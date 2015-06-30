@@ -117,7 +117,7 @@ namespace diNo
             var dbSchueler = new SchuelerTableAdapter().GetDataById(schueler.SchuelerId)[0];
             string benutzterVorname = string.IsNullOrEmpty(dbSchueler.Rufname) ? dbSchueler.Vorname : dbSchueler.Rufname;
             bool isLegastheniker = dbSchueler.LRSStoerung || dbSchueler.LRSSchwaeche;
-            dieSchueler.Add(new Schueler(schueler.Id, benutzterVorname, dbSchueler.Name, isLegastheniker));
+            dieSchueler.Add(new Schueler(schueler.SchuelerId, benutzterVorname, dbSchueler.Name, isLegastheniker));
             if (wertung == Schulaufgabenwertung.NotSet)
             {
               Schulart schulart = dbSchueler.KlasseWinSV.StartsWith("B") ? Schulart.BOS : Schulart.FOS;

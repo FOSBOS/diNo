@@ -30,7 +30,6 @@ namespace diNo
         textBoxAdresse.Text = schueler.AnschriftStrasse + "\n" + schueler.AnschriftPLZ + " " + schueler.AnschriftOrt + "\n Tel.:" + schueler.AnschriftTelefonnummer;
 
         SchuelerKursTableAdapter skAdapter = new SchuelerKursTableAdapter();
-        NoteSchuelerKursTableAdapter nskAdapter = new NoteSchuelerKursTableAdapter();
         NoteTableAdapter noteAdapter = new NoteTableAdapter();
         FachTableAdapter fachAdapter = new FachTableAdapter();
         KursTableAdapter kursAdapter = new KursTableAdapter();
@@ -48,9 +47,9 @@ namespace diNo
           dataGridNoten.Rows[lineCount].Cells[0].Value = fachRow.Bezeichnung;
 
           IList<diNo.diNoDataSet.NoteRow> noten = new List<diNo.diNoDataSet.NoteRow>();
-          foreach (var note in nskAdapter.GetDataBySchuelerKursId(kurs.Id))
+          foreach (var note in noteAdapter.GetDataByKursId(kurs.KursId))
           {
-            noten.Add(noteAdapter.GetDataById(note.NoteId)[0]);
+            noten.Add(note);
           }
 
           InsertSchulaufgaben(1, lineCount, noten, Halbjahr.Erstes);

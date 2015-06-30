@@ -155,7 +155,7 @@ namespace diNo
 
         foreach (var schueler in schuelerDerKlasse)
         {
-          if (kursSelector.IsInKurs(schueler, kurs) && skursAdapter.GetDataBySchuelerAndKurs(schueler.Id, kurs.Id).Count == 0)
+          if (kursSelector.IsInKurs(schueler, kurs) && skursAdapter.GetCountBySchuelerAndKurs(schueler.Id, kurs.Id) == 0)
           {
             skursAdapter.Insert(schueler.Id, kurs.Id);
           }

@@ -68,12 +68,10 @@ namespace diNo
       var schueler = (fKSchuelerToKlasseBindingSource.Current as DataRowView).Row as diNoDataSet.SchuelerRow;
       var kurs = (kursBindingSource.Current as DataRowView).Row as diNoDataSet.KursRow;
 
-      var schuelerZuKurs = new SchuelerKursTableAdapter().GetDataBySchuelerAndKurs(schueler.Id, kurs.Id)[0];
-      var notenZuordnungen = new NoteSchuelerKursTableAdapter().GetDataBySchuelerKursId(schuelerZuKurs.Id);
       BindingList<diNoDataSet.NoteRow> noten = new BindingList<diNoDataSet.NoteRow>();
-      foreach (var notenZuordnung in notenZuordnungen)
+      foreach (var note in new NoteTableAdapter().GetDataByKursId(kurs.Id))
       {
-        noten.Add(new NoteTableAdapter().GetDataById(notenZuordnung.NoteId)[0]);
+        noten.Add(note);
       }
 
       this.noteBindingSource.DataSource = noten;

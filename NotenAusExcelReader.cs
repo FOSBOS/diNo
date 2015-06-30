@@ -36,15 +36,13 @@ namespace diNo
         if (sheet.Kursbezeichnung.ToUpper().Contains("F11TE")) { klasseId = 15;}
 
         int kursId = kurse[0].Id;
-        using (SchuelerKursTableAdapter skAdapter = new SchuelerKursTableAdapter()) 
-        using (NoteSchuelerKursTableAdapter nskAdapter = new NoteSchuelerKursTableAdapter())
         using (NoteTableAdapter noteAdapter = new NoteTableAdapter())
         {
-          DeleteAlteNoten(kursId, skAdapter, nskAdapter, noteAdapter);
+          DeleteAlteNoten(kursId, noteAdapter);
           foreach (var schueler in sheet.Schueler)
           {
             CheckId(schueler, klasseId);
-            InsertNoten(kursId, skAdapter, nskAdapter, noteAdapter, schueler);
+            InsertNoten(kursId, noteAdapter, schueler);
           }
 
           var alleSchueler = CheckSchueler(sheet, kursId);
@@ -148,20 +146,13 @@ namespace diNo
     /// Löscht die alten Noten dieses Kurses aus der Datenbank (evtl. später nur Invalid setzen).
     /// </summary>
     /// <param name="kursId">Die Id des Kurses.</param>
-    /// <param name="skAdapter">Der Schüler-Kurs-Adapter.</param>
-    /// <param name="nskAdapter">Der Note-zu-Schüler-Kurs-Adapter.</param>
     /// <param name="noteAdapter">Der Notenadapter.</param>
-    private static void DeleteAlteNoten(int kursId, SchuelerKursTableAdapter skAdapter, NoteSchuelerKursTableAdapter nskAdapter, NoteTableAdapter noteAdapter)
+    private static void DeleteAlteNoten(int kursId, NoteTableAdapter noteAdapter)
     {
-      var schuelerZuKurs = skAdapter.GetDataByKursId(kursId);
-      foreach (int id in schuelerZuKurs.Select(x => x.Id))
+      foreach (var note in noteAdapter.GetDataByKursId(kursId))
       {
-        foreach (var noteZuordnung in nskAdapter.GetDataBySchuelerKursId(id))
-        {
-          // lösche zuerst die Zuordnung der Note, danach die Note
-          nskAdapter.Delete(noteZuordnung.NoteId); 
-          noteAdapter.Delete(noteZuordnung.NoteId);
-        }
+        // lösche die Note
+        noteAdapter.Delete(note.Id);
       }
     }
 
@@ -169,25 +160,15 @@ namespace diNo
     /// Trägt die Noten eines Schülers aus Excel in die Datenbank ein.
     /// </summary>
     /// <param name="kursId">Die Id des Kurses.</param>
-    /// <param name="skAdapter">Der Schüler-Kurs-Adapter.</param>
-    /// <param name="nskAdapter">Der Note-zu-Schüler-Kurs-Adapter.</param>
     /// <param name="noteAdapter">Der Note-Adapter.</param>
     /// <param name="schueler">Der Schüler (samt Noten dieses Kurses).</param>
-    private static void InsertNoten(int kursId, SchuelerKursTableAdapter skAdapter, NoteSchuelerKursTableAdapter nskAdapter, NoteTableAdapter noteAdapter, Schueler schueler)
+    private static void InsertNoten(int kursId, NoteTableAdapter noteAdapter, Schueler schueler)
     {
-      var schuelerKursZuordnungen = skAdapter.GetDataBySchuelerAndKurs(schueler.Id, kursId);
-      if (schuelerKursZuordnungen.Rows.Count != 1)
-      {
-        throw new InvalidOperationException("Zuordnung Schueler - Kurs nicht gefunden!");
-      }
-
-      var schuelerKursZuordnung = schuelerKursZuordnungen[0];
       foreach (var note in schueler.Noten)
       {
         // trage alle Noten in die DB ein
-        var noteId =0; 
-        noteAdapter.Insert((int)note.Typ, note.Punktwert, DateTime.Now.Date, note.Zelle, (byte)note.Halbjahr, out noteId);
-        nskAdapter.Insert(noteId, schuelerKursZuordnung.Id);
+        var noteId = 0; 
+        noteAdapter.Insert((int)note.Typ, note.Punktwert, DateTime.Now.Date, note.Zelle, (byte)note.Halbjahr, schueler.Id, kursId, out noteId);
       }
     }
   }
