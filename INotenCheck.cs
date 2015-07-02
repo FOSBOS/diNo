@@ -1,10 +1,22 @@
-﻿using System;
+﻿using diNo.diNoDataSetTableAdapters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace diNo
 {
+  public enum CheckReason
+  {
+    None = 0,
+    ProbezeitBOS = 1,
+    HalbjahrUndProbezeitFOS = 2,
+    ErstePA = 3,
+    ZweitePA = 4,
+    DrittePA = 5,
+    Jahresende = 6
+  }
+
   /// <summary>
   /// Interface für Notenprüfungsklassen.
   /// </summary>
@@ -19,19 +31,21 @@ namespace diNo
     }
 
     /// <summary>
-    /// Die Fehlermeldung, die ausgegeben werden soll, wenn der Notencheck schief geht.
+    /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
     /// </summary>
-    string Fehlermeldung
-    {
-      get;
-    }
+    /// <param name="jahrgangsstufe">Die Jahrgangsstufe.</param>
+    /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>true wenn check nötig.</returns>
+    bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason);
 
     /// <summary>
-    /// Prüft die Noten und liefert eine Liste der Schüler-Ids, bei denen ein Problem aufgetreten ist.
+    /// Führt den Check durch.
     /// </summary>
-    /// <param name="schueler">Die Schüler der Klasse.</param>
-    /// <returns>Liste der Schüler-Ids, bei denen ein Problem aufgetreten ist.</returns>
-    IList<int> GetFehler(IList<int> schueler);
+    /// <param name="schueler">Der Schüler.</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
+    string[] Check(diNo.diNoDataSet.SchuelerRow schueler, CheckReason reason);
   }
 
   /// <summary>
@@ -43,11 +57,9 @@ namespace diNo
     /// Konstruktor.
     /// </summary>
     /// <param name="anzeigename">Der Anzeigename.</param>
-    /// <param name="fehlermeldung">Die Fehlermeldung (wenn der Notencheck schief geht).</param>
-    public AbstractNotenCheck(string anzeigename, string fehlermeldung)
+    public AbstractNotenCheck(string anzeigename)
     {
       this.Anzeigename = anzeigename;
-      this.Fehlermeldung = fehlermeldung;
     }
 
     /// <summary>
@@ -60,20 +72,21 @@ namespace diNo
     }
 
     /// <summary>
-    /// Die Fehlermeldung, die ausgegeben werden soll, wenn der Notencheck schief geht.
+    /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
     /// </summary>
-    public string Fehlermeldung
-    {
-      get;
-      private set;
-    }
+    /// <param name="jahrgangsstufe">Die Jahrgangsstufe.</param>
+    /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>true wenn check nötig.</returns>
+    public abstract bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason);
 
     /// <summary>
-    /// Prüft die Noten und liefert eine Liste der Schüler-Ids, bei denen ein Problem aufgetreten ist.
+    /// Führt den Check durch.
     /// </summary>
-    /// <param name="schueler">Die Schüler der Klasse.</param>
-    /// <returns>Liste der Schüler-Ids, bei denen ein Problem aufgetreten ist.</returns>
-    public abstract IList<int> GetFehler(IList<int> schueler);
+    /// <param name="schueler">Der Schüler.</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
+    public abstract string[] Check(diNo.diNoDataSet.SchuelerRow schueler, CheckReason reason);
   }
 
   /// <summary>
@@ -84,18 +97,230 @@ namespace diNo
     /// <summary>
     /// Konstruktor.
     /// </summary>
-    public FachreferatChecker(): base("Fachreferat vorhanden", "Es liegt kein Fachreferat vor.")
+    public FachreferatChecker(): base("Fachreferat vorhanden")
     {
     }
 
     /// <summary>
-    /// Prüft die Noten und liefert eine Liste der Schüler-Ids, bei denen ein Problem aufgetreten ist.
+    /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
     /// </summary>
-    /// <param name="schueler">Die Schüler der Klasse.</param>
-    /// <returns>Liste der Schüler-Ids, bei denen ein Problem aufgetreten ist.</returns>
-    public override IList<int> GetFehler(IList<int> schueler)
+    /// <param name="jahrgangsstufe">Die Jahrgangsstufe.</param>
+    /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>true wenn check nötig.</returns>
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason)
     {
-      throw new NotImplementedException();
+      return jahrgangsstufe == Jahrgangsstufe.Zwoelf && reason == CheckReason.ErstePA;
+    }
+
+    /// <summary>
+    /// Führt den Check durch.
+    /// </summary>
+    /// <param name="schueler">Der Schüler.</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
+    public override string[] Check(diNo.diNoDataSet.SchuelerRow schueler, CheckReason reason)
+    {
+      IList<string> result = new List<string>();
+      var noten = new NoteTableAdapter().GetDataBySchuelerId(schueler.Id).Where(x => x.Notenart == (int)Notentyp.Fachreferat);
+      if (noten.Count() != 1)
+      {
+        result.Add("Der Schüler hat kein Fachreferat");
+      }
+
+      return result.ToArray();
+    }
+  }
+
+  /// <summary>
+  /// Prüft die Anzahl der Noten
+  /// </summary>
+  public class NotenanzahlChecker : AbstractNotenCheck
+  {
+    /// <summary>
+    /// Konstruktor
+    /// </summary>
+    public NotenanzahlChecker(): base("Notenanzahl ausreichend")
+    {
+    }
+
+    /// <summary>
+    /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
+    /// </summary>
+    /// <param name="jahrgangsstufe">Die Jahrgangsstufe.</param>
+    /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>true wenn check nötig.</returns>
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason)
+    {
+      // Diese Prüfung kann immer durchgeführt werden
+      return true;
+    }
+
+    /// <summary>
+    /// Führt den Check durch.
+    /// </summary>
+    /// <param name="schueler">Der Schüler.</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
+    public override string[] Check(diNo.diNoDataSet.SchuelerRow schueler, CheckReason reason)
+    {
+      IList<string> result = new List<string>();
+      foreach (var kursZuordnung in new SchuelerKursTableAdapter().GetDataBySchuelerId(schueler.Id))
+      {
+        var kurs = new KursTableAdapter().GetDataById(kursZuordnung.KursId)[0];
+        var fach = new FachTableAdapter().GetDataById(kurs.FachId)[0];
+        var klasse = new KlasseTableAdapter().GetDataById(schueler.KlasseId)[0];
+        var noten = new NoteTableAdapter().GetDataBySchuelerAndKurs(schueler.Id, kurs.Id);
+        Schulaufgabenwertung wertung = Faecherkanon.GetSchulaufgabenwertung(fach.Kuerzel, klasse.Bezeichnung);
+
+        int noetigeAnzahlSchulaufgaben = GetAnzahlSchulaufgaben(wertung);
+        if (noetigeAnzahlSchulaufgaben > 0)
+        {
+          //es müssen 2 oder 3 Schulaufgaben zum Ende des Jahres vorliegen - zum Halbjahr min. eine
+          var schulaufgaben = noten.Where(x => x.Notenart == (int)Notentyp.Schulaufgabe);
+          if (reason == CheckReason.HalbjahrUndProbezeitFOS && schulaufgaben.Count() < 1)
+          {
+            result.Add("Die Anzahl der Schulaufgaben im Fach " + fach.Bezeichnung + " ist zu gering.");
+          }
+          if (reason == CheckReason.ErstePA && schulaufgaben.Count() < noetigeAnzahlSchulaufgaben)
+          {
+            result.Add("Die Anzahl der Schulaufgaben im Fach " + fach.Bezeichnung + " ist zu gering.");
+          }
+        }
+
+        // egal, bei welcher Entscheidung: Es müssen im ersten Halbjahr min. 2 mündliche Noten vorliegen
+        // am Jahresende bzw. zur PA-Sitzung müssen es entweder 2 Kurzarbeiten und 2 echte mündliche oder 3 Exen und 2 echte mündliche sein
+        var kurzarbeiten = noten.Where(x => x.Notenart == (int)Notentyp.Kurzarbeit);
+        var exen = noten.Where(x => x.Notenart == (int)Notentyp.Ex);
+        var echteMuendliche = noten.Where(x => x.Notenart == (int)Notentyp.EchteMuendliche);
+
+        // die Prüfung unterscheidet wie der bisherige Notenbogen nicht, ob die Note aus einer Ex oder echt mündlich ist - das verantwortet der Lehrer
+        int kurzarbeitenCount = kurzarbeiten.Count();
+        int muendlicheCount = exen.Count() + echteMuendliche.Count();
+
+        if (reason == CheckReason.ProbezeitBOS || reason == CheckReason.HalbjahrUndProbezeitFOS)
+        {
+          if (kurzarbeitenCount == 0 && muendlicheCount < 2)
+          {
+            result.Add("Die Anzahl der mündlichen Noten im Fach "+fach.Bezeichnung + " ist zu gering");
+          }
+          if (muendlicheCount == 0)
+          {
+            result.Add("Die Anzahl der mündlichen Noten im Fach " + fach.Bezeichnung + " ist zu gering");
+          }
+        }
+        else if (reason == CheckReason.ErstePA || reason == CheckReason.Jahresende)
+        {
+          if (kurzarbeitenCount < 2 && muendlicheCount < 5)
+          {
+            result.Add("Die Anzahl der mündlichen Noten im Fach " + fach.Bezeichnung + " ist zu gering");
+          }
+          if (kurzarbeitenCount >= 2 && muendlicheCount < 2)
+          {
+            result.Add("Die Anzahl der mündlichen Noten im Fach " + fach.Bezeichnung + " ist zu gering");
+          }
+        }
+        // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
+        else if (reason == CheckReason.ZweitePA)
+        {
+          var schriftlichePruefung = noten.Where(x => x.Notenart == (int)Notentyp.APSchriftlich);
+          if (schriftlichePruefung.Count() == 0)
+          {
+            result.Add("Es liegt keine Note in der schriftlichen Abschlussprüfung vor");
+          }
+        }
+      }
+
+      return result.ToArray();
+    }
+
+    private static int GetAnzahlSchulaufgaben(Schulaufgabenwertung wertung)
+    {
+      int noetigeAnzahlSchulaufgaben = 0;
+      if (wertung == Schulaufgabenwertung.EinsZuEins)
+      {
+        noetigeAnzahlSchulaufgaben = 2;
+      }
+      if (wertung == Schulaufgabenwertung.ZweiZuEins)
+      {
+        noetigeAnzahlSchulaufgaben = 3;
+      }
+
+      return noetigeAnzahlSchulaufgaben;
+    }
+  }
+
+  public class UnterpunktungChecker : AbstractNotenCheck
+  {
+    /// <summary>
+    /// Konstruktor
+    /// </summary>
+    public UnterpunktungChecker()
+      : base("Prüfe Unterpunktung")
+    {
+    }
+
+    /// <summary>
+    /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
+    /// </summary>
+    /// <param name="jahrgangsstufe">Die Jahrgangsstufe.</param>
+    /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>true wenn check nötig.</returns>
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason)
+    {
+      return true;
+    }
+
+    /// <summary>
+    /// Führt den Check durch.
+    /// </summary>
+    /// <param name="schueler">Der Schüler.</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
+    public override string[] Check(diNoDataSet.SchuelerRow schueler, CheckReason reason)
+    {
+      IList<string> result = new List<string>();
+      foreach (var kursZuordnung in new SchuelerKursTableAdapter().GetDataBySchuelerId(schueler.Id))
+      {
+        var kurs = new KursTableAdapter().GetDataById(kursZuordnung.KursId)[0];
+        var fach = new FachTableAdapter().GetDataById(kurs.FachId)[0];
+        var klasse = new KlasseTableAdapter().GetDataById(schueler.KlasseId)[0];
+        var noten = new NoteTableAdapter().GetDataBySchuelerAndKurs(schueler.Id, kurs.Id);
+
+        diNo.diNoDataSet.NoteRow relevanteNote = null;
+        if (reason == CheckReason.ProbezeitBOS || reason == CheckReason.HalbjahrUndProbezeitFOS)
+        {
+          var halbjahresnote = noten.Where(x => x.Notenart == (int)Notentyp.Jahresfortgang && x.Halbjahr == (int)Halbjahr.Erstes);
+          relevanteNote = halbjahresnote.Count() > 0 ? halbjahresnote.First() : null;
+        }
+        else if (reason == CheckReason.ErstePA || reason == CheckReason.Jahresende)
+        {
+          var jahresfortgang = noten.Where(x => x.Notenart == (int)Notentyp.Jahresfortgang && x.Halbjahr == (int)Halbjahr.Zweites);
+          relevanteNote = jahresfortgang.Count() > 0 ? jahresfortgang.First() : null;
+        }
+        else if (reason == CheckReason.ZweitePA || reason == CheckReason.DrittePA)
+        {
+          var zeugnisnote = noten.Where(x => x.Notenart == (int)Notentyp.Abschlusszeugnis);
+          relevanteNote = zeugnisnote.Count() > 0 ? zeugnisnote.First() : null;
+        }
+
+        if (relevanteNote == null)
+        {
+          result.Add("Es konnte im Fach " + fach.Bezeichnung + " keine Note gebildet werden");
+        }
+        else
+        {
+          int notenwert = (int)(relevanteNote.Punktwert);
+          if (notenwert < 4)
+          {
+            result.Add("Unterpunktung im Fach " + fach.Bezeichnung + " mit " + notenwert + " Punkten");
+          }
+        }
+      }
+
+      return result.ToArray();
     }
   }
 }

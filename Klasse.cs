@@ -9,14 +9,16 @@ namespace diNo
 		Elf = 2,
 		Zwoelf = 3,
 		Dreizehn = 4,
-    Zehn = 5
+    Zehn = 5,
+    ALLE = 15
 	}
 
 	public enum Schulart
 	{
  		None = 0,
 		FOS = 1,
-		BOS = 2
+		BOS = 2,
+    ALLE = 15
 	}
 
 	public enum Zweig
@@ -25,7 +27,8 @@ namespace diNo
 		Sozial = 1,
 		Technik = 2,
 		Wirtschaft = 3,
-    Agrar = 4
+    Agrar = 4,
+    ALLE = 15
 	}
 
   /// <summary>

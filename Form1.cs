@@ -195,9 +195,36 @@ namespace diNo
     /// <param name="e"></param>
     private void button3_Click(object sender, EventArgs e)
     {
-      //TODO: Auswahl, welche Prüfungen überhaupt durchgeführt werden sollen
+      //TODO: Auswahl, welche Prüfungen überhaupt durchgeführt werden sollen (CheckReason wählen)
+      //TODO: einfach alle Klasse(n) prüfen oder sinnvolle Auswahl
+      List<string> meldungen = new List<string>();
+      List<INotenCheck> alleNotenchecks = new List<INotenCheck>();
+      alleNotenchecks.Add(new FachreferatChecker());
+      alleNotenchecks.Add(new NotenanzahlChecker());
+      alleNotenchecks.Add(new UnterpunktungChecker());
 
-      
+      // F11Technik-Klassen. TODO: So geht das künftig natürlich nicht!
+      int[] klassenIDs = new[] { 15, 20, 34 };
+      foreach (int klassenId in klassenIDs)
+      {
+        var dieSchueler = new SchuelerTableAdapter().GetDataByKlasse(klassenId);
+        foreach (var schueler in dieSchueler)
+        {
+          foreach (INotenCheck check in alleNotenchecks)
+          {
+            // TODO: Schulart usw. ermitteln. Für Test nur elfte Klassen.
+            if (check.CheckIsNecessary(GetJahrgangsstufe(schueler.Jahrgangsstufe), Schulart.FOS, CheckReason.Jahresende))
+            {
+              var probleme = check.Check(schueler, CheckReason.Jahresende);
+              if (probleme.Count() > 0)
+              {
+                meldungen.Add("Schüler: " + schueler.Vorname + " " + schueler.Name);
+                meldungen.AddRange(probleme);
+              }
+            }
+          }
+        }
+      }
     }
 	}
 }

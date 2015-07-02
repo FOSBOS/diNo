@@ -10800,7 +10800,7 @@ WHERE        (KlasseId = @KlasseId) AND (Name = @Name) AND (Rufname=@Rufname)";
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [Note] ([Notenart], [Punktwert], [Datum], [Zelle], [Halbjahr], [Schue" +
                 "lerId], [KursId]) VALUES (@Notenart, @Punktwert, @Datum, @Zelle, @Halbjahr, @Sch" +
-                "uelerId, @KursId);\r\n SET [Id] = SCOPE_IDENTITY()";
+                "uelerId, @KursId);\r\n SET @Id = SCOPE_IDENTITY()";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Notenart", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Notenart", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Punktwert", global::System.Data.SqlDbType.Decimal, 5, global::System.Data.ParameterDirection.Input, 5, 2, "Punktwert", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -10809,7 +10809,7 @@ WHERE        (KlasseId = @KlasseId) AND (Name = @Name) AND (Rufname=@Rufname)";
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Halbjahr", global::System.Data.SqlDbType.TinyInt, 1, global::System.Data.ParameterDirection.Input, 0, 0, "Halbjahr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Output, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Output, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = @"UPDATE [Note] SET [Notenart] = @Notenart, [Punktwert] = @Punktwert, [Datum] = @Datum, [Zelle] = @Zelle, [Halbjahr] = @Halbjahr, [SchuelerId] = @SchuelerId, [KursId] = @KursId WHERE (([Id] = @Original_Id) AND ([Notenart] = @Original_Notenart) AND ([Punktwert] = @Original_Punktwert) AND ((@IsNull_Datum = 1 AND [Datum] IS NULL) OR ([Datum] = @Original_Datum)) AND ((@IsNull_Zelle = 1 AND [Zelle] IS NULL) OR ([Zelle] = @Original_Zelle)) AND ([Halbjahr] = @Original_Halbjahr) AND ([SchuelerId] = @Original_SchuelerId) AND ([KursId] = @Original_KursId));

@@ -47,7 +47,7 @@ namespace diNo
           dataGridNoten.Rows[lineCount].Cells[0].Value = fachRow.Bezeichnung;
 
           IList<diNo.diNoDataSet.NoteRow> noten = new List<diNo.diNoDataSet.NoteRow>();
-          foreach (var note in noteAdapter.GetDataByKursId(kurs.KursId))
+          foreach (var note in noteAdapter.GetDataBySchuelerAndKurs(kurs.SchuelerId, kurs.KursId))
           {
             noten.Add(note);
           }
