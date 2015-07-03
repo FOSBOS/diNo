@@ -44,6 +44,7 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridNoten = new System.Windows.Forms.DataGridView();
       this.nameLabel = new System.Windows.Forms.Label();
       this.nameTextBox = new System.Windows.Forms.TextBox();
@@ -70,6 +71,7 @@
       this.NotenHJ2_6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.NotenHJ2_7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.NotenHJ2_8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.Fachreferat = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.SchnittHJ2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.ZeugnisHJ2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.APschriftl = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -106,6 +108,7 @@
             this.NotenHJ2_6,
             this.NotenHJ2_7,
             this.NotenHJ2_8,
+            this.Fachreferat,
             this.SchnittHJ2,
             this.ZeugnisHJ2,
             this.APschriftl,
@@ -117,7 +120,7 @@
       this.dataGridNoten.ReadOnly = true;
       this.dataGridNoten.RowHeadersWidth = 25;
       this.dataGridNoten.ShowEditingIcon = false;
-      this.dataGridNoten.Size = new System.Drawing.Size(1133, 466);
+      this.dataGridNoten.Size = new System.Drawing.Size(1149, 466);
       this.dataGridNoten.TabIndex = 0;
       // 
       // nameLabel
@@ -374,6 +377,18 @@
       this.NotenHJ2_8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
       this.NotenHJ2_8.Width = 25;
       // 
+      // Fachreferat
+      // 
+      dataGridViewCellStyle17.Format = "N0";
+      dataGridViewCellStyle17.NullValue = null;
+      this.Fachreferat.DefaultCellStyle = dataGridViewCellStyle17;
+      this.Fachreferat.HeaderText = "Fach- referat";
+      this.Fachreferat.Name = "Fachreferat";
+      this.Fachreferat.ReadOnly = true;
+      this.Fachreferat.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+      this.Fachreferat.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+      this.Fachreferat.Width = 60;
+      // 
       // SchnittHJ2
       // 
       this.SchnittHJ2.HeaderText = "Schnitt";
@@ -434,7 +449,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1153, 632);
+      this.ClientSize = new System.Drawing.Size(1166, 632);
       this.Controls.Add(this.adresseLabel);
       this.Controls.Add(this.textBoxAdresse);
       this.Controls.Add(this.klasseTextBox);
@@ -478,6 +493,7 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn NotenHJ2_6;
     private System.Windows.Forms.DataGridViewTextBoxColumn NotenHJ2_7;
     private System.Windows.Forms.DataGridViewTextBoxColumn NotenHJ2_8;
+    private System.Windows.Forms.DataGridViewTextBoxColumn Fachreferat;
     private System.Windows.Forms.DataGridViewTextBoxColumn SchnittHJ2;
     private System.Windows.Forms.DataGridViewTextBoxColumn ZeugnisHJ2;
     private System.Windows.Forms.DataGridViewTextBoxColumn APschriftl;

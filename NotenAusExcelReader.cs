@@ -34,6 +34,7 @@ namespace diNo
         if (sheet.Kursbezeichnung.ToUpper().Contains("F11TA")) { klasseId = 20;}
         if (sheet.Kursbezeichnung.ToUpper().Contains("F11TB")) { klasseId = 34;}
         if (sheet.Kursbezeichnung.ToUpper().Contains("F11TE")) { klasseId = 15;}
+        if (sheet.Kursbezeichnung.ToUpper().Contains("B12WE")) { klasseId = 9;}
 
         int kursId = kurse[0].Id;
         using (NoteTableAdapter noteAdapter = new NoteTableAdapter())

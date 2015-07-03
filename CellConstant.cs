@@ -49,6 +49,16 @@ namespace diNo
     public static int GewichteSchulaufgaben = 75;
     public static int GewichteExen = 76;
 
+    #region AP
+
+    public static string APschriftlichSpalte = "E";
+    public static string APmuendlichSpalte = "F";
+    public static string APgesamtSpalte = "G";
+    public static string APZeugnisnote = "I";
+    public static int APZeileErsterSchueler = 6;
+
+    #endregion
+
     #region diNo
     /// <summary>
     /// Achtung diese Konstanten liegen auf einem anderen Datenblatt "diNo".

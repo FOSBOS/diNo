@@ -186,6 +186,7 @@ namespace diNo
     {
       // TODO: Schüler auswählen
       new Notenbogen(8351).Show();
+      new Notenbogen(7794).Show();
     }
 
     /// <summary>

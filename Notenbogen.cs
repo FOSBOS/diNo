@@ -63,11 +63,16 @@ namespace diNo
           InsertSchulaufgaben(11, lineCount, noten, Halbjahr.Zweites);
           InsertExen(11, lineCount + 1, noten, Halbjahr.Zweites);
           InsertMuendliche(16, lineCount + 1, noten, Halbjahr.Zweites);
-          InsertSingleNote(19, lineCount, noten, Notentyp.SchnittSA, Halbjahr.Zweites, true);
-          InsertSingleNote(19, lineCount + 1, noten, Notentyp.Schnittmuendlich, Halbjahr.Zweites, true);
-          InsertSingleNote(20, lineCount, noten, Notentyp.Jahresfortgang, Halbjahr.Zweites, false);
-          InsertSingleNote(20, lineCount + 1, noten, Notentyp.JahresfortgangMitNKS, Halbjahr.Zweites, true);
-          
+          InsertSingleNote(19, lineCount + 1, noten, Notentyp.Fachreferat, Halbjahr.Ohne, false);
+          InsertSingleNote(20, lineCount, noten, Notentyp.SchnittSA, Halbjahr.Zweites, true);
+          InsertSingleNote(20, lineCount + 1, noten, Notentyp.Schnittmuendlich, Halbjahr.Zweites, true);
+          InsertSingleNote(21, lineCount, noten, Notentyp.Jahresfortgang, Halbjahr.Zweites, false);
+          InsertSingleNote(21, lineCount + 1, noten, Notentyp.JahresfortgangMitNKS, Halbjahr.Zweites, true);
+
+          InsertSingleNote(22, lineCount, noten, Notentyp.APSchriftlich, Halbjahr.Ohne, false);
+          InsertSingleNote(23, lineCount, noten, Notentyp.APMuendlich, Halbjahr.Ohne, false);
+          InsertSingleNote(24, lineCount, noten, Notentyp.APGesamt, Halbjahr.Ohne, true);
+          InsertSingleNote(25, lineCount, noten, Notentyp.Abschlusszeugnis, Halbjahr.Ohne, false);
           lineCount = lineCount + 2;
         }
       }
@@ -88,6 +93,19 @@ namespace diNo
       if (note != null)
       {
         dataGridNoten.Rows[row].Cells[col].Value = isCommaValue ? note.Punktwert.ToString() : ((int)note.Punktwert).ToString();
+      }
+      else if (halbjahr == Halbjahr.Ohne)
+      {
+        // bei manchen Noten (z. B. Fachreferat) muss in beiden Halbjahren gesucht werden.
+        note = GetSingleNote(noten, typ, Halbjahr.Erstes);
+        if (note == null)
+        {
+          note = GetSingleNote(noten, typ, Halbjahr.Zweites);
+        }
+        if (note != null)
+        {
+          dataGridNoten.Rows[row].Cells[col].Value = isCommaValue ? note.Punktwert.ToString() : ((int)note.Punktwert).ToString();
+        }
       }
     }
 

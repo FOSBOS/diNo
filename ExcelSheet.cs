@@ -298,15 +298,29 @@ namespace diNo
         log.Error("kein Sheet mit dem Namen \"Schulverwaltung\" gefunden");
       }
 
+      var apsheet = (from Excel.Worksheet sh in this.workbook.Worksheets where sh.Name.Equals("AP") select sh).FirstOrDefault();
+      if (apsheet == null)
+      {
+        log.Error("kein Sheet mit dem Namen \"AP\" gefunden");
+      }
+
       var kursbezeichnung = ReadValue(sheet, CellConstant.Klassenbezeichnung);
       var fach = ReadValue(sheet, CellConstant.Fachbezeichnung);
       var datumStand = ReadValue(sheet, CellConstant.DatumStand);
       var kursId = (sidsheet != null) ? int.Parse(ReadValue(sidsheet, CellConstant.KursId)) : -1;
 
       Kurs klasse = new Kurs(kursId, kursbezeichnung, fach);
+      int indexAP = CellConstant.APZeileErsterSchueler;
       for (int i = CellConstant.ZeileErsterSchueler; i < 2 * MaxAnzahlSchueler; i = i + 2)
       {
         var schueler = ReadSchueler(sheet, sidsheet, i);
+        //Prüfungsnoten
+        AddNoteToSchueler(schueler, apsheet, CellConstant.APschriftlichSpalte + indexAP, Notentyp.APSchriftlich, Halbjahr.Ohne);
+        AddNoteToSchueler(schueler, apsheet, CellConstant.APmuendlichSpalte + indexAP, Notentyp.APMuendlich, Halbjahr.Ohne);
+        AddNoteToSchueler(schueler, apsheet, CellConstant.APgesamtSpalte + indexAP, Notentyp.APGesamt, Halbjahr.Ohne);
+        AddNoteToSchueler(schueler, apsheet, CellConstant.APZeugnisnote + indexAP, Notentyp.Abschlusszeugnis, Halbjahr.Ohne);
+        indexAP++;
+
         if (schueler != null)
         {
           klasse.Schueler.Add(schueler);
