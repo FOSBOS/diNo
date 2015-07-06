@@ -6,6 +6,8 @@ using diNo.diNoDataSetTableAdapters;
 using System.Collections.Generic;
 using log4net;
 using System.IO;
+using System.Drawing.Printing;
+using System.Drawing;
 
 namespace diNo
 {
@@ -189,6 +191,9 @@ namespace diNo
       new Notenbogen(7794).Show();
     }
 
+
+
+
     /// <summary>
     /// Führt alle Notenprüfungen durch.
     /// </summary>
@@ -225,6 +230,10 @@ namespace diNo
             }
           }
         }
+
+        UserControlChecks printControl = new UserControlChecks();
+        // TODO: Das geht hier natürlich noch etwas schicker
+        printControl.Print(klassenId+ "", meldungen.ToArray());
       }
     }
 	}

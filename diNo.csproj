@@ -98,6 +98,12 @@
     <Compile Include="Schueler.cs" />
     <Compile Include="TrueCryptHelper.cs" />
     <Compile Include="UnterrichtExcelReader.cs" />
+    <Compile Include="UserControlChecks.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlChecks.Designer.cs">
+      <DependentUpon>UserControlChecks.cs</DependentUpon>
+    </Compile>
     <Compile Include="WinSVSchuelerReader.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -118,6 +124,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="UserControlChecks.resx">
+      <DependentUpon>UserControlChecks.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="diNoDataSet.xsc">
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
