@@ -46,12 +46,6 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridNoten = new System.Windows.Forms.DataGridView();
-      this.nameLabel = new System.Windows.Forms.Label();
-      this.nameTextBox = new System.Windows.Forms.TextBox();
-      this.klasseLabel = new System.Windows.Forms.Label();
-      this.klasseTextBox = new System.Windows.Forms.TextBox();
-      this.textBoxAdresse = new System.Windows.Forms.TextBox();
-      this.adresseLabel = new System.Windows.Forms.Label();
       this.Fachname = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.NotenHJ1_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.NotenHJ1_2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,7 +72,26 @@
       this.APmuendl = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.APGesamt = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.Endnote = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.nameLabel = new System.Windows.Forms.Label();
+      this.nameTextBox = new System.Windows.Forms.TextBox();
+      this.klasseLabel = new System.Windows.Forms.Label();
+      this.klasseTextBox = new System.Windows.Forms.TextBox();
+      this.textBoxAdresse = new System.Windows.Forms.TextBox();
+      this.adresseLabel = new System.Windows.Forms.Label();
+      this.label1 = new System.Windows.Forms.Label();
+      this.listBoxFpA = new System.Windows.Forms.ListBox();
+      this.label2 = new System.Windows.Forms.Label();
+      this.label3 = new System.Windows.Forms.Label();
+      this.numericUpDownSeminarfach = new System.Windows.Forms.NumericUpDown();
+      this.label4 = new System.Windows.Forms.Label();
+      this.label5 = new System.Windows.Forms.Label();
+      this.textBoxSeminarfachthemaLang = new System.Windows.Forms.TextBox();
+      this.textBoxSeminarfachthemaKurz = new System.Windows.Forms.TextBox();
+      this.buttonSpeichern = new System.Windows.Forms.Button();
+      this.btnSchliessen = new System.Windows.Forms.Button();
+      this.textBoxFpABemerkung = new System.Windows.Forms.TextBox();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeminarfach)).BeginInit();
       this.SuspendLayout();
       // 
       // dataGridNoten
@@ -122,55 +135,6 @@
       this.dataGridNoten.ShowEditingIcon = false;
       this.dataGridNoten.Size = new System.Drawing.Size(1149, 466);
       this.dataGridNoten.TabIndex = 0;
-      // 
-      // nameLabel
-      // 
-      this.nameLabel.AutoSize = true;
-      this.nameLabel.Location = new System.Drawing.Point(9, 9);
-      this.nameLabel.Name = "nameLabel";
-      this.nameLabel.Size = new System.Drawing.Size(35, 13);
-      this.nameLabel.TabIndex = 1;
-      this.nameLabel.Text = "Name";
-      // 
-      // nameTextBox
-      // 
-      this.nameTextBox.Location = new System.Drawing.Point(50, 6);
-      this.nameTextBox.Name = "nameTextBox";
-      this.nameTextBox.Size = new System.Drawing.Size(191, 20);
-      this.nameTextBox.TabIndex = 2;
-      // 
-      // klasseLabel
-      // 
-      this.klasseLabel.AutoSize = true;
-      this.klasseLabel.Location = new System.Drawing.Point(322, 9);
-      this.klasseLabel.Name = "klasseLabel";
-      this.klasseLabel.Size = new System.Drawing.Size(38, 13);
-      this.klasseLabel.TabIndex = 3;
-      this.klasseLabel.Text = "Klasse";
-      // 
-      // klasseTextBox
-      // 
-      this.klasseTextBox.Location = new System.Drawing.Point(383, 6);
-      this.klasseTextBox.Name = "klasseTextBox";
-      this.klasseTextBox.Size = new System.Drawing.Size(100, 20);
-      this.klasseTextBox.TabIndex = 4;
-      // 
-      // textBoxAdresse
-      // 
-      this.textBoxAdresse.Location = new System.Drawing.Point(621, 6);
-      this.textBoxAdresse.Multiline = true;
-      this.textBoxAdresse.Name = "textBoxAdresse";
-      this.textBoxAdresse.Size = new System.Drawing.Size(167, 61);
-      this.textBoxAdresse.TabIndex = 5;
-      // 
-      // adresseLabel
-      // 
-      this.adresseLabel.AutoSize = true;
-      this.adresseLabel.Location = new System.Drawing.Point(561, 9);
-      this.adresseLabel.Name = "adresseLabel";
-      this.adresseLabel.Size = new System.Drawing.Size(45, 13);
-      this.adresseLabel.TabIndex = 6;
-      this.adresseLabel.Text = "Adresse";
       // 
       // Fachname
       // 
@@ -445,11 +409,186 @@
       this.Endnote.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
       this.Endnote.Width = 80;
       // 
+      // nameLabel
+      // 
+      this.nameLabel.AutoSize = true;
+      this.nameLabel.Location = new System.Drawing.Point(9, 9);
+      this.nameLabel.Name = "nameLabel";
+      this.nameLabel.Size = new System.Drawing.Size(35, 13);
+      this.nameLabel.TabIndex = 1;
+      this.nameLabel.Text = "Name";
+      // 
+      // nameTextBox
+      // 
+      this.nameTextBox.Location = new System.Drawing.Point(50, 6);
+      this.nameTextBox.Name = "nameTextBox";
+      this.nameTextBox.Size = new System.Drawing.Size(191, 20);
+      this.nameTextBox.TabIndex = 2;
+      // 
+      // klasseLabel
+      // 
+      this.klasseLabel.AutoSize = true;
+      this.klasseLabel.Location = new System.Drawing.Point(322, 9);
+      this.klasseLabel.Name = "klasseLabel";
+      this.klasseLabel.Size = new System.Drawing.Size(38, 13);
+      this.klasseLabel.TabIndex = 3;
+      this.klasseLabel.Text = "Klasse";
+      // 
+      // klasseTextBox
+      // 
+      this.klasseTextBox.Location = new System.Drawing.Point(383, 6);
+      this.klasseTextBox.Name = "klasseTextBox";
+      this.klasseTextBox.Size = new System.Drawing.Size(100, 20);
+      this.klasseTextBox.TabIndex = 4;
+      // 
+      // textBoxAdresse
+      // 
+      this.textBoxAdresse.Location = new System.Drawing.Point(621, 6);
+      this.textBoxAdresse.Multiline = true;
+      this.textBoxAdresse.Name = "textBoxAdresse";
+      this.textBoxAdresse.Size = new System.Drawing.Size(167, 61);
+      this.textBoxAdresse.TabIndex = 5;
+      // 
+      // adresseLabel
+      // 
+      this.adresseLabel.AutoSize = true;
+      this.adresseLabel.Location = new System.Drawing.Point(561, 9);
+      this.adresseLabel.Name = "adresseLabel";
+      this.adresseLabel.Size = new System.Drawing.Size(45, 13);
+      this.adresseLabel.TabIndex = 6;
+      this.adresseLabel.Text = "Adresse";
+      // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(12, 583);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(132, 13);
+      this.label1.TabIndex = 7;
+      this.label1.Text = "fachpraktische Ausbildung";
+      // 
+      // listBoxFpA
+      // 
+      this.listBoxFpA.FormattingEnabled = true;
+      this.listBoxFpA.Items.AddRange(new object[] {
+            "mit sehr gutem Erfolg",
+            "mit gutem Erfolg",
+            "mit Erfolg",
+            "ohne Erfolg"});
+      this.listBoxFpA.Location = new System.Drawing.Point(150, 570);
+      this.listBoxFpA.Name = "listBoxFpA";
+      this.listBoxFpA.Size = new System.Drawing.Size(120, 56);
+      this.listBoxFpA.TabIndex = 8;
+      // 
+      // label2
+      // 
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(276, 583);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(63, 13);
+      this.label2.TabIndex = 9;
+      this.label2.Text = "durchlaufen";
+      // 
+      // label3
+      // 
+      this.label3.AutoSize = true;
+      this.label3.Location = new System.Drawing.Point(12, 642);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(92, 13);
+      this.label3.TabIndex = 10;
+      this.label3.Text = "Seminarfach Note";
+      // 
+      // numericUpDownSeminarfach
+      // 
+      this.numericUpDownSeminarfach.Location = new System.Drawing.Point(150, 640);
+      this.numericUpDownSeminarfach.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numericUpDownSeminarfach.Name = "numericUpDownSeminarfach";
+      this.numericUpDownSeminarfach.Size = new System.Drawing.Size(120, 20);
+      this.numericUpDownSeminarfach.TabIndex = 11;
+      // 
+      // label4
+      // 
+      this.label4.AutoSize = true;
+      this.label4.Location = new System.Drawing.Point(291, 640);
+      this.label4.Name = "label4";
+      this.label4.Size = new System.Drawing.Size(69, 13);
+      this.label4.TabIndex = 12;
+      this.label4.Text = "Thema (lang)";
+      // 
+      // label5
+      // 
+      this.label5.AutoSize = true;
+      this.label5.Location = new System.Drawing.Point(293, 688);
+      this.label5.Name = "label5";
+      this.label5.Size = new System.Drawing.Size(125, 13);
+      this.label5.TabIndex = 13;
+      this.label5.Text = "Thema (bis 117 Zeichen)";
+      // 
+      // textBoxSeminarfachthemaLang
+      // 
+      this.textBoxSeminarfachthemaLang.Location = new System.Drawing.Point(431, 639);
+      this.textBoxSeminarfachthemaLang.MaxLength = 1024;
+      this.textBoxSeminarfachthemaLang.Multiline = true;
+      this.textBoxSeminarfachthemaLang.Name = "textBoxSeminarfachthemaLang";
+      this.textBoxSeminarfachthemaLang.Size = new System.Drawing.Size(723, 40);
+      this.textBoxSeminarfachthemaLang.TabIndex = 14;
+      // 
+      // textBoxSeminarfachthemaKurz
+      // 
+      this.textBoxSeminarfachthemaKurz.Location = new System.Drawing.Point(431, 685);
+      this.textBoxSeminarfachthemaKurz.MaxLength = 117;
+      this.textBoxSeminarfachthemaKurz.Name = "textBoxSeminarfachthemaKurz";
+      this.textBoxSeminarfachthemaKurz.Size = new System.Drawing.Size(723, 20);
+      this.textBoxSeminarfachthemaKurz.TabIndex = 15;
+      // 
+      // buttonSpeichern
+      // 
+      this.buttonSpeichern.Location = new System.Drawing.Point(15, 743);
+      this.buttonSpeichern.Name = "buttonSpeichern";
+      this.buttonSpeichern.Size = new System.Drawing.Size(75, 23);
+      this.buttonSpeichern.TabIndex = 16;
+      this.buttonSpeichern.Text = "speichern";
+      this.buttonSpeichern.UseVisualStyleBackColor = true;
+      this.buttonSpeichern.Click += new System.EventHandler(this.buttonSpeichern_Click);
+      // 
+      // btnSchliessen
+      // 
+      this.btnSchliessen.Location = new System.Drawing.Point(96, 743);
+      this.btnSchliessen.Name = "btnSchliessen";
+      this.btnSchliessen.Size = new System.Drawing.Size(145, 23);
+      this.btnSchliessen.TabIndex = 17;
+      this.btnSchliessen.Text = "ohne Speichern schließen";
+      this.btnSchliessen.UseVisualStyleBackColor = true;
+      this.btnSchliessen.Click += new System.EventHandler(this.btnSchliessen_Click);
+      // 
+      // textBoxFpABemerkung
+      // 
+      this.textBoxFpABemerkung.Location = new System.Drawing.Point(431, 576);
+      this.textBoxFpABemerkung.Name = "textBoxFpABemerkung";
+      this.textBoxFpABemerkung.Size = new System.Drawing.Size(723, 20);
+      this.textBoxFpABemerkung.TabIndex = 18;
+      // 
       // Notenbogen
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1166, 632);
+      this.ClientSize = new System.Drawing.Size(1166, 778);
+      this.Controls.Add(this.textBoxFpABemerkung);
+      this.Controls.Add(this.btnSchliessen);
+      this.Controls.Add(this.buttonSpeichern);
+      this.Controls.Add(this.textBoxSeminarfachthemaKurz);
+      this.Controls.Add(this.textBoxSeminarfachthemaLang);
+      this.Controls.Add(this.label5);
+      this.Controls.Add(this.label4);
+      this.Controls.Add(this.numericUpDownSeminarfach);
+      this.Controls.Add(this.label3);
+      this.Controls.Add(this.label2);
+      this.Controls.Add(this.listBoxFpA);
+      this.Controls.Add(this.label1);
       this.Controls.Add(this.adresseLabel);
       this.Controls.Add(this.textBoxAdresse);
       this.Controls.Add(this.klasseTextBox);
@@ -460,6 +599,7 @@
       this.Name = "Notenbogen";
       this.Text = "Notenbogen";
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeminarfach)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -500,5 +640,17 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn APmuendl;
     private System.Windows.Forms.DataGridViewTextBoxColumn APGesamt;
     private System.Windows.Forms.DataGridViewTextBoxColumn Endnote;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.ListBox listBoxFpA;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.NumericUpDown numericUpDownSeminarfach;
+    private System.Windows.Forms.Label label4;
+    private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.TextBox textBoxSeminarfachthemaLang;
+    private System.Windows.Forms.TextBox textBoxSeminarfachthemaKurz;
+    private System.Windows.Forms.Button buttonSpeichern;
+    private System.Windows.Forms.Button btnSchliessen;
+    private System.Windows.Forms.TextBox textBoxFpABemerkung;
   }
 }

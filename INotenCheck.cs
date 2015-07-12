@@ -133,6 +133,118 @@ namespace diNo
   }
 
   /// <summary>
+  /// Prüft, ob die fachpraktische Ausbildung mit Erfolg durchlaufen wurde.
+  /// </summary>
+  public class FpABestandenChecker: AbstractNotenCheck
+  {
+    /// <summary>
+    /// Konstruktor.
+    /// </summary>
+    public FpABestandenChecker(): base("FpA bestanden")
+    {
+    }
+
+    /// <summary>
+    /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
+    /// </summary>
+    /// <param name="jahrgangsstufe">Die Jahrgangsstufe.</param>
+    /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>true wenn check nötig.</returns>
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason)
+    {
+      return jahrgangsstufe == Jahrgangsstufe.Elf && schulart == Schulart.FOS;
+    }
+
+    /// <summary>
+    /// Führt den Check durch.
+    /// </summary>
+    /// <param name="schueler">Der Schüler.</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
+    public override string[] Check(diNoDataSet.SchuelerRow schueler, CheckReason reason)
+    {
+      FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
+      var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
+      if (fpANoten.Count == 0)
+      {
+        return new string[] { "Es liegt keine FpA-Note vor." };
+      }
+      else
+      {
+        var note = fpANoten[0].Note;
+        if (note == 3)
+        {
+          return new string[] { "Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen." };
+        }
+        else
+        {
+          // alles OK
+          return new string[0];
+        }
+      }
+    }
+  }
+
+  /// <summary>
+  /// Prüft, ob eine Seminarfachnote vorhanden ist und ein Thema eingetragen wurde.
+  /// </summary>
+  public class SeminarfachChecker: AbstractNotenCheck
+  {
+    /// <summary>
+    /// Konstruktor.
+    /// </summary>
+    public SeminarfachChecker(): base("Seminarfachnote und -thema liegen vor und sind ausreichend")
+    { }
+
+    /// <summary>
+    /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
+    /// </summary>
+    /// <param name="jahrgangsstufe">Die Jahrgangsstufe.</param>
+    /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>true wenn check nötig.</returns>
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason)
+    {
+      return jahrgangsstufe == Jahrgangsstufe.Dreizehn;
+    }
+
+    /// <summary>
+    /// Führt den Check durch.
+    /// </summary>
+    /// <param name="schueler">Der Schüler.</param>
+    /// <param name="reason">Die Art der Prüfung.</param>
+    /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
+    public override string[] Check(diNoDataSet.SchuelerRow schueler, CheckReason reason)
+    {
+      SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
+      var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
+      if (seminarfachnoten.Count == 0)
+      {
+        return new string[] { "Es liegt keine Seminarfachnote vor." };
+      }
+      else
+      {
+        var note = seminarfachnoten[0].Gesamtnote;
+        var thema = seminarfachnoten[0].ThemaLang;
+
+        IList<string> fehler = new List<string>();
+        if (note < 4)
+        {
+          fehler.Add("Im Seminarfach wurden "+note+" Punkte erzielt.");
+        }
+
+        if (string.IsNullOrEmpty(thema))
+        {
+          fehler.Add("Es liegt kein Seminarfachthema vor.");
+        }
+
+        return fehler.ToArray();
+      }
+    }
+  }
+
+  /// <summary>
   /// Prüft die Anzahl der Noten
   /// </summary>
   public class NotenanzahlChecker : AbstractNotenCheck

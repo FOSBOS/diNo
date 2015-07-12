@@ -191,9 +191,6 @@ namespace diNo
       new Notenbogen(7794).Show();
     }
 
-
-
-
     /// <summary>
     /// Führt alle Notenprüfungen durch.
     /// </summary>

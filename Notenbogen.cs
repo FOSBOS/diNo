@@ -8,6 +8,8 @@ namespace diNo
 {
   public partial class Notenbogen : Form
   {
+    private diNo.diNoDataSet.SchuelerRow schueler = null;
+
     /// <summary>
     /// Konstruktor.
     /// </summary>
@@ -20,7 +22,7 @@ namespace diNo
       var schuelerRows = schuelerAdapter.GetDataById(schuelerId);
       if (schuelerRows.Count == 1)
       {
-        var schueler = schuelerRows[0];
+        schueler = schuelerRows[0];
         nameTextBox.Text = schueler.Name + ", " + schueler.Rufname;
 
         KlasseTableAdapter klasseAdapter = new KlasseTableAdapter();
@@ -74,6 +76,29 @@ namespace diNo
           InsertSingleNote(24, lineCount, noten, Notentyp.APGesamt, Halbjahr.Ohne, true);
           InsertSingleNote(25, lineCount, noten, Notentyp.Abschlusszeugnis, Halbjahr.Ohne, false);
           lineCount = lineCount + 2;
+        }
+
+        if (schueler.Jahrgangsstufe == "11")
+        {
+          FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
+          var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
+          if (fpANoten.Count == 1)
+          {
+            textBoxFpABemerkung.Text = fpANoten[0].Bemerkung;
+            listBoxFpA.SelectedIndex = fpANoten[0].Note;
+          }
+        }
+
+        if (schueler.Jahrgangsstufe == "13")
+        {
+          SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
+          var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
+          if (seminarfachnoten.Count == 1)
+          {
+            numericUpDownSeminarfach.Value = seminarfachnoten[0].Gesamtnote;
+            textBoxSeminarfachthemaKurz.Text = seminarfachnoten[0].ThemaKurz;
+            textBoxSeminarfachthemaLang.Text = seminarfachnoten[0].ThemaLang;
+          }
         }
       }
     }
@@ -150,6 +175,42 @@ namespace diNo
         dataGridNoten.Rows[startRow].Cells[startCol].Value = (int)note.Punktwert;
         startCol++;
       }
+    }
+
+    private void buttonSpeichern_Click(object sender, EventArgs e)
+    {
+      if (schueler != null && schueler.Jahrgangsstufe == "11")
+      {
+        FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
+        var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
+        if (fpANoten.Count == 1)
+        {
+          fpAAdapter.Update(listBoxFpA.SelectedIndex, textBoxFpABemerkung.Text, schueler.Id);
+        }
+        else
+        {
+          fpAAdapter.Insert(schueler.Id, listBoxFpA.SelectedIndex, textBoxFpABemerkung.Text);
+        }
+      }
+
+      if (schueler != null && schueler.Jahrgangsstufe == "13")
+      {
+        SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
+        var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
+        if (seminarfachnoten.Count == 1)
+        {
+          seminarfachAdapter.Update((int)numericUpDownSeminarfach.Value, textBoxSeminarfachthemaLang.Text, textBoxSeminarfachthemaKurz.Text, schueler.Id);
+        }
+        else
+        {
+          seminarfachAdapter.Insert(schueler.Id, (int)numericUpDownSeminarfach.Value, textBoxSeminarfachthemaLang.Text, textBoxSeminarfachthemaKurz.Text);
+        }
+      }
+    }
+
+    private void btnSchliessen_Click(object sender, EventArgs e)
+    {
+      this.Close();
     }
   }
 }
