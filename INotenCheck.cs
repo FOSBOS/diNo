@@ -284,6 +284,13 @@ namespace diNo
         var fach = new FachTableAdapter().GetDataById(kurs.FachId)[0];
         var klasse = new KlasseTableAdapter().GetDataById(schueler.KlasseId)[0];
         var noten = new NoteTableAdapter().GetDataBySchuelerAndKurs(schueler.Id, kurs.Id);
+
+        // TODO: Nur für Test am Jahresende, da in manchen Fächern keine Datei vorlag
+        if (noten.Count == 0)
+        {
+          continue;
+        }
+
         Schulaufgabenwertung wertung = Faecherkanon.GetSchulaufgabenwertung(fach.Kuerzel, klasse.Bezeichnung);
 
         int noetigeAnzahlSchulaufgaben = GetAnzahlSchulaufgaben(wertung);
@@ -400,6 +407,12 @@ namespace diNo
         var fach = new FachTableAdapter().GetDataById(kurs.FachId)[0];
         var klasse = new KlasseTableAdapter().GetDataById(schueler.KlasseId)[0];
         var noten = new NoteTableAdapter().GetDataBySchuelerAndKurs(schueler.Id, kurs.Id);
+
+        // TODO: Nur für Test am Jahresende, da in manchen Fächern keine Datei vorlag
+        if (noten.Count == 0)
+        {
+          continue;
+        }
 
         diNo.diNoDataSet.NoteRow relevanteNote = null;
         if (reason == CheckReason.ProbezeitBOS || reason == CheckReason.HalbjahrUndProbezeitFOS)

@@ -74,7 +74,7 @@
             this.columnHeader1});
       this.listViewChecks.Location = new System.Drawing.Point(17, 65);
       this.listViewChecks.Name = "listViewChecks";
-      this.listViewChecks.Size = new System.Drawing.Size(807, 393);
+      this.listViewChecks.Size = new System.Drawing.Size(759, 1006);
       this.listViewChecks.TabIndex = 4;
       this.listViewChecks.UseCompatibleStateImageBehavior = false;
       this.listViewChecks.View = System.Windows.Forms.View.List;

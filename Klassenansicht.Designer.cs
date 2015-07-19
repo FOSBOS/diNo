@@ -79,14 +79,15 @@
       this.fkSchuelerToKursBindingSource = new System.Windows.Forms.BindingSource(this.components);
       this.schuelerKursTableAdapter = new diNo.diNoDataSetTableAdapters.SchuelerKursTableAdapter();
       this.dataGridView3 = new System.Windows.Forms.DataGridView();
-      this.noteBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.noteTableAdapter = new diNo.diNoDataSetTableAdapters.NoteTableAdapter();
       this.idDataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.notenartDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.punktwertDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.datumDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.zelleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.halbjahrDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.noteBindingSource = new System.Windows.Forms.BindingSource(this.components);
+      this.noteTableAdapter = new diNo.diNoDataSetTableAdapters.NoteTableAdapter();
+      this.btnNotenbogenZeigen = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.klasseBindingSource)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.diNoDataSet)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.fKSchuelerToKlasseBindingSource)).BeginInit();
@@ -454,15 +455,6 @@
       this.dataGridView3.Size = new System.Drawing.Size(902, 150);
       this.dataGridView3.TabIndex = 3;
       // 
-      // noteBindingSource
-      // 
-      this.noteBindingSource.DataMember = "Note";
-      this.noteBindingSource.DataSource = this.diNoDataSet;
-      // 
-      // noteTableAdapter
-      // 
-      this.noteTableAdapter.ClearBeforeFill = true;
-      // 
       // idDataGridViewTextBoxColumn2
       // 
       this.idDataGridViewTextBoxColumn2.DataPropertyName = "Id";
@@ -500,11 +492,31 @@
       this.halbjahrDataGridViewTextBoxColumn.HeaderText = "Halbjahr";
       this.halbjahrDataGridViewTextBoxColumn.Name = "halbjahrDataGridViewTextBoxColumn";
       // 
+      // noteBindingSource
+      // 
+      this.noteBindingSource.DataMember = "Note";
+      this.noteBindingSource.DataSource = this.diNoDataSet;
+      // 
+      // noteTableAdapter
+      // 
+      this.noteTableAdapter.ClearBeforeFill = true;
+      // 
+      // btnNotenbogenZeigen
+      // 
+      this.btnNotenbogenZeigen.Location = new System.Drawing.Point(29, 471);
+      this.btnNotenbogenZeigen.Name = "btnNotenbogenZeigen";
+      this.btnNotenbogenZeigen.Size = new System.Drawing.Size(135, 23);
+      this.btnNotenbogenZeigen.TabIndex = 4;
+      this.btnNotenbogenZeigen.Text = "Notenbogen anzeigen";
+      this.btnNotenbogenZeigen.UseVisualStyleBackColor = true;
+      this.btnNotenbogenZeigen.Click += new System.EventHandler(this.btnNotenbogenZeigen_Click);
+      // 
       // Klassenansicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(943, 537);
+      this.Controls.Add(this.btnNotenbogenZeigen);
       this.Controls.Add(this.dataGridView3);
       this.Controls.Add(this.dataGridView2);
       this.Controls.Add(this.dataGridView1);
@@ -585,5 +597,6 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn datumDataGridViewTextBoxColumn;
     private System.Windows.Forms.DataGridViewTextBoxColumn zelleDataGridViewTextBoxColumn;
     private System.Windows.Forms.DataGridViewTextBoxColumn halbjahrDataGridViewTextBoxColumn;
+    private System.Windows.Forms.Button btnNotenbogenZeigen;
   }
 }

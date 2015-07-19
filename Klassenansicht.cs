@@ -76,5 +76,14 @@ namespace diNo
 
       this.noteBindingSource.DataSource = noten;
     }
+
+    private void btnNotenbogenZeigen_Click(object sender, EventArgs e)
+    {
+      var schueler = (fKSchuelerToKlasseBindingSource.Current as DataRowView).Row as diNoDataSet.SchuelerRow;
+      if (schueler != null)
+      {
+        new Notenbogen(schueler.Id).Show();
+      }
+    }
   }
 }

@@ -184,13 +184,6 @@ namespace diNo
       new Klassenansicht().Show();
     }
 
-    private void button2_Click(object sender, EventArgs e)
-    {
-      // TODO: Schüler auswählen
-      new Notenbogen(8351).Show();
-      new Notenbogen(7794).Show();
-    }
-
     /// <summary>
     /// Führt alle Notenprüfungen durch.
     /// </summary>
@@ -200,7 +193,6 @@ namespace diNo
     {
       //TODO: Auswahl, welche Prüfungen überhaupt durchgeführt werden sollen (CheckReason wählen)
       //TODO: einfach alle Klasse(n) prüfen oder sinnvolle Auswahl
-      List<string> meldungen = new List<string>();
       List<INotenCheck> alleNotenchecks = new List<INotenCheck>();
       alleNotenchecks.Add(new FachreferatChecker());
       alleNotenchecks.Add(new NotenanzahlChecker());
@@ -210,9 +202,11 @@ namespace diNo
       int[] klassenIDs = new[] { 15, 20, 34 };
       foreach (int klassenId in klassenIDs)
       {
+        List<string> meldungen = new List<string>();
         var dieSchueler = new SchuelerTableAdapter().GetDataByKlasse(klassenId);
         foreach (var schueler in dieSchueler)
         {
+          bool schuelerAdded = false;
           foreach (INotenCheck check in alleNotenchecks)
           {
             // TODO: Schulart usw. ermitteln. Für Test nur elfte Klassen.
@@ -221,7 +215,12 @@ namespace diNo
               var probleme = check.Check(schueler, CheckReason.Jahresende);
               if (probleme.Count() > 0)
               {
-                meldungen.Add("Schüler: " + schueler.Vorname + " " + schueler.Name);
+                if (!schuelerAdded)
+                {
+                  meldungen.Add("Schüler: " + schueler.Vorname + " " + schueler.Name);
+                  schuelerAdded = true;
+                }
+
                 meldungen.AddRange(probleme);
               }
             }
@@ -229,7 +228,8 @@ namespace diNo
         }
 
         UserControlChecks printControl = new UserControlChecks();
-        // TODO: Das geht hier natürlich noch etwas schicker
+        printControl.Show();
+        // TODO: Das geht hier natürlich noch wesentlich schicker
         printControl.Print(klassenId+ "", meldungen.ToArray());
       }
     }
