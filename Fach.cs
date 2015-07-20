@@ -50,40 +50,79 @@ namespace diNo
 		{
       using (SchulaufgabenfachTableAdapter ada = new SchulaufgabenfachTableAdapter())
       {
+        int schulaufgabenzahl = 0;
+
         var wertung = ada.GetDataByAllInfos(schulart.ToString(), jahrgang.ToString(), zweig.ToString(), fach.Id);
         if (wertung.Count > 0)
         {
-          return (Schulaufgabenwertung)wertung[0].Wertung;
+          schulaufgabenzahl = wertung[0].AnzahlSA;
         }
 
         wertung = ada.GetDataByAllInfos("ALLE", jahrgang.ToString(), zweig.ToString(), fach.Id);
         if (wertung.Count > 0)
         {
-          return (Schulaufgabenwertung)wertung[0].Wertung;
+          schulaufgabenzahl = wertung[0].AnzahlSA;
         }
 
         wertung = ada.GetDataByAllInfos("ALLE", jahrgang.ToString(), "ALLE", fach.Id);
         if (wertung.Count > 0)
         {
-          return (Schulaufgabenwertung)wertung[0].Wertung;
+          schulaufgabenzahl = wertung[0].AnzahlSA;
         }
 
         wertung = ada.GetDataByAllInfos("ALLE", "ALLE", zweig.ToString(), fach.Id);
         if (wertung.Count > 0)
         {
-          return (Schulaufgabenwertung)wertung[0].Wertung;
+          schulaufgabenzahl = wertung[0].AnzahlSA;
         }
 
         wertung = ada.GetDataByAllInfos("ALLE", "ALLE", "ALLE", fach.Id);
         if (wertung.Count > 0)
         {
-          return (Schulaufgabenwertung)wertung[0].Wertung;
+          schulaufgabenzahl = wertung[0].AnzahlSA;
         }
 
-        log.InfoFormat("keine Schulaufgabenwertung gefunden für: Schulart={0}, Jahrgang={1}, Zweig={2}, Fach={3}. Gehe von Kurzarbeiten und Exen aus.", schulart.ToString(), jahrgang.ToString(), zweig.ToString(), fach.Kuerzel);
-        return Schulaufgabenwertung.KurzarbeitenUndExen;
+        if (schulaufgabenzahl == 1 || schulaufgabenzahl == 2)
+        {
+          return Schulaufgabenwertung.EinsZuEins;
+        }
+        else if (schulaufgabenzahl > 2)
+        {
+          return Schulaufgabenwertung.ZweiZuEins;
+        }
+        else
+        {
+          log.InfoFormat("keine Schulaufgabenwertung gefunden für: Schulart={0}, Jahrgang={1}, Zweig={2}, Fach={3}. Gehe von Kurzarbeiten und Exen aus.", schulart.ToString(), jahrgang.ToString(), zweig.ToString(), fach.Kuerzel);
+          return Schulaufgabenwertung.KurzarbeitenUndExen;
+        }
       }
 		}
+
+    public static Zweig GetZweig(string zweig)
+    {
+      switch (zweig)
+      {
+        case "S": return Zweig.Sozial;
+        case "T": return Zweig.Technik;
+        case "WVR":
+        case "W":
+          return Zweig.Wirtschaft;
+        case "V": return Zweig.None; //Vorklasse FOS ohne Zweigzuordnung
+        default: throw new InvalidOperationException("unbekannter Zweig " + zweig);
+      }
+    }
+
+    public static Jahrgangsstufe GetJahrgangsstufe(string jahrgangsstufe)
+    {
+      switch (jahrgangsstufe)
+      {
+        case "10": return Jahrgangsstufe.Vorklasse; // FOS Vorklasse
+        case "11": return Jahrgangsstufe.Elf;
+        case "12": return Jahrgangsstufe.Zwoelf;
+        case "13": return Jahrgangsstufe.Dreizehn;
+        default: throw new InvalidOperationException("unbekannte Jahrgangsstufe " + jahrgangsstufe);
+      }
+    }
 
     public static string GetSchulartString(Schulart schulart)
     {
@@ -108,21 +147,6 @@ namespace diNo
         case Zweig.Agrar: return "A";
         case Zweig.ALLE: return "ALLE";
         default: throw new InvalidOperationException("Unbekannter Zweig : " + zweig);
-      }
-    }
-
-    public static string GetJahrgangString(Jahrgangsstufe jahrgang)
-    {
-      switch (jahrgang)
-      {
-        case Jahrgangsstufe.None: return "None";
-        case Jahrgangsstufe.Vorklasse: return "Vorklasse";
-        case Jahrgangsstufe.Zehn: return "10";
-        case Jahrgangsstufe.Elf: return "11";
-        case Jahrgangsstufe.Zwoelf: return "12";
-        case Jahrgangsstufe.Dreizehn: return "13";
-        case Jahrgangsstufe.ALLE: return "ALLE";
-        default: throw new InvalidOperationException("Unbekannte Jahrgangsstufe : " + jahrgang);
       }
     }
 

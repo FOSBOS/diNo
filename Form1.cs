@@ -123,7 +123,7 @@ namespace diNo
             if (wertung == Schulaufgabenwertung.NotSet)
             {
               Schulart schulart = dbSchueler.KlasseWinSV.StartsWith("B") ? Schulart.BOS : Schulart.FOS;
-              wertung = Faecherkanon.GetSchulaufgabenwertung(fach, GetJahrgangsstufe(dbSchueler.Jahrgangsstufe), GetZweig(dbSchueler.Ausbildungsrichtung), schulart);
+              wertung = Faecherkanon.GetSchulaufgabenwertung(fach, Faecherkanon.GetJahrgangsstufe(dbSchueler.Jahrgangsstufe), Faecherkanon.GetZweig(dbSchueler.Ausbildungsrichtung), schulart);
             }
 
             if (!klassen.Contains(dbSchueler.KlasseWinSV))
@@ -137,32 +137,6 @@ namespace diNo
           // Trage die Sachen in eine leere Excel-Datei
           ExcelSheet.WriteExcelFile(wertung, fach.Bezeichnung, lehrer.Kuerzel, "2015 / 2016", klassenString, dieSchueler, fileName, kurs.Id);
         }
-      }
-    }
-
-    private Zweig GetZweig(string zweig)
-    {
-      switch (zweig)
-      {
-        case "S": return Zweig.Sozial;
-        case "T": return Zweig.Technik;
-        case "WVR":
-        case "W":
-          return Zweig.Wirtschaft;
-        case "V": return Zweig.None; //Vorklasse FOS ohne Zweigzuordnung
-        default: throw new InvalidOperationException("unbekannter Zweig " + zweig);
-      }
-    }
-
-    private Jahrgangsstufe GetJahrgangsstufe (string jahrgangsstufe)
-    {
-      switch (jahrgangsstufe)
-      {
-        case "10": return Jahrgangsstufe.Zehn; // FOS Vorklasse
-        case "11": return Jahrgangsstufe.Elf; 
-        case "12": return Jahrgangsstufe.Zwoelf;
-        case "13": return Jahrgangsstufe.Dreizehn;
-        default: throw new InvalidOperationException("unbekannte Jahrgangsstufe "+jahrgangsstufe);
       }
     }
 
@@ -184,6 +158,21 @@ namespace diNo
       new Klassenansicht().Show();
     }
 
+    private CheckReason GetCheckReason()
+    {
+      string reason = (string)comboBoxCheckReason.SelectedValue;
+      switch (reason)
+      {
+        case "Probezeit BOS": return CheckReason.ProbezeitBOS;
+        case "Halbjahr": return CheckReason.HalbjahrUndProbezeitFOS;
+        case "1. PA": return CheckReason.ErstePA;
+        case "2. PA": return CheckReason.ZweitePA;
+        case "3. PA": return CheckReason.DrittePA;
+        case "Jahresende": return CheckReason.Jahresende;
+        default: return CheckReason.None;
+      }
+    }
+
     /// <summary>
     /// Führt alle Notenprüfungen durch.
     /// </summary>
@@ -191,8 +180,10 @@ namespace diNo
     /// <param name="e"></param>
     private void button3_Click(object sender, EventArgs e)
     {
-      //TODO: Auswahl, welche Prüfungen überhaupt durchgeführt werden sollen (CheckReason wählen)
-      //TODO: einfach alle Klasse(n) prüfen oder sinnvolle Auswahl
+      CheckReason checkReason = GetCheckReason();
+
+      //TODO: Festlegen, welche Prüfungen überhaupt durchgeführt werden müssen anhand CheckReason
+      //TODO: einfach alle Klasse(n) prüfen oder sinnvolle Auswahl anhand CheckReason
       List<INotenCheck> alleNotenchecks = new List<INotenCheck>();
       alleNotenchecks.Add(new FachreferatChecker());
       alleNotenchecks.Add(new NotenanzahlChecker());
@@ -210,9 +201,9 @@ namespace diNo
           foreach (INotenCheck check in alleNotenchecks)
           {
             // TODO: Schulart usw. ermitteln. Für Test nur elfte Klassen.
-            if (check.CheckIsNecessary(GetJahrgangsstufe(schueler.Jahrgangsstufe), Schulart.FOS, CheckReason.Jahresende))
+            if (check.CheckIsNecessary(Faecherkanon.GetJahrgangsstufe(schueler.Jahrgangsstufe), Schulart.FOS, CheckReason.Jahresende))
             {
-              var probleme = check.Check(schueler, CheckReason.Jahresende);
+              var probleme = check.Check(schueler, checkReason);
               if (probleme.Count() > 0)
               {
                 if (!schuelerAdded)
@@ -231,6 +222,57 @@ namespace diNo
         printControl.Show();
         // TODO: Das geht hier natürlich noch wesentlich schicker
         printControl.Print(klassenId+ "", meldungen.ToArray());
+      }
+    }
+
+    private bool IsCalculatedNote(Notentyp typ)
+    {
+      var array = new[] { Notentyp.Jahresfortgang, Notentyp.JahresfortgangMitNKS, Notentyp.Schnittmuendlich, Notentyp.SchnittSA };
+      return array.Contains(typ);
+    }
+
+    private bool IsPruefungsnote (Notentyp typ)
+    {
+      var array = new[] { Notentyp.Abschlusszeugnis, Notentyp.APGesamt, Notentyp.APMuendlich, Notentyp.APSchriftlich, Notentyp.EndnoteMitNKS };
+      return array.Contains(typ);
+    }
+
+    private void btnFixstand_Click(object sender, EventArgs e)
+    {
+      //TODO: method unchecked
+      CheckReason reason = GetCheckReason();
+      var noteAdapter = new NoteTableAdapter();
+      var fixNoteAdapter = new NoteFixStandTableAdapter();
+      var alleNotenDerSchule = noteAdapter.GetData();
+      if (reason == CheckReason.ProbezeitBOS || reason == CheckReason.HalbjahrUndProbezeitFOS)
+      {
+        foreach (var note in alleNotenDerSchule)
+        {
+          if (((Halbjahr)note.Halbjahr == Halbjahr.Erstes) && IsCalculatedNote((Notentyp)note.Notenart) )
+          {
+            fixNoteAdapter.Insert(note.Notenart, note.Punktwert, DateTime.Now, note.SchuelerId, note.KursId);
+          }
+        }
+      }
+      else if (reason == CheckReason.ErstePA || reason == CheckReason.Jahresende)
+      {
+        foreach (var note in alleNotenDerSchule)
+        {
+          if (((Halbjahr)note.Halbjahr == Halbjahr.Zweites) && IsCalculatedNote((Notentyp)note.Notenart))
+          {
+            fixNoteAdapter.Insert(note.Notenart, note.Punktwert, DateTime.Now, note.SchuelerId, note.KursId);
+          }
+        }
+      }
+      else if (reason == CheckReason.ZweitePA || reason == CheckReason.DrittePA)
+      {
+        foreach (var note in alleNotenDerSchule)
+        {
+          if (IsPruefungsnote((Notentyp)note.Notenart))
+          {
+            fixNoteAdapter.Insert(note.Notenart, note.Punktwert, DateTime.Now, note.SchuelerId, note.KursId);
+          }
+        }
       }
     }
 	}

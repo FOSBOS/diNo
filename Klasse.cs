@@ -9,7 +9,7 @@ namespace diNo
 		Elf = 2,
 		Zwoelf = 3,
 		Dreizehn = 4,
-    Zehn = 5,
+    Vorkurs = 5,
     ALLE = 15
 	}
 

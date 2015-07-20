@@ -35,6 +35,8 @@
       this.btnImportSchueler = new System.Windows.Forms.Button();
       this.button1 = new System.Windows.Forms.Button();
       this.button3 = new System.Windows.Forms.Button();
+      this.btnFixstand = new System.Windows.Forms.Button();
+      this.comboBoxCheckReason = new System.Windows.Forms.ComboBox();
       this.SuspendLayout();
       // 
       // btnReadLehrer
@@ -99,7 +101,7 @@
       // 
       // button3
       // 
-      this.button3.Location = new System.Drawing.Point(209, 70);
+      this.button3.Location = new System.Drawing.Point(227, 169);
       this.button3.Name = "button3";
       this.button3.Size = new System.Drawing.Size(96, 23);
       this.button3.TabIndex = 8;
@@ -107,11 +109,37 @@
       this.button3.UseVisualStyleBackColor = true;
       this.button3.Click += new System.EventHandler(this.button3_Click);
       // 
+      // btnFixstand
+      // 
+      this.btnFixstand.Location = new System.Drawing.Point(227, 198);
+      this.btnFixstand.Name = "btnFixstand";
+      this.btnFixstand.Size = new System.Drawing.Size(96, 38);
+      this.btnFixstand.TabIndex = 9;
+      this.btnFixstand.Text = "Fixstand speichern";
+      this.btnFixstand.UseVisualStyleBackColor = true;
+      this.btnFixstand.Click += new System.EventHandler(this.btnFixstand_Click);
+      // 
+      // comboBoxCheckReason
+      // 
+      this.comboBoxCheckReason.FormattingEnabled = true;
+      this.comboBoxCheckReason.Items.AddRange(new object[] {
+            "Probezeit BOS",
+            "Halbjahr",
+            "1. PA",
+            "2. PA",
+            "Jahresende"});
+      this.comboBoxCheckReason.Location = new System.Drawing.Point(100, 171);
+      this.comboBoxCheckReason.Name = "comboBoxCheckReason";
+      this.comboBoxCheckReason.Size = new System.Drawing.Size(121, 21);
+      this.comboBoxCheckReason.TabIndex = 10;
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(726, 262);
+      this.Controls.Add(this.comboBoxCheckReason);
+      this.Controls.Add(this.btnFixstand);
       this.Controls.Add(this.button3);
       this.Controls.Add(this.button1);
       this.Controls.Add(this.btnImportSchueler);
@@ -134,6 +162,8 @@
     private System.Windows.Forms.Button btnImportSchueler;
     private System.Windows.Forms.Button button1;
     private System.Windows.Forms.Button button3;
+    private System.Windows.Forms.Button btnFixstand;
+    private System.Windows.Forms.ComboBox comboBoxCheckReason;
 	}
 }
 
