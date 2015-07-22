@@ -37,6 +37,8 @@
       this.button3 = new System.Windows.Forms.Button();
       this.btnFixstand = new System.Windows.Forms.Button();
       this.comboBoxCheckReason = new System.Windows.Forms.ComboBox();
+      this.label1 = new System.Windows.Forms.Label();
+      this.textBoxStatusMessage = new System.Windows.Forms.TextBox();
       this.SuspendLayout();
       // 
       // btnReadLehrer
@@ -133,11 +135,36 @@
       this.comboBoxCheckReason.Size = new System.Drawing.Size(121, 21);
       this.comboBoxCheckReason.TabIndex = 10;
       // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(12, 254);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(37, 13);
+      this.label1.TabIndex = 11;
+      this.label1.Text = "Status";
+      // 
+      // textBoxStatusMessage
+      // 
+      this.textBoxStatusMessage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+      this.textBoxStatusMessage.BackColor = System.Drawing.SystemColors.Control;
+      this.textBoxStatusMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+      this.textBoxStatusMessage.CausesValidation = false;
+      this.textBoxStatusMessage.Enabled = false;
+      this.textBoxStatusMessage.Location = new System.Drawing.Point(55, 251);
+      this.textBoxStatusMessage.Name = "textBoxStatusMessage";
+      this.textBoxStatusMessage.Size = new System.Drawing.Size(659, 20);
+      this.textBoxStatusMessage.TabIndex = 12;
+      this.textBoxStatusMessage.TabStop = false;
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(726, 262);
+      this.ClientSize = new System.Drawing.Size(726, 276);
+      this.Controls.Add(this.textBoxStatusMessage);
+      this.Controls.Add(this.label1);
       this.Controls.Add(this.comboBoxCheckReason);
       this.Controls.Add(this.btnFixstand);
       this.Controls.Add(this.button3);
@@ -150,6 +177,7 @@
       this.Name = "Form1";
       this.Text = "Form1";
       this.ResumeLayout(false);
+      this.PerformLayout();
 
 		}
 
@@ -164,6 +192,8 @@
     private System.Windows.Forms.Button button3;
     private System.Windows.Forms.Button btnFixstand;
     private System.Windows.Forms.ComboBox comboBoxCheckReason;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.TextBox textBoxStatusMessage;
 	}
 }
 

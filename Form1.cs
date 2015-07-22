@@ -67,8 +67,15 @@ namespace diNo
     {
       foreach (string file in Directory.GetFiles("C:\\Projects\\diNo\\Notendateien11T"))
       {
-        NotenAusExcelReader.Synchronize(file);
+        var notenReader = new NotenAusExcelReader();
+        notenReader.OnStatusChange += notenReader_OnStatusChange;
+        notenReader.Synchronize(file);
       }
+    }
+
+    void notenReader_OnStatusChange(string status)
+    {
+      this.textBoxStatusMessage.Text = status;
     }
 
     private void btnCreateExcels_Click(object sender, EventArgs e)

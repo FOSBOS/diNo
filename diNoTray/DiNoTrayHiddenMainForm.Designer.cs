@@ -1,6 +1,6 @@
 ﻿namespace diNoTray
 {
-  partial class Form1
+  partial class diNoTrayHiddenMainForm
   {
     /// <summary>
     /// Required designer variable.

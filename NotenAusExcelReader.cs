@@ -13,8 +13,13 @@ namespace diNo
     /// Synchronisiert die Excel-Datei mit der Datenbank.
     /// </summary>
     /// <param name="fileName">Der Dateiname.</param>
-    public static void Synchronize(string fileName)
+    public void Synchronize(string fileName)
     {
+      if (OnStatusChange != null)
+      {
+        OnStatusChange("synchronisiere "+fileName);
+      }
+
       using (ExcelSheet sheet = new ExcelSheet(fileName))
       {
         // erst mal schauen, ob der Kurs laut DB existiert. Todo: nächstes Jahr kursId verwenden!
@@ -25,7 +30,10 @@ namespace diNo
           kurse = kursAdapter.GetDataByBezeichnung(sheet.Fachname + " " + sheet.Kursbezeichnung);
           if (kurse.Count != 1)
           {
-            throw new InvalidOperationException("Kurs nicht oder mehrfach gefunden: " + sheet.Kursbezeichnung);
+            if (OnStatusChange != null)
+            {
+              OnStatusChange("Fehler in Datei " + fileName+": Kurs nicht oder mehrfach gefunden: " + sheet.Kursbezeichnung);
+            }
           }
         }
 
@@ -46,11 +54,24 @@ namespace diNo
             InsertNoten(kursId, noteAdapter, schueler);
           }
 
+          if (OnStatusChange != null)
+          {
+            OnStatusChange("Noten sind eingetragen. Prüfe auf Änderungen an den Schülerdaten.");
+          }
+
           var alleSchueler = CheckSchueler(sheet, kursId);
           CheckLegastheniker(sheet, kursAdapter, kurse[0], alleSchueler);
         }
       }
+
+      if (OnStatusChange != null)
+      {
+        OnStatusChange("Datei " + fileName + " erfolgreich gelesen");
+      }
     }
+
+    public delegate void StatusChange(string Status);
+    public event StatusChange OnStatusChange;
 
     private static void CheckId(Schueler schueler, int klasseId)
     {
