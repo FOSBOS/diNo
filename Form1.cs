@@ -167,7 +167,7 @@ namespace diNo
 
     private CheckReason GetCheckReason()
     {
-      string reason = (string)comboBoxCheckReason.SelectedValue;
+      string reason = (string)comboBoxCheckReason.SelectedItem;
       switch (reason)
       {
         case "Probezeit BOS": return CheckReason.ProbezeitBOS;
