@@ -1,4 +1,5 @@
 ﻿using diNo.diNoDataSetTableAdapters;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace diNo
   public partial class Notenbogen : Form
   {
     private diNo.diNoDataSet.SchuelerRow schueler = null;
+    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
     /// <summary>
     /// Konstruktor.
@@ -16,6 +18,7 @@ namespace diNo
     /// <param name="schuelerId">Die Id des anzuzeigenden Schülers.</param>
     public Notenbogen(int schuelerId)
     {
+      log.Debug("Öffne Notenbogen SchülerId=" + schuelerId);
       InitializeComponent();
 
       SchuelerTableAdapter schuelerAdapter = new SchuelerTableAdapter();

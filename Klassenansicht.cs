@@ -65,8 +65,17 @@ namespace diNo
 
     private void kursBindingSource_CurrentChanged(object sender, EventArgs e)
     {
+      if (fKSchuelerToKlasseBindingSource.Current == null || kursBindingSource.Current == null)
+      {
+        return;
+      }
+
       var schueler = (fKSchuelerToKlasseBindingSource.Current as DataRowView).Row as diNoDataSet.SchuelerRow;
-      var kurs = (kursBindingSource.Current as DataRowView).Row as diNoDataSet.KursRow;
+      var kurs = kursBindingSource.Current as diNoDataSet.KursRow;
+      if (kurs == null)
+      {
+        kurs = (kursBindingSource.Current as DataRowView).Row as diNoDataSet.KursRow;
+      }
 
       BindingList<diNoDataSet.NoteRow> noten = new BindingList<diNoDataSet.NoteRow>();
       foreach (var note in new NoteTableAdapter().GetDataByKursId(kurs.Id))
