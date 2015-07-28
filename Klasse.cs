@@ -10,7 +10,8 @@ namespace diNo
 		Zwoelf = 3,
 		Dreizehn = 4,
     Vorkurs = 5,
-    ALLE = 15
+    ALLE = 15,
+sonstiges = 99
 	}
 
 	public enum Schulart
