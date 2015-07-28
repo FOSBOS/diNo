@@ -70,6 +70,12 @@ namespace diNo
           schulaufgabenzahl = wertung[0].AnzahlSA;
         }
 
+        wertung = ada.GetDataByAllInfos(schulart.ToString(), jahrgang.ToString(), "ALLE", fach.Id);
+        if (wertung.Count > 0)
+        {
+          schulaufgabenzahl = wertung[0].AnzahlSA;
+        }
+
         wertung = ada.GetDataByAllInfos("ALLE", "ALLE", zweig.ToString(), fach.Id);
         if (wertung.Count > 0)
         {
