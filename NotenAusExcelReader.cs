@@ -17,7 +17,7 @@ namespace diNo
     {
       if (OnStatusChange != null)
       {
-        OnStatusChange("synchronisiere "+fileName);
+        OnStatusChange(this, new StatusChangedEventArgs() { Status = "synchronisiere " + fileName });
       }
 
       using (ExcelSheet sheet = new ExcelSheet(fileName))
@@ -32,7 +32,7 @@ namespace diNo
           {
             if (OnStatusChange != null)
             {
-              OnStatusChange("Fehler in Datei " + fileName+": Kurs nicht oder mehrfach gefunden: " + sheet.Kursbezeichnung);
+              OnStatusChange(this, new StatusChangedEventArgs() { Status = "Fehler in Datei " + fileName + ": Kurs nicht oder mehrfach gefunden: " + sheet.Kursbezeichnung });
             }
           }
         }
@@ -56,7 +56,7 @@ namespace diNo
 
           if (OnStatusChange != null)
           {
-            OnStatusChange("Noten sind eingetragen. Prüfe auf Änderungen an den Schülerdaten.");
+            OnStatusChange(this, new StatusChangedEventArgs() { Status = "Noten sind eingetragen. Prüfe auf Änderungen an den Schülerdaten." });
           }
 
           var alleSchueler = CheckSchueler(sheet, kursId);
@@ -66,11 +66,16 @@ namespace diNo
 
       if (OnStatusChange != null)
       {
-        OnStatusChange("Datei " + fileName + " erfolgreich gelesen");
+        OnStatusChange(this, new StatusChangedEventArgs() { Status = "Datei " + fileName + " erfolgreich gelesen" });
       }
     }
 
-    public delegate void StatusChange(string Status);
+    public class StatusChangedEventArgs : EventArgs
+    {
+      public string Status { get; set; }
+    }
+
+    public delegate void StatusChange(Object sender, StatusChangedEventArgs e);
     public event StatusChange OnStatusChange;
 
     private static void CheckId(Schueler schueler, int klasseId)

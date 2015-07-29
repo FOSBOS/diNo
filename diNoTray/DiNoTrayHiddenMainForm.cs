@@ -110,10 +110,11 @@ namespace diNoTray
     /// <summary>
     /// Event Handler für Statusmeldungen vom Notenleser.
     /// </summary>
-    /// <param name="status">Die Statusmeldung.</param>
-    void notenReader_OnStatusChange(string status)
+    /// <param name="e">Event Args mit dem neuen Status.</param>
+    /// <param name="sender">Der Sender des Events.</param>
+    void notenReader_OnStatusChange(Object sender, NotenAusExcelReader.StatusChangedEventArgs e)
     {
-      trayIcon.BalloonTipText = status;
+      trayIcon.BalloonTipText = e.Status;
       trayIcon.BalloonTipTitle = "diNo Status";
       trayIcon.ShowBalloonTip(3);
     }

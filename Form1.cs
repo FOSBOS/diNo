@@ -73,9 +73,9 @@ namespace diNo
       }
     }
 
-    void notenReader_OnStatusChange(string status)
+    void notenReader_OnStatusChange(Object sender, NotenAusExcelReader.StatusChangedEventArgs e)
     {
-      this.textBoxStatusMessage.Text = status;
+      this.textBoxStatusMessage.Text = e.Status;
     }
 
     private void btnCreateExcels_Click(object sender, EventArgs e)

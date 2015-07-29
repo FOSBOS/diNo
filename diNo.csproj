@@ -42,7 +42,6 @@
       <HintPath>log4net\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
-    <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -59,7 +58,6 @@
     <Compile Include="CellConstant.cs" />
     <Compile Include="diNoDataSet.cs">
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="diNoDataSet.Designer.cs">
       <AutoGen>True</AutoGen>

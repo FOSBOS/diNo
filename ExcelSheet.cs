@@ -138,6 +138,7 @@ namespace diNo
     /// <param name="aSchueler">Der Schüler.</param>
     public void SetLegasthenieVermerk(Schueler aSchueler)
     {
+      this.UnsavedChanges = true;
       //TODO: Methode ungetestet
       var zeile = this.Schueler.IndexOf(aSchueler);
       if (zeile < 0)
@@ -160,6 +161,9 @@ namespace diNo
       {
         WriteValue(sheet, CellConstant.LegasthenieVermerk + zeile, "");
       }
+
+      this.workbook.Save();
+      this.UnsavedChanges = false;
     }
 
     /// <summary>
@@ -168,6 +172,8 @@ namespace diNo
     /// <param name="aSchueler">Der Schüler.</param>
     public void AppendSchueler(Schueler aSchueler)
     {
+      this.UnsavedChanges = true;
+
       // TODO: Methode ungetestet
       var sheet = (from Excel.Worksheet sh in this.workbook.Worksheets where sh.Name.Equals("Notenbogen") select sh).FirstOrDefault();
       if (sheet == null)
@@ -192,6 +198,7 @@ namespace diNo
       }
 
       this.workbook.Save();
+      this.UnsavedChanges = false;
     }
 
     /// <summary>
@@ -534,6 +541,12 @@ namespace diNo
       }
     }
 
+    public bool UnsavedChanges
+    {
+      get;
+      private set;
+    }
+
     #region IDisposable Member
 
     /// <summary>
@@ -548,13 +561,13 @@ namespace diNo
     /// Disposes.
     /// </summary>
     /// <param name="disposing">If true, free native resources.</param>
-    public void Dispose(bool disposing)
+    protected virtual void Dispose(bool disposing)
     {
       if (disposing)
       {
         if (this.workbook != null)
         {
-          this.workbook.Close(true, this.FileName, Type.Missing);
+          this.workbook.Close(this.UnsavedChanges, this.FileName, Type.Missing);
           Marshal.ReleaseComObject(this.workbook);
           this.workbook = null;
         }

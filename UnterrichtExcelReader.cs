@@ -56,6 +56,11 @@ namespace diNo
           log.Debug("Unterricht Ohne Fach wird ignoriert in Zeile " + zeile);
           continue;
         }
+        if ((new string[] { "SSl", "SNT", "SWi", "FPU", "FPA", "FPB", "F-Wi", "TZ-Fö", "GK_BF", "M-Fö", "E-Fö", "Ph-Fö", "AWU", "Me", "SL", "SF" }).Contains(fach))
+        {
+          log.Debug("Ignoriere Förderunterricht, Seminarfach und diversen anderen Unfug - kein selbstständiger Unterricht");
+          continue;
+        }
         if (string.IsNullOrEmpty(klassenString))
         {
           log.Debug("Unterricht Ohne Klassen wird ignoriert in Zeile " + zeile);
