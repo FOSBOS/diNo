@@ -99,6 +99,51 @@ namespace diNo
     Zweites = 2
   }
 
+  public class BerechneteNote
+  {
+    public decimal? SchnittMuendlich
+    {
+      get;
+      set;
+    }
+
+    public decimal? SchnittSchulaufgaben
+    {
+      get;
+      set;
+    }
+
+    public byte? JahresfortgangGanzzahlig
+    {
+      get;
+      set;
+    }
+
+    public decimal? JahresfortgangMitKomma
+    {
+      get;
+      set;
+    }
+
+    public decimal? PruefungGesamt
+    {
+      get;
+      set;
+    }
+
+    public decimal? SchnittFortgangUndPruefung
+    {
+      get;
+      set;
+    }
+
+    public byte? Abschlusszeugnis
+    {
+      get;
+      set;
+    }
+  }
+
   /// <summary>
   /// Eine Note.
   /// </summary>
@@ -116,7 +161,7 @@ namespace diNo
     /// <summary>
     /// Der Punktwert der Note (0-15).
     /// </summary>
-    public decimal Punktwert
+    public byte Punktwert
     {
       get;
       set;

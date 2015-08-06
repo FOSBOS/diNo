@@ -1,27 +1,33 @@
-﻿namespace diNo {
-    
-    
-    public partial class diNoDataSet {
-      partial class KursDataTable
-      {
-      }
-    
-      partial class SchuelerDataTable
-      {
-      }
-    
-      partial class KlasseDataTable
-      {
-      }
-    
-      partial class FachDataTable
-      {
-      }
-    
-      partial class SchuelerKursDataTable
-      {
-      }
+﻿namespace diNo
+{
+
+
+  public partial class diNoDataSet
+  {
+    partial class NoteFixStandDataTable
+    {
     }
+
+    partial class KursDataTable
+    {
+    }
+
+    partial class SchuelerDataTable
+    {
+    }
+
+    partial class KlasseDataTable
+    {
+    }
+
+    partial class FachDataTable
+    {
+    }
+
+    partial class SchuelerKursDataTable
+    {
+    }
+  }
 }
 
 namespace diNo.diNoDataSetTableAdapters {

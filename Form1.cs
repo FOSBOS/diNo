@@ -249,37 +249,13 @@ namespace diNo
       //TODO: method unchecked
       CheckReason reason = GetCheckReason();
       var noteAdapter = new NoteTableAdapter();
-      var fixNoteAdapter = new NoteFixStandTableAdapter();
-      var alleNotenDerSchule = noteAdapter.GetData();
-      if (reason == CheckReason.ProbezeitBOS || reason == CheckReason.HalbjahrUndProbezeitFOS)
+      var fixNoteAdapter = new BerechneteNoteTableAdapter();
+      var alleNotenDerSchule = fixNoteAdapter.GetData();
+      foreach (var note in alleNotenDerSchule)
       {
-        foreach (var note in alleNotenDerSchule)
-        {
-          if (((Halbjahr)note.Halbjahr == Halbjahr.Erstes) && IsCalculatedNote((Notentyp)note.Notenart) )
-          {
-            fixNoteAdapter.Insert(note.Notenart, note.Punktwert, DateTime.Now, note.SchuelerId, note.KursId);
-          }
-        }
-      }
-      else if (reason == CheckReason.ErstePA || reason == CheckReason.Jahresende)
-      {
-        foreach (var note in alleNotenDerSchule)
-        {
-          if (((Halbjahr)note.Halbjahr == Halbjahr.Zweites) && IsCalculatedNote((Notentyp)note.Notenart))
-          {
-            fixNoteAdapter.Insert(note.Notenart, note.Punktwert, DateTime.Now, note.SchuelerId, note.KursId);
-          }
-        }
-      }
-      else if (reason == CheckReason.ZweitePA || reason == CheckReason.DrittePA)
-      {
-        foreach (var note in alleNotenDerSchule)
-        {
-          if (IsPruefungsnote((Notentyp)note.Notenart))
-          {
-            fixNoteAdapter.Insert(note.Notenart, note.Punktwert, DateTime.Now, note.SchuelerId, note.KursId);
-          }
-        }
+        fixNoteAdapter.Insert(note.SchnittMuendlich, note.SchnittSchulaufgaben, note.JahresfortgangMitKomma,
+          note.JahresfortgangGanzzahlig, note.PruefungGesamt, note.SchnittFortgangUndPruefung, note.Abschlusszeugnis,
+          (int)reason, true, note.SchuelerId, note.KursId, note.ErstesHalbjahr);
       }
     }
 	}

@@ -22,6 +22,14 @@ namespace diNo
     private const int geburtsdatumSpalte = 10;
     private const int geburtsortSpalte = 12;
     private const int bekenntnisSpalte = 14;
+    private const int nachnameEltern1Spalte = 15;
+    private const int vornameEltern1Spalte = 16;
+    private const int anredeEltern1Spalte = 17;
+    private const int verwandtschaftsbezeichnungEltern1Spalte = 18;
+    private const int nachnameEltern2Spalte = 20;
+    private const int vornameEltern2Spalte = 21;
+    private const int anredeEltern2Spalte = 22;
+    private const int verwandtschaftsbezeichnungEltern2Spalte = 23;
     private const int anschr1PlzSpalte = 25;
     private const int anschr1OrtSpalte = 26;
     private const int anschr1StrasseSpalte = 27;
@@ -119,7 +127,15 @@ namespace diNo
               cleanArray[beruflicheVorbildungSpalte],
               cleanArray[lrsStoerungSpalte] == "1",
               cleanArray[lrsSchwaecheSpalte] == "1",
-              ParseDate(cleanArray[lrsBisDatumSpalte])
+              ParseDate(cleanArray[lrsBisDatumSpalte]),
+              cleanArray[verwandtschaftsbezeichnungEltern1Spalte],
+              cleanArray[nachnameEltern1Spalte],
+              cleanArray[vornameEltern1Spalte],
+              cleanArray[anredeEltern1Spalte],
+              cleanArray[nachnameEltern2Spalte],
+              cleanArray[vornameEltern2Spalte],
+              cleanArray[anredeEltern2Spalte],
+              cleanArray[verwandtschaftsbezeichnungEltern2Spalte]
               );
           }
         }

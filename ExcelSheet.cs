@@ -322,10 +322,10 @@ namespace diNo
       {
         var schueler = ReadSchueler(sheet, sidsheet, i);
         //Prüfungsnoten
+        schueler.BerechneteNoten.PruefungGesamt = ReadDecimalNote(apsheet, CellConstant.APgesamtSpalte + indexAP);
+        schueler.BerechneteNoten.Abschlusszeugnis = ReadIntegerNote(apsheet, CellConstant.APZeugnisnote + indexAP);
         AddNoteToSchueler(schueler, apsheet, CellConstant.APschriftlichSpalte + indexAP, Notentyp.APSchriftlich, Halbjahr.Ohne);
         AddNoteToSchueler(schueler, apsheet, CellConstant.APmuendlichSpalte + indexAP, Notentyp.APMuendlich, Halbjahr.Ohne);
-        AddNoteToSchueler(schueler, apsheet, CellConstant.APgesamtSpalte + indexAP, Notentyp.APGesamt, Halbjahr.Ohne);
-        AddNoteToSchueler(schueler, apsheet, CellConstant.APZeugnisnote + indexAP, Notentyp.Abschlusszeugnis, Halbjahr.Ohne);
         indexAP++;
 
         if (schueler != null)
@@ -402,16 +402,16 @@ namespace diNo
       AddNoteToSchueler(schueler, sheet, CellConstant.FachreferatErstesHJ + (i + 1), Notentyp.Fachreferat, Halbjahr.Erstes);
       AddNoteToSchueler(schueler, sheet, CellConstant.FachreferatZweitesHJ + (i + 1), Notentyp.Fachreferat, Halbjahr.Zweites);
 
-      // Durchschnitten und Jahresfortgangsnoten
-      AddNoteToSchueler(schueler, sheet, CellConstant.SchnittSchulaufgabenErstesHJ + (i + 1), Notentyp.SchnittSA, Halbjahr.Erstes);
-      AddNoteToSchueler(schueler, sheet, CellConstant.SchnittMuendlicheUndExenErstesHJ + (i + 1), Notentyp.Schnittmuendlich, Halbjahr.Erstes);
-      AddNoteToSchueler(schueler, sheet, CellConstant.ZeugnisnoteErstesHJ + (i + 1), Notentyp.JahresfortgangMitNKS, Halbjahr.Erstes);
-      AddNoteToSchueler(schueler, sheet, CellConstant.ZeugnisnoteErstesHJ + (i), Notentyp.Jahresfortgang, Halbjahr.Erstes);
+      // Durchschnitte und Jahresfortgangsnoten
+      schueler.BerechneteNotenErstesHalbjahr.SchnittSchulaufgaben = ReadDecimalNote(sheet, CellConstant.SchnittSchulaufgabenErstesHJ + (i + 1));
+      schueler.BerechneteNotenErstesHalbjahr.SchnittMuendlich = ReadDecimalNote(sheet, CellConstant.SchnittMuendlicheUndExenErstesHJ + (i + 1));
+      schueler.BerechneteNotenErstesHalbjahr.JahresfortgangGanzzahlig = ReadIntegerNote(sheet, CellConstant.ZeugnisnoteErstesHJ + (i));
+      schueler.BerechneteNotenErstesHalbjahr.JahresfortgangMitKomma = ReadDecimalNote(sheet, CellConstant.ZeugnisnoteErstesHJ + (i + 1));
 
-      AddNoteToSchueler(schueler, sheet, CellConstant.SchnittSchulaufgabenZweitesHJ + (i + 1), Notentyp.SchnittSA, Halbjahr.Zweites);
-      AddNoteToSchueler(schueler, sheet, CellConstant.SchnittMuendlicheUndExenZweitesHJ + (i + 1), Notentyp.Schnittmuendlich, Halbjahr.Zweites);
-      AddNoteToSchueler(schueler, sheet, CellConstant.ZeugnisnoteZweitesHJ + (i + 1), Notentyp.JahresfortgangMitNKS, Halbjahr.Zweites);
-      AddNoteToSchueler(schueler, sheet, CellConstant.ZeugnisnoteZweitesHJ + (i), Notentyp.Jahresfortgang, Halbjahr.Zweites);
+      schueler.BerechneteNoten.SchnittSchulaufgaben = ReadDecimalNote(sheet, CellConstant.SchnittSchulaufgabenZweitesHJ + (i + 1));
+      schueler.BerechneteNoten.SchnittMuendlich = ReadDecimalNote(sheet, CellConstant.SchnittMuendlicheUndExenZweitesHJ + (i + 1));
+      schueler.BerechneteNoten.JahresfortgangGanzzahlig = ReadIntegerNote(sheet, CellConstant.ZeugnisnoteZweitesHJ + (i));
+      schueler.BerechneteNoten.JahresfortgangMitKomma = ReadDecimalNote(sheet, CellConstant.ZeugnisnoteZweitesHJ + (i + 1));
 
       return schueler;
     }
@@ -467,12 +467,23 @@ namespace diNo
     /// <param name="halbjahr">Das Halbjahr.</param>
     private static void AddNoteToSchueler(Schueler schueler, Excel.Worksheet sheet, string zelle, Notentyp notentyp, Halbjahr halbjahr)
     {
-      var stringValue = ReadValue(sheet, zelle);
-      if (!string.IsNullOrEmpty(stringValue))
+      var punkte = ReadIntegerNote(sheet, zelle);
+      if (punkte != null)
       {
-        var notenwert = Convert.ToDecimal(stringValue, CultureInfo.CurrentUICulture);
-        schueler.Noten.Add(new Note() { Punktwert = notenwert, Typ = notentyp, Zelle = zelle, Halbjahr = halbjahr });
+        schueler.Einzelnoten.Add(new Note() { Punktwert = (byte)punkte, Typ = notentyp, Zelle = zelle, Halbjahr = halbjahr });
       }
+    }
+
+    private static byte? ReadIntegerNote(Excel.Worksheet sheet, string zelle)
+    {
+      var stringValue = ReadValue(sheet, zelle);
+      return !string.IsNullOrEmpty(stringValue) ? Convert.ToByte(stringValue, CultureInfo.CurrentUICulture) : (byte?)null;
+    }
+
+    private static decimal? ReadDecimalNote(Excel.Worksheet sheet, string zelle)
+    {
+      var stringValue = ReadValue(sheet, zelle);
+      return !string.IsNullOrEmpty(stringValue) ? Convert.ToDecimal(stringValue, CultureInfo.CurrentUICulture) : (decimal?)null;
     }
 
     /// <summary>

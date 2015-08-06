@@ -37,21 +37,14 @@ namespace diNo
           }
         }
 
-        //TODO: Nur zum Test am Jahresende: Unbedingt wieder rauswerfen!
-        int klasseId = -1;
-        if (sheet.Kursbezeichnung.ToUpper().Contains("F11TA")) { klasseId = 20;}
-        if (sheet.Kursbezeichnung.ToUpper().Contains("F11TB")) { klasseId = 34;}
-        if (sheet.Kursbezeichnung.ToUpper().Contains("F11TE")) { klasseId = 15;}
-        if (sheet.Kursbezeichnung.ToUpper().Contains("B12WE")) { klasseId = 9;}
-
         int kursId = kurse[0].Id;
         using (NoteTableAdapter noteAdapter = new NoteTableAdapter())
+        using (BerechneteNoteTableAdapter berechneteNotenAdapter = new BerechneteNoteTableAdapter())
         {
-          DeleteAlteNoten(kursId, noteAdapter);
+          DeleteAlteNoten(kursId, noteAdapter, berechneteNotenAdapter);
           foreach (var schueler in sheet.Schueler)
           {
-            CheckId(schueler, klasseId);
-            InsertNoten(kursId, noteAdapter, schueler);
+            InsertNoten(kursId, noteAdapter, berechneteNotenAdapter, schueler);
           }
 
           if (OnStatusChange != null)
@@ -77,32 +70,6 @@ namespace diNo
 
     public delegate void StatusChange(Object sender, StatusChangedEventArgs e);
     public event StatusChange OnStatusChange;
-
-    private static void CheckId(Schueler schueler, int klasseId)
-    {
-      if (schueler.Id == int.MaxValue)
-      {
-        var gefunden = new SchuelerTableAdapter().GetDataByKlasseUndName(klasseId, schueler.Nachname, schueler.Vorname);
-        if (gefunden.Count <= 0)
-        {
-          var newNachname = schueler.Nachname.Replace("oe", "ö");
-          newNachname = newNachname.Replace("ae", "ä");
-          newNachname = newNachname.Replace("ue", "ü");
-          newNachname = newNachname.Replace("ss", "ß");
-          var newVorname = schueler.Vorname.Replace("oe", "ö");
-          newVorname = newVorname.Replace("ae", "ä");
-          newVorname = newVorname.Replace("ue", "ü");
-          newVorname = newVorname.Replace("ss", "ß");
-          gefunden = new SchuelerTableAdapter().GetDataByKlasseUndName(klasseId, newNachname, newVorname);
-          if (gefunden.Count <= 0)
-          {
-            throw new InvalidOperationException("Unbekannter Schüler " + schueler.Vorname + " " + schueler.Nachname);
-          }
-        }
-
-        schueler.Id = gefunden[0].Id;
-      }
-    }
 
     /// <summary>
     /// Prüft, ob die Legasthenievermerke der Datenbank mit der Excel-Datei übereinstimmen.
@@ -174,13 +141,16 @@ namespace diNo
     /// </summary>
     /// <param name="kursId">Die Id des Kurses.</param>
     /// <param name="noteAdapter">Der Notenadapter.</param>
-    private static void DeleteAlteNoten(int kursId, NoteTableAdapter noteAdapter)
+    /// <param name="berechneteNoteAdapter">Der Adapter für berechnete Noten.</param>
+    private static void DeleteAlteNoten(int kursId, NoteTableAdapter noteAdapter, BerechneteNoteTableAdapter berechneteNoteAdapter)
     {
       foreach (var note in noteAdapter.GetDataByKursId(kursId))
       {
         // lösche die Note
         noteAdapter.Delete(note.Id);
       }
+
+      berechneteNoteAdapter.Delete(kursId);
     }
 
     /// <summary>
@@ -188,15 +158,26 @@ namespace diNo
     /// </summary>
     /// <param name="kursId">Die Id des Kurses.</param>
     /// <param name="noteAdapter">Der Note-Adapter.</param>
+    /// <param name="berechneteNoteAdapter">Der Adapter für berechnete Noten.</param>
     /// <param name="schueler">Der Schüler (samt Noten dieses Kurses).</param>
-    private static void InsertNoten(int kursId, NoteTableAdapter noteAdapter, Schueler schueler)
+    private static void InsertNoten(int kursId, NoteTableAdapter noteAdapter, BerechneteNoteTableAdapter berechneteNoteAdapter, Schueler schueler)
     {
-      foreach (var note in schueler.Noten)
+      foreach (var note in schueler.Einzelnoten)
       {
         // trage alle Noten in die DB ein
-        var noteId = 0; 
+        var noteId = 0;
         noteAdapter.Insert((int)note.Typ, note.Punktwert, DateTime.Now.Date, note.Zelle, (byte)note.Halbjahr, schueler.Id, kursId, out noteId);
       }
+
+      berechneteNoteAdapter.Insert(schueler.BerechneteNotenErstesHalbjahr.SchnittMuendlich, schueler.BerechneteNotenErstesHalbjahr.SchnittSchulaufgaben,
+        schueler.BerechneteNotenErstesHalbjahr.JahresfortgangMitKomma, schueler.BerechneteNotenErstesHalbjahr.JahresfortgangGanzzahlig,
+        schueler.BerechneteNotenErstesHalbjahr.PruefungGesamt, schueler.BerechneteNotenErstesHalbjahr.SchnittFortgangUndPruefung,
+        schueler.BerechneteNotenErstesHalbjahr.Abschlusszeugnis, (int)CheckReason.None, false, schueler.Id, kursId, true);
+
+      berechneteNoteAdapter.Insert(schueler.BerechneteNoten.SchnittMuendlich, schueler.BerechneteNoten.SchnittSchulaufgaben,
+        schueler.BerechneteNoten.JahresfortgangMitKomma, schueler.BerechneteNoten.JahresfortgangGanzzahlig,
+        schueler.BerechneteNoten.PruefungGesamt, schueler.BerechneteNoten.SchnittFortgangUndPruefung,
+        schueler.BerechneteNoten.Abschlusszeugnis, (int)CheckReason.None, false, schueler.Id, kursId, false);
     }
   }
 }

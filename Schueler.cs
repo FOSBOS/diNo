@@ -18,7 +18,9 @@ namespace diNo
     /// <param name="isLegastheniker">Ob der Schüler einen Legasthenie-Vermerk hat.</param>
     public Schueler(int id, string vorname, string nachname, bool isLegastheniker)
     {
-      this.Noten = new List<Note>();
+      this.Einzelnoten = new List<Note>();
+      this.BerechneteNoten = new BerechneteNote();
+      this.BerechneteNotenErstesHalbjahr = new BerechneteNote();
       this.Id = id;
       this.Vorname = vorname;
       this.Nachname = nachname;
@@ -66,7 +68,25 @@ namespace diNo
     /// <summary>
     /// Die Noten des Schülers.
     /// </summary>
-    public IList<Note> Noten
+    public IList<Note> Einzelnoten
+    {
+      get;
+      private set;
+    }
+
+    /// <summary>
+    /// Die berechneten Noten des Schülers.
+    /// </summary>
+    public BerechneteNote BerechneteNoten
+    {
+      get;
+      private set;
+    }
+
+    /// <summary>
+    /// Die berechneten Noten des Schülers.
+    /// </summary>
+    public BerechneteNote BerechneteNotenErstesHalbjahr
     {
       get;
       private set;
