@@ -238,3 +238,6 @@ Notendateien11T
 TrueCrypt
 Zeilhofer
 test.tc
+Properties/Settings.settings
+Properties/Settings.Designer.cs
+app.config

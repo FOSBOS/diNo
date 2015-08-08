@@ -65,7 +65,7 @@ namespace diNo
 
     private void btnReadExcelFile_Click(object sender, EventArgs e)
     {
-      foreach (string file in Directory.GetFiles("C:\\Projects\\diNo\\Notendateien11T"))
+      foreach (string file in Directory.GetFiles("D:\\diNo\\Notendateien11T"))
       {
         var notenReader = new NotenAusExcelReader();
         notenReader.OnStatusChange += notenReader_OnStatusChange;
@@ -258,5 +258,10 @@ namespace diNo
           (int)reason, true, note.SchuelerId, note.KursId, note.ErstesHalbjahr);
       }
     }
-	}
+
+        private void btnReport_Click(object sender, EventArgs e)
+        {
+            new ReportForm().Show();
+        }
+    }
 }
