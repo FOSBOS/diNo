@@ -7558,11 +7558,11 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public decimal SchnittMuendlich {
                 get {
-                    try {
-                        return ((decimal)(this[this.tableBerechneteNote.SchnittMuendlichColumn]));
+                    if (this.IsSchnittMuendlichNull()) {
+                        return 0m;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SchnittMuendlich\' in table \'BerechneteNote\' is DBNull.", e);
+                    else {
+                        return ((decimal)(this[this.tableBerechneteNote.SchnittMuendlichColumn]));
                     }
                 }
                 set {
@@ -7574,11 +7574,11 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public decimal SchnittSchulaufgaben {
                 get {
-                    try {
-                        return ((decimal)(this[this.tableBerechneteNote.SchnittSchulaufgabenColumn]));
+                    if (this.IsSchnittSchulaufgabenNull()) {
+                        return 0m;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SchnittSchulaufgaben\' in table \'BerechneteNote\' is DBNull.", e);
+                    else {
+                        return ((decimal)(this[this.tableBerechneteNote.SchnittSchulaufgabenColumn]));
                     }
                 }
                 set {
@@ -7590,12 +7590,11 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public decimal JahresfortgangMitKomma {
                 get {
-                    try {
-                        return ((decimal)(this[this.tableBerechneteNote.JahresfortgangMitKommaColumn]));
+                    if (this.IsJahresfortgangMitKommaNull()) {
+                        return 0m;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'JahresfortgangMitKomma\' in table \'BerechneteNote\' is DBNull" +
-                                ".", e);
+                    else {
+                        return ((decimal)(this[this.tableBerechneteNote.JahresfortgangMitKommaColumn]));
                     }
                 }
                 set {
@@ -7607,12 +7606,11 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public byte JahresfortgangGanzzahlig {
                 get {
-                    try {
-                        return ((byte)(this[this.tableBerechneteNote.JahresfortgangGanzzahligColumn]));
+                    if (this.IsJahresfortgangGanzzahligNull()) {
+                        return 0;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'JahresfortgangGanzzahlig\' in table \'BerechneteNote\' is DBNu" +
-                                "ll.", e);
+                    else {
+                        return ((byte)(this[this.tableBerechneteNote.JahresfortgangGanzzahligColumn]));
                     }
                 }
                 set {
@@ -7624,11 +7622,11 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public decimal PruefungGesamt {
                 get {
-                    try {
-                        return ((decimal)(this[this.tableBerechneteNote.PruefungGesamtColumn]));
+                    if (this.IsPruefungGesamtNull()) {
+                        return 0m;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PruefungGesamt\' in table \'BerechneteNote\' is DBNull.", e);
+                    else {
+                        return ((decimal)(this[this.tableBerechneteNote.PruefungGesamtColumn]));
                     }
                 }
                 set {
@@ -7640,12 +7638,11 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public decimal SchnittFortgangUndPruefung {
                 get {
-                    try {
-                        return ((decimal)(this[this.tableBerechneteNote.SchnittFortgangUndPruefungColumn]));
+                    if (this.IsSchnittFortgangUndPruefungNull()) {
+                        return 0m;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SchnittFortgangUndPruefung\' in table \'BerechneteNote\' is DB" +
-                                "Null.", e);
+                    else {
+                        return ((decimal)(this[this.tableBerechneteNote.SchnittFortgangUndPruefungColumn]));
                     }
                 }
                 set {
@@ -7657,11 +7654,11 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public byte Abschlusszeugnis {
                 get {
-                    try {
-                        return ((byte)(this[this.tableBerechneteNote.AbschlusszeugnisColumn]));
+                    if (this.IsAbschlusszeugnisNull()) {
+                        return 0;
                     }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Abschlusszeugnis\' in table \'BerechneteNote\' is DBNull.", e);
+                    else {
+                        return ((byte)(this[this.tableBerechneteNote.AbschlusszeugnisColumn]));
                     }
                 }
                 set {
@@ -14513,7 +14510,7 @@ SELECT Id, SchnittMuendlich, SchnittSchulaufgaben, JahresfortgangMitKomma, Jahre
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        BerechneteNote.*\r\nFROM            BerechneteNote";
@@ -14524,6 +14521,15 @@ SELECT Id, SchnittMuendlich, SchnittSchulaufgaben, JahresfortgangMitKomma, Jahre
                 "KursId) AND (IstHistorisch = false)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = @"SELECT        Id, SchnittMuendlich, SchnittSchulaufgaben, JahresfortgangMitKomma, JahresfortgangGanzzahlig, PruefungGesamt, SchnittFortgangUndPruefung, 
+                         Abschlusszeugnis, StandNr, IstHistorisch, SchuelerId, KursId, ErstesHalbjahr
+FROM            BerechneteNote
+WHERE        (KursId = @KursId) AND (SchuelerId = @SchuelerId) AND (IstHistorisch = 0)";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14544,6 +14550,19 @@ SELECT Id, SchnittMuendlich, SchnittSchulaufgaben, JahresfortgangMitKomma, Jahre
         public virtual diNoDataSet.BerechneteNoteDataTable GetDataByKursId(int KursId) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KursId));
+            diNoDataSet.BerechneteNoteDataTable dataTable = new diNoDataSet.BerechneteNoteDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.BerechneteNoteDataTable GetDataBySchuelerAndKurs(int KursId, int SchuelerId) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KursId));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(SchuelerId));
             diNoDataSet.BerechneteNoteDataTable dataTable = new diNoDataSet.BerechneteNoteDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

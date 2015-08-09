@@ -65,7 +65,7 @@ namespace diNo
 
     private void btnReadExcelFile_Click(object sender, EventArgs e)
     {
-      foreach (string file in Directory.GetFiles("D:\\diNo\\Notendateien11T"))
+      foreach (string file in Directory.GetFiles("C:\\Projects\\diNo\\Notendateien11T"))
       {
         var notenReader = new NotenAusExcelReader();
         notenReader.OnStatusChange += notenReader_OnStatusChange;
@@ -126,7 +126,7 @@ namespace diNo
             var dbSchueler = new SchuelerTableAdapter().GetDataById(schueler.SchuelerId)[0];
             string benutzterVorname = string.IsNullOrEmpty(dbSchueler.Rufname) ? dbSchueler.Vorname : dbSchueler.Rufname;
             bool isLegastheniker = dbSchueler.LRSStoerung || dbSchueler.LRSSchwaeche;
-            dieSchueler.Add(new Schueler(schueler.SchuelerId, benutzterVorname, dbSchueler.Name, isLegastheniker));
+            dieSchueler.Add(new Schueler(schueler.SchuelerId, benutzterVorname, dbSchueler.Name, isLegastheniker, dbSchueler.KlasseWinSV));
             if (wertung == Schulaufgabenwertung.NotSet)
             {
               Schulart schulart = dbSchueler.KlasseWinSV.StartsWith("B") ? Schulart.BOS : Schulart.FOS;
