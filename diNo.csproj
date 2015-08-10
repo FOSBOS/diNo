@@ -73,12 +73,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Berechnungsvorschrift.cs" />
-    <Compile Include="Bericht.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Bericht.Designer.cs">
-      <DependentUpon>Bericht.cs</DependentUpon>
-    </Compile>
     <Compile Include="CellConstant.cs" />
     <Compile Include="diNoDataSet.cs">
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
@@ -140,9 +134,6 @@
       <DependentUpon>UserControlChecks.cs</DependentUpon>
     </Compile>
     <Compile Include="WinSVSchuelerReader.cs" />
-    <EmbeddedResource Include="Bericht.resx">
-      <DependentUpon>Bericht.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -166,10 +157,12 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Notenbogen.rdlc" />
+    <EmbeddedResource Include="rptFachliste.rdlc" />
     <EmbeddedResource Include="ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rptLehrerliste.rdlc" />
+    <EmbeddedResource Include="rptSchuelerliste.rdlc" />
     <EmbeddedResource Include="UserControlChecks.resx">
       <DependentUpon>UserControlChecks.cs</DependentUpon>
     </EmbeddedResource>

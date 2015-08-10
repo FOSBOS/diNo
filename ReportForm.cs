@@ -19,9 +19,9 @@ namespace diNo
         private void ReportForm_Load(object sender, EventArgs e)
         {
             // TODO: Diese Codezeile lädt Daten in die Tabelle "diNoDataSet.Lehrer". Sie können sie bei Bedarf verschieben oder entfernen.
-            this.BerichtTableAdapter.Fill(this.diNoDataSet.Lehrer);
+         // this.BerichtTableAdapter.Fill(this.diNoDataSet.Lehrer);
 
-            this.reportViewer1.RefreshReport();
+         // this.reportViewer.RefreshReport();
         }
     }
 }

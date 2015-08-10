@@ -30,25 +30,25 @@
         {
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
             this.diNoDataSet = new diNo.diNoDataSet();
             this.BerichtBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.BerichtTableAdapter = new diNo.diNoDataSetTableAdapters.LehrerTableAdapter();
+         // this.BerichtTableAdapter = new diNo.diNoDataSetTableAdapters.LehrerTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.diNoDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BerichtBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // reportViewer1
+            // reportViewer
             // 
-            this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             reportDataSource2.Name = "DataSet1";
             reportDataSource2.Value = this.BerichtBindingSource;
-            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource2);
-            this.reportViewer1.LocalReport.ReportEmbeddedResource = "diNo.rptLehrerliste.rdlc";
-            this.reportViewer1.Location = new System.Drawing.Point(0, 0);
-            this.reportViewer1.Name = "reportViewer1";
-            this.reportViewer1.Size = new System.Drawing.Size(284, 262);
-            this.reportViewer1.TabIndex = 0;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource2);
+        //  this.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptLehrerliste.rdlc";
+            this.reportViewer.Location = new System.Drawing.Point(0, 0);
+            this.reportViewer.Name = "reportViewer";
+            this.reportViewer.Size = new System.Drawing.Size(284, 262);
+            this.reportViewer.TabIndex = 0;
             // 
             // diNoDataSet
             // 
@@ -58,23 +58,23 @@
             // 
             // LehrerBindingSource
             // 
-            this.BerichtBindingSource.DataMember = "Lehrer";
+        //  this.BerichtBindingSource.DataMember = "Lehrer";
             this.BerichtBindingSource.DataSource = this.diNoDataSet;
             // 
             // LehrerTableAdapter
             // 
-            this.BerichtTableAdapter.ClearBeforeFill = true;
+         //   this.BerichtTableAdapter.ClearBeforeFill = true;
             // 
             // ReportForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.reportViewer1);
+            this.Controls.Add(this.reportViewer);
             this.Name = "ReportForm";
             this.Text = "Drucken...";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.ReportForm_Load);
+         // this.Load += new System.EventHandler(this.ReportForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.diNoDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BerichtBindingSource)).EndInit();
             this.ResumeLayout(false);
@@ -83,9 +83,9 @@
 
         #endregion
 
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
-        private System.Windows.Forms.BindingSource BerichtBindingSource;
-        private diNoDataSet diNoDataSet;
-        private diNoDataSetTableAdapters.LehrerTableAdapter BerichtTableAdapter;
+        public Microsoft.Reporting.WinForms.ReportViewer reportViewer;
+        public System.Windows.Forms.BindingSource BerichtBindingSource;
+        public diNoDataSet diNoDataSet;
+     // public diNoDataSetTableAdapters.LehrerTableAdapter BerichtTableAdapter;
     }
 }

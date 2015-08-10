@@ -21,7 +21,7 @@ namespace diNo
             // TODO: Diese Codezeile lädt Daten in die Tabelle "diNoDataSet.Schueler". Sie können sie bei Bedarf verschieben oder entfernen.
             //this.SchuelerTableAdapter.Fill(this.diNoDataSet.Schueler);
 
-            this.reportViewer1.RefreshReport();
+            this.reportViewer.RefreshReport();
         }
     }
 }

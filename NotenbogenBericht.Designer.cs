@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
             this.diNoDataSet = new diNo.diNoDataSet();
             this.SchuelerBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.SchuelerTableAdapter = new diNo.diNoDataSetTableAdapters.SchuelerTableAdapter();
@@ -38,17 +38,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.SchuelerBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // reportViewer1
+            // reportViewer
             // 
-            this.reportViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
             reportDataSource1.Name = "DataSet1";
             reportDataSource1.Value = this.SchuelerBindingSource;
-            this.reportViewer1.LocalReport.DataSources.Add(reportDataSource1);
-            this.reportViewer1.LocalReport.ReportEmbeddedResource = "diNo.Notenbogen.rdlc";
-            this.reportViewer1.Location = new System.Drawing.Point(0, 0);
-            this.reportViewer1.Name = "reportViewer1";
-            this.reportViewer1.Size = new System.Drawing.Size(284, 262);
-            this.reportViewer1.TabIndex = 0;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            this.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.Notenbogen.rdlc";
+            this.reportViewer.Location = new System.Drawing.Point(0, 0);
+            this.reportViewer.Name = "reportViewer";
+            this.reportViewer.Size = new System.Drawing.Size(284, 262);
+            this.reportViewer.TabIndex = 0;
             // 
             // diNoDataSet
             // 
@@ -70,7 +70,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.reportViewer1);
+            this.Controls.Add(this.reportViewer);
             this.Name = "NotenbogenBericht";
             this.Text = "NotenbogenBericht";
             this.Load += new System.EventHandler(this.NotenbogenBericht_Load);
@@ -82,7 +82,7 @@
 
         #endregion
 
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
+        private Microsoft.Reporting.WinForms.ReportViewer reportViewer;
         private System.Windows.Forms.BindingSource SchuelerBindingSource;
         private diNoDataSet diNoDataSet;
         private diNoDataSetTableAdapters.SchuelerTableAdapter SchuelerTableAdapter;

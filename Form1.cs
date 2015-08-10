@@ -261,7 +261,10 @@ namespace diNo
 
         private void btnReport_Click(object sender, EventArgs e)
         {
-            new ReportForm().Show();
+            //new ReportController(Berichtsliste.rptSchuelerliste);
+            new ReportController(Berichtsliste.rptLehrerliste);
+            //new ReportController(Berichtsliste.rptFachliste);            
+
         }
     }
 }
