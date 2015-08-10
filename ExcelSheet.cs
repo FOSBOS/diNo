@@ -245,13 +245,14 @@ namespace diNo
 
     /// <summary>
     /// Vergleicht die Vor- und Nachnamen zweier Schüler. Wird zur Sortierung genutzt.
+    /// Aktuell erstes Sortierkriterium "KLASSE" soll entfallen, sobald nur noch digitale Notenverwaltung.
     /// </summary>
     /// <param name="x">Schüler x.</param>
     /// <param name="y">Schüler y.</param>
     /// <returns>Ergebnis des Vergleichs.</returns>
     private static int CompareSchuelerByName(Schueler x, Schueler y)
     {
-      return (x.Nachname + x.Vorname).CompareTo(y.Nachname + y.Nachname);
+      return (x.Klasse + x.Nachname + x.Vorname).CompareTo(y.Klasse + y.Nachname + y.Nachname);
     }
 
     /// <summary>
@@ -321,15 +322,16 @@ namespace diNo
       for (int i = CellConstant.ZeileErsterSchueler; i < 2 * MaxAnzahlSchueler; i = i + 2)
       {
         var schueler = ReadSchueler(sheet, sidsheet, i);
-        //Prüfungsnoten
-        schueler.BerechneteNoten.PruefungGesamt = ReadDecimalNote(apsheet, CellConstant.APgesamtSpalte + indexAP);
+        if (schueler != null)
+        {
+          //Prüfungsnoten
+          schueler.BerechneteNoten.PruefungGesamt = ReadDecimalNote(apsheet, CellConstant.APgesamtSpalte + indexAP);
         schueler.BerechneteNoten.Abschlusszeugnis = ReadIntegerNote(apsheet, CellConstant.APZeugnisnote + indexAP);
         AddNoteToSchueler(schueler, apsheet, CellConstant.APschriftlichSpalte + indexAP, Notentyp.APSchriftlich, Halbjahr.Ohne);
         AddNoteToSchueler(schueler, apsheet, CellConstant.APmuendlichSpalte + indexAP, Notentyp.APMuendlich, Halbjahr.Ohne);
         indexAP++;
 
-        if (schueler != null)
-        {
+
           klasse.Schueler.Add(schueler);
         }
       }
@@ -367,7 +369,7 @@ namespace diNo
       var legasthenieVermerk = ReadValue(sheet, CellConstant.LegasthenieVermerk + i);
       bool isLegastheniker = legasthenieVermerk == CellConstant.LegasthenieEintragung;
 
-      Schueler schueler = new Schueler(id, vorname, nachname, isLegastheniker);
+      Schueler schueler = new Schueler(id, vorname, nachname, isLegastheniker, "");
 
       foreach (var zelle in CellConstant.SchulaufgabenErstesHJ)
       {

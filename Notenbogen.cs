@@ -38,46 +38,60 @@ namespace diNo
         NoteTableAdapter noteAdapter = new NoteTableAdapter();
         FachTableAdapter fachAdapter = new FachTableAdapter();
         KursTableAdapter kursAdapter = new KursTableAdapter();
+        BerechneteNoteTableAdapter berechneteNoteAdapter = new BerechneteNoteTableAdapter();
 
         // Row[lineCount] für schriftliche und Row[lineCount+1] für mündliche Noten
         int lineCount = 0;
         foreach(var kurs in skAdapter.GetDataBySchuelerId(schuelerId))
         {
-          dataGridNoten.Rows.Add(2);
-          dataGridNoten.Rows[lineCount + 1].Height += 2; 
-          dataGridNoten.Rows[lineCount + 1].DividerHeight = 2;
-          
           var kursRow = kursAdapter.GetDataById(kurs.KursId)[0];
           var fachRow = fachAdapter.GetDataById(kursRow.FachId)[0];
-          dataGridNoten.Rows[lineCount].Cells[0].Value = fachRow.Bezeichnung;
-
+          
           IList<diNo.diNoDataSet.NoteRow> noten = new List<diNo.diNoDataSet.NoteRow>();
           foreach (var note in noteAdapter.GetDataBySchuelerAndKurs(kurs.SchuelerId, kurs.KursId))
           {
             noten.Add(note);
           }
 
+          var berechneteNoten = berechneteNoteAdapter.GetDataBySchuelerAndKurs(kurs.KursId, kurs.SchuelerId);
+
+          if (noten.Count == 0 || berechneteNoten.Count == 0)
+          {
+            continue;
+          }
+
+          dataGridNoten.Rows.Add(2);
+          dataGridNoten.Rows[lineCount + 1].Height += 2;
+          dataGridNoten.Rows[lineCount + 1].DividerHeight = 2;
+          dataGridNoten.Rows[lineCount].Cells[0].Value = fachRow.Bezeichnung;
+          var berechneteErstesHJ = berechneteNoten.First(x => x.ErstesHalbjahr);
+          var berechneteZweitesHJ = berechneteNoten.First(x => !x.ErstesHalbjahr);
+
           InsertSchulaufgaben(1, lineCount, noten, Halbjahr.Erstes);
           InsertExen(1, lineCount + 1, noten, Halbjahr.Erstes);
           InsertMuendliche(6, lineCount + 1, noten, Halbjahr.Erstes);
-          InsertSingleNote(9, lineCount, noten, Notentyp.SchnittSA, Halbjahr.Erstes, true);
-          InsertSingleNote(9, lineCount + 1, noten, Notentyp.Schnittmuendlich, Halbjahr.Erstes, true);
-          InsertSingleNote(10, lineCount, noten, Notentyp.Jahresfortgang, Halbjahr.Erstes, false);
-          InsertSingleNote(10, lineCount + 1, noten, Notentyp.JahresfortgangMitNKS, Halbjahr.Erstes, true);
+
+          dataGridNoten.Rows[lineCount].Cells[9].Value = berechneteErstesHJ.SchnittSchulaufgaben.ToString();
+          dataGridNoten.Rows[lineCount + 1].Cells[9].Value = berechneteErstesHJ.SchnittMuendlich.ToString();
+          dataGridNoten.Rows[lineCount].Cells[10].Value = ((int)berechneteErstesHJ.JahresfortgangGanzzahlig).ToString();
+          dataGridNoten.Rows[lineCount + 1].Cells[10].Value = berechneteErstesHJ.JahresfortgangMitKomma.ToString();
 
           InsertSchulaufgaben(11, lineCount, noten, Halbjahr.Zweites);
           InsertExen(11, lineCount + 1, noten, Halbjahr.Zweites);
           InsertMuendliche(16, lineCount + 1, noten, Halbjahr.Zweites);
           InsertSingleNote(19, lineCount + 1, noten, Notentyp.Fachreferat, Halbjahr.Ohne, false);
-          InsertSingleNote(20, lineCount, noten, Notentyp.SchnittSA, Halbjahr.Zweites, true);
-          InsertSingleNote(20, lineCount + 1, noten, Notentyp.Schnittmuendlich, Halbjahr.Zweites, true);
-          InsertSingleNote(21, lineCount, noten, Notentyp.Jahresfortgang, Halbjahr.Zweites, false);
-          InsertSingleNote(21, lineCount + 1, noten, Notentyp.JahresfortgangMitNKS, Halbjahr.Zweites, true);
+
+          dataGridNoten.Rows[lineCount].Cells[20].Value = berechneteZweitesHJ.SchnittSchulaufgaben.ToString();
+          dataGridNoten.Rows[lineCount + 1].Cells[20].Value = berechneteZweitesHJ.SchnittMuendlich.ToString();
+          dataGridNoten.Rows[lineCount].Cells[21].Value = ((int)berechneteZweitesHJ.JahresfortgangGanzzahlig).ToString();
+          dataGridNoten.Rows[lineCount + 1].Cells[21].Value = berechneteZweitesHJ.JahresfortgangMitKomma.ToString();
 
           InsertSingleNote(22, lineCount, noten, Notentyp.APSchriftlich, Halbjahr.Ohne, false);
           InsertSingleNote(23, lineCount, noten, Notentyp.APMuendlich, Halbjahr.Ohne, false);
-          InsertSingleNote(24, lineCount, noten, Notentyp.APGesamt, Halbjahr.Ohne, true);
-          InsertSingleNote(25, lineCount, noten, Notentyp.Abschlusszeugnis, Halbjahr.Ohne, false);
+
+          dataGridNoten.Rows[lineCount].Cells[24].Value = berechneteZweitesHJ.PruefungGesamt.ToString();
+          dataGridNoten.Rows[lineCount].Cells[25].Value = berechneteZweitesHJ.Abschlusszeugnis.ToString();
+
           lineCount = lineCount + 2;
         }
 

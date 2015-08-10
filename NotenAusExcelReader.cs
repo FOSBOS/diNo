@@ -128,7 +128,7 @@ namespace diNo
           // TODO: Testen, ob da wirklich null drinsteht oder eher DateTime.MinValue oder sowas
           if (dbSchueler.Austrittsdatum == null)
           {
-            sheet.AppendSchueler(new Schueler(dbSchueler.Id, dbSchueler.Vorname, dbSchueler.Name, dbSchueler.LRSSchwaeche || dbSchueler.LRSStoerung));
+            sheet.AppendSchueler(new Schueler(dbSchueler.Id, dbSchueler.Vorname, dbSchueler.Name, dbSchueler.LRSSchwaeche || dbSchueler.LRSStoerung, ""));
           }
         }
       }

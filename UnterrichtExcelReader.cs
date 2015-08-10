@@ -58,7 +58,7 @@ namespace diNo
         }
         if ((new string[] { "SSl", "SNT", "SWi", "FPU", "FPA", "FPB", "F-Wi", "TZ-Fö", "GK_BF", "M-Fö", "E-Fö", "Ph-Fö", "AWU", "Me", "SL", "SF" }).Contains(fach))
         {
-          log.Debug("Ignoriere Förderunterricht, Seminarfach und diversen anderen Unfug - kein selbstständiger Unterricht");
+          log.Debug("Ignoriere Förderunterricht, Ergänzungsunterricht, Seminarfach und diversen anderen Unfug - kein selbstständiger Unterricht");
           continue;
         }
         if (string.IsNullOrEmpty(klassenString))
@@ -71,7 +71,7 @@ namespace diNo
         var dblehrer = FindLehrer(lehrer);
         if (dblehrer == null)
         {
-          log.Debug("Ignoriere Kurse des unbekannten Lehrers " + lehrer);
+          log.Error("Ignoriere Kurse des unbekannten Lehrers " + lehrer);
           continue;
         }
 
