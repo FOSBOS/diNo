@@ -103,12 +103,17 @@ namespace diNo
             }
     }
 
-    /// <summary>
-    /// Das Fach, z. B. Englisch.
-    /// </summary>
+    public diNoDataSet.FachRow getFach
+        {
+            get
+            {
+                return this.data.FachRow;
+            }
+        }
+
     public string FachBezeichnung
     {
-      get { return this.data.FachRow.Bezeichnung; }
+      get { return this.getFach.Bezeichnung; }
       
     }
   }

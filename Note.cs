@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
@@ -149,6 +150,27 @@ namespace diNo
   /// </summary>
   public class Note
   {
+        private int kursid, schuelerid;
+
+        // baut Notenobjekt aus einer DB-Zeile auf
+        public Note(diNoDataSet.NoteRow nr)
+        {
+            kursid = nr.KursId;
+            schuelerid = nr.SchuelerId;
+            Typ = (Notentyp) nr.Notenart;
+            Punktwert = nr.Punktwert;
+            Datum = nr.Datum;
+            Zelle = nr.Zelle;
+            Halbjahr = (Halbjahr) nr.Halbjahr;
+        }
+
+        // Note von Hand eingeben (z.B. aus Excel)
+        public Note(int aKursId, int aSchuelerId)
+        {
+            this.kursid = aKursId;
+            this.schuelerid = aSchuelerId;
+        }
+
     /// <summary>
     /// Der Typ der Note, z. B. Schulaufgabe oder Ex.
     /// </summary>
@@ -192,15 +214,36 @@ namespace diNo
     {
       get;
       set;
+    }	
+  }
+
+    // verwaltet alle Noten eines Schülers in einem Kurs in der Liste noten
+    public class NotenProKurs
+    {
+        private diNoDataSet.NoteDataTable notenDT;
+        public List<Note> noten = new List<Note>();
+        public NotenProKurs(int schuelerid, int kursid)
+        {
+            notenDT = new NoteTableAdapter().GetDataBySchuelerAndKurs(schuelerid,kursid);
+            foreach (var noteR in notenDT)
+            {
+                noten.Add(new Note(noteR));
+            }
+
+            // berechnete Note dieses Schülers und Kurses der Eigenschaft zuweisen:
+            var berechneteNoteRst = new BerechneteNoteTableAdapter().GetDataBySchuelerAndKurs(kursid, schuelerid);
+            if (berechneteNoteRst.Count == 0)
+            {
+                throw new InvalidOperationException("Konstruktor NotenProKurs: Keine berechneten Noten vorhanden.");
+            }
+            berechneteNote = berechneteNoteRst[0];
+        }
+
+        public diNoDataSet.BerechneteNoteRow berechneteNote
+        {
+            get;
+            private set;
+        }
     }
 
-		/// <summary>
-		/// In welchem Fach diese Note erzielt wurde
-		/// </summary>
-    public diNo.diNoDataSet.FachRow Fach
-		{
-			get;
-			set;
-		}
-  }
 }
