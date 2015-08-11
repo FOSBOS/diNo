@@ -63,54 +63,53 @@ namespace diNo
   /// </summary>
   public class Kurs
   {
-    /// <summary>
-    /// Konstruktor.
-    /// </summary>
-    /// <param name="id">Id des Kurses in der Datenbank.</param>
-    /// <param name="name"> Name der Klasse bzw. des Kurses, z. B. Mathematik F11Wa.</param>
-    /// <param name="fach">Das Fach.</param>
-    public Kurs(int id, string name, string fach)
-    {
-      this.Schueler = new List<Schueler>();
-      this.Id = id;
-      this.Name = name;
-      this.Fach = fach;
-    }
-
+    private diNoDataSet.KursRow data;
+    private diNoDataSet.SchuelerDataTable schueler;
+        
+    public Kurs(int id)
+        {
+            this.Id = id;
+            var rst = new KursTableAdapter().GetDataById(id);
+            if (rst.Count == 1)
+            {
+                this.data = rst[0];
+            }
+            else
+            {
+                throw new InvalidOperationException("Konstruktor Kurs: Ungültige ID.");
+            }
+        }
     /// <summary>
     /// Id des Kurses in der Datenbank.
     /// </summary>
     public int Id
     {
       get;
-      set;
-    }
-
-    /// <summary>
-    /// Name der Klasse, z. B. Mathematik F11Wa.
-    /// </summary>
-    public string Name
-    {
-      get;
-      set;
+      private set;
     }
 
     /// <summary>
     /// Die Liste der Schüler dieser Klasse.
     /// </summary>
-    public IList<Schueler> Schueler
+    public diNoDataSet.SchuelerDataTable getSchueler
     {
-      get;
-      private set;
+      get   {
+                if (schueler == null)
+                {
+                    SchuelerTableAdapter sa = new SchuelerTableAdapter();
+                    schueler = sa.GetDataByKursId(Id);
+                }
+                return schueler;
+            }
     }
 
     /// <summary>
     /// Das Fach, z. B. Englisch.
     /// </summary>
-    public string Fach
+    public string FachBezeichnung
     {
-      get;
-      private set;
+      get { return this.data.FachRow.Bezeichnung; }
+      
     }
   }
 }

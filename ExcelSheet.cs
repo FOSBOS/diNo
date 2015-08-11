@@ -317,6 +317,7 @@ namespace diNo
       var datumStand = ReadValue(sheet, CellConstant.DatumStand);
       var kursId = (sidsheet != null) ? int.Parse(ReadValue(sidsheet, CellConstant.KursId)) : -1;
 
+// Hi Markus, hier hab ich dir was kaputt gemacht. Wir telefonieren mal wie wir das lösen, weil ich die Tabellenobjekte nur an die DB binden möchte.
       Kurs klasse = new Kurs(kursId, kursbezeichnung, fach);
       int indexAP = CellConstant.APZeileErsterSchueler;
       for (int i = CellConstant.ZeileErsterSchueler; i < 2 * MaxAnzahlSchueler; i = i + 2)

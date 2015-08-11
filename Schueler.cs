@@ -22,6 +22,7 @@ namespace diNo
         //
         private diNoDataSet.SchuelerRow data;
         private Klasse klasse;
+        private diNoDataSet.KursDataTable kurse;
 
     public Schueler(int id)
     {         
@@ -129,7 +130,10 @@ namespace diNo
     {
       get
             {
-                if (klasse == null) { klasse = new Klasse(this.data.KlasseId); }
+                if (klasse == null)
+                {
+                    klasse = new Klasse(this.data.KlasseId);
+                }
                 return klasse.Data.Bezeichnung;
             }
       
@@ -139,6 +143,22 @@ namespace diNo
     {            
             get { return this.data; }
     }
+
+    public diNoDataSet.KursDataTable Kurse
+        {
+            get
+            {
+                if (kurse == null)
+                {
+                    kurse = new KursTableAdapter().GetDataBySchulerId(this.Id);
+                }
+                return kurse;
+            }
+        }
+    
+
+
+
     /// <summary>
     /// Toes the string.
     /// </summary>

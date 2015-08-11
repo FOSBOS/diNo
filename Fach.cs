@@ -7,10 +7,44 @@ using System.Text;
 
 namespace diNo
 {
-	/// <summary>
-	/// Klasse Fächerkanon dient zur Abfrage der Modalitäten (1:1, 2:1-Fach oder KA/Ex)
-	/// </summary>
-	public static class Faecherkanon
+    public class Fach
+    {
+        private diNoDataSet.FachRow data;
+
+        public Fach(int id)
+        {
+            var rst = new FachTableAdapter().GetDataById(id);
+            if (rst.Count == 1)
+            {
+                this.data = rst[0];
+            }
+            else
+            {
+                throw new InvalidOperationException("Konstruktor Kurs: Ungültige ID.");
+            }
+        }
+
+        public int Id
+        {
+            get { return this.data.Id; }
+        }
+
+        public string Bezeichnung
+        {
+            get { return this.data.Bezeichnung; }
+        }
+
+        public string Kuerzel
+        {
+            get { return this.data.Kuerzel; }
+        }
+    }
+
+
+    ///  <summary>
+    /// Klasse Fächerkanon dient zur Abfrage der Modalitäten (1:1, 2:1-Fach oder KA/Ex)
+    /// </summary>
+    public static class Faecherkanon
 	{
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
