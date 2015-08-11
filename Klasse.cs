@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using diNo.diNoDataSetTableAdapters;
+using System.Collections.Generic;
 
 namespace diNo
 {
@@ -9,9 +11,8 @@ namespace diNo
 		Elf = 2,
 		Zwoelf = 3,
 		Dreizehn = 4,
-    Vorkurs = 5,
-    ALLE = 15,
-sonstiges = 99
+        Vorkurs = 5,
+    ALLE = 15
 	}
 
 	public enum Schulart
@@ -31,6 +32,31 @@ sonstiges = 99
     Agrar = 4,
     ALLE = 15
 	}
+
+    public class Klasse
+    {
+        private diNoDataSet.KlasseRow data;
+
+        public Klasse (int id)
+        {
+            var rst = new KlasseTableAdapter().GetDataById(id);
+            if (rst.Count == 1)
+            {
+                this.data = rst[0];
+            }
+            else
+            {
+                throw new InvalidOperationException("Konstruktor Klasse: Ungültige ID.");
+            }
+
+        }
+
+        public diNoDataSet.KlasseRow Data
+        {
+            get { return this.data; }
+        }
+
+    }
 
   /// <summary>
   /// Ein Kurs.

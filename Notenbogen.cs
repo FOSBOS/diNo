@@ -9,7 +9,7 @@ namespace diNo
 {
   public partial class Notenbogen : Form
   {
-    private diNo.diNoDataSet.SchuelerRow schueler = null;
+    private Schueler schueler;
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
     /// <summary>
@@ -18,21 +18,13 @@ namespace diNo
     /// <param name="schuelerId">Die Id des anzuzeigenden Schülers.</param>
     public Notenbogen(int schuelerId)
     {
-      log.Debug("Öffne Notenbogen SchülerId=" + schuelerId);
-      InitializeComponent();
+        log.Debug("Öffne Notenbogen SchülerId=" + schuelerId);
+        InitializeComponent();
 
-      SchuelerTableAdapter schuelerAdapter = new SchuelerTableAdapter();
-      var schuelerRows = schuelerAdapter.GetDataById(schuelerId);
-      if (schuelerRows.Count == 1)
-      {
-        schueler = schuelerRows[0];
-        nameTextBox.Text = schueler.Name + ", " + schueler.Rufname;
-
-        KlasseTableAdapter klasseAdapter = new KlasseTableAdapter();
-        var klassenRows = klasseAdapter.GetDataById(schueler.KlasseId);
-        klasseTextBox.Text = klassenRows.Count == 1 ? klassenRows[0].Bezeichnung : "";
-
-        textBoxAdresse.Text = schueler.AnschriftStrasse + "\n" + schueler.AnschriftPLZ + " " + schueler.AnschriftOrt + "\n Tel.:" + schueler.AnschriftTelefonnummer;
+        schueler = new Schueler(schuelerId);
+        nameTextBox.Text = schueler.Name;
+        klasseTextBox.Text = schueler.Klasse;
+        textBoxAdresse.Text = schueler.Data.AnschriftStrasse + "\n" + schueler.Data.AnschriftPLZ + " " + schueler.Data.AnschriftOrt + "\n Tel.:" + schueler.Data.AnschriftTelefonnummer;
 
         SchuelerKursTableAdapter skAdapter = new SchuelerKursTableAdapter();
         NoteTableAdapter noteAdapter = new NoteTableAdapter();
@@ -95,7 +87,7 @@ namespace diNo
           lineCount = lineCount + 2;
         }
 
-        if (schueler.Jahrgangsstufe == "11")
+        if (schueler.Data.Jahrgangsstufe == "11")
         {
           FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
           var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
@@ -106,7 +98,7 @@ namespace diNo
           }
         }
 
-        if (schueler.Jahrgangsstufe == "13")
+        if (schueler.Data.Jahrgangsstufe == "13")
         {
           SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
           var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
@@ -116,8 +108,7 @@ namespace diNo
             textBoxSeminarfachthemaKurz.Text = seminarfachnoten[0].ThemaKurz;
             textBoxSeminarfachthemaLang.Text = seminarfachnoten[0].ThemaLang;
           }
-        }
-      }
+        }      
     }
 
     /// <summary>
@@ -196,7 +187,7 @@ namespace diNo
 
     private void buttonSpeichern_Click(object sender, EventArgs e)
     {
-      if (schueler != null && schueler.Jahrgangsstufe == "11")
+      if (schueler != null && schueler.Data.Jahrgangsstufe == "11")
       {
         FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
         var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
@@ -210,7 +201,7 @@ namespace diNo
         }
       }
 
-      if (schueler != null && schueler.Jahrgangsstufe == "13")
+      if (schueler != null && schueler.Data.Jahrgangsstufe == "13")
       {
         SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
         var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);

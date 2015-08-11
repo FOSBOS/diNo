@@ -1,6 +1,7 @@
-﻿
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
@@ -9,24 +10,42 @@ namespace diNo
   /// </summary>
   public class Schueler
   {
-    /// <summary>
-    /// Konstruktor.
-    /// </summary>
-    /// <param name="id">Die Id des Schülers in der Datenbank.</param>
-    /// <param name="vorname">Vorname des Schülers.</param>
-    /// <param name="nachname">Nachname des Schülers.</param>
-    /// <param name="isLegastheniker">Ob der Schüler einen Legasthenie-Vermerk hat.</param>
-    /// <param name="klasse">Die Klasse des Schülers.</param>
-    public Schueler(int id, string vorname, string nachname, bool isLegastheniker, string klasse)
-    {
-      this.Einzelnoten = new List<Note>();
-      this.BerechneteNoten = new BerechneteNote();
-      this.BerechneteNotenErstesHalbjahr = new BerechneteNote();
-      this.Id = id;
-      this.Vorname = vorname;
-      this.Nachname = nachname;
-      this.IsLegastheniker = isLegastheniker;
-      this.Klasse = klasse;
+        /// <summary>
+        /// Konstruktor.
+        /// </summary>
+        /// <param name="id">Die Id des Schülers in der Datenbank.</param>
+        /// <param name="vorname">Vorname des Schülers.</param>
+        /// <param name="nachname">Nachname des Schülers.</param>
+        /// <param name="isLegastheniker">Ob der Schüler einen Legasthenie-Vermerk hat.</param>
+        /// <param name="klasse">Die Klasse des Schülers.</param>
+        /// 
+        //
+        private diNoDataSet.SchuelerRow data;
+        private Klasse klasse;
+
+    public Schueler(int id)
+    {         
+         this.Id = id; 
+         var rst = new SchuelerTableAdapter().GetDataById(id);
+         if (rst.Count == 1)
+            {
+                this.data = rst[0];
+            }
+         else
+            {
+                throw new InvalidOperationException("Konstruktor Schueler: Ungültige ID.");
+            } 
+                 
+         this.Einzelnoten = new List<Note>();
+         this.BerechneteNoten = new BerechneteNote();
+         this.BerechneteNotenErstesHalbjahr = new BerechneteNote();
+    }
+
+    public Schueler(int id, string vorname, string nachname, bool isLegastheniker, string klasse) : this(id)
+    {        
+         this.Vorname = vorname;
+         this.Nachname = nachname;
+         this.IsLegastheniker = isLegastheniker;         
     }
 
     /// <summary>
@@ -39,13 +58,13 @@ namespace diNo
     }
 
     /// <summary>
-    /// Name und Vorname des Schülers, durch ", " getrennt.
+    /// Name und Rufname des Schülers, durch ", " getrennt.
     /// </summary>
     public string Name
     {
       get
       {
-        return this.Nachname + ", " + this.Vorname;
+        return this.Data.Name + ", " + this.Data.Rufname;
       }
     }
 
@@ -104,14 +123,22 @@ namespace diNo
     }
 
     /// <summary>
-    /// Die Klassenbezeichnung (ACHTUNG: Nicht immer gefüllt!)
+    /// Die Klassenbezeichnung 
     /// </summary>
     public string Klasse
     {
-      get;
-      set;
+      get
+            {
+                if (klasse == null) { klasse = new Klasse(this.data.KlasseId); }
+                return klasse.Data.Bezeichnung;
+            }
+      
     }
 
+    public diNoDataSet.SchuelerRow Data
+    {            
+            get { return this.data; }
+    }
     /// <summary>
     /// Toes the string.
     /// </summary>
@@ -122,3 +149,4 @@ namespace diNo
     }
   }
 }
+
