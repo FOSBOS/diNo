@@ -10,19 +10,10 @@ namespace diNo
   /// </summary>
   public class Schueler
   {
-        /// <summary>
-        /// Konstruktor.
-        /// </summary>
-        /// <param name="id">Die Id des Schülers in der Datenbank.</param>
-        /// <param name="vorname">Vorname des Schülers.</param>
-        /// <param name="nachname">Nachname des Schülers.</param>
-        /// <param name="isLegastheniker">Ob der Schüler einen Legasthenie-Vermerk hat.</param>
-        /// <param name="klasse">Die Klasse des Schülers.</param>
-        /// 
-        //
-        private diNoDataSet.SchuelerRow data;
-        private Klasse klasse;
-        private diNoDataSet.KursDataTable kurse;
+      
+        private diNoDataSet.SchuelerRow data;   // nimmt SchülerRecordset auf
+        private Klasse klasse;                  // Objektverweis zur Klasse dieses Schülers
+        private diNoDataSet.KursDataTable kurse; // Recordset-Menge aller Kurse dieses Schülers
 
     public Schueler(int id)
     {         
@@ -37,16 +28,10 @@ namespace diNo
                 throw new InvalidOperationException("Konstruktor Schueler: Ungültige ID.");
             } 
                  
-         this.Einzelnoten = new List<Note>();
+/*       this.Einzelnoten = new List<Note>();
          this.BerechneteNoten = new BerechneteNote();
          this.BerechneteNotenErstesHalbjahr = new BerechneteNote();
-    }
-
-    public Schueler(int id, string vorname, string nachname, bool isLegastheniker, string klasse) : this(id)
-    {        
-         this.Vorname = vorname;
-         this.Nachname = nachname;
-         this.IsLegastheniker = isLegastheniker;         
+*/
     }
 
     /// <summary>
@@ -61,30 +46,12 @@ namespace diNo
     /// <summary>
     /// Name und Rufname des Schülers, durch ", " getrennt.
     /// </summary>
-    public string Name
+    public string NameVorname
     {
       get
       {
         return this.Data.Name + ", " + this.Data.Rufname;
       }
-    }
-
-    /// <summary>
-    /// Vorname des Schülers.
-    /// </summary>
-    public string Vorname
-    {
-      get;
-      private set;
-    }
-
-    /// <summary>
-    /// Nachnname des Schülers.
-    /// </summary>
-    public string Nachname
-    {
-      get;
-      private set;
     }
 
     /// <summary>
@@ -119,8 +86,7 @@ namespace diNo
     /// </summary>
     public bool IsLegastheniker
     {
-      get;
-      set;
+      get { return this.data.LRSStoerung || this.data.LRSSchwaeche;  }     
     }
 
     /// <summary>
@@ -156,7 +122,10 @@ namespace diNo
             }
         }
     
-
+    public NotenProKurs NotenImKurs(int kursid)
+        {
+            return new NotenProKurs(this.Id, kursid);
+        }
 
 
     /// <summary>
@@ -167,6 +136,47 @@ namespace diNo
     {
       return this.Name;
     }
+
+    public double berechneDNote()
+        {
+            int summe=0, anz=0;
+            double erg;
+            var faecher = new BerechneteNoteTableAdapter().GetDataBySchueler4DNote(this.Id);
+            foreach (var fach in faecher)
+            {
+                if ( true /*!fach.KursRow.FachRow.Kuerzel in ['F','Ku','Sp']*/)
+                {
+                    if (fach.Abschlusszeugnis == 0)
+                    {
+                        summe -= 1; // Punktwert 0 wird als -1 gezählt
+                    }
+                    else
+                    {
+                        summe += fach.Abschlusszeugnis;
+                    }
+                    
+                    anz++;
+                }                
+            }
+            if (anz > 0)
+                {
+                    erg = (17 - summe / anz) / 3;
+                    if (erg<1)
+                    {
+                        erg = 1;
+                    }
+                    else
+                    {
+                        erg = Math.Floor(erg * 10) / 10; // auf 1 NK abrunden
+                    }
+                }
+            else
+            {
+                erg = 0;
+            }
+
+            return erg;
+        }
   }
 }
 

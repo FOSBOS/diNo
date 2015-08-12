@@ -101,15 +101,18 @@ namespace diNo
         // schreibe Schülerdaten
         int zeile = 5;
         int zeileFuerSId = CellConstant.zeileSIdErsterSchueler;
-        
-        List<Schueler> sortedList = new List<Schueler>(schueler);
-        sortedList.Sort(CompareSchuelerByName);
-        foreach (Schueler aSchueler in sortedList)
+
+                //List<Schueler> sortedList = new List<Schueler>(schueler);
+                //sortedList.Sort(CompareSchuelerByName);
+                var kurs = new Kurs(kursId);
+                var schuelerliste = kurs.getSchueler; // ist schon via SQL sortiert
+
+        foreach (diNoDataSet.SchuelerRow aSchueler in schuelerliste)
         {
-          WriteValue(sheet, CellConstant.Nachname + zeile, aSchueler.Nachname);
+          WriteValue(sheet, CellConstant.Nachname + zeile, aSchueler.Name);
           WriteValue(sheet, CellConstant.Vorname+(zeile+1), "   " + aSchueler.Vorname);
           WriteValue(sidsheet, CellConstant.SId + zeileFuerSId, aSchueler.Id.ToString());
-          if (aSchueler.IsLegastheniker)
+          if (aSchueler.LRSStoerung || aSchueler.LRSSchwaeche)
           {
             WriteValue(sheet, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
           }
@@ -189,8 +192,8 @@ namespace diNo
 
       int zeile = CellConstant.ZeileErsterSchueler + this.Schueler.Count * 2 + 1;
       int zeileFuerSId = CellConstant.zeileSIdErsterSchueler + this.Schueler.Count + 1;
-      WriteValue(sheet, CellConstant.Nachname + zeile, aSchueler.Nachname);
-      WriteValue(sheet, CellConstant.Vorname + (zeile + 1), "   " + aSchueler.Vorname);
+      WriteValue(sheet, CellConstant.Nachname + zeile, aSchueler.Data.Name);
+      WriteValue(sheet, CellConstant.Vorname + (zeile + 1), "   " + aSchueler.Data.Vorname);
       WriteValue(sidsheet, CellConstant.SId + zeileFuerSId, aSchueler.Id.ToString());
       if (aSchueler.IsLegastheniker)
       {
@@ -243,6 +246,7 @@ namespace diNo
       }
     }
 
+/*
     /// <summary>
     /// Vergleicht die Vor- und Nachnamen zweier Schüler. Wird zur Sortierung genutzt.
     /// Aktuell erstes Sortierkriterium "KLASSE" soll entfallen, sobald nur noch digitale Notenverwaltung.
@@ -254,6 +258,7 @@ namespace diNo
     {
       return (x.Klasse + x.Nachname + x.Vorname).CompareTo(y.Klasse + y.Nachname + y.Nachname);
     }
+*/
 
     /// <summary>
     /// Liefert die möglichen Einstellungen zur Schulaufgabenwertung.
@@ -326,7 +331,7 @@ namespace diNo
         if (schueler != null)
         {
           //Prüfungsnoten
-          schueler.BerechneteNoten.PruefungGesamt = ReadDecimalNote(apsheet, CellConstant.APgesamtSpalte + indexAP);
+        schueler.BerechneteNoten.PruefungGesamt = ReadDecimalNote(apsheet, CellConstant.APgesamtSpalte + indexAP);
         schueler.BerechneteNoten.Abschlusszeugnis = ReadIntegerNote(apsheet, CellConstant.APZeugnisnote + indexAP);
         AddNoteToSchueler(schueler, apsheet, CellConstant.APschriftlichSpalte + indexAP, Notentyp.APSchriftlich, Halbjahr.Ohne);
         AddNoteToSchueler(schueler, apsheet, CellConstant.APmuendlichSpalte + indexAP, Notentyp.APMuendlich, Halbjahr.Ohne);

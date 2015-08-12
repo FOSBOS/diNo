@@ -14581,7 +14581,8 @@ SELECT Id, SchnittMuendlich, SchnittSchulaufgaben, JahresfortgangMitKomma, Jahre
             this._commandCollection[2].CommandText = @"SELECT        Id, SchnittMuendlich, SchnittSchulaufgaben, JahresfortgangMitKomma, JahresfortgangGanzzahlig, PruefungGesamt, SchnittFortgangUndPruefung, 
                          Abschlusszeugnis, StandNr, IstHistorisch, SchuelerId, KursId, ErstesHalbjahr
 FROM            BerechneteNote
-WHERE        (SchuelerId = @schuelerid) AND (IstHistorisch = 0) AND (ErstesHalbjahr = 0)";
+WHERE        (SchuelerId = @schuelerid) AND (IstHistorisch = 0) AND (ErstesHalbjahr = 0) AND (Abschlusszeugnis is not NULL)
+";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@schuelerid", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
@@ -14622,7 +14623,7 @@ WHERE        (KursId = @KursId) AND (SchuelerId = @SchuelerId) AND (IstHistorisc
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.BerechneteNoteDataTable GetDataBySchueler2Hj(int schuelerid) {
+        public virtual diNoDataSet.BerechneteNoteDataTable GetDataBySchueler4DNote(int schuelerid) {
             this.Adapter.SelectCommand = this.CommandCollection[2];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(schuelerid));
             diNoDataSet.BerechneteNoteDataTable dataTable = new diNoDataSet.BerechneteNoteDataTable();
