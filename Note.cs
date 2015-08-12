@@ -171,59 +171,68 @@ namespace diNo
             this.schuelerid = aSchuelerId;
         }
 
-    /// <summary>
-    /// Der Typ der Note, z. B. Schulaufgabe oder Ex.
-    /// </summary>
-    public Notentyp Typ
-    {
-      get;
-      set;
-    }
+        /// <summary>
+        /// Der Typ der Note, z. B. Schulaufgabe oder Ex.
+        /// </summary>
+        public Notentyp Typ
+        {
+          get;
+          set;
+        }
 
-    /// <summary>
-    /// Der Punktwert der Note (0-15).
-    /// </summary>
-    public byte Punktwert
-    {
-      get;
-      set;
-    }
+        /// <summary>
+        /// Der Punktwert der Note (0-15).
+        /// </summary>
+        public byte Punktwert
+        {
+          get;
+          set;
+        }
 
-    /// <summary>
-    /// Das Datum der Note.
-    /// </summary>
-    public DateTime Datum
-    {
-      get;
-      set;
-    }
+        /// <summary>
+        /// Das Datum der Note.
+        /// </summary>
+        public DateTime Datum
+        {
+          get;
+          set;
+        }
 
-    /// <summary>
-    /// In welcher Zelle diese Note steht.
-    /// </summary>
-    public string Zelle
-    {
-      get;
-      set;
-    }
+        /// <summary>
+        /// In welcher Zelle diese Note steht.
+        /// </summary>
+        public string Zelle
+        {
+          get;
+          set;
+        }
 
-    /// <summary>
-    /// Das Halbjahr, welchem die Note zuzuordnen ist.
-    /// </summary>
-    public Halbjahr Halbjahr
-    {
-      get;
-      set;
-    }	
+        /// <summary>
+        /// Das Halbjahr, welchem die Note zuzuordnen ist.
+        /// </summary>
+        public Halbjahr Halbjahr
+        {
+          get;
+          set;
+        }	
+
+        // schreibt ein Notenobjekt in die DB (keine Aktualisierung, d.h. alte Note muss vorher gelöscht sein)
+        public void writeToDB()
+        {            
+            int noteid;
+            NoteTableAdapter na = new NoteTableAdapter();
+            na.Insert((int)Typ, Punktwert, DateTime.Now.Date, Zelle, (byte)Halbjahr, schuelerid, kursid, out noteid);
+        }
   }
 
     // verwaltet alle Noten eines Schülers in einem Kurs in der Liste noten
     public class NotenProKurs
     {
         private diNoDataSet.NoteDataTable notenDT;
-        public List<Note> noten = new List<Note>();
+        public List<Note> noten;
         public NotenProKurs(int schuelerid, int kursid)
         {
+            noten = new List<Note>();
             notenDT = new NoteTableAdapter().GetDataBySchuelerAndKurs(schuelerid,kursid);
             foreach (var noteR in notenDT)
             {
