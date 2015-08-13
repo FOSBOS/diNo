@@ -128,15 +128,6 @@ namespace diNo
         }
 
 
-    /// <summary>
-    /// Toes the string.
-    /// </summary>
-    /// <returns>String represantation of this.</returns>
-    public override string ToString()
-    {
-      return this.Name;
-    }
-
     public double berechneDNote()
         {
             int summe=0, anz=0;
@@ -148,7 +139,7 @@ namespace diNo
                 {
                     if (fach.Abschlusszeugnis == 0)
                     {
-                        summe -= 1; // Punktwert 0 wird als -1 gezählt
+                        summe--; // Punktwert 0 wird als -1 gezählt
                     }
                     else
                     {

@@ -36,7 +36,7 @@ namespace diNo
       var sheet = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("Tabelle1") select sh).FirstOrDefault();
       if (sheet == null)
       {
-        throw new InvalidOperationException("kein Sheet mit dem Namen \"Notenbogen\" gefunden");
+        throw new InvalidOperationException("kein Sheet mit dem Namen \"Tabelle1\" gefunden");
       }
 
       int rowCount = sheet.get_Range("A" + sheet.Rows.Count, "B" + sheet.Rows.Count).get_End(Excel.XlDirection.xlUp).Row;

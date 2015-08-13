@@ -22,7 +22,7 @@ namespace diNo
         InitializeComponent();
 
         schueler = new Schueler(schuelerId);
-        nameTextBox.Text = schueler.Name;
+        nameTextBox.Text = schueler.NameVorname;
         klasseTextBox.Text = schueler.Klasse;
         textBoxAdresse.Text = schueler.Data.AnschriftStrasse + "\n" + schueler.Data.AnschriftPLZ + " " + schueler.Data.AnschriftOrt + "\n Tel.:" + schueler.Data.AnschriftTelefonnummer;
 

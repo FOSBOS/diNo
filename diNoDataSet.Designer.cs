@@ -10758,7 +10758,7 @@ WHERE        (Id = @Id)";
 
 FROM Schueler, SchuelerKurs
 WHERE (SchuelerKurs.SchuelerId = Schueler.Id) and (SchuelerKurs.KursId = @KursId)
-ORDER BY Name, Vorname";
+ORDER BY KlasseId,Name, Vorname";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }

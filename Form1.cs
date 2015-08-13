@@ -80,71 +80,7 @@ namespace diNo
 
     private void btnCreateExcels_Click(object sender, EventArgs e)
     {
-      using (LehrerTableAdapter lehrerAdapter = new LehrerTableAdapter())
-      using (KursTableAdapter kursAdapter = new KursTableAdapter())
-      using (SchuelerKursTableAdapter schuelerKursAdapter = new SchuelerKursTableAdapter())
-      using (SchuelerTableAdapter schuelerAdapter = new SchuelerTableAdapter())
-      using (FachTableAdapter fachAdapter = new FachTableAdapter())
-      {
-        foreach (var kurs in kursAdapter.GetData())
-        {
-          var lehrer = lehrerAdapter.GetDataById(kurs.LehrerId)[0];
-
-          string directoryName = "C:\\Projects\\diNo\\ExcelFiles\\" + lehrer.Kuerzel;
-          if (!Directory.Exists(directoryName))
-          {
-            Directory.CreateDirectory(directoryName);
-          }
-
-          kurs.Bezeichnung = kurs.Bezeichnung.Replace('/', ' ');
-          string fileName = directoryName + "\\" + kurs.Bezeichnung + ".xlsx";
-          if (File.Exists(fileName))
-          {
-            continue;
-          }
-
-          var alleSchueler = schuelerKursAdapter.GetDataByKursId(kurs.Id);
-          if (alleSchueler.Count == 0)
-          {
-            log.WarnFormat("Der Kurs {0} hat keine Schueler ", kurs.Bezeichnung);
-            continue;
-          }
-
-          var fach = fachAdapter.GetDataById(kurs.FachId)[0];
-          if (string.IsNullOrEmpty(fach.Bezeichnung))
-          {
-            // ignoriere FPA, Seminare und ähnliche Platzhalter
-            log.Debug("Erzeuge keine Datei für das Fach " + fach.Kuerzel);
-            continue;
-          }
-
-          Schulaufgabenwertung wertung = Schulaufgabenwertung.NotSet;
-          var dieSchueler = new List<Schueler>();
-          var klassen = new List<string>();
-          foreach (var schueler in alleSchueler)
-          {
-            var dbSchueler = new SchuelerTableAdapter().GetDataById(schueler.SchuelerId)[0];
-            string benutzterVorname = string.IsNullOrEmpty(dbSchueler.Rufname) ? dbSchueler.Vorname : dbSchueler.Rufname;
-            bool isLegastheniker = dbSchueler.LRSStoerung || dbSchueler.LRSSchwaeche;
-            dieSchueler.Add(new Schueler(schueler.SchuelerId, benutzterVorname, dbSchueler.Name, isLegastheniker, dbSchueler.KlasseWinSV));
-            if (wertung == Schulaufgabenwertung.NotSet)
-            {
-              Schulart schulart = dbSchueler.KlasseWinSV.StartsWith("B") ? Schulart.BOS : Schulart.FOS;
-              wertung = Faecherkanon.GetSchulaufgabenwertung(fach, Faecherkanon.GetJahrgangsstufe(dbSchueler.Jahrgangsstufe), Faecherkanon.GetZweig(dbSchueler.Ausbildungsrichtung), schulart);
-            }
-
-            if (!klassen.Contains(dbSchueler.KlasseWinSV))
-            {
-              klassen.Add(dbSchueler.KlasseWinSV);
-            }
-          }
-
-          string klassenString = klassen.Aggregate((x, y) => x + y);
-         
-          // Trage die Sachen in eine leere Excel-Datei
-          ExcelSheet.WriteExcelFile(wertung, fach.Bezeichnung, lehrer.Kuerzel, "2015 / 2016", klassenString, dieSchueler, fileName, kurs.Id);
-        }
-      }
+            new ErzeugeAlleExcelDateien();
     }
 
     private void btnReadExcelKurse_Click(object sender, EventArgs e)

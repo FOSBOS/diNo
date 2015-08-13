@@ -88,8 +88,13 @@ namespace diNo
       private set;
     }
 
+    public diNoDataSet.KursRow Data
+        {
+            get { return data; }           
+        }
+
     /// <summary>
-    /// Die Liste der Schüler dieser Klasse.
+    /// Die Liste der Schüler dieser Klasse (sortiert via SQL)
     /// </summary>
     public diNoDataSet.SchuelerDataTable getSchueler
     {

@@ -72,7 +72,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Berechnungsvorschrift.cs" />
+    <Compile Include="GlobalConsts.cs" />
     <Compile Include="CellConstant.cs" />
     <Compile Include="diNoDataSet.cs">
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
@@ -82,7 +82,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ErzeugeExcelDateien.cs" />
     <Compile Include="ExcelSheet.cs" />
+    <Compile Include="ExcelTools.cs" />
     <Compile Include="Fach.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -101,6 +103,7 @@
     </Compile>
     <Compile Include="KursplanReader.cs" />
     <Compile Include="LehrerFileReader.cs" />
+    <Compile Include="LeseNotenAusExcel.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="NotenAusExcelReader.cs" />
     <Compile Include="Notenbogen.cs">

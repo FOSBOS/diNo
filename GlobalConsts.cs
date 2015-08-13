@@ -24,4 +24,11 @@ namespace diNo
 		/// </summary>
 		ZweiZuEins = 2
 	}
+
+    public static class Konstanten
+    {
+        public const string ExcelPfad = "D:\\diNo\\ExcelFiles\\";
+        public const string Schuljahr = "2015 / 2016";
+    }
+    
 }
