@@ -65,8 +65,11 @@ namespace diNo
   {
     private diNoDataSet.KursRow data;
     private diNoDataSet.SchuelerDataTable schueler;
-        
-    public Kurs(int id)
+    private diNoDataSet.FachRow fach;
+    private diNoDataSet.LehrerRow lehrer;
+
+
+        public Kurs(int id)
         {
             this.Id = id;
             var rst = new KursTableAdapter().GetDataById(id);
@@ -112,11 +115,31 @@ namespace diNo
         {
             get
             {
-                return this.data.FachRow;
+                if (fach == null)
+                {
+                    fach = new FachTableAdapter().GetDataById(data.FachId)[0];
+                }
+                return fach;
+
+                // return data.FachRow; so sollte es eigentlich gehen
             }
         }
 
-    public string FachBezeichnung
+        public diNoDataSet.LehrerRow getLehrer
+        {
+            get
+            {
+                if (lehrer == null)
+                {
+                    lehrer = new LehrerTableAdapter().GetDataById(data.LehrerId)[0];
+                }
+                return lehrer;
+
+                // return data.LehrerRow; so sollte es eigentlich gehen
+            }
+        }
+
+        public string FachBezeichnung
     {
       get { return this.getFach.Bezeichnung; }
       

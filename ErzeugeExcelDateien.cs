@@ -20,6 +20,8 @@ namespace diNo
             var kurse = ta.GetData();
             foreach (var kurs in kurse)
             {
+                // if (kurs.Id>824) && (kurs.Id<840)
+                if (kurs.Id==851)
                 new ErzeugeExcelDatei(kurs);
             }
         }        
@@ -31,7 +33,7 @@ namespace diNo
   public class ErzeugeExcelDatei
   {
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-    private OpenExcel xls;
+    private OpenNotendatei xls;
     private Kurs kurs;
     private string fileName;
     private diNoDataSet.SchuelerDataTable alleSchueler;
@@ -57,10 +59,10 @@ namespace diNo
                 return;
             }
 
-            try
+//           try
             {
                 CopyExcelFile();
-                xls = new OpenExcel(fileName);
+                xls = new OpenNotendatei(fileName);
                 FillExcelFile();
                 SwitchNotenschluessel();
 
@@ -68,10 +70,11 @@ namespace diNo
                 xls.workbook.Save();
                 xls.Dispose(); // Destruktor aufrufen
             }
-            catch (Exception exp)
+            /*catch (Exception exp)
             {
-                log.Fatal("Fehler beim Schreiben der Excel-Datei " + FileName, exp);
+                log.Fatal("Fehler beim Schreiben der Excel-Datei " + fileName, exp);
             }
+            */
         }
 
         /// <summary>
@@ -79,7 +82,7 @@ namespace diNo
         /// </summary>
         private void CopyExcelFile()
         {
-            string directoryName = Konstanten.ExcelPfad + "\\" + kurs.Data.LehrerRow.Kuerzel;
+            string directoryName = Konstanten.ExcelPfad + "\\" + kurs.getLehrer.Kuerzel;
             if (!Directory.Exists(directoryName))
             {
                 Directory.CreateDirectory(directoryName);
@@ -91,7 +94,7 @@ namespace diNo
             }
 
             // kopiere Vorlage
-            if (kurs.Data.FachRow.Bezeichnung == "Englisch")
+            if (kurs.FachBezeichnung == "Englisch")
             {
                 File.Copy(Konstanten.ExcelPfad + "\\Vorlage Englisch.xlsx", fileName);
             }
@@ -113,11 +116,11 @@ namespace diNo
             Schulaufgabenwertung wertung = Faecherkanon.GetSchulaufgabenwertung(kurs.getFach, Faecherkanon.GetJahrgangsstufe(ersterSchueler.Jahrgangsstufe), Faecherkanon.GetZweig(ersterSchueler.Ausbildungsrichtung), schulart);
 
             // schreibe Notenbogen - Kopf
-            xls.WriteValue(OpenExcel.Notensheets.Notenbogen, CellConstant.Wertungsart, GetWertungsString(wertung));
-            xls.WriteValue(OpenExcel.Notensheets.Notenbogen, CellConstant.Fachbezeichnung, kurs.getFach.Bezeichnung);
-            xls.WriteValue(OpenExcel.Notensheets.Notenbogen, CellConstant.Lehrer, kurs.Data.LehrerRow.Name);
-            xls.WriteValue(OpenExcel.Notensheets.Notenbogen, CellConstant.Schuljahr, Konstanten.Schuljahr);
-            xls.WriteValue(OpenExcel.Notensheets.sid, CellConstant.KursId, kurs.Id.ToString());
+            xls.WriteValue(xls.notenbogen, CellConstant.Wertungsart, GetWertungsString(wertung));
+            xls.WriteValue(xls.notenbogen, CellConstant.Fachbezeichnung, kurs.getFach.Bezeichnung);
+            xls.WriteValue(xls.notenbogen, CellConstant.Lehrer, kurs.getLehrer.Name);
+            xls.WriteValue(xls.notenbogen, CellConstant.Schuljahr, Konstanten.Schuljahr);
+            xls.WriteValue(xls.sid, CellConstant.KursId, kurs.Id.ToString());
 
             int zeile = 5;
             int zeileFuerSId = CellConstant.zeileSIdErsterSchueler;
@@ -132,12 +135,12 @@ namespace diNo
                 }
 
                 // Schüler in die Exceldatei schreiben
-                xls.WriteValue(OpenExcel.Notensheets.Notenbogen, CellConstant.Nachname + zeile, schueler.Name);
-                xls.WriteValue(OpenExcel.Notensheets.Notenbogen, CellConstant.Vorname + (zeile + 1), "   " + benutzterVorname);
-                xls.WriteValue(OpenExcel.Notensheets.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
+                xls.WriteValue(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Name);
+                xls.WriteValue(xls.notenbogen, CellConstant.Vorname + (zeile + 1), "   " + benutzterVorname);
+                xls.WriteValue(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
                 if (schueler.LRSStoerung || schueler.LRSSchwaeche)
                 {
-                    xls.WriteValue(OpenExcel.Notensheets.Notenbogen, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
+                    xls.WriteValue(xls.notenbogen, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
                 }
 
                 zeile += 2;
@@ -145,7 +148,7 @@ namespace diNo
             }
 
             // Klassenbezeichnung wird aus allen Schülern gesammelt
-            xls.WriteValue(OpenExcel.Notensheets.Notenbogen, CellConstant.Klassenbezeichnung, klassen.Aggregate((x, y) => x + y));
+            xls.WriteValue(xls.notenbogen, CellConstant.Klassenbezeichnung, klassen.Aggregate((x, y) => x + y));
         }
 
     /// <summary>
@@ -206,49 +209,6 @@ namespace diNo
       throw new InvalidOperationException("unbekannte Schulaufgabenwertung " + wertung);
     }
 
-    /// <summary>
-    /// Der Dateiname.
-    /// </summary>
-    public string FileName
-    {
-      get;
-      private set;
-    }
-
-        /*
-    #region IDisposable Member
-
-    /// <summary>
-    /// Disposes.
-    /// </summary>
-    public void Dispose()
-    {
-      this.Dispose(true);
-    }
-
-    /// <summary>
-    /// Disposes.
-    /// </summary>
-    /// <param name="disposing">If true, free native resources.</param>
-    protected virtual void Dispose(bool disposing)
-    {
-      if (disposing)
-      {
-        if (this.workbook != null)
-        {
-          this.workbook.Close(this.UnsavedChanges, this.FileName, Type.Missing);
-          Marshal.ReleaseComObject(this.workbook);
-          this.workbook = null;
-        }
-
-        this.excelApp = null;
-      }
-
-      GC.SuppressFinalize(this);
-    }
-
-    #endregion
-    */
     }
 }
 
