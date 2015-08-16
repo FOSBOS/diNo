@@ -12,6 +12,7 @@ namespace diNoTray
     private NotifyIcon trayIcon;
     private ContextMenu trayMenu;
 
+/*
     /// <summary>
     /// Konstruktor.
     /// </summary>
@@ -133,6 +134,6 @@ namespace diNoTray
 
       base.WndProc(ref m);
     }
-
+*/
   }
 }

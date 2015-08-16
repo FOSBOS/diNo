@@ -43,6 +43,11 @@ namespace diNo
       internal set;
     }
 
+     public string benutzterVorname
+        {
+            get { return string.IsNullOrEmpty(data.Rufname) ? data.Vorname : data.Rufname; }
+        }
+
     /// <summary>
     /// Name und Rufname des Schülers, durch ", " getrennt.
     /// </summary>
@@ -50,7 +55,7 @@ namespace diNo
     {
       get
       {
-        return this.Data.Name + ", " + this.Data.Rufname;
+        return this.Data.Name + ", " + benutzterVorname;
       }
     }
 
@@ -92,7 +97,7 @@ namespace diNo
     /// <summary>
     /// Die Klassenbezeichnung 
     /// </summary>
-    public string Klasse
+    public Klasse getKlasse
     {
       get
             {
@@ -100,7 +105,7 @@ namespace diNo
                 {
                     klasse = new Klasse(this.data.KlasseId);
                 }
-                return klasse.Data.Bezeichnung;
+                return klasse;
             }
       
     }

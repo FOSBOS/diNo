@@ -26,23 +26,6 @@ namespace diNo
       LehrerFileReader.Read("C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\STDLEHR.txt");
     }
 
-    private static Schulaufgabenwertung FindWertung(KursplanZeile aKurs, diNoDataSet.KursRow dbKurs, Schulaufgabenwertung wertungImKurs)
-    {
-      Schulaufgabenwertung wertungInDieserKlasse = Faecherkanon.GetSchulaufgabenwertung(aKurs.FachKurzbez, aKurs.Klasse);
-      if (wertungImKurs == Schulaufgabenwertung.NotSet)
-      {
-        wertungImKurs = wertungInDieserKlasse;
-      }
-      else
-      {
-        if (wertungImKurs != wertungInDieserKlasse)
-        {
-          log.ErrorFormat("Die Schulaufgabenwertung im Kurs {0} von Lehrer {1} ist nicht konsistent: {2} vs. {3}", dbKurs.Bezeichnung, dbKurs.LehrerRow.Kuerzel, wertungImKurs, wertungInDieserKlasse);
-        }
-      }
-      return wertungImKurs;
-    }
-
     private static List<KursplanZeile> FilterKurse(IList<KursplanZeile> alleKurseRaw)
     {
       var alleKurse = new List<KursplanZeile>();

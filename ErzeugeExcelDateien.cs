@@ -20,8 +20,8 @@ namespace diNo
             var kurse = ta.GetData();
             foreach (var kurs in kurse)
             {
-                // if (kurs.Id>824) && (kurs.Id<840)
-                if (kurs.Id==851)
+                if (kurs.Id>824 && kurs.Id<840)
+                //if (kurs.Id==851)
                 new ErzeugeExcelDatei(kurs);
             }
         }        
@@ -63,6 +63,7 @@ namespace diNo
             {
                 CopyExcelFile();
                 xls = new OpenNotendatei(fileName);
+                
                 FillExcelFile();
                 SwitchNotenschluessel();
 
@@ -113,7 +114,7 @@ namespace diNo
             // Schulart, SA-Wertung wird dem ersten Schüler entnommen
             diNoDataSet.SchuelerRow ersterSchueler = alleSchueler[0]; // muss existieren, da nur Kurse mit Schülern erzeugt werden
             Schulart schulart = ersterSchueler.KlasseWinSV.StartsWith("B") ? Schulart.BOS : Schulart.FOS;
-            Schulaufgabenwertung wertung = Faecherkanon.GetSchulaufgabenwertung(kurs.getFach, Faecherkanon.GetJahrgangsstufe(ersterSchueler.Jahrgangsstufe), Faecherkanon.GetZweig(ersterSchueler.Ausbildungsrichtung), schulart);
+            Schulaufgabenwertung wertung = kurs.GetSchulaufgabenwertung(new Klasse(ersterSchueler.KlasseId));
 
             // schreibe Notenbogen - Kopf
             xls.WriteValue(xls.notenbogen, CellConstant.Wertungsart, GetWertungsString(wertung));
@@ -125,20 +126,21 @@ namespace diNo
             int zeile = 5;
             int zeileFuerSId = CellConstant.zeileSIdErsterSchueler;
 
-            foreach (var schueler in alleSchueler)
-            {               
-                string benutzterVorname = string.IsNullOrEmpty(schueler.Rufname) ? schueler.Vorname : schueler.Rufname;
-                bool isLegastheniker = schueler.LRSStoerung || schueler.LRSSchwaeche;
-                if (!klassen.Contains(schueler.KlasseWinSV))
+            foreach (var s in alleSchueler)
+            {
+                Schueler schueler = new Schueler(s.Id);
+                
+                
+                if (!klassen.Contains(schueler.getKlasse.Data.Bezeichnung))
                 {
-                    klassen.Add(schueler.KlasseWinSV);
+                    klassen.Add(schueler.getKlasse.Data.Bezeichnung);
                 }
 
                 // Schüler in die Exceldatei schreiben
-                xls.WriteValue(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Name);
-                xls.WriteValue(xls.notenbogen, CellConstant.Vorname + (zeile + 1), "   " + benutzterVorname);
+                xls.WriteValue(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name);
+                xls.WriteValue(xls.notenbogen, CellConstant.Vorname + (zeile + 1), "   " + schueler.benutzterVorname);
                 xls.WriteValue(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
-                if (schueler.LRSStoerung || schueler.LRSSchwaeche)
+                if (schueler.IsLegastheniker)
                 {
                     xls.WriteValue(xls.notenbogen, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
                 }
@@ -148,7 +150,7 @@ namespace diNo
             }
 
             // Klassenbezeichnung wird aus allen Schülern gesammelt
-            xls.WriteValue(xls.notenbogen, CellConstant.Klassenbezeichnung, klassen.Aggregate((x, y) => x + y));
+            xls.WriteValue(xls.notenbogen, CellConstant.Klassenbezeichnung, klassen.Aggregate((x, y) => x + ", " + y));
         }
 
     /// <summary>
@@ -157,18 +159,18 @@ namespace diNo
     private void SwitchNotenschluessel()
     {
             string schluessel, ug, og;
-            switch (kurs.FachBezeichnung)
+            switch (kurs.getFach.Kuerzel)
             {
-                case "Englisch":
+                case "E":
                     schluessel = "E";
                     ug = "34";
                     og = "49";
                     break;
-                case "Betriebswirtschaftslehre":
-                case "Wirtschaftsinformatik":
-                case "Volkswirtschaftslehre":
-                case "Wirtschaftslehre":
-                case "Rechtslehre":
+                case "BwR":
+                case "WIn":
+                case "VWL":
+                case "Wl":
+                case "Rl":
                     schluessel = "M";
                     ug = "30";
                     og = "44";

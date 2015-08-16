@@ -278,7 +278,7 @@ namespace diNo
     public override string[] Check(diNo.diNoDataSet.SchuelerRow schueler, CheckReason reason)
     {
       IList<string> result = new List<string>();
-      foreach (var kursZuordnung in new SchuelerKursTableAdapter().GetDataBySchuelerId(schueler.Id))
+/*      foreach (var kursZuordnung in new SchuelerKursTableAdapter().GetDataBySchuelerId(schueler.Id))
       {
         var kurs = new KursTableAdapter().GetDataById(kursZuordnung.KursId)[0];
         var fach = new FachTableAdapter().GetDataById(kurs.FachId)[0];
@@ -291,7 +291,7 @@ namespace diNo
           continue;
         }
 
-        Schulaufgabenwertung wertung = Faecherkanon.GetSchulaufgabenwertung(fach.Kuerzel, klasse.Bezeichnung);
+        Schulaufgabenwertung wertung = kurs.GetSchulaufgabenwertung(fach.Kuerzel, klasse.Bezeichnung);
 
         int noetigeAnzahlSchulaufgaben = GetAnzahlSchulaufgaben(wertung);
         if (noetigeAnzahlSchulaufgaben > 0)
@@ -350,7 +350,7 @@ namespace diNo
           }
         }
       }
-
+      */
       return result.ToArray();
     }
 

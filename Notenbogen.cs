@@ -23,7 +23,7 @@ namespace diNo
 
         schueler = new Schueler(schuelerId);
         nameTextBox.Text = schueler.NameVorname;
-        klasseTextBox.Text = schueler.Klasse;
+        klasseTextBox.Text = schueler.getKlasse.Data.Bezeichnung;
         textBoxAdresse.Text = schueler.Data.AnschriftStrasse + "\n" + schueler.Data.AnschriftPLZ + " " + schueler.Data.AnschriftOrt + "\n Tel.:" + schueler.Data.AnschriftTelefonnummer;
 
         SchuelerKursTableAdapter skAdapter = new SchuelerKursTableAdapter();

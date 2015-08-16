@@ -24,7 +24,8 @@ namespace diNo
         {
             try
             {
-                this.excelApp = new Excel.Application();
+                if (OpenExcel.excelApp==null)
+                    OpenExcel.excelApp = new Excel.Application();
                 this.FileName = fileName;
 
                 this.workbook = excelApp.Workbooks.Open(this.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
@@ -58,7 +59,7 @@ namespace diNo
     /// <summary>
     /// Referenz auf die Excel Application.
     /// </summary>
-    private Excel.Application excelApp;
+    private static Excel.Application excelApp;
 
     /// <summary>
     /// Das Excel Workbook.
@@ -117,7 +118,7 @@ namespace diNo
           this.workbook = null;
         }
 
-        this.excelApp = null;
+        //this.excelApp = null;
       }
       GC.SuppressFinalize(this);
     }
@@ -203,8 +204,15 @@ namespace diNo
         /// <param name="value">Den Wert der Zelle als String.</param>
         public void WriteValue(Excel.Worksheet sheet, string zelle, string value)
         {
-            Excel.Range r = sheet.get_Range(zelle, missing);
-            r.Value2 = value;
+            try // muss wieder raus!
+            {
+                Excel.Range r = sheet.get_Range(zelle, missing);
+                r.Value2 = value;
+            }
+            catch
+            {
+                ;
+            }
         }
 
         /// <summary>
