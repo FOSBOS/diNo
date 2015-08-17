@@ -47,15 +47,16 @@ namespace diNo
     }
 
     private void btnReadExcelFile_Click(object sender, EventArgs e)
-    {
-            /*
-      foreach (string file in Directory.GetFiles("C:\\Projects\\diNo\\Notendateien11T"))
+    {            
+      foreach (string file in Directory.GetFiles(Konstanten.ExcelPfad + "\\Abgabe"))
       {
-        var notenReader = new NotenAusExcelReader();
-        notenReader.OnStatusChange += notenReader_OnStatusChange;
-        notenReader.Synchronize(file);
+            var reader = new LeseNotenAusExcel(file);
+            if (reader.success)
+                Directory.Move(file, Konstanten.ExcelPfad + "\\Archiv");
+        //notenReader.OnStatusChange += notenReader_OnStatusChange;
+        //notenReader.Synchronize(file);
       }
-     */ 
+     
     }
 
     /*

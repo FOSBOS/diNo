@@ -226,6 +226,41 @@ namespace diNo
             Excel.Range r = sheet.get_Range(zelle, missing);
             return r.Value2 == null ? null : Convert.ToString(r.Value2).Trim();
         }
+
+        public byte? ReadNote(Notentyp typ, string zelle)
+        {
+            string v;     
+            if (typ==Notentyp.Abschlusszeugnis || typ == Notentyp.APMuendlich || typ == Notentyp.APSchriftlich)
+                v = ReadValue(notenbogen, zelle);            
+            else            
+                v = ReadValue(AP, zelle);
+
+            return !string.IsNullOrEmpty(v) ? Convert.ToByte(v, CultureInfo.CurrentUICulture) : (byte?)null;
+        }
+
+        public decimal? ReadSchnitt(Notentyp typ, Halbjahr hj,int zeile)
+        {
+            string zelle = CellConstant.getLNWZelle(typ, hj, zeile)[0];
+            string v;
+            if (typ == Notentyp.APGesamt)            
+                v = ReadValue(notenbogen, zelle);            
+            else            
+                v = ReadValue(AP, zelle);
+
+            return !string.IsNullOrEmpty(v) ? Convert.ToDecimal(v, CultureInfo.CurrentUICulture) : (decimal?)null;
+        }
+
+        public byte? ReadSchnittGanzzahlig(Notentyp typ, Halbjahr hj, int zeile)
+        {
+            string zelle = CellConstant.getLNWZelle(typ, hj, zeile)[0];
+            string v;
+            if (typ == Notentyp.APGesamt)
+                v = ReadValue(notenbogen, zelle);
+            else
+                v = ReadValue(AP, zelle);
+
+            return !string.IsNullOrEmpty(v) ? Convert.ToByte(v, CultureInfo.CurrentUICulture) : (byte?)null;
+        }
     }
 
 }

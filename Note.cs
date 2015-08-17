@@ -86,10 +86,12 @@ namespace diNo
   /// </summary>
   public enum Halbjahr
   {
+        
     /// <summary>
     /// Keine Zuordnung zu einem Halbjahr möglich.
     /// </summary>
     Ohne = 0,
+        
     /// <summary>
     /// Erstes Halbjahr.
     /// </summary>
@@ -100,50 +102,67 @@ namespace diNo
     Zweites = 2
   }
 
-  public class BerechneteNote
-  {
-    public decimal? SchnittMuendlich
+    public class BerechneteNote
     {
-      get;
-      set;
-    }
+        public decimal? SchnittMuendlich
+        {
+            get;
+            set;
+        }
 
-    public decimal? SchnittSchulaufgaben
-    {
-      get;
-      set;
-    }
+        public decimal? SchnittSchulaufgaben
+        {
+            get;
+            set;
+        }
 
-    public byte? JahresfortgangGanzzahlig
-    {
-      get;
-      set;
-    }
+        public byte? JahresfortgangGanzzahlig
+        {
+            get;
+            set;
+        }
 
-    public decimal? JahresfortgangMitKomma
-    {
-      get;
-      set;
-    }
+        public decimal? JahresfortgangMitKomma
+        {
+            get;
+            set;
+        }
 
-    public decimal? PruefungGesamt
-    {
-      get;
-      set;
-    }
+        public decimal? PruefungGesamt
+        {
+            get;
+            set;
+        }
 
-    public decimal? SchnittFortgangUndPruefung
-    {
-      get;
-      set;
-    }
+        public decimal? SchnittFortgangUndPruefung
+        {
+            get;
+            set;
+        }
 
-    public byte? Abschlusszeugnis
-    {
-      get;
-      set;
+        public byte? Abschlusszeugnis
+        {
+            get;
+            set;
+        }
+        public bool ErstesHalbjahr { get; set; }
+
+        private int kursid, schuelerid;
+
+        public BerechneteNote(int aKursId, int aSchuelerId)
+        {
+            kursid = aKursId;
+            schuelerid = aSchuelerId;
+        }
+
+        public void writeToDB()
+        {
+            BerechneteNoteTableAdapter na = new BerechneteNoteTableAdapter();
+            na.Insert(SchnittMuendlich, SchnittSchulaufgaben, JahresfortgangMitKomma, JahresfortgangGanzzahlig,
+                    PruefungGesamt, SchnittFortgangUndPruefung, Abschlusszeugnis, 0, false, schuelerid, kursid, ErstesHalbjahr);
+
+        }
     }
-  }
 
   /// <summary>
   /// Eine Note.

@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 namespace diNo
 {
   /// <summary>
@@ -17,32 +17,15 @@ namespace diNo
     #region Konstanten geben das Feld für den ersten Schüler an.
     
     public static string Nachname = "B";
-    public static string[] SchulaufgabenErstesHJ = new[] { "D", "E", "F" };
-    public static string ZeugnisnoteErstesHJ = "O";
-    public static string[] SchulaufgabenZweitesHJ = new[] { "P", "Q", "R" };
     public static string LegasthenieVermerk = "Y";
     public static string LegasthenieEintragung = "Legasthenie";
-    public static string ZeugnisnoteZweitesHJ = "AA";
+
 
     #endregion
 
     #region Ab hier die untere Zeile der beiden Zeilen eines Schuelers.
 
     public static string Vorname = "B";
-    public static string[] ExenErstesHJ = new[] { "D", "E", "F", "G" };
-    public static string[] MuendlicheErstesHJ = new[] { "H", "I", "J" };
-    public static string EPErstesHJ = "K";
-    public static string FachreferatErstesHJ = "L";
-    public static string SchnittSchulaufgabenErstesHJ = "M";
-    public static string SchnittMuendlicheUndExenErstesHJ = "N";
-    public static string SchnittGesamtErstesHJ = "O";
-    public static string[] ExenZweitesHJ = new[] { "P", "Q", "R", "S" };
-    public static string[] MuendlicheZweitesHJ = new[] { "T", "U", "V" };
-    public static string EPZweitesHJ = "W";
-    public static string FachreferatZweitesHJ = "X";
-    public static string SchnittSchulaufgabenZweitesHJ = "Y";
-    public static string SchnittMuendlicheUndExenZweitesHJ = "Z";
-    public static string SchnittGesamtZweitesHJ = "AA";
 
     #endregion
 
@@ -51,11 +34,7 @@ namespace diNo
 
     #region AP
 
-    public static string APschriftlichSpalte = "E";
-    public static string APmuendlichSpalte = "F";
-    public static string APgesamtSpalte = "G";
-    public static string APZeugnisnote = "I";
-    public static int APZeileErsterSchueler = 6;
+ public static int APZeileErsterSchueler = 6;
 
     #endregion
 
@@ -78,6 +57,61 @@ namespace diNo
     public static string ProzentFuenfUntergrenze = "H34";
     public static string ProzentFuenfObergrenze = "H35";
 
-    #endregion
-  }
+        #endregion
+
+        /// <summary>
+        /// liefert zum angegeben Notentyp und Halbjahr die Spalte im Excelsheet. Zusammen mit der Zeile (=obere Zeile) 
+        /// des Schülers wird die Zelle generiert.
+        /// </summary>
+        public static string[] getLNWZelle(Notentyp typ, Halbjahr hj,int zeile)
+        {
+            string[] s = new string[] { };            
+
+            if (hj == Halbjahr.Erstes)
+            {
+                zeile++; // die meisten Noten stehen unten
+                switch (typ)
+                {                    
+                    case Notentyp.Schulaufgabe: s =  new[] { "D", "E", "F" }; zeile--; break;
+                    case Notentyp.Ex: s =  new[] { "D", "E", "F", "G" };  break;
+                    case Notentyp.EchteMuendliche: s =  new[] { "H", "I", "J" }; break;
+                    case Notentyp.Fachreferat: s =  new[] { "L" }; break;
+                    case Notentyp.Ersatzprüfung: s =  new[] { "K" }; break;
+                    case Notentyp.SchnittSA: s =  new[] { "M" }; break;
+                    case Notentyp.Schnittmuendlich: s =  new[] { "N" }; break;
+                    case Notentyp.JahresfortgangMitNKS: s = new[] { "O" }; break;
+                    case Notentyp.Jahresfortgang: s =  new[] { "O" }; zeile--; break;
+                }
+            }
+
+            if (hj == Halbjahr.Zweites)
+            {
+                zeile++;
+                switch (typ)
+                {                   
+                    case Notentyp.Schulaufgabe: s =  new[] { "P", "Q", "R" }; zeile--; break;
+                    case Notentyp.Ex: s =  new[] { "P", "Q", "R", "S" }; break;
+                    case Notentyp.EchteMuendliche: s =  new[] { "T", "U", "V" }; break;
+                    case Notentyp.Fachreferat: s =  new[] { "X" }; break;
+                    case Notentyp.Ersatzprüfung: s =  new[] { "W" }; break;
+                    case Notentyp.SchnittSA: s =  new[] { "Y" }; break;
+                    case Notentyp.Schnittmuendlich: s =  new[] { "Z" }; break;
+                    case Notentyp.JahresfortgangMitNKS: s = new[] { "AA" }; break;
+                    case Notentyp.Jahresfortgang: s =  new[] { "AA" }; zeile--; break;
+                    case Notentyp.APSchriftlich: s = new[] { "E" }; break;
+                    case Notentyp.APMuendlich: s = new[] { "F" }; break;
+                    case Notentyp.APGesamt: s = new[] { "G" }; break;
+                    case Notentyp.Abschlusszeugnis: s = new[] { "I" }; break;
+                }
+            }
+            
+            for (int i = 0; i < s.Length; i++)
+                s[i] = s[i] + zeile;     // Zeilennummer an jede Spalte anhängen
+
+            return s; // ggf. eine leere Liste, falls diese Kombi nicht zulässig ist
+        }
+        
+    }
+
 }
+
