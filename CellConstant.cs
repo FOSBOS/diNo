@@ -77,10 +77,6 @@ namespace diNo
                     case Notentyp.EchteMuendliche: s =  new[] { "H", "I", "J" }; break;
                     case Notentyp.Fachreferat: s =  new[] { "L" }; break;
                     case Notentyp.Ersatzprüfung: s =  new[] { "K" }; break;
-                    case Notentyp.SchnittSA: s =  new[] { "M" }; break;
-                    case Notentyp.Schnittmuendlich: s =  new[] { "N" }; break;
-                    case Notentyp.JahresfortgangMitNKS: s = new[] { "O" }; break;
-                    case Notentyp.Jahresfortgang: s =  new[] { "O" }; zeile--; break;
                 }
             }
 
@@ -94,14 +90,8 @@ namespace diNo
                     case Notentyp.EchteMuendliche: s =  new[] { "T", "U", "V" }; break;
                     case Notentyp.Fachreferat: s =  new[] { "X" }; break;
                     case Notentyp.Ersatzprüfung: s =  new[] { "W" }; break;
-                    case Notentyp.SchnittSA: s =  new[] { "Y" }; break;
-                    case Notentyp.Schnittmuendlich: s =  new[] { "Z" }; break;
-                    case Notentyp.JahresfortgangMitNKS: s = new[] { "AA" }; break;
-                    case Notentyp.Jahresfortgang: s =  new[] { "AA" }; zeile--; break;
                     case Notentyp.APSchriftlich: s = new[] { "E" }; break;
                     case Notentyp.APMuendlich: s = new[] { "F" }; break;
-                    case Notentyp.APGesamt: s = new[] { "G" }; break;
-                    case Notentyp.Abschlusszeugnis: s = new[] { "I" }; break;
                 }
             }
             
@@ -110,7 +100,44 @@ namespace diNo
 
             return s; // ggf. eine leere Liste, falls diese Kombi nicht zulässig ist
         }
-        
+
+        /// <summary>
+        /// liefert zum angegeben Notentyp und Halbjahr die Spalte im Excelsheet. Zusammen mit der Zeile (=obere Zeile) 
+        /// des Schülers wird die Zelle generiert.
+        /// </summary>
+        public static string getSchnittZelle(BerechneteNotentyp typ, Halbjahr hj, int zeile)
+        {
+            string s=null;
+
+            if (hj == Halbjahr.Erstes)
+            {
+                zeile++; // die meisten Noten stehen unten
+                switch (typ)
+                {
+                    case BerechneteNotentyp.SchnittSA: s = "M"; break;
+                    case BerechneteNotentyp.Schnittmuendlich: s = "N"; break;
+                    case BerechneteNotentyp.JahresfortgangMitNKS: s = "O"; break;
+                    case BerechneteNotentyp.Jahresfortgang: s = "O"; zeile--; break;
+                }
+            }
+
+            if (hj == Halbjahr.Zweites)
+            {
+                zeile++;
+                switch (typ)
+                {
+                    case BerechneteNotentyp.SchnittSA: s = "Y"; break;
+                    case BerechneteNotentyp.Schnittmuendlich: s = "Z"; break;
+                    case BerechneteNotentyp.JahresfortgangMitNKS: s = "AA"; break;
+                    case BerechneteNotentyp.Jahresfortgang: s = "AA"; zeile--; break;
+                    case BerechneteNotentyp.APGesamt: s = "G"; break;
+                    case BerechneteNotentyp.Abschlusszeugnis: s ="I"; break;
+                }
+            }
+            if (s != null) s = s + zeile;
+            return s; // ggf. ein null String, falls diese Kombi nicht zulässig ist
+        }
+
     }
 
 }

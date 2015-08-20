@@ -94,15 +94,14 @@ namespace diNo
         {
             int i = CellConstant.ZeileErsterSchueler;
             int indexAP = CellConstant.APZeileErsterSchueler;
-            List<BerechneteNote> schnitte = new List<BerechneteNote>();
 
             foreach (int sid in sidList)
-            {
-                // Schueler schueler = new Schueler(sid); // dieser Schüler ist jetzt dran
+            {                
                 for (Halbjahr hj = Halbjahr.Erstes; hj <= Halbjahr.Zweites; hj++)
-                {
-                    foreach (Notentyp typ in new[] { Notentyp.Schulaufgabe, Notentyp.Ex, Notentyp.EchteMuendliche,
-                                    Notentyp.Fachreferat, Notentyp.Ersatzprüfung, Notentyp.APSchriftlich, Notentyp.APMuendlich })
+                {                                        
+                    foreach (Notentyp typ in Enum.GetValues(typeof(Notentyp)))
+                        //new[] { Notentyp.Schulaufgabe, Notentyp.Ex, Notentyp.EchteMuendliche,
+                         //           Notentyp.Fachreferat, Notentyp.Ersatzprüfung, Notentyp.APSchriftlich, Notentyp.APMuendlich })
                     {
                         string[] zellen = CellConstant.getLNWZelle(typ, hj, i);
                         foreach (string zelle in zellen)
@@ -122,21 +121,19 @@ namespace diNo
 
                     BerechneteNote bnote = new BerechneteNote(sid, kurs.Id);
                     bnote.ErstesHalbjahr = (hj == Halbjahr.Erstes);
-                    bnote.SchnittSchulaufgaben = xls.ReadSchnitt(Notentyp.SchnittSA, hj, i);
-                    bnote.SchnittMuendlich = xls.ReadSchnitt(Notentyp.Schnittmuendlich, hj, i);
-                    bnote.JahresfortgangMitKomma = xls.ReadSchnitt(Notentyp.JahresfortgangMitNKS, hj, i);
-                    bnote.JahresfortgangGanzzahlig = xls.ReadSchnittGanzzahlig(Notentyp.Jahresfortgang, hj, i);
-                    bnote.PruefungGesamt = xls.ReadSchnitt(Notentyp.APGesamt, hj, indexAP);
-                    bnote.SchnittFortgangUndPruefung = xls.ReadSchnitt(Notentyp.EndnoteMitNKS, hj, indexAP);
-                    bnote.Abschlusszeugnis = xls.ReadSchnittGanzzahlig(Notentyp.Abschlusszeugnis, hj, indexAP);
-                    schnitte.Add(bnote);
-                }
-
-                // Erst wenn JF des 2. Hj. feststeht, wird diese Schnittkonstellation verwendet, sonst erstes Hj.
-                if (schnitte[1].JahresfortgangGanzzahlig != null)
-                    schnitte[1].writeToDB(); // 2. Hj
-                else
-                    schnitte[0].writeToDB(); // 1. Hj
+                    bnote.SchnittSchulaufgaben = xls.ReadSchnitt(BerechneteNotentyp.SchnittSA, hj, i);
+                    bnote.SchnittMuendlich = xls.ReadSchnitt(BerechneteNotentyp.Schnittmuendlich, hj, i);
+                    bnote.JahresfortgangMitKomma = xls.ReadSchnitt(BerechneteNotentyp.JahresfortgangMitNKS, hj, i);
+                    bnote.JahresfortgangGanzzahlig = xls.ReadSchnittGanzzahlig(BerechneteNotentyp.Jahresfortgang, hj, i);
+                    bnote.PruefungGesamt = xls.ReadSchnitt(BerechneteNotentyp.APGesamt, hj, indexAP);
+                    bnote.SchnittFortgangUndPruefung = xls.ReadSchnitt(BerechneteNotentyp.EndnoteMitNKS, hj, indexAP);
+                    bnote.Abschlusszeugnis = xls.ReadSchnittGanzzahlig(BerechneteNotentyp.Abschlusszeugnis, hj, indexAP);
+                    // Erst wenn JF feststeht, wird diese Schnittkonstellation gespeichert
+                    if (bnote.JahresfortgangGanzzahlig != null)
+                        bnote.writeToDB();
+                }                              
+                i += 2;
+                indexAP++;
             }
         }
     }

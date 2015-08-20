@@ -126,6 +126,7 @@
       <DependentUpon>ReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Schueler.cs" />
+    <Compile Include="SchuelerNoten.cs" />
     <Compile Include="TrueCryptHelper.cs" />
     <Compile Include="UnterrichtExcelReader.cs" />
     <Compile Include="UserControlChecks.cs">

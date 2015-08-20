@@ -14,6 +14,7 @@ namespace diNo
         private diNoDataSet.SchuelerRow data;   // nimmt SchülerRecordset auf
         private Klasse klasse;                  // Objektverweis zur Klasse dieses Schülers
         private diNoDataSet.KursDataTable kurse; // Recordset-Menge aller Kurse dieses Schülers
+        private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
 
     public Schueler(int id)
     {         
@@ -26,12 +27,7 @@ namespace diNo
          else
             {
                 throw new InvalidOperationException("Konstruktor Schueler: Ungültige ID.");
-            } 
-                 
-/*       this.Einzelnoten = new List<Note>();
-         this.BerechneteNoten = new BerechneteNote();
-         this.BerechneteNotenErstesHalbjahr = new BerechneteNote();
-*/
+            }       
     }
 
     /// <summary>
@@ -59,34 +55,7 @@ namespace diNo
       }
     }
 
-    /// <summary>
-    /// Die Noten des Schülers.
-    /// </summary>
-    public IList<Note> Einzelnoten
-    {
-      get;
-      private set;
-    }
-
-    /// <summary>
-    /// Die berechneten Noten des Schülers.
-    /// </summary>
-    public BerechneteNote BerechneteNoten
-    {
-      get;
-      private set;
-    }
-
-    /// <summary>
-    /// Die berechneten Noten des Schülers.
-    /// </summary>
-    public BerechneteNote BerechneteNotenErstesHalbjahr
-    {
-      get;
-      private set;
-    }
-
-    /// <summary>
+     /// <summary>
     /// Ob der Schüler Legastheniker ist.
     /// </summary>
     public bool IsLegastheniker
@@ -110,6 +79,21 @@ namespace diNo
       
     }
 
+    /// <summary>
+    /// Alle Noten (je Fach/Kurs) dieses Schülers
+    /// </summary>
+    public SchuelerNoten getNoten
+    {
+        get
+        {
+            if (noten == null)
+            {
+                noten = new SchuelerNoten(this);
+            }
+            return noten;
+        }
+    }
+
     public diNoDataSet.SchuelerRow Data
     {            
             get { return this.data; }
@@ -127,12 +111,7 @@ namespace diNo
             }
         }
     
-    public NotenProKurs NotenImKurs(int kursid)
-        {
-            return new NotenProKurs(this.Id, kursid);
-        }
-
-
+ 
     public double berechneDNote()
         {
             int summe=0, anz=0;

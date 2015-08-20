@@ -6,16 +6,7 @@ using System.Text;
 
 namespace diNo
 {
-  public enum CheckReason
-  {
-    None = 0,
-    ProbezeitBOS = 1,
-    HalbjahrUndProbezeitFOS = 2,
-    ErstePA = 3,
-    ZweitePA = 4,
-    DrittePA = 5,
-    Jahresende = 6
-  }
+ 
 
   /// <summary>
   /// Interface für Notenprüfungsklassen.
@@ -37,7 +28,7 @@ namespace diNo
     /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>true wenn check nötig.</returns>
-    bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason);
+    bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, Zeitpunkt reason);
 
     /// <summary>
     /// Führt den Check durch.
@@ -45,7 +36,7 @@ namespace diNo
     /// <param name="schueler">Der Schüler.</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
-    string[] Check(diNo.diNoDataSet.SchuelerRow schueler, CheckReason reason);
+    string[] Check(diNo.diNoDataSet.SchuelerRow schueler, Zeitpunkt reason);
   }
 
   /// <summary>
@@ -78,7 +69,7 @@ namespace diNo
     /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>true wenn check nötig.</returns>
-    public abstract bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason);
+    public abstract bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, Zeitpunkt reason);
 
     /// <summary>
     /// Führt den Check durch.
@@ -86,7 +77,7 @@ namespace diNo
     /// <param name="schueler">Der Schüler.</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
-    public abstract string[] Check(diNo.diNoDataSet.SchuelerRow schueler, CheckReason reason);
+    public abstract string[] Check(diNo.diNoDataSet.SchuelerRow schueler, Zeitpunkt reason);
   }
 
   /// <summary>
@@ -108,9 +99,9 @@ namespace diNo
     /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>true wenn check nötig.</returns>
-    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason)
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, Zeitpunkt reason)
     {
-      return jahrgangsstufe == Jahrgangsstufe.Zwoelf && reason == CheckReason.ErstePA;
+      return jahrgangsstufe == Jahrgangsstufe.Zwoelf && reason == Zeitpunkt.ErstePA;
     }
 
     /// <summary>
@@ -119,7 +110,7 @@ namespace diNo
     /// <param name="schueler">Der Schüler.</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
-    public override string[] Check(diNo.diNoDataSet.SchuelerRow schueler, CheckReason reason)
+    public override string[] Check(diNo.diNoDataSet.SchuelerRow schueler, Zeitpunkt reason)
     {
       IList<string> result = new List<string>();
       var noten = new NoteTableAdapter().GetDataBySchuelerId(schueler.Id).Where(x => x.Notenart == (int)Notentyp.Fachreferat);
@@ -151,7 +142,7 @@ namespace diNo
     /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>true wenn check nötig.</returns>
-    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason)
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, Zeitpunkt reason)
     {
       return jahrgangsstufe == Jahrgangsstufe.Elf && schulart == Schulart.FOS;
     }
@@ -162,7 +153,7 @@ namespace diNo
     /// <param name="schueler">Der Schüler.</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
-    public override string[] Check(diNoDataSet.SchuelerRow schueler, CheckReason reason)
+    public override string[] Check(diNoDataSet.SchuelerRow schueler, Zeitpunkt reason)
     {
       FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
       var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
@@ -204,7 +195,7 @@ namespace diNo
     /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>true wenn check nötig.</returns>
-    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason)
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, Zeitpunkt reason)
     {
       return jahrgangsstufe == Jahrgangsstufe.Dreizehn;
     }
@@ -215,7 +206,7 @@ namespace diNo
     /// <param name="schueler">Der Schüler.</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
-    public override string[] Check(diNoDataSet.SchuelerRow schueler, CheckReason reason)
+    public override string[] Check(diNoDataSet.SchuelerRow schueler, Zeitpunkt reason)
     {
       SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
       var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
@@ -263,7 +254,7 @@ namespace diNo
     /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>true wenn check nötig.</returns>
-    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason)
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, Zeitpunkt reason)
     {
       // Diese Prüfung kann immer durchgeführt werden
       return true;
@@ -275,7 +266,7 @@ namespace diNo
     /// <param name="schueler">Der Schüler.</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
-    public override string[] Check(diNo.diNoDataSet.SchuelerRow schueler, CheckReason reason)
+    public override string[] Check(diNo.diNoDataSet.SchuelerRow schueler, Zeitpunkt reason)
     {
       IList<string> result = new List<string>();
 /*      foreach (var kursZuordnung in new SchuelerKursTableAdapter().GetDataBySchuelerId(schueler.Id))
@@ -298,11 +289,11 @@ namespace diNo
         {
           //es müssen 2 oder 3 Schulaufgaben zum Ende des Jahres vorliegen - zum Halbjahr min. eine
           var schulaufgaben = noten.Where(x => x.Notenart == (int)Notentyp.Schulaufgabe);
-          if (reason == CheckReason.HalbjahrUndProbezeitFOS && schulaufgaben.Count() < 1)
+          if (reason == Zeitpunkt.HalbjahrUndProbezeitFOS && schulaufgaben.Count() < 1)
           {
             result.Add("Die Anzahl der Schulaufgaben im Fach " + fach.Bezeichnung + " ist zu gering.");
           }
-          if (reason == CheckReason.ErstePA && schulaufgaben.Count() < noetigeAnzahlSchulaufgaben)
+          if (reason == Zeitpunkt.ErstePA && schulaufgaben.Count() < noetigeAnzahlSchulaufgaben)
           {
             result.Add("Die Anzahl der Schulaufgaben im Fach " + fach.Bezeichnung + " ist zu gering.");
           }
@@ -318,7 +309,7 @@ namespace diNo
         int kurzarbeitenCount = kurzarbeiten.Count();
         int muendlicheCount = exen.Count() + echteMuendliche.Count();
 
-        if (reason == CheckReason.ProbezeitBOS || reason == CheckReason.HalbjahrUndProbezeitFOS)
+        if (reason == Zeitpunkt.ProbezeitBOS || reason == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {
           if (kurzarbeitenCount == 0 && muendlicheCount < 2)
           {
@@ -329,7 +320,7 @@ namespace diNo
             result.Add("Die Anzahl der mündlichen Noten im Fach " + fach.Bezeichnung + " ist zu gering");
           }
         }
-        else if (reason == CheckReason.ErstePA || reason == CheckReason.Jahresende)
+        else if (reason == Zeitpunkt.ErstePA || reason == Zeitpunkt.Jahresende)
         {
           if (kurzarbeitenCount < 2 && muendlicheCount < 5)
           {
@@ -341,7 +332,7 @@ namespace diNo
           }
         }
         // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
-        else if (reason == CheckReason.ZweitePA)
+        else if (reason == Zeitpunkt.ZweitePA)
         {
           var schriftlichePruefung = noten.Where(x => x.Notenart == (int)Notentyp.APSchriftlich);
           if (schriftlichePruefung.Count() == 0)
@@ -387,7 +378,7 @@ namespace diNo
     /// <param name="schulart">Die Schulart (FOS oder BOS)</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>true wenn check nötig.</returns>
-    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, CheckReason reason)
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart, Zeitpunkt reason)
     {
       return true;
     }
@@ -398,9 +389,10 @@ namespace diNo
     /// <param name="schueler">Der Schüler.</param>
     /// <param name="reason">Die Art der Prüfung.</param>
     /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
-    public override string[] Check(diNoDataSet.SchuelerRow schueler, CheckReason reason)
+    public override string[] Check(diNoDataSet.SchuelerRow schueler, Zeitpunkt reason)
     {
       IList<string> result = new List<string>();
+            /*
       foreach (var kursZuordnung in new SchuelerKursTableAdapter().GetDataBySchuelerId(schueler.Id))
       {
         var kurs = new KursTableAdapter().GetDataById(kursZuordnung.KursId)[0];
@@ -415,17 +407,17 @@ namespace diNo
         }
 
         diNo.diNoDataSet.NoteRow relevanteNote = null;
-        if (reason == CheckReason.ProbezeitBOS || reason == CheckReason.HalbjahrUndProbezeitFOS)
+        if (reason == Zeitpunkt.ProbezeitBOS || reason == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {
           var halbjahresnote = noten.Where(x => x.Notenart == (int)Notentyp.Jahresfortgang && x.Halbjahr == (int)Halbjahr.Erstes);
           relevanteNote = halbjahresnote.Count() > 0 ? halbjahresnote.First() : null;
         }
-        else if (reason == CheckReason.ErstePA || reason == CheckReason.Jahresende)
+        else if (reason == Zeitpunkt.ErstePA || reason == Zeitpunkt.Jahresende)
         {
           var jahresfortgang = noten.Where(x => x.Notenart == (int)Notentyp.Jahresfortgang && x.Halbjahr == (int)Halbjahr.Zweites);
           relevanteNote = jahresfortgang.Count() > 0 ? jahresfortgang.First() : null;
         }
-        else if (reason == CheckReason.ZweitePA || reason == CheckReason.DrittePA)
+        else if (reason == Zeitpunkt.ZweitePA || reason == Zeitpunkt.DrittePA)
         {
           var zeugnisnote = noten.Where(x => x.Notenart == (int)Notentyp.Abschlusszeugnis);
           relevanteNote = zeugnisnote.Count() > 0 ? zeugnisnote.First() : null;
@@ -444,7 +436,7 @@ namespace diNo
           }
         }
       }
-
+      */
       return result.ToArray();
     }
   }

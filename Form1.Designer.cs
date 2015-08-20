@@ -36,7 +36,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.btnFixstand = new System.Windows.Forms.Button();
-            this.comboBoxCheckReason = new System.Windows.Forms.ComboBox();
+            this.comboBoxZeitpunkt = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxStatusMessage = new System.Windows.Forms.TextBox();
             this.btnReport = new System.Windows.Forms.Button();
@@ -122,19 +122,19 @@
             this.btnFixstand.UseVisualStyleBackColor = true;
             this.btnFixstand.Click += new System.EventHandler(this.btnFixstand_Click);
             // 
-            // comboBoxCheckReason
+            // comboBoxZeitpunkt
             // 
-            this.comboBoxCheckReason.FormattingEnabled = true;
-            this.comboBoxCheckReason.Items.AddRange(new object[] {
+            this.comboBoxZeitpunkt.FormattingEnabled = true;
+            this.comboBoxZeitpunkt.Items.AddRange(new object[] {
             "Probezeit BOS",
             "Halbjahr",
             "1. PA",
             "2. PA",
             "Jahresende"});
-            this.comboBoxCheckReason.Location = new System.Drawing.Point(100, 171);
-            this.comboBoxCheckReason.Name = "comboBoxCheckReason";
-            this.comboBoxCheckReason.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxCheckReason.TabIndex = 10;
+            this.comboBoxZeitpunkt.Location = new System.Drawing.Point(100, 171);
+            this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";
+            this.comboBoxZeitpunkt.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxZeitpunkt.TabIndex = 10;
             // 
             // label1
             // 
@@ -177,7 +177,7 @@
             this.Controls.Add(this.btnReport);
             this.Controls.Add(this.textBoxStatusMessage);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBoxCheckReason);
+            this.Controls.Add(this.comboBoxZeitpunkt);
             this.Controls.Add(this.btnFixstand);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button1);
@@ -203,7 +203,7 @@
     private System.Windows.Forms.Button button1;
     private System.Windows.Forms.Button button3;
     private System.Windows.Forms.Button btnFixstand;
-    private System.Windows.Forms.ComboBox comboBoxCheckReason;
+    private System.Windows.Forms.ComboBox comboBoxZeitpunkt;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TextBox textBoxStatusMessage;
         private System.Windows.Forms.Button btnReport;

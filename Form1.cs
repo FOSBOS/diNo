@@ -89,18 +89,18 @@ namespace diNo
       new Klassenansicht().Show();
     }
 
-    private CheckReason GetCheckReason()
+    private Zeitpunkt GetZeitpunkt()
     {
-      string reason = (string)comboBoxCheckReason.SelectedItem;
+      string reason = (string)comboBoxZeitpunkt.SelectedItem;
       switch (reason)
       {
-        case "Probezeit BOS": return CheckReason.ProbezeitBOS;
-        case "Halbjahr": return CheckReason.HalbjahrUndProbezeitFOS;
-        case "1. PA": return CheckReason.ErstePA;
-        case "2. PA": return CheckReason.ZweitePA;
-        case "3. PA": return CheckReason.DrittePA;
-        case "Jahresende": return CheckReason.Jahresende;
-        default: return CheckReason.None;
+        case "Probezeit BOS": return Zeitpunkt.ProbezeitBOS;
+        case "Halbjahr": return Zeitpunkt.HalbjahrUndProbezeitFOS;
+        case "1. PA": return Zeitpunkt.ErstePA;
+        case "2. PA": return Zeitpunkt.ZweitePA;
+        case "3. PA": return Zeitpunkt.DrittePA;
+        case "Jahresende": return Zeitpunkt.Jahresende;
+        default: return Zeitpunkt.None;
       }
     }
 
@@ -111,10 +111,10 @@ namespace diNo
     /// <param name="e"></param>
     private void button3_Click(object sender, EventArgs e)
     {
-      CheckReason checkReason = GetCheckReason();
+      Zeitpunkt Zeitpunkt = GetZeitpunkt();
 
-      //TODO: Festlegen, welche Prüfungen überhaupt durchgeführt werden müssen anhand CheckReason
-      //TODO: einfach alle Klasse(n) prüfen oder sinnvolle Auswahl anhand CheckReason
+      //TODO: Festlegen, welche Prüfungen überhaupt durchgeführt werden müssen anhand Zeitpunkt
+      //TODO: einfach alle Klasse(n) prüfen oder sinnvolle Auswahl anhand Zeitpunkt
       List<INotenCheck> alleNotenchecks = new List<INotenCheck>();
       alleNotenchecks.Add(new FachreferatChecker());
       alleNotenchecks.Add(new NotenanzahlChecker());
@@ -132,9 +132,9 @@ namespace diNo
           foreach (INotenCheck check in alleNotenchecks)
           {
             // TODO: Schulart usw. ermitteln. Für Test nur elfte Klassen.
-            if (check.CheckIsNecessary(Faecherkanon.GetJahrgangsstufe(schueler.Jahrgangsstufe), Schulart.FOS, CheckReason.Jahresende))
+            if (check.CheckIsNecessary(Faecherkanon.GetJahrgangsstufe(schueler.Jahrgangsstufe), Schulart.FOS, Zeitpunkt.Jahresende))
             {
-              var probleme = check.Check(schueler, checkReason);
+              var probleme = check.Check(schueler, Zeitpunkt);
               if (probleme.Count() > 0)
               {
                 if (!schuelerAdded)
@@ -156,22 +156,10 @@ namespace diNo
       }
     }
 
-    private bool IsCalculatedNote(Notentyp typ)
-    {
-      var array = new[] { Notentyp.Jahresfortgang, Notentyp.JahresfortgangMitNKS, Notentyp.Schnittmuendlich, Notentyp.SchnittSA };
-      return array.Contains(typ);
-    }
-
-    private bool IsPruefungsnote (Notentyp typ)
-    {
-      var array = new[] { Notentyp.Abschlusszeugnis, Notentyp.APGesamt, Notentyp.APMuendlich, Notentyp.APSchriftlich, Notentyp.EndnoteMitNKS };
-      return array.Contains(typ);
-    }
-
     private void btnFixstand_Click(object sender, EventArgs e)
     {
       //TODO: method unchecked
-      CheckReason reason = GetCheckReason();
+      Zeitpunkt reason = GetZeitpunkt();
       var noteAdapter = new NoteTableAdapter();
       var fixNoteAdapter = new BerechneteNoteTableAdapter();
       var alleNotenDerSchule = fixNoteAdapter.GetData();

@@ -26,65 +26,43 @@ namespace diNo
         klasseTextBox.Text = schueler.getKlasse.Data.Bezeichnung;
         textBoxAdresse.Text = schueler.Data.AnschriftStrasse + "\n" + schueler.Data.AnschriftPLZ + " " + schueler.Data.AnschriftOrt + "\n Tel.:" + schueler.Data.AnschriftTelefonnummer;
 
-        SchuelerKursTableAdapter skAdapter = new SchuelerKursTableAdapter();
-        NoteTableAdapter noteAdapter = new NoteTableAdapter();
-        FachTableAdapter fachAdapter = new FachTableAdapter();
-        KursTableAdapter kursAdapter = new KursTableAdapter();
-        BerechneteNoteTableAdapter berechneteNoteAdapter = new BerechneteNoteTableAdapter();
+        SchuelerNoten noten = schueler.getNoten;
 
         // Row[lineCount] für schriftliche und Row[lineCount+1] für mündliche Noten
         int lineCount = 0;
-        foreach(var kurs in skAdapter.GetDataBySchuelerId(schuelerId))
+        int col;
+        foreach(var kursNoten in noten.alleFaecher)
         {
-          var kursRow = kursAdapter.GetDataById(kurs.KursId)[0];
-          var fachRow = fachAdapter.GetDataById(kursRow.FachId)[0];
-          
-          IList<diNo.diNoDataSet.NoteRow> noten = new List<diNo.diNoDataSet.NoteRow>();
-          foreach (var note in noteAdapter.GetDataBySchuelerAndKurs(kurs.SchuelerId, kurs.KursId))
-          {
-            noten.Add(note);
-          }
+            dataGridNoten.Rows.Add(2);
+            dataGridNoten.Rows[lineCount + 1].Height += 2;
+            dataGridNoten.Rows[lineCount + 1].DividerHeight = 2;
+            dataGridNoten.Rows[lineCount].Cells[0].Value = kursNoten.getFach.Bezeichnung;
 
-          var berechneteNoten = berechneteNoteAdapter.GetDataBySchuelerAndKurs(kurs.KursId, kurs.SchuelerId);
+            InsertNoten(1, lineCount, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Schulaufgabe));
+            col = InsertNoten(1, lineCount+1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ex));
+            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ex));
+            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.EchteMuendliche));
+            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Fachreferat), "F");
+                  InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ersatzprüfung), "E");
 
-          if (noten.Count == 0 || berechneteNoten.Count == 0)
-          {
-            continue;
-          }
+            InsertNoten(11, lineCount, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Schulaufgabe));
+            col = InsertNoten(11, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Kurzarbeit),"K");
+            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ex));
+            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.EchteMuendliche));
+            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Fachreferat), "F");
+                  InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ersatzprüfung), "E");
 
-          dataGridNoten.Rows.Add(2);
-          dataGridNoten.Rows[lineCount + 1].Height += 2;
-          dataGridNoten.Rows[lineCount + 1].DividerHeight = 2;
-          dataGridNoten.Rows[lineCount].Cells[0].Value = fachRow.Bezeichnung;
-          var berechneteErstesHJ = berechneteNoten.First(x => x.ErstesHalbjahr);
-          var berechneteZweitesHJ = berechneteNoten.First(x => !x.ErstesHalbjahr);
+            InsertSchnitt(9,lineCount,kursNoten.getSchnitt(Halbjahr.Erstes));
+            InsertSchnitt(20,lineCount, kursNoten.getSchnitt(Halbjahr.Zweites));
 
-          InsertSchulaufgaben(1, lineCount, noten, Halbjahr.Erstes);
-          InsertExen(1, lineCount + 1, noten, Halbjahr.Erstes);
-          InsertMuendliche(6, lineCount + 1, noten, Halbjahr.Erstes);
+/*
+            InsertSingleNote(22, lineCount, noten, Notentyp.APSchriftlich, Halbjahr.Ohne, false);
+            InsertSingleNote(23, lineCount, noten, Notentyp.APMuendlich, Halbjahr.Ohne, false);
 
-          dataGridNoten.Rows[lineCount].Cells[9].Value = berechneteErstesHJ.SchnittSchulaufgaben.ToString();
-          dataGridNoten.Rows[lineCount + 1].Cells[9].Value = berechneteErstesHJ.SchnittMuendlich.ToString();
-          dataGridNoten.Rows[lineCount].Cells[10].Value = ((int)berechneteErstesHJ.JahresfortgangGanzzahlig).ToString();
-          dataGridNoten.Rows[lineCount + 1].Cells[10].Value = berechneteErstesHJ.JahresfortgangMitKomma.ToString();
-
-          InsertSchulaufgaben(11, lineCount, noten, Halbjahr.Zweites);
-          InsertExen(11, lineCount + 1, noten, Halbjahr.Zweites);
-          InsertMuendliche(16, lineCount + 1, noten, Halbjahr.Zweites);
-          InsertSingleNote(19, lineCount + 1, noten, Notentyp.Fachreferat, Halbjahr.Ohne, false);
-
-          dataGridNoten.Rows[lineCount].Cells[20].Value = berechneteZweitesHJ.SchnittSchulaufgaben.ToString();
-          dataGridNoten.Rows[lineCount + 1].Cells[20].Value = berechneteZweitesHJ.SchnittMuendlich.ToString();
-          dataGridNoten.Rows[lineCount].Cells[21].Value = ((int)berechneteZweitesHJ.JahresfortgangGanzzahlig).ToString();
-          dataGridNoten.Rows[lineCount + 1].Cells[21].Value = berechneteZweitesHJ.JahresfortgangMitKomma.ToString();
-
-          InsertSingleNote(22, lineCount, noten, Notentyp.APSchriftlich, Halbjahr.Ohne, false);
-          InsertSingleNote(23, lineCount, noten, Notentyp.APMuendlich, Halbjahr.Ohne, false);
-
-          dataGridNoten.Rows[lineCount].Cells[24].Value = berechneteZweitesHJ.PruefungGesamt.ToString();
-          dataGridNoten.Rows[lineCount].Cells[25].Value = berechneteZweitesHJ.Abschlusszeugnis.ToString();
-
-          lineCount = lineCount + 2;
+            dataGridNoten.Rows[lineCount].Cells[24].Value = berechneteZweitesHJ.PruefungGesamt.ToString();
+            dataGridNoten.Rows[lineCount].Cells[25].Value = berechneteZweitesHJ.Abschlusszeugnis.ToString();
+*/
+            lineCount = lineCount + 2;
         }
 
         if (schueler.Data.Jahrgangsstufe == "11")
@@ -111,81 +89,34 @@ namespace diNo
         }      
     }
 
-    /// <summary>
-    /// Fügt eine Einzelnote in den Notenbogen ein.
-    /// </summary>
-    /// <param name="col">Die Spalte.</param>
-    /// <param name="row">Die Zeile.</param>
-    /// <param name="noten">Die Noten (zum Filtern).</param>
-    /// <param name="typ">Der Typ der gesuchten Note.</param>
-    /// <param name="halbjahr">Das Halbjahr.</param>
-    /// <param name="isCommaValue">true wenn die Note als Kommazahl eingetragen werden soll.</param>
-    private void InsertSingleNote(int col, int row, IList<diNo.diNoDataSet.NoteRow> noten, Notentyp typ, Halbjahr halbjahr, bool isCommaValue)
+    // schreibt eine Notenliste (z.B. alle SA in Englisch aus dem 1. Hj. ins Grid), bez wird als Text an jede Note angefügt
+    // gibt die nächste freie Spalte zurück
+    private int InsertNoten(int startCol, int startRow, IList<int> noten, string bez="")
     {
-      var note = GetSingleNote(noten, typ, halbjahr);
-      if (note != null)
-      {
-        dataGridNoten.Rows[row].Cells[col].Value = isCommaValue ? note.Punktwert.ToString() : ((int)note.Punktwert).ToString();
-      }
-      else if (halbjahr == Halbjahr.Ohne)
-      {
-        // bei manchen Noten (z. B. Fachreferat) muss in beiden Halbjahren gesucht werden.
-        note = GetSingleNote(noten, typ, Halbjahr.Erstes);
-        if (note == null)
+        foreach (var note in noten)
         {
-          note = GetSingleNote(noten, typ, Halbjahr.Zweites);
+                if (bez=="")
+                    dataGridNoten.Rows[startRow].Cells[startCol].Value = note;
+                else
+                    dataGridNoten.Rows[startRow].Cells[startCol].Value = note + "(" + bez + ")";
+                startCol++;
         }
-        if (note != null)
+        return startCol;
+    }
+
+    // schreibt eine Schnittkonstellation ins Grid    
+    private void InsertSchnitt(int startCol, int startRow, BerechneteNote b)
+    {
+        if (b != null)
         {
-          dataGridNoten.Rows[row].Cells[col].Value = isCommaValue ? note.Punktwert.ToString() : ((int)note.Punktwert).ToString();
+            dataGridNoten.Rows[startRow].Cells[startCol].Value = b.SchnittSchulaufgaben;
+            dataGridNoten.Rows[startRow + 1].Cells[startCol].Value = b.SchnittMuendlich;
+            dataGridNoten.Rows[startRow + 1].Cells[startCol + 1].Value = b.JahresfortgangMitKomma;
+            dataGridNoten.Rows[startRow].Cells[startCol + 1].Value = b.JahresfortgangGanzzahlig;
         }
-      }
     }
 
-    private diNo.diNoDataSet.NoteRow GetSingleNote(IList<diNo.diNoDataSet.NoteRow> noten, Notentyp typ, Halbjahr halbjahr)
-    {
-      var result = noten.Where(x => x.Halbjahr == (int)halbjahr && (Notentyp)x.Notenart == typ);
-      if (result.Count() > 1)
-      {
-        throw new InvalidOperationException("Mehr als eine Note gefunden, obwohl die Note nur einmal vorhanden sein sollte.");
-      }
-
-      foreach (var aNote in result)
-      {
-        return aNote;
-      }
-
-      return null;
-    }
-
-    private void InsertMuendliche(int startCol, int startRow, IList<diNo.diNoDataSet.NoteRow> noten, Halbjahr halbjahr)
-    {
-      foreach (var note in noten.Where(x => x.Halbjahr == (int)halbjahr && (Notentyp)x.Notenart == Notentyp.EchteMuendliche).OrderBy(x => x.Zelle))
-      {
-        dataGridNoten.Rows[startRow].Cells[startCol].Value = (int)note.Punktwert;
-        startCol++;
-      }
-    }
-
-    private void InsertExen(int startCol, int startRow, IList<diNo.diNoDataSet.NoteRow> noten, Halbjahr halbjahr)
-    {
-      foreach (var note in noten.Where(x => x.Halbjahr == (int)halbjahr && ((Notentyp)x.Notenart == Notentyp.Kurzarbeit || (Notentyp)x.Notenart == Notentyp.Ex)).OrderBy(x => x.Zelle))
-      {
-        dataGridNoten.Rows[startRow].Cells[startCol].Value = (int)note.Punktwert + ((Notentyp)note.Notenart == Notentyp.Kurzarbeit ? "(K)" : "");
-        startCol++;
-      }
-    }
-
-    private void InsertSchulaufgaben(int startCol, int startRow, IList<diNo.diNoDataSet.NoteRow> noten, Halbjahr halbjahr)
-    {
-      foreach (var note in noten.Where(x => x.Halbjahr == (int)halbjahr && (Notentyp)x.Notenart == Notentyp.Schulaufgabe).OrderBy(x => x.Zelle))
-      {
-        dataGridNoten.Rows[startRow].Cells[startCol].Value = (int)note.Punktwert;
-        startCol++;
-      }
-    }
-
-    private void buttonSpeichern_Click(object sender, EventArgs e)
+        private void buttonSpeichern_Click(object sender, EventArgs e)
     {
       if (schueler != null && schueler.Data.Jahrgangsstufe == "11")
       {
