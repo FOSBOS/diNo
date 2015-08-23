@@ -39,29 +39,37 @@ namespace diNo
             dataGridNoten.Rows[lineCount].Cells[0].Value = kursNoten.getFach.Bezeichnung;
 
             InsertNoten(1, lineCount, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Schulaufgabe));
-            col = InsertNoten(1, lineCount+1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ex));
+            col = InsertNoten(1, lineCount+1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Kurzarbeit), "K");
             col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ex));
             col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.EchteMuendliche));
             col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Fachreferat), "F");
                   InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ersatzprüfung), "E");
 
-            InsertNoten(11, lineCount, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Schulaufgabe));
-            col = InsertNoten(11, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Kurzarbeit),"K");
-            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ex));
-            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.EchteMuendliche));
-            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Fachreferat), "F");
-                  InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ersatzprüfung), "E");
+            InsertNoten(10, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Schulaufgabe));
+            col = InsertNoten(10, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Kurzarbeit),"K");
+            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Ex));
+            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.EchteMuendliche));
+            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Fachreferat), "F");
+                  InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Ersatzprüfung), "E");
 
-            InsertSchnitt(9,lineCount,kursNoten.getSchnitt(Halbjahr.Erstes));
-            InsertSchnitt(20,lineCount, kursNoten.getSchnitt(Halbjahr.Zweites));
+            InsertSchnitt(8,lineCount,kursNoten.getSchnitt(Halbjahr.Erstes));
+            BerechneteNote zeugnis = kursNoten.getSchnitt(Halbjahr.Zweites);
+            InsertSchnitt(18,lineCount, zeugnis);
 
-/*
-            InsertSingleNote(22, lineCount, noten, Notentyp.APSchriftlich, Halbjahr.Ohne, false);
-            InsertSingleNote(23, lineCount, noten, Notentyp.APMuendlich, Halbjahr.Ohne, false);
+            InsertNoten(20, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich));
+            InsertNoten(20, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich));
 
-            dataGridNoten.Rows[lineCount].Cells[24].Value = berechneteZweitesHJ.PruefungGesamt.ToString();
-            dataGridNoten.Rows[lineCount].Cells[25].Value = berechneteZweitesHJ.Abschlusszeugnis.ToString();
-*/
+            if (zeugnis != null)
+            {
+                if (zeugnis.PruefungGesamt != null)
+                {
+                    dataGridNoten.Rows[lineCount].Cells[21].Value = zeugnis.PruefungGesamt;
+                    dataGridNoten.Rows[lineCount].Cells[22].Value = zeugnis.SchnittFortgangUndPruefung;
+                    dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.Abschlusszeugnis;
+                }
+                else
+                    dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.JahresfortgangGanzzahlig;
+            }
             lineCount = lineCount + 2;
         }
 
@@ -98,7 +106,7 @@ namespace diNo
                 if (bez=="")
                     dataGridNoten.Rows[startRow].Cells[startCol].Value = note;
                 else
-                    dataGridNoten.Rows[startRow].Cells[startCol].Value = note + "(" + bez + ")";
+                    dataGridNoten.Rows[startRow].Cells[startCol].Value = note + " " + bez;
                 startCol++;
         }
         return startCol;
@@ -109,7 +117,8 @@ namespace diNo
     {
         if (b != null)
         {
-            dataGridNoten.Rows[startRow].Cells[startCol].Value = b.SchnittSchulaufgaben;
+            if (b.SchnittSchulaufgaben != null)
+                dataGridNoten.Rows[startRow].Cells[startCol].Value = b.SchnittSchulaufgaben;
             dataGridNoten.Rows[startRow + 1].Cells[startCol].Value = b.SchnittMuendlich;
             dataGridNoten.Rows[startRow + 1].Cells[startCol + 1].Value = b.JahresfortgangMitKomma;
             dataGridNoten.Rows[startRow].Cells[startCol + 1].Value = b.JahresfortgangGanzzahlig;

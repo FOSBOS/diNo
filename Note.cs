@@ -185,12 +185,15 @@ namespace diNo
         {
             kursid = aKursId;
             schuelerid = aSchuelerId;
-            
-            SchnittSchulaufgaben = d.SchnittSchulaufgaben;
+
+            if (d.IsSchnittSchulaufgabenNull()) SchnittSchulaufgaben = null;
+                else SchnittSchulaufgaben = d.SchnittSchulaufgaben;
+            //SchnittSchulaufgaben = d.IsSchnittSchulaufgabenNull() ? null :  d.SchnittSchulaufgaben;  // frisst er nicht!!?
             SchnittMuendlich = d.SchnittMuendlich;
             JahresfortgangMitKomma = d.JahresfortgangMitKomma;
             JahresfortgangGanzzahlig = d.JahresfortgangGanzzahlig;
-            PruefungGesamt = d.PruefungGesamt;
+            if (d.IsPruefungGesamtNull()) PruefungGesamt= null;
+                else PruefungGesamt = d.PruefungGesamt;
             SchnittFortgangUndPruefung = d.SchnittFortgangUndPruefung;
             Abschlusszeugnis = d.Abschlusszeugnis;
             StandNr = (Zeitpunkt)d.StandNr;
