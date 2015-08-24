@@ -38,13 +38,90 @@ namespace diNo
         {
             get { return this.data.Kuerzel; }
         }
+
+        // Ermittelt die SA-Wertung für diesen Kurs
+        // todo: strings durch Schlüssel ersetzen
+        public Schulaufgabenwertung GetSchulaufgabenwertung(Klasse klasse)
+        {
+            Jahrgangsstufe jahrgang = klasse.Jahrgangsstufe;
+
+            // Prüfungsfächer haben immer SA (Vorklasse und 12. 3, sonst 2)
+            if (data.IstSAP)
+            {
+                if (klasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse || klasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
+                    return Schulaufgabenwertung.ZweiZuEins;
+                else
+                    return Schulaufgabenwertung.EinsZuEins;
+            }
+            else
+            {
+                if (Kuerzel == "TeIn" || Kuerzel == "VWL" || Kuerzel == "B")
+                    return Schulaufgabenwertung.EinsZuEins;
+                else
+                    return Schulaufgabenwertung.KurzarbeitenUndExen;
+            }
+
+            /* oder via SA-Zahl,  Problem ist ToString geht grad nicht; ToDo: Strings durch Ids ersetzen
+            var wertung = ada.GetDataByAllInfos(schulart.ToString(), jahrgang.ToString(), zweig.ToString(), fach.Id);
+            if (wertung.Count > 0)
+            {
+                schulaufgabenzahl = wertung[0].AnzahlSA;
+            }
+
+            wertung = ada.GetDataByAllInfos("ALLE", jahrgang.ToString(), zweig.ToString(), fach.Id);
+            if (wertung.Count > 0)
+            {
+                schulaufgabenzahl = wertung[0].AnzahlSA;
+            }
+
+            wertung = ada.GetDataByAllInfos("ALLE", jahrgang.ToString(), "ALLE", fach.Id);
+            if (wertung.Count > 0)
+            {
+                schulaufgabenzahl = wertung[0].AnzahlSA;
+            }
+
+            wertung = ada.GetDataByAllInfos(schulart.ToString(), jahrgang.ToString(), "ALLE", fach.Id);
+            if (wertung.Count > 0)
+            {
+                schulaufgabenzahl = wertung[0].AnzahlSA;
+            }
+
+            wertung = ada.GetDataByAllInfos("ALLE", "ALLE", zweig.ToString(), fach.Id);
+            if (wertung.Count > 0)
+            {
+                schulaufgabenzahl = wertung[0].AnzahlSA;
+            }
+
+            wertung = ada.GetDataByAllInfos("ALLE", "ALLE", "ALLE", fach.Id);
+            if (wertung.Count > 0)
+            {
+                schulaufgabenzahl = wertung[0].AnzahlSA;
+            }
+
+            if (schulaufgabenzahl == 1 || schulaufgabenzahl == 2)
+            {
+                return Schulaufgabenwertung.EinsZuEins;
+            }
+            else if (schulaufgabenzahl > 2)
+            {
+                return Schulaufgabenwertung.ZweiZuEins;
+            }
+            else
+            {
+                log.InfoFormat("keine Schulaufgabenwertung gefunden für: Schulart={0}, Jahrgang={1}, Zweig={2}, Fach={3}. Gehe von Kurzarbeiten und Exen aus.", schulart.ToString(), jahrgang.ToString(), zweig.ToString(), fach.Kuerzel);
+                return Schulaufgabenwertung.KurzarbeitenUndExen;
+            }
+            */
+        }
     }
 
 
-    ///  <summary>
-    /// Klasse Fächerkanon dient zur Abfrage der Modalitäten (1:1, 2:1-Fach oder KA/Ex)
-    /// </summary>
-    public static class Faecherkanon
+
+
+///  <summary>
+/// Klasse Fächerkanon dient zur Abfrage der Modalitäten (1:1, 2:1-Fach oder KA/Ex)
+/// </summary>
+public static class Faecherkanon
 	{
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 

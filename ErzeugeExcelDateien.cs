@@ -114,7 +114,7 @@ namespace diNo
             // Schulart, SA-Wertung wird dem ersten Schüler entnommen
             diNoDataSet.SchuelerRow ersterSchueler = alleSchueler[0]; // muss existieren, da nur Kurse mit Schülern erzeugt werden
             Schulart schulart = ersterSchueler.KlasseWinSV.StartsWith("B") ? Schulart.BOS : Schulart.FOS;
-            Schulaufgabenwertung wertung = kurs.GetSchulaufgabenwertung(new Klasse(ersterSchueler.KlasseId));
+            Schulaufgabenwertung wertung = kurs.getFach.GetSchulaufgabenwertung(new Klasse(ersterSchueler.KlasseId));
 
             // schreibe Notenbogen - Kopf
             xls.WriteValue(xls.notenbogen, CellConstant.Wertungsart, GetWertungsString(wertung));

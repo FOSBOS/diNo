@@ -105,7 +105,9 @@ namespace diNo
         /// </summary>
         public BerechneteNote getSchnitt(Halbjahr hj)
         {
-            return schnitte[(int)hj];
+            var s = schnitte[(int)hj];
+            if (s==null) return new BerechneteNote(kursId,schuelerId); // gibt leere Berechnungstabelle zurück
+            return s;
         }
 
         /*

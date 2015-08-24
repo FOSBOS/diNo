@@ -111,49 +111,14 @@ namespace diNo
     /// <param name="e"></param>
     private void button3_Click(object sender, EventArgs e)
     {
-      Zeitpunkt Zeitpunkt = GetZeitpunkt();
+        var contr = new NotenCheckController(GetZeitpunkt());
+        contr.CheckAll();
 
-      //TODO: Festlegen, welche Prüfungen überhaupt durchgeführt werden müssen anhand Zeitpunkt
-      //TODO: einfach alle Klasse(n) prüfen oder sinnvolle Auswahl anhand Zeitpunkt
-      List<INotenCheck> alleNotenchecks = new List<INotenCheck>();
-      alleNotenchecks.Add(new FachreferatChecker());
-      alleNotenchecks.Add(new NotenanzahlChecker());
-      alleNotenchecks.Add(new UnterpunktungChecker());
-
-      // F11Technik-Klassen. TODO: So geht das künftig natürlich nicht!
-      int[] klassenIDs = new[] { 15, 20, 34 };
-      foreach (int klassenId in klassenIDs)
-      {
-        List<string> meldungen = new List<string>();
-        var dieSchueler = new SchuelerTableAdapter().GetDataByKlasse(klassenId);
-        foreach (var schueler in dieSchueler)
-        {
-          bool schuelerAdded = false;
-          foreach (INotenCheck check in alleNotenchecks)
-          {
-            // TODO: Schulart usw. ermitteln. Für Test nur elfte Klassen.
-            if (check.CheckIsNecessary(Faecherkanon.GetJahrgangsstufe(schueler.Jahrgangsstufe), Schulart.FOS, Zeitpunkt.Jahresende))
-            {
-              var probleme = check.Check(schueler, Zeitpunkt);
-              if (probleme.Count() > 0)
-              {
-                if (!schuelerAdded)
-                {
-                  meldungen.Add("Schüler: " + schueler.Vorname + " " + schueler.Name);
-                  schuelerAdded = true;
-                }
-
-                meldungen.AddRange(probleme);
-              }
-            }
-          }
-        }
 
         UserControlChecks printControl = new UserControlChecks();
         printControl.Show();
         // TODO: Das geht hier natürlich noch wesentlich schicker
-        printControl.Print(klassenId+ "", meldungen.ToArray());
-      }
+        printControl.Print(contr.PrintResults());      
     }
 
     private void btnFixstand_Click(object sender, EventArgs e)

@@ -30,10 +30,16 @@ namespace diNo
             }       
     }
 
-    /// <summary>
-    /// Die Id des Schülers in der Datenbank.
-    /// </summary>
-    public int Id
+    public Schueler(diNoDataSet.SchuelerRow s)
+    {
+        this.Id = s.Id;
+        this.data = s;
+    }
+
+        /// <summary>
+        /// Die Id des Schülers in der Datenbank.
+        /// </summary>
+        public int Id
     {
       get;
       internal set;

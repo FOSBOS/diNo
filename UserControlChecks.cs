@@ -17,12 +17,12 @@ namespace diNo
       InitializeComponent();
     }
 
-    public void Print(string klasse, string[] meldungen)
+    public void Print(List<string> meldungen)
     {
       PrintDocument printDocument1 = new PrintDocument();
       printDocument1.PrintPage += new PrintPageEventHandler(printDocument1_PrintPage);
 
-      this.textBoxKlasse.Text = klasse;
+      //this.textBoxKlasse.Text = klasse;
       this.textBoxDatum.Text = DateTime.Today.ToShortDateString();
 
       foreach (string meldung in meldungen)
