@@ -29,8 +29,7 @@ namespace diNo
         SchuelerNoten noten = schueler.getNoten;
 
         // Row[lineCount] für schriftliche und Row[lineCount+1] für mündliche Noten
-        int lineCount = 0;
-        int col;
+        int lineCount = 0;        
         foreach(var kursNoten in noten.alleFaecher)
         {
             dataGridNoten.Rows.Add(2);
@@ -39,18 +38,10 @@ namespace diNo
             dataGridNoten.Rows[lineCount].Cells[0].Value = kursNoten.getFach.Bezeichnung;
 
             InsertNoten(1, lineCount, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Schulaufgabe));
-            col = InsertNoten(1, lineCount+1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Kurzarbeit), "K");
-            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ex));
-            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.EchteMuendliche));
-            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Fachreferat), "F");
-                  InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Ersatzprüfung), "E");
+            InsertNoten(1, lineCount+1, kursNoten.sonstigeLeistungen(Halbjahr.Erstes));
 
             InsertNoten(10, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Schulaufgabe));
-            col = InsertNoten(10, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Kurzarbeit),"K");
-            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Ex));
-            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.EchteMuendliche));
-            col = InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Fachreferat), "F");
-                  InsertNoten(col, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Ersatzprüfung), "E");
+            InsertNoten(10, lineCount+1, kursNoten.sonstigeLeistungen(Halbjahr.Zweites));
 
             InsertSchnitt(8,lineCount,kursNoten.getSchnitt(Halbjahr.Erstes));
             BerechneteNote zeugnis = kursNoten.getSchnitt(Halbjahr.Zweites);
@@ -97,22 +88,26 @@ namespace diNo
         }      
     }
 
-    // schreibt eine Notenliste (z.B. alle SA in Englisch aus dem 1. Hj. ins Grid), bez wird als Text an jede Note angefügt
-    // gibt die nächste freie Spalte zurück
-    private int InsertNoten(int startCol, int startRow, IList<int> noten, string bez="")
+    // schreibt eine Notenliste (z.B. alle SA in Englisch aus dem 1. Hj. ins Grid), bez wird als Text an jede Note angefügt    
+    private void InsertNoten(int startCol, int startRow, IList<string> noten)
     {
         foreach (var note in noten)
         {
-                if (bez=="")
-                    dataGridNoten.Rows[startRow].Cells[startCol].Value = note;
-                else
-                    dataGridNoten.Rows[startRow].Cells[startCol].Value = note + " " + bez;
-                startCol++;
-        }
-        return startCol;
+             dataGridNoten.Rows[startRow].Cells[startCol].Value = note;
+             startCol++;
+        }        
     }
 
-    // schreibt eine Schnittkonstellation ins Grid    
+    private void InsertNoten(int startCol, int startRow, IList<int> noten)
+    {
+        foreach (var note in noten)
+        {
+             dataGridNoten.Rows[startRow].Cells[startCol].Value = note;
+             startCol++;
+        }        
+    }
+
+        // schreibt eine Schnittkonstellation ins Grid    
     private void InsertSchnitt(int startCol, int startRow, BerechneteNote b)
     {
         if (b != null)

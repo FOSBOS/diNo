@@ -119,6 +119,26 @@ namespace diNo
         }
         */
 
+        /// <summary>
+        /// Liefert die zur Zeit z (z.B. Probezeit BOS) relevante Note (hier Jahresfortgang Ganzz. 1. Hj.)
+        /// </summary>
+        public byte? getRelevanteNote(Zeitpunkt z)
+        {
+            if (z == Zeitpunkt.ProbezeitBOS || z == Zeitpunkt.HalbjahrUndProbezeitFOS)
+            {
+                return getSchnitt(Halbjahr.Erstes).JahresfortgangGanzzahlig;
+            }
+            else if (z == Zeitpunkt.ErstePA || z == Zeitpunkt.Jahresende)
+            {
+                return getSchnitt(Halbjahr.Zweites).JahresfortgangGanzzahlig;
+            }
+            else // 2./3.PA
+            {
+                return getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
+            }
+
+        }
+
         public int getNotenanzahl(Halbjahr hj, Notentyp typ)
         {
             return noten[(int)hj, (int)typ].Count;
@@ -142,6 +162,29 @@ namespace diNo
             }
         }
 
+
+        /// <summary>
+        /// Liefert eine druckbare Liste für alle sonstigen Leistungen
+        /// </summary>
+        public IList<string> sonstigeLeistungen(Halbjahr hj)
+        {
+            IList<string> liste = new List<string>();
+            InsertNoten(liste, getNoten(hj, Notentyp.Kurzarbeit), "K");
+            InsertNoten(liste, getNoten(hj, Notentyp.Ex), "");
+            InsertNoten(liste, getNoten(hj, Notentyp.EchteMuendliche), "");
+            InsertNoten(liste, getNoten(hj, Notentyp.Fachreferat), "F");
+            InsertNoten(liste, getNoten(hj, Notentyp.Ersatzprüfung), "E"); 
+            return liste;           
+        }
+
+        private void InsertNoten(IList<string> liste, IList<int>noten, string bez="")
+        {
+            foreach (var note in noten)
+            {
+                    liste.Add(note + (bez=="" ? "" : " " + bez));                
+            }        
+        }
+        
     }
 
 }

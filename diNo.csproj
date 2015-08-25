@@ -165,6 +165,8 @@
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rptLehrerliste.rdlc" />
+    <EmbeddedResource Include="rptNotenbogen.rdlc" />
+    <EmbeddedResource Include="rptNotenCheck.rdlc" />
     <EmbeddedResource Include="rptSchuelerliste.rdlc" />
     <EmbeddedResource Include="UserControlChecks.resx">
       <DependentUpon>UserControlChecks.cs</DependentUpon>
@@ -181,6 +183,25 @@
     <None Include="diNoDataSet.xss">
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
     </None>
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.BerechneteNoteTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.FachTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.FpANotenTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.KlasseKursTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.KlasseTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.KursTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.LehrerTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.NotenartTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.NoteTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.SchuelerKursTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.SchuelerTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.SchulaufgabenfachTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.SeminarfachnoteTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.TableAdapterManager+UpdateOrderOption.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.TableAdapterManager.datasource" />
+    <None Include="Properties\DataSources\diNo.Properties.Resources.datasource" />
+    <None Include="Properties\DataSources\diNo.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\NotenCheckResult.datasource" />
+    <None Include="Properties\DataSources\Schueler.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

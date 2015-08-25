@@ -11,7 +11,7 @@ namespace diNo
     /// </summary>
     public class NotenCheckController
     {
-        private NotenCheckResults res = new NotenCheckResults();
+        public NotenCheckResults res = new NotenCheckResults();
         private IList<INotenCheck> alleNotenchecks = new List<INotenCheck>();
         private Zeitpunkt zeitpunkt;
 
@@ -74,8 +74,7 @@ namespace diNo
             List<string> s = new List<string>();
             foreach (var r in res.list)
             {
-                s.Add(r.schueler.getKlasse.Data.Bezeichnung + ", " + r.schueler.NameVorname + ", " +
-                    (r.kurs!=null ? r.kurs.getFach.Kuerzel + " (" + r.kurs.getLehrer.Kuerzel +"): " : "")  + r.meldung);
+                s.Add(r.ToString());
             }
             return s;
         }
@@ -115,15 +114,25 @@ namespace diNo
     /// </summary>
     public class NotenCheckResult
     {
-        public Schueler schueler  { get; set; } // betroffener Schüler
-        public Kurs kurs { get; set; } // Referenz zum betroffenen Kurs (und damit Lehrer)
+        public string schueler  { get; private set; }
+        public string klasse { get; private set; } 
+        public string lehrer { get; private set; } 
+        public string fach { get; private set; } 
         public string meldung { get; set; }
 
         public NotenCheckResult(Schueler s,Kurs k,string m)
         {
-            schueler = s;
-            kurs = k;
+            schueler = s.NameVorname;
+            klasse = s.getKlasse.Data.Bezeichnung;
+            lehrer = k!=null ? k.getLehrer.Kuerzel : "";
+            fach =   k!=null ? k.getFach.Kuerzel : "";
             meldung = m;
+        }
+
+        public override string ToString()
+        {
+             return klasse + ", " + schueler + ", " +
+                    (lehrer=="" ? fach + " (" + lehrer + "): " : "")  + meldung;            
         }
     }
 }

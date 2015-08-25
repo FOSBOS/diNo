@@ -112,13 +112,16 @@ namespace diNo
     private void button3_Click(object sender, EventArgs e)
     {
         var contr = new NotenCheckController(GetZeitpunkt());
-        contr.CheckAll();
+        //contr.CheckAll();
+        contr.CheckKlasse(new Klasse(15)); // 11Te
+        new ReportNotencheck(contr.res);
 
-
+/*
         UserControlChecks printControl = new UserControlChecks();
         printControl.Show();
         // TODO: Das geht hier natürlich noch wesentlich schicker
         printControl.Print(contr.PrintResults());      
+*/
     }
 
     private void btnFixstand_Click(object sender, EventArgs e)
@@ -139,9 +142,9 @@ namespace diNo
         private void btnReport_Click(object sender, EventArgs e)
         {
             //new ReportController(Berichtsliste.rptSchuelerliste);
-            new ReportController(Berichtsliste.rptLehrerliste);
-            //new ReportController(Berichtsliste.rptFachliste);            
-
+            //new ReportController(Berichtsliste.rptLehrerliste);
+            //new ReportFachliste();
+            new ReportNotenbogen(null);
         }
     }
 }

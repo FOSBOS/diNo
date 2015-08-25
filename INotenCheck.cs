@@ -392,22 +392,8 @@ namespace diNo
 
 
         foreach (var fachNoten in noten.alleFaecher)
-        {
-            
-            byte? relevanteNote;
-            if (reason == Zeitpunkt.ProbezeitBOS || reason == Zeitpunkt.HalbjahrUndProbezeitFOS)
-            {
-                relevanteNote = fachNoten.getSchnitt(Halbjahr.Erstes).JahresfortgangGanzzahlig;
-            }
-            else if (reason == Zeitpunkt.ErstePA || reason == Zeitpunkt.Jahresende)
-            {
-                relevanteNote = fachNoten.getSchnitt(Halbjahr.Zweites).JahresfortgangGanzzahlig;
-            }
-            else // 2./3.PA
-            {
-                relevanteNote = fachNoten.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
-            }
-                    
+        {            
+            byte? relevanteNote = fachNoten.getRelevanteNote(reason);                    
             if (relevanteNote == null)
             {
                 res.Add(schueler,new Kurs(fachNoten.kursId) ,"Es konnte keine Note gebildet werden.");

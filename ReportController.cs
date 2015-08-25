@@ -6,26 +6,73 @@ using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
-    public enum Berichtsliste
+  
+    public abstract class ReportController    
     {
-        rptLehrerliste, 
-        rptSchuelerliste,
-        rptFachliste,
-        rptNotenbogen
+        protected ReportForm rpt;
+        protected Object bindingDataSource;
+        
+        public ReportController(Object dataSource = null)
+        {
+            ReportForm rpt = new ReportForm();          
+            bindingDataSource = dataSource;
+            Init(rpt);
+            rpt.reportViewer.RefreshReport();
+            rpt.Show();           
+        }
+
+        //TODO: eigentlich müsste rpt doch in der abgeleiteten Klasse vorhanden sein, dort wird es aber null !!?
+        public abstract void Init(ReportForm rpt); 
     }
 
-
-    class ReportController    
+    public class ReportNotencheck : ReportController
     {
-        private Berichtsliste rptID;
+        public ReportNotencheck(NotenCheckResults dataSource) : base(dataSource) {}
 
-        public ReportController(Berichtsliste aRptID)
+        public override void Init(ReportForm rpt)
+        {            
+            rpt.BerichtBindingSource.DataSource = ((NotenCheckResults)bindingDataSource).list;
+            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenCheck.rdlc";            
+        }
+
+    }
+
+    public class ReportNotenbogen : ReportController
+    {
+        public ReportNotenbogen(NotenCheckResults dataSource) : base(dataSource) {}
+
+        public override void Init(ReportForm rpt)
+        {            
+            IList<Schueler>liste = new List<Schueler>();
+            liste.Add(new Schueler(8500));
+            liste.Add(new Schueler(8534));
+            /*
+            ReportDataSource tSource = new ReportDataSource("Status", bindingSource1);
+            rvOrders.LocalReport.ReportPath = @".\osCommerceReports\OrderReport.rdlc";
+            rvOrders.LocalReport.DataSources.Add(tSource);
+            */
+
+            rpt.BerichtBindingSource.DataSource = liste;
+            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";            
+        }
+
+    }
+
+    public class ReportFachliste : ReportController
+    {
+        public override void Init(ReportForm rpt)
         {
-            ReportForm rpt = new ReportForm();
-            
-            rptID = aRptID;
-            switch (rptID)
-            {   case Berichtsliste.rptLehrerliste:
+            FachTableAdapter BerichtTableAdapter;
+            rpt.BerichtBindingSource.DataMember = "Fach";
+            BerichtTableAdapter = new FachTableAdapter();
+            BerichtTableAdapter.ClearBeforeFill = true;
+            BerichtTableAdapter.Fill(rpt.diNoDataSet.Fach);
+            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptFachliste.rdlc";     
+        }
+
+    }
+        /*
+{   case Berichtsliste.rptLehrerliste:
                     {
                         LehrerTableAdapter BerichtTableAdapter;
 
@@ -49,25 +96,5 @@ namespace diNo
 
                         break;
                     }
-                case Berichtsliste.rptFachliste:
-                    {
-                        FachTableAdapter BerichtTableAdapter;
-
-                        rpt.BerichtBindingSource.DataMember = "Fach";
-                        BerichtTableAdapter = new FachTableAdapter();
-                        BerichtTableAdapter.ClearBeforeFill = true;
-                        BerichtTableAdapter.Fill(rpt.diNoDataSet.Fach);
-                        rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptFachliste.rdlc";
-
-                        break;
-                    }
-                default:
-                    break;
-            }
-            rpt.reportViewer.RefreshReport();
-            rpt.Show();
-
-        }
-
-    }
+                */
 }
