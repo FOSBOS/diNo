@@ -11,8 +11,8 @@ namespace diNoTray
   {
     private NotifyIcon trayIcon;
     private ContextMenu trayMenu;
+    private string path;
 
-/*
     /// <summary>
     /// Konstruktor.
     /// </summary>
@@ -35,6 +35,7 @@ namespace diNoTray
       // Add menu to tray icon and show it.
       trayIcon.ContextMenu = trayMenu;
       trayIcon.Visible = true;
+      trayIcon.BalloonTipClicked += TrayIcon_BalloonTipClicked;
     }
 
     /// <summary>
@@ -77,9 +78,7 @@ namespace diNoTray
       {
         foreach (string fileName in fileDialog.FileNames)
         {
-          var notenReader = new NotenAusExcelReader();
-          notenReader.OnStatusChange += notenReader_OnStatusChange;
-          notenReader.Synchronize(fileName);
+          Synchronisiere(fileName);
         }
       }
     }
@@ -94,31 +93,57 @@ namespace diNoTray
         if (d.DriveType == System.IO.DriveType.Removable)
         {
           // TODO: Evtl. nur neu eingesteckte filtern (Änderungen zum letzten Mal?)
-          string path = d.Name+"Noten";
+          this.path = d.Name+"Noten";
           if (Directory.Exists(path))
           {
-            foreach (var fileName in Directory.GetFiles(path, "*.xlsx"))
-            {
-              var notenReader = new NotenAusExcelReader();
-              notenReader.OnStatusChange += notenReader_OnStatusChange;
-              notenReader.Synchronize(fileName);
-            }
+            trayIcon.BalloonTipText = "Zum Synchronisieren bitte hier klicken.";
+            trayIcon.BalloonTipTitle = "Im Verzeichnis " + path + " wurden Notendateien gefunden";
+            trayIcon.ShowBalloonTip(3);
           }
         }
       }
     }
 
     /// <summary>
+    /// Event Handler für Click Ereignis auf dem Balloon.
+    /// </summary>
+    /// <param name="sender">Der Sender.</param>
+    /// <param name="e">Die Event Arguments.</param>
+    private void TrayIcon_BalloonTipClicked(object sender, EventArgs e)
+    {
+      if (Directory.Exists(this.path))
+      {
+        foreach (var fileName in Directory.GetFiles(this.path, "*.xlsx"))
+        {
+          Synchronisiere(fileName);
+        }
+      }
+    }
+
+    /// <summary>
+    /// Übernimmt die Synchronisation.
+    /// </summary>
+    /// <param name="fileName">Name der Excel-Datei, die die Noten enthält.</param>
+    private void Synchronisiere(string fileName)
+    {
+      var notenReader = new LeseNotenAusExcel(fileName);
+      // Todo: Statusmeldungen wieder einführen
+      // notenReader.OnStatusChange += notenReader_OnStatusChange;
+    }
+
+    /*
+    /// <summary>
     /// Event Handler für Statusmeldungen vom Notenleser.
     /// </summary>
     /// <param name="e">Event Args mit dem neuen Status.</param>
     /// <param name="sender">Der Sender des Events.</param>
-    void notenReader_OnStatusChange(Object sender, NotenAusExcelReader.StatusChangedEventArgs e)
+    void notenReader_OnStatusChange(Object sender, LeseNotenAusExcel.StatusChangedEventArgs e)
     {
       trayIcon.BalloonTipText = e.Status;
       trayIcon.BalloonTipTitle = "diNo Status";
       trayIcon.ShowBalloonTip(3);
     }
+    */
 
     const int WM_DEVICECHANGE = 0x219;
     /// <summary>
@@ -134,6 +159,5 @@ namespace diNoTray
 
       base.WndProc(ref m);
     }
-*/
   }
 }
