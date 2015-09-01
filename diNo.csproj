@@ -160,6 +160,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Notenbogen.rdlc" />
+    <EmbeddedResource Include="rptKlassenliste.rdlc" />
     <EmbeddedResource Include="rptFachliste.rdlc" />
     <EmbeddedResource Include="ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>

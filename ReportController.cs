@@ -14,22 +14,21 @@ namespace diNo
         
         public ReportController(Object dataSource = null)
         {
-            ReportForm rpt = new ReportForm();          
+            rpt = new ReportForm();          
             bindingDataSource = dataSource;
-            Init(rpt);
+            Init();
             rpt.reportViewer.RefreshReport();
             rpt.Show();           
         }
-
-        //TODO: eigentlich müsste rpt doch in der abgeleiteten Klasse vorhanden sein, dort wird es aber null !!?
-        public abstract void Init(ReportForm rpt); 
+        
+        public abstract void Init(); 
     }
 
     public class ReportNotencheck : ReportController
     {
         public ReportNotencheck(NotenCheckResults dataSource) : base(dataSource) {}
 
-        public override void Init(ReportForm rpt)
+        public override void Init()
         {            
             rpt.BerichtBindingSource.DataSource = ((NotenCheckResults)bindingDataSource).list;
             rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenCheck.rdlc";            
@@ -41,7 +40,7 @@ namespace diNo
     {
         public ReportNotenbogen(NotenCheckResults dataSource) : base(dataSource) {}
 
-        public override void Init(ReportForm rpt)
+        public override void Init()
         {            
             IList<Schueler>liste = new List<Schueler>();
             liste.Add(new Schueler(8500));
@@ -60,7 +59,7 @@ namespace diNo
 
     public class ReportFachliste : ReportController
     {
-        public override void Init(ReportForm rpt)
+        public override void Init()
         {
             FachTableAdapter BerichtTableAdapter;
             rpt.BerichtBindingSource.DataMember = "Fach";
@@ -69,11 +68,26 @@ namespace diNo
             BerichtTableAdapter.Fill(rpt.diNoDataSet.Fach);
             rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptFachliste.rdlc";     
         }
-
     }
-        /*
-{   case Berichtsliste.rptLehrerliste:
-                    {
+    
+    public class ReportSchuelerliste : ReportController
+    {
+        public override void Init()
+        {
+            SchuelerTableAdapter BerichtTableAdapter;
+            rpt.BerichtBindingSource.DataMember = "Schueler";
+            BerichtTableAdapter = new SchuelerTableAdapter();
+            BerichtTableAdapter.ClearBeforeFill = true;
+            BerichtTableAdapter.FillByKlasse(rpt.diNoDataSet.Schueler, 34); // 11Tb 
+            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptSchuelerliste.rdlc";
+        }
+    }
+
+   
+    public class ReportLehrerliste : ReportController
+    {
+        public override void Init()
+        {
                         LehrerTableAdapter BerichtTableAdapter;
 
                         rpt.BerichtBindingSource.DataMember = "Lehrer";
@@ -81,20 +95,6 @@ namespace diNo
                         BerichtTableAdapter.ClearBeforeFill = true;
                         BerichtTableAdapter.Fill(rpt.diNoDataSet.Lehrer);
                         rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptLehrerliste.rdlc";
-
-                        break;
-                    }    
-                case Berichtsliste.rptSchuelerliste:
-                    {
-                        SchuelerTableAdapter BerichtTableAdapter;
-
-                        rpt.BerichtBindingSource.DataMember = "Schueler";
-                        BerichtTableAdapter = new SchuelerTableAdapter();
-                        BerichtTableAdapter.ClearBeforeFill = true;
-                        BerichtTableAdapter.FillByKlasse(rpt.diNoDataSet.Schueler, 34); // 11Tb 
-                        rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptSchuelerliste.rdlc";
-
-                        break;
-                    }
-                */
+        }
+    }
 }

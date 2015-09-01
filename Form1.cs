@@ -141,10 +141,10 @@ namespace diNo
 
         private void btnReport_Click(object sender, EventArgs e)
         {
-            //new ReportController(Berichtsliste.rptSchuelerliste);
-            //new ReportController(Berichtsliste.rptLehrerliste);
+            new ReportSchuelerliste();
+            //new ReportLehrerliste();
             //new ReportFachliste();
-            new ReportNotenbogen(null);
+            //new ReportNotenbogen(null);
         }
     }
 }
