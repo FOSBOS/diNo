@@ -107,9 +107,7 @@ namespace diNo
               cleanArray[anschr1OrtSpalte],
               cleanArray[anschr1StrasseSpalte],
               cleanArray[anschr1TelefonSpalte],
-              cleanArray[klasseSpalte],
-              cleanArray[jahrgangsstufeSpalte],
-              cleanArray[ausbildungsrichtungSpalte],
+              ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]),
               cleanArray[fremdsprache2Spalte],
               cleanArray[reliOderEthikSpalte],
               cleanArray[wahlpflichtfachSpalte],
@@ -186,6 +184,22 @@ namespace diNo
         return null;
 
       return DateTime.Parse(date, CultureInfo.CurrentCulture);
+    }
+
+    /// <summary>
+    ///  Hauptzweck der Methode: W statt WVR im Wirtschaftszweig verwenden.
+    /// </summary>
+    /// <param name="ausbildungsrichtung">Die Ausbildungsrichtung aus der Schüler SV. z. B. WVR für Wirtschaft.</param>
+    /// <returns>Ein-Buchstabige Ausbildungsrichtung, z. B. W für Wirtschaft.</returns>
+    private static string ChangeAusbildungsrichtung(string ausbildungsrichtung)
+    {
+      switch (ausbildungsrichtung)
+      {
+        case "S": return "S";
+        case "T": return "T";
+        case "WVR": return "W";
+        default: throw new InvalidOperationException("Unbekannte Ausbildungsrichtung " + ausbildungsrichtung);
+      }
     }
   }
 }

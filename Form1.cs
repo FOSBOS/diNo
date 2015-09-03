@@ -59,16 +59,15 @@ namespace diNo
      
     }
 
-    /*
-    void notenReader_OnStatusChange(Object sender, NotenAusExcelReader.StatusChangedEventArgs e)
+    
+    void notenReader_OnStatusChange(Object sender, StatusChangedEventArgs e)
     {
-      this.textBoxStatusMessage.Text = e.Status;
+      this.textBoxStatusMessage.Text = e.Meldung;
     }
-    */
 
     private void btnCreateExcels_Click(object sender, EventArgs e)
     {
-            new ErzeugeAlleExcelDateien();
+       new ErzeugeAlleExcelDateien(this.notenReader_OnStatusChange);
     }
 
     private void btnReadExcelKurse_Click(object sender, EventArgs e)

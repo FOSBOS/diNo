@@ -64,7 +64,7 @@ namespace diNo
             lineCount = lineCount + 2;
         }
 
-        if (schueler.Data.Jahrgangsstufe == "11")
+        if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
         {
           FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
           var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
@@ -75,7 +75,7 @@ namespace diNo
           }
         }
 
-        if (schueler.Data.Jahrgangsstufe == "13")
+        if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
         {
           SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
           var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
@@ -85,7 +85,7 @@ namespace diNo
             textBoxSeminarfachthemaKurz.Text = seminarfachnoten[0].ThemaKurz;
             textBoxSeminarfachthemaLang.Text = seminarfachnoten[0].ThemaLang;
           }
-        }      
+        }    
     }
 
     // schreibt eine Notenliste (z.B. alle SA in Englisch aus dem 1. Hj. ins Grid), bez wird als Text an jede Note angefügt    
@@ -122,7 +122,8 @@ namespace diNo
 
         private void buttonSpeichern_Click(object sender, EventArgs e)
     {
-      if (schueler != null && schueler.Data.Jahrgangsstufe == "11")
+      
+      if (schueler != null && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
       {
         FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
         var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
@@ -136,7 +137,7 @@ namespace diNo
         }
       }
 
-      if (schueler != null && schueler.Data.Jahrgangsstufe == "13")
+      if (schueler != null && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
       {
         SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
         var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
@@ -149,6 +150,7 @@ namespace diNo
           seminarfachAdapter.Insert(schueler.Id, (int)numericUpDownSeminarfach.Value, textBoxSeminarfachthemaLang.Text, textBoxSeminarfachthemaKurz.Text);
         }
       }
+      
     }
 
     private void btnSchliessen_Click(object sender, EventArgs e)
