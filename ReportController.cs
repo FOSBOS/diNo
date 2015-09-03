@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using diNo.diNoDataSetTableAdapters;
+using Microsoft.Reporting.WinForms;
 
 namespace diNo
 {
@@ -41,18 +42,20 @@ namespace diNo
         public ReportNotenbogen(NotenCheckResults dataSource) : base(dataSource) {}
 
         public override void Init()
-        {            
+        {    
+        
+              
             IList<Schueler>liste = new List<Schueler>();
             liste.Add(new Schueler(8500));
             liste.Add(new Schueler(8534));
-            /*
-            ReportDataSource tSource = new ReportDataSource("Status", bindingSource1);
-            rvOrders.LocalReport.ReportPath = @".\osCommerceReports\OrderReport.rdlc";
-            rvOrders.LocalReport.DataSources.Add(tSource);
-            */
+            
+            ReportDataSource tSource = new ReportDataSource("DataSetNotenbogen", liste);
+            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";
+            rpt.reportViewer.LocalReport.DataSources.Add(tSource);
+            
 
-            rpt.BerichtBindingSource.DataSource = liste;
-            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";            
+            // rpt.BerichtBindingSource.DataSource = liste;
+            // rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";            
         }
 
     }
