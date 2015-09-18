@@ -75,12 +75,12 @@ namespace diNo
       SchuelerKursSelectorHolder kursSelector = new SchuelerKursSelectorHolder();
       kursSelector.AddSelector(new FremdspracheSelector());
       kursSelector.AddSelector(new ReliOderEthikSelector());
-      UnterrichtExcelReader.ReadUnterricht("C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\Daten_Stani.xlsx", kursSelector);
+      UnterrichtExcelReader.ReadUnterricht("C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\Daten_Stani 2015.xlsx", kursSelector);
     }
 
     private void btnImportSchueler_Click(object sender, EventArgs e)
     {
-      WinSVSchuelerReader.ReadSchueler("C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\Datenquelle_WINSV.txt");
+      WinSVSchuelerReader.ReadSchueler("C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\Datenquelle_WINSV_2015.txt");
     }
 
     private void button1_Click(object sender, EventArgs e)
@@ -140,10 +140,10 @@ namespace diNo
 
         private void btnReport_Click(object sender, EventArgs e)
         {
-            new ReportSchuelerliste();
+            //new ReportSchuelerliste();
             //new ReportLehrerliste();
             //new ReportFachliste();
-            //new ReportNotenbogen(null);
+            new ReportNotenbogen(null);
         }
     }
 }

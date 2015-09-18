@@ -198,6 +198,8 @@ namespace diNo
         case "S": return "S";
         case "T": return "T";
         case "WVR": return "W";
+        case "W": return "W"; // manchmal steht W auch schon drin
+        case "V": return "V"; // Vorklasse FOS hat noch keine Ausbildungsrichtung
         default: throw new InvalidOperationException("Unbekannte Ausbildungsrichtung " + ausbildungsrichtung);
       }
     }

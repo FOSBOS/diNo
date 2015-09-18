@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 
 namespace diNo
 {
@@ -20,7 +21,7 @@ namespace diNo
 
       foreach (var kurs in kurse)
       {
-        if (kurs.Id > 824 && kurs.Id < 840)
+        //if (kurs.Id > 824 && kurs.Id < 840)
         //if (kurs.Id==851)
         {
           if (statusChangedHandler != null)
@@ -224,6 +225,66 @@ namespace diNo
       throw new InvalidOperationException("unbekannte Schulaufgabenwertung " + wertung);
     }
 
+
+    public void SendMailToAll()
+    {
+      LehrerTableAdapter ada = new LehrerTableAdapter();
+      foreach (diNoDataSet.LehrerRow row in ada.GetData())
+      {
+        // TODO: Wieder rausnehmen!
+        if (row.Id != 273)
+          continue;
+
+        string directoryName = Konstanten.ExcelPfad + "\\" + row.Kuerzel;
+        if (!Directory.Exists(directoryName) || Directory.GetFiles(directoryName).Count() == 0)
+        {
+          log.Warn("Unterrichtet der Lehrer " + row.Kuerzel + " nix ?");
+          continue;
+        }
+
+        string dienstlicheMailAdresse = row.EMail;
+
+        SendMail("markus.siegel@fosbos-kempten.de", dienstlicheMailAdresse, Directory.GetFiles(directoryName));
+      }
+    }
+
+    private void SendMail(string from, string to, IEnumerable<string> fileNames)
+    {
+      try
+      {
+        string subject = "Mail von der digitalen Notenverwaltung (diNo)";
+        string body = 
+          @"Liebe Kolleginnen und Kollegen, 
+          diese Nachricht wurde von unserer digitalen Notenverwaltung diNo erzeugt.
+          Im Anhang finden Sie die Excel-Notenlisten für das kommende Schuljahr.
+          Da wir dieses Verfahren dieses Jahr zum ersten Mal durchführen: prüfen Sie bitte 
+          - ob es sich um Ihre Kurse handelt und die Schülerliste vollständig ist
+          - ob die Einstellungen in der Datei korrekt sind (z. B. Lehrername, Schulaufgabenwertung und ähnliche Eintragungen)
+          - ob sich sonstige offensichtliche Fehler, z. B. beim Notenschlüssel eingeschlichen haben
+
+          Verwenden Sie die Dateien mit noch mehr Vorsicht als in den vergangenen Jahren, da aufgrund der vielen Änderungen
+          die Wahrscheinlichkeit für Fehler erhöht ist. 
+          Die Note gibt immer der Lehrer, nie das Programm ;-)";
+        SmtpClient mailServer = new SmtpClient("mail.fosbos-kempten.de", 587);
+        mailServer.EnableSsl = false;
+        mailServer.Credentials = new System.Net.NetworkCredential(from, "FB_ms3169");
+        MailMessage msg = new MailMessage(from, to);
+        msg.Subject = subject;
+        msg.Body = body;
+        foreach (string fileName in fileNames)
+        {
+          msg.Attachments.Add(new Attachment(fileName));
+        }
+
+        mailServer.Send(msg);
+      }
+      catch (Exception ex)
+      {
+        log.Fatal("Unable to send email. Error : " + ex);
+        throw;
+      }
+
+    }
   }
 }
 

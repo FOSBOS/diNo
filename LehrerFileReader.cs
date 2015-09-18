@@ -39,7 +39,12 @@ namespace diNo
           {
             if (adapter.GetDataByKuerzel(cleanArray[kuerzelSpalte]).Count == 0)
             {
-              adapter.Insert(cleanArray[kuerzelSpalte], cleanArray[vornameSpalte] + " " + cleanArray[nachnameSpalte]);
+              string mailAdresse = cleanArray[vornameSpalte] + "." + cleanArray[nachnameSpalte] + "@fosbos-kempten.de";
+              mailAdresse = mailAdresse.Replace("ä", "ae");
+              mailAdresse = mailAdresse.Replace("ö", "oe");
+              mailAdresse = mailAdresse.Replace("ü", "ue");
+              mailAdresse = mailAdresse.Replace("ß", "ss");
+              adapter.Insert(cleanArray[kuerzelSpalte], cleanArray[vornameSpalte] + " " + cleanArray[nachnameSpalte], cleanArray[dienstbezeichnungSpalte], mailAdresse);
             }
           }
         }

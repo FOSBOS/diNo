@@ -39,8 +39,8 @@ namespace diNo
         throw new InvalidOperationException("kein Sheet mit dem Namen \"Tabelle1\" gefunden");
       }
 
-      int rowCount = sheet.get_Range("A" + sheet.Rows.Count, "B" + sheet.Rows.Count).get_End(Excel.XlDirection.xlUp).Row;
-      for (int zeile = 5; zeile < rowCount; zeile++)
+      int lastRow = sheet.get_Range("A" + sheet.Rows.Count, "B" + sheet.Rows.Count).get_End(Excel.XlDirection.xlUp).Row;
+      for (int zeile = 5; zeile <= lastRow; zeile++)
       {
         string lehrer = ReadValue(sheet, "E" + zeile);
         string fach = ReadValue(sheet, "F" + zeile);

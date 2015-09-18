@@ -27,7 +27,7 @@ namespace diNo
         this.FileName = fileName;
 
         this.workbook = excelApp.Workbooks.Open(this.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
-        excelApp.Visible = true;
+        excelApp.Visible = false;
       }
       catch (Exception exp)
       {
