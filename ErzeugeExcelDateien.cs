@@ -70,10 +70,6 @@ namespace diNo
       int count = 0;
       foreach (diNoDataSet.LehrerRow row in rows)
       {
-        // TODO: Wieder rausnehmen!
-        if (row.Id != 372)
-          continue;
-
         string directoryName = Konstanten.ExcelPfad + "\\" + row.Kuerzel;
         if (!Directory.Exists(directoryName) || Directory.GetFiles(directoryName).Count() == 0)
         {
@@ -87,7 +83,9 @@ namespace diNo
           statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = count + " von " + rows.Count + " gesendet" });
         }
 
-        SendMail("markus.siegel@fosbos-kempten.de", dienstlicheMailAdresse, Directory.GetFiles(directoryName));
+        //SendMail("markus.siegel@fosbos-kempten.de", dienstlicheMailAdresse, Directory.GetFiles(directoryName));
+        SendMail("siegelma@arcor.de", dienstlicheMailAdresse, Directory.GetFiles(directoryName));
+        
         count++;
       }
     }
@@ -104,20 +102,33 @@ namespace diNo
       {
         string subject = "Mail von der digitalen Notenverwaltung (diNo)";
         string body =
-          @"Liebe Kolleginnen und Kollegen, 
-          diese Nachricht wurde von unserer digitalen Notenverwaltung diNo erzeugt.
-          Im Anhang finden Sie die Excel-Notenlisten für das kommende Schuljahr.
-          Da wir dieses Verfahren dieses Jahr zum ersten Mal durchführen: prüfen Sie bitte 
-          - ob es sich um Ihre Kurse handelt und die Schülerliste vollständig ist
-          - ob die Einstellungen in der Datei korrekt sind (z. B. Lehrername, Schulaufgabenwertung und ähnliche Eintragungen)
-          - ob sich sonstige offensichtliche Fehler, z. B. beim Notenschlüssel eingeschlichen haben
+@"Liebe Kolleginnen und Kollegen,
+ 
+diese Nachricht wurde maschinell von unserer digitalen Notenverwaltung diNo erzeugt.
+Im Anhang finden Sie die Excel-Notenlisten für das kommende Schuljahr.
+Da wir dieses Verfahren dieses Jahr zum ersten Mal durchführen: prüfen Sie bitte 
+- ob es sich um Ihre Kurse handelt und die Schülerliste vollständig ist
+- ob die Einstellungen in der Datei korrekt sind (z. B. Lehrername, Schulaufgabenwertung und ähnliche Eintragungen)
+- ob sich sonstige offensichtliche Fehler, z. B. beim Notenschlüssel eingeschlichen haben
 
-          Verwenden Sie die Dateien mit noch mehr Vorsicht als in den vergangenen Jahren, da aufgrund der vielen Änderungen
-          die Wahrscheinlichkeit für Fehler erhöht ist. 
-          Die Note gibt immer der Lehrer, nie das Programm ;-)";
-        SmtpClient mailServer = new SmtpClient("mail.fosbos-kempten.de", 587);
+Bei Problemen bitte ich um eine Nachricht.          
+
+Verwenden Sie die Dateien mit noch mehr Vorsicht als in den vergangenen Jahren, da aufgrund der vielen Änderungen
+die Wahrscheinlichkeit für Fehler erhöht ist. 
+
+Als Erinnerung: Die Note gibt auch künftig immer der Lehrer, das Programm hilft hier bestenfalls mit ;-)
+
+Viele Grüße
+Markus Siegel
+
+PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel@fosbos-kempten.de
+(das automatisierte Senden von meiner Dienstadresse hat nicht geklappt, drum nehme ich meine private)";
+        //SmtpClient mailServer = new SmtpClient("mail.fosbos-kempten.de", 587);
+        SmtpClient mailServer = new SmtpClient("mail.arcor.de", 587);
         mailServer.EnableSsl = false;
-        mailServer.Credentials = new System.Net.NetworkCredential(from, "FB_ms3169");
+        mailServer.UseDefaultCredentials = false;
+
+        mailServer.Credentials = new System.Net.NetworkCredential(from, "bitte Passwort hier eingeben");
         MailMessage msg = new MailMessage(from, to);
         msg.Subject = subject;
         msg.Body = body;
@@ -125,7 +136,7 @@ namespace diNo
         {
           msg.Attachments.Add(new Attachment(fileName));
         }
-
+        
         mailServer.Send(msg);
       }
       catch (Exception ex)
