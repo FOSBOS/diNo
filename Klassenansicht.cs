@@ -28,6 +28,12 @@ namespace diNo
 
     void fKSchuelerToKlasseBindingSource_CurrentChanged(object sender, EventArgs e)
     {
+      if (fkSchuelerToKursBindingSource.Current == null)
+      {
+        this.kursBindingSource.DataSource = new BindingList<diNoDataSet.KursRow>();
+        return;
+      }
+
       var schueler = (fKSchuelerToKlasseBindingSource.Current as DataRowView).Row as diNoDataSet.SchuelerRow;
       BindingList<diNoDataSet.KursRow> list = new BindingList<diNoDataSet.KursRow>();
       foreach (var kurs in new SchuelerKursTableAdapter().GetDataBySchuelerId(schueler.Id))

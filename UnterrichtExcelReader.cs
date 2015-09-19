@@ -56,7 +56,7 @@ namespace diNo
           log.Debug("Unterricht Ohne Fach wird ignoriert in Zeile " + zeile);
           continue;
         }
-        if ((new string[] { "SSl", "SNT", "SWi", "FPU", "FPA", "FPB", "F-Wi", "TZ-Fö", "GK_BF", "M-Fö", "E-Fö", "Ph-Fö", "AWU", "Me", "SL", "SF" }).Contains(fach))
+        if ((new string[] { "SSl", "SNT", "SWi", "FPU", "FPA", "FPB", "TZ-Fö", "GK_BF", "M-Fö", "E-Fö", "Ph-Fö", "AWU", "Me", "SL", "SF" }).Contains(fach))
         {
           log.Debug("Ignoriere Förderunterricht, Ergänzungsunterricht, Seminarfach und diversen anderen Unfug - kein selbstständiger Unterricht");
           continue;
@@ -68,13 +68,19 @@ namespace diNo
         }
 
         var dbFach = FindOrCreateFach(fach);
+        if (string.IsNullOrEmpty(dbFach.Bezeichnung.Trim()))
+        {
+          log.Debug("Ignoriere Ignoriere Fach ohne Namen : Kürzel "+dbFach.Kuerzel);
+          continue;
+        }
+
         var dblehrer = FindLehrer(lehrer);
         if (dblehrer == null)
         {
           log.Error("Ignoriere Kurse des unbekannten Lehrers " + lehrer);
           continue;
         }
-
+        
         var kurs = FindOrCreateKurs(dbFach.Bezeichnung.Trim() + " " + klassenString, dblehrer.Id, fach);
         
         var klassen = klassenString.Split(',');
@@ -106,7 +112,7 @@ namespace diNo
         var schuelerDerKlasse = sAdapter.GetDataByKlasse(dbKlasse.Id);
         if (schuelerDerKlasse.Count == 0)
         {
-          log.Debug("Klasse " + dbKlasse.Bezeichnung + " ist leer");
+
           if (dbKlasse.Bezeichnung.StartsWith("FB") && dbKlasse.Bezeichnung.EndsWith("F"))
           {
             // z.B. FB13T_F meint die FOSler der Mischklasse FB13T. Evtl. sind die als eigene Klasse F13T in der DB
@@ -156,6 +162,56 @@ namespace diNo
               schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "S");
             }
           }
+
+          if (dbKlasse.Bezeichnung.EndsWith("_T") && dbKlasse.Bezeichnung.Contains("TW"))
+          {
+            // Techniker aus der Mischklasse
+            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("_T", string.Empty);
+            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
+            if (dbKlasse != null)
+            {
+              schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "T");
+            }
+          }
+
+          if (dbKlasse.Bezeichnung.EndsWith("_W") && dbKlasse.Bezeichnung.Contains("TW"))
+          {
+            // Wirtschaftler aus der Mischklasse
+            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("_W", string.Empty);
+            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
+            if (dbKlasse != null)
+            {
+              schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "W");
+            }
+          }
+
+          if (dbKlasse.Bezeichnung.EndsWith("_T") && dbKlasse.Bezeichnung.Contains("ST"))
+          {
+            // Techniker aus der Mischklasse
+            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("_T", string.Empty);
+            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
+            if (dbKlasse != null)
+            {
+              schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "T");
+            }
+          }
+
+          if (dbKlasse.Bezeichnung.EndsWith("_S") && dbKlasse.Bezeichnung.Contains("ST"))
+          {
+            // Soziale aus der Mischklasse
+            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("_S", string.Empty);
+            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
+            if (dbKlasse != null)
+            {
+              schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "S");
+            }
+          }
+        }
+
+        if (schuelerDerKlasse.Count == 0)
+        {
+          //throw new InvalidOperationException("Klasse " + dbKlasse.Bezeichnung + " ist leer");
+          log.Error("Klasse " + dbKlasse.Bezeichnung + " ist leer");
         }
 
         foreach (var schueler in schuelerDerKlasse)

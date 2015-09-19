@@ -8,11 +8,22 @@ using System.Net.Mail;
 
 namespace diNo
 {
-
+  /// <summary>
+  /// Delegat für Statusänderungsmeldungen.
+  /// </summary>
+  /// <param name="sender">Der Sender.</param>
+  /// <param name="eventArgs">Die Event Args (hauptsächlich die Meldung).</param>
   public delegate void StatusChanged(object sender, StatusChangedEventArgs eventArgs);
 
+  /// <summary>
+  /// Klasse zum Erzeugen der Excel-Dateien.
+  /// </summary>
   public class ErzeugeAlleExcelDateien
   {
+    /// <summary>
+    /// Konstruktor.
+    /// </summary>
+    /// <param name="statusChangedHandler">Handler für Statusmeldungen. Kann auch null sein.</param>
     public ErzeugeAlleExcelDateien(StatusChanged statusChangedHandler)
     {
       KursTableAdapter ta = new KursTableAdapter();
@@ -37,6 +48,90 @@ namespace diNo
       if (statusChangedHandler != null)
       {
         statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = count + " Dateien erfolgreich erzeugt" });
+      }
+    }
+  }
+
+  /// <summary>
+  /// Klasse zum automatisierten verschicken der Excel-Dateien an alle Lehrer.
+  /// </summary>
+  public class SendExcelMails
+  {
+    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+    /// <summary>
+    /// Konstruktor.
+    /// </summary>
+    /// <param name="statusChangedHandler">Handler für Statusmeldungen. Kann auch null sein.</param>
+    public SendExcelMails(StatusChanged statusChangedHandler)
+    {
+      LehrerTableAdapter ada = new LehrerTableAdapter();
+      var rows = ada.GetData();
+      int count = 0;
+      foreach (diNoDataSet.LehrerRow row in rows)
+      {
+        // TODO: Wieder rausnehmen!
+        if (row.Id != 372)
+          continue;
+
+        string directoryName = Konstanten.ExcelPfad + "\\" + row.Kuerzel;
+        if (!Directory.Exists(directoryName) || Directory.GetFiles(directoryName).Count() == 0)
+        {
+          log.Warn("Unterrichtet der Lehrer " + row.Name + " nix ?");
+          continue;
+        }
+
+        string dienstlicheMailAdresse = row.EMail;
+        if (statusChangedHandler != null)
+        {
+          statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = count + " von " + rows.Count + " gesendet" });
+        }
+
+        SendMail("markus.siegel@fosbos-kempten.de", dienstlicheMailAdresse, Directory.GetFiles(directoryName));
+        count++;
+      }
+    }
+
+    /// <summary>
+    /// Schickt eine Mail mit den übergebenen Excel-Files.
+    /// </summary>
+    /// <param name="from">Der Absender.</param>
+    /// <param name="to">Der Empfänger.</param>
+    /// <param name="fileNames">Die Dateinamen.</param>
+    private static void SendMail(string from, string to, IEnumerable<string> fileNames)
+    {
+      try
+      {
+        string subject = "Mail von der digitalen Notenverwaltung (diNo)";
+        string body =
+          @"Liebe Kolleginnen und Kollegen, 
+          diese Nachricht wurde von unserer digitalen Notenverwaltung diNo erzeugt.
+          Im Anhang finden Sie die Excel-Notenlisten für das kommende Schuljahr.
+          Da wir dieses Verfahren dieses Jahr zum ersten Mal durchführen: prüfen Sie bitte 
+          - ob es sich um Ihre Kurse handelt und die Schülerliste vollständig ist
+          - ob die Einstellungen in der Datei korrekt sind (z. B. Lehrername, Schulaufgabenwertung und ähnliche Eintragungen)
+          - ob sich sonstige offensichtliche Fehler, z. B. beim Notenschlüssel eingeschlichen haben
+
+          Verwenden Sie die Dateien mit noch mehr Vorsicht als in den vergangenen Jahren, da aufgrund der vielen Änderungen
+          die Wahrscheinlichkeit für Fehler erhöht ist. 
+          Die Note gibt immer der Lehrer, nie das Programm ;-)";
+        SmtpClient mailServer = new SmtpClient("mail.fosbos-kempten.de", 587);
+        mailServer.EnableSsl = false;
+        mailServer.Credentials = new System.Net.NetworkCredential(from, "FB_ms3169");
+        MailMessage msg = new MailMessage(from, to);
+        msg.Subject = subject;
+        msg.Body = body;
+        foreach (string fileName in fileNames)
+        {
+          msg.Attachments.Add(new Attachment(fileName));
+        }
+
+        mailServer.Send(msg);
+      }
+      catch (Exception ex)
+      {
+        log.Fatal("Unable to send email. Error : " + ex);
+        throw;
       }
     }
   }
@@ -204,7 +299,6 @@ namespace diNo
         xls.WriteValue(pruefungssheet, CellConstant.SchluesselArt, schluessel);
         xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfUntergrenze, ug);
         xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfObergrenze, og);
-
       }
     }
 
@@ -223,67 +317,6 @@ namespace diNo
         return "KA / mdl.";
 
       throw new InvalidOperationException("unbekannte Schulaufgabenwertung " + wertung);
-    }
-
-
-    public void SendMailToAll()
-    {
-      LehrerTableAdapter ada = new LehrerTableAdapter();
-      foreach (diNoDataSet.LehrerRow row in ada.GetData())
-      {
-        // TODO: Wieder rausnehmen!
-        if (row.Id != 273)
-          continue;
-
-        string directoryName = Konstanten.ExcelPfad + "\\" + row.Kuerzel;
-        if (!Directory.Exists(directoryName) || Directory.GetFiles(directoryName).Count() == 0)
-        {
-          log.Warn("Unterrichtet der Lehrer " + row.Kuerzel + " nix ?");
-          continue;
-        }
-
-        string dienstlicheMailAdresse = row.EMail;
-
-        SendMail("markus.siegel@fosbos-kempten.de", dienstlicheMailAdresse, Directory.GetFiles(directoryName));
-      }
-    }
-
-    private void SendMail(string from, string to, IEnumerable<string> fileNames)
-    {
-      try
-      {
-        string subject = "Mail von der digitalen Notenverwaltung (diNo)";
-        string body = 
-          @"Liebe Kolleginnen und Kollegen, 
-          diese Nachricht wurde von unserer digitalen Notenverwaltung diNo erzeugt.
-          Im Anhang finden Sie die Excel-Notenlisten für das kommende Schuljahr.
-          Da wir dieses Verfahren dieses Jahr zum ersten Mal durchführen: prüfen Sie bitte 
-          - ob es sich um Ihre Kurse handelt und die Schülerliste vollständig ist
-          - ob die Einstellungen in der Datei korrekt sind (z. B. Lehrername, Schulaufgabenwertung und ähnliche Eintragungen)
-          - ob sich sonstige offensichtliche Fehler, z. B. beim Notenschlüssel eingeschlichen haben
-
-          Verwenden Sie die Dateien mit noch mehr Vorsicht als in den vergangenen Jahren, da aufgrund der vielen Änderungen
-          die Wahrscheinlichkeit für Fehler erhöht ist. 
-          Die Note gibt immer der Lehrer, nie das Programm ;-)";
-        SmtpClient mailServer = new SmtpClient("mail.fosbos-kempten.de", 587);
-        mailServer.EnableSsl = false;
-        mailServer.Credentials = new System.Net.NetworkCredential(from, "FB_ms3169");
-        MailMessage msg = new MailMessage(from, to);
-        msg.Subject = subject;
-        msg.Body = body;
-        foreach (string fileName in fileNames)
-        {
-          msg.Attachments.Add(new Attachment(fileName));
-        }
-
-        mailServer.Send(msg);
-      }
-      catch (Exception ex)
-      {
-        log.Fatal("Unable to send email. Error : " + ex);
-        throw;
-      }
-
     }
   }
 }

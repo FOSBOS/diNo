@@ -75,6 +75,7 @@ namespace diNo
       SchuelerKursSelectorHolder kursSelector = new SchuelerKursSelectorHolder();
       kursSelector.AddSelector(new FremdspracheSelector());
       kursSelector.AddSelector(new ReliOderEthikSelector());
+      kursSelector.AddSelector(new WahlpflichtfachSelector());
       UnterrichtExcelReader.ReadUnterricht("C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\Daten_Stani 2015.xlsx", kursSelector);
     }
 
@@ -145,5 +146,10 @@ namespace diNo
             //new ReportFachliste();
             new ReportNotenbogen(null);
         }
+
+    private void btnSendMail_Click(object sender, EventArgs e)
+    {
+      new SendExcelMails(this.notenReader_OnStatusChange);
     }
+  }
 }

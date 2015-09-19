@@ -108,7 +108,8 @@ namespace diNo
       var fach = new FachTableAdapter().GetDataById(kurs.FachId)[0];
       if (fach.Kuerzel.Equals("F", StringComparison.OrdinalIgnoreCase))
       {
-        return (fach.Kuerzel.Equals(schueler.Fremdsprache2, StringComparison.OrdinalIgnoreCase));
+        // F3 steht für französisch fortgeführt. Diese Leute gehören nicht in den "normalen" Französischkurs
+        return (fach.Kuerzel.Equals(schueler.Fremdsprache2, StringComparison.OrdinalIgnoreCase)) && !(schueler.Wahlpflichtfach.Equals("F3", StringComparison.OrdinalIgnoreCase));
       }
 
       return true;
@@ -170,6 +171,74 @@ namespace diNo
       return fach.Kuerzel.Equals("K", StringComparison.OrdinalIgnoreCase)
         || fach.Kuerzel.Equals("Ev", StringComparison.OrdinalIgnoreCase)
         || fach.Kuerzel.Equals("Eth", StringComparison.OrdinalIgnoreCase);
+    }
+  }
+
+  public class WahlpflichtfachSelector : ISchuelerKursSelector
+  {
+    /// <summary>
+    /// Prüft, ob ein Schueler in einem Kurs ist.
+    /// </summary>
+    /// <param name="schueler">Der Schüler.</param>
+    /// <param name="kurs">Der Kurs.</param>
+    /// <returns>true, wenn der Schüler in diesen Kurs gehen soll.</returns>
+    public bool IsInKurs(diNoDataSet.SchuelerRow schueler, diNoDataSet.KursRow kurs)
+    {
+      var fach = new FachTableAdapter().GetDataById(kurs.FachId)[0];
+      Schueler derSchueler = new Schueler(schueler);
+
+      if (derSchueler.getKlasse.Zweig == Zweig.Wirtschaft)
+      {
+        if (derSchueler.getKlasse.Schulart == Schulart.FOS)
+        {
+          // Wirtschafts-FOSler müssen zwischen WIn und Französisch (fortgeführt) wählen
+          // wenn der Schüler dieses Fach extra gewählt hat soll er natürlich reingehen
+          if (fach.Kuerzel.Equals("F-Wi", StringComparison.OrdinalIgnoreCase) &&
+            schueler.Wahlpflichtfach.Equals("F3", StringComparison.OrdinalIgnoreCase))
+          {
+            return true;
+          }
+
+          if (fach.Kuerzel.Equals("WIn", StringComparison.OrdinalIgnoreCase) &&
+            schueler.Wahlpflichtfach.Equals("WIn", StringComparison.OrdinalIgnoreCase))
+          {
+            return true;
+          }
+
+          return false;
+        }
+        else
+        {
+          // Wirtschafts-BOSler gehen immer in WIn, aber nie in Französisch (fortgeführt) oder Kunst
+          return fach.Kuerzel.Equals("WIn", StringComparison.OrdinalIgnoreCase);
+        }
+      }
+
+      // Für Soziale gilt: Wer Kunst als Wahlpflichtfach gewählt hat geht in Kunst
+      // wer Französisch als Wahlpflichtfach gewählt hat, geht in Französisch (das macht aber der
+      // Fremdsprachenselector, weil dann Französisch als Sprache2 eingetragen wird)
+      if (derSchueler.getKlasse.Zweig == Zweig.Sozial)
+      {
+        if (fach.Kuerzel.Equals("Ku", StringComparison.OrdinalIgnoreCase) &&
+            schueler.Wahlpflichtfach.Equals("Ku", StringComparison.OrdinalIgnoreCase))
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    /// <summary>
+    /// Interessiert sich momentan für die Fächer F-Wi, Ku und WIn.
+    /// </summary>
+    /// <param name="fach">Das Fach</param>
+    /// <returns>true falls eines der Reli-Fächer übergeben wurde. Sonst false.</returns>
+    public bool IsInterestedInFach(diNoDataSet.FachRow fach)
+    {
+      return fach.Kuerzel.Equals("F-Wi", StringComparison.OrdinalIgnoreCase)
+        || fach.Kuerzel.Equals("WIn", StringComparison.OrdinalIgnoreCase)
+        || fach.Kuerzel.Equals("Ku", StringComparison.OrdinalIgnoreCase);
     }
   }
 }
