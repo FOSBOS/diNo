@@ -156,7 +156,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
     private OpenNotendatei xls;
     private Kurs kurs;
     private string fileName;
-    private diNoDataSet.SchuelerDataTable alleSchueler;
+    private IList<diNoDataSet.SchuelerRow> alleSchueler;
 
     /// <summary>
     /// Aus dem übergebenen Kurs wird eine Exceldatei mit allen Schülerdaten generiert
@@ -165,7 +165,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
     {
 
       kurs = new Kurs(aKurs.Id);
-      alleSchueler = kurs.getSchueler; // sind bereits via SQL nach Klasse und Namen sortiert
+      alleSchueler = kurs.getSchueler(true); // sind bereits via SQL nach Klasse und Namen sortiert
 
       if (alleSchueler.Count == 0)
       {
@@ -194,7 +194,9 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
 
       // speichere und schließe Datei
       xls.workbook.Save();
+      //TODO: ich halte es für gefährlich, private Variablen zu disposen
       xls.Dispose(); // Destruktor aufrufen
+      xls = null;
     }
 
     /// <summary>
@@ -260,9 +262,10 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
         xls.WriteValue(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name);
         xls.WriteValue(xls.notenbogen, CellConstant.Vorname + (zeile + 1), "   " + schueler.benutzterVorname);
         xls.WriteValueProtectedCell(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
+
         if (schueler.IsLegastheniker)
         {
-          xls.WriteValue(xls.notenbogen, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
+          xls.SetLegasthenievermerkByZeile(zeile, true);
         }
 
         zeile += 2;
@@ -272,6 +275,8 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
       // Klassenbezeichnung wird aus allen Schülern gesammelt
       xls.WriteValue(xls.notenbogen, CellConstant.Klassenbezeichnung, klassen.Aggregate((x, y) => x + ", " + y));
     }
+
+
 
     /// <summary>
     /// Trägt die korrekten Einstellungen für den Notenschlüssel eines Faches als Vorbelegung ins Excel-Sheet ein.

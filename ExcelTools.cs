@@ -35,16 +35,6 @@ namespace diNo
       }
     }
 
-    // Destruktor
-    ~OpenExcel()
-    {
-      if (UnsavedChanges) workbook.Save();
-      workbook.Close(false, FileName, Type.Missing);
-      Marshal.ReleaseComObject(workbook);
-      excelApp.Quit();
-    }
-
-
     /// <summary>
     /// Der Dateiname.
     /// </summary>
@@ -116,8 +106,9 @@ namespace diNo
           this.workbook = null;
         }
 
-        //this.excelApp = null;
+        excelApp.Quit();
       }
+
       GC.SuppressFinalize(this);
     }
     #endregion
@@ -183,15 +174,82 @@ namespace diNo
       int zeile = GetErsteFreieZeile(notenbogen);
       int zeileFuerSId = GetSidZeileForNotenbogenZeile(zeile);
       WriteValue(notenbogen, CellConstant.Nachname + zeile, aSchueler.Name);
-      WriteValue(AP, CellConstant.Vorname + (zeile + 1), "   " + aSchueler.Vorname);
+      WriteValue(notenbogen, CellConstant.Vorname + (zeile + 1), "   " + aSchueler.Rufname);
       WriteValueProtectedCell(sid, CellConstant.SId + zeileFuerSId, aSchueler.Id.ToString());
       if (aSchueler.LRSStoerung || aSchueler.LRSSchwaeche)
       {
         WriteValue(notenbogen, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
       }
+    }
 
-      this.workbook.Save();
-      this.UnsavedChanges = false;
+    /// <summary>
+    /// Entfernt einen Schüler aus der Datei (Name und Id). Lässt seine Noten aber stehen.
+    /// </summary>
+    /// <param name="aSchueler">der Schüler.</param>
+    public void RemoveSchueler(diNoDataSet.SchuelerRow aSchueler)
+    {
+      UnsavedChanges = true;
+      RemoveSchueler(aSchueler.Id);
+    }
+
+    /// <summary>
+    /// Entfernt einen Schüler aus der Datei (Name und Id). Lässt seine Noten aber stehen.
+    /// </summary>
+    /// <param name="schuelerId">die Id des Schülers.</param>
+    public void RemoveSchueler(int schuelerId)
+    {
+      UnsavedChanges = true;
+      int zeileSId = GetSidZeileForSchueler(schuelerId);
+      int zeileNachname = GetNotenbogenZeileForSidZeile(zeileSId);
+      WriteValue(notenbogen, CellConstant.Nachname + zeileNachname, "");
+      WriteValue(notenbogen, CellConstant.Vorname + (zeileNachname + 1), "");
+      WriteValueProtectedCell(sid, CellConstant.SId + zeileSId, ""+int.MaxValue);
+    }
+
+    /// <summary>
+    /// Setzt den Legasthenievermerk für  den Schüler.
+    /// </summary>
+    /// <param name="schuelerId">ID des Schülers.</param>
+    /// <param name="isLegastheniker">Ob der Schüler Legastheniker ist oder nicht.</param>
+    public void SetLegasthenievermerk(int schuelerId, bool isLegastheniker)
+    {
+      UnsavedChanges = true;
+      int zeileSId = GetSidZeileForSchueler(schuelerId);
+      int zeileNachname = GetNotenbogenZeileForSidZeile(zeileSId);
+      SetLegasthenievermerkByZeile(zeileNachname, isLegastheniker);
+    }
+
+    /// <summary>
+    /// Setzt den Legasthenievermerk für einen Schüler anhand der Zeile.
+    /// </summary>
+    /// <param name="zeile">Die Zeile, in der der Schueler steht.</param>
+    /// <param name="isLegastheniker">Ob der Schüler Legastheniker ist oder nicht.</param>
+    public void SetLegasthenievermerkByZeile(int zeile, bool isLegastheniker)
+    {
+      UnsavedChanges = true;
+      string value = isLegastheniker ? CellConstant.LegasthenieEintragung : string.Empty;
+      WriteValue(notenbogen, CellConstant.LegasthenieVermerk + zeile, value);
+    }
+
+    public int GetSidZeileForSchueler(int schuelerId)
+    {
+      for (int i = CellConstant.zeileSIdErsterSchueler; i <= MaxAnzahlSchueler + CellConstant.zeileSIdErsterSchueler ; i++)
+      {
+        string aValue = ReadValue(sid, CellConstant.SId + i);
+        int intValue = int.Parse(aValue);
+        if (intValue.Equals(schuelerId))
+        {
+          return i;
+        }
+      }
+
+      throw new InvalidOperationException("Schüler nicht gefunden. Id "+schuelerId);
+    }
+
+    private int GetNotenbogenZeileForSidZeile(int sidZeile)
+    {
+      int indexSchueler = sidZeile - 4; // Beginnend mit dem Nullten
+      return 2 * indexSchueler + 5;
     }
 
     private int GetSidZeileForNotenbogenZeile(int notenbogenZeile)
@@ -208,7 +266,7 @@ namespace diNo
         zeile = zeile - 2;
       }
 
-      return zeile;
+      return zeile + 2;
     }
 
     /// <summary>
@@ -263,6 +321,9 @@ namespace diNo
     public decimal? ReadSchnitt(BerechneteNotentyp typ, Halbjahr hj, int zeile)
     {
       string zelle = CellConstant.getSchnittZelle(typ, hj, zeile);
+      if (zelle == null)
+        return null;
+
       string v;
       if (typ == BerechneteNotentyp.APGesamt)
         v = ReadValue(AP, zelle);
@@ -275,6 +336,9 @@ namespace diNo
     public byte? ReadSchnittGanzzahlig(BerechneteNotentyp typ, Halbjahr hj, int zeile)
     {
       string zelle = CellConstant.getSchnittZelle(typ, hj, zeile);
+      if (zelle == null)
+        return null;
+
       string v;
       if (typ == BerechneteNotentyp.Abschlusszeugnis)
         v = ReadValue(AP, zelle);

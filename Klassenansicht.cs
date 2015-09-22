@@ -34,14 +34,17 @@ namespace diNo
         return;
       }
 
-      var schueler = (fKSchuelerToKlasseBindingSource.Current as DataRowView).Row as diNoDataSet.SchuelerRow;
-      BindingList<diNoDataSet.KursRow> list = new BindingList<diNoDataSet.KursRow>();
-      foreach (var kurs in new SchuelerKursTableAdapter().GetDataBySchuelerId(schueler.Id))
+      if (fKSchuelerToKlasseBindingSource.Current != null)
       {
-        list.Add(new KursTableAdapter().GetDataById(kurs.KursId)[0]);
-      }
+        var schueler = (fKSchuelerToKlasseBindingSource.Current as DataRowView).Row as diNoDataSet.SchuelerRow;
+        BindingList<diNoDataSet.KursRow> list = new BindingList<diNoDataSet.KursRow>();
+        foreach (var kurs in new SchuelerKursTableAdapter().GetDataBySchuelerId(schueler.Id))
+        {
+          list.Add(new KursTableAdapter().GetDataById(kurs.KursId)[0]);
+        }
 
-      this.kursBindingSource.DataSource = list;
+        this.kursBindingSource.DataSource = list;
+      }
     }
 
     private void diNoDataSetBindingSource_CurrentChanged(object sender, EventArgs e)

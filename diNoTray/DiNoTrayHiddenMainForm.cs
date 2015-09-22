@@ -16,8 +16,10 @@ namespace diNoTray
     /// <summary>
     /// Konstruktor.
     /// </summary>
-    public diNoTrayHiddenMainForm()
+    public diNoTrayHiddenMainForm(): base()
     {
+      InitializeComponent();
+
       // Create a simple tray menu with only one item.
       trayMenu = new ContextMenu();
       trayMenu.MenuItems.Add("Exit", OnExit);
@@ -44,8 +46,8 @@ namespace diNoTray
     /// <param name="e">Die event arguments.</param>
     protected override void OnLoad(EventArgs e)
     {
-      Visible = false; // Hide form window.
-      ShowInTaskbar = false; // Remove from taskbar.
+      // Visible = false; // Hide form window.
+      // ShowInTaskbar = false; // Remove from taskbar.
 
       base.OnLoad(e);
     }
@@ -66,6 +68,11 @@ namespace diNoTray
     /// <param name="sender">Der Sender.</param>
     /// <param name="e">Die event arguments.</param>
     private void OnSynchronizeClick(object sender, EventArgs e)
+    {
+      WaehleDateiUndTrageNotenEin();
+    }
+
+    private void WaehleDateiUndTrageNotenEin()
     {
       var fileDialog = new OpenFileDialog();
       fileDialog.Filter = "Excel Files|*.xls*";
@@ -88,11 +95,10 @@ namespace diNoTray
     /// </summary>
     private void CheckDrives()
     {
-      foreach (System.IO.DriveInfo d in System.IO.DriveInfo.GetDrives())
+     foreach (System.IO.DriveInfo d in System.IO.DriveInfo.GetDrives())
       {
         if (d.DriveType == System.IO.DriveType.Removable)
         {
-          // TODO: Evtl. nur neu eingesteckte filtern (Änderungen zum letzten Mal?)
           this.path = d.Name+"Noten";
           if (Directory.Exists(path))
           {
@@ -103,7 +109,6 @@ namespace diNoTray
         }
       }
     }
-
     /// <summary>
     /// Event Handler für Click Ereignis auf dem Balloon.
     /// </summary>
@@ -126,24 +131,20 @@ namespace diNoTray
     /// <param name="fileName">Name der Excel-Datei, die die Noten enthält.</param>
     private void Synchronisiere(string fileName)
     {
-      var notenReader = new LeseNotenAusExcel(fileName);
-      // Todo: Statusmeldungen wieder einführen
-      // notenReader.OnStatusChange += notenReader_OnStatusChange;
+      var notenReader = new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
     }
 
-    /*
+    
     /// <summary>
     /// Event Handler für Statusmeldungen vom Notenleser.
     /// </summary>
     /// <param name="e">Event Args mit dem neuen Status.</param>
     /// <param name="sender">Der Sender des Events.</param>
-    void notenReader_OnStatusChange(Object sender, LeseNotenAusExcel.StatusChangedEventArgs e)
+    void notenReader_OnStatusChange(Object sender, StatusChangedEventArgs e)
     {
-      trayIcon.BalloonTipText = e.Status;
-      trayIcon.BalloonTipTitle = "diNo Status";
-      trayIcon.ShowBalloonTip(3);
+      lblStatus.Text = e.Meldung;
     }
-    */
+    
 
     const int WM_DEVICECHANGE = 0x219;
     /// <summary>
@@ -158,6 +159,16 @@ namespace diNoTray
       }
 
       base.WndProc(ref m);
+    }
+
+    private void btnNotenSync_Click(object sender, EventArgs e)
+    {
+      WaehleDateiUndTrageNotenEin();
+    }
+
+    private void btnNotenbogen_Click(object sender, EventArgs e)
+    {
+      new Klassenansicht().Show();
     }
   }
 }

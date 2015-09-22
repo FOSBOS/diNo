@@ -212,21 +212,48 @@ namespace diNo
             get { return data; }
         }
 
-        /// <summary>
-        /// Die Liste der Schüler dieser Kurses (sortiert via SQL)
-        /// </summary>
-        public diNoDataSet.SchuelerDataTable getSchueler
+    /// <summary>
+    /// Die Liste der Schüler dieser Kurses (sortiert via SQL)
+    /// </summary>
+    public diNoDataSet.SchuelerDataTable Schueler
+    {
+      get
+      {
+        if (schueler == null)
         {
-            get
-            {
-                if (schueler == null)
-                {
-                    SchuelerTableAdapter sa = new SchuelerTableAdapter();
-                    schueler = sa.GetDataByKursId(Id);
-                }
-                return schueler;
-            }
+          SchuelerTableAdapter sa = new SchuelerTableAdapter();
+          schueler = sa.GetDataByKursId(Id);
         }
+
+        return schueler;
+      }
+    }
+
+    /// <summary>
+    /// Die Liste der Schüler dieser Kurses (sortiert via SQL).
+    /// </summary>
+    /// <param name="excludeAusgetretene">Ob Ausgetretene ausgeschlossen werden sollen.</param>
+    /// <returns>Liste mit den SchuelerRows.</returns>
+    public IList<diNoDataSet.SchuelerRow> getSchueler(bool excludeAusgetretene)
+    {
+      if (excludeAusgetretene)
+      {
+        IList<diNoDataSet.SchuelerRow> result = new List<diNoDataSet.SchuelerRow>();
+        foreach (var schueler in this.Schueler)
+        {
+          if (schueler.IsAustrittsdatumNull())
+          {
+            result.Add(schueler);
+          }
+        }
+
+        return result;
+      }
+      else
+      {
+        return new List<diNoDataSet.SchuelerRow>(this.Schueler);
+      }
+    }
 
         public Fach getFach
         {
