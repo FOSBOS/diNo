@@ -35,7 +35,6 @@
       this.olvSpalteFranzoesisch = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvSpalteReli = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvSpalteAustrittsdatum = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-      this.olvSpalteKlassenwechsel = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.klasseWechselnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.abmeldungToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.label1 = new System.Windows.Forms.Label();
@@ -51,16 +50,16 @@
       this.treeListView1.AllColumns.Add(this.olvSpalteFranzoesisch);
       this.treeListView1.AllColumns.Add(this.olvSpalteReli);
       this.treeListView1.AllColumns.Add(this.olvSpalteAustrittsdatum);
-      this.treeListView1.AllColumns.Add(this.olvSpalteKlassenwechsel);
       this.treeListView1.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
       this.treeListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn1,
             this.olvSpalteLegasthenie,
             this.olvSpalteFranzoesisch,
             this.olvSpalteReli,
-            this.olvSpalteAustrittsdatum,
-            this.olvSpalteKlassenwechsel});
+            this.olvSpalteAustrittsdatum});
       this.treeListView1.GridLines = true;
+      this.treeListView1.IsSimpleDragSource = true;
+      this.treeListView1.IsSimpleDropSink = true;
       this.treeListView1.Location = new System.Drawing.Point(12, 62);
       this.treeListView1.MultiSelect = false;
       this.treeListView1.Name = "treeListView1";
@@ -71,7 +70,10 @@
       this.treeListView1.UseCompatibleStateImageBehavior = false;
       this.treeListView1.View = System.Windows.Forms.View.Details;
       this.treeListView1.VirtualMode = true;
-      this.treeListView1.HyperlinkClicked += new System.EventHandler<BrightIdeasSoftware.HyperlinkClickedEventArgs>(this.treeListView1_HyperlinkClicked);
+      this.treeListView1.CellEditStarting += new BrightIdeasSoftware.CellEditEventHandler(this.listViewComplex_CellEditStarting);
+      this.treeListView1.CellEditFinishing += new BrightIdeasSoftware.CellEditEventHandler(this.listViewComplex_CellEditFinishing);
+      this.treeListView1.ModelCanDrop += new System.EventHandler<BrightIdeasSoftware.ModelDropEventArgs>(this.treeListView1_ModelCanDrop);
+      this.treeListView1.ModelDropped += new System.EventHandler<BrightIdeasSoftware.ModelDropEventArgs>(this.treeListView1_ModelDropped);
       // 
       // olvColumn1
       // 
@@ -100,12 +102,6 @@
       // 
       this.olvSpalteAustrittsdatum.Text = "Austrittsdatum";
       this.olvSpalteAustrittsdatum.Width = 80;
-      // 
-      // olvSpalteKlassenwechsel
-      // 
-      this.olvSpalteKlassenwechsel.Hyperlink = true;
-      this.olvSpalteKlassenwechsel.Text = "Klasse wechseln";
-      this.olvSpalteKlassenwechsel.Width = 80;
       // 
       // klasseWechselnToolStripMenuItem
       // 
@@ -167,7 +163,6 @@
     private System.Windows.Forms.ToolStripMenuItem klasseWechselnToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem abmeldungToolStripMenuItem;
     private BrightIdeasSoftware.OLVColumn olvSpalteAustrittsdatum;
-    private BrightIdeasSoftware.OLVColumn olvSpalteKlassenwechsel;
   }
 }
 

@@ -25,6 +25,28 @@ namespace diNo
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
     /// <summary>
+    /// Methode liefert den Standardkursselektor.
+    /// </summary>
+    /// <returns>Einen Standaradkursselektor.</returns>
+    public static SchuelerKursSelectorHolder GetStandardKursSelector()
+    {
+      SchuelerKursSelectorHolder kursSelector = new SchuelerKursSelectorHolder();
+      kursSelector.AddSelector(new FremdspracheSelector());
+      kursSelector.AddSelector(new ReliOderEthikSelector());
+      kursSelector.AddSelector(new WahlpflichtfachSelector());
+      return kursSelector;
+    }
+
+    /// <summary>
+    /// Die eigentliche Lese-Methode. Benutzt den Standardkursselektor.
+    /// </summary>
+    /// <param name="fileName">Der Dateiname.</param>
+    public static void ReadUnterricht (string fileName)
+    {
+      ReadUnterricht(fileName, GetStandardKursSelector());
+    }
+
+    /// <summary>
     /// Die eigentliche Lese-Methode.
     /// </summary>
     /// <param name="fileName">Der Dateiname.</param>
@@ -108,9 +130,8 @@ namespace diNo
     /// <param name="kurs">Der Kurs.</param>
     /// <param name="dbKlasse">Die Klasse.</param>
     /// <param name="kursSelector">Ein Selektor zur Prüfung, welche Schüler in welchen Kurs auch wirklich müssen.</param>
-    private static void AddSchuelerToKurs(diNoDataSet.KursRow kurs, diNoDataSet.KlasseRow dbKlasse, ISchuelerKursSelector kursSelector)
+    public static void AddSchuelerToKurs(diNoDataSet.KursRow kurs, diNoDataSet.KlasseRow dbKlasse, ISchuelerKursSelector kursSelector)
     {
-      using (SchuelerKursTableAdapter skursAdapter = new SchuelerKursTableAdapter())
       using (SchuelerTableAdapter sAdapter = new SchuelerTableAdapter())
       {
         sAdapter.ClearBeforeFill = true;
@@ -221,11 +242,19 @@ namespace diNo
 
         foreach (var schueler in schuelerDerKlasse)
         {
-          if (kursSelector.IsInKurs(schueler, kurs) && skursAdapter.GetCountBySchuelerAndKurs(schueler.Id, kurs.Id) == 0)
-          {
-            log.Warn("neuer Schüler im Kurs "+kurs.Bezeichnung);
-            skursAdapter.Insert(schueler.Id, kurs.Id);
-          }
+          AddSchuelerToKurs(kurs, kursSelector, schueler);
+        }
+      }
+    }
+
+    public static void AddSchuelerToKurs(diNoDataSet.KursRow kurs, ISchuelerKursSelector kursSelector, diNoDataSet.SchuelerRow schueler)
+    {
+      using (SchuelerKursTableAdapter skursAdapter = new SchuelerKursTableAdapter())
+      {
+        if (kursSelector.IsInKurs(schueler, kurs) && skursAdapter.GetCountBySchuelerAndKurs(schueler.Id, kurs.Id) == 0)
+        {
+          log.Warn("neuer Schüler im Kurs " + kurs.Bezeichnung);
+          skursAdapter.Insert(schueler.Id, kurs.Id);
         }
       }
     }

@@ -10,45 +10,57 @@ namespace diNo
   /// </summary>
   public class Schueler
   {
-      
-        private diNoDataSet.SchuelerRow data;   // nimmt SchülerRecordset auf
-        private Klasse klasse;                  // Objektverweis zur Klasse dieses Schülers
-        private diNoDataSet.KursDataTable kurse; // Recordset-Menge aller Kurse dieses Schülers
-        private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
+
+    private diNoDataSet.SchuelerRow data;   // nimmt SchülerRecordset auf
+    private Klasse klasse;                  // Objektverweis zur Klasse dieses Schülers
+    private diNoDataSet.KursDataTable kurse; // Recordset-Menge aller Kurse dieses Schülers
+    private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
 
     public Schueler(int id)
-    {         
-         this.Id = id; 
-         var rst = new SchuelerTableAdapter().GetDataById(id);
-         if (rst.Count == 1)
-            {
-                this.data = rst[0];
-            }
-         else
-            {
-                throw new InvalidOperationException("Konstruktor Schueler: Ungültige ID.");
-            }       
+    {
+      this.Id = id;
+      this.Refresh();
     }
 
     public Schueler(diNoDataSet.SchuelerRow s)
     {
-        this.Id = s.Id;
-        this.data = s;
+      this.Id = s.Id;
+      this.data = s;
     }
 
-        /// <summary>
-        /// Die Id des Schülers in der Datenbank.
-        /// </summary>
-        public int Id
+    /// <summary>
+    /// Hole alle Daten von Neuem aus der Datenbank.
+    /// </summary>
+    public void Refresh()
+    {
+      var rst = new SchuelerTableAdapter().GetDataById(this.Id);
+      if (rst.Count == 1)
+      {
+        this.data = rst[0];
+      }
+      else
+      {
+        throw new InvalidOperationException("Konstruktor Schueler: Ungültige ID.");
+      }
+
+      this.klasse = null;
+      this.kurse = null;
+      this.noten = null;
+    }
+
+    /// <summary>
+    /// Die Id des Schülers in der Datenbank.
+    /// </summary>
+    public int Id
     {
       get;
       internal set;
     }
 
-     public string benutzterVorname
-        {
-            get { return string.IsNullOrEmpty(data.Rufname) ? data.Vorname : data.Rufname; }
-        }
+    public string benutzterVorname
+    {
+      get { return string.IsNullOrEmpty(data.Rufname) ? data.Vorname : data.Rufname; }
+    }
 
     /// <summary>
     /// Name und Rufname des Schülers, durch ", " getrennt.
@@ -61,18 +73,18 @@ namespace diNo
       }
     }
 
-     /// <summary>
+    /// <summary>
     /// Ob der Schüler Legastheniker ist.
     /// </summary>
     public bool IsLegastheniker
     {
-      get { return this.data.LRSStoerung || this.data.LRSSchwaeche;  }
+      get { return this.data.LRSStoerung || this.data.LRSSchwaeche; }
       set
       {
         this.data.LRSStoerung = value;
         this.data.LRSSchwaeche = value;
         (new SchuelerTableAdapter()).UpdateLRS(this.data.LRSStoerung, this.data.LRSSchwaeche, this.Id);
-      }     
+      }
     }
 
     /// <summary>
@@ -81,14 +93,14 @@ namespace diNo
     public Klasse getKlasse
     {
       get
-            {
-                if (klasse == null)
-                {
-                    klasse = new Klasse(this.data.KlasseId);
-                }
-                return klasse;
-            }
-      
+      {
+        if (klasse == null)
+        {
+          klasse = new Klasse(this.data.KlasseId);
+        }
+        return klasse;
+      }
+
     }
 
     /// <summary>
@@ -160,75 +172,99 @@ namespace diNo
     /// </summary>
     public SchuelerNoten getNoten
     {
-        get
+      get
+      {
+        if (noten == null)
         {
-            if (noten == null)
-            {
-                noten = new SchuelerNoten(this);
-            }
-            return noten;
+          noten = new SchuelerNoten(this);
         }
+        return noten;
+      }
     }
 
     public diNoDataSet.SchuelerRow Data
-    {            
-            get { return this.data; }
+    {
+      get { return this.data; }
     }
 
     public diNoDataSet.KursDataTable Kurse
+    {
+      get
+      {
+        if (kurse == null)
         {
-            get
-            {
-                if (kurse == null)
-                {
-                    kurse = new KursTableAdapter().GetDataBySchulerId(this.Id);
-                }
-                return kurse;
-            }
+          kurse = new KursTableAdapter().GetDataBySchulerId(this.Id);
         }
-    
- 
+        return kurse;
+      }
+    }
+
+
     public double berechneDNote()
+    {
+      int summe = 0, anz = 0;
+      double erg;
+      var faecher = new BerechneteNoteTableAdapter().GetDataBySchueler4DNote(this.Id);
+      foreach (var fach in faecher)
+      {
+        if (true /*!fach.KursRow.FachRow.Kuerzel in ['F','Ku','Sp']*/)
         {
-            int summe=0, anz=0;
-            double erg;
-            var faecher = new BerechneteNoteTableAdapter().GetDataBySchueler4DNote(this.Id);
-            foreach (var fach in faecher)
-            {
-                if ( true /*!fach.KursRow.FachRow.Kuerzel in ['F','Ku','Sp']*/)
-                {
-                    if (fach.Abschlusszeugnis == 0)
-                    {
-                        summe--; // Punktwert 0 wird als -1 gezählt
-                    }
-                    else
-                    {
-                        summe += fach.Abschlusszeugnis;
-                    }
-                    
-                    anz++;
-                }                
-            }
-            if (anz > 0)
-                {
-                    erg = (17 - summe / anz) / 3;
-                    if (erg<1)
-                    {
-                        erg = 1;
-                    }
-                    else
-                    {
-                        erg = Math.Floor(erg * 10) / 10; // auf 1 NK abrunden
-                    }
-                }
-            else
-            {
-                erg = 0;
-            }
+          if (fach.Abschlusszeugnis == 0)
+          {
+            summe--; // Punktwert 0 wird als -1 gezählt
+          }
+          else
+          {
+            summe += fach.Abschlusszeugnis;
+          }
 
-            return erg;
+          anz++;
         }
+      }
+      if (anz > 0)
+      {
+        erg = (17 - summe / anz) / 3;
+        if (erg < 1)
+        {
+          erg = 1;
+        }
+        else
+        {
+          erg = Math.Floor(erg * 10) / 10; // auf 1 NK abrunden
+        }
+      }
+      else
+      {
+        erg = 0;
+      }
 
+      return erg;
+    }
+
+    /// <summary>
+    /// Methode für den Klassenwechsel ohne Notenmitnahme.
+    /// </summary>
+    /// <param name="schueler">Der Schüler.</param>
+    /// <param name="nachKlasse"></param>
+    public static void WechsleKlasse(Schueler schueler, Klasse nachKlasse)
+    {
+      // melde den Schüler aus allen Kursen ab.
+      foreach (var kurs in schueler.Kurse)
+      {
+        MeldeAb(schueler, new Kurs(kurs));
+      }
+
+      var kursSelector = UnterrichtExcelReader.GetStandardKursSelector();
+      foreach (var klassekurs in new KlasseKursTableAdapter().GetDataByKlasse(nachKlasse.Data.Id))
+      {
+        var kurs = new KursTableAdapter().GetDataById(klassekurs.KursId)[0];
+        // prüfe, ob der Schüler in diesen Kurs gehen soll und trage ihn ein.
+        UnterrichtExcelReader.AddSchuelerToKurs(kurs, kursSelector, schueler.Data);
+      }
+
+      new SchuelerTableAdapter().UpdateManyThings(nachKlasse.Data.Id, schueler.Data.Fremdsprache2, schueler.Data.ReligionOderEthik, schueler.Data.Austrittsdatum, schueler.Data.LRSStoerung, schueler.Data.LRSSchwaeche, schueler.Id);
+      schueler.Refresh();
+    }
 
     /// <summary>
     /// Austritt eines Schülers. Das Feld Austrittsdatum wird gesetzt und der Schüler aus allen Kursen abgemeldet.

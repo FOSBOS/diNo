@@ -2,13 +2,9 @@
 using diNo;
 using diNo.diNoDataSetTableAdapters;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace diNoVerwaltung
@@ -20,9 +16,6 @@ namespace diNoVerwaltung
     public FormSchuelerverwaltung()
     {
       InitializeComponent();
-      this.treeListView1.CellEditStarting += listViewComplex_CellEditStarting;
-      this.treeListView1.CellEditFinishing += listViewComplex_CellEditFinishing;
-      // this.treeListView1.AddDecoration(new EditingCellBorderDecoration(true));
 
       this.olvColumn1.AspectGetter = SelectValueCol1;
       this.olvSpalteLegasthenie.AspectGetter = SelectValueLegasthenie;
@@ -38,8 +31,34 @@ namespace diNoVerwaltung
       this.olvSpalteAustrittsdatum.AspectToStringConverter = GetDisplayValueForDate;
       this.olvSpalteAustrittsdatum.AspectGetter = SelectValueAustrittsdatum;
       this.olvSpalteAustrittsdatum.AspectPutter = SetValueAustrittsdatum;
+    }
 
-      this.olvSpalteKlassenwechsel.AspectGetter = delegate (Object rowObject) { return "-->"; };
+    private void Form1_Load(object sender, EventArgs e)
+    {
+      List<Klasse> klassen = new List<Klasse>();
+      foreach (var klasse in (new KlasseTableAdapter().GetData()))
+      {
+        Klasse dieKlasse = new Klasse(klasse);
+        klassen.Add(dieKlasse);
+      }
+
+      klassen.Sort((x, y) => x.Bezeichnung.CompareTo(y.Bezeichnung));
+
+      treeListView1.Roots = klassen;
+      this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
+      this.treeListView1.ChildrenGetter = delegate (object x) { return GetSortedSchuelerList((Klasse)x); };
+    }
+
+    private static List<Schueler> GetSortedSchuelerList(Klasse klasse)
+    {
+      List<Schueler> schueler = new List<Schueler>();
+      foreach (var einSchueler in klasse.getSchueler)
+      {
+        schueler.Add(new Schueler(einSchueler));
+      }
+
+      schueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
+      return schueler;
     }
 
     private string GetDisplayValueForDate(object value)
@@ -53,6 +72,8 @@ namespace diNoVerwaltung
         return ((DateTime)value).ToString("dd.MM.yyyy");
       }
     }
+
+    #region AspectValueSetter
 
     private void SetValueAustrittsdatum(object rowObject, object newValue)
     {
@@ -75,22 +96,6 @@ namespace diNoVerwaltung
       }
 
       //ToDo: Sollte es möglich sein, einen Austritt wieder rückgängig zu machen (z. B. wenn beim falschen Schüler gesetzt)?
-    }
-
-    private object SelectValueAustrittsdatum(object rowObject)
-    {
-      if (rowObject is Klasse)
-      {
-        return NullDate;
-      }
-
-      var schueler = rowObject as Schueler;
-      if (schueler != null)
-      {
-        return schueler.Data.IsAustrittsdatumNull() ? NullDate : schueler.Data.Austrittsdatum;
-      }
-
-      throw new InvalidOperationException("no aspect getter for this object given");
     }
 
     private void SetValueReliOderEthik(object rowObject, object newValue)
@@ -128,6 +133,8 @@ namespace diNoVerwaltung
 
       schueler.IsLegastheniker = (bool)newValue;
     }
+
+    #endregion
 
     private void listViewComplex_CellEditStarting(object sender, CellEditEventArgs e)
     {
@@ -208,6 +215,8 @@ namespace diNoVerwaltung
       ((ObjectListView)sender).RefreshItem(e.ListViewItem);
     }
 
+    #region AspectSelection
+
     private object SelectValueCol1(Object rowObject)
     {
       if (rowObject is Klasse)
@@ -268,38 +277,96 @@ namespace diNoVerwaltung
       throw new InvalidOperationException("no aspect getter for this object given");
     }
 
-    private void Form1_Load(object sender, EventArgs e)
+    private object SelectValueAustrittsdatum(object rowObject)
     {
-      List<Klasse> klassen = new List<Klasse>();
-      foreach (var klasse in (new KlasseTableAdapter().GetData()))
+      if (rowObject is Klasse)
       {
-        Klasse dieKlasse = new Klasse(klasse);
-        klassen.Add(dieKlasse);
+        return NullDate;
       }
 
-      klassen.Sort((x, y) => x.Bezeichnung.CompareTo(y.Bezeichnung));
-
-      treeListView1.Roots = klassen;
-      this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
-      this.treeListView1.ChildrenGetter = delegate (object x) { return GetSortedSchuelerList((Klasse)x); };
-    }
-
-    private static List<Schueler> GetSortedSchuelerList(Klasse klasse)
-    {
-      List<Schueler> schueler = new List<Schueler>();
-      foreach (var einSchueler in klasse.getSchueler)
+      var schueler = rowObject as Schueler;
+      if (schueler != null)
       {
-        schueler.Add(new Schueler(einSchueler));
+        return schueler.Data.IsAustrittsdatumNull() ? NullDate : schueler.Data.Austrittsdatum;
       }
 
-      schueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
-      return schueler;
+      throw new InvalidOperationException("no aspect getter for this object given");
     }
 
-    private void treeListView1_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
+#endregion
+
+    #region Drag and Drop
+
+    private void treeListView1_ModelCanDrop(object sender, ModelDropEventArgs e)
     {
+      e.Handled = true;
+      e.Effect = DragDropEffects.None;
 
+      Klasse targetKlasse = GetDragTargetKlasse(e);
+
+      if (targetKlasse == null)
+      {
+        e.InfoMessage = "Ziel konnte nicht erkannt werden.";
+        return;
+      }
+
+      Schueler derSchueler = GetDraggedSchueler(e.SourceModels);
+      if (derSchueler == null)
+      {
+        e.InfoMessage = "Nur Schülerzeilen können in eine andere Klasse verschoben werden.";
+        return;
+      }
+      else
+      {
+        e.Effect = DragDropEffects.Move;
+      }
     }
+
+    private static Klasse GetDragTargetKlasse(ModelDropEventArgs e)
+    {
+      Klasse targetKlasse = e.TargetModel as Klasse;
+      if (targetKlasse == null)
+      {
+        Schueler targetSchueler = e.TargetModel as Schueler;
+        if (targetSchueler != null)
+        {
+          targetKlasse = targetSchueler.getKlasse;
+        }
+      }
+
+      return targetKlasse;
+    }
+
+    private Schueler GetDraggedSchueler(IList draggedSourceModels)
+    {
+      foreach (var obj in draggedSourceModels)
+      {
+        Schueler schueler = obj as Schueler;
+        if (schueler != null)
+        {
+          return schueler;
+        }
+      }
+
+      return null;
+    }
+
+    private void treeListView1_ModelDropped(object sender, ModelDropEventArgs e)
+    {
+      Schueler derSchueler = GetDraggedSchueler(e.SourceModels);
+      Klasse targetKlasse = GetDragTargetKlasse(e);
+      var questionResult = MessageBox.Show("Soll der Schüler " + derSchueler.NameVorname + " von der " + derSchueler.getKlasse.Bezeichnung + " in die " + targetKlasse.Bezeichnung + " verschoben werden?", "Nachfrage", MessageBoxButtons.YesNo);
+      if (questionResult == DialogResult.Yes)
+      {
+        Schueler.WechsleKlasse(derSchueler, targetKlasse);
+      }
+      else
+      {
+        e.Effect = DragDropEffects.None;
+      }
+    }
+
+    #endregion
 
     private class MyCheckStateRenderer : CheckStateRenderer
     {
@@ -333,7 +400,5 @@ namespace diNoVerwaltung
         }
       }
     }
-
-
   }
 }

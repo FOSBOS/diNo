@@ -70,11 +70,7 @@ namespace diNo
 
     private void btnReadExcelKurse_Click(object sender, EventArgs e)
     {
-      SchuelerKursSelectorHolder kursSelector = new SchuelerKursSelectorHolder();
-      kursSelector.AddSelector(new FremdspracheSelector());
-      kursSelector.AddSelector(new ReliOderEthikSelector());
-      kursSelector.AddSelector(new WahlpflichtfachSelector());
-      UnterrichtExcelReader.ReadUnterricht("C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\Daten_Stani 2015.xlsx", kursSelector);
+      UnterrichtExcelReader.ReadUnterricht("C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\Daten_Stani 2015.xlsx");
     }
 
     private void btnImportSchueler_Click(object sender, EventArgs e)
