@@ -88,6 +88,14 @@ namespace diNo
             get { return this.data; }
         }
 
+    public string Bezeichnung
+    {
+      get
+      {
+        return data.Bezeichnung;
+      }
+    }
+
         public Jahrgangsstufe Jahrgangsstufe
         {
             get
@@ -198,10 +206,17 @@ namespace diNo
                 throw new InvalidOperationException("Konstruktor Kurs: Ungültige ID.");
             }
         }
-        /// <summary>
-        /// Id des Kurses in der Datenbank.
-        /// </summary>
-        public int Id
+
+    public Kurs(diNoDataSet.KursRow data)
+    {
+      this.Id = data.Id;
+      this.data = data;
+    }
+
+    /// <summary>
+    /// Id des Kurses in der Datenbank.
+    /// </summary>
+    public int Id
         {
             get;
             private set;

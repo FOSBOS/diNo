@@ -82,12 +82,17 @@ namespace diNo
         }
         
         var kurs = FindOrCreateKurs(dbFach.Bezeichnung.Trim() + " " + klassenString, dblehrer.Id, fach);
-        
+
         var klassen = klassenString.Split(',');
+        var klasseKursAdapter = new KlasseKursTableAdapter();
         foreach (var klasse in klassen)
         {
           var dbKlasse = FindOrCreateKlasse(klasse, true);
-          new KlasseKursTableAdapter().Insert(dbKlasse.Id, kurs.Id);
+          if (klasseKursAdapter.ScalarQueryCountByKlasseAndKurs(dbKlasse.Id, kurs.Id) == 0)
+          {
+            klasseKursAdapter.Insert(dbKlasse.Id, kurs.Id);
+          }
+
           AddSchuelerToKurs(kurs, dbKlasse, kursSelector);
         }
       }
@@ -218,6 +223,7 @@ namespace diNo
         {
           if (kursSelector.IsInKurs(schueler, kurs) && skursAdapter.GetCountBySchuelerAndKurs(schueler.Id, kurs.Id) == 0)
           {
+            log.Warn("neuer Schüler im Kurs "+kurs.Bezeichnung);
             skursAdapter.Insert(schueler.Id, kurs.Id);
           }
         }

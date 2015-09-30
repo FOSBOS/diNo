@@ -66,7 +66,13 @@ namespace diNo
     /// </summary>
     public bool IsLegastheniker
     {
-      get { return this.data.LRSStoerung || this.data.LRSSchwaeche;  }     
+      get { return this.data.LRSStoerung || this.data.LRSSchwaeche;  }
+      set
+      {
+        this.data.LRSStoerung = value;
+        this.data.LRSSchwaeche = value;
+        (new SchuelerTableAdapter()).UpdateLRS(this.data.LRSStoerung, this.data.LRSSchwaeche, this.Id);
+      }     
     }
 
     /// <summary>
@@ -83,6 +89,70 @@ namespace diNo
                 return klasse;
             }
       
+    }
+
+    /// <summary>
+    /// Liefert entweder
+    /// F für Wahlfach Französisch
+    /// F3 für fortgeführtes Französisch
+    /// einen Leerstring für Schüler die gar kein Französisch haben
+    /// </summary>
+    public string FranzoesischKurs
+    {
+      get
+      {
+        KursTableAdapter ada = new KursTableAdapter();
+        foreach (var kurs in ada.GetDataBySchulerId(this.Id))
+        {
+          Kurs kursObj = new Kurs(kurs);
+          if (kursObj.getFach.Kuerzel == "F")
+          {
+            return "F";
+          }
+
+          if (kursObj.getFach.Kuerzel == "F-Wi")
+          {
+            return "F-Wi";
+          }
+        }
+
+        return string.Empty;
+      }
+    }
+
+    /// <summary>
+    /// Liefert entweder
+    /// K falls der Schüler in kath. Religionslehre geht
+    /// Ev falls evangelisch
+    /// Eth falls der Schüler in Ethik geht
+    /// Leerstring falls gar keine Zuordnung
+    /// </summary>
+    public string ReliOderEthik
+    {
+      get
+      {
+        KursTableAdapter ada = new KursTableAdapter();
+        foreach (var kurs in ada.GetDataBySchulerId(this.Id))
+        {
+          Kurs kursObj = new Kurs(kurs);
+          if (kursObj.getFach.Kuerzel == "K")
+          {
+            return "K";
+          }
+
+          if (kursObj.getFach.Kuerzel == "Ev")
+          {
+            return "Ev";
+          }
+
+          if (kursObj.getFach.Kuerzel == "Eth")
+          {
+            return "Eth";
+          }
+        }
+
+        return string.Empty;
+      }
     }
 
     /// <summary>
@@ -158,6 +228,74 @@ namespace diNo
 
             return erg;
         }
+
+
+    /// <summary>
+    /// Austritt eines Schülers. Das Feld Austrittsdatum wird gesetzt und der Schüler aus allen Kursen abgemeldet.
+    /// </summary>
+    /// <param name="schueler">Der Schüler.</param>
+    /// <param name="when">Wann der Schüler ausgetreten ist.</param>
+    public static void Austritt(Schueler schueler, DateTime when)
+    {
+      foreach (var kurs in schueler.Kurse)
+      {
+        MeldeAb(schueler, new Kurs(kurs));
+        new SchuelerTableAdapter().UpdateManyThings(schueler.Data.KlasseId, schueler.Data.Fremdsprache2, schueler.Data.ReligionOderEthik, when, schueler.Data.LRSStoerung, schueler.Data.LRSSchwaeche, schueler.Id);
+        schueler.kurse = null;
+        schueler.Data.Austrittsdatum = when;
+      }
+    }
+
+    /// <summary>
+    /// Wechselt einen Schüler aus einem Kurs in einen anderen.
+    /// Konkret: Aus dem Von-Kurs-Fachkürzel wird er rausgeworfen und im Nach-Kurs-Fachkürzel angemeldet.
+    /// meist: K für katholisch, Ev für Evangelisch, Eth für Ethik, F für Französisch, F-Wi für Französisch (fortgeführt)
+    /// </summary>
+    /// <param name="schueler">Der Schüler.</param>
+    /// <param name="von"></param>
+    /// <param name="nach">K für katholisch, Ev für Evangelisch, Eth für Ethik</param>
+    public static void WechsleKurse(Schueler schueler, string von, string nach)
+    {
+      MeldeAb(schueler, von);
+      MeldeAn(schueler, nach);
+    }
+
+    private static void MeldeAb(Schueler schueler, string vonFachKuerzel)
+    {
+      FachTableAdapter ada = new FachTableAdapter();
+      foreach (var kurs in schueler.Kurse)
+      {
+        var fach = ada.GetDataById(kurs.FachId)[0];
+        if (fach.Kuerzel == vonFachKuerzel)
+        {
+          MeldeAb(schueler, new Kurs(kurs));
+        }
+      }
+    }
+
+    private static void MeldeAb(Schueler schueler, Kurs vonKurs)
+    {
+      new SchuelerKursTableAdapter().Delete(schueler.Id, vonKurs.Id);
+    }
+
+    private static void MeldeAn(Schueler schueler, Kurs beiKurs)
+    {
+      new SchuelerKursTableAdapter().Insert(schueler.Id, beiKurs.Id);
+    }
+
+    private static void MeldeAn(Schueler schueler, string nachFachKuerzel)
+    {
+      FachTableAdapter ada = new FachTableAdapter();
+      foreach (var kursZuKlasse in new KlasseKursTableAdapter().GetDataByKlasse(schueler.getKlasse.Data.Id))
+      {
+        var kurs = new KursTableAdapter().GetDataById(kursZuKlasse.KursId)[0];
+        var fach = ada.GetDataById(kurs.FachId)[0];
+        if (fach.Kuerzel == nachFachKuerzel)
+        {
+          MeldeAn(schueler, new Kurs(kurs));
+        }
+      }
+    }
   }
 }
 

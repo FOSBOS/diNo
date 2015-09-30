@@ -156,9 +156,24 @@ namespace diNo
       {
         // wenn keine Wahl vorliegt, dann muss das Bekenntnis passen
         // wenn das auch nicht passt, dann stecken wir den Schueler in Ethik
-        bool bekenntnisStimmt = fach.Kuerzel.Equals(schueler.Bekenntnis, StringComparison.OrdinalIgnoreCase);
+        bool bekenntnisStimmt = IsEqualBekenntnis(schueler.Bekenntnis, fach.Kuerzel);
         return bekenntnisStimmt || fach.Kuerzel.Equals("Eth", StringComparison.OrdinalIgnoreCase);
       }
+    }
+
+    public bool IsEqualBekenntnis(string bekenntnis, string anderes)
+    {
+      if (bekenntnis.Equals(anderes, StringComparison.OrdinalIgnoreCase))
+      {
+        return true;
+      }
+
+      if ((bekenntnis.Equals("K", StringComparison.OrdinalIgnoreCase) && anderes.Equals("RK", StringComparison.OrdinalIgnoreCase)) || (bekenntnis.Equals("RK", StringComparison.OrdinalIgnoreCase) && anderes.Equals("K", StringComparison.OrdinalIgnoreCase)))
+      {
+        return true;
+      }
+
+      return false;
     }
 
     /// <summary>
