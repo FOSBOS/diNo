@@ -15,6 +15,8 @@ namespace diNo
     private Klasse klasse;                  // Objektverweis zur Klasse dieses Schülers
     private diNoDataSet.KursDataTable kurse; // Recordset-Menge aller Kurse dieses Schülers
     private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
+    private string franzKurs;                // der ermittelte Französisch-Kurs-Fachkürzel
+    private string reliOderEthik;           // Ob der Schüler Reli oder Ethik hat
 
     public Schueler(int id)
     {
@@ -46,6 +48,8 @@ namespace diNo
       this.klasse = null;
       this.kurse = null;
       this.noten = null;
+      this.reliOderEthik = string.Empty;
+      this.franzKurs = string.Empty;
     }
 
     /// <summary>
@@ -98,6 +102,7 @@ namespace diNo
         {
           klasse = new Klasse(this.data.KlasseId);
         }
+
         return klasse;
       }
 
@@ -113,22 +118,31 @@ namespace diNo
     {
       get
       {
-        KursTableAdapter ada = new KursTableAdapter();
-        foreach (var kurs in ada.GetDataBySchulerId(this.Id))
+        if (!string.IsNullOrEmpty(this.franzKurs))
         {
-          Kurs kursObj = new Kurs(kurs);
-          if (kursObj.getFach.Kuerzel == "F")
+          return this.franzKurs;
+        }
+        else
+        {
+          KursTableAdapter ada = new KursTableAdapter();
+          foreach (var kurs in ada.GetDataBySchulerId(this.Id))
           {
-            return "F";
-          }
+            Kurs kursObj = new Kurs(kurs);
+            if (kursObj.getFach.Kuerzel == "F")
+            {
+              franzKurs = "F";
+              break;
+            }
 
-          if (kursObj.getFach.Kuerzel == "F-Wi")
-          {
-            return "F-Wi";
+            if (kursObj.getFach.Kuerzel == "F-Wi")
+            {
+              franzKurs = "F-Wi";
+              break;
+            }
           }
         }
 
-        return string.Empty;
+        return this.franzKurs;
       }
     }
 
@@ -143,27 +157,37 @@ namespace diNo
     {
       get
       {
-        KursTableAdapter ada = new KursTableAdapter();
-        foreach (var kurs in ada.GetDataBySchulerId(this.Id))
+        if (!string.IsNullOrEmpty(this.reliOderEthik))
         {
-          Kurs kursObj = new Kurs(kurs);
-          if (kursObj.getFach.Kuerzel == "K")
+          return this.reliOderEthik;
+        }
+        else
+        {
+          KursTableAdapter ada = new KursTableAdapter();
+          foreach (var kurs in ada.GetDataBySchulerId(this.Id))
           {
-            return "K";
-          }
+            Kurs kursObj = new Kurs(kurs);
+            if (kursObj.getFach.Kuerzel == "K")
+            {
+              this.reliOderEthik = "K";
+              break;
+            }
 
-          if (kursObj.getFach.Kuerzel == "Ev")
-          {
-            return "Ev";
-          }
+            if (kursObj.getFach.Kuerzel == "Ev")
+            {
+              this.reliOderEthik = "Ev";
+              break;
+            }
 
-          if (kursObj.getFach.Kuerzel == "Eth")
-          {
-            return "Eth";
+            if (kursObj.getFach.Kuerzel == "Eth")
+            {
+              this.reliOderEthik = "Eth";
+              break;
+            }
           }
         }
 
-        return string.Empty;
+        return this.reliOderEthik;
       }
     }
 
@@ -178,6 +202,7 @@ namespace diNo
         {
           noten = new SchuelerNoten(this);
         }
+
         return noten;
       }
     }
