@@ -78,11 +78,11 @@ namespace diNo
     }
 
     /// <summary>
-    /// Ob der Schüler Legastheniker ist.
+    /// Ob der Schüler Legastheniker ist (so dass in Englisch und Französisch 1:1 gewertet werden muss).
     /// </summary>
     public bool IsLegastheniker
     {
-      get { return this.data.LRSStoerung || this.data.LRSSchwaeche; }
+      get { return this.data.LRSStoerung; }
       set
       {
         this.data.LRSStoerung = value;

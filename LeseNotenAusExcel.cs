@@ -77,8 +77,8 @@ namespace diNo
           xls.AppendSchueler(schueler);
           sidList.Add(schueler.Id);
         }
-        if (kurs.FachBezeichnung == "Englisch") // nur dort ändert sich die Wertung
-          CheckLegastheniker(schueler);
+
+        CheckLegastheniker(schueler);
       }
 
       var klassenSIds = klasse.Select(x => x.Id);
@@ -99,9 +99,11 @@ namespace diNo
     private void CheckLegastheniker(diNoDataSet.SchuelerRow schueler)
     {
       Schueler schuelerObj = new Schueler(schueler);
-      if (schuelerObj.IsLegastheniker) // eigentlich auch zum Entfernen gedacht, aber dann werden jedesmal alle Vermerke neu gesetzt (nicht performant).
+      bool isVermerkGesetzt = xls.GetLegasthenievermerk(schuelerObj.Id);
+      bool sollteGesetztSein = schuelerObj.IsLegastheniker && (kurs.getFach.Kuerzel == "E" || kurs.getFach.Kuerzel == "F");
+      if ((sollteGesetztSein && !isVermerkGesetzt) || (!sollteGesetztSein && isVermerkGesetzt))
       {
-        xls.SetLegasthenievermerk(schuelerObj.Id, schuelerObj.IsLegastheniker);
+        xls.SetLegasthenievermerk(schuelerObj.Id, sollteGesetztSein);
       }
     }
 
@@ -134,7 +136,7 @@ namespace diNo
           //new[] { Notentyp.Schulaufgabe, Notentyp.Ex, Notentyp.EchteMuendliche,
           //           Notentyp.Fachreferat, Notentyp.Ersatzprüfung, Notentyp.APSchriftlich, Notentyp.APMuendlich })
           {
-            string[] zellen = CellConstant.getLNWZelle(typ, hj, i);
+            string[] zellen = CellConstant.getLNWZelle(typ, hj, i, indexAP);
             foreach (string zelle in zellen)
             {
               byte? p = xls.ReadNote(typ, zelle);
@@ -163,6 +165,7 @@ namespace diNo
           if (bnote.JahresfortgangGanzzahlig != null)
             bnote.writeToDB();
         }
+
         i += 2;
         indexAP++;
       }

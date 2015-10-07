@@ -263,7 +263,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
         xls.WriteValue(xls.notenbogen, CellConstant.Vorname + (zeile + 1), "   " + schueler.benutzterVorname);
         xls.WriteValueProtectedCell(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
 
-        if (schueler.IsLegastheniker)
+        if (schueler.IsLegastheniker && (kurs.getFach.Kuerzel == "E" || kurs.getFach.Kuerzel == "F"))
         {
           xls.SetLegasthenievermerkByZeile(zeile, true);
         }

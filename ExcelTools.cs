@@ -26,7 +26,7 @@ namespace diNo
           OpenExcel.excelApp = new Excel.Application();
         this.FileName = fileName;
 
-        this.workbook = excelApp.Workbooks.Open(this.FileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+        this.workbook = excelApp.Workbooks.Open(this.FileName, Type.Missing, false, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
         excelApp.Visible = false;
       }
       catch (Exception exp)
@@ -204,6 +204,19 @@ namespace diNo
       WriteValue(notenbogen, CellConstant.Nachname + zeileNachname, "");
       WriteValue(notenbogen, CellConstant.Vorname + (zeileNachname + 1), "");
       WriteValueProtectedCell(sid, CellConstant.SId + zeileSId, ""+int.MaxValue);
+    }
+
+    /// <summary>
+    /// Ruft den Legasthenievermerk für den Schüler ab.
+    /// </summary>
+    /// <param name="schuelerId">ID des Schülers.</param>
+    /// <returns>Ob der Schüler Legastheniker ist oder nicht.</returns>
+    public bool GetLegasthenievermerk(int schuelerId)
+    {
+      int zeileSId = GetSidZeileForSchueler(schuelerId);
+      int zeileNachname = GetNotenbogenZeileForSidZeile(zeileSId);
+      string value = ReadValue(notenbogen, CellConstant.LegasthenieVermerk + zeileNachname);
+      return CellConstant.LegasthenieEintragung.Equals(value);
     }
 
     /// <summary>
