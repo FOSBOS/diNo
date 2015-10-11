@@ -136,9 +136,9 @@ namespace diNo
         private void btnReport_Click(object sender, EventArgs e)
         {
             //new ReportSchuelerliste();
-            //new ReportLehrerliste();
+            new ReportLehrerliste();
             //new ReportFachliste();
-            new ReportNotenbogen(null);
+            //new ReportNotenbogen(null);
         }
 
     private void btnSendMail_Click(object sender, EventArgs e)

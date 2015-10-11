@@ -14,6 +14,7 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -72,6 +72,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="diNoDataSetKurs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>diNoDataSetKurs.xsd</DependentUpon>
+    </Compile>
     <Compile Include="GlobalConsts.cs" />
     <Compile Include="CellConstant.cs" />
     <Compile Include="diNoDataSet.cs">
@@ -169,6 +174,7 @@
     <EmbeddedResource Include="rptNotenbogen.rdlc" />
     <EmbeddedResource Include="rptNotenCheck.rdlc" />
     <EmbeddedResource Include="rptSchuelerliste.rdlc" />
+    <EmbeddedResource Include="subrptKurs.rdlc" />
     <EmbeddedResource Include="UserControlChecks.resx">
       <DependentUpon>UserControlChecks.cs</DependentUpon>
     </EmbeddedResource>
@@ -183,6 +189,17 @@
     </None>
     <None Include="diNoDataSet.xss">
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="diNoDataSetKurs.xsc">
+      <DependentUpon>diNoDataSetKurs.xsd</DependentUpon>
+    </None>
+    <None Include="diNoDataSetKurs.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>diNoDataSetKurs.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="diNoDataSetKurs.xss">
+      <DependentUpon>diNoDataSetKurs.xsd</DependentUpon>
     </None>
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.BerechneteNoteTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.FachTableAdapter.datasource" />
@@ -201,6 +218,7 @@
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.TableAdapterManager.datasource" />
     <None Include="Properties\DataSources\diNo.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\diNo.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\Klasse.datasource" />
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />
     <None Include="Properties\DataSources\Schueler.datasource" />
     <None Include="Properties\Settings.settings">
