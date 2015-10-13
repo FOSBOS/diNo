@@ -178,7 +178,9 @@
     <EmbeddedResource Include="UserControlChecks.resx">
       <DependentUpon>UserControlChecks.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="diNoDataSet.xsc">
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
     </None>
