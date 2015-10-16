@@ -22,8 +22,11 @@ namespace diNoVerwaltung
       this.olvSpalteLegasthenie.AspectPutter = SetValueLegasthenie;
       this.olvSpalteLegasthenie.Renderer = new MyCheckStateRenderer();
 
-      this.olvSpalteFranzoesisch.AspectGetter = SelectValueFranzoesisch;
-      this.olvSpalteFranzoesisch.AspectPutter = SetValueFranzoesisch;
+      this.olvSpalteWahlpflichtfach.AspectGetter = SelectValueWahlpflichtfach;
+      this.olvSpalteWahlpflichtfach.AspectPutter = SetValueWahlpflichtfach;
+
+      this.olvSpalteFremdsprache2.AspectGetter = SelectValueFremdsprache2;
+      this.olvSpalteFremdsprache2.AspectPutter = SetValueFremdsprache2;
 
       this.olvSpalteReli.AspectGetter = SelectValueReli;
       this.olvSpalteReli.AspectPutter = SetValueReliOderEthik;
@@ -39,7 +42,11 @@ namespace diNoVerwaltung
       foreach (var klasse in (new KlasseTableAdapter().GetData()))
       {
         Klasse dieKlasse = new Klasse(klasse);
-        klassen.Add(dieKlasse);
+        if (dieKlasse.getSchueler.Count > 0)
+        {
+          // Dies filtert wenigstens ein Paar Dummy- und Spassklassen heraus
+          klassen.Add(dieKlasse);
+        }
       }
 
       klassen.Sort((x, y) => x.Bezeichnung.CompareTo(y.Bezeichnung));
@@ -106,11 +113,15 @@ namespace diNoVerwaltung
         return;
       }
 
-      string oldValue = schueler.ReliOderEthik;
-      Schueler.WechsleKurse(schueler, oldValue, (string)newValue);
+      schueler.ReliOderEthik = (string)newValue;
     }
 
-    private void SetValueFranzoesisch(object rowObject, object newValue)
+    /// <summary>
+    /// Setzt den Wert für das Wahlpflichtfach, sollte F, F3, Win oder Ku sein
+    /// </summary>
+    /// <param name="rowObject">Der Schüler.</param>
+    /// <param name="newValue">Der neue Wert für das Wahlpflichtfach.</param>
+    private void SetValueWahlpflichtfach(object rowObject, object newValue)
     {
       Schueler schueler = rowObject as Schueler;
       if (schueler == null)
@@ -118,9 +129,29 @@ namespace diNoVerwaltung
         return;
       }
 
-      string oldValue = schueler.FranzoesischKurs;
-      Schueler.WechsleKurse(schueler, oldValue, (string)newValue);
-      // TODO: Auch Spalte Fremdsprache bzw. Wahlpflichtfach anpassen
+      if (schueler.Wahlpflichtfach != (string)newValue)
+      {
+        schueler.Wahlpflichtfach = (string)newValue;
+      }
+    }
+
+    /// <summary>
+    /// Setzt den Wert für die Fremdsprache, sollte F oder leer sein.
+    /// </summary>
+    /// <param name="rowObject">Der Schüler.</param>
+    /// <param name="newValue">Der neue Wert für die Fremdsprache.</param>
+    private void SetValueFremdsprache2(object rowObject, object newValue)
+    {
+      Schueler schueler = rowObject as Schueler;
+      if (schueler == null)
+      {
+        return;
+      }
+
+      if (schueler.Fremdsprache2 != (string)newValue)
+      {
+        schueler.Fremdsprache2 = (string)newValue;
+      }
     }
 
     private void SetValueLegasthenie(object rowObject, object newValue)
@@ -157,38 +188,53 @@ namespace diNoVerwaltung
       }
 
       // We only want to mess with the Französisch or Reli column
-      if (!e.Column.Equals(this.olvSpalteFranzoesisch) && !e.Column.Equals(this.olvSpalteReli))
+      if (!e.Column.Equals(this.olvSpalteWahlpflichtfach) && !e.Column.Equals(this.olvSpalteReli))
         return;
 
       ComboBox cb = new ComboBox();
       cb.Bounds = e.CellBounds;
       cb.Font = ((ObjectListView)sender).Font;
       cb.DropDownStyle = ComboBoxStyle.DropDownList;
-      if (e.Column.Equals(this.olvSpalteFranzoesisch) && (e.RowObject is Schueler))
+      if (e.Column.Equals(this.olvSpalteWahlpflichtfach) && (e.RowObject is Schueler))
       {
         cb.Items.Add(new ComboBoxItem("", ""));
         cb.Items.Add(new ComboBoxItem("F", "F"));
         cb.Items.Add(new ComboBoxItem("F-Wi", "F3"));
-        switch (schueler.FranzoesischKurs)
+        cb.Items.Add(new ComboBoxItem("Ku", "Ku"));
+        cb.Items.Add(new ComboBoxItem("WIn", "WIn"));
+        switch (schueler.Wahlpflichtfach)
         {
           case "": cb.SelectedIndex = 0; break;
           case "F": cb.SelectedIndex = 1; break;
           case "F-Wi": cb.SelectedIndex = 2; break;
-          default: throw new InvalidOperationException("Unbekannter Wert für FranzösischKurs" + ((Schueler)e.RowObject).FranzoesischKurs);
+          case "Ku": cb.SelectedIndex = 3; break;
+          case "WIn": cb.SelectedIndex = 4; break;
+          default: throw new InvalidOperationException("Unbekannter Wert für Wahlpflichtfach" + ((Schueler)e.RowObject).Wahlpflichtfach);
+        }
+      }
+      if (e.Column.Equals(this.olvSpalteFremdsprache2) && (e.RowObject is Schueler))
+      {
+        cb.Items.Add(new ComboBoxItem("", ""));
+        cb.Items.Add(new ComboBoxItem("F", "F"));
+        switch (schueler.Fremdsprache2)
+        {
+          case "": cb.SelectedIndex = 0; break;
+          case "F": cb.SelectedIndex = 1; break;
+          default: throw new InvalidOperationException("Unbekannter Wert für Fremdsprache2" + ((Schueler)e.RowObject).Fremdsprache2);
         }
       }
       if (e.Column.Equals(this.olvSpalteReli) && (e.RowObject is Schueler))
       {
         cb.Items.Add(new ComboBoxItem("", ""));
-        cb.Items.Add(new ComboBoxItem("K", "katholisch"));
-        cb.Items.Add(new ComboBoxItem("Ev", "evangelisch"));
+        cb.Items.Add(new ComboBoxItem("RK", "katholisch"));
+        cb.Items.Add(new ComboBoxItem("EV", "evangelisch"));
         cb.Items.Add(new ComboBoxItem("Eth", "Ethik"));
         switch (schueler.ReliOderEthik)
         {
           case "":
           case null: cb.SelectedIndex = 0; break;
-          case "K": cb.SelectedIndex = 1; break;
-          case "Ev": cb.SelectedIndex = 2; break;
+          case "RK": cb.SelectedIndex = 1; break;
+          case "EV": cb.SelectedIndex = 2; break;
           case "Eth": cb.SelectedIndex = 3; break;
           default: throw new InvalidOperationException("Unbekannter Wert für Religionskurs" + ((Schueler)e.RowObject).ReliOderEthik);
         }
@@ -201,7 +247,7 @@ namespace diNoVerwaltung
     private void listViewComplex_CellEditFinishing(object sender, CellEditEventArgs e)
     {
       // We only want to mess with the Französisch or Reli column
-      if (!e.Column.Equals(this.olvSpalteFranzoesisch) && !e.Column.Equals(this.olvSpalteReli))
+      if (!e.Column.Equals(this.olvSpalteWahlpflichtfach) && !e.Column.Equals(this.olvSpalteReli) && !e.Column.Equals(this.olvSpalteFremdsprache2))
       {
         return;
       }
@@ -248,7 +294,7 @@ namespace diNoVerwaltung
       throw new InvalidOperationException("no aspect getter for this object given");
     }
 
-    private object SelectValueFranzoesisch(Object rowObject)
+    private object SelectValueWahlpflichtfach(Object rowObject)
     {
       if (rowObject is Klasse)
       {
@@ -257,7 +303,23 @@ namespace diNoVerwaltung
 
       if (rowObject is Schueler)
       {
-        return ((Schueler)rowObject).FranzoesischKurs;
+        return ((Schueler)rowObject).Wahlpflichtfach;
+      }
+
+      throw new InvalidOperationException("no aspect getter for this object given");
+    }
+
+
+    private object SelectValueFremdsprache2(Object rowObject)
+    {
+      if (rowObject is Klasse)
+      {
+        return null;
+      }
+
+      if (rowObject is Schueler)
+      {
+        return ((Schueler)rowObject).Fremdsprache2;
       }
 
       throw new InvalidOperationException("no aspect getter for this object given");

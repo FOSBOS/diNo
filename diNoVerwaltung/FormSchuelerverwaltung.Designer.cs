@@ -32,13 +32,14 @@
       this.treeListView1 = new BrightIdeasSoftware.TreeListView();
       this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvSpalteLegasthenie = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-      this.olvSpalteFranzoesisch = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.olvSpalteWahlpflichtfach = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvSpalteReli = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvSpalteAustrittsdatum = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.klasseWechselnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.abmeldungToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.label1 = new System.Windows.Forms.Label();
       this.pictureBox1 = new System.Windows.Forms.PictureBox();
+      this.olvSpalteFremdsprache2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.SuspendLayout();
@@ -46,9 +47,10 @@
       // treeListView1
       // 
       this.treeListView1.AllColumns.Add(this.olvColumn1);
-      this.treeListView1.AllColumns.Add(this.olvSpalteLegasthenie);
-      this.treeListView1.AllColumns.Add(this.olvSpalteFranzoesisch);
+      this.treeListView1.AllColumns.Add(this.olvSpalteWahlpflichtfach);
+      this.treeListView1.AllColumns.Add(this.olvSpalteFremdsprache2);
       this.treeListView1.AllColumns.Add(this.olvSpalteReli);
+      this.treeListView1.AllColumns.Add(this.olvSpalteLegasthenie);
       this.treeListView1.AllColumns.Add(this.olvSpalteAustrittsdatum);
       this.treeListView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -56,9 +58,10 @@
       this.treeListView1.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
       this.treeListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn1,
-            this.olvSpalteLegasthenie,
-            this.olvSpalteFranzoesisch,
+            this.olvSpalteWahlpflichtfach,
+            this.olvSpalteFremdsprache2,
             this.olvSpalteReli,
+            this.olvSpalteLegasthenie,
             this.olvSpalteAustrittsdatum});
       this.treeListView1.GridLines = true;
       this.treeListView1.IsSimpleDragSource = true;
@@ -91,15 +94,15 @@
       this.olvSpalteLegasthenie.Text = "Legasthenie";
       this.olvSpalteLegasthenie.Width = 80;
       // 
-      // olvSpalteFranzoesisch
+      // olvSpalteWahlpflichtfach
       // 
-      this.olvSpalteFranzoesisch.Text = "Französisch";
-      this.olvSpalteFranzoesisch.Width = 80;
+      this.olvSpalteWahlpflichtfach.Text = "Wahlpflichtfach";
+      this.olvSpalteWahlpflichtfach.Width = 100;
       // 
       // olvSpalteReli
       // 
       this.olvSpalteReli.Text = "Reli oder Ethik";
-      this.olvSpalteReli.Width = 80;
+      this.olvSpalteReli.Width = 100;
       // 
       // olvSpalteAustrittsdatum
       // 
@@ -136,6 +139,11 @@
       this.pictureBox1.TabIndex = 0;
       this.pictureBox1.TabStop = false;
       // 
+      // olvSpalteFremdsprache2
+      // 
+      this.olvSpalteFremdsprache2.Text = "Fremdsprache2";
+      this.olvSpalteFremdsprache2.Width = 100;
+      // 
       // FormSchuelerverwaltung
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -161,11 +169,12 @@
     private BrightIdeasSoftware.TreeListView treeListView1;
     private BrightIdeasSoftware.OLVColumn olvColumn1;
     private BrightIdeasSoftware.OLVColumn olvSpalteLegasthenie;
-    private BrightIdeasSoftware.OLVColumn olvSpalteFranzoesisch;
+    private BrightIdeasSoftware.OLVColumn olvSpalteWahlpflichtfach;
     private BrightIdeasSoftware.OLVColumn olvSpalteReli;
     private System.Windows.Forms.ToolStripMenuItem klasseWechselnToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem abmeldungToolStripMenuItem;
     private BrightIdeasSoftware.OLVColumn olvSpalteAustrittsdatum;
+    private BrightIdeasSoftware.OLVColumn olvSpalteFremdsprache2;
   }
 }
 

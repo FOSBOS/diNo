@@ -15,8 +15,6 @@ namespace diNo
     private Klasse klasse;                  // Objektverweis zur Klasse dieses Schülers
     private diNoDataSet.KursDataTable kurse; // Recordset-Menge aller Kurse dieses Schülers
     private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
-    private string franzKurs;                // der ermittelte Französisch-Kurs-Fachkürzel
-    private string reliOderEthik;           // Ob der Schüler Reli oder Ethik hat
 
     public Schueler(int id)
     {
@@ -48,8 +46,6 @@ namespace diNo
       this.klasse = null;
       this.kurse = null;
       this.noten = null;
-      this.reliOderEthik = string.Empty;
-      this.franzKurs = string.Empty;
     }
 
     /// <summary>
@@ -113,36 +109,43 @@ namespace diNo
     /// F für Wahlfach Französisch
     /// F3 für fortgeführtes Französisch
     /// einen Leerstring für Schüler die gar kein Französisch haben
+    /// 
+    /// Achtung: Beim Setzen wird auch gleich der Kurs umgemeldet!
     /// </summary>
-    public string FranzoesischKurs
+    public string Wahlpflichtfach
     {
       get
       {
-        if (!string.IsNullOrEmpty(this.franzKurs))
-        {
-          return this.franzKurs;
-        }
-        else
-        {
-          KursTableAdapter ada = new KursTableAdapter();
-          foreach (var kurs in ada.GetDataBySchulerId(this.Id))
-          {
-            Kurs kursObj = new Kurs(kurs);
-            if (kursObj.getFach.Kuerzel == "F")
-            {
-              franzKurs = "F";
-              break;
-            }
+        return this.Data.Wahlpflichtfach;
+      }
+      set
+      {
+        MeldeAb(this, this.Data.Wahlpflichtfach);
+        MeldeAn(this, value);
+        this.Data.Wahlpflichtfach = value;
+        this.Data.AcceptChanges();
+        new SchuelerTableAdapter().UpdateWahlpflichtfach(value, this.Id);
+      }
+    }
 
-            if (kursObj.getFach.Kuerzel == "F-Wi")
-            {
-              franzKurs = "F-Wi";
-              break;
-            }
-          }
-        }
-
-        return this.franzKurs;
+    /// <summary>
+    /// Liefert oder setzt den Fremdsprache2-Eintrag.
+    /// 
+    /// Achtung: Beim Setzen wird auch gleich der Kurs umgemeldet!
+    /// </summary>
+    public string Fremdsprache2
+    {
+      get
+      {
+        return this.Data.Fremdsprache2;
+      }
+      set
+      {
+        MeldeAb(this, this.Data.Fremdsprache2);
+        MeldeAn(this, value);
+        this.Data.Fremdsprache2 = value;
+        this.Data.AcceptChanges();
+        new SchuelerTableAdapter().UpdateFremdsprache2(value, this.Id);
       }
     }
 
@@ -157,37 +160,23 @@ namespace diNo
     {
       get
       {
-        if (!string.IsNullOrEmpty(this.reliOderEthik))
-        {
-          return this.reliOderEthik;
-        }
-        else
-        {
-          KursTableAdapter ada = new KursTableAdapter();
-          foreach (var kurs in ada.GetDataBySchulerId(this.Id))
-          {
-            Kurs kursObj = new Kurs(kurs);
-            if (kursObj.getFach.Kuerzel == "K")
-            {
-              this.reliOderEthik = "K";
-              break;
-            }
+        return this.Data.ReligionOderEthik;
+      }
 
-            if (kursObj.getFach.Kuerzel == "Ev")
-            {
-              this.reliOderEthik = "Ev";
-              break;
-            }
-
-            if (kursObj.getFach.Kuerzel == "Eth")
-            {
-              this.reliOderEthik = "Eth";
-              break;
-            }
-          }
+      set
+      {
+        MeldeAb(this, this.Data.ReligionOderEthik);
+        switch (value)
+        {
+          case "RK": MeldeAn(this, "K"); break;
+          case "EV": MeldeAn(this, "Ev"); break;
+          case "Eth": MeldeAn(this, "Eth"); break;
+          default: throw new InvalidOperationException("ungültiger Wert für ReliOderEthik: "+value);
         }
 
-        return this.reliOderEthik;
+        this.Data.ReligionOderEthik = value;
+        this.Data.AcceptChanges();
+        new SchuelerTableAdapter().UpdateReliOderEthik(value, this.Id);
       }
     }
 
@@ -280,18 +269,16 @@ namespace diNo
       }
 
       var kursSelector = UnterrichtExcelReader.GetStandardKursSelector();
-
-      // TODO: modifiziere Klasse (z. B. aus BVKST muss werden BVkst_S bzw. BVkST_T)
-
-
-
-
-
-      foreach (var klassekurs in new KlasseKursTableAdapter().GetDataByKlasse(nachKlasse.Data.Id))
+      var klasse = Klasse.FindKlassenTeilMitKursen(nachKlasse.Bezeichnung, Faecherkanon.GetZweig(schueler.Data.Ausbildungsrichtung));
+      if (klasse == null)
       {
-        var kurs = new KursTableAdapter().GetDataById(klassekurs.KursId)[0];
+        throw new InvalidOperationException("Für die Klasse "+nachKlasse.Bezeichnung+ " konnten keine Kurse gefunden werden");
+      }
+
+      foreach (var kurs in klasse.Kurse)
+      {
         // prüfe, ob der Schüler in diesen Kurs gehen soll und trage ihn ein.
-        UnterrichtExcelReader.AddSchuelerToKurs(kurs, kursSelector, schueler.Data);
+        UnterrichtExcelReader.AddSchuelerToKurs(kurs.Data, kursSelector, schueler.Data);
       }
 
       DateTime? austrittsdatum = schueler.Data.IsAustrittsdatumNull() ? (DateTime?)null : schueler.Data.Austrittsdatum;
@@ -355,6 +342,7 @@ namespace diNo
     private static void MeldeAn(Schueler schueler, string nachFachKuerzel)
     {
       FachTableAdapter ada = new FachTableAdapter();
+      bool found = false;
       foreach (var kursZuKlasse in new KlasseKursTableAdapter().GetDataByKlasse(schueler.getKlasse.Data.Id))
       {
         var kurs = new KursTableAdapter().GetDataById(kursZuKlasse.KursId)[0];
@@ -362,7 +350,13 @@ namespace diNo
         if (fach.Kuerzel == nachFachKuerzel)
         {
           MeldeAn(schueler, new Kurs(kurs));
+          found = true;
         }
+      }
+
+      if (!found)
+      {
+        throw new InvalidOperationException("Es konnte kein Kurs mit dem Kürzel "+nachFachKuerzel+" gefunden werden");
       }
     }
   }

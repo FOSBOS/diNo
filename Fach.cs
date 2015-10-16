@@ -125,9 +125,6 @@ public static class Faecherkanon
 	{
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-		
-  
-
     public static Zweig GetZweig(string zweig)
     {
       switch (zweig)
