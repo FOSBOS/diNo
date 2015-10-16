@@ -185,7 +185,8 @@ namespace diNoVerwaltung
         cb.Items.Add(new ComboBoxItem("Eth", "Ethik"));
         switch (schueler.ReliOderEthik)
         {
-          case "": cb.SelectedIndex = 0; break;
+          case "":
+          case null: cb.SelectedIndex = 0; break;
           case "K": cb.SelectedIndex = 1; break;
           case "Ev": cb.SelectedIndex = 2; break;
           case "Eth": cb.SelectedIndex = 3; break;
@@ -200,7 +201,7 @@ namespace diNoVerwaltung
     private void listViewComplex_CellEditFinishing(object sender, CellEditEventArgs e)
     {
       // We only want to mess with the Französisch or Reli column
-      if (!e.Column.Equals(this.olvSpalteFranzoesisch) && !!e.Column.Equals(this.olvSpalteReli))
+      if (!e.Column.Equals(this.olvSpalteFranzoesisch) && !e.Column.Equals(this.olvSpalteReli))
       {
         return;
       }

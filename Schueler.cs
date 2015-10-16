@@ -280,6 +280,13 @@ namespace diNo
       }
 
       var kursSelector = UnterrichtExcelReader.GetStandardKursSelector();
+
+      // TODO: modifiziere Klasse (z. B. aus BVKST muss werden BVkst_S bzw. BVkST_T)
+
+
+
+
+
       foreach (var klassekurs in new KlasseKursTableAdapter().GetDataByKlasse(nachKlasse.Data.Id))
       {
         var kurs = new KursTableAdapter().GetDataById(klassekurs.KursId)[0];
@@ -287,7 +294,8 @@ namespace diNo
         UnterrichtExcelReader.AddSchuelerToKurs(kurs, kursSelector, schueler.Data);
       }
 
-      new SchuelerTableAdapter().UpdateManyThings(nachKlasse.Data.Id, schueler.Data.Fremdsprache2, schueler.Data.ReligionOderEthik, schueler.Data.Austrittsdatum, schueler.Data.LRSStoerung, schueler.Data.LRSSchwaeche, schueler.Id);
+      DateTime? austrittsdatum = schueler.Data.IsAustrittsdatumNull() ? (DateTime?)null : schueler.Data.Austrittsdatum;
+      new SchuelerTableAdapter().UpdateManyThings(nachKlasse.Data.Id, schueler.Data.Fremdsprache2, schueler.Data.ReligionOderEthik, austrittsdatum, schueler.Data.LRSStoerung, schueler.Data.LRSSchwaeche, schueler.Id);
       schueler.Refresh();
     }
 

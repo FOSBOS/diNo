@@ -50,6 +50,9 @@
       this.treeListView1.AllColumns.Add(this.olvSpalteFranzoesisch);
       this.treeListView1.AllColumns.Add(this.olvSpalteReli);
       this.treeListView1.AllColumns.Add(this.olvSpalteAustrittsdatum);
+      this.treeListView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.treeListView1.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
       this.treeListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn1,
@@ -70,8 +73,8 @@
       this.treeListView1.UseCompatibleStateImageBehavior = false;
       this.treeListView1.View = System.Windows.Forms.View.Details;
       this.treeListView1.VirtualMode = true;
-      this.treeListView1.CellEditStarting += new BrightIdeasSoftware.CellEditEventHandler(this.listViewComplex_CellEditStarting);
       this.treeListView1.CellEditFinishing += new BrightIdeasSoftware.CellEditEventHandler(this.listViewComplex_CellEditFinishing);
+      this.treeListView1.CellEditStarting += new BrightIdeasSoftware.CellEditEventHandler(this.listViewComplex_CellEditStarting);
       this.treeListView1.ModelCanDrop += new System.EventHandler<BrightIdeasSoftware.ModelDropEventArgs>(this.treeListView1_ModelCanDrop);
       this.treeListView1.ModelDropped += new System.EventHandler<BrightIdeasSoftware.ModelDropEventArgs>(this.treeListView1_ModelDropped);
       // 

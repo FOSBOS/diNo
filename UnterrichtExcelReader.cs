@@ -125,7 +125,7 @@ namespace diNo
     }
 
     /// <summary>
-    /// Trägt einen Schüler in einen Kurs in der Datenbank ein.
+    /// Trägt alle Schüler einer Klasse in einen Kurs in der Datenbank ein.
     /// </summary>
     /// <param name="kurs">Der Kurs.</param>
     /// <param name="dbKlasse">Die Klasse.</param>
