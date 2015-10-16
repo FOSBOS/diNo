@@ -78,8 +78,8 @@
       this.treeListView1.VirtualMode = true;
       this.treeListView1.CellEditFinishing += new BrightIdeasSoftware.CellEditEventHandler(this.listViewComplex_CellEditFinishing);
       this.treeListView1.CellEditStarting += new BrightIdeasSoftware.CellEditEventHandler(this.listViewComplex_CellEditStarting);
-      this.treeListView1.ModelCanDrop += new System.EventHandler<BrightIdeasSoftware.ModelDropEventArgs>(this.treeListView1_ModelCanDrop);
-      this.treeListView1.ModelDropped += new System.EventHandler<BrightIdeasSoftware.ModelDropEventArgs>(this.treeListView1_ModelDropped);
+      this.treeListView1.ModelCanDrop += new System.EventHandler<BrightIdeasSoftware.ModelDropEventArgs>(FormSchuelerverwaltungController.treeListView1_ModelCanDrop);
+      this.treeListView1.ModelDropped += new System.EventHandler<BrightIdeasSoftware.ModelDropEventArgs>(FormSchuelerverwaltungController.treeListView1_ModelDropped);
       // 
       // olvColumn1
       // 

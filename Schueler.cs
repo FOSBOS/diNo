@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using BrightIdeasSoftware;
 using diNo.diNoDataSetTableAdapters;
+using System;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -51,12 +51,14 @@ namespace diNo
     /// <summary>
     /// Die Id des Schülers in der Datenbank.
     /// </summary>
+    [OLVColumn(Title="Id", Width = 50, DisplayIndex = 4, TextAlign = HorizontalAlignment.Right)]
     public int Id
     {
       get;
       internal set;
     }
 
+    [OLVColumn(Title = "Rufname", Width = 100, DisplayIndex = 3)]
     public string benutzterVorname
     {
       get { return string.IsNullOrEmpty(data.Rufname) ? data.Vorname : data.Rufname; }
@@ -73,9 +75,28 @@ namespace diNo
       }
     }
 
+    [OLVColumn(Title = "Name", Width = 100, DisplayIndex = 1)]
+    public string Name
+    {
+      get
+      {
+        return this.Data.Name;
+      }
+    }
+
+    [OLVColumn(Title = "Vorname", Width = 100, DisplayIndex = 2)]
+    public string Vorname
+    {
+      get
+      {
+        return this.Data.Vorname;
+      }
+    }
+
     /// <summary>
     /// Ob der Schüler Legastheniker ist (so dass in Englisch und Französisch 1:1 gewertet werden muss).
     /// </summary>
+    [OLVColumn(Title="Legasthenie", Width = 80)]
     public bool IsLegastheniker
     {
       get { return this.data.LRSStoerung; }
@@ -112,6 +133,7 @@ namespace diNo
     /// 
     /// Achtung: Beim Setzen wird auch gleich der Kurs umgemeldet!
     /// </summary>
+    [OLVColumn(Title = "Wahlpflichtfach", Width = 100)]
     public string Wahlpflichtfach
     {
       get
@@ -133,6 +155,7 @@ namespace diNo
     /// 
     /// Achtung: Beim Setzen wird auch gleich der Kurs umgemeldet!
     /// </summary>
+    [OLVColumn(Title = "Fremdsprache2", Width = 100)]
     public string Fremdsprache2
     {
       get
@@ -156,6 +179,7 @@ namespace diNo
     /// Eth falls der Schüler in Ethik geht
     /// Leerstring falls gar keine Zuordnung
     /// </summary>
+    [OLVColumn(Title = "ReliOderEthik", Width = 100)]
     public string ReliOderEthik
     {
       get
@@ -213,6 +237,14 @@ namespace diNo
       }
     }
 
+    [OLVColumn(Title = "DNote", Width = 50)]
+    public double DNote
+    {
+      get
+      {
+        return this.berechneDNote();
+      }
+    }
 
     public double berechneDNote()
     {
@@ -342,7 +374,6 @@ namespace diNo
     private static void MeldeAn(Schueler schueler, string nachFachKuerzel)
     {
       FachTableAdapter ada = new FachTableAdapter();
-      bool found = false;
       foreach (var kursZuKlasse in new KlasseKursTableAdapter().GetDataByKlasse(schueler.getKlasse.Data.Id))
       {
         var kurs = new KursTableAdapter().GetDataById(kursZuKlasse.KursId)[0];
@@ -350,13 +381,7 @@ namespace diNo
         if (fach.Kuerzel == nachFachKuerzel)
         {
           MeldeAn(schueler, new Kurs(kurs));
-          found = true;
         }
-      }
-
-      if (!found)
-      {
-        throw new InvalidOperationException("Es konnte kein Kurs mit dem Kürzel "+nachFachKuerzel+" gefunden werden");
       }
     }
   }

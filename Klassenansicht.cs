@@ -1,107 +1,49 @@
-﻿using diNo.diNoDataSetTableAdapters;
+﻿using BrightIdeasSoftware;
 using System;
-using System.ComponentModel;
-using System.Data;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace diNo
 {
   public partial class Klassenansicht : Form
   {
-    private bool aenderungenVorhanden = false;
-    private string aktuelleKlasse = "";
-
     public Klassenansicht()
     {
       InitializeComponent();
+
+      this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
+      Generator.GenerateColumns(this.objectListView1, typeof(Schueler), false);
     }
 
-    private void Klassenansicht_Load(object sender, EventArgs e)
+    private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
     {
-      // TODO: This line of code loads data into the 'diNoDataSet.SchuelerKurs' table. You can move, or remove it, as needed.
-      this.schuelerKursTableAdapter.Fill(this.diNoDataSet.SchuelerKurs);
-      // TODO: This line of code loads data into the 'diNoDataSet.Kurs' table. You can move, or remove it, as needed.
-      this.kursTableAdapter.Fill(this.diNoDataSet.Kurs);
-      this.klasseTableAdapter.Fill(this.diNoDataSet.Klasse);
-      this.fKSchuelerToKlasseBindingSource.CurrentChanged += fKSchuelerToKlasseBindingSource_CurrentChanged;
-    }
-
-    void fKSchuelerToKlasseBindingSource_CurrentChanged(object sender, EventArgs e)
-    {
-      if (fkSchuelerToKursBindingSource.Current == null)
+      var schueler = treeListView1.SelectedObject as Schueler;
+      if (schueler != null)
       {
-        this.kursBindingSource.DataSource = new BindingList<diNoDataSet.KursRow>();
-        return;
+        this.btnNotenbogenZeigen.Enabled = true;
+        this.objectListView1.Objects = new List<Schueler>() { schueler };
       }
-
-      if (fKSchuelerToKlasseBindingSource.Current != null)
+      else
       {
-        var schueler = (fKSchuelerToKlasseBindingSource.Current as DataRowView).Row as diNoDataSet.SchuelerRow;
-        BindingList<diNoDataSet.KursRow> list = new BindingList<diNoDataSet.KursRow>();
-        foreach (var kurs in new SchuelerKursTableAdapter().GetDataBySchuelerId(schueler.Id))
-        {
-          list.Add(new KursTableAdapter().GetDataById(kurs.KursId)[0]);
-        }
-
-        this.kursBindingSource.DataSource = list;
+        this.btnNotenbogenZeigen.Enabled = false;
       }
-    }
-
-    private void diNoDataSetBindingSource_CurrentChanged(object sender, EventArgs e)
-    {
-      var alteListe = this.fKSchuelerToKlasseBindingSource.DataSource as diNo.diNoDataSet.SchuelerDataTable;
-      if (aenderungenVorhanden)
-      {
-        var result = MessageBox.Show("Sie hatten in der Klasse " + aktuelleKlasse + " Änderungen. Wollen Sie speichern?", "Frage", MessageBoxButtons.YesNo);
-        if (result == System.Windows.Forms.DialogResult.Yes)
-        {
-          new SchuelerTableAdapter().Update(alteListe);
-        }
-      }
-
-      var neueKlasse = ((this.klasseBindingSource.Current as DataRowView).Row as diNoDataSet.KlasseRow);
-      var schuelerDerKlasse = new SchuelerTableAdapter().GetDataByKlasse(neueKlasse.Id);
-      this.fKSchuelerToKlasseBindingSource.DataSource = schuelerDerKlasse;
-      schuelerDerKlasse.RowChanged += schuelerDerKlasse_RowChanged;
-      aktuelleKlasse = neueKlasse.Bezeichnung;
-      aenderungenVorhanden = false;
-    }
-
-    void schuelerDerKlasse_RowChanged(object sender, DataRowChangeEventArgs e)
-    {
-      aenderungenVorhanden = true;
-    }
-
-    private void kursBindingSource_CurrentChanged(object sender, EventArgs e)
-    {
-      if (fKSchuelerToKlasseBindingSource.Current == null || kursBindingSource.Current == null)
-      {
-        return;
-      }
-
-      var schueler = (fKSchuelerToKlasseBindingSource.Current as DataRowView).Row as diNoDataSet.SchuelerRow;
-      var kurs = kursBindingSource.Current as diNoDataSet.KursRow;
-      if (kurs == null)
-      {
-        kurs = (kursBindingSource.Current as DataRowView).Row as diNoDataSet.KursRow;
-      }
-
-      BindingList<diNoDataSet.NoteRow> noten = new BindingList<diNoDataSet.NoteRow>();
-      foreach (var note in new NoteTableAdapter().GetDataByKursId(kurs.Id))
-      {
-        noten.Add(note);
-      }
-
-      this.noteBindingSource.DataSource = noten;
     }
 
     private void btnNotenbogenZeigen_Click(object sender, EventArgs e)
     {
-      var schueler = (fKSchuelerToKlasseBindingSource.Current as DataRowView).Row as diNoDataSet.SchuelerRow;
+      var schueler = treeListView1.SelectedObject as Schueler;
       if (schueler != null)
       {
-        new Notenbogen(schueler.Id).Show();
+        Notenbogen bogen = new Notenbogen(schueler.Id);
+        bogen.Show();
       }
+    }
+
+    private void Klassenansicht_Load(object sender, EventArgs e)
+    {
+      this.treeListView1.Roots = KlassenTreeViewController.GetSortedKlassenList();
+      this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
+      this.treeListView1.ChildrenGetter = delegate (object x) { return KlassenTreeViewController.GetSortedSchuelerList((Klasse)x); };
     }
   }
 }

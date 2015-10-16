@@ -68,6 +68,7 @@
     <Compile Include="FormSchuelerverwaltung.Designer.cs">
       <DependentUpon>FormSchuelerverwaltung.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSchuelerverwaltungController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormSchuelerverwaltung.resx">
