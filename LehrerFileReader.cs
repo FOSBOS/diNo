@@ -40,15 +40,22 @@ namespace diNo
             if (adapter.GetDataByKuerzel(cleanArray[kuerzelSpalte]).Count == 0)
             {
               string mailAdresse = cleanArray[vornameSpalte] + "." + cleanArray[nachnameSpalte] + "@fosbos-kempten.de";
-              mailAdresse = mailAdresse.Replace("ä", "ae");
-              mailAdresse = mailAdresse.Replace("ö", "oe");
-              mailAdresse = mailAdresse.Replace("ü", "ue");
-              mailAdresse = mailAdresse.Replace("ß", "ss");
-              adapter.Insert(cleanArray[kuerzelSpalte], cleanArray[vornameSpalte] + " " + cleanArray[nachnameSpalte], cleanArray[dienstbezeichnungSpalte], mailAdresse);
+              mailAdresse = ReplaceUmlaute(mailAdresse);
+              string windowsname = cleanArray[vornameSpalte].Substring(0, 1) + ReplaceUmlaute(cleanArray[nachnameSpalte]);
+              adapter.Insert(cleanArray[kuerzelSpalte], cleanArray[vornameSpalte] + " " + cleanArray[nachnameSpalte], cleanArray[dienstbezeichnungSpalte], mailAdresse, windowsname);
             }
           }
         }
       }
+    }
+
+    private static string ReplaceUmlaute(string mailAdresse)
+    {
+      mailAdresse = mailAdresse.Replace("ä", "ae");
+      mailAdresse = mailAdresse.Replace("ö", "oe");
+      mailAdresse = mailAdresse.Replace("ü", "ue");
+      mailAdresse = mailAdresse.Replace("ß", "ss");
+      return mailAdresse;
     }
   }
 }

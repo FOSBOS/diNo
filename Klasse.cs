@@ -214,6 +214,71 @@ namespace diNo
       return null;
     }
 
+
+    public static IList<Klasse> GetTeilKlassen(string klassenBezeichnung)
+    {
+      List<Klasse> result = new List<Klasse>();
+
+      var klasse = FindKlasse(klassenBezeichnung);
+      if (klasse != null && klasse.Kurse.Count > 0)
+      {
+        result.Add(klasse);
+      }
+
+      if (klassenBezeichnung.EndsWith("ST"))
+      {
+        string modifiedKlasse = klassenBezeichnung + "_S";
+        klasse = FindKlasse(modifiedKlasse);
+        if (klasse != null && klasse.Kurse.Count > 0)
+        {
+          result.Add(klasse);
+        }
+
+        modifiedKlasse = klassenBezeichnung + "_T";
+        klasse = FindKlasse(modifiedKlasse);
+        if (klasse != null && klasse.Kurse.Count > 0)
+        {
+          result.Add(klasse);
+        }
+      }
+
+      if (klassenBezeichnung.EndsWith("SW"))
+      {
+        string modifiedKlasse = klassenBezeichnung + "_S";
+        klasse = FindKlasse(modifiedKlasse);
+        if (klasse != null && klasse.Kurse.Count > 0)
+        {
+          result.Add(klasse);
+        }
+
+        modifiedKlasse = klassenBezeichnung + "_W";
+        klasse = FindKlasse(modifiedKlasse);
+        if (klasse != null && klasse.Kurse.Count > 0)
+        {
+          result.Add(klasse);
+        }
+      }
+
+      if (klassenBezeichnung.EndsWith("TW"))
+      {
+        string modifiedKlasse = klassenBezeichnung + "_T";
+        klasse = FindKlasse(modifiedKlasse);
+        if (klasse != null && klasse.Kurse.Count > 0)
+        {
+          result.Add(klasse);
+        }
+
+        modifiedKlasse = klassenBezeichnung + "_W";
+        klasse = FindKlasse(modifiedKlasse);
+        if (klasse != null && klasse.Kurse.Count > 0)
+        {
+          result.Add(klasse);
+        }
+      }
+
+      return result;
+    }
+
     /// <summary>
     /// Sucht denjenigen Klassenteil der Klasse, der die Kurse für den gegebenen Zweig enthält.
     /// </summary>

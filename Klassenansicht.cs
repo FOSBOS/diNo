@@ -41,7 +41,7 @@ namespace diNo
 
     private void Klassenansicht_Load(object sender, EventArgs e)
     {
-      this.treeListView1.Roots = KlassenTreeViewController.GetSortedKlassenList();
+      this.treeListView1.Roots = KlassenTreeViewController.GetSortedKlassenList(true);
       this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
       this.treeListView1.ChildrenGetter = delegate (object x) { return KlassenTreeViewController.GetSortedSchuelerList((Klasse)x); };
     }

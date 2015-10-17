@@ -29,34 +29,26 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      this.btnNotenbogenZeigen = new System.Windows.Forms.Button();
       this.treeListView1 = new BrightIdeasSoftware.TreeListView();
       this.olvColumnBezeichnung = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
+      this.btnNotenbogenZeigen = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
       this.SuspendLayout();
       // 
-      // btnNotenbogenZeigen
-      // 
-      this.btnNotenbogenZeigen.Location = new System.Drawing.Point(29, 308);
-      this.btnNotenbogenZeigen.Name = "btnNotenbogenZeigen";
-      this.btnNotenbogenZeigen.Size = new System.Drawing.Size(135, 23);
-      this.btnNotenbogenZeigen.TabIndex = 4;
-      this.btnNotenbogenZeigen.Text = "Notenbogen anzeigen";
-      this.btnNotenbogenZeigen.UseVisualStyleBackColor = true;
-      this.btnNotenbogenZeigen.Click += new System.EventHandler(this.btnNotenbogenZeigen_Click);
-      // 
       // treeListView1
       // 
       this.treeListView1.AllColumns.Add(this.olvColumnBezeichnung);
+      this.treeListView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
       this.treeListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnBezeichnung});
-      this.treeListView1.Location = new System.Drawing.Point(29, 12);
+      this.treeListView1.Location = new System.Drawing.Point(12, 12);
       this.treeListView1.Name = "treeListView1";
       this.treeListView1.OwnerDraw = true;
       this.treeListView1.ShowGroups = false;
-      this.treeListView1.Size = new System.Drawing.Size(135, 280);
+      this.treeListView1.Size = new System.Drawing.Size(207, 280);
       this.treeListView1.TabIndex = 5;
       this.treeListView1.UseCompatibleStateImageBehavior = false;
       this.treeListView1.View = System.Windows.Forms.View.Details;
@@ -68,19 +60,34 @@
       this.olvColumnBezeichnung.Hideable = false;
       this.olvColumnBezeichnung.IsEditable = false;
       this.olvColumnBezeichnung.Text = "Bezeichnung";
-      this.olvColumnBezeichnung.Width = 131;
+      this.olvColumnBezeichnung.Width = 204;
       // 
       // objectListView1
       // 
+      this.objectListView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
       this.objectListView1.GridLines = true;
-      this.objectListView1.Location = new System.Drawing.Point(170, 12);
+      this.objectListView1.Location = new System.Drawing.Point(225, 12);
       this.objectListView1.Name = "objectListView1";
       this.objectListView1.ShowGroups = false;
-      this.objectListView1.Size = new System.Drawing.Size(666, 280);
+      this.objectListView1.Size = new System.Drawing.Size(706, 280);
       this.objectListView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
       this.objectListView1.TabIndex = 6;
       this.objectListView1.UseCompatibleStateImageBehavior = false;
       this.objectListView1.View = System.Windows.Forms.View.Details;
+      // 
+      // btnNotenbogenZeigen
+      // 
+      this.btnNotenbogenZeigen.Image = global::diNo.Properties.Resources.piktogrammNotenbogen;
+      this.btnNotenbogenZeigen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+      this.btnNotenbogenZeigen.Location = new System.Drawing.Point(12, 298);
+      this.btnNotenbogenZeigen.Name = "btnNotenbogenZeigen";
+      this.btnNotenbogenZeigen.Size = new System.Drawing.Size(207, 33);
+      this.btnNotenbogenZeigen.TabIndex = 4;
+      this.btnNotenbogenZeigen.Text = "Notenbogen anzeigen";
+      this.btnNotenbogenZeigen.UseVisualStyleBackColor = true;
+      this.btnNotenbogenZeigen.Click += new System.EventHandler(this.btnNotenbogenZeigen_Click);
       // 
       // Klassenansicht
       // 
