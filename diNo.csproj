@@ -72,11 +72,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="diNoDataSetKurs.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>diNoDataSetKurs.xsd</DependentUpon>
-    </Compile>
     <Compile Include="GlobalConsts.cs" />
     <Compile Include="CellConstant.cs" />
     <Compile Include="diNoDataSet.cs">
@@ -192,17 +187,6 @@
     </None>
     <None Include="diNoDataSet.xss">
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="diNoDataSetKurs.xsc">
-      <DependentUpon>diNoDataSetKurs.xsd</DependentUpon>
-    </None>
-    <None Include="diNoDataSetKurs.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>diNoDataSetKurs.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="diNoDataSetKurs.xss">
-      <DependentUpon>diNoDataSetKurs.xsd</DependentUpon>
     </None>
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.BerechneteNoteTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.FachTableAdapter.datasource" />
