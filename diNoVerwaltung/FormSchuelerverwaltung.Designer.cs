@@ -31,15 +31,15 @@
       this.components = new System.ComponentModel.Container();
       this.treeListView1 = new BrightIdeasSoftware.TreeListView();
       this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-      this.olvSpalteLegasthenie = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvSpalteWahlpflichtfach = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.olvSpalteFremdsprache2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvSpalteReli = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.olvSpalteLegasthenie = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvSpalteAustrittsdatum = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.klasseWechselnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.abmeldungToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.label1 = new System.Windows.Forms.Label();
       this.pictureBox1 = new System.Windows.Forms.PictureBox();
-      this.olvSpalteFremdsprache2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.SuspendLayout();
@@ -78,8 +78,6 @@
       this.treeListView1.VirtualMode = true;
       this.treeListView1.CellEditFinishing += new BrightIdeasSoftware.CellEditEventHandler(this.listViewComplex_CellEditFinishing);
       this.treeListView1.CellEditStarting += new BrightIdeasSoftware.CellEditEventHandler(this.listViewComplex_CellEditStarting);
-      this.treeListView1.ModelCanDrop += new System.EventHandler<BrightIdeasSoftware.ModelDropEventArgs>(FormSchuelerverwaltungController.treeListView1_ModelCanDrop);
-      this.treeListView1.ModelDropped += new System.EventHandler<BrightIdeasSoftware.ModelDropEventArgs>(FormSchuelerverwaltungController.treeListView1_ModelDropped);
       // 
       // olvColumn1
       // 
@@ -88,21 +86,26 @@
       this.olvColumn1.Text = "Bezeichnung";
       this.olvColumn1.Width = 221;
       // 
-      // olvSpalteLegasthenie
-      // 
-      this.olvSpalteLegasthenie.CheckBoxes = true;
-      this.olvSpalteLegasthenie.Text = "Legasthenie";
-      this.olvSpalteLegasthenie.Width = 80;
-      // 
       // olvSpalteWahlpflichtfach
       // 
       this.olvSpalteWahlpflichtfach.Text = "Wahlpflichtfach";
       this.olvSpalteWahlpflichtfach.Width = 100;
       // 
+      // olvSpalteFremdsprache2
+      // 
+      this.olvSpalteFremdsprache2.Text = "Fremdsprache2";
+      this.olvSpalteFremdsprache2.Width = 100;
+      // 
       // olvSpalteReli
       // 
       this.olvSpalteReli.Text = "Reli oder Ethik";
       this.olvSpalteReli.Width = 100;
+      // 
+      // olvSpalteLegasthenie
+      // 
+      this.olvSpalteLegasthenie.CheckBoxes = true;
+      this.olvSpalteLegasthenie.Text = "Legasthenie";
+      this.olvSpalteLegasthenie.Width = 80;
       // 
       // olvSpalteAustrittsdatum
       // 
@@ -139,11 +142,6 @@
       this.pictureBox1.TabIndex = 0;
       this.pictureBox1.TabStop = false;
       // 
-      // olvSpalteFremdsprache2
-      // 
-      this.olvSpalteFremdsprache2.Text = "Fremdsprache2";
-      this.olvSpalteFremdsprache2.Width = 100;
-      // 
       // FormSchuelerverwaltung
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -153,7 +151,7 @@
       this.Controls.Add(this.label1);
       this.Controls.Add(this.pictureBox1);
       this.Name = "FormSchuelerverwaltung";
-      this.Text = "Form1";
+      this.Text = "Schülerverwaltung";
       this.Load += new System.EventHandler(this.Form1_Load);
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

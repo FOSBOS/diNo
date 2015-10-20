@@ -195,6 +195,7 @@ namespace diNo
           case "RK": MeldeAn(this, "K"); break;
           case "EV": MeldeAn(this, "Ev"); break;
           case "Eth": MeldeAn(this, "Eth"); break;
+          case "": break;
           default: throw new InvalidOperationException("ungültiger Wert für ReliOderEthik: "+value);
         }
 
@@ -233,6 +234,7 @@ namespace diNo
         {
           kurse = new KursTableAdapter().GetDataBySchulerId(this.Id);
         }
+
         return kurse;
       }
     }
@@ -368,7 +370,11 @@ namespace diNo
 
     private static void MeldeAn(Schueler schueler, Kurs beiKurs)
     {
-      new SchuelerKursTableAdapter().Insert(schueler.Id, beiKurs.Id);
+      SchuelerKursTableAdapter skAda = new SchuelerKursTableAdapter();
+      if (skAda.GetCountBySchuelerAndKurs(schueler.Id, beiKurs.Id) == 0)
+      {
+        new SchuelerKursTableAdapter().Insert(schueler.Id, beiKurs.Id);
+      }
     }
 
     private static void MeldeAn(Schueler schueler, string nachFachKuerzel)
@@ -381,6 +387,7 @@ namespace diNo
         if (fach.Kuerzel == nachFachKuerzel)
         {
           MeldeAn(schueler, new Kurs(kurs));
+          schueler.Refresh();
         }
       }
     }

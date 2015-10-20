@@ -10,6 +10,12 @@ namespace diNoVerwaltung
   public class FormSchuelerverwaltungController
   {
     public static DateTime NullDate = new DateTimePicker().MinDate;
+    private Action refreshFunc;
+
+    public FormSchuelerverwaltungController(Action aRefreshFunc)
+    {
+      this.refreshFunc = aRefreshFunc;
+    }
 
     public static string GetDisplayValueForDate(object value)
     {
@@ -193,7 +199,7 @@ namespace diNoVerwaltung
 
     #region Drag and Drop
 
-    public static void treeListView1_ModelCanDrop(object sender, ModelDropEventArgs e)
+    public void treeListView1_ModelCanDrop(object sender, ModelDropEventArgs e)
     {
       e.Handled = true;
       e.Effect = DragDropEffects.None;
@@ -247,7 +253,7 @@ namespace diNoVerwaltung
       return null;
     }
 
-    public static void treeListView1_ModelDropped(object sender, ModelDropEventArgs e)
+    public void treeListView1_ModelDropped(object sender, ModelDropEventArgs e)
     {
       Schueler derSchueler = GetDraggedSchueler(e.SourceModels);
       Klasse targetKlasse = GetDragTargetKlasse(e);
@@ -255,6 +261,10 @@ namespace diNoVerwaltung
       if (questionResult == DialogResult.Yes)
       {
         Schueler.WechsleKlasse(derSchueler, targetKlasse);
+        if (this.refreshFunc != null)
+        {
+          this.refreshFunc();
+        }
       }
       else
       {

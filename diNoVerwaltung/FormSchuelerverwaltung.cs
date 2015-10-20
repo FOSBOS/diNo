@@ -8,9 +8,15 @@ namespace diNoVerwaltung
 {
   public partial class FormSchuelerverwaltung : Form
   {
+    private FormSchuelerverwaltungController controller; 
+
     public FormSchuelerverwaltung()
     {
       InitializeComponent();
+
+      this.controller = new FormSchuelerverwaltungController(RefreshTree);
+      this.treeListView1.ModelCanDrop += controller.treeListView1_ModelCanDrop;
+      this.treeListView1.ModelDropped += controller.treeListView1_ModelDropped;
 
       this.olvColumn1.AspectGetter = KlassenTreeViewController.SelectValueCol1;
       this.olvSpalteLegasthenie.AspectGetter = FormSchuelerverwaltungController.SelectValueLegasthenie;
@@ -31,9 +37,15 @@ namespace diNoVerwaltung
       this.olvSpalteAustrittsdatum.AspectPutter = FormSchuelerverwaltungController.SetValueAustrittsdatum;
     }
 
-    private void Form1_Load(object sender, EventArgs e)
+    private void RefreshTree()
     {
       treeListView1.Roots = KlassenTreeViewController.GetSortedKlassenList();
+      treeListView1.Refresh();
+    }
+
+    private void Form1_Load(object sender, EventArgs e)
+    {
+      RefreshTree();
       this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
       this.treeListView1.ChildrenGetter = delegate (object x) { return KlassenTreeViewController.GetSortedSchuelerList((Klasse)x); };
     }
@@ -54,7 +66,7 @@ namespace diNoVerwaltung
       }
 
       // We only want to mess with the Französisch or Reli column
-      if (!e.Column.Equals(this.olvSpalteWahlpflichtfach) && !e.Column.Equals(this.olvSpalteReli))
+      if (!e.Column.Equals(this.olvSpalteWahlpflichtfach) && !e.Column.Equals(this.olvSpalteReli) && !e.Column.Equals(this.olvSpalteFremdsprache2))
         return;
 
       ComboBox cb = new ComboBox();
