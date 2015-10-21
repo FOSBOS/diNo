@@ -1,0 +1,12 @@
+todos für diNo
+--------------
+
+- FpA, Seminarfach irgendwie integrieren
+- Fehltage integrieren
+- Abschließen eines Notenbogens bei Austritt / Rücktritt (sinnvoller Workflow, um evtl. noch vorhandene Noten einzutreiben etc.)
+- Aktualisieren der Schülerdaten (Adresse, was noch?)
+- Notenprüfungen (was prüfen wir alles?)
+- Entscheidungen der Konferenz, z. B. über Notenausgleich, Probezeit, Vorrücken auf Probe, Gefährdungsmitteilung, Zulassung zur AP, Gefahr d Abweisung, Zw./Ja/Abi-Zeugnis
+- Zurückspielen der Noten in die WinSV und Zeugnisdruck (ohne WinSV geht es nicht wg. Statistikmeldungen - zudem beantragen da noch Schüler ihr Lateinzeugnis der neunten Klasse anzuerkennen und lauter so einen Unfug mit dem ich nicht unbedingt was zu tun haben möchte)
+- Felder Eintritt in Jgst. xx am xx aus der xx-Schule
+- Klassenleiter bei Klasse speichern

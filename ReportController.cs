@@ -42,34 +42,16 @@ namespace diNo
 
     public class ReportNotenbogen : ReportController
     {
-        public ReportNotenbogen(NotenCheckResults dataSource) : base(dataSource) {}
-
         public override void Init()
         {    
         
-              
-            IList<diNoDataSet.SchuelerRow>sListe = new List<diNoDataSet.SchuelerRow>();
-            IList<Klasse>kListe = new List<Klasse>();
-            /*var s =new Schueler(8500);
-            kListe.Add(s.getKlasse);
-            sListe.Add(s.Data);
-            */
-            var s =new Schueler(8534);
-            kListe.Add(s.getKlasse);
-            sListe.Add(s.Data);                      
-            //ReportDataSource tSource = new ReportDataSource("DataSetNotenbogen", liste);
-            ReportDataSource tSource = new ReportDataSource("DataSetSchuelerDB", sListe);
-            rpt.reportViewer.LocalReport.DataSources.Add(tSource);
-
-            ReportDataSource kSource = new ReportDataSource("DataSetKlasse", kListe);
-            rpt.reportViewer.LocalReport.DataSources.Add(kSource);
+            vwNotenbogenTableAdapter ta =  new vwNotenbogenTableAdapter();
+            rpt.BerichtBindingSource.DataMember = "vwNotenbogen";
+            ta.ClearBeforeFill = true;
             
+            ta.FillBySchuelerId(rpt.diNoDataSet.vwNotenbogen,6253);                        
             rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";
-
-            // rpt.BerichtBindingSource.DataSource = liste;
-            // rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";            
         }
-
     }
 
     public class ReportFachliste : ReportController
@@ -93,7 +75,7 @@ namespace diNo
             rpt.BerichtBindingSource.DataMember = "Schueler";
             BerichtTableAdapter = new SchuelerTableAdapter();
             BerichtTableAdapter.ClearBeforeFill = true;
-            BerichtTableAdapter.FillByKlasse(rpt.diNoDataSet.Schueler, 34); // 11Tb 
+            BerichtTableAdapter.FillByKlasse(rpt.diNoDataSet.Schueler, 89); // 12Wf 
             rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptSchuelerliste.rdlc";
         }
 
