@@ -203,7 +203,6 @@ namespace diNo
       int zeileNachname = GetNotenbogenZeileForSidZeile(zeileSId);
       WriteValue(notenbogen, CellConstant.Nachname + zeileNachname, "");
       WriteValue(notenbogen, CellConstant.Vorname + (zeileNachname + 1), "");
-      WriteValueProtectedCell(sid, CellConstant.SId + zeileSId, ""+int.MaxValue);
     }
 
     /// <summary>

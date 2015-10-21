@@ -79,6 +79,7 @@
       // 
       // btnNotenbogenZeigen
       // 
+      this.btnNotenbogenZeigen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.btnNotenbogenZeigen.Image = global::diNo.Properties.Resources.piktogrammNotenbogen;
       this.btnNotenbogenZeigen.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
       this.btnNotenbogenZeigen.Location = new System.Drawing.Point(12, 298);

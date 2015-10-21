@@ -28,15 +28,8 @@ namespace diNo
       for (int i = CellConstant.zeileSIdErsterSchueler; i < CellConstant.zeileSIdErsterSchueler + OpenNotendatei.MaxAnzahlSchueler; i++)
       {
         int sid = Convert.ToInt32(xls.ReadValue(xls.sid, CellConstant.SId + i));
-        if (sid == int.MaxValue)
-        {
-          continue; // Schüler wurde gelöscht
-        }
-        else
-        {
-          if (sid == 0) break;
-          sidList.Add(sid);
-        }
+        if (sid == 0) break; // wir sind wohl am Ende der Datei
+        sidList.Add(sid);
       }
 
       kurs = new Kurs(Convert.ToInt32(xls.ReadValue(xls.sid, CellConstant.KursId)));
