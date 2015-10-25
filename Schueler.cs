@@ -75,6 +75,17 @@ namespace diNo
       }
     }
 
+    /// <summary>
+    /// Name und Adresse des Schülers in drei Zeilen
+    /// </summary>
+    public string NameUndAdresse
+    {
+      get
+      {
+        return this.benutzterVorname + " " + this.Data.Name + "\n" + this.Data.AnschriftStrasse + "\n" + this.Data.AnschriftPLZ + " " + this.Data.AnschriftOrt;
+      }
+    }
+
     [OLVColumn(Title = "Name", Width = 100, DisplayIndex = 1)]
     public string Name
     {
@@ -122,7 +133,6 @@ namespace diNo
 
         return klasse;
       }
-
     }
 
     /// <summary>
@@ -219,6 +229,35 @@ namespace diNo
 
         return noten;
       }
+    }
+
+    public string getWiederholungen()
+    {
+      string result = string.Empty;
+      
+      if (!string.IsNullOrEmpty(this.Data.Wiederholung1Jahrgangsstufe) && isAWiederholung(this.Data.Wiederholung1Jahrgangsstufe))
+      {
+        result += this.Data.Wiederholung1Jahrgangsstufe;
+        result += "(" + this.Data.Wiederholung1Grund + ")";
+      }
+      if (!string.IsNullOrEmpty(this.Data.Wiederholung2Jahrgangsstufe) && isAWiederholung(this.Data.Wiederholung2Jahrgangsstufe))
+      {
+        result += this.Data.Wiederholung2Jahrgangsstufe;
+        result += "(" + this.Data.Wiederholung2Grund + ")";
+      }
+
+      return result;
+    }
+
+    private bool isAWiederholung(string aWiederholungsEintrag)
+    {
+      int zahl;
+      if (int.TryParse(aWiederholungsEintrag, out zahl))
+      {
+        return (zahl != 0);
+      }
+
+      return false;
     }
 
     public diNoDataSet.SchuelerRow Data

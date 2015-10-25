@@ -151,6 +151,18 @@ public static class Faecherkanon
       }
     }
 
+    public static string GetJahrgangsstufe(Jahrgangsstufe jahrgangsstufe)
+    {
+      switch (jahrgangsstufe)
+      {
+        case Jahrgangsstufe.Vorklasse: return "10";  // FOS Vorklasse
+        case Jahrgangsstufe.Elf: return "11";
+        case Jahrgangsstufe.Zwoelf: return "12" ;
+        case Jahrgangsstufe.Dreizehn: return "13" ;
+        default: throw new InvalidOperationException("unbekannte Jahrgangsstufe " + jahrgangsstufe);
+      }
+    }
+
     public static string GetSchulartString(Schulart schulart)
     {
       switch (schulart)

@@ -12,7 +12,6 @@ namespace diNo
       InitializeComponent();
 
       this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
-      Generator.GenerateColumns(this.objectListView1, typeof(Schueler), false);
     }
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -21,7 +20,7 @@ namespace diNo
       if (schueler != null)
       {
         this.btnNotenbogenZeigen.Enabled = true;
-        this.objectListView1.Objects = new List<Schueler>() { schueler };
+        this.userControlSchueleransicht1.Schueler = schueler;
       }
       else
       {

@@ -31,10 +31,9 @@
       this.components = new System.ComponentModel.Container();
       this.treeListView1 = new BrightIdeasSoftware.TreeListView();
       this.olvColumnBezeichnung = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-      this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
       this.btnNotenbogenZeigen = new System.Windows.Forms.Button();
+      this.userControlSchueleransicht1 = new diNo.UserControlSchueleransicht();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
       this.SuspendLayout();
       // 
       // treeListView1
@@ -62,21 +61,6 @@
       this.olvColumnBezeichnung.Text = "Bezeichnung";
       this.olvColumnBezeichnung.Width = 204;
       // 
-      // objectListView1
-      // 
-      this.objectListView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.objectListView1.GridLines = true;
-      this.objectListView1.Location = new System.Drawing.Point(225, 12);
-      this.objectListView1.Name = "objectListView1";
-      this.objectListView1.ShowGroups = false;
-      this.objectListView1.Size = new System.Drawing.Size(706, 280);
-      this.objectListView1.Sorting = System.Windows.Forms.SortOrder.Ascending;
-      this.objectListView1.TabIndex = 6;
-      this.objectListView1.UseCompatibleStateImageBehavior = false;
-      this.objectListView1.View = System.Windows.Forms.View.Details;
-      // 
       // btnNotenbogenZeigen
       // 
       this.btnNotenbogenZeigen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -90,19 +74,26 @@
       this.btnNotenbogenZeigen.UseVisualStyleBackColor = true;
       this.btnNotenbogenZeigen.Click += new System.EventHandler(this.btnNotenbogenZeigen_Click);
       // 
+      // userControlSchueleransicht1
+      // 
+      this.userControlSchueleransicht1.Location = new System.Drawing.Point(237, 12);
+      this.userControlSchueleransicht1.Name = "userControlSchueleransicht1";
+      this.userControlSchueleransicht1.Schueler = null;
+      this.userControlSchueleransicht1.Size = new System.Drawing.Size(661, 319);
+      this.userControlSchueleransicht1.TabIndex = 7;
+      // 
       // Klassenansicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(943, 343);
-      this.Controls.Add(this.objectListView1);
+      this.ClientSize = new System.Drawing.Size(910, 343);
+      this.Controls.Add(this.userControlSchueleransicht1);
       this.Controls.Add(this.treeListView1);
       this.Controls.Add(this.btnNotenbogenZeigen);
       this.Name = "Klassenansicht";
       this.Text = "Klassenansicht";
       this.Load += new System.EventHandler(this.Klassenansicht_Load);
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -111,6 +102,6 @@
     private System.Windows.Forms.Button btnNotenbogenZeigen;
     private BrightIdeasSoftware.TreeListView treeListView1;
     private BrightIdeasSoftware.OLVColumn olvColumnBezeichnung;
-    private BrightIdeasSoftware.ObjectListView objectListView1;
+    private UserControlSchueleransicht userControlSchueleransicht1;
   }
 }
