@@ -50,7 +50,22 @@ namespace diNo
             ta.ClearBeforeFill = true;
             
             ta.FillBySchuelerId(rpt.diNoDataSet.vwNotenbogen,6253);                        
+            //ta.FillByKlasseId(rpt.diNoDataSet.vwNotenbogen,89);  klappt noch nicht
             rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";
+            // Unterbericht einbinden
+            rpt.reportViewer.LocalReport.SubreportProcessing +=
+                    new SubreportProcessingEventHandler(subrptNotenbogenEventHandler);
+        }
+
+        void subrptNotenbogenEventHandler(object sender, SubreportProcessingEventArgs e)
+        {
+            //e.Parameters verwenden, um Fremdschlüssel abzugreifen (SchülerId)
+            int SchuelerId=0;
+            int.TryParse(e.Parameters[0].Values[0],out SchuelerId);
+            Schueler schueler = new Schueler(SchuelerId);
+
+            var noten = schueler.getNoten.SchuelerNotenDruck();
+            e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
         }
     }
 

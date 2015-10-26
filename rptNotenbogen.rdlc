@@ -49,7 +49,7 @@
         <rd:DefaultName>Textbox13</rd:DefaultName>
         <Left>13.69071cm</Left>
         <Height>0.6cm</Height>
-        <Width>3.44158cm</Width>
+        <Width>3.12407cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -92,7 +92,6 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox11</rd:DefaultName>
-            <Top>0cm</Top>
             <Left>0.09948cm</Left>
             <Height>0.6cm</Height>
             <Width>8.74417cm</Width>
@@ -365,7 +364,7 @@
         <Top>0.94382cm</Top>
         <Left>8.87893cm</Left>
         <Height>4.40697cm</Height>
-        <Width>8.25335cm</Width>
+        <Width>7.93585cm</Width>
         <ZIndex>3</ZIndex>
         <Style>
           <Border>
@@ -373,18 +372,36 @@
           </Border>
         </Style>
       </Rectangle>
+      <Subreport Name="subrptFachSchuelerNoten">
+        <ReportName>subrptFachSchuelerNoten</ReportName>
+        <Parameters>
+          <Parameter Name="SchuelerId">
+            <Value>=First(Fields!Id.Value, "DataSet1")</Value>
+          </Parameter>
+        </Parameters>
+        <Top>5.65891cm</Top>
+        <Left>0.02328cm</Left>
+        <Height>1.85208cm</Height>
+        <Width>16.7915cm</Width>
+        <ZIndex>4</ZIndex>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
+        </Style>
+      </Subreport>
     </ReportItems>
     <Height>4.11458in</Height>
     <Style />
   </Body>
-  <Width>6.74499in</Width>
+  <Width>6.745in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
+    <LeftMargin>1.5cm</LeftMargin>
+    <RightMargin>1.5cm</RightMargin>
+    <TopMargin>1.5cm</TopMargin>
+    <BottomMargin>1.5cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>

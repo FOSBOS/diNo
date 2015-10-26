@@ -170,6 +170,7 @@
     <EmbeddedResource Include="rptNotenbogen.rdlc" />
     <EmbeddedResource Include="rptNotenCheck.rdlc" />
     <EmbeddedResource Include="rptSchuelerliste.rdlc" />
+    <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptKurs.rdlc" />
     <EmbeddedResource Include="UserControlChecks.resx">
       <DependentUpon>UserControlChecks.cs</DependentUpon>
@@ -203,8 +204,10 @@
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.SeminarfachnoteTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.TableAdapterManager+UpdateOrderOption.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.TableAdapterManager.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.vwNotenbogenTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\diNo.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\FachSchuelerNotenDruck.datasource" />
     <None Include="Properties\DataSources\Klasse.datasource" />
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />
     <None Include="Properties\DataSources\Schueler.datasource" />
