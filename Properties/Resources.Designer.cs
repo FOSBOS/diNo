@@ -63,6 +63,26 @@ namespace diNo.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap avatarFrau {
+            get {
+                object obj = ResourceManager.GetObject("avatarFrau", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap avatarMann {
+            get {
+                object obj = ResourceManager.GetObject("avatarMann", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap piktogrammNotenbogen {
             get {
                 object obj = ResourceManager.GetObject("piktogrammNotenbogen", resourceCulture);

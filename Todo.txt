@@ -1,4 +1,4 @@
-todos für diNo
+﻿todos für diNo
 --------------
 
 - FpA, Seminarfach irgendwie integrieren
@@ -10,3 +10,4 @@ todos für diNo
 - Zurückspielen der Noten in die WinSV und Zeugnisdruck (ohne WinSV geht es nicht wg. Statistikmeldungen - zudem beantragen da noch Schüler ihr Lateinzeugnis der neunten Klasse anzuerkennen und lauter so einen Unfug mit dem ich nicht unbedingt was zu tun haben möchte)
 - Felder Eintritt in Jgst. xx am xx aus der xx-Schule
 - Klassenleiter bei Klasse speichern
+- Übertrag der Noten in Geschichte und Sozialkunde aus 11 in 12
