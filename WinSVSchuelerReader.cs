@@ -49,6 +49,9 @@ namespace diNo
     private const int wdh1GrundSpalte = 91;
     private const int wdh2GrundSpalte = 92;
     private const int probezeitBisSpalte = 98;
+    private const int eintrittDatumSpalte = 115;
+    private const int eintrittJgstSpalte = 117;
+    private const int eintrittVonSchulnummerSpalte = 125;
     private const int austrittsdatumSpalte = 122;
     private const int schulischeVorbildungSpalte = 128;
     private const int beruflicheVorbildungSpalte = 129;
