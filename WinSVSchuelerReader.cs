@@ -58,6 +58,9 @@ namespace diNo
     private const int lrsStoerungSpalte = 215;
     private const int lrsSchwaecheSpalte = 216;
     private const int lrsBisDatumSpalte = 254;
+    private const int emailSpalte = 269;
+    private const int notfallrufnummerSpalte = 270;
+
     #endregion
     /// <summary>
     /// Der log4net-Logger.
@@ -136,7 +139,62 @@ namespace diNo
               cleanArray[nachnameEltern2Spalte],
               cleanArray[vornameEltern2Spalte],
               cleanArray[anredeEltern2Spalte],
-              cleanArray[verwandtschaftsbezeichnungEltern2Spalte]
+              cleanArray[verwandtschaftsbezeichnungEltern2Spalte],
+              cleanArray[eintrittJgstSpalte],
+              ParseDate(cleanArray[eintrittDatumSpalte]),
+              !string.IsNullOrEmpty(cleanArray[eintrittVonSchulnummerSpalte]) ? int.Parse(cleanArray[eintrittVonSchulnummerSpalte]) : -1,
+              cleanArray[emailSpalte],
+              cleanArray[notfallrufnummerSpalte]
+              );
+          }
+          else
+          {
+            tableAdapter.Update(
+              cleanArray[nachnameSpalte],
+              cleanArray[vornameSpalte],
+              klasseId,
+              cleanArray[rufnameSpalte],
+              cleanArray[geschlechtSpalte],
+              ParseDate(cleanArray[geburtsdatumSpalte]),
+              cleanArray[geburtsortSpalte],
+              cleanArray[bekenntnisSpalte],
+              cleanArray[anschr1PlzSpalte],
+              cleanArray[anschr1OrtSpalte],
+              cleanArray[anschr1StrasseSpalte],
+              cleanArray[anschr1TelefonSpalte],
+              ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]),
+              cleanArray[fremdsprache2Spalte],
+              cleanArray[reliOderEthikSpalte],
+              cleanArray[wahlpflichtfachSpalte],
+              cleanArray[wahlfach1Spalte],
+              cleanArray[wahlfach2Spalte],
+              cleanArray[wahlfach3Spalte],
+              cleanArray[wahlfach4Spalte],
+              cleanArray[wdh1JahrgangsstufeSpalte],
+              cleanArray[wdh2JahrgangsstufeSpalte],
+              cleanArray[wdh1GrundSpalte],
+              cleanArray[wdh2GrundSpalte],
+              ParseDate(cleanArray[probezeitBisSpalte]),
+              ParseDate(cleanArray[austrittsdatumSpalte]),
+              cleanArray[schulischeVorbildungSpalte],
+              cleanArray[beruflicheVorbildungSpalte],
+              cleanArray[lrsStoerungSpalte] == "1",
+              cleanArray[lrsSchwaecheSpalte] == "1",
+              ParseDate(cleanArray[lrsBisDatumSpalte]),
+              cleanArray[verwandtschaftsbezeichnungEltern1Spalte],
+              cleanArray[nachnameEltern1Spalte],
+              cleanArray[vornameEltern1Spalte],
+              cleanArray[anredeEltern1Spalte],
+              cleanArray[nachnameEltern2Spalte],
+              cleanArray[vornameEltern2Spalte],
+              cleanArray[anredeEltern2Spalte],
+              cleanArray[verwandtschaftsbezeichnungEltern2Spalte],
+              cleanArray[eintrittJgstSpalte],
+              ParseDate(cleanArray[eintrittDatumSpalte]),
+              !string.IsNullOrEmpty(cleanArray[eintrittVonSchulnummerSpalte]) ? int.Parse(cleanArray[eintrittVonSchulnummerSpalte]) : -1,
+              cleanArray[emailSpalte],
+              cleanArray[notfallrufnummerSpalte],
+              int.Parse(cleanArray[schuelerIdSpalte])
               );
           }
         }
@@ -169,7 +227,7 @@ namespace diNo
         }
         else
         {
-          klasseTableAdapter.Insert(klasse);
+          klasseTableAdapter.Insert(klasse, null);
           var neueKlasse = klasseTableAdapter.GetDataByBezeichnung(klasse);
           return neueKlasse[0].Id;
         }

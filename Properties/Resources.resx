@@ -121,7 +121,7 @@
   <data name="piktogrammNotenbogen" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsIAAA7CARUoSoAAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNvyMY98A
+        YQUAAAAJcEhZcwAADsEAAA7BAbiRa+0AAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNvyMY98A
         AALnSURBVEhL7VZLT1NBGOV3sFWI8nAhccFONIiJxIR1VdRE6IuAQhNQBFqgDwGjvbfFEATB+IBQClek
         CQJtoUApLX3R3sa4c6ErMCasJDl25tILhgW2F4kLTjKZk2lyTmfmfN/crBMchp1IFPzQEPg3b7G7dDzo
         KStD8FETmEslWO3q/vfm22t+fB0cQG9xMTDwEsHKm7BXVGBr9tPRm3MTk+DGbVi0TyA8+ApNhYUw5uag
@@ -143,5 +143,8 @@
   </data>
   <data name="avatarMann" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\diNoTray\avatarMann.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ListeAllerSchulenInBayern" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ListeAllerSchulenInBayern.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

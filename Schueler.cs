@@ -1,6 +1,9 @@
 ﻿using BrightIdeasSoftware;
 using diNo.diNoDataSetTableAdapters;
+using diNo.Properties;
 using System;
+using System.Collections.Generic;
+using System.Resources;
 using System.Windows.Forms;
 
 namespace diNo
@@ -212,6 +215,30 @@ namespace diNo
         this.Data.ReligionOderEthik = value;
         this.Data.AcceptChanges();
         new SchuelerTableAdapter().UpdateReliOderEthik(value, this.Id);
+      }
+    }
+
+    public DateTime? EintrittAm
+    {
+      get
+      {
+        return this.Data.IsEintrittAmNull() ? null : (DateTime?)this.Data.EintrittAm;
+      }
+    }
+
+    public string EintrittInJahrgangsstufe
+    {
+      get
+      {
+        return this.Data.EintrittJahrgangsstufe;
+      }
+    }
+
+    public string EintrittAusSchulname
+    {
+      get
+      {
+        return SchulnummernHolder.GetSchulname(this.Data.EintrittAusSchulnummer);
       }
     }
 
@@ -429,6 +456,34 @@ namespace diNo
           schueler.Refresh();
         }
       }
+    }
+  }
+
+  public static class SchulnummernHolder
+  {
+    private static Dictionary<int, string> schulenInBayern = ReadFromResource();
+
+    private static Dictionary<int, string> ReadFromResource()
+    {
+      Dictionary<int, string> result = new Dictionary<int, string>();
+      foreach (string line in Resources.ListeAllerSchulenInBayern.Split('\n'))
+      {
+        string[] array = line.Split(';');
+        int schulnummer = int.Parse(array[0]);
+        string name = array[2].Trim();
+
+        if (!result.ContainsKey(schulnummer))
+        {
+          result.Add(schulnummer, name);
+        }
+      }
+
+      return result;
+    }
+
+    public static string GetSchulname(int schulnummer)
+    {
+      return (schulenInBayern.ContainsKey(schulnummer)) ? schulenInBayern[schulnummer] : "";
     }
   }
 }

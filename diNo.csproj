@@ -198,6 +198,7 @@
     <None Include="diNoDataSet.xss">
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
     </None>
+    <EmbeddedResource Include="ListeAllerSchulenInBayern.csv" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.BerechneteNoteTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.FachTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.FpANotenTableAdapter.datasource" />

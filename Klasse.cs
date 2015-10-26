@@ -65,6 +65,8 @@ namespace diNo
   {
     private diNoDataSet.KlasseRow data;
     private diNoDataSet.SchuelerDataTable schueler;
+    private diNoDataSet.LehrerRow klassenleiter;
+
     public Klasse(int id)
     {
       var rst = new KlasseTableAdapter().GetDataById(id);
@@ -166,6 +168,21 @@ namespace diNo
         throw new InvalidOperationException("Zweig nicht gefunden: " + klasse);
       }
     }
+
+    public diNoDataSet.LehrerRow Klassenleiter
+    {
+      get
+      {
+        if (this.klassenleiter == null)
+        {
+          var lehrer = new LehrerTableAdapter().GetDataById(this.Data.KlassenleiterId);
+          this.klassenleiter = lehrer.Count == 1 ? lehrer[0] : null;
+        }
+
+        return this.klassenleiter;
+      }
+    }
+
 
     public IList<Kurs> Kurse
     {
