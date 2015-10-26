@@ -280,7 +280,7 @@
                     <Style />
                   </TextRun>
                   <TextRun>
-                    <Value> (Unterricht: </Value>
+                    <Value>  (Unterricht: </Value>
                     <Style />
                   </TextRun>
                   <TextRun>
@@ -323,7 +323,7 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>,  (AR </Value>
+                    <Value>   (AR </Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -374,14 +374,9 @@
       </Rectangle>
       <Subreport Name="subrptFachSchuelerNoten">
         <ReportName>subrptFachSchuelerNoten</ReportName>
-        <Parameters>
-          <Parameter Name="SchuelerId">
-            <Value>=First(Fields!Id.Value, "DataSet1")</Value>
-          </Parameter>
-        </Parameters>
         <Top>5.65891cm</Top>
         <Left>0.02328cm</Left>
-        <Height>1.85208cm</Height>
+        <Height>0.79375cm</Height>
         <Width>16.7915cm</Width>
         <ZIndex>4</ZIndex>
         <Style>

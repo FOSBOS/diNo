@@ -42,14 +42,16 @@ namespace diNo
 
     public class ReportNotenbogen : ReportController
     {
+        int schuelerId=0;
         public override void Init()
         {    
-        
+            schuelerId = 8861;
             vwNotenbogenTableAdapter ta =  new vwNotenbogenTableAdapter();
             rpt.BerichtBindingSource.DataMember = "vwNotenbogen";
             ta.ClearBeforeFill = true;
             
-            ta.FillBySchuelerId(rpt.diNoDataSet.vwNotenbogen,6253);                        
+            ta.FillBySchuelerId(rpt.diNoDataSet.vwNotenbogen,schuelerId);   
+                              
             //ta.FillByKlasseId(rpt.diNoDataSet.vwNotenbogen,89);  klappt noch nicht
             rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";
             // Unterbericht einbinden
@@ -60,9 +62,11 @@ namespace diNo
         void subrptNotenbogenEventHandler(object sender, SubreportProcessingEventArgs e)
         {
             //e.Parameters verwenden, um Fremdschlüssel abzugreifen (SchülerId)
-            int SchuelerId=0;
-            int.TryParse(e.Parameters[0].Values[0],out SchuelerId);
-            Schueler schueler = new Schueler(SchuelerId);
+            //warum klappt FK-Übergabe nicht?
+            //log.Debug("im Subreport Notenbogen");
+          
+            //int.TryParse(e.Parameters[0].Values[0],out SchuelerId);
+            Schueler schueler = new Schueler(schuelerId);
 
             var noten = schueler.getNoten.SchuelerNotenDruck();
             e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));

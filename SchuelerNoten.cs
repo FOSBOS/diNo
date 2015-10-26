@@ -214,7 +214,7 @@ namespace diNo
         FachSchuelerNoten schueler;
         
         // Arrays können in Bericht leider nicht gedruckt werden, daher einzeln:
-        public string Fach { get; private set; }        
+        public string fachBez { get; private set; }        
         public string SA11 { get; private set; }
         public string SA12 { get; private set; }
         public string SA21 { get; private set; }
@@ -243,7 +243,7 @@ namespace diNo
         public FachSchuelerNotenDruck(FachSchuelerNoten s)
         {
             schueler = s;
-                        
+            fachBez = s.getFach.Bezeichnung;
             IList<string> n;
             n = s.SA(Halbjahr.Erstes);
             checkLen(n,2);

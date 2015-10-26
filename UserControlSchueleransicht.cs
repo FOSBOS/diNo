@@ -32,6 +32,7 @@ namespace diNo
           nameLabel.Text = schueler.NameVorname;
           textBoxAdresse.Lines = schueler.NameUndAdresse.Split('\n');
           textBoxTelefonnummer.Text = schueler.Data.AnschriftTelefonnummer;
+          textBoxID.Text = schueler.Id.ToString();
           textBoxGeburtsdatum.Text = schueler.Data.IsGeburtsdatumNull() ? "" : schueler.Data.Geburtsdatum.ToString("dd.MM.yyyy");
           textBoxGeburtsort.Text = schueler.Data.Geburtsort;
           textBoxBeruflicheVorbildung.Text = schueler.Data.BeruflicheVorbildung;
@@ -50,6 +51,7 @@ namespace diNo
           nameLabel.Text = "";
           textBoxAdresse.Text = "";
           textBoxTelefonnummer.Text = "";
+          textBoxID.Text = "";
           textBoxGeburtsdatum.Text = "";
           textBoxGeburtsort.Text = "";
           textBoxBeruflicheVorbildung.Text = "";
