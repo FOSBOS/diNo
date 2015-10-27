@@ -15,7 +15,7 @@ namespace diNo
       {
         username = username.Replace("FOSBOS\\", "");
         var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(username);
-        var angemeldeterLehrer = lehrerResult == null ? null : lehrerResult[0];
+        var angemeldeterLehrer = (lehrerResult == null || lehrerResult.Count == 0) ? null : lehrerResult[0];
         if (angemeldeterLehrer == null && nurEigeneKlassen)
         {
           return new List<Klasse>();
