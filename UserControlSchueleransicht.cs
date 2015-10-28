@@ -38,11 +38,16 @@ namespace diNo
           textBoxBeruflicheVorbildung.Text = schueler.Data.BeruflicheVorbildung;
           textBoxSchulischeVorbildung.Text = schueler.Data.SchulischeVorbildung;
           textBoxWiederholungen.Text = schueler.getWiederholungen();
-          textBoxJahrgangsstufe.Text = Faecherkanon.GetJahrgangsstufe(schueler.getKlasse.Jahrgangsstufe);
-          textBoxEintrittAm.Text = ""; // Feld eintritt am muss erst noch in die Datenbank
-          textBoxVorigeSchule.Text = ""; // Feld vorige Schule muss erst noch in die Datenbank
-          textBoxAdresseEltern.Text = schueler.Data.VornameEltern1 + " " + schueler.Data.NachnameEltern1; // Adresse(n) der Eltern müssen noch in die Datenbank
+          textBoxJahrgangsstufe.Text = schueler.EintrittInJahrgangsstufe;
+          textBoxEintrittAm.Text = schueler.EintrittAm == null ? "" : schueler.EintrittAm.Value.ToString("dd.MM.yyyy");
+          textBoxVorigeSchule.Text = schueler.EintrittAusSchulname;
+          string kontaktEltern = schueler.Data.VornameEltern1 + " " + schueler.Data.NachnameEltern1;
+          kontaktEltern += string.IsNullOrEmpty(schueler.Data.VornameEltern2) ? "" : "\n" + schueler.Data.VornameEltern2 + " " + schueler.Data.NachnameEltern2;
+          kontaktEltern += schueler.Data.IsNotfalltelefonnummerNull() ? "" : "\n" + schueler.Data.Notfalltelefonnummer; // da steht oft mehr als nur die Telefonnummer drin
+          textBoxAdresseEltern.Lines = kontaktEltern.Split('\n');
           textBoxProbezeit.Text = schueler.Data.IsProbezeitBisNull() ? "" : schueler.Data.ProbezeitBis.ToString("dd.MM.yyyy");
+         // TODO: Warum geht diese Zeile nicht?
+          // textBoxEmail.Text = schueler.Data.IsEmailNull() ? "" : schueler.Data.EMail;
           Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
           pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
         }
@@ -62,6 +67,7 @@ namespace diNo
           textBoxVorigeSchule.Text = "";
           textBoxAdresseEltern.Text = "";
           textBoxProbezeit.Text = "";
+          textBoxEmail.Text = "";
           pictureBoxImage.Image = null;
         }
       }

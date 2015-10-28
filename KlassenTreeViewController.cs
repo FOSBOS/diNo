@@ -11,7 +11,7 @@ namespace diNo
       string username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
 
       // wenn die Software in der Schule läuft, enthalten die Nutzer den Domänennamen
-      if (nurEigeneKlassen && username.Contains("FOSBOS"))
+      if (nurEigeneKlassen && username.Contains("FOSBOS") && !username.Equals("FOSBOS\\Administrator"))
       {
         username = username.Replace("FOSBOS\\", "");
         var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(username);
