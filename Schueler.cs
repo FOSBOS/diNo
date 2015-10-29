@@ -396,10 +396,11 @@ namespace diNo
       foreach (var kurs in schueler.Kurse)
       {
         MeldeAb(schueler, new Kurs(kurs));
-        new SchuelerTableAdapter().UpdateManyThings(schueler.Data.KlasseId, schueler.Data.Fremdsprache2, schueler.Data.ReligionOderEthik, when, schueler.Data.LRSStoerung, schueler.Data.LRSSchwaeche, schueler.Id);
-        schueler.kurse = null;
-        schueler.Data.Austrittsdatum = when;
       }
+
+      new SchuelerTableAdapter().UpdateManyThings(schueler.Data.KlasseId, schueler.Data.Fremdsprache2, schueler.Data.ReligionOderEthik, when, schueler.Data.LRSStoerung, schueler.Data.LRSSchwaeche, schueler.Id);
+      schueler.kurse = null;
+      schueler.Data.Austrittsdatum = when;
     }
 
     /// <summary>
