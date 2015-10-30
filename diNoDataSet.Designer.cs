@@ -5704,6 +5704,18 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnThemaKurz;
             
+            private global::System.Data.DataColumn columnKlassenleiter;
+            
+            private global::System.Data.DataColumn columnEintrittJahrgangsstufe;
+            
+            private global::System.Data.DataColumn columnEintrittAm;
+            
+            private global::System.Data.DataColumn columnEintrittAusSchulnummer;
+            
+            private global::System.Data.DataColumn columnEmail;
+            
+            private global::System.Data.DataColumn columnNotfalltelefonnummer;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public vwNotenbogenDataTable() {
@@ -6091,6 +6103,54 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn KlassenleiterColumn {
+                get {
+                    return this.columnKlassenleiter;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EintrittJahrgangsstufeColumn {
+                get {
+                    return this.columnEintrittJahrgangsstufe;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EintrittAmColumn {
+                get {
+                    return this.columnEintrittAm;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EintrittAusSchulnummerColumn {
+                get {
+                    return this.columnEintrittAusSchulnummer;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EmailColumn {
+                get {
+                    return this.columnEmail;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NotfalltelefonnummerColumn {
+                get {
+                    return this.columnNotfalltelefonnummer;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -6170,7 +6230,13 @@ namespace diNo {
                         string VerwandtschaftsbezeichnungEltern2, 
                         int Gesamtnote, 
                         string ThemaLang, 
-                        string ThemaKurz) {
+                        string ThemaKurz, 
+                        string Klassenleiter, 
+                        string EintrittJahrgangsstufe, 
+                        System.DateTime EintrittAm, 
+                        int EintrittAusSchulnummer, 
+                        string Email, 
+                        string Notfalltelefonnummer) {
                 vwNotenbogenRow rowvwNotenbogenRow = ((vwNotenbogenRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Bezeichnung,
@@ -6216,7 +6282,13 @@ namespace diNo {
                         VerwandtschaftsbezeichnungEltern2,
                         Gesamtnote,
                         ThemaLang,
-                        ThemaKurz};
+                        ThemaKurz,
+                        Klassenleiter,
+                        EintrittJahrgangsstufe,
+                        EintrittAm,
+                        EintrittAusSchulnummer,
+                        Email,
+                        Notfalltelefonnummer};
                 rowvwNotenbogenRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowvwNotenbogenRow);
                 return rowvwNotenbogenRow;
@@ -6290,6 +6362,12 @@ namespace diNo {
                 this.columnGesamtnote = base.Columns["Gesamtnote"];
                 this.columnThemaLang = base.Columns["ThemaLang"];
                 this.columnThemaKurz = base.Columns["ThemaKurz"];
+                this.columnKlassenleiter = base.Columns["Klassenleiter"];
+                this.columnEintrittJahrgangsstufe = base.Columns["EintrittJahrgangsstufe"];
+                this.columnEintrittAm = base.Columns["EintrittAm"];
+                this.columnEintrittAusSchulnummer = base.Columns["EintrittAusSchulnummer"];
+                this.columnEmail = base.Columns["Email"];
+                this.columnNotfalltelefonnummer = base.Columns["Notfalltelefonnummer"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6383,6 +6461,18 @@ namespace diNo {
                 base.Columns.Add(this.columnThemaLang);
                 this.columnThemaKurz = new global::System.Data.DataColumn("ThemaKurz", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnThemaKurz);
+                this.columnKlassenleiter = new global::System.Data.DataColumn("Klassenleiter", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnKlassenleiter);
+                this.columnEintrittJahrgangsstufe = new global::System.Data.DataColumn("EintrittJahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEintrittJahrgangsstufe);
+                this.columnEintrittAm = new global::System.Data.DataColumn("EintrittAm", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEintrittAm);
+                this.columnEintrittAusSchulnummer = new global::System.Data.DataColumn("EintrittAusSchulnummer", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEintrittAusSchulnummer);
+                this.columnEmail = new global::System.Data.DataColumn("Email", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmail);
+                this.columnNotfalltelefonnummer = new global::System.Data.DataColumn("Notfalltelefonnummer", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNotfalltelefonnummer);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnBezeichnung.AllowDBNull = false;
@@ -6424,8 +6514,14 @@ namespace diNo {
                 this.columnVornameEltern2.MaxLength = 50;
                 this.columnAnredeEltern2.MaxLength = 10;
                 this.columnVerwandtschaftsbezeichnungEltern2.MaxLength = 10;
+                this.columnGesamtnote.AllowDBNull = false;
                 this.columnThemaLang.MaxLength = 1024;
                 this.columnThemaKurz.MaxLength = 117;
+                this.columnKlassenleiter.AllowDBNull = false;
+                this.columnKlassenleiter.MaxLength = 256;
+                this.columnEintrittJahrgangsstufe.MaxLength = 10;
+                this.columnEmail.MaxLength = 256;
+                this.columnNotfalltelefonnummer.MaxLength = 256;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9862,12 +9958,7 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int Gesamtnote {
                 get {
-                    try {
-                        return ((int)(this[this.tablevwNotenbogen.GesamtnoteColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Gesamtnote in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
+                    return ((int)(this[this.tablevwNotenbogen.GesamtnoteColumn]));
                 }
                 set {
                     this[this.tablevwNotenbogen.GesamtnoteColumn] = value;
@@ -9903,6 +9994,97 @@ namespace diNo {
                 }
                 set {
                     this[this.tablevwNotenbogen.ThemaKurzColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Klassenleiter {
+                get {
+                    return ((string)(this[this.tablevwNotenbogen.KlassenleiterColumn]));
+                }
+                set {
+                    this[this.tablevwNotenbogen.KlassenleiterColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string EintrittJahrgangsstufe {
+                get {
+                    try {
+                        return ((string)(this[this.tablevwNotenbogen.EintrittJahrgangsstufeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittJahrgangsstufe in Tabelle vwNotenbogen ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevwNotenbogen.EintrittJahrgangsstufeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime EintrittAm {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tablevwNotenbogen.EintrittAmColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittAm in Tabelle vwNotenbogen ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevwNotenbogen.EintrittAmColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int EintrittAusSchulnummer {
+                get {
+                    try {
+                        return ((int)(this[this.tablevwNotenbogen.EintrittAusSchulnummerColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittAusSchulnummer in Tabelle vwNotenbogen ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevwNotenbogen.EintrittAusSchulnummerColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Email {
+                get {
+                    try {
+                        return ((string)(this[this.tablevwNotenbogen.EmailColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Email in Tabelle vwNotenbogen ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevwNotenbogen.EmailColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Notfalltelefonnummer {
+                get {
+                    try {
+                        return ((string)(this[this.tablevwNotenbogen.NotfalltelefonnummerColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Notfalltelefonnummer in Tabelle vwNotenbogen ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevwNotenbogen.NotfalltelefonnummerColumn] = value;
                 }
             }
             
@@ -10340,18 +10522,6 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsGesamtnoteNull() {
-                return this.IsNull(this.tablevwNotenbogen.GesamtnoteColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetGesamtnoteNull() {
-                this[this.tablevwNotenbogen.GesamtnoteColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsThemaLangNull() {
                 return this.IsNull(this.tablevwNotenbogen.ThemaLangColumn);
             }
@@ -10372,6 +10542,66 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetThemaKurzNull() {
                 this[this.tablevwNotenbogen.ThemaKurzColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsEintrittJahrgangsstufeNull() {
+                return this.IsNull(this.tablevwNotenbogen.EintrittJahrgangsstufeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetEintrittJahrgangsstufeNull() {
+                this[this.tablevwNotenbogen.EintrittJahrgangsstufeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsEintrittAmNull() {
+                return this.IsNull(this.tablevwNotenbogen.EintrittAmColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetEintrittAmNull() {
+                this[this.tablevwNotenbogen.EintrittAmColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsEintrittAusSchulnummerNull() {
+                return this.IsNull(this.tablevwNotenbogen.EintrittAusSchulnummerColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetEintrittAusSchulnummerNull() {
+                this[this.tablevwNotenbogen.EintrittAusSchulnummerColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsEmailNull() {
+                return this.IsNull(this.tablevwNotenbogen.EmailColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetEmailNull() {
+                this[this.tablevwNotenbogen.EmailColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNotfalltelefonnummerNull() {
+                return this.IsNull(this.tablevwNotenbogen.NotfalltelefonnummerColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNotfalltelefonnummerNull() {
+                this[this.tablevwNotenbogen.NotfalltelefonnummerColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -17795,6 +18025,12 @@ WHERE        (KursId = @KursId) AND (SchuelerId = @SchuelerId) AND (IstHistorisc
             tableMapping.ColumnMappings.Add("Gesamtnote", "Gesamtnote");
             tableMapping.ColumnMappings.Add("ThemaLang", "ThemaLang");
             tableMapping.ColumnMappings.Add("ThemaKurz", "ThemaKurz");
+            tableMapping.ColumnMappings.Add("Klassenleiter", "Klassenleiter");
+            tableMapping.ColumnMappings.Add("EintrittJahrgangsstufe", "EintrittJahrgangsstufe");
+            tableMapping.ColumnMappings.Add("EintrittAm", "EintrittAm");
+            tableMapping.ColumnMappings.Add("EintrittAusSchulnummer", "EintrittAusSchulnummer");
+            tableMapping.ColumnMappings.Add("Email", "Email");
+            tableMapping.ColumnMappings.Add("Notfalltelefonnummer", "Notfalltelefonnummer");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -17817,8 +18053,7 @@ WHERE        (KursId = @KursId) AND (SchuelerId = @SchuelerId) AND (IstHistorisc
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT        vwNotenbogen.*\r\nFROM            vwNotenbogen\r\nWHERE [KlasseId]=@Kla" +
-                "sseId";
+            this._commandCollection[1].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, Bezeichnung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Gesamtnote, Geschlecht, Id, KlasseId, Klassenleiter, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, ThemaKurz, ThemaLang, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM vwNotenbogen WHERE (KlasseId = @KlasseId)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }

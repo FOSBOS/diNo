@@ -593,6 +593,30 @@
           <DataField>ThemaKurz</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Klassenleiter">
+          <DataField>Klassenleiter</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EintrittJahrgangsstufe">
+          <DataField>EintrittJahrgangsstufe</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="EintrittAm">
+          <DataField>EintrittAm</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="EintrittAusSchulnummer">
+          <DataField>EintrittAusSchulnummer</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Email">
+          <DataField>Email</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Notfalltelefonnummer">
+          <DataField>Notfalltelefonnummer</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>diNoDataSet</rd:DataSetName>
