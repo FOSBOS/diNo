@@ -43,9 +43,12 @@ namespace diNo
     public class ReportNotenbogen : ReportController
     {
         int schuelerId=0;
+
+        public ReportNotenbogen(Schueler dataSource) : base(dataSource) {}
+
         public override void Init()
         {    
-            schuelerId = 8861;
+            schuelerId = ((Schueler)bindingDataSource).Id;
             vwNotenbogenTableAdapter ta =  new vwNotenbogenTableAdapter();
             rpt.BerichtBindingSource.DataMember = "vwNotenbogen";
             ta.ClearBeforeFill = true;

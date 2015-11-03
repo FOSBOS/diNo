@@ -9,7 +9,7 @@
               <Width>0.75375cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.03491cm</Width>
+              <Width>0.63803cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.98199cm</Width>
@@ -24,7 +24,7 @@
               <Width>1.12417cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.01833cm</Width>
+              <Width>0.70083cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.44167cm</Width>
@@ -507,7 +507,7 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox4">
+                    <Textbox Name="sL1">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -523,7 +523,6 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox4</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -916,7 +915,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSetFachSchuelerNoten</DataSetName>
         <Height>1.64126cm</Height>
-        <Width>12.11161cm</Width>
+        <Width>11.39724cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>

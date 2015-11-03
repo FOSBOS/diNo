@@ -157,5 +157,10 @@ namespace diNo
     {
       this.Close();
     }
+
+    private void btnDruck_Click(object sender, EventArgs e)
+    {
+        new ReportNotenbogen(schueler);
+    }
   }
 }

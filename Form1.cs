@@ -138,7 +138,7 @@ namespace diNo
             //new ReportSchuelerliste();
             //new ReportLehrerliste();
             //new ReportFachliste();
-            new ReportNotenbogen();
+            new ReportNotenbogen(new Schueler(8861));
         }
 
     private void btnSendMail_Click(object sender, EventArgs e)

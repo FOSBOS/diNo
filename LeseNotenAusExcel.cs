@@ -126,9 +126,9 @@ namespace diNo
         for (Halbjahr hj = Halbjahr.Erstes; hj <= Halbjahr.Zweites; hj++)
         {
           foreach (Notentyp typ in Enum.GetValues(typeof(Notentyp)))
-          //new[] { Notentyp.Schulaufgabe, Notentyp.Ex, Notentyp.EchteMuendliche,
-          //           Notentyp.Fachreferat, Notentyp.Ersatzprüfung, Notentyp.APSchriftlich, Notentyp.APMuendlich })
           {
+            if (typ==Notentyp.Kurzarbeit) continue; // wird unter Ex bearbeitet
+
             string[] zellen = CellConstant.getLNWZelle(typ, hj, i, indexAP);
             foreach (string zelle in zellen)
             {
@@ -137,7 +137,12 @@ namespace diNo
               {
                 Note note = new Note(kurs.Id, sid);
                 note.Halbjahr = hj;
-                note.Typ = typ;
+                // Gewichtung steht bei Ex auf 2, also KA
+                if ((typ==Notentyp.Ex) && (xls.ReadValue(xls.notenbogen,Char.ToString(zelle[0]) + CellConstant.GewichteExen)=="2"))
+                   { note.Typ = Notentyp.Kurzarbeit; }
+                else
+                   { note.Typ = typ; }
+
                 note.Zelle = zelle;
                 note.Punktwert = (byte)p;
                 note.writeToDB();
