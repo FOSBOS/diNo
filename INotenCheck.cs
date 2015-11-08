@@ -296,7 +296,7 @@ namespace diNo
                 anz = fachNoten.getNotenanzahl(Notentyp.Schulaufgabe);
                 if (anz < noetigeAnzahlSchulaufgaben)
                     res.Add(schueler, kurs, 
-                        "Es " + toText(anz) + " SA vorhanden.");
+                        "Es sind nur " + toText(anz) + " SA vorhanden.");
             }
 
             // egal, bei welcher Entscheidung: Es müssen im ersten Halbjahr min. 2 mündliche Noten vorliegen
@@ -311,7 +311,7 @@ namespace diNo
                 if ((kurzarbeitenCount == 0 && muendlicheCount < 2) || muendlicheCount == 0)
                 {
                     res.Add(schueler, kurs,
-                        "Es " + toText(muendlicheCount) + " mündliche Noten vorhanden.");
+                        "Es sind nur " + toText(muendlicheCount) + " mündliche Noten vorhanden.");
                 }
             }
             else if (reason == Zeitpunkt.ErstePA || reason == Zeitpunkt.Jahresende)
@@ -319,19 +319,19 @@ namespace diNo
                 if (kurzarbeitenCount == 1)
                 {
                     res.Add(schueler, kurs,
-                        "Es " + toText(kurzarbeitenCount) + " Kurzarbeit vorhanden.");
+                        "Es ist nur " + toText(kurzarbeitenCount) + " Kurzarbeit vorhanden.");
                 }
                 if ((kurzarbeitenCount == 0 && muendlicheCount < 4) || muendlicheCount < 2)
                 {
                     res.Add(schueler, kurs,
-                        "Es " + toText(muendlicheCount) + " mündliche Noten vorhanden.");
+                        "Es sind nur " + toText(muendlicheCount) + " mündliche Noten vorhanden.");
                 }
             }
 
             // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
             else if (reason == Zeitpunkt.ZweitePA)
             {
-                
+                // TODO: && IstPrüfungsfach
                 if (fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
                 {
                     res.Add(schueler, kurs,"Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
@@ -413,7 +413,7 @@ namespace diNo
 
         if (reason == Zeitpunkt.ErstePA)
         {
-            if (anz6 > 1 || anz5 > 3) res.Add(schueler, null, "Zum Abitur nicht zugelassen: " + m);                
+            if (anz6 > 1 || (anz6 + anz5) > 3) res.Add(schueler, null, "Zum Abitur nicht zugelassen: " + m);                
         }
         else if (reason == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {

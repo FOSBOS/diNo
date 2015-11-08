@@ -39,6 +39,12 @@ namespace diNo
             get { return this.data.Kuerzel; }
         }
 
+        public bool IstSAFach()
+        {
+            return data.IstSAP || (Kuerzel == "TeIn" || Kuerzel == "VWL" || Kuerzel == "B");
+        }
+
+
         // Ermittelt die SA-Wertung für diesen Kurs
         // todo: strings durch Schlüssel ersetzen
         public Schulaufgabenwertung GetSchulaufgabenwertung(Klasse klasse)
