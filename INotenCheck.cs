@@ -277,12 +277,6 @@ namespace diNo
         int anz=0;
         foreach (var fachNoten in noten.alleFaecher)
         {
-            // TODO: Nur für Test am Jahresende, da in manchen Fächern keine Datei vorlag
-            /*            if (noten.Count == 0)
-                        {
-                            continue;
-                        }*/
-
             // TODO: Anzahl SA direkt aus DB lesen!
             Schulaufgabenwertung wertung = fachNoten.getFach.GetSchulaufgabenwertung(schueler.getKlasse);
             Kurs kurs = new Kurs(fachNoten.kursId);
@@ -329,9 +323,8 @@ namespace diNo
             }
 
             // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
-            else if (reason == Zeitpunkt.ZweitePA)
+            else if (reason == Zeitpunkt.ZweitePA && fachNoten.getFach.IstSAPFach())
             {
-                // TODO: && IstPrüfungsfach
                 if (fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
                 {
                     res.Add(schueler, kurs,"Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");

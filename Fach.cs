@@ -44,6 +44,10 @@ namespace diNo
             return data.IstSAP || (Kuerzel == "TeIn" || Kuerzel == "VWL" || Kuerzel == "B");
         }
 
+    public bool IstSAPFach()
+    {
+      return this.data.IstSAP;
+    }
 
         // Ermittelt die SA-Wertung für diesen Kurs
         // todo: strings durch Schlüssel ersetzen
