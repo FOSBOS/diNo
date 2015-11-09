@@ -72,7 +72,7 @@ namespace diNo
             Schueler schueler = new Schueler(schuelerId);
 
             var noten = schueler.getNoten.SchuelerNotenDruck();
-            e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
+            e.DataSources.Add(new ReportDataSource("DataSet1",noten));
         }
     }
 

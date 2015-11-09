@@ -43,7 +43,11 @@ namespace diNo
             IList<FachSchuelerNotenDruck> liste = new List<FachSchuelerNotenDruck>();
             foreach (FachSchuelerNoten f in alleFaecher)
             {
-                liste.Add(new FachSchuelerNotenDruck(f));
+                // für SA-Fächer werden zwei Datensätze erzeugt, immer der sL-Eintrag 
+                if (f.getFach.IstSAFach())
+                    liste.Add(new FachSchuelerNotenDruck(f, true)); // SA
+
+                liste.Add(new FachSchuelerNotenDruck(f, false)); // sonstige Leistungen
             }
             return liste;
         }
@@ -214,6 +218,99 @@ namespace diNo
         FachSchuelerNoten schueler;
         
         // Arrays können in Bericht leider nicht gedruckt werden, daher einzeln:
+        // für SA / sL wird je ein Datensatz erzeugt
+        // JF und DGes wird nur bei sL mitgeschickt
+        public string fachBez { get; private set; }
+        public string Art { get; private set; } // gibt den Text SA oder sL aus
+        public string N11 { get; private set; } 
+        public string N12 { get; private set; } // 2. Note im 1. Hj.
+        public string N13 { get; private set; }
+        public string N14 { get; private set; }
+        public string N15 { get; private set; }
+        public string N16 { get; private set; }
+        public string N21 { get; private set; }
+        public string N22 { get; private set; }
+        public string N23 { get; private set; }
+        public string N24 { get; private set; }
+        public string N25 { get; private set; }
+        public string N26 { get; private set; }
+        public string D1 { get; private set; } // Durchschnitt 1. Hj.
+        public string DGes1 { get; private set; } // Schnitt Gesamt im 1. Hj.
+        public string JF1 { get; private set; }
+        public string D2 { get; private set; }
+        public string DGes2 { get; private set; }
+        public string JF2 { get; private set; }
+        
+        public FachSchuelerNotenDruck(FachSchuelerNoten s, bool evalSA)
+        {
+            schueler = s;
+            fachBez = s.getFach.Bezeichnung;
+
+            var d1 = s.getSchnitt(Halbjahr.Erstes);
+            var d2 = s.getSchnitt(Halbjahr.Zweites);
+
+            IList<string> n1,n2;
+            if (evalSA)
+            {
+                Art = "SA";
+                n1 = s.SA(Halbjahr.Erstes);
+                n2 = s.SA(Halbjahr.Zweites);
+                D1 = String.Format("{0:f2}", d1.SchnittSchulaufgaben);
+                D2 = String.Format("{0:f2}", d2.SchnittSchulaufgaben);                              
+
+            }
+            else
+            {
+                Art = "sL";
+                n1 = s.sonstigeLeistungen(Halbjahr.Erstes);
+                n2 = s.sonstigeLeistungen(Halbjahr.Zweites);
+                D1 = String.Format("{0:f2}", d1.SchnittMuendlich);
+                D2 = String.Format("{0:f2}", d2.SchnittMuendlich);
+                DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
+                JF1 = d1.JahresfortgangGanzzahlig.ToString();
+                DGes2 = String.Format("{0:f2}", d2.JahresfortgangMitKomma);
+                JF2 = d2.JahresfortgangGanzzahlig.ToString();
+            }                      
+            checkLen(n1,6);
+            N11 = put(n1,0);
+            N12 = put(n1,1);
+            N13 = put(n1,2);
+            N14 = put(n1,3);
+            N15 = put(n1,4);
+            N16 = put(n1,5);
+            
+            checkLen(n2,6);
+            N21 = put(n2,0);
+            N22 = put(n2,1);
+            N23 = put(n2,2);
+            N24 = put(n2,3);
+            N25 = put(n2,4);
+            N26 = put(n2,5);
+        }
+
+        private string put(IList<string> n, int index)
+        {
+            if (index < n.Count)
+                return n[index];
+            else
+                return "";
+        }
+
+        private void checkLen(IList<string> n, int maxindex)
+        {
+            if (n.Count>=maxindex)
+            {
+                throw new IndexOutOfRangeException("Notenbogendruck: Zuviele Noten im Fach " + schueler.getFach.Bezeichnung + " bei Schüler " + schueler.schuelerId);            
+            }
+        }
+    }
+    
+    /*
+    public class FachSchuelerNotenDruck
+    {
+        FachSchuelerNoten schueler;
+        
+        // Arrays können in Bericht leider nicht gedruckt werden, daher einzeln:
         public string fachBez { get; private set; }        
         public string SA11 { get; private set; }
         public string SA12 { get; private set; }
@@ -299,8 +396,6 @@ namespace diNo
                 throw new IndexOutOfRangeException("Notenbogendruck: Zuviele Noten im Fach " + schueler.getFach.Bezeichnung + " bei Schüler " + schueler.schuelerId);            
             }
         }
-        
-
     }
-
+    */
 }
