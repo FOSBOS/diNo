@@ -2,35 +2,38 @@
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <Body>
     <ReportItems>
-      <Tablix Name="TablixFachNoten">
+      <Tablix Name="TablixFachSchuelerNoten">
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>0.75375cm</Width>
+              <Width>0.8cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.63803cm</Width>
+              <Width>0.8cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.98199cm</Width>
+              <Width>0.8cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.08783cm</Width>
+              <Width>0.8cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9125cm</Width>
+              <Width>0.8cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.12417cm</Width>
+              <Width>0.8cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.70083cm</Width>
+              <Width>0.8cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.44167cm</Width>
+              <Width>1cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.25646cm</Width>
+              <Width>1cm</Width>
+            </TablixColumn>
+            <TablixColumn>
+              <Width>0.8cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -56,7 +59,6 @@
                       <rd:DefaultName>Textbox9</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -86,7 +88,6 @@
                       <rd:DefaultName>Textbox1</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -112,17 +113,49 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Schnitte</Value>
+                              <Value>S</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox21</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
+                          <Style>Solid</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox2">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Ges</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox2</rd:DefaultName>
+                      <Style>
+                        <Border>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -142,17 +175,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Zeug.</Value>
+                              <Value>Z</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox24</rd:DefaultName>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>Solid</Style>
                         </Border>
                         <PaddingLeft>2pt</PaddingLeft>
@@ -166,7 +200,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.52063cm</Height>
+              <Height>0.5cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -177,7 +211,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>SA</Value>
+                              <Value>=Fields!Art.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -212,7 +246,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!SA11.Value</Value>
+                              <Value>=Fields!N11.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -249,7 +283,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!SA12.Value</Value>
+                              <Value>=Fields!N12.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -286,9 +320,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!N13.Value</Value>
                               <Style>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -323,9 +357,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!N14.Value</Value>
                               <Style>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -360,9 +394,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!N15.Value</Value>
                               <Style>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -397,9 +431,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>=Fields!N16.Value</Value>
                               <Style>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -434,7 +468,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!DSA1.Value</Value>
+                              <Value>=Fields!D1.Value</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                               </Style>
@@ -446,6 +480,43 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>DSA1</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                        <BottomBorder>
+                          <Color>LightGrey</Color>
+                          <Style>Dotted</Style>
+                        </BottomBorder>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="DGes1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!DGes1.Value</Value>
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>DGes1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -502,309 +573,11 @@
                 </TablixCell>
               </TablixCells>
             </TablixRow>
-            <TablixRow>
-              <Height>0.52063cm</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="sL1">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>sL</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>1pt</PaddingLeft>
-                        <PaddingRight>1pt</PaddingRight>
-                        <PaddingTop>1pt</PaddingTop>
-                        <PaddingBottom>1pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="sL11">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!sL11.Value</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>sL11</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>1pt</PaddingLeft>
-                        <PaddingRight>1pt</PaddingRight>
-                        <PaddingTop>1pt</PaddingTop>
-                        <PaddingBottom>1pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="sL12">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!sL12.Value</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>sL12</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>1pt</PaddingLeft>
-                        <PaddingRight>1pt</PaddingRight>
-                        <PaddingTop>1pt</PaddingTop>
-                        <PaddingBottom>1pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="sL13">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!sL13.Value</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>sL13</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>1pt</PaddingLeft>
-                        <PaddingRight>1pt</PaddingRight>
-                        <PaddingTop>1pt</PaddingTop>
-                        <PaddingBottom>1pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="sL14">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!sL14.Value</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>sL14</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>1pt</PaddingLeft>
-                        <PaddingRight>1pt</PaddingRight>
-                        <PaddingTop>1pt</PaddingTop>
-                        <PaddingBottom>1pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="sL15">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!sL15.Value</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>sL15</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>1pt</PaddingLeft>
-                        <PaddingRight>1pt</PaddingRight>
-                        <PaddingTop>1pt</PaddingTop>
-                        <PaddingBottom>1pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="sL16">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!sL16.Value</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>sL16</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>1pt</PaddingLeft>
-                        <PaddingRight>1pt</PaddingRight>
-                        <PaddingTop>1pt</PaddingTop>
-                        <PaddingBottom>1pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="DsL1">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!DsL1.Value</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>DsL1</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>1pt</PaddingLeft>
-                        <PaddingRight>1pt</PaddingRight>
-                        <PaddingTop>1pt</PaddingTop>
-                        <PaddingBottom>1pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="DGes1">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!DGes1.Value</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Center</TextAlign>
-                          </Style>
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>DGes1</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>1pt</PaddingLeft>
-                        <PaddingRight>1pt</PaddingRight>
-                        <PaddingTop>1pt</PaddingTop>
-                        <PaddingBottom>1pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
           </TablixRows>
         </TablixBody>
         <TablixColumnHierarchy>
           <TablixMembers>
+            <TablixMember />
             <TablixMember />
             <TablixMember />
             <TablixMember />
@@ -839,7 +612,6 @@
                     <rd:DefaultName>Textbox10</rd:DefaultName>
                     <Style>
                       <Border>
-                        <Color>LightGrey</Color>
                         <Style>Solid</Style>
                       </Border>
                       <PaddingLeft>2pt</PaddingLeft>
@@ -906,16 +678,15 @@
                   <Group Name="Details" />
                   <TablixMembers>
                     <TablixMember />
-                    <TablixMember />
                   </TablixMembers>
                 </TablixMember>
               </TablixMembers>
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DataSetFachSchuelerNoten</DataSetName>
-        <Height>1.64126cm</Height>
-        <Width>11.39724cm</Width>
+        <DataSetName>DataSet1</DataSetName>
+        <Height>1.1cm</Height>
+        <Width>10.9cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -953,34 +724,30 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetFachSchuelerNoten">
+    <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>diNo</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="Art">
+          <DataField>Art</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="D1">
+          <DataField>D1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="D2">
+          <DataField>D2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="DGes1">
           <DataField>DGes1</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="DGes2">
           <DataField>DGes2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DSA1">
-          <DataField>DSA1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DSA2">
-          <DataField>DSA2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DsL1">
-          <DataField>DsL1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DsL2">
-          <DataField>DsL2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="fachBez">
@@ -995,68 +762,52 @@
           <DataField>JF2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="SA11">
-          <DataField>SA11</DataField>
+        <Field Name="N11">
+          <DataField>N11</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="SA12">
-          <DataField>SA12</DataField>
+        <Field Name="N12">
+          <DataField>N12</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="SA21">
-          <DataField>SA21</DataField>
+        <Field Name="N13">
+          <DataField>N13</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="SA22">
-          <DataField>SA22</DataField>
+        <Field Name="N14">
+          <DataField>N14</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="sL11">
-          <DataField>sL11</DataField>
+        <Field Name="N15">
+          <DataField>N15</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="sL12">
-          <DataField>sL12</DataField>
+        <Field Name="N16">
+          <DataField>N16</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="sL13">
-          <DataField>sL13</DataField>
+        <Field Name="N21">
+          <DataField>N21</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="sL14">
-          <DataField>sL14</DataField>
+        <Field Name="N22">
+          <DataField>N22</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="sL15">
-          <DataField>sL15</DataField>
+        <Field Name="N23">
+          <DataField>N23</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="sL16">
-          <DataField>sL16</DataField>
+        <Field Name="N24">
+          <DataField>N24</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="sL21">
-          <DataField>sL21</DataField>
+        <Field Name="N25">
+          <DataField>N25</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="sL22">
-          <DataField>sL22</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="sL23">
-          <DataField>sL23</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="sL24">
-          <DataField>sL24</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="sL25">
-          <DataField>sL25</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="sL26">
-          <DataField>sL26</DataField>
+        <Field Name="N26">
+          <DataField>N26</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
