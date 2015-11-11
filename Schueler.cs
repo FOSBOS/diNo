@@ -13,11 +13,11 @@ namespace diNo
   /// </summary>
   public class Schueler
   {
-
     private diNoDataSet.SchuelerRow data;   // nimmt SchülerRecordset auf
     private Klasse klasse;                  // Objektverweis zur Klasse dieses Schülers
     private diNoDataSet.KursDataTable kurse; // Recordset-Menge aller Kurse dieses Schülers
     private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
+    private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler
 
     public Schueler(int id)
     {
@@ -49,6 +49,7 @@ namespace diNo
       this.klasse = null;
       this.kurse = null;
       this.noten = null;
+      this.vorkommnisse = null;
     }
 
     /// <summary>
@@ -302,6 +303,29 @@ namespace diNo
         }
 
         return kurse;
+      }
+    }
+
+    public void AddVorkommnis(Vorkommnisart art, DateTime datum, string bemerkung)
+    {
+      new VorkommnisTableAdapter().Insert(datum, bemerkung, this.Id, (int)art);
+      this.vorkommnisse = null; // damit er die neu lädt
+    }
+
+    public IList<Vorkommnis> Vorkommnisse
+    {
+      get
+      {
+        if (this.vorkommnisse == null)
+        {
+          this.vorkommnisse = new List<Vorkommnis>();
+          foreach (var vorkommnis in new VorkommnisTableAdapter().GetDataBySchuelerId(this.Id))
+          {
+            this.vorkommnisse.Add(new Vorkommnis(vorkommnis));
+          }
+        }
+
+        return this.vorkommnisse;
       }
     }
 

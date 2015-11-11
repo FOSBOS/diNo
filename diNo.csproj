@@ -148,6 +148,7 @@
     <Compile Include="UserControlSchueleransicht.Designer.cs">
       <DependentUpon>UserControlSchueleransicht.cs</DependentUpon>
     </Compile>
+    <Compile Include="Vorkommnis.cs" />
     <Compile Include="WinSVSchuelerReader.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
