@@ -240,6 +240,11 @@ namespace diNo
         public string D2 { get; private set; }
         public string DGes2 { get; private set; }
         public string JF2 { get; private set; }
+        public string SAP { get; private set; }
+        public string MAP { get; private set; }
+        public string APG { get; private set; }
+        public string GesZ { get; private set; }
+        public string Z { get; private set; }
         
         public FachSchuelerNotenDruck(FachSchuelerNoten s, bool evalSA)
         {
@@ -257,7 +262,6 @@ namespace diNo
                 n2 = s.SA(Halbjahr.Zweites);
                 D1 = String.Format("{0:f2}", d1.SchnittSchulaufgaben);
                 D2 = String.Format("{0:f2}", d2.SchnittSchulaufgaben);                              
-
             }
             else
             {
@@ -269,7 +273,10 @@ namespace diNo
                 DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
                 JF1 = d1.JahresfortgangGanzzahlig.ToString();
                 DGes2 = String.Format("{0:f2}", d2.JahresfortgangMitKomma);
-                JF2 = d2.JahresfortgangGanzzahlig.ToString();
+                APG = String.Format("{0:f2}",d2.PruefungGesamt);
+                GesZ = String.Format("{0:f2}",d2.SchnittFortgangUndPruefung);                
+                Z = d2.Abschlusszeugnis.ToString();
+
             }                      
             checkLen(n1,6);
             N11 = put(n1,0);
@@ -278,7 +285,7 @@ namespace diNo
             N14 = put(n1,3);
             N15 = put(n1,4);
             N16 = put(n1,5);
-            
+
             checkLen(n2,6);
             N21 = put(n2,0);
             N22 = put(n2,1);
@@ -286,6 +293,9 @@ namespace diNo
             N24 = put(n2,3);
             N25 = put(n2,4);
             N26 = put(n2,5);
+
+            SAP = put(s.getNoten(Halbjahr.Ohne,Notentyp.APSchriftlich),0);
+            MAP = put(s.getNoten(Halbjahr.Ohne,Notentyp.APSchriftlich),0);
         }
 
         private string put(IList<string> n, int index)
@@ -296,6 +306,13 @@ namespace diNo
                 return "";
         }
 
+        private string put(IList<int> n, int index)
+        {
+            if (index < n.Count)
+                return n[index].ToString();
+            else
+                return "";
+        }
         private void checkLen(IList<string> n, int maxindex)
         {
             if (n.Count>=maxindex)
