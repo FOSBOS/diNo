@@ -337,7 +337,7 @@ namespace diNo
         return null;
 
       string v;
-      if (typ == BerechneteNotentyp.APGesamt)
+      if (typ == BerechneteNotentyp.APGesamt || typ == BerechneteNotentyp.EndnoteMitNKS)
         v = ReadValue(AP, zelle);
       else
         v = ReadValue(notenbogen, zelle);

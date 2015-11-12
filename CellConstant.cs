@@ -114,27 +114,26 @@ namespace diNo
             string s=null;
 
             if (hj == Halbjahr.Erstes)
-            {
-                zeile++; // die meisten Noten stehen unten
+            {                
                 switch (typ)
                 {
-                    case BerechneteNotentyp.SchnittSA: s = "M"; break;
-                    case BerechneteNotentyp.Schnittmuendlich: s = "N"; break;
-                    case BerechneteNotentyp.JahresfortgangMitNKS: s = "O"; break;
-                    case BerechneteNotentyp.Jahresfortgang: s = "O"; zeile--; break;
+                    case BerechneteNotentyp.SchnittSA: s = "M"; zeile++; break;
+                    case BerechneteNotentyp.Schnittmuendlich: s = "N"; zeile++; break;
+                    case BerechneteNotentyp.JahresfortgangMitNKS: s = "O"; zeile++;break;
+                    case BerechneteNotentyp.Jahresfortgang: s = "O"; break;
                 }
             }
 
             if (hj == Halbjahr.Zweites)
-            {
-                zeile++;
+            {                
                 switch (typ)
                 {
-                    case BerechneteNotentyp.SchnittSA: s = "Y"; break;
-                    case BerechneteNotentyp.Schnittmuendlich: s = "Z"; break;
-                    case BerechneteNotentyp.JahresfortgangMitNKS: s = "AA"; break;
-                    case BerechneteNotentyp.Jahresfortgang: s = "AA"; zeile--; break;
+                    case BerechneteNotentyp.SchnittSA: s = "Y"; zeile++; break;
+                    case BerechneteNotentyp.Schnittmuendlich: s = "Z";zeile++; break;
+                    case BerechneteNotentyp.JahresfortgangMitNKS: s = "AA"; zeile++; break;
+                    case BerechneteNotentyp.Jahresfortgang: s = "AA"; break;
                     case BerechneteNotentyp.APGesamt: s = "G"; break;
+                    case BerechneteNotentyp.EndnoteMitNKS: s = "H"; break;
                     case BerechneteNotentyp.Abschlusszeugnis: s ="I"; break;
                 }
             }

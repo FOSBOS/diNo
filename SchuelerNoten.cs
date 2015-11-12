@@ -273,10 +273,13 @@ namespace diNo
                 DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
                 JF1 = d1.JahresfortgangGanzzahlig.ToString();
                 DGes2 = String.Format("{0:f2}", d2.JahresfortgangMitKomma);
+                JF2 = d2.JahresfortgangGanzzahlig.ToString();
+
+                SAP = put(s.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich),0);
+                MAP = put(s.getNoten(Halbjahr.Zweites,Notentyp.APMuendlich),0);
                 APG = String.Format("{0:f2}",d2.PruefungGesamt);
                 GesZ = String.Format("{0:f2}",d2.SchnittFortgangUndPruefung);                
                 Z = d2.Abschlusszeugnis.ToString();
-
             }                      
             checkLen(n1,6);
             N11 = put(n1,0);
@@ -294,8 +297,6 @@ namespace diNo
             N25 = put(n2,4);
             N26 = put(n2,5);
 
-            SAP = put(s.getNoten(Halbjahr.Ohne,Notentyp.APSchriftlich),0);
-            MAP = put(s.getNoten(Halbjahr.Ohne,Notentyp.APSchriftlich),0);
         }
 
         private string put(IList<string> n, int index)
@@ -321,98 +322,4 @@ namespace diNo
             }
         }
     }
-    
-    /*
-    public class FachSchuelerNotenDruck
-    {
-        FachSchuelerNoten schueler;
-        
-        // Arrays können in Bericht leider nicht gedruckt werden, daher einzeln:
-        public string fachBez { get; private set; }        
-        public string SA11 { get; private set; }
-        public string SA12 { get; private set; }
-        public string SA21 { get; private set; }
-        public string SA22 { get; private set; }
-        public string sL11 { get; private set; }
-        public string sL12 { get; private set; }
-        public string sL13 { get; private set; }
-        public string sL14 { get; private set; }
-        public string sL15 { get; private set; }
-        public string sL16 { get; private set; }
-        public string sL21 { get; private set; }
-        public string sL22 { get; private set; }
-        public string sL23 { get; private set; }
-        public string sL24 { get; private set; }
-        public string sL25 { get; private set; }
-        public string sL26 { get; private set; }
-        public string DSA1 { get; private set; }
-        public string DsL1 { get; private set; }
-        public string DGes1 { get; private set; }
-        public string JF1 { get; private set; }
-        public string DSA2 { get; private set; }
-        public string DsL2 { get; private set; }
-        public string DGes2 { get; private set; }
-        public string JF2 { get; private set; }
-        
-        public FachSchuelerNotenDruck(FachSchuelerNoten s)
-        {
-            schueler = s;
-            fachBez = s.getFach.Bezeichnung;
-            IList<string> n;
-            n = s.SA(Halbjahr.Erstes);
-            checkLen(n,2);
-            SA11 = put(n,0);
-            SA12 = put(n,1);
-            n = s.SA(Halbjahr.Zweites);
-            checkLen(n,2);
-            SA21 = put(n,0);
-            SA22 = put(n,1);
-
-            n = s.sonstigeLeistungen(Halbjahr.Erstes);
-            checkLen(n,6);
-            sL11 = put(n,0);
-            sL12 = put(n,1);
-            sL13 = put(n,2);
-            sL14 = put(n,3);
-            sL15 = put(n,4);
-            sL16 = put(n,5);
-            n = s.sonstigeLeistungen(Halbjahr.Zweites);
-            checkLen(n,6);
-            sL21 = put(n,0);
-            sL22 = put(n,1);
-            sL23 = put(n,2);
-            sL24 = put(n,3);
-            sL25 = put(n,4);
-            sL26 = put(n,5);
-
-            var d = s.getSchnitt(Halbjahr.Erstes);
-            DSA1 = String.Format("{0:f2}", d.SchnittSchulaufgaben);
-            DsL1 = String.Format("{0:f2}", d.SchnittMuendlich);
-            DGes1 = String.Format("{0:f2}", d.JahresfortgangMitKomma);
-            JF1 = d.JahresfortgangGanzzahlig.ToString();
-
-            d = s.getSchnitt(Halbjahr.Zweites);
-            DSA2 = String.Format("{0:f2}", d.SchnittSchulaufgaben);
-            DsL2 = String.Format("{0:f2}", d.SchnittMuendlich);
-            DGes2 = String.Format("{0:f2}", d.JahresfortgangMitKomma);
-            JF2 = d.JahresfortgangGanzzahlig.ToString();
-        }
-
-        private string put(IList<string> n, int index)
-        {
-            if (index < n.Count)
-                return n[index];
-            else
-                return "";
-        }
-
-        private void checkLen(IList<string> n, int maxindex)
-        {
-            if (n.Count>=maxindex)
-            {
-                throw new IndexOutOfRangeException("Notenbogendruck: Zuviele Noten im Fach " + schueler.getFach.Bezeichnung + " bei Schüler " + schueler.schuelerId);            
-            }
-        }
-    }
-    */
 }
