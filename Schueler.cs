@@ -203,19 +203,33 @@ namespace diNo
 
       set
       {
-        MeldeAb(this, this.Data.ReligionOderEthik);
-        switch (value)
+        MeldeAb(this, this.GetFachKuerzel(this.Data.ReligionOderEthik));
+        if (!string.IsNullOrEmpty(value))
         {
-          case "RK": MeldeAn(this, "K"); break;
-          case "EV": MeldeAn(this, "Ev"); break;
-          case "Eth": MeldeAn(this, "Eth"); break;
-          case "": break;
-          default: throw new InvalidOperationException("ungültiger Wert für ReliOderEthik: "+value);
+          MeldeAn(this, this.GetFachKuerzel(value));
         }
 
         this.Data.ReligionOderEthik = value;
         this.Data.AcceptChanges();
         new SchuelerTableAdapter().UpdateReliOderEthik(value, this.Id);
+      }
+    }
+
+    /// <summary>
+    /// vorliegende Methode wird benötigt, weil aus irgendwelchen Gründen z. B. in der Spalte ReliOderEthik "RK" stehen muss
+    /// das korrekte Fachkürzel (laut Fächerliste) für kath. Religionslehre einfach "K" lautet
+    /// </summary>
+    /// <param name="aKuerzel">Ein Fachkürzel aus der Spalte ReliOderEthik</param>
+    /// <returns>Ein korrektes Fachkürzel für die Datenbank</returns>
+    private string GetFachKuerzel(string aKuerzel)
+    {
+      switch (aKuerzel)
+      {
+        case "RK": return "K";
+        case "EV": return "Ev";
+        case "Eth": return "Eth";
+        case "": return "";
+        default: throw new InvalidOperationException("ungültiger Wert für ReliOderEthik: " + aKuerzel);
       }
     }
 

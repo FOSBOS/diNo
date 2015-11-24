@@ -296,6 +296,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
         case "VWL":
         case "Wl":
         case "Rl":
+        case "Inf": //Informatik für Sozial-13
           schluessel = "M";
           ug = "30";
           og = "44";

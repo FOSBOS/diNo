@@ -8,8 +8,13 @@ Kritisch:
 - FpA, Seminarfach irgendwie integrieren
 - Fehltage integrieren
 - Abschließen eines Notenbogens bei Austritt / Rücktritt (sinnvoller Workflow, um evtl. noch vorhandene Noten einzutreiben etc.)
+	=> simpelste Lösung: Bei Austritt oder Rücktritt wird der Notenbogen ausgedruckt und wie bisher den Lehrern ins Fach gelegt
+	=> Bei Probezeitentscheidungen entfällt dies ja sowieso
 - Aktualisieren der Schülerdaten (Adresse, was noch?)
 - Notenprüfungen (was prüfen wir alles?)
 - Entscheidungen der Konferenz, z. B. über Notenausgleich, Probezeit, Vorrücken auf Probe, Gefährdungsmitteilung, Zulassung zur AP, Gefahr d Abweisung, Zw./Ja/Abi-Zeugnis
+	=> Vorschlag: Jeder Schüler erhält einen Werdegang (1:1-Beziehung), in welchem die ganzen Ankreuzelkästchen des Notenbogens stehen
+	=> Für die komplizierteren Dinge (Zeugnisbemerkungen, Ordnungsmaßnahmen oder Gefährdungsmitteilung) gibt es eine Massnahmentabelle
 - Zurückspielen der Noten in die WinSV und Zeugnisdruck (ohne WinSV geht es nicht wg. Statistikmeldungen - zudem beantragen da noch Schüler ihr Lateinzeugnis der neunten Klasse anzuerkennen und lauter so einen Unfug mit dem ich nicht unbedingt was zu tun haben möchte)
 - Übertrag der Noten von Geschichte und RL,TZ,..? aus 11 in 12
+	=> simpelste Lösung: Export der Zeugnisnoten am Ende des Schuljahres und Anlegen von Dummy-Kursen im neuen Jahr mit Wieder-Import
