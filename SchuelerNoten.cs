@@ -261,7 +261,8 @@ namespace diNo
                 n1 = s.SA(Halbjahr.Erstes);
                 n2 = s.SA(Halbjahr.Zweites);
                 D1 = String.Format("{0:f2}", d1.SchnittSchulaufgaben);
-                D2 = String.Format("{0:f2}", d2.SchnittSchulaufgaben);                              
+                D2 = String.Format("{0:f2}", d2.SchnittSchulaufgaben);
+                DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
             }
             else
             {

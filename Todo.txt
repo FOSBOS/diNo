@@ -1,6 +1,10 @@
 ﻿todos für diNo
 --------------
 
+Kritisch:
+- Exceldatei auslesen, stürzt ab, wenn beim Speichern auf nein geklickt wird.
+
+
 - FpA, Seminarfach irgendwie integrieren
 - Fehltage integrieren
 - Abschließen eines Notenbogens bei Austritt / Rücktritt (sinnvoller Workflow, um evtl. noch vorhandene Noten einzutreiben etc.)
@@ -8,4 +12,4 @@
 - Notenprüfungen (was prüfen wir alles?)
 - Entscheidungen der Konferenz, z. B. über Notenausgleich, Probezeit, Vorrücken auf Probe, Gefährdungsmitteilung, Zulassung zur AP, Gefahr d Abweisung, Zw./Ja/Abi-Zeugnis
 - Zurückspielen der Noten in die WinSV und Zeugnisdruck (ohne WinSV geht es nicht wg. Statistikmeldungen - zudem beantragen da noch Schüler ihr Lateinzeugnis der neunten Klasse anzuerkennen und lauter so einen Unfug mit dem ich nicht unbedingt was zu tun haben möchte)
-- Übertrag der Noten in Geschichte und Sozialkunde aus 11 in 12
+- Übertrag der Noten von Geschichte und RL,TZ,..? aus 11 in 12
