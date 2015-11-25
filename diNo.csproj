@@ -156,6 +156,12 @@
     <Compile Include="UserControlSchueleransicht.Designer.cs">
       <DependentUpon>UserControlSchueleransicht.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControlVorkommnisse.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlVorkommnisse.Designer.cs">
+      <DependentUpon>UserControlVorkommnisse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vorkommnis.cs" />
     <Compile Include="WinSVSchuelerReader.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -192,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlSchueleransicht.resx">
       <DependentUpon>UserControlSchueleransicht.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControlVorkommnisse.resx">
+      <DependentUpon>UserControlVorkommnisse.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

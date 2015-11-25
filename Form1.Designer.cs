@@ -41,6 +41,8 @@
       this.textBoxStatusMessage = new System.Windows.Forms.TextBox();
       this.btnReport = new System.Windows.Forms.Button();
       this.btnSendMail = new System.Windows.Forms.Button();
+      this.button2 = new System.Windows.Forms.Button();
+      this.userControlVorkommnisse1 = new diNo.UserControlVorkommnisse();
       this.SuspendLayout();
       // 
       // btnReadLehrer
@@ -154,9 +156,9 @@
       this.textBoxStatusMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.textBoxStatusMessage.CausesValidation = false;
       this.textBoxStatusMessage.Enabled = false;
-      this.textBoxStatusMessage.Location = new System.Drawing.Point(55, 251);
+      this.textBoxStatusMessage.Location = new System.Drawing.Point(55, 533);
       this.textBoxStatusMessage.Name = "textBoxStatusMessage";
-      this.textBoxStatusMessage.Size = new System.Drawing.Size(659, 20);
+      this.textBoxStatusMessage.Size = new System.Drawing.Size(1220, 20);
       this.textBoxStatusMessage.TabIndex = 12;
       this.textBoxStatusMessage.TabStop = false;
       // 
@@ -180,11 +182,32 @@
       this.btnSendMail.UseVisualStyleBackColor = true;
       this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
       // 
+      // button2
+      // 
+      this.button2.Location = new System.Drawing.Point(440, 41);
+      this.button2.Name = "button2";
+      this.button2.Size = new System.Drawing.Size(109, 23);
+      this.button2.TabIndex = 15;
+      this.button2.Text = "Vorkommnisansicht";
+      this.button2.UseVisualStyleBackColor = true;
+      this.button2.Click += new System.EventHandler(this.button2_Click);
+      // 
+      // userControlVorkommnisse1
+      // 
+      this.userControlVorkommnisse1.Location = new System.Drawing.Point(564, 12);
+      this.userControlVorkommnisse1.Name = "userControlVorkommnisse1";
+      this.userControlVorkommnisse1.Schueler = null;
+      this.userControlVorkommnisse1.Size = new System.Drawing.Size(710, 493);
+      this.userControlVorkommnisse1.TabIndex = 16;
+      this.userControlVorkommnisse1.Visible = false;
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(726, 276);
+      this.ClientSize = new System.Drawing.Size(1287, 558);
+      this.Controls.Add(this.userControlVorkommnisse1);
+      this.Controls.Add(this.button2);
       this.Controls.Add(this.btnSendMail);
       this.Controls.Add(this.btnReport);
       this.Controls.Add(this.textBoxStatusMessage);
@@ -220,6 +243,8 @@
     private System.Windows.Forms.TextBox textBoxStatusMessage;
         private System.Windows.Forms.Button btnReport;
     private System.Windows.Forms.Button btnSendMail;
+    private System.Windows.Forms.Button button2;
+    private UserControlVorkommnisse userControlVorkommnisse1;
   }
 }
 

@@ -49,6 +49,7 @@ namespace diNo
 
   public enum Vorkommnisart
   {
+    NotSet = 0,
     ProbezeitNichtBestanden = 1,
     VorrueckenAufProbe = 2,
     Notenausgleich = 3,

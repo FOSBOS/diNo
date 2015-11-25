@@ -145,5 +145,11 @@ namespace diNo
     {
       new SendExcelMails(this.notenReader_OnStatusChange);
     }
+
+    private void button2_Click(object sender, EventArgs e)
+    {
+      this.userControlVorkommnisse1.Visible = true;
+      this.userControlVorkommnisse1.Schueler = new Schueler(8861);
+    }
   }
 }
