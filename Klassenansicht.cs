@@ -19,22 +19,9 @@ namespace diNo
       var schueler = treeListView1.SelectedObject as Schueler;
       if (schueler != null)
       {
-        this.btnNotenbogenZeigen.Enabled = true;
         this.userControlSchueleransicht1.Schueler = schueler;
-      }
-      else
-      {
-        this.btnNotenbogenZeigen.Enabled = false;
-      }
-    }
-
-    private void btnNotenbogenZeigen_Click(object sender, EventArgs e)
-    {
-      var schueler = treeListView1.SelectedObject as Schueler;
-      if (schueler != null)
-      {
-        Notenbogen bogen = new Notenbogen(schueler.Id);
-        bogen.Show();
+        this.userControlVorkommnisse1.Schueler = schueler;
+        this.notenbogen1.Schueler = schueler;
       }
     }
 

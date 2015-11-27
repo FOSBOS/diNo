@@ -7,85 +7,110 @@ using System.Windows.Forms;
 
 namespace diNo
 {
-  public partial class Notenbogen : Form
+  public partial class Notenbogen : UserControl
   {
     private Schueler schueler;
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
     /// <summary>
-    /// Konstruktor.
+    /// leerer Konstruktor ist Pflicht für UserControls
     /// </summary>
-    /// <param name="schuelerId">Die Id des anzuzeigenden Schülers.</param>
-    public Notenbogen(int schuelerId)
+    public Notenbogen()
     {
-        log.Debug("Öffne Notenbogen SchülerId=" + schuelerId);
-        InitializeComponent();
+      InitializeComponent();
+    }
 
-        schueler = new Schueler(schuelerId);
-        nameTextBox.Text = schueler.NameVorname;
-        klasseTextBox.Text = schueler.getKlasse.Data.Bezeichnung;
-        textBoxAdresse.Text = schueler.Data.AnschriftStrasse + "\n" + schueler.Data.AnschriftPLZ + " " + schueler.Data.AnschriftOrt + "\n Tel.:" + schueler.Data.AnschriftTelefonnummer;
+    /// <summary>
+    /// Der anzuzeigende Schüler.
+    /// </summary>
+    public Schueler Schueler
+    {
+      get
+      {
+        return this.schueler;
+      }
+      set
+      {
+        this.schueler = value;
+        this.Init();
+      }
+    }
 
-        SchuelerNoten noten = schueler.getNoten;
+    /// <summary>
+    /// Füllt die Felder mit den Daten des Schülers.
+    /// </summary>
+    public void Init()
+    {
+      if (this.schueler == null)
+      {
+        return;
+      }
 
-        // Row[lineCount] für schriftliche und Row[lineCount+1] für mündliche Noten
-        int lineCount = 0;        
-        foreach(var kursNoten in noten.alleFaecher)
+      log.Debug("Öffne Notenbogen SchülerId=" + this.schueler.Id);
+      nameLabel.Text = schueler.NameVorname;
+      klasseTextBox.Text = schueler.getKlasse.Data.Bezeichnung;
+      textBoxAdresse.Text = schueler.Data.AnschriftStrasse + "\n" + schueler.Data.AnschriftPLZ + " " + schueler.Data.AnschriftOrt + "\n Tel.:" + schueler.Data.AnschriftTelefonnummer;
+
+      SchuelerNoten noten = schueler.getNoten;
+
+      // Row[lineCount] für schriftliche und Row[lineCount+1] für mündliche Noten
+      int lineCount = 0;
+      foreach (var kursNoten in noten.alleFaecher)
+      {
+        dataGridNoten.Rows.Add(2);
+        dataGridNoten.Rows[lineCount + 1].Height += 2;
+        dataGridNoten.Rows[lineCount + 1].DividerHeight = 2;
+        dataGridNoten.Rows[lineCount].Cells[0].Value = kursNoten.getFach.Bezeichnung;
+
+        InsertNoten(1, lineCount, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Schulaufgabe));
+        InsertNoten(1, lineCount + 1, kursNoten.sonstigeLeistungen(Halbjahr.Erstes));
+
+        InsertNoten(10, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Schulaufgabe));
+        InsertNoten(10, lineCount + 1, kursNoten.sonstigeLeistungen(Halbjahr.Zweites));
+
+        InsertSchnitt(8, lineCount, kursNoten.getSchnitt(Halbjahr.Erstes));
+        BerechneteNote zeugnis = kursNoten.getSchnitt(Halbjahr.Zweites);
+        InsertSchnitt(18, lineCount, zeugnis);
+
+        InsertNoten(20, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich));
+        InsertNoten(20, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich));
+
+        if (zeugnis != null)
         {
-            dataGridNoten.Rows.Add(2);
-            dataGridNoten.Rows[lineCount + 1].Height += 2;
-            dataGridNoten.Rows[lineCount + 1].DividerHeight = 2;
-            dataGridNoten.Rows[lineCount].Cells[0].Value = kursNoten.getFach.Bezeichnung;
-
-            InsertNoten(1, lineCount, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Schulaufgabe));
-            InsertNoten(1, lineCount+1, kursNoten.sonstigeLeistungen(Halbjahr.Erstes));
-
-            InsertNoten(10, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Schulaufgabe));
-            InsertNoten(10, lineCount+1, kursNoten.sonstigeLeistungen(Halbjahr.Zweites));
-
-            InsertSchnitt(8,lineCount,kursNoten.getSchnitt(Halbjahr.Erstes));
-            BerechneteNote zeugnis = kursNoten.getSchnitt(Halbjahr.Zweites);
-            InsertSchnitt(18,lineCount, zeugnis);
-
-            InsertNoten(20, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich));
-            InsertNoten(20, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich));
-
-            if (zeugnis != null)
-            {
-                if (zeugnis.PruefungGesamt != null)
-                {
-                    dataGridNoten.Rows[lineCount].Cells[21].Value = zeugnis.PruefungGesamt;
-                    dataGridNoten.Rows[lineCount].Cells[22].Value = zeugnis.SchnittFortgangUndPruefung;
-                    dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.Abschlusszeugnis;
-                }
-                else
-                    dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.JahresfortgangGanzzahlig;
-            }
-            lineCount = lineCount + 2;
-        }
-
-        if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
-        {
-          FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
-          var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
-          if (fpANoten.Count == 1)
+          if (zeugnis.PruefungGesamt != null)
           {
-            textBoxFpABemerkung.Text = fpANoten[0].Bemerkung;
-            listBoxFpA.SelectedIndex = fpANoten[0].Note;
+            dataGridNoten.Rows[lineCount].Cells[21].Value = zeugnis.PruefungGesamt;
+            dataGridNoten.Rows[lineCount].Cells[22].Value = zeugnis.SchnittFortgangUndPruefung;
+            dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.Abschlusszeugnis;
           }
+          else
+            dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.JahresfortgangGanzzahlig;
         }
+        lineCount = lineCount + 2;
+      }
 
-        if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
+      {
+        FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
+        var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
+        if (fpANoten.Count == 1)
         {
-          SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
-          var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
-          if (seminarfachnoten.Count == 1)
-          {
-            numericUpDownSeminarfach.Value = seminarfachnoten[0].Gesamtnote;
-            textBoxSeminarfachthemaKurz.Text = seminarfachnoten[0].ThemaKurz;
-            textBoxSeminarfachthemaLang.Text = seminarfachnoten[0].ThemaLang;
-          }
-        }    
+          textBoxFpABemerkung.Text = fpANoten[0].Bemerkung;
+          listBoxFpA.SelectedIndex = fpANoten[0].Note;
+        }
+      }
+
+      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      {
+        SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
+        var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
+        if (seminarfachnoten.Count == 1)
+        {
+          numericUpDownSeminarfach.Value = seminarfachnoten[0].Gesamtnote;
+          textBoxSeminarfachthemaKurz.Text = seminarfachnoten[0].ThemaKurz;
+          textBoxSeminarfachthemaLang.Text = seminarfachnoten[0].ThemaLang;
+        }
+      }
     }
 
     // schreibt eine Notenliste (z.B. alle SA in Englisch aus dem 1. Hj. ins Grid), bez wird als Text an jede Note angefügt    
@@ -151,11 +176,6 @@ namespace diNo
         }
       }
       
-    }
-
-    private void btnSchliessen_Click(object sender, EventArgs e)
-    {
-      this.Close();
     }
 
     private void btnDruck_Click(object sender, EventArgs e)
