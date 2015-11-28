@@ -114,7 +114,7 @@
     <Compile Include="LeseNotenAusExcel.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Notenbogen.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Notenbogen.Designer.cs">
       <DependentUpon>Notenbogen.cs</DependentUpon>
@@ -162,8 +162,15 @@
     <Compile Include="UserControlVorkommnisse.Designer.cs">
       <DependentUpon>UserControlVorkommnisse.cs</DependentUpon>
     </Compile>
+    <Compile Include="Brief.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Brief.Designer.cs">
+      <DependentUpon>Brief.cs</DependentUpon>
+    </Compile>
     <Compile Include="Vorkommnis.cs" />
     <Compile Include="WinSVSchuelerReader.cs" />
+    <Compile Include="Zugriff.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -182,6 +189,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Notenbogen.rdlc" />
+    <EmbeddedResource Include="rptBrief.rdlc" />
     <EmbeddedResource Include="rptKlassenliste.rdlc" />
     <EmbeddedResource Include="rptFachliste.rdlc" />
     <EmbeddedResource Include="ReportForm.resx">
@@ -202,6 +210,9 @@
     <EmbeddedResource Include="UserControlVorkommnisse.resx">
       <DependentUpon>UserControlVorkommnisse.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Brief.resx">
+      <DependentUpon>Brief.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -217,6 +228,7 @@
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
     </None>
     <EmbeddedResource Include="ListeAllerSchulenInBayern.csv" />
+    <None Include="Properties\DataSources\BriefDaten.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.BerechneteNoteTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.FachTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.FpANotenTableAdapter.datasource" />

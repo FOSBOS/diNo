@@ -103,6 +103,24 @@ namespace diNo
 
     }
 
+    public class ReportBrief : ReportController
+    {
+        public ReportBrief(BriefDaten dataSource) : base(dataSource) {}
+        public override void Init()
+        {
+            /*
+            SchuelerTableAdapter BerichtTableAdapter;
+            rpt.BerichtBindingSource.DataMember = "Schueler";
+            BerichtTableAdapter = new SchuelerTableAdapter();
+            BerichtTableAdapter.ClearBeforeFill = true;
+            BerichtTableAdapter.FillByKlasse(rpt.diNoDataSet.Schueler, 89);
+            */
+            rpt.BerichtBindingSource.DataSource = (BriefDaten)bindingDataSource;
+            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptBrief.rdlc";
+        }
+
+    }
+
     public class ReportLehrerliste : ReportController
     {
         public override void Init()

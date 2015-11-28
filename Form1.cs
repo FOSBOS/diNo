@@ -151,5 +151,11 @@ namespace diNo
       this.userControlVorkommnisse1.Visible = true;
       this.userControlVorkommnisse1.Schueler = new Schueler(8861);
     }
-  }
+
+        private void btnVerweis_Click(object sender, EventArgs e)
+        {
+            Brief vw = new Brief(new Schueler(8861));
+            vw.ShowDialog();
+        }
+    }
 }
