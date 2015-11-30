@@ -47,9 +47,9 @@ namespace diNo
       }
 
       log.Debug("Öffne Notenbogen SchülerId=" + this.schueler.Id);
-      nameLabel.Text = schueler.NameVorname;
-      klasseTextBox.Text = schueler.getKlasse.Data.Bezeichnung;
-      textBoxAdresse.Text = schueler.Data.AnschriftStrasse + "\n" + schueler.Data.AnschriftPLZ + " " + schueler.Data.AnschriftOrt + "\n Tel.:" + schueler.Data.AnschriftTelefonnummer;
+      //nameLabel.Text = schueler.NameVorname;
+      //klasseTextBox.Text = schueler.getKlasse.Data.Bezeichnung;
+      //textBoxAdresse.Text = schueler.Data.AnschriftStrasse + "\n" + schueler.Data.AnschriftPLZ + " " + schueler.Data.AnschriftOrt + "\n Tel.:" + schueler.Data.AnschriftTelefonnummer;
 
       SchuelerNoten noten = schueler.getNoten;
 

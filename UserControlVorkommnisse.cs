@@ -31,7 +31,7 @@ namespace diNo
       set
       {
         this.schueler = value;
-        this.lblSchuelername.Text = (value == null) ? "" : this.schueler.NameVorname;
+        //this.lblSchuelername.Text = (value == null) ? "" : this.schueler.NameVorname;
         if (value != null)
         {
           this.objectListViewVorkommnisse.SetObjects(this.schueler.Vorkommnisse);

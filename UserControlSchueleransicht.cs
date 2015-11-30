@@ -29,7 +29,7 @@ namespace diNo
         this.schueler = value;
         if (this.schueler != null)
         {
-          nameLabel.Text = schueler.NameVorname;
+          //nameLabel.Text = schueler.NameVorname;
           textBoxAdresse.Lines = schueler.NameUndAdresse.Split('\n');
           textBoxTelefonnummer.Text = schueler.Data.AnschriftTelefonnummer;
           textBoxID.Text = schueler.Id.ToString();
@@ -48,12 +48,12 @@ namespace diNo
           textBoxProbezeit.Text = schueler.Data.IsProbezeitBisNull() ? "" : schueler.Data.ProbezeitBis.ToString("dd.MM.yyyy");
          // TODO: Warum geht diese Zeile nicht?
           // textBoxEmail.Text = schueler.Data.IsEmailNull() ? "" : schueler.Data.EMail;
-          Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
-          pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
+          //Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
+          //pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
         }
         else
         {
-          nameLabel.Text = "";
+          //nameLabel.Text = "";
           textBoxAdresse.Text = "";
           textBoxTelefonnummer.Text = "";
           textBoxID.Text = "";
@@ -68,7 +68,7 @@ namespace diNo
           textBoxAdresseEltern.Text = "";
           textBoxProbezeit.Text = "";
           textBoxEmail.Text = "";
-          pictureBoxImage.Image = null;
+          //pictureBoxImage.Image = null;
         }
       }
     }

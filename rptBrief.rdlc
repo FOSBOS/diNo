@@ -364,6 +364,9 @@
         <Height>0cm</Height>
         <Width>8.16527cm</Width>
         <ZIndex>10</ZIndex>
+        <Visibility>
+          <Hidden>true</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>Dotted</Style>
@@ -400,12 +403,15 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Line Name="Line3">
+      <Line Name="LineTraut">
         <Top>12.44134cm</Top>
         <Left>8.57969cm</Left>
         <Height>0cm</Height>
         <Width>8.16527cm</Width>
         <ZIndex>12</ZIndex>
+        <Visibility>
+          <Hidden>true</Hidden>
+        </Visibility>
         <Style>
           <Border>
             <Style>Dotted</Style>
