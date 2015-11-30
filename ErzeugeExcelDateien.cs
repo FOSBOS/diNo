@@ -276,8 +276,6 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
       xls.WriteValue(xls.notenbogen, CellConstant.Klassenbezeichnung, klassen.Aggregate((x, y) => x + ", " + y));
     }
 
-
-
     /// <summary>
     /// Trägt die korrekten Einstellungen für den Notenschlüssel eines Faches als Vorbelegung ins Excel-Sheet ein.
     /// </summary>

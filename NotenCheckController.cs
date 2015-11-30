@@ -41,7 +41,18 @@ namespace diNo
             return res;
         }
 
-        public NotenCheckResults CheckKlasse(Klasse klasse)
+    public NotenCheckResults CheckKlassen(IList<Klasse> klassen)
+    {
+      IList<INotenCheck> notwendigeNotenchecks = new List<INotenCheck>();
+      foreach (var klasse in klassen)
+      {
+        CheckKlasse(klasse);
+      }
+
+      return res;
+    }
+
+    public NotenCheckResults CheckKlasse(Klasse klasse)
         {
             IList<INotenCheck> notwendigeNotenchecks = new List<INotenCheck>();
             foreach (var ch in alleNotenchecks)

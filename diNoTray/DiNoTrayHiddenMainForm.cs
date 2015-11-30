@@ -170,5 +170,34 @@ namespace diNoTray
     {
       new Klassenansicht().Show();
     }
+
+    private void btnUnterpunktungen_Click(object sender, EventArgs e)
+    {
+      var contr = new NotenCheckController(GetZeitpunkt());
+      //contr.CheckAll();
+      contr.CheckKlasse(new Klasse(55)); // 11Te
+      new ReportNotencheck(contr.res);
+    }
+
+    private Zeitpunkt GetZeitpunkt()
+    {
+      string reason = (string)comboBoxZeitpunkt.SelectedItem;
+      switch (reason)
+      {
+        case "Probezeit BOS": return Zeitpunkt.ProbezeitBOS;
+        case "Halbjahr": return Zeitpunkt.HalbjahrUndProbezeitFOS;
+        case "1. PA": return Zeitpunkt.ErstePA;
+        case "2. PA": return Zeitpunkt.ZweitePA;
+        case "3. PA": return Zeitpunkt.DrittePA;
+        case "Jahresende": return Zeitpunkt.Jahresende;
+        default: return Zeitpunkt.None;
+      }
+    }
+
+    private void comboBoxZeitpunkt_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      // jetzt ist irgendein Zeitpunkt für den Notencheck ausgewählt. Aktiviere den Button.
+      this.btnUnterpunktungen.Enabled = true;
+    }
   }
 }

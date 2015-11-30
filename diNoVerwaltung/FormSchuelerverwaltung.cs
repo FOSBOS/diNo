@@ -39,7 +39,7 @@ namespace diNoVerwaltung
 
     private void RefreshTree()
     {
-      treeListView1.Roots = KlassenTreeViewController.GetSortedKlassenList();
+      treeListView1.Roots = KlassenTreeViewController.GetSortedKlassenList(false);
       treeListView1.Refresh();
     }
 

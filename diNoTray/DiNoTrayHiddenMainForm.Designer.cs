@@ -36,7 +36,10 @@
       this.btnNotenbogen = new System.Windows.Forms.Button();
       this.btnUnterpunktungen = new System.Windows.Forms.Button();
       this.lblStatus = new System.Windows.Forms.Label();
+      this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.comboBoxZeitpunkt = new System.Windows.Forms.ComboBox();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+      this.groupBox1.SuspendLayout();
       this.SuspendLayout();
       // 
       // btnNotenSync
@@ -82,35 +85,63 @@
       // btnUnterpunktungen
       // 
       this.btnUnterpunktungen.Enabled = false;
-      this.btnUnterpunktungen.Location = new System.Drawing.Point(21, 137);
+      this.btnUnterpunktungen.Location = new System.Drawing.Point(6, 46);
       this.btnUnterpunktungen.Name = "btnUnterpunktungen";
-      this.btnUnterpunktungen.Size = new System.Drawing.Size(145, 23);
+      this.btnUnterpunktungen.Size = new System.Drawing.Size(139, 23);
       this.btnUnterpunktungen.TabIndex = 4;
-      this.btnUnterpunktungen.Text = "Liste mit Unterpunktungen";
+      this.btnUnterpunktungen.Text = "Prüfung starten";
       this.btnUnterpunktungen.UseVisualStyleBackColor = true;
+      this.btnUnterpunktungen.Click += new System.EventHandler(this.btnUnterpunktungen_Click);
       // 
       // lblStatus
       // 
       this.lblStatus.AutoSize = true;
-      this.lblStatus.Location = new System.Drawing.Point(18, 202);
+      this.lblStatus.Location = new System.Drawing.Point(18, 228);
       this.lblStatus.Name = "lblStatus";
       this.lblStatus.Size = new System.Drawing.Size(40, 13);
       this.lblStatus.TabIndex = 5;
       this.lblStatus.Text = "Status:";
       // 
+      // groupBox1
+      // 
+      this.groupBox1.Controls.Add(this.comboBoxZeitpunkt);
+      this.groupBox1.Controls.Add(this.btnUnterpunktungen);
+      this.groupBox1.Location = new System.Drawing.Point(21, 137);
+      this.groupBox1.Name = "groupBox1";
+      this.groupBox1.Size = new System.Drawing.Size(155, 76);
+      this.groupBox1.TabIndex = 6;
+      this.groupBox1.TabStop = false;
+      this.groupBox1.Text = "Notenprüfung";
+      // 
+      // comboBoxZeitpunkt
+      // 
+      this.comboBoxZeitpunkt.FormattingEnabled = true;
+      this.comboBoxZeitpunkt.Items.AddRange(new object[] {
+            "Probezeit BOS",
+            "Halbjahr",
+            "1. PA",
+            "2. PA",
+            "Jahresende"});
+      this.comboBoxZeitpunkt.Location = new System.Drawing.Point(6, 19);
+      this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";
+      this.comboBoxZeitpunkt.Size = new System.Drawing.Size(139, 21);
+      this.comboBoxZeitpunkt.TabIndex = 11;
+      this.comboBoxZeitpunkt.SelectedIndexChanged += new System.EventHandler(this.comboBoxZeitpunkt_SelectedIndexChanged);
+      // 
       // diNoTrayHiddenMainForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(569, 224);
+      this.ClientSize = new System.Drawing.Size(569, 250);
+      this.Controls.Add(this.groupBox1);
       this.Controls.Add(this.lblStatus);
-      this.Controls.Add(this.btnUnterpunktungen);
       this.Controls.Add(this.btnNotenbogen);
       this.Controls.Add(this.label1);
       this.Controls.Add(this.pictureBox1);
       this.Controls.Add(this.btnNotenSync);
       this.Name = "diNoTrayHiddenMainForm";
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+      this.groupBox1.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -124,6 +155,8 @@
     private System.Windows.Forms.Button btnNotenbogen;
     private System.Windows.Forms.Button btnUnterpunktungen;
     private System.Windows.Forms.Label lblStatus;
+    private System.Windows.Forms.GroupBox groupBox1;
+    private System.Windows.Forms.ComboBox comboBoxZeitpunkt;
   }
 }
 
