@@ -32,8 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Klassenansicht));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageStammdaten = new System.Windows.Forms.TabPage();
+            this.userControlSchueleransicht1 = new diNo.UserControlSchueleransicht();
             this.tabPageNoten = new System.Windows.Forms.TabPage();
+            this.notenbogen1 = new diNo.Notenbogen();
             this.tabPageVorkommnisse = new System.Windows.Forms.TabPage();
+            this.userControlVorkommnisse1 = new diNo.UserControlVorkommnisse();
             this.klasseLabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -45,9 +48,6 @@
             this.btnBrief = new System.Windows.Forms.Button();
             this.toolTipButtons = new System.Windows.Forms.ToolTip(this.components);
             this.label1 = new System.Windows.Forms.Label();
-            this.userControlSchueleransicht1 = new diNo.UserControlSchueleransicht();
-            this.notenbogen1 = new diNo.Notenbogen();
-            this.userControlVorkommnisse1 = new diNo.UserControlVorkommnisse();
             this.tabControl1.SuspendLayout();
             this.tabPageStammdaten.SuspendLayout();
             this.tabPageNoten.SuspendLayout();
@@ -83,6 +83,16 @@
             this.tabPageStammdaten.Text = "Schülerdaten";
             this.tabPageStammdaten.UseVisualStyleBackColor = true;
             // 
+            // userControlSchueleransicht1
+            // 
+            this.userControlSchueleransicht1.AutoScroll = true;
+            this.userControlSchueleransicht1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.userControlSchueleransicht1.Location = new System.Drawing.Point(3, 3);
+            this.userControlSchueleransicht1.Name = "userControlSchueleransicht1";
+            this.userControlSchueleransicht1.Schueler = null;
+            this.userControlSchueleransicht1.Size = new System.Drawing.Size(900, 457);
+            this.userControlSchueleransicht1.TabIndex = 7;
+            // 
             // tabPageNoten
             // 
             this.tabPageNoten.Controls.Add(this.notenbogen1);
@@ -94,6 +104,17 @@
             this.tabPageNoten.Text = "Notenbogen";
             this.tabPageNoten.UseVisualStyleBackColor = true;
             // 
+            // notenbogen1
+            // 
+            this.notenbogen1.AutoScroll = true;
+            this.notenbogen1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.notenbogen1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.notenbogen1.Location = new System.Drawing.Point(3, 3);
+            this.notenbogen1.Name = "notenbogen1";
+            this.notenbogen1.Schueler = null;
+            this.notenbogen1.Size = new System.Drawing.Size(900, 457);
+            this.notenbogen1.TabIndex = 0;
+            // 
             // tabPageVorkommnisse
             // 
             this.tabPageVorkommnisse.Controls.Add(this.userControlVorkommnisse1);
@@ -103,6 +124,16 @@
             this.tabPageVorkommnisse.TabIndex = 2;
             this.tabPageVorkommnisse.Text = "Vorkommnisse";
             this.tabPageVorkommnisse.UseVisualStyleBackColor = true;
+            // 
+            // userControlVorkommnisse1
+            // 
+            this.userControlVorkommnisse1.AutoScroll = true;
+            this.userControlVorkommnisse1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.userControlVorkommnisse1.Location = new System.Drawing.Point(0, 0);
+            this.userControlVorkommnisse1.Name = "userControlVorkommnisse1";
+            this.userControlVorkommnisse1.Schueler = null;
+            this.userControlVorkommnisse1.Size = new System.Drawing.Size(906, 463);
+            this.userControlVorkommnisse1.TabIndex = 0;
             // 
             // klasseLabel
             // 
@@ -219,36 +250,6 @@
             this.label1.TabIndex = 36;
             this.label1.Text = "Notendateien können ab sofort über die Excel-Schaltfläche abgegeben werden.\r\nÜber" +
     " den Stift können z.B. Verweise gedruckt werden.\r\n";
-            // 
-            // userControlSchueleransicht1
-            // 
-            this.userControlSchueleransicht1.AutoScroll = true;
-            this.userControlSchueleransicht1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.userControlSchueleransicht1.Location = new System.Drawing.Point(3, 3);
-            this.userControlSchueleransicht1.Name = "userControlSchueleransicht1";
-            this.userControlSchueleransicht1.Schueler = null;
-            this.userControlSchueleransicht1.Size = new System.Drawing.Size(900, 457);
-            this.userControlSchueleransicht1.TabIndex = 7;
-            // 
-            // notenbogen1
-            // 
-            this.notenbogen1.AutoScroll = true;
-            this.notenbogen1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notenbogen1.Location = new System.Drawing.Point(3, 3);
-            this.notenbogen1.Name = "notenbogen1";
-            this.notenbogen1.Schueler = null;
-            this.notenbogen1.Size = new System.Drawing.Size(900, 457);
-            this.notenbogen1.TabIndex = 0;
-            // 
-            // userControlVorkommnisse1
-            // 
-            this.userControlVorkommnisse1.AutoScroll = true;
-            this.userControlVorkommnisse1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.userControlVorkommnisse1.Location = new System.Drawing.Point(0, 0);
-            this.userControlVorkommnisse1.Name = "userControlVorkommnisse1";
-            this.userControlVorkommnisse1.Schueler = null;
-            this.userControlVorkommnisse1.Size = new System.Drawing.Size(906, 463);
-            this.userControlVorkommnisse1.TabIndex = 0;
             // 
             // Klassenansicht
             // 
