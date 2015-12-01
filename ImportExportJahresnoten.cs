@@ -3,6 +3,13 @@ using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
+
+  /// <summary>
+  /// Exportiert die Jahresnoten aus der elften Klasse ins nächste Jahr. Exportiert wird jeweils Geschichte und
+  /// T: Technisches Zeichnen
+  /// W: Rechtslehre
+  /// S: Chemie
+  /// </summary>
   public class ImportExportJahresnoten
   {
     /// <summary>
@@ -17,9 +24,6 @@ namespace diNo
     /// <param name="fileName">Der Dateiname.</param>
     public static void ExportiereNoten(string fileName)
     {
-      //TODO: Filtern wir die exportierten Noten, z. B. nur bei Schülern der Jahrgangsstufe 11 und nur in Geschichte und Sozialkunde?
-      //      oder machen wir das dann beim Import im Jahr darauf
-
       using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
       using (StreamWriter writer = new StreamWriter(stream))
       {
@@ -30,12 +34,34 @@ namespace diNo
           foreach (var dbSchueler in new SchuelerTableAdapter().GetDataByKursId(kurs.Id))
           {
             Schueler schueler = new Schueler(dbSchueler);
-            var fach = schueler.getNoten.getFach(kurs.Id);
-            var note = fach.getRelevanteNote(Zeitpunkt.Jahresende);
-            writer.WriteLine(schueler.Id + Separator + schueler.Name + Separator + fach.getFach.Kuerzel + Separator + lehrer.Kuerzel + Separator + note);
+            if (IsExportNecessary(kurs.getFach.Kuerzel, schueler))
+            {
+              var fach = schueler.getNoten.getFach(kurs.Id);
+              var note = fach.getRelevanteNote(Zeitpunkt.Jahresende);
+              writer.WriteLine(schueler.Id + Separator + schueler.Name + Separator + fach.getFach.Kuerzel + Separator + lehrer.Kuerzel + Separator + note);
+            }
           }
         }
       }
+    }
+
+    /// <summary>
+    /// Methode prüft ob ein Export nötig ist.
+    /// </summary>
+    /// <param name="fachKuerzel">Fachkürzel.</param>
+    /// <param name="schueler">Der Schüler.</param>
+    /// <returns>Ob für diesen Schüler die Note des genannten Faches exportiert werden soll.</returns>
+    private static bool IsExportNecessary(string fachKuerzel, Schueler schueler)
+    {
+      // Momentan exportieren wir nur die Noten der FOS11 in den Fächern, die dort abgelegt werden.
+      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.getKlasse.Schulart == Schulart.FOS)
+      {
+        return fachKuerzel == "G" ||
+          (schueler.Data.Ausbildungsrichtung == "W" && fachKuerzel == "Rl") ||
+          (schueler.Data.Ausbildungsrichtung == "S" && fachKuerzel == "Ch") ||
+          (schueler.Data.Ausbildungsrichtung == "T" && fachKuerzel == "TZ");
+      }
+      else return false;
     }
 
     /// <summary>
@@ -44,9 +70,6 @@ namespace diNo
     /// <param name="fileName">Der Dateiname.</param>
     public static void ImportiereNoten(string fileName)
     {
-      //TODO: Filtern wir die exportierten Noten, z. B. nur bei Schülern der Jahrgangsstufe 11 und nur in Geschichte und Sozialkunde?
-      //      oder machen wir das dann beim Import im Jahr darauf
-
       using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(stream))
       {
