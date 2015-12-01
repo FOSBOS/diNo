@@ -46,6 +46,7 @@ namespace diNo
         return;
       }
 
+      dataGridNoten.Rows.Clear();
       log.Debug("Öffne Notenbogen SchülerId=" + this.schueler.Id);
       //nameLabel.Text = schueler.NameVorname;
       //klasseTextBox.Text = schueler.getKlasse.Data.Bezeichnung;

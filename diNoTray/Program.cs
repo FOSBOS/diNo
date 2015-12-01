@@ -1,4 +1,5 @@
-﻿using System;
+﻿using diNo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace diNoTray
             
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new diNoTrayHiddenMainForm());
+      Application.Run(new Klassenansicht());
             
     }
   }

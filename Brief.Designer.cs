@@ -78,6 +78,7 @@
             this.boxAuswahl.Controls.Add(this.radioButton1);
             this.boxAuswahl.Controls.Add(this.opMitteilung);
             this.boxAuswahl.Controls.Add(this.opVerweis);
+            this.boxAuswahl.Enabled = false;
             this.boxAuswahl.Location = new System.Drawing.Point(39, 36);
             this.boxAuswahl.Name = "boxAuswahl";
             this.boxAuswahl.Size = new System.Drawing.Size(149, 203);
@@ -87,6 +88,7 @@
             // radioButton4
             // 
             this.radioButton4.AutoSize = true;
+            this.radioButton4.Enabled = false;
             this.radioButton4.Location = new System.Drawing.Point(17, 133);
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(90, 17);
@@ -97,6 +99,7 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
+            this.radioButton3.Enabled = false;
             this.radioButton3.Location = new System.Drawing.Point(17, 111);
             this.radioButton3.Name = "radioButton3";
             this.radioButton3.Size = new System.Drawing.Size(96, 17);
@@ -107,6 +110,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
+            this.radioButton2.Enabled = false;
             this.radioButton2.Location = new System.Drawing.Point(17, 88);
             this.radioButton2.Name = "radioButton2";
             this.radioButton2.Size = new System.Drawing.Size(96, 17);
@@ -117,6 +121,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
+            this.radioButton1.Enabled = false;
             this.radioButton1.Location = new System.Drawing.Point(17, 65);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(77, 17);
@@ -127,6 +132,7 @@
             // opMitteilung
             // 
             this.opMitteilung.AutoSize = true;
+            this.opMitteilung.Enabled = false;
             this.opMitteilung.Location = new System.Drawing.Point(17, 42);
             this.opMitteilung.Name = "opMitteilung";
             this.opMitteilung.Size = new System.Drawing.Size(70, 17);

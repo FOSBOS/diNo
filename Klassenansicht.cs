@@ -8,16 +8,17 @@ namespace diNo
 {
   public partial class Klassenansicht : Form
   {
-    public Klassenansicht()
-    {
-      InitializeComponent();
+        private Schueler schueler=null;
+        public Klassenansicht()
+        {
+          InitializeComponent();
 
-      this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
-    }
+          this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
+        }
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
     {
-      var schueler = treeListView1.SelectedObject as Schueler;
+      schueler = treeListView1.SelectedObject as Schueler;
       if (schueler != null)
       {
         this.userControlSchueleransicht1.Schueler = schueler;
@@ -27,6 +28,8 @@ namespace diNo
         klasseLabel.Text = schueler.getKlasse.Bezeichnung;
         Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
         pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
+        btnBrief.Enabled = true;
+        btnPrint.Enabled = true;
 
       }
     }
@@ -40,5 +43,44 @@ namespace diNo
         klasseLabel.Text = "";
         pictureBoxImage.Image = null;    
     }
-  }
+
+        private void btnNotenabgeben_Click(object sender, EventArgs e)
+        {
+              var fileDialog = new OpenFileDialog();
+              fileDialog.Filter = "Excel Files|*.xls*";
+              fileDialog.Multiselect = true;
+              // Call the ShowDialog method to show the dialog box.
+              bool userClickedOK = fileDialog.ShowDialog() == DialogResult.OK;
+
+              // Process input if the user clicked OK.
+              if (userClickedOK == true)
+              {
+                foreach (string fileName in fileDialog.FileNames)
+                {
+                    new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
+                }
+              }
+        }
+            
+        /// <summary>
+        /// Event Handler für Statusmeldungen vom Notenleser.
+        /// </summary>
+        /// <param name="e">Event Args mit dem neuen Status.</param>
+        /// <param name="sender">Der Sender des Events.</param>
+        void notenReader_OnStatusChange(Object sender, StatusChangedEventArgs e)
+        {
+          //lblStatus.Text = e.Meldung;
+        }
+
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            new ReportNotenbogen(schueler);
+        }
+
+        private void btnBrief_Click(object sender, EventArgs e)
+        {
+            var b = new Brief(schueler);
+            b.ShowDialog();
+        }
+    }
 }

@@ -28,21 +28,21 @@
     /// </summary>
     private void InitializeComponent()
     {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle41 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle42 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle43 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle44 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle45 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridNoten = new System.Windows.Forms.DataGridView();
             this.Fachname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NotenHJ1_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -89,6 +89,9 @@
             this.dataGridNoten.AllowUserToDeleteRows = false;
             this.dataGridNoten.AllowUserToResizeColumns = false;
             this.dataGridNoten.AllowUserToResizeRows = false;
+            this.dataGridNoten.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridNoten.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridNoten.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Fachname,
@@ -120,7 +123,7 @@
             this.dataGridNoten.ReadOnly = true;
             this.dataGridNoten.RowHeadersWidth = 25;
             this.dataGridNoten.ShowEditingIcon = false;
-            this.dataGridNoten.Size = new System.Drawing.Size(1182, 526);
+            this.dataGridNoten.Size = new System.Drawing.Size(1186, 198);
             this.dataGridNoten.TabIndex = 0;
             // 
             // Fachname
@@ -134,9 +137,9 @@
             // 
             // NotenHJ1_1
             // 
-            dataGridViewCellStyle16.Format = "N0";
-            dataGridViewCellStyle16.NullValue = null;
-            this.NotenHJ1_1.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle31.Format = "N0";
+            dataGridViewCellStyle31.NullValue = null;
+            this.NotenHJ1_1.DefaultCellStyle = dataGridViewCellStyle31;
             this.NotenHJ1_1.HeaderText = "";
             this.NotenHJ1_1.Name = "NotenHJ1_1";
             this.NotenHJ1_1.ReadOnly = true;
@@ -146,8 +149,8 @@
             // 
             // NotenHJ1_2
             // 
-            dataGridViewCellStyle17.Format = "N0";
-            this.NotenHJ1_2.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle32.Format = "N0";
+            this.NotenHJ1_2.DefaultCellStyle = dataGridViewCellStyle32;
             this.NotenHJ1_2.HeaderText = "";
             this.NotenHJ1_2.Name = "NotenHJ1_2";
             this.NotenHJ1_2.ReadOnly = true;
@@ -157,8 +160,8 @@
             // 
             // NotenHJ1_3
             // 
-            dataGridViewCellStyle18.Format = "N0";
-            this.NotenHJ1_3.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle33.Format = "N0";
+            this.NotenHJ1_3.DefaultCellStyle = dataGridViewCellStyle33;
             this.NotenHJ1_3.HeaderText = "";
             this.NotenHJ1_3.Name = "NotenHJ1_3";
             this.NotenHJ1_3.ReadOnly = true;
@@ -168,8 +171,8 @@
             // 
             // NotenHJ1_4
             // 
-            dataGridViewCellStyle19.Format = "N0";
-            this.NotenHJ1_4.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle34.Format = "N0";
+            this.NotenHJ1_4.DefaultCellStyle = dataGridViewCellStyle34;
             this.NotenHJ1_4.HeaderText = "";
             this.NotenHJ1_4.Name = "NotenHJ1_4";
             this.NotenHJ1_4.ReadOnly = true;
@@ -179,8 +182,8 @@
             // 
             // NotenHJ1_5
             // 
-            dataGridViewCellStyle20.Format = "N0";
-            this.NotenHJ1_5.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle35.Format = "N0";
+            this.NotenHJ1_5.DefaultCellStyle = dataGridViewCellStyle35;
             this.NotenHJ1_5.HeaderText = "";
             this.NotenHJ1_5.Name = "NotenHJ1_5";
             this.NotenHJ1_5.ReadOnly = true;
@@ -190,8 +193,8 @@
             // 
             // NotenHJ1_6
             // 
-            dataGridViewCellStyle21.Format = "N0";
-            this.NotenHJ1_6.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle36.Format = "N0";
+            this.NotenHJ1_6.DefaultCellStyle = dataGridViewCellStyle36;
             this.NotenHJ1_6.HeaderText = "";
             this.NotenHJ1_6.Name = "NotenHJ1_6";
             this.NotenHJ1_6.ReadOnly = true;
@@ -201,8 +204,8 @@
             // 
             // NotenHJ1_7
             // 
-            dataGridViewCellStyle22.Format = "N0";
-            this.NotenHJ1_7.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle37.Format = "N0";
+            this.NotenHJ1_7.DefaultCellStyle = dataGridViewCellStyle37;
             this.NotenHJ1_7.HeaderText = "";
             this.NotenHJ1_7.Name = "NotenHJ1_7";
             this.NotenHJ1_7.ReadOnly = true;
@@ -231,8 +234,8 @@
             // 
             // NotenHJ2_1
             // 
-            dataGridViewCellStyle23.Format = "N0";
-            this.NotenHJ2_1.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle38.Format = "N0";
+            this.NotenHJ2_1.DefaultCellStyle = dataGridViewCellStyle38;
             this.NotenHJ2_1.HeaderText = "";
             this.NotenHJ2_1.Name = "NotenHJ2_1";
             this.NotenHJ2_1.ReadOnly = true;
@@ -242,8 +245,8 @@
             // 
             // NotenHJ2_2
             // 
-            dataGridViewCellStyle24.Format = "N0";
-            this.NotenHJ2_2.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle39.Format = "N0";
+            this.NotenHJ2_2.DefaultCellStyle = dataGridViewCellStyle39;
             this.NotenHJ2_2.HeaderText = "";
             this.NotenHJ2_2.Name = "NotenHJ2_2";
             this.NotenHJ2_2.ReadOnly = true;
@@ -253,8 +256,8 @@
             // 
             // NotenHJ2_3
             // 
-            dataGridViewCellStyle25.Format = "N0";
-            this.NotenHJ2_3.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle40.Format = "N0";
+            this.NotenHJ2_3.DefaultCellStyle = dataGridViewCellStyle40;
             this.NotenHJ2_3.HeaderText = "";
             this.NotenHJ2_3.Name = "NotenHJ2_3";
             this.NotenHJ2_3.ReadOnly = true;
@@ -264,8 +267,8 @@
             // 
             // NotenHJ2_4
             // 
-            dataGridViewCellStyle26.Format = "N0";
-            this.NotenHJ2_4.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle41.Format = "N0";
+            this.NotenHJ2_4.DefaultCellStyle = dataGridViewCellStyle41;
             this.NotenHJ2_4.HeaderText = "";
             this.NotenHJ2_4.Name = "NotenHJ2_4";
             this.NotenHJ2_4.ReadOnly = true;
@@ -275,8 +278,8 @@
             // 
             // NotenHJ2_5
             // 
-            dataGridViewCellStyle27.Format = "N0";
-            this.NotenHJ2_5.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle42.Format = "N0";
+            this.NotenHJ2_5.DefaultCellStyle = dataGridViewCellStyle42;
             this.NotenHJ2_5.HeaderText = "";
             this.NotenHJ2_5.Name = "NotenHJ2_5";
             this.NotenHJ2_5.ReadOnly = true;
@@ -286,8 +289,8 @@
             // 
             // NotenHJ2_6
             // 
-            dataGridViewCellStyle28.Format = "N0";
-            this.NotenHJ2_6.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle43.Format = "N0";
+            this.NotenHJ2_6.DefaultCellStyle = dataGridViewCellStyle43;
             this.NotenHJ2_6.HeaderText = "";
             this.NotenHJ2_6.Name = "NotenHJ2_6";
             this.NotenHJ2_6.ReadOnly = true;
@@ -297,8 +300,8 @@
             // 
             // NotenHJ2_7
             // 
-            dataGridViewCellStyle29.Format = "N0";
-            this.NotenHJ2_7.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle44.Format = "N0";
+            this.NotenHJ2_7.DefaultCellStyle = dataGridViewCellStyle44;
             this.NotenHJ2_7.HeaderText = "";
             this.NotenHJ2_7.Name = "NotenHJ2_7";
             this.NotenHJ2_7.ReadOnly = true;
@@ -308,8 +311,8 @@
             // 
             // NotenHJ2_8
             // 
-            dataGridViewCellStyle30.Format = "N0";
-            this.NotenHJ2_8.DefaultCellStyle = dataGridViewCellStyle30;
+            dataGridViewCellStyle45.Format = "N0";
+            this.NotenHJ2_8.DefaultCellStyle = dataGridViewCellStyle45;
             this.NotenHJ2_8.HeaderText = "";
             this.NotenHJ2_8.Name = "NotenHJ2_8";
             this.NotenHJ2_8.ReadOnly = true;
@@ -375,8 +378,9 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 583);
+            this.label1.Location = new System.Drawing.Point(15, 252);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(132, 13);
             this.label1.TabIndex = 7;
@@ -384,21 +388,23 @@
             // 
             // listBoxFpA
             // 
+            this.listBoxFpA.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.listBoxFpA.FormattingEnabled = true;
             this.listBoxFpA.Items.AddRange(new object[] {
             "mit sehr gutem Erfolg",
             "mit gutem Erfolg",
             "mit Erfolg",
             "ohne Erfolg"});
-            this.listBoxFpA.Location = new System.Drawing.Point(150, 570);
+            this.listBoxFpA.Location = new System.Drawing.Point(153, 239);
             this.listBoxFpA.Name = "listBoxFpA";
             this.listBoxFpA.Size = new System.Drawing.Size(120, 56);
             this.listBoxFpA.TabIndex = 8;
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(276, 583);
+            this.label2.Location = new System.Drawing.Point(279, 252);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 13);
             this.label2.TabIndex = 9;
@@ -406,8 +412,9 @@
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 642);
+            this.label3.Location = new System.Drawing.Point(15, 311);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(92, 13);
             this.label3.TabIndex = 10;
@@ -415,7 +422,8 @@
             // 
             // numericUpDownSeminarfach
             // 
-            this.numericUpDownSeminarfach.Location = new System.Drawing.Point(150, 640);
+            this.numericUpDownSeminarfach.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.numericUpDownSeminarfach.Location = new System.Drawing.Point(153, 309);
             this.numericUpDownSeminarfach.Maximum = new decimal(new int[] {
             15,
             0,
@@ -427,8 +435,9 @@
             // 
             // label4
             // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(291, 640);
+            this.label4.Location = new System.Drawing.Point(294, 309);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(69, 13);
             this.label4.TabIndex = 12;
@@ -436,8 +445,9 @@
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(293, 688);
+            this.label5.Location = new System.Drawing.Point(296, 357);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(125, 13);
             this.label5.TabIndex = 13;
@@ -445,7 +455,8 @@
             // 
             // textBoxSeminarfachthemaLang
             // 
-            this.textBoxSeminarfachthemaLang.Location = new System.Drawing.Point(431, 639);
+            this.textBoxSeminarfachthemaLang.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxSeminarfachthemaLang.Location = new System.Drawing.Point(434, 308);
             this.textBoxSeminarfachthemaLang.MaxLength = 1024;
             this.textBoxSeminarfachthemaLang.Multiline = true;
             this.textBoxSeminarfachthemaLang.Name = "textBoxSeminarfachthemaLang";
@@ -454,7 +465,8 @@
             // 
             // textBoxSeminarfachthemaKurz
             // 
-            this.textBoxSeminarfachthemaKurz.Location = new System.Drawing.Point(431, 685);
+            this.textBoxSeminarfachthemaKurz.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxSeminarfachthemaKurz.Location = new System.Drawing.Point(434, 354);
             this.textBoxSeminarfachthemaKurz.MaxLength = 117;
             this.textBoxSeminarfachthemaKurz.Name = "textBoxSeminarfachthemaKurz";
             this.textBoxSeminarfachthemaKurz.Size = new System.Drawing.Size(723, 20);
@@ -462,7 +474,8 @@
             // 
             // buttonSpeichern
             // 
-            this.buttonSpeichern.Location = new System.Drawing.Point(15, 743);
+            this.buttonSpeichern.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonSpeichern.Location = new System.Drawing.Point(18, 351);
             this.buttonSpeichern.Name = "buttonSpeichern";
             this.buttonSpeichern.Size = new System.Drawing.Size(75, 23);
             this.buttonSpeichern.TabIndex = 16;
@@ -472,7 +485,8 @@
             // 
             // textBoxFpABemerkung
             // 
-            this.textBoxFpABemerkung.Location = new System.Drawing.Point(431, 576);
+            this.textBoxFpABemerkung.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxFpABemerkung.Location = new System.Drawing.Point(434, 245);
             this.textBoxFpABemerkung.Name = "textBoxFpABemerkung";
             this.textBoxFpABemerkung.Size = new System.Drawing.Size(723, 20);
             this.textBoxFpABemerkung.TabIndex = 18;
@@ -494,7 +508,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridNoten);
             this.Name = "Notenbogen";
-            this.Size = new System.Drawing.Size(1199, 778);
+            this.Size = new System.Drawing.Size(1299, 496);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSeminarfach)).EndInit();
             this.ResumeLayout(false);
