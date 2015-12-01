@@ -140,5 +140,22 @@ namespace diNoVerwaltung
         }
       }
     }
+
+    private void btnShowKurse_Click(object sender, EventArgs e)
+    {
+      var schueler = this.treeListView1.SelectedObject as Schueler;
+      if (schueler == null)
+      {
+        return;
+      }
+
+      Form form = new KurszuordnungenForm(schueler);
+      form.ShowDialog();
+    }
+
+    private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      this.btnShowKurse.Enabled = this.treeListView1.SelectedObject is Schueler;
+    }
   }
 }

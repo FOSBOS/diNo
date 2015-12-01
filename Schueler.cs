@@ -455,7 +455,7 @@ namespace diNo
       MeldeAn(schueler, nach);
     }
 
-    private static void MeldeAb(Schueler schueler, string vonFachKuerzel)
+    public static void MeldeAb(Schueler schueler, string vonFachKuerzel)
     {
       FachTableAdapter ada = new FachTableAdapter();
       foreach (var kurs in schueler.Kurse)
@@ -468,21 +468,23 @@ namespace diNo
       }
     }
 
-    private static void MeldeAb(Schueler schueler, Kurs vonKurs)
+    public static void MeldeAb(Schueler schueler, Kurs vonKurs)
     {
       new SchuelerKursTableAdapter().Delete(schueler.Id, vonKurs.Id);
+      schueler.Refresh();
     }
 
-    private static void MeldeAn(Schueler schueler, Kurs beiKurs)
+    public static void MeldeAn(Schueler schueler, Kurs beiKurs)
     {
       SchuelerKursTableAdapter skAda = new SchuelerKursTableAdapter();
       if (skAda.GetCountBySchuelerAndKurs(schueler.Id, beiKurs.Id) == 0)
       {
         new SchuelerKursTableAdapter().Insert(schueler.Id, beiKurs.Id);
+        schueler.Refresh();
       }
     }
 
-    private static void MeldeAn(Schueler schueler, string nachFachKuerzel)
+    public static void MeldeAn(Schueler schueler, string nachFachKuerzel)
     {
       FachTableAdapter ada = new FachTableAdapter();
       foreach (var kursZuKlasse in new KlasseKursTableAdapter().GetDataByKlasse(schueler.getKlasse.Data.Id))
@@ -492,7 +494,6 @@ namespace diNo
         if (fach.Kuerzel == nachFachKuerzel)
         {
           MeldeAn(schueler, new Kurs(kurs));
-          schueler.Refresh();
         }
       }
     }
