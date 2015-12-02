@@ -79,6 +79,7 @@ namespace diNo
       {
         if (!klassenSIds.Contains(schuelerId))
         {
+          
           xls.RemoveSchueler(schuelerId);
         }
       }

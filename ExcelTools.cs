@@ -101,7 +101,18 @@ namespace diNo
       {
         if (this.workbook != null)
         {
-          this.workbook.Close(this.UnsavedChanges, this.FileName, Type.Missing);
+          try
+          {
+            this.workbook.Close(this.UnsavedChanges, this.FileName, Type.Missing);
+          }
+          catch (COMException exp)
+          {
+            // dummerweise wird eine COMException ausgelöst, wenn jemand beim Speichern auf "Nein" klickt
+            // schließe in diesem Fall ohne die Änderungen zu speichern
+            log.Debug(exp);
+            this.workbook.Close(false, this.FileName, Type.Missing);
+          }
+
           Marshal.ReleaseComObject(this.workbook);
           this.workbook = null;
         }
@@ -198,9 +209,16 @@ namespace diNo
     /// <param name="schuelerId">die Id des Schülers.</param>
     public void RemoveSchueler(int schuelerId)
     {
-      UnsavedChanges = true;
       int zeileSId = GetSidZeileForSchueler(schuelerId);
       int zeileNachname = GetNotenbogenZeileForSidZeile(zeileSId);
+      string name = ReadValue(notenbogen, CellConstant.Nachname + zeileNachname) + ReadValue(notenbogen, CellConstant.Vorname + (zeileNachname + 1));
+      if (string.IsNullOrEmpty(name.Trim()))
+      {
+        // Der Schüler ist bereits aus der Datei entfernt. Keine Aktion nötig.
+        return;
+      }
+
+      UnsavedChanges = true;
       WriteValue(notenbogen, CellConstant.Nachname + zeileNachname, "");
       WriteValue(notenbogen, CellConstant.Vorname + (zeileNachname + 1), "");
     }
@@ -242,6 +260,7 @@ namespace diNo
       string value = isLegastheniker ? CellConstant.LegasthenieEintragung : string.Empty;
       WriteValue(notenbogen, CellConstant.LegasthenieVermerk + zeile, value);
     }
+
 
     public int GetSidZeileForSchueler(int schuelerId)
     {
