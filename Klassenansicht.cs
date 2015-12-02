@@ -82,5 +82,11 @@ namespace diNo
             var b = new Brief(schueler);
             b.ShowDialog();
         }
+
+        private void btnCheck_Click(object sender, EventArgs e)
+        {
+            var c = new NotenCheckForm();
+             c.ShowDialog();
+        }
     }
 }

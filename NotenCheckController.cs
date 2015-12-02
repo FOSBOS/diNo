@@ -20,15 +20,7 @@ namespace diNo
             zeitpunkt = azeitpunkt;
             alleNotenchecks.Add(new FachreferatChecker());
             alleNotenchecks.Add(new NotenanzahlChecker());
-            alleNotenchecks.Add(new UnterpunktungChecker());
-
-            /*
-            int[] klassenIDs = new[] { 15, 20, 34 };
-            foreach (int klassenId in klassenIDs)
-            {
-
-            }
-            */
+            alleNotenchecks.Add(new UnterpunktungChecker());            
         }
 
         public NotenCheckResults CheckAll()
@@ -62,6 +54,8 @@ namespace diNo
             }
             foreach (var schueler in klasse.getSchueler)
             {
+                // TODO: Probezeit-check nur für Schüler mit Probezeit. Achtung: teilweise stehen noch alte Datümer in der DB.
+                // können wir diesen Wert beim Import gleich löschen, wenn aus dem alten Schuljahr stammend?
                 CheckSchueler(new Schueler(schueler),notwendigeNotenchecks);
             }
             return res;

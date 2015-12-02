@@ -127,6 +127,12 @@
       <DependentUpon>NotenbogenBericht.cs</DependentUpon>
     </Compile>
     <Compile Include="NotenCheckController.cs" />
+    <Compile Include="NotenCheckForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NotenCheckForm.Designer.cs">
+      <DependentUpon>NotenCheckForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -183,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="NotenbogenBericht.resx">
       <DependentUpon>NotenbogenBericht.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NotenCheckForm.resx">
+      <DependentUpon>NotenCheckForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
