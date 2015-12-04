@@ -22,6 +22,9 @@ namespace diNo
             bindingDataSource = dataSource;
             Init();
             rpt.reportViewer.RefreshReport();
+            rpt.reportViewer.SetDisplayMode( DisplayMode.PrintLayout ); // Darstellung sofort im Seitenlayout
+            rpt.reportViewer.ZoomMode = ZoomMode.Percent;
+            rpt.reportViewer.ZoomPercent = 100;
             rpt.Show();           
         }
         

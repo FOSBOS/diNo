@@ -185,6 +185,7 @@
             this.edInhalt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.edInhalt.Enabled = false;
             this.edInhalt.Location = new System.Drawing.Point(39, 270);
             this.edInhalt.Multiline = true;
             this.edInhalt.Name = "edInhalt";
@@ -193,6 +194,7 @@
             // 
             // datTermin
             // 
+            this.datTermin.Enabled = false;
             this.datTermin.Location = new System.Drawing.Point(241, 120);
             this.datTermin.Name = "datTermin";
             this.datTermin.Size = new System.Drawing.Size(238, 20);
@@ -202,6 +204,7 @@
             // datZeit
             // 
             this.datZeit.CustomFormat = "H\':\'m";
+            this.datZeit.Enabled = false;
             this.datZeit.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.datZeit.Location = new System.Drawing.Point(508, 120);
             this.datZeit.Name = "datZeit";

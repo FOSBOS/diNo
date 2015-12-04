@@ -35,10 +35,13 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.progressBarChecks = new System.Windows.Forms.ProgressBar();
             this.lbStatus = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.chkEigeneNoten = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // comboBoxZeitpunkt
             // 
+            this.comboBoxZeitpunkt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxZeitpunkt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comboBoxZeitpunkt.FormattingEnabled = true;
             this.comboBoxZeitpunkt.Items.AddRange(new object[] {
@@ -47,7 +50,7 @@
             "1. PA",
             "2. PA",
             "Jahresende"});
-            this.comboBoxZeitpunkt.Location = new System.Drawing.Point(25, 37);
+            this.comboBoxZeitpunkt.Location = new System.Drawing.Point(25, 71);
             this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";
             this.comboBoxZeitpunkt.Size = new System.Drawing.Size(218, 24);
             this.comboBoxZeitpunkt.TabIndex = 12;
@@ -56,7 +59,7 @@
             // 
             this.btnUnterpunktungen.ImageKey = "Ok.png";
             this.btnUnterpunktungen.ImageList = this.imageList1;
-            this.btnUnterpunktungen.Location = new System.Drawing.Point(262, 28);
+            this.btnUnterpunktungen.Location = new System.Drawing.Point(262, 62);
             this.btnUnterpunktungen.Name = "btnUnterpunktungen";
             this.btnUnterpunktungen.Size = new System.Drawing.Size(40, 40);
             this.btnUnterpunktungen.TabIndex = 13;
@@ -72,7 +75,7 @@
             // 
             // progressBarChecks
             // 
-            this.progressBarChecks.Location = new System.Drawing.Point(25, 133);
+            this.progressBarChecks.Location = new System.Drawing.Point(25, 159);
             this.progressBarChecks.Name = "progressBarChecks";
             this.progressBarChecks.Size = new System.Drawing.Size(277, 20);
             this.progressBarChecks.TabIndex = 14;
@@ -80,17 +83,41 @@
             // lbStatus
             // 
             this.lbStatus.AutoSize = true;
-            this.lbStatus.Location = new System.Drawing.Point(26, 105);
+            this.lbStatus.Location = new System.Drawing.Point(22, 131);
             this.lbStatus.Name = "lbStatus";
             this.lbStatus.Size = new System.Drawing.Size(37, 13);
             this.lbStatus.TabIndex = 15;
             this.lbStatus.Text = "Status";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(22, 55);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(133, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Prüfungsanlass auswählen";
+            // 
+            // chkEigeneNoten
+            // 
+            this.chkEigeneNoten.AutoSize = true;
+            this.chkEigeneNoten.Checked = true;
+            this.chkEigeneNoten.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkEigeneNoten.Location = new System.Drawing.Point(25, 24);
+            this.chkEigeneNoten.Name = "chkEigeneNoten";
+            this.chkEigeneNoten.Size = new System.Drawing.Size(141, 17);
+            this.chkEigeneNoten.TabIndex = 17;
+            this.chkEigeneNoten.Text = "nur eigene Noten prüfen";
+            this.chkEigeneNoten.UseVisualStyleBackColor = true;
+            this.chkEigeneNoten.Visible = false;
             // 
             // NotenCheckForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(329, 222);
+            this.Controls.Add(this.chkEigeneNoten);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.lbStatus);
             this.Controls.Add(this.progressBarChecks);
             this.Controls.Add(this.btnUnterpunktungen);
@@ -108,5 +135,7 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ProgressBar progressBarChecks;
         private System.Windows.Forms.Label lbStatus;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox chkEigeneNoten;
     }
 }

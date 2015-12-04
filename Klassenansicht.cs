@@ -28,7 +28,7 @@ namespace diNo
         klasseLabel.Text = schueler.getKlasse.Bezeichnung;
         Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
         pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
-        btnBrief.Enabled = true;
+        btnBrief.Enabled = ! Zugriff.Instance.IsAdmin; // Admins haben kein Lehrerobjekt und können daher keine Briefe schreiben
         btnPrint.Enabled = true;
 
       }
