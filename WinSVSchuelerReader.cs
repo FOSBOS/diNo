@@ -97,8 +97,9 @@ namespace diNo
           }
 
           // wenn der Schüler noch nicht vorhanden ist
+          // TODO: die Daten direkt in ein SchuelerRow schreiben, und dann den Insert auf dieses Objekt machen
           if (tableAdapter.GetDataById(int.Parse(cleanArray[schuelerIdSpalte])).Count == 0)
-          {
+          {/*
             tableAdapter.Insert(
               int.Parse(cleanArray[schuelerIdSpalte]),
               cleanArray[nachnameSpalte],
@@ -195,7 +196,7 @@ namespace diNo
               cleanArray[emailSpalte],
               cleanArray[notfallrufnummerSpalte],
               int.Parse(cleanArray[schuelerIdSpalte])
-              );
+              ); */
           }
         }
       }

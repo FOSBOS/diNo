@@ -157,5 +157,14 @@ namespace diNo
             Brief vw = new Brief(new Schueler(8861));
             vw.ShowDialog();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var s = new Schueler(8861);
+            s.Data.AnschriftStrasse = "Jürgen-Hinterhuber-Str. 30f";          
+            s.Data.AnschriftOrt="Betzigau";
+            s.Save();
+            s.Refresh();
+        }
     }
 }

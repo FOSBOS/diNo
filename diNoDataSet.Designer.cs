@@ -34,8 +34,6 @@ namespace diNo {
         
         private NotenartDataTable tableNotenart;
         
-        private SchuelerDataTable tableSchueler;
-        
         private KlasseKursDataTable tableKlasseKurs;
         
         private SchuelerKursDataTable tableSchuelerKurs;
@@ -54,13 +52,13 @@ namespace diNo {
         
         private VorkommnisDataTable tableVorkommnis;
         
+        private SchuelerDataTable tableSchueler;
+        
         private global::System.Data.DataRelation relationFK_Lehrer_Klasse;
         
         private global::System.Data.DataRelation relationFK_Kurs_Lehrer;
         
         private global::System.Data.DataRelation relationFK_Kurs_Fach;
-        
-        private global::System.Data.DataRelation relationFK_Schueler_ToKlasse;
         
         private global::System.Data.DataRelation relationFK_KlasseKurs_Klasse;
         
@@ -68,11 +66,15 @@ namespace diNo {
         
         private global::System.Data.DataRelation relationFK_SchuelerKurs_Kurs;
         
-        private global::System.Data.DataRelation relationFK_SchuelerKurs_Schueler;
-        
         private global::System.Data.DataRelation relationFK_Note_Kurs;
         
         private global::System.Data.DataRelation relationFK_Note_Notenart;
+        
+        private global::System.Data.DataRelation relationFK_Schulaufgabenfach_Fach;
+        
+        private global::System.Data.DataRelation relationFK_BerechneteNote_Kurs;
+        
+        private global::System.Data.DataRelation relationFK_SchuelerKurs_Schueler;
         
         private global::System.Data.DataRelation relationFK_Note_Schueler;
         
@@ -80,13 +82,11 @@ namespace diNo {
         
         private global::System.Data.DataRelation relationFK_Seminarfachnote_Schueler;
         
-        private global::System.Data.DataRelation relationFK_Schulaufgabenfach_Fach;
-        
-        private global::System.Data.DataRelation relationFK_BerechneteNote_Kurs;
-        
         private global::System.Data.DataRelation relationFK_BerechneteNote_Schueler;
         
         private global::System.Data.DataRelation relationFK_Vorkommnis_Schueler;
+        
+        private global::System.Data.DataRelation relationFK_Schueler_ToTable;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -131,9 +131,6 @@ namespace diNo {
                 if ((ds.Tables["Notenart"] != null)) {
                     base.Tables.Add(new NotenartDataTable(ds.Tables["Notenart"]));
                 }
-                if ((ds.Tables["Schueler"] != null)) {
-                    base.Tables.Add(new SchuelerDataTable(ds.Tables["Schueler"]));
-                }
                 if ((ds.Tables["KlasseKurs"] != null)) {
                     base.Tables.Add(new KlasseKursDataTable(ds.Tables["KlasseKurs"]));
                 }
@@ -160,6 +157,9 @@ namespace diNo {
                 }
                 if ((ds.Tables["Vorkommnis"] != null)) {
                     base.Tables.Add(new VorkommnisDataTable(ds.Tables["Vorkommnis"]));
+                }
+                if ((ds.Tables["Schueler"] != null)) {
+                    base.Tables.Add(new SchuelerDataTable(ds.Tables["Schueler"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -226,16 +226,6 @@ namespace diNo {
         public NotenartDataTable Notenart {
             get {
                 return this.tableNotenart;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public SchuelerDataTable Schueler {
-            get {
-                return this.tableSchueler;
             }
         }
         
@@ -331,6 +321,16 @@ namespace diNo {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public SchuelerDataTable Schueler {
+            get {
+                return this.tableSchueler;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.BrowsableAttribute(true)]
         [global::System.ComponentModel.DesignerSerializationVisibilityAttribute(global::System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public override global::System.Data.SchemaSerializationMode SchemaSerializationMode {
@@ -411,9 +411,6 @@ namespace diNo {
                 if ((ds.Tables["Notenart"] != null)) {
                     base.Tables.Add(new NotenartDataTable(ds.Tables["Notenart"]));
                 }
-                if ((ds.Tables["Schueler"] != null)) {
-                    base.Tables.Add(new SchuelerDataTable(ds.Tables["Schueler"]));
-                }
                 if ((ds.Tables["KlasseKurs"] != null)) {
                     base.Tables.Add(new KlasseKursDataTable(ds.Tables["KlasseKurs"]));
                 }
@@ -440,6 +437,9 @@ namespace diNo {
                 }
                 if ((ds.Tables["Vorkommnis"] != null)) {
                     base.Tables.Add(new VorkommnisDataTable(ds.Tables["Vorkommnis"]));
+                }
+                if ((ds.Tables["Schueler"] != null)) {
+                    base.Tables.Add(new SchuelerDataTable(ds.Tables["Schueler"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -504,12 +504,6 @@ namespace diNo {
                     this.tableNotenart.InitVars();
                 }
             }
-            this.tableSchueler = ((SchuelerDataTable)(base.Tables["Schueler"]));
-            if ((initTable == true)) {
-                if ((this.tableSchueler != null)) {
-                    this.tableSchueler.InitVars();
-                }
-            }
             this.tableKlasseKurs = ((KlasseKursDataTable)(base.Tables["KlasseKurs"]));
             if ((initTable == true)) {
                 if ((this.tableKlasseKurs != null)) {
@@ -564,23 +558,29 @@ namespace diNo {
                     this.tableVorkommnis.InitVars();
                 }
             }
+            this.tableSchueler = ((SchuelerDataTable)(base.Tables["Schueler"]));
+            if ((initTable == true)) {
+                if ((this.tableSchueler != null)) {
+                    this.tableSchueler.InitVars();
+                }
+            }
             this.relationFK_Lehrer_Klasse = this.Relations["FK_Lehrer_Klasse"];
             this.relationFK_Kurs_Lehrer = this.Relations["FK_Kurs_Lehrer"];
             this.relationFK_Kurs_Fach = this.Relations["FK_Kurs_Fach"];
-            this.relationFK_Schueler_ToKlasse = this.Relations["FK_Schueler_ToKlasse"];
             this.relationFK_KlasseKurs_Klasse = this.Relations["FK_KlasseKurs_Klasse"];
             this.relationFK_KlasseKurs_Kurs = this.Relations["FK_KlasseKurs_Kurs"];
             this.relationFK_SchuelerKurs_Kurs = this.Relations["FK_SchuelerKurs_Kurs"];
-            this.relationFK_SchuelerKurs_Schueler = this.Relations["FK_SchuelerKurs_Schueler"];
             this.relationFK_Note_Kurs = this.Relations["FK_Note_Kurs"];
             this.relationFK_Note_Notenart = this.Relations["FK_Note_Notenart"];
+            this.relationFK_Schulaufgabenfach_Fach = this.Relations["FK_Schulaufgabenfach_Fach"];
+            this.relationFK_BerechneteNote_Kurs = this.Relations["FK_BerechneteNote_Kurs"];
+            this.relationFK_SchuelerKurs_Schueler = this.Relations["FK_SchuelerKurs_Schueler"];
             this.relationFK_Note_Schueler = this.Relations["FK_Note_Schueler"];
             this.relationFK_FpANoten_Schueler = this.Relations["FK_FpANoten_Schueler"];
             this.relationFK_Seminarfachnote_Schueler = this.Relations["FK_Seminarfachnote_Schueler"];
-            this.relationFK_Schulaufgabenfach_Fach = this.Relations["FK_Schulaufgabenfach_Fach"];
-            this.relationFK_BerechneteNote_Kurs = this.Relations["FK_BerechneteNote_Kurs"];
             this.relationFK_BerechneteNote_Schueler = this.Relations["FK_BerechneteNote_Schueler"];
             this.relationFK_Vorkommnis_Schueler = this.Relations["FK_Vorkommnis_Schueler"];
+            this.relationFK_Schueler_ToTable = this.Relations["FK_Schueler_ToTable"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -601,8 +601,6 @@ namespace diNo {
             base.Tables.Add(this.tableLehrer);
             this.tableNotenart = new NotenartDataTable();
             base.Tables.Add(this.tableNotenart);
-            this.tableSchueler = new SchuelerDataTable();
-            base.Tables.Add(this.tableSchueler);
             this.tableKlasseKurs = new KlasseKursDataTable();
             base.Tables.Add(this.tableKlasseKurs);
             this.tableSchuelerKurs = new SchuelerKursDataTable();
@@ -621,6 +619,8 @@ namespace diNo {
             base.Tables.Add(this.tablevwNotenbogen);
             this.tableVorkommnis = new VorkommnisDataTable();
             base.Tables.Add(this.tableVorkommnis);
+            this.tableSchueler = new SchuelerDataTable();
+            base.Tables.Add(this.tableSchueler);
             global::System.Data.ForeignKeyConstraint fkc;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_Lehrer_Klasse", new global::System.Data.DataColumn[] {
                         this.tableLehrer.IdColumn}, new global::System.Data.DataColumn[] {
@@ -641,10 +641,6 @@ namespace diNo {
                         this.tableFach.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableKurs.FachIdColumn}, false);
             this.Relations.Add(this.relationFK_Kurs_Fach);
-            this.relationFK_Schueler_ToKlasse = new global::System.Data.DataRelation("FK_Schueler_ToKlasse", new global::System.Data.DataColumn[] {
-                        this.tableKlasse.IdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSchueler.KlasseIdColumn}, false);
-            this.Relations.Add(this.relationFK_Schueler_ToKlasse);
             this.relationFK_KlasseKurs_Klasse = new global::System.Data.DataRelation("FK_KlasseKurs_Klasse", new global::System.Data.DataColumn[] {
                         this.tableKlasse.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableKlasseKurs.KlasseIdColumn}, false);
@@ -657,10 +653,6 @@ namespace diNo {
                         this.tableKurs.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableSchuelerKurs.KursIdColumn}, false);
             this.Relations.Add(this.relationFK_SchuelerKurs_Kurs);
-            this.relationFK_SchuelerKurs_Schueler = new global::System.Data.DataRelation("FK_SchuelerKurs_Schueler", new global::System.Data.DataColumn[] {
-                        this.tableSchueler.IdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSchuelerKurs.SchuelerIdColumn}, false);
-            this.Relations.Add(this.relationFK_SchuelerKurs_Schueler);
             this.relationFK_Note_Kurs = new global::System.Data.DataRelation("FK_Note_Kurs", new global::System.Data.DataColumn[] {
                         this.tableKurs.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableNote.KursIdColumn}, false);
@@ -669,6 +661,18 @@ namespace diNo {
                         this.tableNotenart.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableNote.NotenartColumn}, false);
             this.Relations.Add(this.relationFK_Note_Notenart);
+            this.relationFK_Schulaufgabenfach_Fach = new global::System.Data.DataRelation("FK_Schulaufgabenfach_Fach", new global::System.Data.DataColumn[] {
+                        this.tableFach.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSchulaufgabenfach.FachIdColumn}, false);
+            this.Relations.Add(this.relationFK_Schulaufgabenfach_Fach);
+            this.relationFK_BerechneteNote_Kurs = new global::System.Data.DataRelation("FK_BerechneteNote_Kurs", new global::System.Data.DataColumn[] {
+                        this.tableKurs.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableBerechneteNote.KursIdColumn}, false);
+            this.Relations.Add(this.relationFK_BerechneteNote_Kurs);
+            this.relationFK_SchuelerKurs_Schueler = new global::System.Data.DataRelation("FK_SchuelerKurs_Schueler", new global::System.Data.DataColumn[] {
+                        this.tableSchueler.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSchuelerKurs.SchuelerIdColumn}, false);
+            this.Relations.Add(this.relationFK_SchuelerKurs_Schueler);
             this.relationFK_Note_Schueler = new global::System.Data.DataRelation("FK_Note_Schueler", new global::System.Data.DataColumn[] {
                         this.tableSchueler.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableNote.SchuelerIdColumn}, false);
@@ -681,14 +685,6 @@ namespace diNo {
                         this.tableSchueler.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableSeminarfachnote.SchuelerIdColumn}, false);
             this.Relations.Add(this.relationFK_Seminarfachnote_Schueler);
-            this.relationFK_Schulaufgabenfach_Fach = new global::System.Data.DataRelation("FK_Schulaufgabenfach_Fach", new global::System.Data.DataColumn[] {
-                        this.tableFach.IdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSchulaufgabenfach.FachIdColumn}, false);
-            this.Relations.Add(this.relationFK_Schulaufgabenfach_Fach);
-            this.relationFK_BerechneteNote_Kurs = new global::System.Data.DataRelation("FK_BerechneteNote_Kurs", new global::System.Data.DataColumn[] {
-                        this.tableKurs.IdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableBerechneteNote.KursIdColumn}, false);
-            this.Relations.Add(this.relationFK_BerechneteNote_Kurs);
             this.relationFK_BerechneteNote_Schueler = new global::System.Data.DataRelation("FK_BerechneteNote_Schueler", new global::System.Data.DataColumn[] {
                         this.tableSchueler.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableBerechneteNote.SchuelerIdColumn}, false);
@@ -697,6 +693,10 @@ namespace diNo {
                         this.tableSchueler.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableVorkommnis.SchuelerIdColumn}, false);
             this.Relations.Add(this.relationFK_Vorkommnis_Schueler);
+            this.relationFK_Schueler_ToTable = new global::System.Data.DataRelation("FK_Schueler_ToTable", new global::System.Data.DataColumn[] {
+                        this.tableKlasse.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSchueler.KlasseIdColumn}, false);
+            this.Relations.Add(this.relationFK_Schueler_ToTable);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -726,12 +726,6 @@ namespace diNo {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private bool ShouldSerializeNotenart() {
-            return false;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeSchueler() {
             return false;
         }
         
@@ -786,6 +780,12 @@ namespace diNo {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private bool ShouldSerializeVorkommnis() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeSchueler() {
             return false;
         }
         
@@ -860,9 +860,6 @@ namespace diNo {
         public delegate void NotenartRowChangeEventHandler(object sender, NotenartRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void SchuelerRowChangeEventHandler(object sender, SchuelerRowChangeEvent e);
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void KlasseKursRowChangeEventHandler(object sender, KlasseKursRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -888,6 +885,9 @@ namespace diNo {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void VorkommnisRowChangeEventHandler(object sender, VorkommnisRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void SchuelerRowChangeEventHandler(object sender, SchuelerRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -2371,970 +2371,6 @@ namespace diNo {
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "NotenartDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class SchuelerDataTable : global::System.Data.TypedTableBase<SchuelerRow> {
-            
-            private global::System.Data.DataColumn columnId;
-            
-            private global::System.Data.DataColumn columnName;
-            
-            private global::System.Data.DataColumn columnVorname;
-            
-            private global::System.Data.DataColumn columnKlasseId;
-            
-            private global::System.Data.DataColumn columnRufname;
-            
-            private global::System.Data.DataColumn columnGeschlecht;
-            
-            private global::System.Data.DataColumn columnGeburtsdatum;
-            
-            private global::System.Data.DataColumn columnGeburtsort;
-            
-            private global::System.Data.DataColumn columnBekenntnis;
-            
-            private global::System.Data.DataColumn columnAnschriftPLZ;
-            
-            private global::System.Data.DataColumn columnAnschriftOrt;
-            
-            private global::System.Data.DataColumn columnAnschriftStrasse;
-            
-            private global::System.Data.DataColumn columnAnschriftTelefonnummer;
-            
-            private global::System.Data.DataColumn columnAusbildungsrichtung;
-            
-            private global::System.Data.DataColumn columnFremdsprache2;
-            
-            private global::System.Data.DataColumn columnReligionOderEthik;
-            
-            private global::System.Data.DataColumn columnWahlpflichtfach;
-            
-            private global::System.Data.DataColumn columnWahlfach1;
-            
-            private global::System.Data.DataColumn columnWahlfach2;
-            
-            private global::System.Data.DataColumn columnWahlfach3;
-            
-            private global::System.Data.DataColumn columnWahlfach4;
-            
-            private global::System.Data.DataColumn columnWiederholung1Jahrgangsstufe;
-            
-            private global::System.Data.DataColumn columnWiederholung2Jahrgangsstufe;
-            
-            private global::System.Data.DataColumn columnWiederholung1Grund;
-            
-            private global::System.Data.DataColumn columnWiederholung2Grund;
-            
-            private global::System.Data.DataColumn columnProbezeitBis;
-            
-            private global::System.Data.DataColumn columnAustrittsdatum;
-            
-            private global::System.Data.DataColumn columnSchulischeVorbildung;
-            
-            private global::System.Data.DataColumn columnBeruflicheVorbildung;
-            
-            private global::System.Data.DataColumn columnLRSStoerung;
-            
-            private global::System.Data.DataColumn columnLRSSchwaeche;
-            
-            private global::System.Data.DataColumn columnLRSBisDatum;
-            
-            private global::System.Data.DataColumn columnNachnameEltern1;
-            
-            private global::System.Data.DataColumn columnVornameEltern1;
-            
-            private global::System.Data.DataColumn columnAnredeEltern1;
-            
-            private global::System.Data.DataColumn columnVerwandtschaftsbezeichnungEltern1;
-            
-            private global::System.Data.DataColumn columnNachnameEltern2;
-            
-            private global::System.Data.DataColumn columnVornameEltern2;
-            
-            private global::System.Data.DataColumn columnAnredeEltern2;
-            
-            private global::System.Data.DataColumn columnVerwandtschaftsbezeichnungEltern2;
-            
-            private global::System.Data.DataColumn columnEintrittJahrgangsstufe;
-            
-            private global::System.Data.DataColumn columnEintrittAm;
-            
-            private global::System.Data.DataColumn columnEintrittAusSchulnummer;
-            
-            private global::System.Data.DataColumn columnEMail;
-            
-            private global::System.Data.DataColumn columnNotfalltelefonnummer;
-            
-            private global::System.Data.DataColumn columnEmail;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SchuelerDataTable() {
-                this.TableName = "Schueler";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal SchuelerDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected SchuelerDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn IdColumn {
-                get {
-                    return this.columnId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NameColumn {
-                get {
-                    return this.columnName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VornameColumn {
-                get {
-                    return this.columnVorname;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn KlasseIdColumn {
-                get {
-                    return this.columnKlasseId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn RufnameColumn {
-                get {
-                    return this.columnRufname;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn GeschlechtColumn {
-                get {
-                    return this.columnGeschlecht;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn GeburtsdatumColumn {
-                get {
-                    return this.columnGeburtsdatum;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn GeburtsortColumn {
-                get {
-                    return this.columnGeburtsort;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn BekenntnisColumn {
-                get {
-                    return this.columnBekenntnis;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnschriftPLZColumn {
-                get {
-                    return this.columnAnschriftPLZ;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnschriftOrtColumn {
-                get {
-                    return this.columnAnschriftOrt;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnschriftStrasseColumn {
-                get {
-                    return this.columnAnschriftStrasse;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnschriftTelefonnummerColumn {
-                get {
-                    return this.columnAnschriftTelefonnummer;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AusbildungsrichtungColumn {
-                get {
-                    return this.columnAusbildungsrichtung;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Fremdsprache2Column {
-                get {
-                    return this.columnFremdsprache2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ReligionOderEthikColumn {
-                get {
-                    return this.columnReligionOderEthik;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn WahlpflichtfachColumn {
-                get {
-                    return this.columnWahlpflichtfach;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach1Column {
-                get {
-                    return this.columnWahlfach1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach2Column {
-                get {
-                    return this.columnWahlfach2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach3Column {
-                get {
-                    return this.columnWahlfach3;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach4Column {
-                get {
-                    return this.columnWahlfach4;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wiederholung1JahrgangsstufeColumn {
-                get {
-                    return this.columnWiederholung1Jahrgangsstufe;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wiederholung2JahrgangsstufeColumn {
-                get {
-                    return this.columnWiederholung2Jahrgangsstufe;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wiederholung1GrundColumn {
-                get {
-                    return this.columnWiederholung1Grund;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wiederholung2GrundColumn {
-                get {
-                    return this.columnWiederholung2Grund;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ProbezeitBisColumn {
-                get {
-                    return this.columnProbezeitBis;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AustrittsdatumColumn {
-                get {
-                    return this.columnAustrittsdatum;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn SchulischeVorbildungColumn {
-                get {
-                    return this.columnSchulischeVorbildung;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn BeruflicheVorbildungColumn {
-                get {
-                    return this.columnBeruflicheVorbildung;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn LRSStoerungColumn {
-                get {
-                    return this.columnLRSStoerung;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn LRSSchwaecheColumn {
-                get {
-                    return this.columnLRSSchwaeche;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn LRSBisDatumColumn {
-                get {
-                    return this.columnLRSBisDatum;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NachnameEltern1Column {
-                get {
-                    return this.columnNachnameEltern1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VornameEltern1Column {
-                get {
-                    return this.columnVornameEltern1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnredeEltern1Column {
-                get {
-                    return this.columnAnredeEltern1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VerwandtschaftsbezeichnungEltern1Column {
-                get {
-                    return this.columnVerwandtschaftsbezeichnungEltern1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NachnameEltern2Column {
-                get {
-                    return this.columnNachnameEltern2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VornameEltern2Column {
-                get {
-                    return this.columnVornameEltern2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnredeEltern2Column {
-                get {
-                    return this.columnAnredeEltern2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VerwandtschaftsbezeichnungEltern2Column {
-                get {
-                    return this.columnVerwandtschaftsbezeichnungEltern2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EintrittJahrgangsstufeColumn {
-                get {
-                    return this.columnEintrittJahrgangsstufe;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EintrittAmColumn {
-                get {
-                    return this.columnEintrittAm;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EintrittAusSchulnummerColumn {
-                get {
-                    return this.columnEintrittAusSchulnummer;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EMailColumn {
-                get {
-                    return this.columnEMail;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NotfalltelefonnummerColumn {
-                get {
-                    return this.columnNotfalltelefonnummer;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EmailColumn {
-                get {
-                    return this.columnEmail;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SchuelerRow this[int index] {
-                get {
-                    return ((SchuelerRow)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SchuelerRowChangeEventHandler SchuelerRowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SchuelerRowChangeEventHandler SchuelerRowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SchuelerRowChangeEventHandler SchuelerRowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event SchuelerRowChangeEventHandler SchuelerRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddSchuelerRow(SchuelerRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SchuelerRow AddSchuelerRow(
-                        int Id, 
-                        string Name, 
-                        string Vorname, 
-                        KlasseRow parentKlasseRowByFK_Schueler_ToKlasse, 
-                        string Rufname, 
-                        string Geschlecht, 
-                        System.DateTime Geburtsdatum, 
-                        string Geburtsort, 
-                        string Bekenntnis, 
-                        string AnschriftPLZ, 
-                        string AnschriftOrt, 
-                        string AnschriftStrasse, 
-                        string AnschriftTelefonnummer, 
-                        string Ausbildungsrichtung, 
-                        string Fremdsprache2, 
-                        string ReligionOderEthik, 
-                        string Wahlpflichtfach, 
-                        string Wahlfach1, 
-                        string Wahlfach2, 
-                        string Wahlfach3, 
-                        string Wahlfach4, 
-                        string Wiederholung1Jahrgangsstufe, 
-                        string Wiederholung2Jahrgangsstufe, 
-                        string Wiederholung1Grund, 
-                        string Wiederholung2Grund, 
-                        System.DateTime ProbezeitBis, 
-                        System.DateTime Austrittsdatum, 
-                        string SchulischeVorbildung, 
-                        string BeruflicheVorbildung, 
-                        bool LRSStoerung, 
-                        bool LRSSchwaeche, 
-                        System.DateTime LRSBisDatum, 
-                        string NachnameEltern1, 
-                        string VornameEltern1, 
-                        string AnredeEltern1, 
-                        string VerwandtschaftsbezeichnungEltern1, 
-                        string NachnameEltern2, 
-                        string VornameEltern2, 
-                        string AnredeEltern2, 
-                        string VerwandtschaftsbezeichnungEltern2, 
-                        string EintrittJahrgangsstufe, 
-                        System.DateTime EintrittAm, 
-                        int EintrittAusSchulnummer, 
-                        string EMail, 
-                        string Notfalltelefonnummer, 
-                        string Email1) {
-                SchuelerRow rowSchuelerRow = ((SchuelerRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        Id,
-                        Name,
-                        Vorname,
-                        null,
-                        Rufname,
-                        Geschlecht,
-                        Geburtsdatum,
-                        Geburtsort,
-                        Bekenntnis,
-                        AnschriftPLZ,
-                        AnschriftOrt,
-                        AnschriftStrasse,
-                        AnschriftTelefonnummer,
-                        Ausbildungsrichtung,
-                        Fremdsprache2,
-                        ReligionOderEthik,
-                        Wahlpflichtfach,
-                        Wahlfach1,
-                        Wahlfach2,
-                        Wahlfach3,
-                        Wahlfach4,
-                        Wiederholung1Jahrgangsstufe,
-                        Wiederholung2Jahrgangsstufe,
-                        Wiederholung1Grund,
-                        Wiederholung2Grund,
-                        ProbezeitBis,
-                        Austrittsdatum,
-                        SchulischeVorbildung,
-                        BeruflicheVorbildung,
-                        LRSStoerung,
-                        LRSSchwaeche,
-                        LRSBisDatum,
-                        NachnameEltern1,
-                        VornameEltern1,
-                        AnredeEltern1,
-                        VerwandtschaftsbezeichnungEltern1,
-                        NachnameEltern2,
-                        VornameEltern2,
-                        AnredeEltern2,
-                        VerwandtschaftsbezeichnungEltern2,
-                        EintrittJahrgangsstufe,
-                        EintrittAm,
-                        EintrittAusSchulnummer,
-                        EMail,
-                        Notfalltelefonnummer,
-                        Email1};
-                if ((parentKlasseRowByFK_Schueler_ToKlasse != null)) {
-                    columnValuesArray[3] = parentKlasseRowByFK_Schueler_ToKlasse[0];
-                }
-                rowSchuelerRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowSchuelerRow);
-                return rowSchuelerRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SchuelerRow FindById(int Id) {
-                return ((SchuelerRow)(this.Rows.Find(new object[] {
-                            Id})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                SchuelerDataTable cln = ((SchuelerDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new SchuelerDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal void InitVars() {
-                this.columnId = base.Columns["Id"];
-                this.columnName = base.Columns["Name"];
-                this.columnVorname = base.Columns["Vorname"];
-                this.columnKlasseId = base.Columns["KlasseId"];
-                this.columnRufname = base.Columns["Rufname"];
-                this.columnGeschlecht = base.Columns["Geschlecht"];
-                this.columnGeburtsdatum = base.Columns["Geburtsdatum"];
-                this.columnGeburtsort = base.Columns["Geburtsort"];
-                this.columnBekenntnis = base.Columns["Bekenntnis"];
-                this.columnAnschriftPLZ = base.Columns["AnschriftPLZ"];
-                this.columnAnschriftOrt = base.Columns["AnschriftOrt"];
-                this.columnAnschriftStrasse = base.Columns["AnschriftStrasse"];
-                this.columnAnschriftTelefonnummer = base.Columns["AnschriftTelefonnummer"];
-                this.columnAusbildungsrichtung = base.Columns["Ausbildungsrichtung"];
-                this.columnFremdsprache2 = base.Columns["Fremdsprache2"];
-                this.columnReligionOderEthik = base.Columns["ReligionOderEthik"];
-                this.columnWahlpflichtfach = base.Columns["Wahlpflichtfach"];
-                this.columnWahlfach1 = base.Columns["Wahlfach1"];
-                this.columnWahlfach2 = base.Columns["Wahlfach2"];
-                this.columnWahlfach3 = base.Columns["Wahlfach3"];
-                this.columnWahlfach4 = base.Columns["Wahlfach4"];
-                this.columnWiederholung1Jahrgangsstufe = base.Columns["Wiederholung1Jahrgangsstufe"];
-                this.columnWiederholung2Jahrgangsstufe = base.Columns["Wiederholung2Jahrgangsstufe"];
-                this.columnWiederholung1Grund = base.Columns["Wiederholung1Grund"];
-                this.columnWiederholung2Grund = base.Columns["Wiederholung2Grund"];
-                this.columnProbezeitBis = base.Columns["ProbezeitBis"];
-                this.columnAustrittsdatum = base.Columns["Austrittsdatum"];
-                this.columnSchulischeVorbildung = base.Columns["SchulischeVorbildung"];
-                this.columnBeruflicheVorbildung = base.Columns["BeruflicheVorbildung"];
-                this.columnLRSStoerung = base.Columns["LRSStoerung"];
-                this.columnLRSSchwaeche = base.Columns["LRSSchwaeche"];
-                this.columnLRSBisDatum = base.Columns["LRSBisDatum"];
-                this.columnNachnameEltern1 = base.Columns["NachnameEltern1"];
-                this.columnVornameEltern1 = base.Columns["VornameEltern1"];
-                this.columnAnredeEltern1 = base.Columns["AnredeEltern1"];
-                this.columnVerwandtschaftsbezeichnungEltern1 = base.Columns["VerwandtschaftsbezeichnungEltern1"];
-                this.columnNachnameEltern2 = base.Columns["NachnameEltern2"];
-                this.columnVornameEltern2 = base.Columns["VornameEltern2"];
-                this.columnAnredeEltern2 = base.Columns["AnredeEltern2"];
-                this.columnVerwandtschaftsbezeichnungEltern2 = base.Columns["VerwandtschaftsbezeichnungEltern2"];
-                this.columnEintrittJahrgangsstufe = base.Columns["EintrittJahrgangsstufe"];
-                this.columnEintrittAm = base.Columns["EintrittAm"];
-                this.columnEintrittAusSchulnummer = base.Columns["EintrittAusSchulnummer"];
-                this.columnEMail = base.Columns["EMail"];
-                this.columnNotfalltelefonnummer = base.Columns["Notfalltelefonnummer"];
-                this.columnEmail = base.Columns["Email"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            private void InitClass() {
-                this.columnId = new global::System.Data.DataColumn("Id", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnId);
-                this.columnName = new global::System.Data.DataColumn("Name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnName);
-                this.columnVorname = new global::System.Data.DataColumn("Vorname", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVorname);
-                this.columnKlasseId = new global::System.Data.DataColumn("KlasseId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnKlasseId);
-                this.columnRufname = new global::System.Data.DataColumn("Rufname", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnRufname);
-                this.columnGeschlecht = new global::System.Data.DataColumn("Geschlecht", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnGeschlecht);
-                this.columnGeburtsdatum = new global::System.Data.DataColumn("Geburtsdatum", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnGeburtsdatum);
-                this.columnGeburtsort = new global::System.Data.DataColumn("Geburtsort", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnGeburtsort);
-                this.columnBekenntnis = new global::System.Data.DataColumn("Bekenntnis", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBekenntnis);
-                this.columnAnschriftPLZ = new global::System.Data.DataColumn("AnschriftPLZ", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnschriftPLZ);
-                this.columnAnschriftOrt = new global::System.Data.DataColumn("AnschriftOrt", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnschriftOrt);
-                this.columnAnschriftStrasse = new global::System.Data.DataColumn("AnschriftStrasse", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnschriftStrasse);
-                this.columnAnschriftTelefonnummer = new global::System.Data.DataColumn("AnschriftTelefonnummer", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnschriftTelefonnummer);
-                this.columnAusbildungsrichtung = new global::System.Data.DataColumn("Ausbildungsrichtung", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAusbildungsrichtung);
-                this.columnFremdsprache2 = new global::System.Data.DataColumn("Fremdsprache2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFremdsprache2);
-                this.columnReligionOderEthik = new global::System.Data.DataColumn("ReligionOderEthik", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnReligionOderEthik);
-                this.columnWahlpflichtfach = new global::System.Data.DataColumn("Wahlpflichtfach", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlpflichtfach);
-                this.columnWahlfach1 = new global::System.Data.DataColumn("Wahlfach1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach1);
-                this.columnWahlfach2 = new global::System.Data.DataColumn("Wahlfach2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach2);
-                this.columnWahlfach3 = new global::System.Data.DataColumn("Wahlfach3", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach3);
-                this.columnWahlfach4 = new global::System.Data.DataColumn("Wahlfach4", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach4);
-                this.columnWiederholung1Jahrgangsstufe = new global::System.Data.DataColumn("Wiederholung1Jahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWiederholung1Jahrgangsstufe);
-                this.columnWiederholung2Jahrgangsstufe = new global::System.Data.DataColumn("Wiederholung2Jahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWiederholung2Jahrgangsstufe);
-                this.columnWiederholung1Grund = new global::System.Data.DataColumn("Wiederholung1Grund", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWiederholung1Grund);
-                this.columnWiederholung2Grund = new global::System.Data.DataColumn("Wiederholung2Grund", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWiederholung2Grund);
-                this.columnProbezeitBis = new global::System.Data.DataColumn("ProbezeitBis", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnProbezeitBis);
-                this.columnAustrittsdatum = new global::System.Data.DataColumn("Austrittsdatum", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAustrittsdatum);
-                this.columnSchulischeVorbildung = new global::System.Data.DataColumn("SchulischeVorbildung", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSchulischeVorbildung);
-                this.columnBeruflicheVorbildung = new global::System.Data.DataColumn("BeruflicheVorbildung", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBeruflicheVorbildung);
-                this.columnLRSStoerung = new global::System.Data.DataColumn("LRSStoerung", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLRSStoerung);
-                this.columnLRSSchwaeche = new global::System.Data.DataColumn("LRSSchwaeche", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLRSSchwaeche);
-                this.columnLRSBisDatum = new global::System.Data.DataColumn("LRSBisDatum", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLRSBisDatum);
-                this.columnNachnameEltern1 = new global::System.Data.DataColumn("NachnameEltern1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNachnameEltern1);
-                this.columnVornameEltern1 = new global::System.Data.DataColumn("VornameEltern1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVornameEltern1);
-                this.columnAnredeEltern1 = new global::System.Data.DataColumn("AnredeEltern1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnredeEltern1);
-                this.columnVerwandtschaftsbezeichnungEltern1 = new global::System.Data.DataColumn("VerwandtschaftsbezeichnungEltern1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVerwandtschaftsbezeichnungEltern1);
-                this.columnNachnameEltern2 = new global::System.Data.DataColumn("NachnameEltern2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNachnameEltern2);
-                this.columnVornameEltern2 = new global::System.Data.DataColumn("VornameEltern2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVornameEltern2);
-                this.columnAnredeEltern2 = new global::System.Data.DataColumn("AnredeEltern2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnredeEltern2);
-                this.columnVerwandtschaftsbezeichnungEltern2 = new global::System.Data.DataColumn("VerwandtschaftsbezeichnungEltern2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVerwandtschaftsbezeichnungEltern2);
-                this.columnEintrittJahrgangsstufe = new global::System.Data.DataColumn("EintrittJahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEintrittJahrgangsstufe);
-                this.columnEintrittAm = new global::System.Data.DataColumn("EintrittAm", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEintrittAm);
-                this.columnEintrittAusSchulnummer = new global::System.Data.DataColumn("EintrittAusSchulnummer", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEintrittAusSchulnummer);
-                this.columnEMail = new global::System.Data.DataColumn("EMail", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEMail);
-                this.columnNotfalltelefonnummer = new global::System.Data.DataColumn("Notfalltelefonnummer", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNotfalltelefonnummer);
-                this.columnEmail = new global::System.Data.DataColumn("Email", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEmail);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnId}, true));
-                this.columnId.AllowDBNull = false;
-                this.columnId.Unique = true;
-                this.columnName.AllowDBNull = false;
-                this.columnName.MaxLength = 256;
-                this.columnVorname.AllowDBNull = false;
-                this.columnVorname.MaxLength = 256;
-                this.columnKlasseId.AllowDBNull = false;
-                this.columnRufname.MaxLength = 256;
-                this.columnGeschlecht.MaxLength = 50;
-                this.columnGeburtsort.MaxLength = 256;
-                this.columnBekenntnis.MaxLength = 50;
-                this.columnAnschriftPLZ.MaxLength = 256;
-                this.columnAnschriftOrt.MaxLength = 256;
-                this.columnAnschriftStrasse.MaxLength = 256;
-                this.columnAnschriftTelefonnummer.MaxLength = 256;
-                this.columnAusbildungsrichtung.MaxLength = 50;
-                this.columnFremdsprache2.MaxLength = 50;
-                this.columnReligionOderEthik.MaxLength = 50;
-                this.columnWahlfach1.MaxLength = 50;
-                this.columnWahlfach2.MaxLength = 50;
-                this.columnWahlfach3.MaxLength = 50;
-                this.columnWahlfach4.MaxLength = 50;
-                this.columnWiederholung1Jahrgangsstufe.MaxLength = 50;
-                this.columnWiederholung2Jahrgangsstufe.MaxLength = 50;
-                this.columnWiederholung1Grund.MaxLength = 256;
-                this.columnWiederholung2Grund.MaxLength = 256;
-                this.columnSchulischeVorbildung.MaxLength = 50;
-                this.columnBeruflicheVorbildung.MaxLength = 50;
-                this.columnEmail.MaxLength = 256;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SchuelerRow NewSchuelerRow() {
-                return ((SchuelerRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new SchuelerRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(SchuelerRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.SchuelerRowChanged != null)) {
-                    this.SchuelerRowChanged(this, new SchuelerRowChangeEvent(((SchuelerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.SchuelerRowChanging != null)) {
-                    this.SchuelerRowChanging(this, new SchuelerRowChangeEvent(((SchuelerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.SchuelerRowDeleted != null)) {
-                    this.SchuelerRowDeleted(this, new SchuelerRowChangeEvent(((SchuelerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.SchuelerRowDeleting != null)) {
-                    this.SchuelerRowDeleting(this, new SchuelerRowChangeEvent(((SchuelerRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveSchuelerRow(SchuelerRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                diNoDataSet ds = new diNoDataSet();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "SchuelerDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -7017,6 +6053,966 @@ namespace diNo {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class SchuelerDataTable : global::System.Data.TypedTableBase<SchuelerRow> {
+            
+            private global::System.Data.DataColumn columnId;
+            
+            private global::System.Data.DataColumn columnName;
+            
+            private global::System.Data.DataColumn columnVorname;
+            
+            private global::System.Data.DataColumn columnKlasseId;
+            
+            private global::System.Data.DataColumn columnRufname;
+            
+            private global::System.Data.DataColumn columnGeschlecht;
+            
+            private global::System.Data.DataColumn columnGeburtsdatum;
+            
+            private global::System.Data.DataColumn columnGeburtsort;
+            
+            private global::System.Data.DataColumn columnBekenntnis;
+            
+            private global::System.Data.DataColumn columnAnschriftPLZ;
+            
+            private global::System.Data.DataColumn columnAnschriftOrt;
+            
+            private global::System.Data.DataColumn columnAnschriftStrasse;
+            
+            private global::System.Data.DataColumn columnAnschriftTelefonnummer;
+            
+            private global::System.Data.DataColumn columnAusbildungsrichtung;
+            
+            private global::System.Data.DataColumn columnFremdsprache2;
+            
+            private global::System.Data.DataColumn columnReligionOderEthik;
+            
+            private global::System.Data.DataColumn columnWahlpflichtfach;
+            
+            private global::System.Data.DataColumn columnWahlfach1;
+            
+            private global::System.Data.DataColumn columnWahlfach2;
+            
+            private global::System.Data.DataColumn columnWahlfach3;
+            
+            private global::System.Data.DataColumn columnWahlfach4;
+            
+            private global::System.Data.DataColumn columnWiederholung1Jahrgangsstufe;
+            
+            private global::System.Data.DataColumn columnWiederholung2Jahrgangsstufe;
+            
+            private global::System.Data.DataColumn columnWiederholung1Grund;
+            
+            private global::System.Data.DataColumn columnWiederholung2Grund;
+            
+            private global::System.Data.DataColumn columnProbezeitBis;
+            
+            private global::System.Data.DataColumn columnAustrittsdatum;
+            
+            private global::System.Data.DataColumn columnSchulischeVorbildung;
+            
+            private global::System.Data.DataColumn columnBeruflicheVorbildung;
+            
+            private global::System.Data.DataColumn columnLRSStoerung;
+            
+            private global::System.Data.DataColumn columnLRSSchwaeche;
+            
+            private global::System.Data.DataColumn columnLRSBisDatum;
+            
+            private global::System.Data.DataColumn columnNachnameEltern1;
+            
+            private global::System.Data.DataColumn columnVornameEltern1;
+            
+            private global::System.Data.DataColumn columnAnredeEltern1;
+            
+            private global::System.Data.DataColumn columnVerwandtschaftsbezeichnungEltern1;
+            
+            private global::System.Data.DataColumn columnNachnameEltern2;
+            
+            private global::System.Data.DataColumn columnVornameEltern2;
+            
+            private global::System.Data.DataColumn columnAnredeEltern2;
+            
+            private global::System.Data.DataColumn columnVerwandtschaftsbezeichnungEltern2;
+            
+            private global::System.Data.DataColumn columnEintrittJahrgangsstufe;
+            
+            private global::System.Data.DataColumn columnEintrittAm;
+            
+            private global::System.Data.DataColumn columnEintrittAusSchulnummer;
+            
+            private global::System.Data.DataColumn columnEmail;
+            
+            private global::System.Data.DataColumn columnNotfalltelefonnummer;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SchuelerDataTable() {
+                this.TableName = "Schueler";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal SchuelerDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected SchuelerDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IdColumn {
+                get {
+                    return this.columnId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NameColumn {
+                get {
+                    return this.columnName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VornameColumn {
+                get {
+                    return this.columnVorname;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn KlasseIdColumn {
+                get {
+                    return this.columnKlasseId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn RufnameColumn {
+                get {
+                    return this.columnRufname;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GeschlechtColumn {
+                get {
+                    return this.columnGeschlecht;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GeburtsdatumColumn {
+                get {
+                    return this.columnGeburtsdatum;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn GeburtsortColumn {
+                get {
+                    return this.columnGeburtsort;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn BekenntnisColumn {
+                get {
+                    return this.columnBekenntnis;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AnschriftPLZColumn {
+                get {
+                    return this.columnAnschriftPLZ;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AnschriftOrtColumn {
+                get {
+                    return this.columnAnschriftOrt;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AnschriftStrasseColumn {
+                get {
+                    return this.columnAnschriftStrasse;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AnschriftTelefonnummerColumn {
+                get {
+                    return this.columnAnschriftTelefonnummer;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AusbildungsrichtungColumn {
+                get {
+                    return this.columnAusbildungsrichtung;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Fremdsprache2Column {
+                get {
+                    return this.columnFremdsprache2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ReligionOderEthikColumn {
+                get {
+                    return this.columnReligionOderEthik;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn WahlpflichtfachColumn {
+                get {
+                    return this.columnWahlpflichtfach;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Wahlfach1Column {
+                get {
+                    return this.columnWahlfach1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Wahlfach2Column {
+                get {
+                    return this.columnWahlfach2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Wahlfach3Column {
+                get {
+                    return this.columnWahlfach3;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Wahlfach4Column {
+                get {
+                    return this.columnWahlfach4;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Wiederholung1JahrgangsstufeColumn {
+                get {
+                    return this.columnWiederholung1Jahrgangsstufe;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Wiederholung2JahrgangsstufeColumn {
+                get {
+                    return this.columnWiederholung2Jahrgangsstufe;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Wiederholung1GrundColumn {
+                get {
+                    return this.columnWiederholung1Grund;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Wiederholung2GrundColumn {
+                get {
+                    return this.columnWiederholung2Grund;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ProbezeitBisColumn {
+                get {
+                    return this.columnProbezeitBis;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AustrittsdatumColumn {
+                get {
+                    return this.columnAustrittsdatum;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SchulischeVorbildungColumn {
+                get {
+                    return this.columnSchulischeVorbildung;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn BeruflicheVorbildungColumn {
+                get {
+                    return this.columnBeruflicheVorbildung;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LRSStoerungColumn {
+                get {
+                    return this.columnLRSStoerung;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LRSSchwaecheColumn {
+                get {
+                    return this.columnLRSSchwaeche;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LRSBisDatumColumn {
+                get {
+                    return this.columnLRSBisDatum;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NachnameEltern1Column {
+                get {
+                    return this.columnNachnameEltern1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VornameEltern1Column {
+                get {
+                    return this.columnVornameEltern1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AnredeEltern1Column {
+                get {
+                    return this.columnAnredeEltern1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VerwandtschaftsbezeichnungEltern1Column {
+                get {
+                    return this.columnVerwandtschaftsbezeichnungEltern1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NachnameEltern2Column {
+                get {
+                    return this.columnNachnameEltern2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VornameEltern2Column {
+                get {
+                    return this.columnVornameEltern2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AnredeEltern2Column {
+                get {
+                    return this.columnAnredeEltern2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VerwandtschaftsbezeichnungEltern2Column {
+                get {
+                    return this.columnVerwandtschaftsbezeichnungEltern2;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EintrittJahrgangsstufeColumn {
+                get {
+                    return this.columnEintrittJahrgangsstufe;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EintrittAmColumn {
+                get {
+                    return this.columnEintrittAm;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EintrittAusSchulnummerColumn {
+                get {
+                    return this.columnEintrittAusSchulnummer;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn EmailColumn {
+                get {
+                    return this.columnEmail;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NotfalltelefonnummerColumn {
+                get {
+                    return this.columnNotfalltelefonnummer;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SchuelerRow this[int index] {
+                get {
+                    return ((SchuelerRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event SchuelerRowChangeEventHandler SchuelerRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event SchuelerRowChangeEventHandler SchuelerRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event SchuelerRowChangeEventHandler SchuelerRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event SchuelerRowChangeEventHandler SchuelerRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddSchuelerRow(SchuelerRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SchuelerRow AddSchuelerRow(
+                        int Id, 
+                        string Name, 
+                        string Vorname, 
+                        KlasseRow parentKlasseRowByFK_Schueler_ToTable, 
+                        string Rufname, 
+                        string Geschlecht, 
+                        System.DateTime Geburtsdatum, 
+                        string Geburtsort, 
+                        string Bekenntnis, 
+                        string AnschriftPLZ, 
+                        string AnschriftOrt, 
+                        string AnschriftStrasse, 
+                        string AnschriftTelefonnummer, 
+                        string Ausbildungsrichtung, 
+                        string Fremdsprache2, 
+                        string ReligionOderEthik, 
+                        string Wahlpflichtfach, 
+                        string Wahlfach1, 
+                        string Wahlfach2, 
+                        string Wahlfach3, 
+                        string Wahlfach4, 
+                        string Wiederholung1Jahrgangsstufe, 
+                        string Wiederholung2Jahrgangsstufe, 
+                        string Wiederholung1Grund, 
+                        string Wiederholung2Grund, 
+                        System.DateTime ProbezeitBis, 
+                        System.DateTime Austrittsdatum, 
+                        string SchulischeVorbildung, 
+                        string BeruflicheVorbildung, 
+                        bool LRSStoerung, 
+                        bool LRSSchwaeche, 
+                        System.DateTime LRSBisDatum, 
+                        string NachnameEltern1, 
+                        string VornameEltern1, 
+                        string AnredeEltern1, 
+                        string VerwandtschaftsbezeichnungEltern1, 
+                        string NachnameEltern2, 
+                        string VornameEltern2, 
+                        string AnredeEltern2, 
+                        string VerwandtschaftsbezeichnungEltern2, 
+                        string EintrittJahrgangsstufe, 
+                        System.DateTime EintrittAm, 
+                        int EintrittAusSchulnummer, 
+                        string Email, 
+                        string Notfalltelefonnummer) {
+                SchuelerRow rowSchuelerRow = ((SchuelerRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        Id,
+                        Name,
+                        Vorname,
+                        null,
+                        Rufname,
+                        Geschlecht,
+                        Geburtsdatum,
+                        Geburtsort,
+                        Bekenntnis,
+                        AnschriftPLZ,
+                        AnschriftOrt,
+                        AnschriftStrasse,
+                        AnschriftTelefonnummer,
+                        Ausbildungsrichtung,
+                        Fremdsprache2,
+                        ReligionOderEthik,
+                        Wahlpflichtfach,
+                        Wahlfach1,
+                        Wahlfach2,
+                        Wahlfach3,
+                        Wahlfach4,
+                        Wiederholung1Jahrgangsstufe,
+                        Wiederholung2Jahrgangsstufe,
+                        Wiederholung1Grund,
+                        Wiederholung2Grund,
+                        ProbezeitBis,
+                        Austrittsdatum,
+                        SchulischeVorbildung,
+                        BeruflicheVorbildung,
+                        LRSStoerung,
+                        LRSSchwaeche,
+                        LRSBisDatum,
+                        NachnameEltern1,
+                        VornameEltern1,
+                        AnredeEltern1,
+                        VerwandtschaftsbezeichnungEltern1,
+                        NachnameEltern2,
+                        VornameEltern2,
+                        AnredeEltern2,
+                        VerwandtschaftsbezeichnungEltern2,
+                        EintrittJahrgangsstufe,
+                        EintrittAm,
+                        EintrittAusSchulnummer,
+                        Email,
+                        Notfalltelefonnummer};
+                if ((parentKlasseRowByFK_Schueler_ToTable != null)) {
+                    columnValuesArray[3] = parentKlasseRowByFK_Schueler_ToTable[0];
+                }
+                rowSchuelerRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowSchuelerRow);
+                return rowSchuelerRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SchuelerRow FindById(int Id) {
+                return ((SchuelerRow)(this.Rows.Find(new object[] {
+                            Id})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                SchuelerDataTable cln = ((SchuelerDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new SchuelerDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnId = base.Columns["Id"];
+                this.columnName = base.Columns["Name"];
+                this.columnVorname = base.Columns["Vorname"];
+                this.columnKlasseId = base.Columns["KlasseId"];
+                this.columnRufname = base.Columns["Rufname"];
+                this.columnGeschlecht = base.Columns["Geschlecht"];
+                this.columnGeburtsdatum = base.Columns["Geburtsdatum"];
+                this.columnGeburtsort = base.Columns["Geburtsort"];
+                this.columnBekenntnis = base.Columns["Bekenntnis"];
+                this.columnAnschriftPLZ = base.Columns["AnschriftPLZ"];
+                this.columnAnschriftOrt = base.Columns["AnschriftOrt"];
+                this.columnAnschriftStrasse = base.Columns["AnschriftStrasse"];
+                this.columnAnschriftTelefonnummer = base.Columns["AnschriftTelefonnummer"];
+                this.columnAusbildungsrichtung = base.Columns["Ausbildungsrichtung"];
+                this.columnFremdsprache2 = base.Columns["Fremdsprache2"];
+                this.columnReligionOderEthik = base.Columns["ReligionOderEthik"];
+                this.columnWahlpflichtfach = base.Columns["Wahlpflichtfach"];
+                this.columnWahlfach1 = base.Columns["Wahlfach1"];
+                this.columnWahlfach2 = base.Columns["Wahlfach2"];
+                this.columnWahlfach3 = base.Columns["Wahlfach3"];
+                this.columnWahlfach4 = base.Columns["Wahlfach4"];
+                this.columnWiederholung1Jahrgangsstufe = base.Columns["Wiederholung1Jahrgangsstufe"];
+                this.columnWiederholung2Jahrgangsstufe = base.Columns["Wiederholung2Jahrgangsstufe"];
+                this.columnWiederholung1Grund = base.Columns["Wiederholung1Grund"];
+                this.columnWiederholung2Grund = base.Columns["Wiederholung2Grund"];
+                this.columnProbezeitBis = base.Columns["ProbezeitBis"];
+                this.columnAustrittsdatum = base.Columns["Austrittsdatum"];
+                this.columnSchulischeVorbildung = base.Columns["SchulischeVorbildung"];
+                this.columnBeruflicheVorbildung = base.Columns["BeruflicheVorbildung"];
+                this.columnLRSStoerung = base.Columns["LRSStoerung"];
+                this.columnLRSSchwaeche = base.Columns["LRSSchwaeche"];
+                this.columnLRSBisDatum = base.Columns["LRSBisDatum"];
+                this.columnNachnameEltern1 = base.Columns["NachnameEltern1"];
+                this.columnVornameEltern1 = base.Columns["VornameEltern1"];
+                this.columnAnredeEltern1 = base.Columns["AnredeEltern1"];
+                this.columnVerwandtschaftsbezeichnungEltern1 = base.Columns["VerwandtschaftsbezeichnungEltern1"];
+                this.columnNachnameEltern2 = base.Columns["NachnameEltern2"];
+                this.columnVornameEltern2 = base.Columns["VornameEltern2"];
+                this.columnAnredeEltern2 = base.Columns["AnredeEltern2"];
+                this.columnVerwandtschaftsbezeichnungEltern2 = base.Columns["VerwandtschaftsbezeichnungEltern2"];
+                this.columnEintrittJahrgangsstufe = base.Columns["EintrittJahrgangsstufe"];
+                this.columnEintrittAm = base.Columns["EintrittAm"];
+                this.columnEintrittAusSchulnummer = base.Columns["EintrittAusSchulnummer"];
+                this.columnEmail = base.Columns["Email"];
+                this.columnNotfalltelefonnummer = base.Columns["Notfalltelefonnummer"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnId = new global::System.Data.DataColumn("Id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnId);
+                this.columnName = new global::System.Data.DataColumn("Name", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnName);
+                this.columnVorname = new global::System.Data.DataColumn("Vorname", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVorname);
+                this.columnKlasseId = new global::System.Data.DataColumn("KlasseId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnKlasseId);
+                this.columnRufname = new global::System.Data.DataColumn("Rufname", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRufname);
+                this.columnGeschlecht = new global::System.Data.DataColumn("Geschlecht", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGeschlecht);
+                this.columnGeburtsdatum = new global::System.Data.DataColumn("Geburtsdatum", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGeburtsdatum);
+                this.columnGeburtsort = new global::System.Data.DataColumn("Geburtsort", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnGeburtsort);
+                this.columnBekenntnis = new global::System.Data.DataColumn("Bekenntnis", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBekenntnis);
+                this.columnAnschriftPLZ = new global::System.Data.DataColumn("AnschriftPLZ", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAnschriftPLZ);
+                this.columnAnschriftOrt = new global::System.Data.DataColumn("AnschriftOrt", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAnschriftOrt);
+                this.columnAnschriftStrasse = new global::System.Data.DataColumn("AnschriftStrasse", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAnschriftStrasse);
+                this.columnAnschriftTelefonnummer = new global::System.Data.DataColumn("AnschriftTelefonnummer", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAnschriftTelefonnummer);
+                this.columnAusbildungsrichtung = new global::System.Data.DataColumn("Ausbildungsrichtung", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAusbildungsrichtung);
+                this.columnFremdsprache2 = new global::System.Data.DataColumn("Fremdsprache2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFremdsprache2);
+                this.columnReligionOderEthik = new global::System.Data.DataColumn("ReligionOderEthik", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnReligionOderEthik);
+                this.columnWahlpflichtfach = new global::System.Data.DataColumn("Wahlpflichtfach", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWahlpflichtfach);
+                this.columnWahlfach1 = new global::System.Data.DataColumn("Wahlfach1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWahlfach1);
+                this.columnWahlfach2 = new global::System.Data.DataColumn("Wahlfach2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWahlfach2);
+                this.columnWahlfach3 = new global::System.Data.DataColumn("Wahlfach3", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWahlfach3);
+                this.columnWahlfach4 = new global::System.Data.DataColumn("Wahlfach4", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWahlfach4);
+                this.columnWiederholung1Jahrgangsstufe = new global::System.Data.DataColumn("Wiederholung1Jahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWiederholung1Jahrgangsstufe);
+                this.columnWiederholung2Jahrgangsstufe = new global::System.Data.DataColumn("Wiederholung2Jahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWiederholung2Jahrgangsstufe);
+                this.columnWiederholung1Grund = new global::System.Data.DataColumn("Wiederholung1Grund", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWiederholung1Grund);
+                this.columnWiederholung2Grund = new global::System.Data.DataColumn("Wiederholung2Grund", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWiederholung2Grund);
+                this.columnProbezeitBis = new global::System.Data.DataColumn("ProbezeitBis", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProbezeitBis);
+                this.columnAustrittsdatum = new global::System.Data.DataColumn("Austrittsdatum", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAustrittsdatum);
+                this.columnSchulischeVorbildung = new global::System.Data.DataColumn("SchulischeVorbildung", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSchulischeVorbildung);
+                this.columnBeruflicheVorbildung = new global::System.Data.DataColumn("BeruflicheVorbildung", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBeruflicheVorbildung);
+                this.columnLRSStoerung = new global::System.Data.DataColumn("LRSStoerung", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLRSStoerung);
+                this.columnLRSSchwaeche = new global::System.Data.DataColumn("LRSSchwaeche", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLRSSchwaeche);
+                this.columnLRSBisDatum = new global::System.Data.DataColumn("LRSBisDatum", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLRSBisDatum);
+                this.columnNachnameEltern1 = new global::System.Data.DataColumn("NachnameEltern1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNachnameEltern1);
+                this.columnVornameEltern1 = new global::System.Data.DataColumn("VornameEltern1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVornameEltern1);
+                this.columnAnredeEltern1 = new global::System.Data.DataColumn("AnredeEltern1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAnredeEltern1);
+                this.columnVerwandtschaftsbezeichnungEltern1 = new global::System.Data.DataColumn("VerwandtschaftsbezeichnungEltern1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVerwandtschaftsbezeichnungEltern1);
+                this.columnNachnameEltern2 = new global::System.Data.DataColumn("NachnameEltern2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNachnameEltern2);
+                this.columnVornameEltern2 = new global::System.Data.DataColumn("VornameEltern2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVornameEltern2);
+                this.columnAnredeEltern2 = new global::System.Data.DataColumn("AnredeEltern2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAnredeEltern2);
+                this.columnVerwandtschaftsbezeichnungEltern2 = new global::System.Data.DataColumn("VerwandtschaftsbezeichnungEltern2", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVerwandtschaftsbezeichnungEltern2);
+                this.columnEintrittJahrgangsstufe = new global::System.Data.DataColumn("EintrittJahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEintrittJahrgangsstufe);
+                this.columnEintrittAm = new global::System.Data.DataColumn("EintrittAm", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEintrittAm);
+                this.columnEintrittAusSchulnummer = new global::System.Data.DataColumn("EintrittAusSchulnummer", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEintrittAusSchulnummer);
+                this.columnEmail = new global::System.Data.DataColumn("Email", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnEmail);
+                this.columnNotfalltelefonnummer = new global::System.Data.DataColumn("Notfalltelefonnummer", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNotfalltelefonnummer);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnId}, true));
+                this.columnId.AllowDBNull = false;
+                this.columnId.Unique = true;
+                this.columnName.AllowDBNull = false;
+                this.columnName.MaxLength = 256;
+                this.columnVorname.AllowDBNull = false;
+                this.columnVorname.MaxLength = 256;
+                this.columnKlasseId.AllowDBNull = false;
+                this.columnRufname.MaxLength = 256;
+                this.columnGeschlecht.MaxLength = 50;
+                this.columnGeburtsort.MaxLength = 256;
+                this.columnBekenntnis.MaxLength = 50;
+                this.columnAnschriftPLZ.MaxLength = 256;
+                this.columnAnschriftOrt.MaxLength = 256;
+                this.columnAnschriftStrasse.MaxLength = 256;
+                this.columnAnschriftTelefonnummer.MaxLength = 256;
+                this.columnAusbildungsrichtung.MaxLength = 50;
+                this.columnFremdsprache2.MaxLength = 50;
+                this.columnReligionOderEthik.MaxLength = 50;
+                this.columnWahlpflichtfach.MaxLength = 50;
+                this.columnWahlfach1.MaxLength = 50;
+                this.columnWahlfach2.MaxLength = 50;
+                this.columnWahlfach3.MaxLength = 50;
+                this.columnWahlfach4.MaxLength = 50;
+                this.columnWiederholung1Jahrgangsstufe.MaxLength = 50;
+                this.columnWiederholung2Jahrgangsstufe.MaxLength = 50;
+                this.columnWiederholung1Grund.MaxLength = 256;
+                this.columnWiederholung2Grund.MaxLength = 256;
+                this.columnSchulischeVorbildung.MaxLength = 50;
+                this.columnBeruflicheVorbildung.MaxLength = 50;
+                this.columnNachnameEltern1.MaxLength = 50;
+                this.columnVornameEltern1.MaxLength = 50;
+                this.columnAnredeEltern1.MaxLength = 10;
+                this.columnVerwandtschaftsbezeichnungEltern1.MaxLength = 10;
+                this.columnNachnameEltern2.MaxLength = 50;
+                this.columnVornameEltern2.MaxLength = 50;
+                this.columnAnredeEltern2.MaxLength = 10;
+                this.columnVerwandtschaftsbezeichnungEltern2.MaxLength = 10;
+                this.columnEintrittJahrgangsstufe.MaxLength = 10;
+                this.columnEmail.MaxLength = 256;
+                this.columnNotfalltelefonnummer.MaxLength = 256;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SchuelerRow NewSchuelerRow() {
+                return ((SchuelerRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new SchuelerRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(SchuelerRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.SchuelerRowChanged != null)) {
+                    this.SchuelerRowChanged(this, new SchuelerRowChangeEvent(((SchuelerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.SchuelerRowChanging != null)) {
+                    this.SchuelerRowChanging(this, new SchuelerRowChangeEvent(((SchuelerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.SchuelerRowDeleted != null)) {
+                    this.SchuelerRowDeleted(this, new SchuelerRowChangeEvent(((SchuelerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.SchuelerRowDeleting != null)) {
+                    this.SchuelerRowDeleting(this, new SchuelerRowChangeEvent(((SchuelerRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemoveSchuelerRow(SchuelerRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                diNoDataSet ds = new diNoDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "SchuelerDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class FachRow : global::System.Data.DataRow {
@@ -7174,23 +7170,23 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SchuelerRow[] GetSchuelerRows() {
-                if ((this.Table.ChildRelations["FK_Schueler_ToKlasse"] == null)) {
-                    return new SchuelerRow[0];
-                }
-                else {
-                    return ((SchuelerRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Schueler_ToKlasse"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public KlasseKursRow[] GetKlasseKursRows() {
                 if ((this.Table.ChildRelations["FK_KlasseKurs_Klasse"] == null)) {
                     return new KlasseKursRow[0];
                 }
                 else {
                     return ((KlasseKursRow[])(base.GetChildRows(this.Table.ChildRelations["FK_KlasseKurs_Klasse"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SchuelerRow[] GetSchuelerRows() {
+                if ((this.Table.ChildRelations["FK_Schueler_ToTable"] == null)) {
+                    return new SchuelerRow[0];
+                }
+                else {
+                    return ((SchuelerRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Schueler_ToTable"])));
                 }
             }
         }
@@ -7518,1320 +7514,6 @@ namespace diNo {
                 }
                 else {
                     return ((NoteRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Note_Notenart"])));
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class SchuelerRow : global::System.Data.DataRow {
-            
-            private SchuelerDataTable tableSchueler;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal SchuelerRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableSchueler = ((SchuelerDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Id {
-                get {
-                    return ((int)(this[this.tableSchueler.IdColumn]));
-                }
-                set {
-                    this[this.tableSchueler.IdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Name {
-                get {
-                    return ((string)(this[this.tableSchueler.NameColumn]));
-                }
-                set {
-                    this[this.tableSchueler.NameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Vorname {
-                get {
-                    return ((string)(this[this.tableSchueler.VornameColumn]));
-                }
-                set {
-                    this[this.tableSchueler.VornameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int KlasseId {
-                get {
-                    return ((int)(this[this.tableSchueler.KlasseIdColumn]));
-                }
-                set {
-                    this[this.tableSchueler.KlasseIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Rufname {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.RufnameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Rufname in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.RufnameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Geschlecht {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.GeschlechtColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Geschlecht in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.GeschlechtColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime Geburtsdatum {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableSchueler.GeburtsdatumColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Geburtsdatum in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.GeburtsdatumColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Geburtsort {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.GeburtsortColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Geburtsort in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.GeburtsortColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Bekenntnis {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.BekenntnisColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Bekenntnis in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.BekenntnisColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnschriftPLZ {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.AnschriftPLZColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftPLZ in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.AnschriftPLZColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnschriftOrt {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.AnschriftOrtColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftOrt in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.AnschriftOrtColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnschriftStrasse {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.AnschriftStrasseColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftStrasse in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.AnschriftStrasseColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnschriftTelefonnummer {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.AnschriftTelefonnummerColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftTelefonnummer in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.AnschriftTelefonnummerColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Ausbildungsrichtung {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.AusbildungsrichtungColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Ausbildungsrichtung in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.AusbildungsrichtungColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Fremdsprache2 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Fremdsprache2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Fremdsprache2 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Fremdsprache2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ReligionOderEthik {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.ReligionOderEthikColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte ReligionOderEthik in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.ReligionOderEthikColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wahlpflichtfach {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.WahlpflichtfachColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlpflichtfach in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.WahlpflichtfachColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wahlfach1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wahlfach1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach1 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wahlfach1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wahlfach2 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wahlfach2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach2 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wahlfach2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wahlfach3 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wahlfach3Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach3 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wahlfach3Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wahlfach4 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wahlfach4Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach4 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wahlfach4Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wiederholung1Jahrgangsstufe {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wiederholung1JahrgangsstufeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung1Jahrgangsstufe in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wiederholung1JahrgangsstufeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wiederholung2Jahrgangsstufe {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wiederholung2JahrgangsstufeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung2Jahrgangsstufe in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wiederholung2JahrgangsstufeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wiederholung1Grund {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wiederholung1GrundColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung1Grund in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wiederholung1GrundColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wiederholung2Grund {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wiederholung2GrundColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung2Grund in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wiederholung2GrundColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime ProbezeitBis {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableSchueler.ProbezeitBisColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte ProbezeitBis in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.ProbezeitBisColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime Austrittsdatum {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableSchueler.AustrittsdatumColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Austrittsdatum in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.AustrittsdatumColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string SchulischeVorbildung {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.SchulischeVorbildungColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte SchulischeVorbildung in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.SchulischeVorbildungColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string BeruflicheVorbildung {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.BeruflicheVorbildungColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte BeruflicheVorbildung in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.BeruflicheVorbildungColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool LRSStoerung {
-                get {
-                    try {
-                        return ((bool)(this[this.tableSchueler.LRSStoerungColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte LRSStoerung in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.LRSStoerungColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool LRSSchwaeche {
-                get {
-                    try {
-                        return ((bool)(this[this.tableSchueler.LRSSchwaecheColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte LRSSchwaeche in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.LRSSchwaecheColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime LRSBisDatum {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableSchueler.LRSBisDatumColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte LRSBisDatum in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.LRSBisDatumColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string NachnameEltern1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.NachnameEltern1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte NachnameEltern1 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.NachnameEltern1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string VornameEltern1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.VornameEltern1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VornameEltern1 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.VornameEltern1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnredeEltern1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.AnredeEltern1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnredeEltern1 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.AnredeEltern1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string VerwandtschaftsbezeichnungEltern1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.VerwandtschaftsbezeichnungEltern1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VerwandtschaftsbezeichnungEltern1 in Tabelle Schueler ist DBN" +
-                                "ull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.VerwandtschaftsbezeichnungEltern1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string NachnameEltern2 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.NachnameEltern2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte NachnameEltern2 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.NachnameEltern2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string VornameEltern2 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.VornameEltern2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VornameEltern2 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.VornameEltern2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnredeEltern2 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.AnredeEltern2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnredeEltern2 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.AnredeEltern2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string VerwandtschaftsbezeichnungEltern2 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.VerwandtschaftsbezeichnungEltern2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VerwandtschaftsbezeichnungEltern2 in Tabelle Schueler ist DBN" +
-                                "ull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.VerwandtschaftsbezeichnungEltern2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string EintrittJahrgangsstufe {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.EintrittJahrgangsstufeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittJahrgangsstufe in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.EintrittJahrgangsstufeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime EintrittAm {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableSchueler.EintrittAmColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittAm in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.EintrittAmColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int EintrittAusSchulnummer {
-                get {
-                    try {
-                        return ((int)(this[this.tableSchueler.EintrittAusSchulnummerColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittAusSchulnummer in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.EintrittAusSchulnummerColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string EMail {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.EMailColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EMail in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.EMailColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Notfalltelefonnummer {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.NotfalltelefonnummerColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Notfalltelefonnummer in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.NotfalltelefonnummerColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Email {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.EmailColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Email in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.EmailColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public KlasseRow KlasseRow {
-                get {
-                    return ((KlasseRow)(this.GetParentRow(this.Table.ParentRelations["FK_Schueler_ToKlasse"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_Schueler_ToKlasse"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsRufnameNull() {
-                return this.IsNull(this.tableSchueler.RufnameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetRufnameNull() {
-                this[this.tableSchueler.RufnameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsGeschlechtNull() {
-                return this.IsNull(this.tableSchueler.GeschlechtColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetGeschlechtNull() {
-                this[this.tableSchueler.GeschlechtColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsGeburtsdatumNull() {
-                return this.IsNull(this.tableSchueler.GeburtsdatumColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetGeburtsdatumNull() {
-                this[this.tableSchueler.GeburtsdatumColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsGeburtsortNull() {
-                return this.IsNull(this.tableSchueler.GeburtsortColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetGeburtsortNull() {
-                this[this.tableSchueler.GeburtsortColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsBekenntnisNull() {
-                return this.IsNull(this.tableSchueler.BekenntnisColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetBekenntnisNull() {
-                this[this.tableSchueler.BekenntnisColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnschriftPLZNull() {
-                return this.IsNull(this.tableSchueler.AnschriftPLZColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnschriftPLZNull() {
-                this[this.tableSchueler.AnschriftPLZColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnschriftOrtNull() {
-                return this.IsNull(this.tableSchueler.AnschriftOrtColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnschriftOrtNull() {
-                this[this.tableSchueler.AnschriftOrtColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnschriftStrasseNull() {
-                return this.IsNull(this.tableSchueler.AnschriftStrasseColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnschriftStrasseNull() {
-                this[this.tableSchueler.AnschriftStrasseColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnschriftTelefonnummerNull() {
-                return this.IsNull(this.tableSchueler.AnschriftTelefonnummerColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnschriftTelefonnummerNull() {
-                this[this.tableSchueler.AnschriftTelefonnummerColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAusbildungsrichtungNull() {
-                return this.IsNull(this.tableSchueler.AusbildungsrichtungColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAusbildungsrichtungNull() {
-                this[this.tableSchueler.AusbildungsrichtungColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsFremdsprache2Null() {
-                return this.IsNull(this.tableSchueler.Fremdsprache2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetFremdsprache2Null() {
-                this[this.tableSchueler.Fremdsprache2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsReligionOderEthikNull() {
-                return this.IsNull(this.tableSchueler.ReligionOderEthikColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetReligionOderEthikNull() {
-                this[this.tableSchueler.ReligionOderEthikColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWahlpflichtfachNull() {
-                return this.IsNull(this.tableSchueler.WahlpflichtfachColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWahlpflichtfachNull() {
-                this[this.tableSchueler.WahlpflichtfachColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWahlfach1Null() {
-                return this.IsNull(this.tableSchueler.Wahlfach1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWahlfach1Null() {
-                this[this.tableSchueler.Wahlfach1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWahlfach2Null() {
-                return this.IsNull(this.tableSchueler.Wahlfach2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWahlfach2Null() {
-                this[this.tableSchueler.Wahlfach2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWahlfach3Null() {
-                return this.IsNull(this.tableSchueler.Wahlfach3Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWahlfach3Null() {
-                this[this.tableSchueler.Wahlfach3Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWahlfach4Null() {
-                return this.IsNull(this.tableSchueler.Wahlfach4Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWahlfach4Null() {
-                this[this.tableSchueler.Wahlfach4Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWiederholung1JahrgangsstufeNull() {
-                return this.IsNull(this.tableSchueler.Wiederholung1JahrgangsstufeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWiederholung1JahrgangsstufeNull() {
-                this[this.tableSchueler.Wiederholung1JahrgangsstufeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWiederholung2JahrgangsstufeNull() {
-                return this.IsNull(this.tableSchueler.Wiederholung2JahrgangsstufeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWiederholung2JahrgangsstufeNull() {
-                this[this.tableSchueler.Wiederholung2JahrgangsstufeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWiederholung1GrundNull() {
-                return this.IsNull(this.tableSchueler.Wiederholung1GrundColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWiederholung1GrundNull() {
-                this[this.tableSchueler.Wiederholung1GrundColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWiederholung2GrundNull() {
-                return this.IsNull(this.tableSchueler.Wiederholung2GrundColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWiederholung2GrundNull() {
-                this[this.tableSchueler.Wiederholung2GrundColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsProbezeitBisNull() {
-                return this.IsNull(this.tableSchueler.ProbezeitBisColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetProbezeitBisNull() {
-                this[this.tableSchueler.ProbezeitBisColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAustrittsdatumNull() {
-                return this.IsNull(this.tableSchueler.AustrittsdatumColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAustrittsdatumNull() {
-                this[this.tableSchueler.AustrittsdatumColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsSchulischeVorbildungNull() {
-                return this.IsNull(this.tableSchueler.SchulischeVorbildungColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetSchulischeVorbildungNull() {
-                this[this.tableSchueler.SchulischeVorbildungColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsBeruflicheVorbildungNull() {
-                return this.IsNull(this.tableSchueler.BeruflicheVorbildungColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetBeruflicheVorbildungNull() {
-                this[this.tableSchueler.BeruflicheVorbildungColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsLRSStoerungNull() {
-                return this.IsNull(this.tableSchueler.LRSStoerungColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetLRSStoerungNull() {
-                this[this.tableSchueler.LRSStoerungColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsLRSSchwaecheNull() {
-                return this.IsNull(this.tableSchueler.LRSSchwaecheColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetLRSSchwaecheNull() {
-                this[this.tableSchueler.LRSSchwaecheColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsLRSBisDatumNull() {
-                return this.IsNull(this.tableSchueler.LRSBisDatumColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetLRSBisDatumNull() {
-                this[this.tableSchueler.LRSBisDatumColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsNachnameEltern1Null() {
-                return this.IsNull(this.tableSchueler.NachnameEltern1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetNachnameEltern1Null() {
-                this[this.tableSchueler.NachnameEltern1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVornameEltern1Null() {
-                return this.IsNull(this.tableSchueler.VornameEltern1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVornameEltern1Null() {
-                this[this.tableSchueler.VornameEltern1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnredeEltern1Null() {
-                return this.IsNull(this.tableSchueler.AnredeEltern1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnredeEltern1Null() {
-                this[this.tableSchueler.AnredeEltern1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVerwandtschaftsbezeichnungEltern1Null() {
-                return this.IsNull(this.tableSchueler.VerwandtschaftsbezeichnungEltern1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVerwandtschaftsbezeichnungEltern1Null() {
-                this[this.tableSchueler.VerwandtschaftsbezeichnungEltern1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsNachnameEltern2Null() {
-                return this.IsNull(this.tableSchueler.NachnameEltern2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetNachnameEltern2Null() {
-                this[this.tableSchueler.NachnameEltern2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVornameEltern2Null() {
-                return this.IsNull(this.tableSchueler.VornameEltern2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVornameEltern2Null() {
-                this[this.tableSchueler.VornameEltern2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnredeEltern2Null() {
-                return this.IsNull(this.tableSchueler.AnredeEltern2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnredeEltern2Null() {
-                this[this.tableSchueler.AnredeEltern2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVerwandtschaftsbezeichnungEltern2Null() {
-                return this.IsNull(this.tableSchueler.VerwandtschaftsbezeichnungEltern2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVerwandtschaftsbezeichnungEltern2Null() {
-                this[this.tableSchueler.VerwandtschaftsbezeichnungEltern2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEintrittJahrgangsstufeNull() {
-                return this.IsNull(this.tableSchueler.EintrittJahrgangsstufeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEintrittJahrgangsstufeNull() {
-                this[this.tableSchueler.EintrittJahrgangsstufeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEintrittAmNull() {
-                return this.IsNull(this.tableSchueler.EintrittAmColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEintrittAmNull() {
-                this[this.tableSchueler.EintrittAmColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEintrittAusSchulnummerNull() {
-                return this.IsNull(this.tableSchueler.EintrittAusSchulnummerColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEintrittAusSchulnummerNull() {
-                this[this.tableSchueler.EintrittAusSchulnummerColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEMailNull() {
-                return this.IsNull(this.tableSchueler.EMailColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEMailNull() {
-                this[this.tableSchueler.EMailColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsNotfalltelefonnummerNull() {
-                return this.IsNull(this.tableSchueler.NotfalltelefonnummerColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetNotfalltelefonnummerNull() {
-                this[this.tableSchueler.NotfalltelefonnummerColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEmailNull() {
-                return this.IsNull(this.tableSchueler.EmailColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEmailNull() {
-                this[this.tableSchueler.EmailColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SchuelerKursRow[] GetSchuelerKursRows() {
-                if ((this.Table.ChildRelations["FK_SchuelerKurs_Schueler"] == null)) {
-                    return new SchuelerKursRow[0];
-                }
-                else {
-                    return ((SchuelerKursRow[])(base.GetChildRows(this.Table.ChildRelations["FK_SchuelerKurs_Schueler"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public NoteRow[] GetNoteRows() {
-                if ((this.Table.ChildRelations["FK_Note_Schueler"] == null)) {
-                    return new NoteRow[0];
-                }
-                else {
-                    return ((NoteRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Note_Schueler"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public FpANotenRow[] GetFpANotenRows() {
-                if ((this.Table.ChildRelations["FK_FpANoten_Schueler"] == null)) {
-                    return new FpANotenRow[0];
-                }
-                else {
-                    return ((FpANotenRow[])(base.GetChildRows(this.Table.ChildRelations["FK_FpANoten_Schueler"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SeminarfachnoteRow[] GetSeminarfachnoteRows() {
-                if ((this.Table.ChildRelations["FK_Seminarfachnote_Schueler"] == null)) {
-                    return new SeminarfachnoteRow[0];
-                }
-                else {
-                    return ((SeminarfachnoteRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Seminarfachnote_Schueler"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public BerechneteNoteRow[] GetBerechneteNoteRows() {
-                if ((this.Table.ChildRelations["FK_BerechneteNote_Schueler"] == null)) {
-                    return new BerechneteNoteRow[0];
-                }
-                else {
-                    return ((BerechneteNoteRow[])(base.GetChildRows(this.Table.ChildRelations["FK_BerechneteNote_Schueler"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public VorkommnisRow[] GetVorkommnisRows() {
-                if ((this.Table.ChildRelations["FK_Vorkommnis_Schueler"] == null)) {
-                    return new VorkommnisRow[0];
-                }
-                else {
-                    return ((VorkommnisRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Vorkommnis_Schueler"])));
                 }
             }
         }
@@ -11066,6 +9748,1292 @@ namespace diNo {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class SchuelerRow : global::System.Data.DataRow {
+            
+            private SchuelerDataTable tableSchueler;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal SchuelerRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableSchueler = ((SchuelerDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Id {
+                get {
+                    return ((int)(this[this.tableSchueler.IdColumn]));
+                }
+                set {
+                    this[this.tableSchueler.IdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Name {
+                get {
+                    return ((string)(this[this.tableSchueler.NameColumn]));
+                }
+                set {
+                    this[this.tableSchueler.NameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Vorname {
+                get {
+                    return ((string)(this[this.tableSchueler.VornameColumn]));
+                }
+                set {
+                    this[this.tableSchueler.VornameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int KlasseId {
+                get {
+                    return ((int)(this[this.tableSchueler.KlasseIdColumn]));
+                }
+                set {
+                    this[this.tableSchueler.KlasseIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Rufname {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.RufnameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Rufname in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.RufnameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Geschlecht {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.GeschlechtColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Geschlecht in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.GeschlechtColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime Geburtsdatum {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableSchueler.GeburtsdatumColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Geburtsdatum in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.GeburtsdatumColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Geburtsort {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.GeburtsortColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Geburtsort in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.GeburtsortColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Bekenntnis {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.BekenntnisColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Bekenntnis in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.BekenntnisColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string AnschriftPLZ {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.AnschriftPLZColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftPLZ in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.AnschriftPLZColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string AnschriftOrt {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.AnschriftOrtColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftOrt in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.AnschriftOrtColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string AnschriftStrasse {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.AnschriftStrasseColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftStrasse in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.AnschriftStrasseColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string AnschriftTelefonnummer {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.AnschriftTelefonnummerColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftTelefonnummer in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.AnschriftTelefonnummerColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Ausbildungsrichtung {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.AusbildungsrichtungColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Ausbildungsrichtung in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.AusbildungsrichtungColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Fremdsprache2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.Fremdsprache2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Fremdsprache2 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.Fremdsprache2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string ReligionOderEthik {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.ReligionOderEthikColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte ReligionOderEthik in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.ReligionOderEthikColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Wahlpflichtfach {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.WahlpflichtfachColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlpflichtfach in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.WahlpflichtfachColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Wahlfach1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.Wahlfach1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach1 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.Wahlfach1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Wahlfach2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.Wahlfach2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach2 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.Wahlfach2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Wahlfach3 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.Wahlfach3Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach3 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.Wahlfach3Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Wahlfach4 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.Wahlfach4Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach4 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.Wahlfach4Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Wiederholung1Jahrgangsstufe {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.Wiederholung1JahrgangsstufeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung1Jahrgangsstufe in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.Wiederholung1JahrgangsstufeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Wiederholung2Jahrgangsstufe {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.Wiederholung2JahrgangsstufeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung2Jahrgangsstufe in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.Wiederholung2JahrgangsstufeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Wiederholung1Grund {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.Wiederholung1GrundColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung1Grund in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.Wiederholung1GrundColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Wiederholung2Grund {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.Wiederholung2GrundColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung2Grund in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.Wiederholung2GrundColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime ProbezeitBis {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableSchueler.ProbezeitBisColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte ProbezeitBis in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.ProbezeitBisColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime Austrittsdatum {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableSchueler.AustrittsdatumColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Austrittsdatum in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.AustrittsdatumColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string SchulischeVorbildung {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.SchulischeVorbildungColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte SchulischeVorbildung in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.SchulischeVorbildungColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string BeruflicheVorbildung {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.BeruflicheVorbildungColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte BeruflicheVorbildung in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.BeruflicheVorbildungColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool LRSStoerung {
+                get {
+                    try {
+                        return ((bool)(this[this.tableSchueler.LRSStoerungColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte LRSStoerung in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.LRSStoerungColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool LRSSchwaeche {
+                get {
+                    try {
+                        return ((bool)(this[this.tableSchueler.LRSSchwaecheColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte LRSSchwaeche in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.LRSSchwaecheColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime LRSBisDatum {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableSchueler.LRSBisDatumColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte LRSBisDatum in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.LRSBisDatumColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string NachnameEltern1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.NachnameEltern1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte NachnameEltern1 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.NachnameEltern1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string VornameEltern1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.VornameEltern1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VornameEltern1 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.VornameEltern1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string AnredeEltern1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.AnredeEltern1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnredeEltern1 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.AnredeEltern1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string VerwandtschaftsbezeichnungEltern1 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.VerwandtschaftsbezeichnungEltern1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VerwandtschaftsbezeichnungEltern1 in Tabelle Schueler ist DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.VerwandtschaftsbezeichnungEltern1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string NachnameEltern2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.NachnameEltern2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte NachnameEltern2 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.NachnameEltern2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string VornameEltern2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.VornameEltern2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VornameEltern2 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.VornameEltern2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string AnredeEltern2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.AnredeEltern2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnredeEltern2 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.AnredeEltern2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string VerwandtschaftsbezeichnungEltern2 {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.VerwandtschaftsbezeichnungEltern2Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VerwandtschaftsbezeichnungEltern2 in Tabelle Schueler ist DBN" +
+                                "ull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.VerwandtschaftsbezeichnungEltern2Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string EintrittJahrgangsstufe {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.EintrittJahrgangsstufeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittJahrgangsstufe in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.EintrittJahrgangsstufeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public System.DateTime EintrittAm {
+                get {
+                    try {
+                        return ((global::System.DateTime)(this[this.tableSchueler.EintrittAmColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittAm in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.EintrittAmColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int EintrittAusSchulnummer {
+                get {
+                    try {
+                        return ((int)(this[this.tableSchueler.EintrittAusSchulnummerColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittAusSchulnummer in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.EintrittAusSchulnummerColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Email {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.EmailColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Email in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.EmailColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Notfalltelefonnummer {
+                get {
+                    try {
+                        return ((string)(this[this.tableSchueler.NotfalltelefonnummerColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Notfalltelefonnummer in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.NotfalltelefonnummerColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public KlasseRow KlasseRow {
+                get {
+                    return ((KlasseRow)(this.GetParentRow(this.Table.ParentRelations["FK_Schueler_ToTable"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Schueler_ToTable"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsRufnameNull() {
+                return this.IsNull(this.tableSchueler.RufnameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetRufnameNull() {
+                this[this.tableSchueler.RufnameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGeschlechtNull() {
+                return this.IsNull(this.tableSchueler.GeschlechtColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGeschlechtNull() {
+                this[this.tableSchueler.GeschlechtColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGeburtsdatumNull() {
+                return this.IsNull(this.tableSchueler.GeburtsdatumColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGeburtsdatumNull() {
+                this[this.tableSchueler.GeburtsdatumColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGeburtsortNull() {
+                return this.IsNull(this.tableSchueler.GeburtsortColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGeburtsortNull() {
+                this[this.tableSchueler.GeburtsortColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsBekenntnisNull() {
+                return this.IsNull(this.tableSchueler.BekenntnisColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetBekenntnisNull() {
+                this[this.tableSchueler.BekenntnisColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAnschriftPLZNull() {
+                return this.IsNull(this.tableSchueler.AnschriftPLZColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAnschriftPLZNull() {
+                this[this.tableSchueler.AnschriftPLZColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAnschriftOrtNull() {
+                return this.IsNull(this.tableSchueler.AnschriftOrtColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAnschriftOrtNull() {
+                this[this.tableSchueler.AnschriftOrtColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAnschriftStrasseNull() {
+                return this.IsNull(this.tableSchueler.AnschriftStrasseColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAnschriftStrasseNull() {
+                this[this.tableSchueler.AnschriftStrasseColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAnschriftTelefonnummerNull() {
+                return this.IsNull(this.tableSchueler.AnschriftTelefonnummerColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAnschriftTelefonnummerNull() {
+                this[this.tableSchueler.AnschriftTelefonnummerColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAusbildungsrichtungNull() {
+                return this.IsNull(this.tableSchueler.AusbildungsrichtungColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAusbildungsrichtungNull() {
+                this[this.tableSchueler.AusbildungsrichtungColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFremdsprache2Null() {
+                return this.IsNull(this.tableSchueler.Fremdsprache2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFremdsprache2Null() {
+                this[this.tableSchueler.Fremdsprache2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsReligionOderEthikNull() {
+                return this.IsNull(this.tableSchueler.ReligionOderEthikColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetReligionOderEthikNull() {
+                this[this.tableSchueler.ReligionOderEthikColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWahlpflichtfachNull() {
+                return this.IsNull(this.tableSchueler.WahlpflichtfachColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWahlpflichtfachNull() {
+                this[this.tableSchueler.WahlpflichtfachColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWahlfach1Null() {
+                return this.IsNull(this.tableSchueler.Wahlfach1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWahlfach1Null() {
+                this[this.tableSchueler.Wahlfach1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWahlfach2Null() {
+                return this.IsNull(this.tableSchueler.Wahlfach2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWahlfach2Null() {
+                this[this.tableSchueler.Wahlfach2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWahlfach3Null() {
+                return this.IsNull(this.tableSchueler.Wahlfach3Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWahlfach3Null() {
+                this[this.tableSchueler.Wahlfach3Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWahlfach4Null() {
+                return this.IsNull(this.tableSchueler.Wahlfach4Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWahlfach4Null() {
+                this[this.tableSchueler.Wahlfach4Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWiederholung1JahrgangsstufeNull() {
+                return this.IsNull(this.tableSchueler.Wiederholung1JahrgangsstufeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWiederholung1JahrgangsstufeNull() {
+                this[this.tableSchueler.Wiederholung1JahrgangsstufeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWiederholung2JahrgangsstufeNull() {
+                return this.IsNull(this.tableSchueler.Wiederholung2JahrgangsstufeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWiederholung2JahrgangsstufeNull() {
+                this[this.tableSchueler.Wiederholung2JahrgangsstufeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWiederholung1GrundNull() {
+                return this.IsNull(this.tableSchueler.Wiederholung1GrundColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWiederholung1GrundNull() {
+                this[this.tableSchueler.Wiederholung1GrundColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWiederholung2GrundNull() {
+                return this.IsNull(this.tableSchueler.Wiederholung2GrundColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWiederholung2GrundNull() {
+                this[this.tableSchueler.Wiederholung2GrundColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsProbezeitBisNull() {
+                return this.IsNull(this.tableSchueler.ProbezeitBisColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetProbezeitBisNull() {
+                this[this.tableSchueler.ProbezeitBisColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAustrittsdatumNull() {
+                return this.IsNull(this.tableSchueler.AustrittsdatumColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAustrittsdatumNull() {
+                this[this.tableSchueler.AustrittsdatumColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSchulischeVorbildungNull() {
+                return this.IsNull(this.tableSchueler.SchulischeVorbildungColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSchulischeVorbildungNull() {
+                this[this.tableSchueler.SchulischeVorbildungColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsBeruflicheVorbildungNull() {
+                return this.IsNull(this.tableSchueler.BeruflicheVorbildungColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetBeruflicheVorbildungNull() {
+                this[this.tableSchueler.BeruflicheVorbildungColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsLRSStoerungNull() {
+                return this.IsNull(this.tableSchueler.LRSStoerungColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetLRSStoerungNull() {
+                this[this.tableSchueler.LRSStoerungColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsLRSSchwaecheNull() {
+                return this.IsNull(this.tableSchueler.LRSSchwaecheColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetLRSSchwaecheNull() {
+                this[this.tableSchueler.LRSSchwaecheColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsLRSBisDatumNull() {
+                return this.IsNull(this.tableSchueler.LRSBisDatumColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetLRSBisDatumNull() {
+                this[this.tableSchueler.LRSBisDatumColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNachnameEltern1Null() {
+                return this.IsNull(this.tableSchueler.NachnameEltern1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNachnameEltern1Null() {
+                this[this.tableSchueler.NachnameEltern1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVornameEltern1Null() {
+                return this.IsNull(this.tableSchueler.VornameEltern1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVornameEltern1Null() {
+                this[this.tableSchueler.VornameEltern1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAnredeEltern1Null() {
+                return this.IsNull(this.tableSchueler.AnredeEltern1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAnredeEltern1Null() {
+                this[this.tableSchueler.AnredeEltern1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVerwandtschaftsbezeichnungEltern1Null() {
+                return this.IsNull(this.tableSchueler.VerwandtschaftsbezeichnungEltern1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVerwandtschaftsbezeichnungEltern1Null() {
+                this[this.tableSchueler.VerwandtschaftsbezeichnungEltern1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNachnameEltern2Null() {
+                return this.IsNull(this.tableSchueler.NachnameEltern2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNachnameEltern2Null() {
+                this[this.tableSchueler.NachnameEltern2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVornameEltern2Null() {
+                return this.IsNull(this.tableSchueler.VornameEltern2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVornameEltern2Null() {
+                this[this.tableSchueler.VornameEltern2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAnredeEltern2Null() {
+                return this.IsNull(this.tableSchueler.AnredeEltern2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAnredeEltern2Null() {
+                this[this.tableSchueler.AnredeEltern2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVerwandtschaftsbezeichnungEltern2Null() {
+                return this.IsNull(this.tableSchueler.VerwandtschaftsbezeichnungEltern2Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVerwandtschaftsbezeichnungEltern2Null() {
+                this[this.tableSchueler.VerwandtschaftsbezeichnungEltern2Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsEintrittJahrgangsstufeNull() {
+                return this.IsNull(this.tableSchueler.EintrittJahrgangsstufeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetEintrittJahrgangsstufeNull() {
+                this[this.tableSchueler.EintrittJahrgangsstufeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsEintrittAmNull() {
+                return this.IsNull(this.tableSchueler.EintrittAmColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetEintrittAmNull() {
+                this[this.tableSchueler.EintrittAmColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsEintrittAusSchulnummerNull() {
+                return this.IsNull(this.tableSchueler.EintrittAusSchulnummerColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetEintrittAusSchulnummerNull() {
+                this[this.tableSchueler.EintrittAusSchulnummerColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsEmailNull() {
+                return this.IsNull(this.tableSchueler.EmailColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetEmailNull() {
+                this[this.tableSchueler.EmailColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNotfalltelefonnummerNull() {
+                return this.IsNull(this.tableSchueler.NotfalltelefonnummerColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNotfalltelefonnummerNull() {
+                this[this.tableSchueler.NotfalltelefonnummerColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SchuelerKursRow[] GetSchuelerKursRows() {
+                if ((this.Table.ChildRelations["FK_SchuelerKurs_Schueler"] == null)) {
+                    return new SchuelerKursRow[0];
+                }
+                else {
+                    return ((SchuelerKursRow[])(base.GetChildRows(this.Table.ChildRelations["FK_SchuelerKurs_Schueler"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public NoteRow[] GetNoteRows() {
+                if ((this.Table.ChildRelations["FK_Note_Schueler"] == null)) {
+                    return new NoteRow[0];
+                }
+                else {
+                    return ((NoteRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Note_Schueler"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public FpANotenRow[] GetFpANotenRows() {
+                if ((this.Table.ChildRelations["FK_FpANoten_Schueler"] == null)) {
+                    return new FpANotenRow[0];
+                }
+                else {
+                    return ((FpANotenRow[])(base.GetChildRows(this.Table.ChildRelations["FK_FpANoten_Schueler"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SeminarfachnoteRow[] GetSeminarfachnoteRows() {
+                if ((this.Table.ChildRelations["FK_Seminarfachnote_Schueler"] == null)) {
+                    return new SeminarfachnoteRow[0];
+                }
+                else {
+                    return ((SeminarfachnoteRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Seminarfachnote_Schueler"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public BerechneteNoteRow[] GetBerechneteNoteRows() {
+                if ((this.Table.ChildRelations["FK_BerechneteNote_Schueler"] == null)) {
+                    return new BerechneteNoteRow[0];
+                }
+                else {
+                    return ((BerechneteNoteRow[])(base.GetChildRows(this.Table.ChildRelations["FK_BerechneteNote_Schueler"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public VorkommnisRow[] GetVorkommnisRows() {
+                if ((this.Table.ChildRelations["FK_Vorkommnis_Schueler"] == null)) {
+                    return new VorkommnisRow[0];
+                }
+                else {
+                    return ((VorkommnisRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Vorkommnis_Schueler"])));
+                }
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -11221,40 +11189,6 @@ namespace diNo {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public NotenartRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class SchuelerRowChangeEvent : global::System.EventArgs {
-            
-            private SchuelerRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SchuelerRowChangeEvent(SchuelerRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SchuelerRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -11561,6 +11495,40 @@ namespace diNo {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public VorkommnisRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class SchuelerRowChangeEvent : global::System.EventArgs {
+            
+            private SchuelerRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SchuelerRowChangeEvent(SchuelerRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SchuelerRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -13664,1949 +13632,6 @@ SELECT Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHER
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
         public virtual int Update(string Art, int Original_Id, string Original_Art) {
             return this.Update(Original_Id, Art, Original_Id, Original_Art);
-        }
-    }
-    
-    /// <summary>
-    ///Represents the connection and commands used to retrieve and save data.
-    ///</summary>
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DataObjectAttribute(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
-        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class SchuelerTableAdapter : global::System.ComponentModel.Component {
-        
-        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
-        
-        private global::System.Data.SqlClient.SqlConnection _connection;
-        
-        private global::System.Data.SqlClient.SqlTransaction _transaction;
-        
-        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
-        
-        private bool _clearBeforeFill;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public SchuelerTableAdapter() {
-            this.ClearBeforeFill = true;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
-            get {
-                if ((this._adapter == null)) {
-                    this.InitAdapter();
-                }
-                return this._adapter;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        internal global::System.Data.SqlClient.SqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
-            }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        internal global::System.Data.SqlClient.SqlTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public bool ClearBeforeFill {
-            get {
-                return this._clearBeforeFill;
-            }
-            set {
-                this._clearBeforeFill = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitAdapter() {
-            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
-            tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "Schueler";
-            tableMapping.ColumnMappings.Add("Id", "Id");
-            tableMapping.ColumnMappings.Add("Name", "Name");
-            tableMapping.ColumnMappings.Add("Vorname", "Vorname");
-            tableMapping.ColumnMappings.Add("KlasseId", "KlasseId");
-            tableMapping.ColumnMappings.Add("Rufname", "Rufname");
-            tableMapping.ColumnMappings.Add("Geschlecht", "Geschlecht");
-            tableMapping.ColumnMappings.Add("Geburtsdatum", "Geburtsdatum");
-            tableMapping.ColumnMappings.Add("Geburtsort", "Geburtsort");
-            tableMapping.ColumnMappings.Add("Bekenntnis", "Bekenntnis");
-            tableMapping.ColumnMappings.Add("AnschriftPLZ", "AnschriftPLZ");
-            tableMapping.ColumnMappings.Add("AnschriftOrt", "AnschriftOrt");
-            tableMapping.ColumnMappings.Add("AnschriftStrasse", "AnschriftStrasse");
-            tableMapping.ColumnMappings.Add("AnschriftTelefonnummer", "AnschriftTelefonnummer");
-            tableMapping.ColumnMappings.Add("Ausbildungsrichtung", "Ausbildungsrichtung");
-            tableMapping.ColumnMappings.Add("Fremdsprache2", "Fremdsprache2");
-            tableMapping.ColumnMappings.Add("ReligionOderEthik", "ReligionOderEthik");
-            tableMapping.ColumnMappings.Add("Wahlfach1", "Wahlfach1");
-            tableMapping.ColumnMappings.Add("Wahlfach2", "Wahlfach2");
-            tableMapping.ColumnMappings.Add("Wahlfach3", "Wahlfach3");
-            tableMapping.ColumnMappings.Add("Wahlfach4", "Wahlfach4");
-            tableMapping.ColumnMappings.Add("Wiederholung1Jahrgangsstufe", "Wiederholung1Jahrgangsstufe");
-            tableMapping.ColumnMappings.Add("Wiederholung2Jahrgangsstufe", "Wiederholung2Jahrgangsstufe");
-            tableMapping.ColumnMappings.Add("Wiederholung1Grund", "Wiederholung1Grund");
-            tableMapping.ColumnMappings.Add("Wiederholung2Grund", "Wiederholung2Grund");
-            tableMapping.ColumnMappings.Add("ProbezeitBis", "ProbezeitBis");
-            tableMapping.ColumnMappings.Add("Austrittsdatum", "Austrittsdatum");
-            tableMapping.ColumnMappings.Add("SchulischeVorbildung", "SchulischeVorbildung");
-            tableMapping.ColumnMappings.Add("BeruflicheVorbildung", "BeruflicheVorbildung");
-            tableMapping.ColumnMappings.Add("LRSStoerung", "LRSStoerung");
-            tableMapping.ColumnMappings.Add("LRSSchwaeche", "LRSSchwaeche");
-            tableMapping.ColumnMappings.Add("LRSBisDatum", "LRSBisDatum");
-            tableMapping.ColumnMappings.Add("Wahlpflichtfach", "Wahlpflichtfach");
-            tableMapping.ColumnMappings.Add("NachnameEltern1", "NachnameEltern1");
-            tableMapping.ColumnMappings.Add("VornameEltern1", "VornameEltern1");
-            tableMapping.ColumnMappings.Add("AnredeEltern1", "AnredeEltern1");
-            tableMapping.ColumnMappings.Add("VerwandtschaftsbezeichnungEltern1", "VerwandtschaftsbezeichnungEltern1");
-            tableMapping.ColumnMappings.Add("NachnameEltern2", "NachnameEltern2");
-            tableMapping.ColumnMappings.Add("VornameEltern2", "VornameEltern2");
-            tableMapping.ColumnMappings.Add("AnredeEltern2", "AnredeEltern2");
-            tableMapping.ColumnMappings.Add("VerwandtschaftsbezeichnungEltern2", "VerwandtschaftsbezeichnungEltern2");
-            tableMapping.ColumnMappings.Add("EintrittJahrgangsstufe", "EintrittJahrgangsstufe");
-            tableMapping.ColumnMappings.Add("EintrittAm", "EintrittAm");
-            tableMapping.ColumnMappings.Add("EintrittAusSchulnummer", "EintrittAusSchulnummer");
-            tableMapping.ColumnMappings.Add("EMail", "EMail");
-            tableMapping.ColumnMappings.Add("Notfalltelefonnummer", "Notfalltelefonnummer");
-            tableMapping.ColumnMappings.Add("Email", "Email");
-            this._adapter.TableMappings.Add(tableMapping);
-            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Schueler] WHERE (([Id] = @Original_Id) AND ([Name] = @Original_Name)" +
-                " AND ([Vorname] = @Original_Vorname) AND ([KlasseId] = @Original_KlasseId) AND (" +
-                "(@IsNull_Rufname = 1 AND [Rufname] IS NULL) OR ([Rufname] = @Original_Rufname)) " +
-                "AND ((@IsNull_Geschlecht = 1 AND [Geschlecht] IS NULL) OR ([Geschlecht] = @Origi" +
-                "nal_Geschlecht)) AND ((@IsNull_Geburtsdatum = 1 AND [Geburtsdatum] IS NULL) OR (" +
-                "[Geburtsdatum] = @Original_Geburtsdatum)) AND ((@IsNull_Geburtsort = 1 AND [Gebu" +
-                "rtsort] IS NULL) OR ([Geburtsort] = @Original_Geburtsort)) AND ((@IsNull_Bekennt" +
-                "nis = 1 AND [Bekenntnis] IS NULL) OR ([Bekenntnis] = @Original_Bekenntnis)) AND " +
-                "((@IsNull_AnschriftPLZ = 1 AND [AnschriftPLZ] IS NULL) OR ([AnschriftPLZ] = @Ori" +
-                "ginal_AnschriftPLZ)) AND ((@IsNull_AnschriftOrt = 1 AND [AnschriftOrt] IS NULL) " +
-                "OR ([AnschriftOrt] = @Original_AnschriftOrt)) AND ((@IsNull_AnschriftStrasse = 1" +
-                " AND [AnschriftStrasse] IS NULL) OR ([AnschriftStrasse] = @Original_AnschriftStr" +
-                "asse)) AND ((@IsNull_AnschriftTelefonnummer = 1 AND [AnschriftTelefonnummer] IS " +
-                "NULL) OR ([AnschriftTelefonnummer] = @Original_AnschriftTelefonnummer)) AND ((@I" +
-                "sNull_Ausbildungsrichtung = 1 AND [Ausbildungsrichtung] IS NULL) OR ([Ausbildung" +
-                "srichtung] = @Original_Ausbildungsrichtung)) AND ((@IsNull_Fremdsprache2 = 1 AND" +
-                " [Fremdsprache2] IS NULL) OR ([Fremdsprache2] = @Original_Fremdsprache2)) AND ((" +
-                "@IsNull_ReligionOderEthik = 1 AND [ReligionOderEthik] IS NULL) OR ([ReligionOder" +
-                "Ethik] = @Original_ReligionOderEthik)) AND ((@IsNull_Wahlpflichtfach = 1 AND [Wa" +
-                "hlpflichtfach] IS NULL) OR ([Wahlpflichtfach] = @Original_Wahlpflichtfach)) AND " +
-                "((@IsNull_Wahlfach1 = 1 AND [Wahlfach1] IS NULL) OR ([Wahlfach1] = @Original_Wah" +
-                "lfach1)) AND ((@IsNull_Wahlfach2 = 1 AND [Wahlfach2] IS NULL) OR ([Wahlfach2] = " +
-                "@Original_Wahlfach2)) AND ((@IsNull_Wahlfach3 = 1 AND [Wahlfach3] IS NULL) OR ([" +
-                "Wahlfach3] = @Original_Wahlfach3)) AND ((@IsNull_Wahlfach4 = 1 AND [Wahlfach4] I" +
-                "S NULL) OR ([Wahlfach4] = @Original_Wahlfach4)) AND ((@IsNull_Wiederholung1Jahrg" +
-                "angsstufe = 1 AND [Wiederholung1Jahrgangsstufe] IS NULL) OR ([Wiederholung1Jahrg" +
-                "angsstufe] = @Original_Wiederholung1Jahrgangsstufe)) AND ((@IsNull_Wiederholung2" +
-                "Jahrgangsstufe = 1 AND [Wiederholung2Jahrgangsstufe] IS NULL) OR ([Wiederholung2" +
-                "Jahrgangsstufe] = @Original_Wiederholung2Jahrgangsstufe)) AND ((@IsNull_Wiederho" +
-                "lung1Grund = 1 AND [Wiederholung1Grund] IS NULL) OR ([Wiederholung1Grund] = @Ori" +
-                "ginal_Wiederholung1Grund)) AND ((@IsNull_Wiederholung2Grund = 1 AND [Wiederholun" +
-                "g2Grund] IS NULL) OR ([Wiederholung2Grund] = @Original_Wiederholung2Grund)) AND " +
-                "((@IsNull_ProbezeitBis = 1 AND [ProbezeitBis] IS NULL) OR ([ProbezeitBis] = @Ori" +
-                "ginal_ProbezeitBis)) AND ((@IsNull_Austrittsdatum = 1 AND [Austrittsdatum] IS NU" +
-                "LL) OR ([Austrittsdatum] = @Original_Austrittsdatum)) AND ((@IsNull_SchulischeVo" +
-                "rbildung = 1 AND [SchulischeVorbildung] IS NULL) OR ([SchulischeVorbildung] = @O" +
-                "riginal_SchulischeVorbildung)) AND ((@IsNull_BeruflicheVorbildung = 1 AND [Beruf" +
-                "licheVorbildung] IS NULL) OR ([BeruflicheVorbildung] = @Original_BeruflicheVorbi" +
-                "ldung)) AND ((@IsNull_LRSStoerung = 1 AND [LRSStoerung] IS NULL) OR ([LRSStoerun" +
-                "g] = @Original_LRSStoerung)) AND ((@IsNull_LRSSchwaeche = 1 AND [LRSSchwaeche] I" +
-                "S NULL) OR ([LRSSchwaeche] = @Original_LRSSchwaeche)) AND ((@IsNull_LRSBisDatum " +
-                "= 1 AND [LRSBisDatum] IS NULL) OR ([LRSBisDatum] = @Original_LRSBisDatum)) AND (" +
-                "(@IsNull_VerwandtschaftsbezeichnungEltern1 = 1 AND [VerwandtschaftsbezeichnungEl" +
-                "tern1] IS NULL) OR ([VerwandtschaftsbezeichnungEltern1] = @Original_Verwandtscha" +
-                "ftsbezeichnungEltern1)) AND ((@IsNull_NachnameEltern1 = 1 AND [NachnameEltern1] " +
-                "IS NULL) OR ([NachnameEltern1] = @Original_NachnameEltern1)) AND ((@IsNull_Vorna" +
-                "meEltern1 = 1 AND [VornameEltern1] IS NULL) OR ([VornameEltern1] = @Original_Vor" +
-                "nameEltern1)) AND ((@IsNull_AnredeEltern1 = 1 AND [AnredeEltern1] IS NULL) OR ([" +
-                "AnredeEltern1] = @Original_AnredeEltern1)) AND ((@IsNull_NachnameEltern2 = 1 AND" +
-                " [NachnameEltern2] IS NULL) OR ([NachnameEltern2] = @Original_NachnameEltern2)) " +
-                "AND ((@IsNull_VornameEltern2 = 1 AND [VornameEltern2] IS NULL) OR ([VornameElter" +
-                "n2] = @Original_VornameEltern2)) AND ((@IsNull_AnredeEltern2 = 1 AND [AnredeElte" +
-                "rn2] IS NULL) OR ([AnredeEltern2] = @Original_AnredeEltern2)) AND ((@IsNull_Verw" +
-                "andtschaftsbezeichnungEltern2 = 1 AND [VerwandtschaftsbezeichnungEltern2] IS NUL" +
-                "L) OR ([VerwandtschaftsbezeichnungEltern2] = @Original_Verwandtschaftsbezeichnun" +
-                "gEltern2)) AND ((@IsNull_EintrittJahrgangsstufe = 1 AND [EintrittJahrgangsstufe]" +
-                " IS NULL) OR ([EintrittJahrgangsstufe] = @Original_EintrittJahrgangsstufe)) AND " +
-                "((@IsNull_EintrittAm = 1 AND [EintrittAm] IS NULL) OR ([EintrittAm] = @Original_" +
-                "EintrittAm)) AND ((@IsNull_EintrittAusSchulnummer = 1 AND [EintrittAusSchulnumme" +
-                "r] IS NULL) OR ([EintrittAusSchulnummer] = @Original_EintrittAusSchulnummer)) AN" +
-                "D ((@IsNull_Email = 1 AND [Email] IS NULL) OR ([Email] = @Original_Email)) AND (" +
-                "(@IsNull_Notfalltelefonnummer = 1 AND [Notfalltelefonnummer] IS NULL) OR ([Notfa" +
-                "lltelefonnummer] = @Original_Notfalltelefonnummer)))";
-            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Vorname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Vorname", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_KlasseId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Rufname", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Rufname", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Rufname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Rufname", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Geschlecht", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geschlecht", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Geschlecht", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geschlecht", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Geburtsdatum", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsdatum", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Geburtsdatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsdatum", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Geburtsort", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsort", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Geburtsort", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsort", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Bekenntnis", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bekenntnis", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bekenntnis", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bekenntnis", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_AnschriftPLZ", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftPLZ", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AnschriftPLZ", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftPLZ", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_AnschriftOrt", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftOrt", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AnschriftOrt", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftOrt", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_AnschriftStrasse", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftStrasse", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AnschriftStrasse", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftStrasse", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_AnschriftTelefonnummer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftTelefonnummer", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AnschriftTelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftTelefonnummer", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Ausbildungsrichtung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Fremdsprache2", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fremdsprache2", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Fremdsprache2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fremdsprache2", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ReligionOderEthik", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReligionOderEthik", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ReligionOderEthik", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReligionOderEthik", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Wahlpflichtfach", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlpflichtfach", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Wahlpflichtfach", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlpflichtfach", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Wahlfach1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach1", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Wahlfach1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach1", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Wahlfach2", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach2", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Wahlfach2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach2", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Wahlfach3", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach3", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Wahlfach3", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach3", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Wahlfach4", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach4", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Wahlfach4", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach4", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Wiederholung1Jahrgangsstufe", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Jahrgangsstufe", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Wiederholung1Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Jahrgangsstufe", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Wiederholung2Jahrgangsstufe", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Jahrgangsstufe", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Wiederholung2Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Jahrgangsstufe", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Wiederholung1Grund", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Grund", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Wiederholung1Grund", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Grund", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Wiederholung2Grund", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Grund", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Wiederholung2Grund", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Grund", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ProbezeitBis", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProbezeitBis", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ProbezeitBis", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProbezeitBis", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Austrittsdatum", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Austrittsdatum", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Austrittsdatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Austrittsdatum", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SchulischeVorbildung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchulischeVorbildung", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchulischeVorbildung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchulischeVorbildung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_BeruflicheVorbildung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BeruflicheVorbildung", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_BeruflicheVorbildung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BeruflicheVorbildung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_LRSStoerung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSStoerung", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LRSStoerung", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSStoerung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_LRSSchwaeche", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSSchwaeche", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LRSSchwaeche", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSSchwaeche", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_LRSBisDatum", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSBisDatum", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LRSBisDatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSBisDatum", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_VerwandtschaftsbezeichnungEltern1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern1", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_VerwandtschaftsbezeichnungEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern1", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_NachnameEltern1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern1", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_NachnameEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern1", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_VornameEltern1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern1", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_VornameEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern1", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_AnredeEltern1", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern1", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AnredeEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern1", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_NachnameEltern2", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern2", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_NachnameEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern2", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_VornameEltern2", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern2", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_VornameEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern2", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_AnredeEltern2", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern2", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_AnredeEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern2", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_VerwandtschaftsbezeichnungEltern2", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern2", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_VerwandtschaftsbezeichnungEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern2", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_EintrittJahrgangsstufe", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittJahrgangsstufe", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EintrittJahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittJahrgangsstufe", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_EintrittAm", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAm", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EintrittAm", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAm", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_EintrittAusSchulnummer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAusSchulnummer", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_EintrittAusSchulnummer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAusSchulnummer", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Email", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Email", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Email", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Email", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Notfalltelefonnummer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Notfalltelefonnummer", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Notfalltelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Notfalltelefonnummer", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [Schueler] ([Id], [Name], [Vorname], [KlasseId], [Rufname], [Geschlec" +
-                "ht], [Geburtsdatum], [Geburtsort], [Bekenntnis], [AnschriftPLZ], [AnschriftOrt]," +
-                " [AnschriftStrasse], [AnschriftTelefonnummer], [Ausbildungsrichtung], [Fremdspra" +
-                "che2], [ReligionOderEthik], [Wahlpflichtfach], [Wahlfach1], [Wahlfach2], [Wahlfa" +
-                "ch3], [Wahlfach4], [Wiederholung1Jahrgangsstufe], [Wiederholung2Jahrgangsstufe]," +
-                " [Wiederholung1Grund], [Wiederholung2Grund], [ProbezeitBis], [Austrittsdatum], [" +
-                "SchulischeVorbildung], [BeruflicheVorbildung], [LRSStoerung], [LRSSchwaeche], [L" +
-                "RSBisDatum], [VerwandtschaftsbezeichnungEltern1], [NachnameEltern1], [VornameElt" +
-                "ern1], [AnredeEltern1], [NachnameEltern2], [VornameEltern2], [AnredeEltern2], [V" +
-                "erwandtschaftsbezeichnungEltern2], [EintrittJahrgangsstufe], [EintrittAm], [Eint" +
-                "rittAusSchulnummer], [Email], [Notfalltelefonnummer]) VALUES (@Id, @Name, @Vorna" +
-                "me, @KlasseId, @Rufname, @Geschlecht, @Geburtsdatum, @Geburtsort, @Bekenntnis, @" +
-                "AnschriftPLZ, @AnschriftOrt, @AnschriftStrasse, @AnschriftTelefonnummer, @Ausbil" +
-                "dungsrichtung, @Fremdsprache2, @ReligionOderEthik, @Wahlpflichtfach, @Wahlfach1," +
-                " @Wahlfach2, @Wahlfach3, @Wahlfach4, @Wiederholung1Jahrgangsstufe, @Wiederholung" +
-                "2Jahrgangsstufe, @Wiederholung1Grund, @Wiederholung2Grund, @ProbezeitBis, @Austr" +
-                "ittsdatum, @SchulischeVorbildung, @BeruflicheVorbildung, @LRSStoerung, @LRSSchwa" +
-                "eche, @LRSBisDatum, @VerwandtschaftsbezeichnungEltern1, @NachnameEltern1, @Vorna" +
-                "meEltern1, @AnredeEltern1, @NachnameEltern2, @VornameEltern2, @AnredeEltern2, @V" +
-                "erwandtschaftsbezeichnungEltern2, @EintrittJahrgangsstufe, @EintrittAm, @Eintrit" +
-                "tAusSchulnummer, @Email, @Notfalltelefonnummer);\r\nSELECT Id, Name, Vorname, Klas" +
-                "seId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, AnschriftPLZ, A" +
-                "nschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Frem" +
-                "dsprache2, ReligionOderEthik, Wahlpflichtfach, Wahlfach1, Wahlfach2, Wahlfach3, " +
-                "Wahlfach4, Wiederholung1Jahrgangsstufe, Wiederholung2Jahrgangsstufe, Wiederholun" +
-                "g1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, SchulischeVorbildung," +
-                " BeruflicheVorbildung, LRSStoerung, LRSSchwaeche, LRSBisDatum, Verwandtschaftsbe" +
-                "zeichnungEltern1, NachnameEltern1, VornameEltern1, AnredeEltern1, NachnameEltern" +
-                "2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2, EintrittJah" +
-                "rgangsstufe, EintrittAm, EintrittAusSchulnummer, Email, Notfalltelefonnummer FRO" +
-                "M Schueler WHERE (Id = @Id)";
-            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Vorname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Vorname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Rufname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Rufname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geschlecht", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geschlecht", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geburtsdatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsdatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geburtsort", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsort", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bekenntnis", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bekenntnis", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftPLZ", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftPLZ", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftOrt", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftOrt", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftStrasse", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftStrasse", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftTelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftTelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Fremdsprache2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fremdsprache2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReligionOderEthik", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReligionOderEthik", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlpflichtfach", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlpflichtfach", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach3", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach3", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach4", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach4", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung2Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Grund", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Grund", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung2Grund", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Grund", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProbezeitBis", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProbezeitBis", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Austrittsdatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Austrittsdatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchulischeVorbildung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchulischeVorbildung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BeruflicheVorbildung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BeruflicheVorbildung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSStoerung", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSStoerung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSSchwaeche", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSSchwaeche", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSBisDatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSBisDatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VerwandtschaftsbezeichnungEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NachnameEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VornameEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnredeEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NachnameEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VornameEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnredeEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VerwandtschaftsbezeichnungEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittJahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittJahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAm", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAm", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAusSchulnummer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAusSchulnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Email", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Email", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Notfalltelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Notfalltelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
-            this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE       Schueler\r\nSET                Name = @Name, Vorname = @Vorname, Klass" +
-                "eId = @KlasseId, Rufname = @Rufname, Geschlecht = @Geschlecht, Geburtsdatum = @G" +
-                "eburtsdatum, \r\n                         Geburtsort = @Geburtsort, Bekenntnis = @" +
-                "Bekenntnis, AnschriftPLZ = @AnschriftPLZ, AnschriftOrt = @AnschriftOrt, Anschrif" +
-                "tStrasse = @AnschriftStrasse, \r\n                         AnschriftTelefonnummer " +
-                "= @AnschriftTelefonnummer, Ausbildungsrichtung = @Ausbildungsrichtung, Fremdspra" +
-                "che2 = @Fremdsprache2, \r\n                         ReligionOderEthik = @ReligionO" +
-                "derEthik, Wahlpflichtfach = @Wahlpflichtfach, Wahlfach1 = @Wahlfach1, Wahlfach2 " +
-                "= @Wahlfach2, Wahlfach3 = @Wahlfach3, \r\n                         Wahlfach4 = @Wa" +
-                "hlfach4, Wiederholung1Jahrgangsstufe = @Wiederholung1Jahrgangsstufe, Wiederholun" +
-                "g2Jahrgangsstufe = @Wiederholung2Jahrgangsstufe, \r\n                         Wied" +
-                "erholung1Grund = @Wiederholung1Grund, Wiederholung2Grund = @Wiederholung2Grund, " +
-                "ProbezeitBis = @ProbezeitBis, Austrittsdatum = @Austrittsdatum, \r\n              " +
-                "           SchulischeVorbildung = @SchulischeVorbildung, BeruflicheVorbildung = " +
-                "@BeruflicheVorbildung, LRSStoerung = @LRSStoerung, LRSSchwaeche = @LRSSchwaeche," +
-                " \r\n                         LRSBisDatum = @LRSBisDatum, Verwandtschaftsbezeichnu" +
-                "ngEltern1 = @VerwandtschaftsbezeichnungEltern1, NachnameEltern1 = @NachnameElter" +
-                "n1, \r\n                         VornameEltern1 = @VornameEltern1, AnredeEltern1 =" +
-                " @AnredeEltern1, NachnameEltern2 = @NachnameEltern2, VornameEltern2 = @VornameEl" +
-                "tern2, \r\n                         AnredeEltern2 = @AnredeEltern2, Verwandtschaft" +
-                "sbezeichnungEltern2 = @VerwandtschaftsbezeichnungEltern2, EintrittJahrgangsstufe" +
-                " = @EintrittJahrgangsstufe, \r\n                         EintrittAm = @EintrittAm," +
-                " EintrittAusSchulnummer = @EintrittAusSchulnummer, Email = @Email, Notfalltelefo" +
-                "nnummer = @Notfalltelefonnummer\r\nWHERE        (Id = @Id);  \r\nSELECT Id, Name, Vo" +
-                "rname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, Ansc" +
-                "hriftPLZ, AnschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsric" +
-                "htung, Fremdsprache2, ReligionOderEthik, Wahlpflichtfach, Wahlfach1, Wahlfach2, " +
-                "Wahlfach3, Wahlfach4, Wiederholung1Jahrgangsstufe, Wiederholung2Jahrgangsstufe, " +
-                "Wiederholung1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, Schulische" +
-                "Vorbildung, BeruflicheVorbildung, LRSStoerung, LRSSchwaeche, LRSBisDatum, Verwan" +
-                "dtschaftsbezeichnungEltern1, NachnameEltern1, VornameEltern1, AnredeEltern1, Nac" +
-                "hnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2, " +
-                "EintrittJahrgangsstufe, EintrittAm, EintrittAusSchulnummer, Email, Notfalltelefo" +
-                "nnummer FROM Schueler WHERE (Id = @Id)";
-            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Vorname", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Vorname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Rufname", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Rufname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geschlecht", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Geschlecht", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geburtsdatum", global::System.Data.SqlDbType.DateTime, 3, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsdatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geburtsort", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsort", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bekenntnis", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Bekenntnis", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftPLZ", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftPLZ", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftOrt", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftOrt", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftStrasse", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftStrasse", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftTelefonnummer", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftTelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Fremdsprache2", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Fremdsprache2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReligionOderEthik", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "ReligionOderEthik", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlpflichtfach", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlpflichtfach", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach1", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach2", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach3", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach3", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach4", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach4", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung2Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Grund", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Grund", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung2Grund", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Grund", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProbezeitBis", global::System.Data.SqlDbType.DateTime, 3, global::System.Data.ParameterDirection.Input, 0, 0, "ProbezeitBis", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Austrittsdatum", global::System.Data.SqlDbType.DateTime, 3, global::System.Data.ParameterDirection.Input, 0, 0, "Austrittsdatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchulischeVorbildung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "SchulischeVorbildung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BeruflicheVorbildung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "BeruflicheVorbildung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSStoerung", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 0, 0, "LRSStoerung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSSchwaeche", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 0, 0, "LRSSchwaeche", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSBisDatum", global::System.Data.SqlDbType.DateTime, 3, global::System.Data.ParameterDirection.Input, 0, 0, "LRSBisDatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VerwandtschaftsbezeichnungEltern1", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NachnameEltern1", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VornameEltern1", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnredeEltern1", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NachnameEltern2", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VornameEltern2", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnredeEltern2", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VerwandtschaftsbezeichnungEltern2", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittJahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittJahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAm", global::System.Data.SqlDbType.DateTime, 3, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAm", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAusSchulnummer", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAusSchulnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Email", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Email", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Notfalltelefonnummer", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Notfalltelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitConnection() {
-            this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::diNo.Properties.Settings.Default.diNoConnectionString;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[10];
-            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT        Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, AnschriftPLZ, AnschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, 
-                         Ausbildungsrichtung, Fremdsprache2, ReligionOderEthik, Wahlpflichtfach, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wiederholung1Jahrgangsstufe, 
-                         Wiederholung2Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung,
-                          LRSSchwaeche, LRSBisDatum, VerwandtschaftsbezeichnungEltern1, NachnameEltern1, VornameEltern1, AnredeEltern1, NachnameEltern2, VornameEltern2, 
-                         AnredeEltern2, VerwandtschaftsbezeichnungEltern2, EintrittJahrgangsstufe, EintrittAm, EintrittAusSchulnummer, Email, Notfalltelefonnummer
-FROM            Schueler
-WHERE        (Id = @Id)";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId)";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId) AND (Ausbildungsrichtung = @Ausbildungsrichtung)";
-            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId) AND (Name = @Name) AND (Rufname = @Rufname)";
-            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Rufname", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Rufname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[4].Connection = this.Connection;
-            this._commandCollection[4].CommandText = @"SELECT Schueler.AnredeEltern1, Schueler.AnredeEltern2, Schueler.AnschriftOrt, Schueler.AnschriftPLZ, Schueler.AnschriftStrasse, Schueler.AnschriftTelefonnummer, Schueler.Ausbildungsrichtung, Schueler.Austrittsdatum, Schueler.Bekenntnis, Schueler.BeruflicheVorbildung, Schueler.EintrittAm, Schueler.EintrittAusSchulnummer, Schueler.EintrittJahrgangsstufe, Schueler.Email, Schueler.Fremdsprache2, Schueler.Geburtsdatum, Schueler.Geburtsort, Schueler.Geschlecht, Schueler.Id, Schueler.KlasseId, Schueler.LRSBisDatum, Schueler.LRSSchwaeche, Schueler.LRSStoerung, Schueler.NachnameEltern1, Schueler.NachnameEltern2, Schueler.Name, Schueler.Notfalltelefonnummer, Schueler.ProbezeitBis, Schueler.ReligionOderEthik, Schueler.Rufname, Schueler.SchulischeVorbildung, Schueler.VerwandtschaftsbezeichnungEltern1, Schueler.VerwandtschaftsbezeichnungEltern2, Schueler.Vorname, Schueler.VornameEltern1, Schueler.VornameEltern2, Schueler.Wahlfach1, Schueler.Wahlfach2, Schueler.Wahlfach3, Schueler.Wahlfach4, Schueler.Wahlpflichtfach, Schueler.Wiederholung1Grund, Schueler.Wiederholung1Jahrgangsstufe, Schueler.Wiederholung2Grund, Schueler.Wiederholung2Jahrgangsstufe FROM Schueler INNER JOIN SchuelerKurs ON Schueler.Id = SchuelerKurs.SchuelerId WHERE (SchuelerKurs.KursId = @KursId) ORDER BY Schueler.KlasseId, Schueler.Name, Schueler.Vorname";
-            this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[5].Connection = this.Connection;
-            this._commandCollection[5].CommandText = @"UPDATE       Schueler
-SET                Fremdsprache2 = @Fremdsprache2
-WHERE        (Id = @Id); 
-SELECT Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, AnschriftPLZ, AnschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Fremdsprache2, ReligionOderEthik, Wahlpflichtfach, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wiederholung1Jahrgangsstufe, Wiederholung2Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, LRSSchwaeche, LRSBisDatum, VerwandtschaftsbezeichnungEltern1, NachnameEltern1, VornameEltern1, AnredeEltern1, NachnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2 FROM Schueler WHERE (Id = @Id)";
-            this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Fremdsprache2", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Fremdsprache2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._commandCollection[6] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[6].Connection = this.Connection;
-            this._commandCollection[6].CommandText = @"UPDATE       Schueler
-SET                LRSStoerung = @LRSStoerung, LRSSchwaeche = @LRSSchwaeche
-WHERE        (Id = @Id);    
-SELECT Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, AnschriftPLZ, AnschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Fremdsprache2, ReligionOderEthik, Wahlpflichtfach, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wiederholung1Jahrgangsstufe, Wiederholung2Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, LRSSchwaeche, LRSBisDatum, VerwandtschaftsbezeichnungEltern1, NachnameEltern1, VornameEltern1, AnredeEltern1, NachnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2 FROM Schueler WHERE (Id = @Id)";
-            this._commandCollection[6].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSStoerung", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 0, 0, "LRSStoerung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSSchwaeche", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 0, 0, "LRSSchwaeche", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._commandCollection[7] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[7].Connection = this.Connection;
-            this._commandCollection[7].CommandText = @"UPDATE       Schueler
-SET                KlasseId = @KlasseId, Fremdsprache2 = @Fremdsprache2, ReligionOderEthik = @ReligionOderEthik, Austrittsdatum = @Austrittsdatum, 
-                         LRSStoerung = @LRSStoerung, LRSSchwaeche = @LRSSchwaeche
-WHERE        (Id = @Id);  
-SELECT Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, AnschriftPLZ, AnschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Fremdsprache2, ReligionOderEthik, Wahlpflichtfach, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wiederholung1Jahrgangsstufe, Wiederholung2Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, LRSSchwaeche, LRSBisDatum, VerwandtschaftsbezeichnungEltern1, NachnameEltern1, VornameEltern1, AnredeEltern1, NachnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2 FROM Schueler WHERE (Id = @Id)";
-            this._commandCollection[7].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Fremdsprache2", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Fremdsprache2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReligionOderEthik", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "ReligionOderEthik", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Austrittsdatum", global::System.Data.SqlDbType.DateTime, 3, global::System.Data.ParameterDirection.Input, 0, 0, "Austrittsdatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSStoerung", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 0, 0, "LRSStoerung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSSchwaeche", global::System.Data.SqlDbType.Bit, 1, global::System.Data.ParameterDirection.Input, 0, 0, "LRSSchwaeche", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._commandCollection[8] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[8].Connection = this.Connection;
-            this._commandCollection[8].CommandText = @"UPDATE       Schueler
-SET               ReligionOderEthik = @ReligionOderEthik
-WHERE        (Id = @Id); 
-SELECT Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, AnschriftPLZ, AnschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Fremdsprache2, ReligionOderEthik, Wahlpflichtfach, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wiederholung1Jahrgangsstufe, Wiederholung2Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, LRSSchwaeche, LRSBisDatum, VerwandtschaftsbezeichnungEltern1, NachnameEltern1, VornameEltern1, AnredeEltern1, NachnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2 FROM Schueler WHERE (Id = @Id)";
-            this._commandCollection[8].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReligionOderEthik", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "ReligionOderEthik", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._commandCollection[9] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[9].Connection = this.Connection;
-            this._commandCollection[9].CommandText = @"UPDATE       Schueler
-SET                Wahlpflichtfach = @Wahlpflichtfach
-WHERE        (Id = @Id); 
-SELECT Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, AnschriftPLZ, AnschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Fremdsprache2, ReligionOderEthik, Wahlpflichtfach, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wiederholung1Jahrgangsstufe, Wiederholung2Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, LRSSchwaeche, LRSBisDatum, VerwandtschaftsbezeichnungEltern1, NachnameEltern1, VornameEltern1, AnredeEltern1, NachnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2 FROM Schueler WHERE (Id = @Id)";
-            this._commandCollection[9].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[9].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlpflichtfach", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlpflichtfach", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[9].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual diNoDataSet.SchuelerDataTable GetDataById(int Id) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(Id));
-            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByKlasse(diNoDataSet.SchuelerDataTable dataTable, int KlasseId) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.SchuelerDataTable GetDataByKlasse(int KlasseId) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
-            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.SchuelerDataTable GetDataByKlasseAndZweig(int KlasseId, string Ausbildungsrichtung) {
-            this.Adapter.SelectCommand = this.CommandCollection[2];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
-            if ((Ausbildungsrichtung == null)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(Ausbildungsrichtung));
-            }
-            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.SchuelerDataTable GetDataByKlasseUndName(int KlasseId, string Name, string Rufname) {
-            this.Adapter.SelectCommand = this.CommandCollection[3];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
-            if ((Name == null)) {
-                throw new global::System.ArgumentNullException("Name");
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(Name));
-            }
-            if ((Rufname == null)) {
-                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(Rufname));
-            }
-            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.SchuelerDataTable GetDataByKursId(int KursId) {
-            this.Adapter.SelectCommand = this.CommandCollection[4];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KursId));
-            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(diNoDataSet.SchuelerDataTable dataTable) {
-            return this.Adapter.Update(dataTable);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(diNoDataSet dataSet) {
-            return this.Adapter.Update(dataSet, "Schueler");
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow dataRow) {
-            return this.Adapter.Update(new global::System.Data.DataRow[] {
-                        dataRow});
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int Update(global::System.Data.DataRow[] dataRows) {
-            return this.Adapter.Update(dataRows);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(
-                    int Original_Id, 
-                    string Original_Name, 
-                    string Original_Vorname, 
-                    int Original_KlasseId, 
-                    string Original_Rufname, 
-                    string Original_Geschlecht, 
-                    global::System.Nullable<global::System.DateTime> Original_Geburtsdatum, 
-                    string Original_Geburtsort, 
-                    string Original_Bekenntnis, 
-                    string Original_AnschriftPLZ, 
-                    string Original_AnschriftOrt, 
-                    string Original_AnschriftStrasse, 
-                    string Original_AnschriftTelefonnummer, 
-                    string Original_Ausbildungsrichtung, 
-                    string Original_Fremdsprache2, 
-                    string Original_ReligionOderEthik, 
-                    string Original_Wahlpflichtfach, 
-                    string Original_Wahlfach1, 
-                    string Original_Wahlfach2, 
-                    string Original_Wahlfach3, 
-                    string Original_Wahlfach4, 
-                    string Original_Wiederholung1Jahrgangsstufe, 
-                    string Original_Wiederholung2Jahrgangsstufe, 
-                    string Original_Wiederholung1Grund, 
-                    string Original_Wiederholung2Grund, 
-                    global::System.Nullable<global::System.DateTime> Original_ProbezeitBis, 
-                    global::System.Nullable<global::System.DateTime> Original_Austrittsdatum, 
-                    string Original_SchulischeVorbildung, 
-                    string Original_BeruflicheVorbildung, 
-                    global::System.Nullable<bool> Original_LRSStoerung, 
-                    global::System.Nullable<bool> Original_LRSSchwaeche, 
-                    global::System.Nullable<global::System.DateTime> Original_LRSBisDatum, 
-                    string Original_VerwandtschaftsbezeichnungEltern1, 
-                    string Original_NachnameEltern1, 
-                    string Original_VornameEltern1, 
-                    string Original_AnredeEltern1, 
-                    string Original_NachnameEltern2, 
-                    string Original_VornameEltern2, 
-                    string Original_AnredeEltern2, 
-                    string Original_VerwandtschaftsbezeichnungEltern2, 
-                    string Original_EintrittJahrgangsstufe, 
-                    global::System.Nullable<global::System.DateTime> Original_EintrittAm, 
-                    global::System.Nullable<int> Original_EintrittAusSchulnummer, 
-                    string Original_Email, 
-                    string Original_Notfalltelefonnummer) {
-            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
-            if ((Original_Name == null)) {
-                throw new global::System.ArgumentNullException("Original_Name");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_Name));
-            }
-            if ((Original_Vorname == null)) {
-                throw new global::System.ArgumentNullException("Original_Vorname");
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_Vorname));
-            }
-            this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(Original_KlasseId));
-            if ((Original_Rufname == null)) {
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((string)(Original_Rufname));
-            }
-            if ((Original_Geschlecht == null)) {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[7].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[7].Value = ((string)(Original_Geschlecht));
-            }
-            if ((Original_Geburtsdatum.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[9].Value = ((System.DateTime)(Original_Geburtsdatum.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Geburtsort == null)) {
-                this.Adapter.DeleteCommand.Parameters[10].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[11].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[10].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[11].Value = ((string)(Original_Geburtsort));
-            }
-            if ((Original_Bekenntnis == null)) {
-                this.Adapter.DeleteCommand.Parameters[12].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[13].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[12].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[13].Value = ((string)(Original_Bekenntnis));
-            }
-            if ((Original_AnschriftPLZ == null)) {
-                this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[15].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[15].Value = ((string)(Original_AnschriftPLZ));
-            }
-            if ((Original_AnschriftOrt == null)) {
-                this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[17].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[17].Value = ((string)(Original_AnschriftOrt));
-            }
-            if ((Original_AnschriftStrasse == null)) {
-                this.Adapter.DeleteCommand.Parameters[18].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[19].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[18].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[19].Value = ((string)(Original_AnschriftStrasse));
-            }
-            if ((Original_AnschriftTelefonnummer == null)) {
-                this.Adapter.DeleteCommand.Parameters[20].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[21].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[20].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[21].Value = ((string)(Original_AnschriftTelefonnummer));
-            }
-            if ((Original_Ausbildungsrichtung == null)) {
-                this.Adapter.DeleteCommand.Parameters[22].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[23].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[22].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[23].Value = ((string)(Original_Ausbildungsrichtung));
-            }
-            if ((Original_Fremdsprache2 == null)) {
-                this.Adapter.DeleteCommand.Parameters[24].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[25].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[24].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[25].Value = ((string)(Original_Fremdsprache2));
-            }
-            if ((Original_ReligionOderEthik == null)) {
-                this.Adapter.DeleteCommand.Parameters[26].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[27].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[26].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[27].Value = ((string)(Original_ReligionOderEthik));
-            }
-            if ((Original_Wahlpflichtfach == null)) {
-                this.Adapter.DeleteCommand.Parameters[28].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[29].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[28].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[29].Value = ((string)(Original_Wahlpflichtfach));
-            }
-            if ((Original_Wahlfach1 == null)) {
-                this.Adapter.DeleteCommand.Parameters[30].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[31].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[30].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[31].Value = ((string)(Original_Wahlfach1));
-            }
-            if ((Original_Wahlfach2 == null)) {
-                this.Adapter.DeleteCommand.Parameters[32].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[33].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[32].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[33].Value = ((string)(Original_Wahlfach2));
-            }
-            if ((Original_Wahlfach3 == null)) {
-                this.Adapter.DeleteCommand.Parameters[34].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[35].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[34].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[35].Value = ((string)(Original_Wahlfach3));
-            }
-            if ((Original_Wahlfach4 == null)) {
-                this.Adapter.DeleteCommand.Parameters[36].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[37].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[36].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[37].Value = ((string)(Original_Wahlfach4));
-            }
-            if ((Original_Wiederholung1Jahrgangsstufe == null)) {
-                this.Adapter.DeleteCommand.Parameters[38].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[39].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[38].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[39].Value = ((string)(Original_Wiederholung1Jahrgangsstufe));
-            }
-            if ((Original_Wiederholung2Jahrgangsstufe == null)) {
-                this.Adapter.DeleteCommand.Parameters[40].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[41].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[40].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[41].Value = ((string)(Original_Wiederholung2Jahrgangsstufe));
-            }
-            if ((Original_Wiederholung1Grund == null)) {
-                this.Adapter.DeleteCommand.Parameters[42].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[43].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[42].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[43].Value = ((string)(Original_Wiederholung1Grund));
-            }
-            if ((Original_Wiederholung2Grund == null)) {
-                this.Adapter.DeleteCommand.Parameters[44].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[45].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[44].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[45].Value = ((string)(Original_Wiederholung2Grund));
-            }
-            if ((Original_ProbezeitBis.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[46].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[47].Value = ((System.DateTime)(Original_ProbezeitBis.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[46].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[47].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Austrittsdatum.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[48].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[49].Value = ((System.DateTime)(Original_Austrittsdatum.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[48].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[49].Value = global::System.DBNull.Value;
-            }
-            if ((Original_SchulischeVorbildung == null)) {
-                this.Adapter.DeleteCommand.Parameters[50].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[51].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[50].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[51].Value = ((string)(Original_SchulischeVorbildung));
-            }
-            if ((Original_BeruflicheVorbildung == null)) {
-                this.Adapter.DeleteCommand.Parameters[52].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[53].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[52].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[53].Value = ((string)(Original_BeruflicheVorbildung));
-            }
-            if ((Original_LRSStoerung.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[54].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[55].Value = ((bool)(Original_LRSStoerung.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[54].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[55].Value = global::System.DBNull.Value;
-            }
-            if ((Original_LRSSchwaeche.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[56].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[57].Value = ((bool)(Original_LRSSchwaeche.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[56].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[57].Value = global::System.DBNull.Value;
-            }
-            if ((Original_LRSBisDatum.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[58].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[59].Value = ((System.DateTime)(Original_LRSBisDatum.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[58].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[59].Value = global::System.DBNull.Value;
-            }
-            if ((Original_VerwandtschaftsbezeichnungEltern1 == null)) {
-                this.Adapter.DeleteCommand.Parameters[60].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[61].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[60].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[61].Value = ((string)(Original_VerwandtschaftsbezeichnungEltern1));
-            }
-            if ((Original_NachnameEltern1 == null)) {
-                this.Adapter.DeleteCommand.Parameters[62].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[63].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[62].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[63].Value = ((string)(Original_NachnameEltern1));
-            }
-            if ((Original_VornameEltern1 == null)) {
-                this.Adapter.DeleteCommand.Parameters[64].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[65].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[64].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[65].Value = ((string)(Original_VornameEltern1));
-            }
-            if ((Original_AnredeEltern1 == null)) {
-                this.Adapter.DeleteCommand.Parameters[66].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[67].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[66].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[67].Value = ((string)(Original_AnredeEltern1));
-            }
-            if ((Original_NachnameEltern2 == null)) {
-                this.Adapter.DeleteCommand.Parameters[68].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[69].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[68].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[69].Value = ((string)(Original_NachnameEltern2));
-            }
-            if ((Original_VornameEltern2 == null)) {
-                this.Adapter.DeleteCommand.Parameters[70].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[71].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[70].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[71].Value = ((string)(Original_VornameEltern2));
-            }
-            if ((Original_AnredeEltern2 == null)) {
-                this.Adapter.DeleteCommand.Parameters[72].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[73].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[72].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[73].Value = ((string)(Original_AnredeEltern2));
-            }
-            if ((Original_VerwandtschaftsbezeichnungEltern2 == null)) {
-                this.Adapter.DeleteCommand.Parameters[74].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[75].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[74].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[75].Value = ((string)(Original_VerwandtschaftsbezeichnungEltern2));
-            }
-            if ((Original_EintrittJahrgangsstufe == null)) {
-                this.Adapter.DeleteCommand.Parameters[76].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[77].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[76].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[77].Value = ((string)(Original_EintrittJahrgangsstufe));
-            }
-            if ((Original_EintrittAm.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[78].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[79].Value = ((System.DateTime)(Original_EintrittAm.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[78].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[79].Value = global::System.DBNull.Value;
-            }
-            if ((Original_EintrittAusSchulnummer.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[80].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[81].Value = ((int)(Original_EintrittAusSchulnummer.Value));
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[80].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[81].Value = global::System.DBNull.Value;
-            }
-            if ((Original_Email == null)) {
-                this.Adapter.DeleteCommand.Parameters[82].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[83].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[82].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[83].Value = ((string)(Original_Email));
-            }
-            if ((Original_Notfalltelefonnummer == null)) {
-                this.Adapter.DeleteCommand.Parameters[84].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[85].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[84].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[85].Value = ((string)(Original_Notfalltelefonnummer));
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
-            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.DeleteCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.DeleteCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(
-                    int Id, 
-                    string Name, 
-                    string Vorname, 
-                    int KlasseId, 
-                    string Rufname, 
-                    string Geschlecht, 
-                    global::System.Nullable<global::System.DateTime> Geburtsdatum, 
-                    string Geburtsort, 
-                    string Bekenntnis, 
-                    string AnschriftPLZ, 
-                    string AnschriftOrt, 
-                    string AnschriftStrasse, 
-                    string AnschriftTelefonnummer, 
-                    string Ausbildungsrichtung, 
-                    string Fremdsprache2, 
-                    string ReligionOderEthik, 
-                    string Wahlpflichtfach, 
-                    string Wahlfach1, 
-                    string Wahlfach2, 
-                    string Wahlfach3, 
-                    string Wahlfach4, 
-                    string Wiederholung1Jahrgangsstufe, 
-                    string Wiederholung2Jahrgangsstufe, 
-                    string Wiederholung1Grund, 
-                    string Wiederholung2Grund, 
-                    global::System.Nullable<global::System.DateTime> ProbezeitBis, 
-                    global::System.Nullable<global::System.DateTime> Austrittsdatum, 
-                    string SchulischeVorbildung, 
-                    string BeruflicheVorbildung, 
-                    global::System.Nullable<bool> LRSStoerung, 
-                    global::System.Nullable<bool> LRSSchwaeche, 
-                    global::System.Nullable<global::System.DateTime> LRSBisDatum, 
-                    string VerwandtschaftsbezeichnungEltern1, 
-                    string NachnameEltern1, 
-                    string VornameEltern1, 
-                    string AnredeEltern1, 
-                    string NachnameEltern2, 
-                    string VornameEltern2, 
-                    string AnredeEltern2, 
-                    string VerwandtschaftsbezeichnungEltern2, 
-                    string EintrittJahrgangsstufe, 
-                    global::System.Nullable<global::System.DateTime> EintrittAm, 
-                    global::System.Nullable<int> EintrittAusSchulnummer, 
-                    string Email, 
-                    string Notfalltelefonnummer) {
-            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(Id));
-            if ((Name == null)) {
-                throw new global::System.ArgumentNullException("Name");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(Name));
-            }
-            if ((Vorname == null)) {
-                throw new global::System.ArgumentNullException("Vorname");
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(Vorname));
-            }
-            this.Adapter.InsertCommand.Parameters[3].Value = ((int)(KlasseId));
-            if ((Rufname == null)) {
-                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(Rufname));
-            }
-            if ((Geschlecht == null)) {
-                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[5].Value = ((string)(Geschlecht));
-            }
-            if ((Geburtsdatum.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[6].Value = ((System.DateTime)(Geburtsdatum.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
-            }
-            if ((Geburtsort == null)) {
-                this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[7].Value = ((string)(Geburtsort));
-            }
-            if ((Bekenntnis == null)) {
-                this.Adapter.InsertCommand.Parameters[8].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[8].Value = ((string)(Bekenntnis));
-            }
-            if ((AnschriftPLZ == null)) {
-                this.Adapter.InsertCommand.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[9].Value = ((string)(AnschriftPLZ));
-            }
-            if ((AnschriftOrt == null)) {
-                this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[10].Value = ((string)(AnschriftOrt));
-            }
-            if ((AnschriftStrasse == null)) {
-                this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[11].Value = ((string)(AnschriftStrasse));
-            }
-            if ((AnschriftTelefonnummer == null)) {
-                this.Adapter.InsertCommand.Parameters[12].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[12].Value = ((string)(AnschriftTelefonnummer));
-            }
-            if ((Ausbildungsrichtung == null)) {
-                this.Adapter.InsertCommand.Parameters[13].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[13].Value = ((string)(Ausbildungsrichtung));
-            }
-            if ((Fremdsprache2 == null)) {
-                this.Adapter.InsertCommand.Parameters[14].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[14].Value = ((string)(Fremdsprache2));
-            }
-            if ((ReligionOderEthik == null)) {
-                this.Adapter.InsertCommand.Parameters[15].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[15].Value = ((string)(ReligionOderEthik));
-            }
-            if ((Wahlpflichtfach == null)) {
-                this.Adapter.InsertCommand.Parameters[16].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[16].Value = ((string)(Wahlpflichtfach));
-            }
-            if ((Wahlfach1 == null)) {
-                this.Adapter.InsertCommand.Parameters[17].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[17].Value = ((string)(Wahlfach1));
-            }
-            if ((Wahlfach2 == null)) {
-                this.Adapter.InsertCommand.Parameters[18].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[18].Value = ((string)(Wahlfach2));
-            }
-            if ((Wahlfach3 == null)) {
-                this.Adapter.InsertCommand.Parameters[19].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[19].Value = ((string)(Wahlfach3));
-            }
-            if ((Wahlfach4 == null)) {
-                this.Adapter.InsertCommand.Parameters[20].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[20].Value = ((string)(Wahlfach4));
-            }
-            if ((Wiederholung1Jahrgangsstufe == null)) {
-                this.Adapter.InsertCommand.Parameters[21].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[21].Value = ((string)(Wiederholung1Jahrgangsstufe));
-            }
-            if ((Wiederholung2Jahrgangsstufe == null)) {
-                this.Adapter.InsertCommand.Parameters[22].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[22].Value = ((string)(Wiederholung2Jahrgangsstufe));
-            }
-            if ((Wiederholung1Grund == null)) {
-                this.Adapter.InsertCommand.Parameters[23].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[23].Value = ((string)(Wiederholung1Grund));
-            }
-            if ((Wiederholung2Grund == null)) {
-                this.Adapter.InsertCommand.Parameters[24].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[24].Value = ((string)(Wiederholung2Grund));
-            }
-            if ((ProbezeitBis.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[25].Value = ((System.DateTime)(ProbezeitBis.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[25].Value = global::System.DBNull.Value;
-            }
-            if ((Austrittsdatum.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[26].Value = ((System.DateTime)(Austrittsdatum.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[26].Value = global::System.DBNull.Value;
-            }
-            if ((SchulischeVorbildung == null)) {
-                this.Adapter.InsertCommand.Parameters[27].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[27].Value = ((string)(SchulischeVorbildung));
-            }
-            if ((BeruflicheVorbildung == null)) {
-                this.Adapter.InsertCommand.Parameters[28].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[28].Value = ((string)(BeruflicheVorbildung));
-            }
-            if ((LRSStoerung.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[29].Value = ((bool)(LRSStoerung.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[29].Value = global::System.DBNull.Value;
-            }
-            if ((LRSSchwaeche.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[30].Value = ((bool)(LRSSchwaeche.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[30].Value = global::System.DBNull.Value;
-            }
-            if ((LRSBisDatum.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[31].Value = ((System.DateTime)(LRSBisDatum.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[31].Value = global::System.DBNull.Value;
-            }
-            if ((VerwandtschaftsbezeichnungEltern1 == null)) {
-                this.Adapter.InsertCommand.Parameters[32].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[32].Value = ((string)(VerwandtschaftsbezeichnungEltern1));
-            }
-            if ((NachnameEltern1 == null)) {
-                this.Adapter.InsertCommand.Parameters[33].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[33].Value = ((string)(NachnameEltern1));
-            }
-            if ((VornameEltern1 == null)) {
-                this.Adapter.InsertCommand.Parameters[34].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[34].Value = ((string)(VornameEltern1));
-            }
-            if ((AnredeEltern1 == null)) {
-                this.Adapter.InsertCommand.Parameters[35].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[35].Value = ((string)(AnredeEltern1));
-            }
-            if ((NachnameEltern2 == null)) {
-                this.Adapter.InsertCommand.Parameters[36].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[36].Value = ((string)(NachnameEltern2));
-            }
-            if ((VornameEltern2 == null)) {
-                this.Adapter.InsertCommand.Parameters[37].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[37].Value = ((string)(VornameEltern2));
-            }
-            if ((AnredeEltern2 == null)) {
-                this.Adapter.InsertCommand.Parameters[38].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[38].Value = ((string)(AnredeEltern2));
-            }
-            if ((VerwandtschaftsbezeichnungEltern2 == null)) {
-                this.Adapter.InsertCommand.Parameters[39].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[39].Value = ((string)(VerwandtschaftsbezeichnungEltern2));
-            }
-            if ((EintrittJahrgangsstufe == null)) {
-                this.Adapter.InsertCommand.Parameters[40].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[40].Value = ((string)(EintrittJahrgangsstufe));
-            }
-            if ((EintrittAm.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[41].Value = ((System.DateTime)(EintrittAm.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[41].Value = global::System.DBNull.Value;
-            }
-            if ((EintrittAusSchulnummer.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[42].Value = ((int)(EintrittAusSchulnummer.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[42].Value = global::System.DBNull.Value;
-            }
-            if ((Email == null)) {
-                this.Adapter.InsertCommand.Parameters[43].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[43].Value = ((string)(Email));
-            }
-            if ((Notfalltelefonnummer == null)) {
-                this.Adapter.InsertCommand.Parameters[44].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[44].Value = ((string)(Notfalltelefonnummer));
-            }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
-            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.InsertCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.InsertCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(
-                    string Name, 
-                    string Vorname, 
-                    int KlasseId, 
-                    string Rufname, 
-                    string Geschlecht, 
-                    global::System.Nullable<global::System.DateTime> Geburtsdatum, 
-                    string Geburtsort, 
-                    string Bekenntnis, 
-                    string AnschriftPLZ, 
-                    string AnschriftOrt, 
-                    string AnschriftStrasse, 
-                    string AnschriftTelefonnummer, 
-                    string Ausbildungsrichtung, 
-                    string Fremdsprache2, 
-                    string ReligionOderEthik, 
-                    string Wahlpflichtfach, 
-                    string Wahlfach1, 
-                    string Wahlfach2, 
-                    string Wahlfach3, 
-                    string Wahlfach4, 
-                    string Wiederholung1Jahrgangsstufe, 
-                    string Wiederholung2Jahrgangsstufe, 
-                    string Wiederholung1Grund, 
-                    string Wiederholung2Grund, 
-                    global::System.Nullable<global::System.DateTime> ProbezeitBis, 
-                    global::System.Nullable<global::System.DateTime> Austrittsdatum, 
-                    string SchulischeVorbildung, 
-                    string BeruflicheVorbildung, 
-                    global::System.Nullable<bool> LRSStoerung, 
-                    global::System.Nullable<bool> LRSSchwaeche, 
-                    global::System.Nullable<global::System.DateTime> LRSBisDatum, 
-                    string VerwandtschaftsbezeichnungEltern1, 
-                    string NachnameEltern1, 
-                    string VornameEltern1, 
-                    string AnredeEltern1, 
-                    string NachnameEltern2, 
-                    string VornameEltern2, 
-                    string AnredeEltern2, 
-                    string VerwandtschaftsbezeichnungEltern2, 
-                    string EintrittJahrgangsstufe, 
-                    global::System.Nullable<global::System.DateTime> EintrittAm, 
-                    global::System.Nullable<int> EintrittAusSchulnummer, 
-                    string Email, 
-                    string Notfalltelefonnummer, 
-                    int Id) {
-            if ((Name == null)) {
-                throw new global::System.ArgumentNullException("Name");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(Name));
-            }
-            if ((Vorname == null)) {
-                throw new global::System.ArgumentNullException("Vorname");
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(Vorname));
-            }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(KlasseId));
-            if ((Rufname == null)) {
-                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Rufname));
-            }
-            if ((Geschlecht == null)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Geschlecht));
-            }
-            if ((Geburtsdatum.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((System.DateTime)(Geburtsdatum.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            if ((Geburtsort == null)) {
-                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Geburtsort));
-            }
-            if ((Bekenntnis == null)) {
-                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Bekenntnis));
-            }
-            if ((AnschriftPLZ == null)) {
-                this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(AnschriftPLZ));
-            }
-            if ((AnschriftOrt == null)) {
-                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(AnschriftOrt));
-            }
-            if ((AnschriftStrasse == null)) {
-                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(AnschriftStrasse));
-            }
-            if ((AnschriftTelefonnummer == null)) {
-                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(AnschriftTelefonnummer));
-            }
-            if ((Ausbildungsrichtung == null)) {
-                this.Adapter.UpdateCommand.Parameters[12].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((string)(Ausbildungsrichtung));
-            }
-            if ((Fremdsprache2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Fremdsprache2));
-            }
-            if ((ReligionOderEthik == null)) {
-                this.Adapter.UpdateCommand.Parameters[14].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((string)(ReligionOderEthik));
-            }
-            if ((Wahlpflichtfach == null)) {
-                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(Wahlpflichtfach));
-            }
-            if ((Wahlfach1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[16].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((string)(Wahlfach1));
-            }
-            if ((Wahlfach2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[17].Value = ((string)(Wahlfach2));
-            }
-            if ((Wahlfach3 == null)) {
-                this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((string)(Wahlfach3));
-            }
-            if ((Wahlfach4 == null)) {
-                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((string)(Wahlfach4));
-            }
-            if ((Wiederholung1Jahrgangsstufe == null)) {
-                this.Adapter.UpdateCommand.Parameters[20].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[20].Value = ((string)(Wiederholung1Jahrgangsstufe));
-            }
-            if ((Wiederholung2Jahrgangsstufe == null)) {
-                this.Adapter.UpdateCommand.Parameters[21].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((string)(Wiederholung2Jahrgangsstufe));
-            }
-            if ((Wiederholung1Grund == null)) {
-                this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[22].Value = ((string)(Wiederholung1Grund));
-            }
-            if ((Wiederholung2Grund == null)) {
-                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((string)(Wiederholung2Grund));
-            }
-            if ((ProbezeitBis.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((System.DateTime)(ProbezeitBis.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
-            }
-            if ((Austrittsdatum.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[25].Value = ((System.DateTime)(Austrittsdatum.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[25].Value = global::System.DBNull.Value;
-            }
-            if ((SchulischeVorbildung == null)) {
-                this.Adapter.UpdateCommand.Parameters[26].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[26].Value = ((string)(SchulischeVorbildung));
-            }
-            if ((BeruflicheVorbildung == null)) {
-                this.Adapter.UpdateCommand.Parameters[27].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[27].Value = ((string)(BeruflicheVorbildung));
-            }
-            if ((LRSStoerung.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[28].Value = ((bool)(LRSStoerung.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[28].Value = global::System.DBNull.Value;
-            }
-            if ((LRSSchwaeche.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[29].Value = ((bool)(LRSSchwaeche.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[29].Value = global::System.DBNull.Value;
-            }
-            if ((LRSBisDatum.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[30].Value = ((System.DateTime)(LRSBisDatum.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[30].Value = global::System.DBNull.Value;
-            }
-            if ((VerwandtschaftsbezeichnungEltern1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[31].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[31].Value = ((string)(VerwandtschaftsbezeichnungEltern1));
-            }
-            if ((NachnameEltern1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[32].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[32].Value = ((string)(NachnameEltern1));
-            }
-            if ((VornameEltern1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[33].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[33].Value = ((string)(VornameEltern1));
-            }
-            if ((AnredeEltern1 == null)) {
-                this.Adapter.UpdateCommand.Parameters[34].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[34].Value = ((string)(AnredeEltern1));
-            }
-            if ((NachnameEltern2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[35].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[35].Value = ((string)(NachnameEltern2));
-            }
-            if ((VornameEltern2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[36].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[36].Value = ((string)(VornameEltern2));
-            }
-            if ((AnredeEltern2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[37].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[37].Value = ((string)(AnredeEltern2));
-            }
-            if ((VerwandtschaftsbezeichnungEltern2 == null)) {
-                this.Adapter.UpdateCommand.Parameters[38].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[38].Value = ((string)(VerwandtschaftsbezeichnungEltern2));
-            }
-            if ((EintrittJahrgangsstufe == null)) {
-                this.Adapter.UpdateCommand.Parameters[39].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[39].Value = ((string)(EintrittJahrgangsstufe));
-            }
-            if ((EintrittAm.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[40].Value = ((System.DateTime)(EintrittAm.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[40].Value = global::System.DBNull.Value;
-            }
-            if ((EintrittAusSchulnummer.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[41].Value = ((int)(EintrittAusSchulnummer.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[41].Value = global::System.DBNull.Value;
-            }
-            if ((Email == null)) {
-                this.Adapter.UpdateCommand.Parameters[42].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[42].Value = ((string)(Email));
-            }
-            if ((Notfalltelefonnummer == null)) {
-                this.Adapter.UpdateCommand.Parameters[43].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[43].Value = ((string)(Notfalltelefonnummer));
-            }
-            this.Adapter.UpdateCommand.Parameters[44].Value = ((int)(Id));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
-            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                this.Adapter.UpdateCommand.Connection.Open();
-            }
-            try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
-                return returnValue;
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    this.Adapter.UpdateCommand.Connection.Close();
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
-        public virtual int UpdateFremdsprache2(string Fremdsprache2, int Id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[5];
-            if ((Fremdsprache2 == null)) {
-                command.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[0].Value = ((string)(Fremdsprache2));
-            }
-            command.Parameters[1].Value = ((int)(Id));
-            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
-            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                command.Connection.Open();
-            }
-            int returnValue;
-            try {
-                returnValue = command.ExecuteNonQuery();
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    command.Connection.Close();
-                }
-            }
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int UpdateLRS(global::System.Nullable<bool> LRSStoerung, global::System.Nullable<bool> LRSSchwaeche, int Id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[6];
-            if ((LRSStoerung.HasValue == true)) {
-                command.Parameters[0].Value = ((bool)(LRSStoerung.Value));
-            }
-            else {
-                command.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            if ((LRSSchwaeche.HasValue == true)) {
-                command.Parameters[1].Value = ((bool)(LRSSchwaeche.Value));
-            }
-            else {
-                command.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            command.Parameters[2].Value = ((int)(Id));
-            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
-            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                command.Connection.Open();
-            }
-            int returnValue;
-            try {
-                returnValue = command.ExecuteNonQuery();
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    command.Connection.Close();
-                }
-            }
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual int UpdateManyThings(int KlasseId, string Fremdsprache2, string ReligionOderEthik, global::System.Nullable<global::System.DateTime> Austrittsdatum, global::System.Nullable<bool> LRSStoerung, global::System.Nullable<bool> LRSSchwaeche, int Id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[7];
-            command.Parameters[0].Value = ((int)(KlasseId));
-            if ((Fremdsprache2 == null)) {
-                command.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[1].Value = ((string)(Fremdsprache2));
-            }
-            if ((ReligionOderEthik == null)) {
-                command.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[2].Value = ((string)(ReligionOderEthik));
-            }
-            if ((Austrittsdatum.HasValue == true)) {
-                command.Parameters[3].Value = ((System.DateTime)(Austrittsdatum.Value));
-            }
-            else {
-                command.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            if ((LRSStoerung.HasValue == true)) {
-                command.Parameters[4].Value = ((bool)(LRSStoerung.Value));
-            }
-            else {
-                command.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            if ((LRSSchwaeche.HasValue == true)) {
-                command.Parameters[5].Value = ((bool)(LRSSchwaeche.Value));
-            }
-            else {
-                command.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            command.Parameters[6].Value = ((int)(Id));
-            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
-            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                command.Connection.Open();
-            }
-            int returnValue;
-            try {
-                returnValue = command.ExecuteNonQuery();
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    command.Connection.Close();
-                }
-            }
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
-        public virtual int UpdateReliOderEthik(string ReligionOderEthik, int Id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[8];
-            if ((ReligionOderEthik == null)) {
-                command.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[0].Value = ((string)(ReligionOderEthik));
-            }
-            command.Parameters[1].Value = ((int)(Id));
-            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
-            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                command.Connection.Open();
-            }
-            int returnValue;
-            try {
-                returnValue = command.ExecuteNonQuery();
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    command.Connection.Close();
-                }
-            }
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, false)]
-        public virtual int UpdateWahlpflichtfach(string Wahlpflichtfach, int Id) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[9];
-            if ((Wahlpflichtfach == null)) {
-                command.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[0].Value = ((string)(Wahlpflichtfach));
-            }
-            command.Parameters[1].Value = ((int)(Id));
-            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
-            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                command.Connection.Open();
-            }
-            int returnValue;
-            try {
-                returnValue = command.ExecuteNonQuery();
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    command.Connection.Close();
-                }
-            }
-            return returnValue;
         }
     }
     
@@ -19047,6 +17072,483 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
     }
     
     /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class SchuelerTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public SchuelerTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "Schueler";
+            tableMapping.ColumnMappings.Add("Id", "Id");
+            tableMapping.ColumnMappings.Add("Name", "Name");
+            tableMapping.ColumnMappings.Add("Vorname", "Vorname");
+            tableMapping.ColumnMappings.Add("KlasseId", "KlasseId");
+            tableMapping.ColumnMappings.Add("Rufname", "Rufname");
+            tableMapping.ColumnMappings.Add("Geschlecht", "Geschlecht");
+            tableMapping.ColumnMappings.Add("Geburtsdatum", "Geburtsdatum");
+            tableMapping.ColumnMappings.Add("Geburtsort", "Geburtsort");
+            tableMapping.ColumnMappings.Add("Bekenntnis", "Bekenntnis");
+            tableMapping.ColumnMappings.Add("AnschriftPLZ", "AnschriftPLZ");
+            tableMapping.ColumnMappings.Add("AnschriftOrt", "AnschriftOrt");
+            tableMapping.ColumnMappings.Add("AnschriftStrasse", "AnschriftStrasse");
+            tableMapping.ColumnMappings.Add("AnschriftTelefonnummer", "AnschriftTelefonnummer");
+            tableMapping.ColumnMappings.Add("Ausbildungsrichtung", "Ausbildungsrichtung");
+            tableMapping.ColumnMappings.Add("Fremdsprache2", "Fremdsprache2");
+            tableMapping.ColumnMappings.Add("ReligionOderEthik", "ReligionOderEthik");
+            tableMapping.ColumnMappings.Add("Wahlpflichtfach", "Wahlpflichtfach");
+            tableMapping.ColumnMappings.Add("Wahlfach1", "Wahlfach1");
+            tableMapping.ColumnMappings.Add("Wahlfach2", "Wahlfach2");
+            tableMapping.ColumnMappings.Add("Wahlfach3", "Wahlfach3");
+            tableMapping.ColumnMappings.Add("Wahlfach4", "Wahlfach4");
+            tableMapping.ColumnMappings.Add("Wiederholung1Jahrgangsstufe", "Wiederholung1Jahrgangsstufe");
+            tableMapping.ColumnMappings.Add("Wiederholung2Jahrgangsstufe", "Wiederholung2Jahrgangsstufe");
+            tableMapping.ColumnMappings.Add("Wiederholung1Grund", "Wiederholung1Grund");
+            tableMapping.ColumnMappings.Add("Wiederholung2Grund", "Wiederholung2Grund");
+            tableMapping.ColumnMappings.Add("ProbezeitBis", "ProbezeitBis");
+            tableMapping.ColumnMappings.Add("Austrittsdatum", "Austrittsdatum");
+            tableMapping.ColumnMappings.Add("SchulischeVorbildung", "SchulischeVorbildung");
+            tableMapping.ColumnMappings.Add("BeruflicheVorbildung", "BeruflicheVorbildung");
+            tableMapping.ColumnMappings.Add("LRSStoerung", "LRSStoerung");
+            tableMapping.ColumnMappings.Add("LRSSchwaeche", "LRSSchwaeche");
+            tableMapping.ColumnMappings.Add("LRSBisDatum", "LRSBisDatum");
+            tableMapping.ColumnMappings.Add("NachnameEltern1", "NachnameEltern1");
+            tableMapping.ColumnMappings.Add("VornameEltern1", "VornameEltern1");
+            tableMapping.ColumnMappings.Add("AnredeEltern1", "AnredeEltern1");
+            tableMapping.ColumnMappings.Add("VerwandtschaftsbezeichnungEltern1", "VerwandtschaftsbezeichnungEltern1");
+            tableMapping.ColumnMappings.Add("NachnameEltern2", "NachnameEltern2");
+            tableMapping.ColumnMappings.Add("VornameEltern2", "VornameEltern2");
+            tableMapping.ColumnMappings.Add("AnredeEltern2", "AnredeEltern2");
+            tableMapping.ColumnMappings.Add("VerwandtschaftsbezeichnungEltern2", "VerwandtschaftsbezeichnungEltern2");
+            tableMapping.ColumnMappings.Add("EintrittJahrgangsstufe", "EintrittJahrgangsstufe");
+            tableMapping.ColumnMappings.Add("EintrittAm", "EintrittAm");
+            tableMapping.ColumnMappings.Add("EintrittAusSchulnummer", "EintrittAusSchulnummer");
+            tableMapping.ColumnMappings.Add("Email", "Email");
+            tableMapping.ColumnMappings.Add("Notfalltelefonnummer", "Notfalltelefonnummer");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Schueler] WHERE (([Id] = @Original_Id))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [Schueler] ([Id], [Name], [Vorname], [KlasseId], [Rufname], [Geschlec" +
+                "ht], [Geburtsdatum], [Geburtsort], [Bekenntnis], [AnschriftPLZ], [AnschriftOrt]," +
+                " [AnschriftStrasse], [AnschriftTelefonnummer], [Ausbildungsrichtung], [Fremdspra" +
+                "che2], [ReligionOderEthik], [Wahlpflichtfach], [Wahlfach1], [Wahlfach2], [Wahlfa" +
+                "ch3], [Wahlfach4], [Wiederholung1Jahrgangsstufe], [Wiederholung2Jahrgangsstufe]," +
+                " [Wiederholung1Grund], [Wiederholung2Grund], [ProbezeitBis], [Austrittsdatum], [" +
+                "SchulischeVorbildung], [BeruflicheVorbildung], [LRSStoerung], [LRSSchwaeche], [L" +
+                "RSBisDatum], [NachnameEltern1], [VornameEltern1], [AnredeEltern1], [Verwandtscha" +
+                "ftsbezeichnungEltern1], [NachnameEltern2], [VornameEltern2], [AnredeEltern2], [V" +
+                "erwandtschaftsbezeichnungEltern2], [EintrittJahrgangsstufe], [EintrittAm], [Eint" +
+                "rittAusSchulnummer], [Email], [Notfalltelefonnummer]) VALUES (@Id, @Name, @Vorna" +
+                "me, @KlasseId, @Rufname, @Geschlecht, @Geburtsdatum, @Geburtsort, @Bekenntnis, @" +
+                "AnschriftPLZ, @AnschriftOrt, @AnschriftStrasse, @AnschriftTelefonnummer, @Ausbil" +
+                "dungsrichtung, @Fremdsprache2, @ReligionOderEthik, @Wahlpflichtfach, @Wahlfach1," +
+                " @Wahlfach2, @Wahlfach3, @Wahlfach4, @Wiederholung1Jahrgangsstufe, @Wiederholung" +
+                "2Jahrgangsstufe, @Wiederholung1Grund, @Wiederholung2Grund, @ProbezeitBis, @Austr" +
+                "ittsdatum, @SchulischeVorbildung, @BeruflicheVorbildung, @LRSStoerung, @LRSSchwa" +
+                "eche, @LRSBisDatum, @NachnameEltern1, @VornameEltern1, @AnredeEltern1, @Verwandt" +
+                "schaftsbezeichnungEltern1, @NachnameEltern2, @VornameEltern2, @AnredeEltern2, @V" +
+                "erwandtschaftsbezeichnungEltern2, @EintrittJahrgangsstufe, @EintrittAm, @Eintrit" +
+                "tAusSchulnummer, @Email, @Notfalltelefonnummer)";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Vorname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Vorname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Rufname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Rufname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geschlecht", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geschlecht", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geburtsdatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsdatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geburtsort", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsort", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bekenntnis", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bekenntnis", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftPLZ", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftPLZ", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftOrt", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftOrt", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftStrasse", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftStrasse", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftTelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftTelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Fremdsprache2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fremdsprache2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReligionOderEthik", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReligionOderEthik", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlpflichtfach", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlpflichtfach", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach3", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach3", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach4", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach4", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung2Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Grund", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Grund", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung2Grund", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Grund", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProbezeitBis", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProbezeitBis", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Austrittsdatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Austrittsdatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchulischeVorbildung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchulischeVorbildung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BeruflicheVorbildung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BeruflicheVorbildung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSStoerung", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSStoerung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSSchwaeche", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSSchwaeche", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSBisDatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSBisDatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NachnameEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VornameEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnredeEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VerwandtschaftsbezeichnungEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NachnameEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VornameEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnredeEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VerwandtschaftsbezeichnungEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittJahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittJahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAm", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAm", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAusSchulnummer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAusSchulnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Email", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Email", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Notfalltelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Notfalltelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = "UPDATE [Schueler] SET [Id] = @Id, [Name] = @Name, [Vorname] = @Vorname, [KlasseId" +
+                "] = @KlasseId, [Rufname] = @Rufname, [Geschlecht] = @Geschlecht, [Geburtsdatum] " +
+                "= @Geburtsdatum, [Geburtsort] = @Geburtsort, [Bekenntnis] = @Bekenntnis, [Anschr" +
+                "iftPLZ] = @AnschriftPLZ, [AnschriftOrt] = @AnschriftOrt, [AnschriftStrasse] = @A" +
+                "nschriftStrasse, [AnschriftTelefonnummer] = @AnschriftTelefonnummer, [Ausbildung" +
+                "srichtung] = @Ausbildungsrichtung, [Fremdsprache2] = @Fremdsprache2, [ReligionOd" +
+                "erEthik] = @ReligionOderEthik, [Wahlpflichtfach] = @Wahlpflichtfach, [Wahlfach1]" +
+                " = @Wahlfach1, [Wahlfach2] = @Wahlfach2, [Wahlfach3] = @Wahlfach3, [Wahlfach4] =" +
+                " @Wahlfach4, [Wiederholung1Jahrgangsstufe] = @Wiederholung1Jahrgangsstufe, [Wied" +
+                "erholung2Jahrgangsstufe] = @Wiederholung2Jahrgangsstufe, [Wiederholung1Grund] = " +
+                "@Wiederholung1Grund, [Wiederholung2Grund] = @Wiederholung2Grund, [ProbezeitBis] " +
+                "= @ProbezeitBis, [Austrittsdatum] = @Austrittsdatum, [SchulischeVorbildung] = @S" +
+                "chulischeVorbildung, [BeruflicheVorbildung] = @BeruflicheVorbildung, [LRSStoerun" +
+                "g] = @LRSStoerung, [LRSSchwaeche] = @LRSSchwaeche, [LRSBisDatum] = @LRSBisDatum," +
+                " [NachnameEltern1] = @NachnameEltern1, [VornameEltern1] = @VornameEltern1, [Anre" +
+                "deEltern1] = @AnredeEltern1, [VerwandtschaftsbezeichnungEltern1] = @Verwandtscha" +
+                "ftsbezeichnungEltern1, [NachnameEltern2] = @NachnameEltern2, [VornameEltern2] = " +
+                "@VornameEltern2, [AnredeEltern2] = @AnredeEltern2, [VerwandtschaftsbezeichnungEl" +
+                "tern2] = @VerwandtschaftsbezeichnungEltern2, [EintrittJahrgangsstufe] = @Eintrit" +
+                "tJahrgangsstufe, [EintrittAm] = @EintrittAm, [EintrittAusSchulnummer] = @Eintrit" +
+                "tAusSchulnummer, [Email] = @Email, [Notfalltelefonnummer] = @Notfalltelefonnumme" +
+                "r WHERE (([Id] = @Original_Id))";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Vorname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Vorname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Rufname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Rufname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geschlecht", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geschlecht", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geburtsdatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsdatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geburtsort", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geburtsort", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bekenntnis", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bekenntnis", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftPLZ", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftPLZ", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftOrt", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftOrt", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftStrasse", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftStrasse", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftTelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftTelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Fremdsprache2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fremdsprache2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReligionOderEthik", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReligionOderEthik", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlpflichtfach", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlpflichtfach", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach3", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach3", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach4", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach4", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung2Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Grund", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Grund", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung2Grund", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Grund", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ProbezeitBis", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ProbezeitBis", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Austrittsdatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Austrittsdatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchulischeVorbildung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchulischeVorbildung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BeruflicheVorbildung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BeruflicheVorbildung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSStoerung", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSStoerung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSSchwaeche", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSSchwaeche", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSBisDatum", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSBisDatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NachnameEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VornameEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnredeEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VerwandtschaftsbezeichnungEltern1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NachnameEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "NachnameEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VornameEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VornameEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnredeEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnredeEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@VerwandtschaftsbezeichnungEltern2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "VerwandtschaftsbezeichnungEltern2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittJahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittJahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAm", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAm", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAusSchulnummer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAusSchulnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Email", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Email", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Notfalltelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Notfalltelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = global::diNo.Properties.Settings.Default.diNoConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT  Schueler.*\r\nFROM Schueler\r\nWHERE (Id = @Id)";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId)";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId) AND (Name = @Name) AND (Rufname = @Rufname)";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Rufname", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Rufname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[3].Connection = this.Connection;
+            this._commandCollection[3].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId) AND (Ausbildungsrichtung = @Ausbildungsrichtung)";
+            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[4].Connection = this.Connection;
+            this._commandCollection[4].CommandText = @"SELECT Schueler.AnredeEltern1, Schueler.AnredeEltern2, Schueler.AnschriftOrt, Schueler.AnschriftPLZ, Schueler.AnschriftStrasse, Schueler.AnschriftTelefonnummer, Schueler.Ausbildungsrichtung, Schueler.Austrittsdatum, Schueler.Bekenntnis, Schueler.BeruflicheVorbildung, Schueler.EintrittAm, Schueler.EintrittAusSchulnummer, Schueler.EintrittJahrgangsstufe, Schueler.Email, Schueler.Fremdsprache2, Schueler.Geburtsdatum, Schueler.Geburtsort, Schueler.Geschlecht, Schueler.Id, Schueler.KlasseId, Schueler.LRSBisDatum, Schueler.LRSSchwaeche, Schueler.LRSStoerung, Schueler.NachnameEltern1, Schueler.NachnameEltern2, Schueler.Name, Schueler.Notfalltelefonnummer, Schueler.ProbezeitBis, Schueler.ReligionOderEthik, Schueler.Rufname, Schueler.SchulischeVorbildung, Schueler.VerwandtschaftsbezeichnungEltern1, Schueler.VerwandtschaftsbezeichnungEltern2, Schueler.Vorname, Schueler.VornameEltern1, Schueler.VornameEltern2, Schueler.Wahlfach1, Schueler.Wahlfach2, Schueler.Wahlfach3, Schueler.Wahlfach4, Schueler.Wahlpflichtfach, Schueler.Wiederholung1Grund, Schueler.Wiederholung1Jahrgangsstufe, Schueler.Wiederholung2Grund, Schueler.Wiederholung2Jahrgangsstufe FROM Schueler INNER JOIN SchuelerKurs ON Schueler.Id = SchuelerKurs.SchuelerId WHERE (SchuelerKurs.KursId = @KursId) ORDER BY Schueler.KlasseId, Schueler.Name, Schueler.Vorname";
+            this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual diNoDataSet.SchuelerDataTable GetDataById(int Id) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(Id));
+            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByKlasse(diNoDataSet.SchuelerDataTable dataTable, int KlasseId) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.SchuelerDataTable GetDataByKlasse(int KlasseId) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
+            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.SchuelerDataTable GetDataByByKlasseUndName(int KlasseId, string Name, string Rufname) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
+            if ((Name == null)) {
+                throw new global::System.ArgumentNullException("Name");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(Name));
+            }
+            if ((Rufname == null)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(Rufname));
+            }
+            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.SchuelerDataTable GetDataByKlasseUndZweig(int KlasseId, string Ausbildungsrichtung) {
+            this.Adapter.SelectCommand = this.CommandCollection[3];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
+            if ((Ausbildungsrichtung == null)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((string)(Ausbildungsrichtung));
+            }
+            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.SchuelerDataTable GetDataByKursId(int KursId) {
+            this.Adapter.SelectCommand = this.CommandCollection[4];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KursId));
+            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(diNoDataSet.SchuelerDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(diNoDataSet dataSet) {
+            return this.Adapter.Update(dataSet, "Schueler");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+    }
+    
+    /// <summary>
     ///TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
     ///</summary>
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -19068,8 +17570,6 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
         
         private NotenartTableAdapter _notenartTableAdapter;
         
-        private SchuelerTableAdapter _schuelerTableAdapter;
-        
         private KlasseKursTableAdapter _klasseKursTableAdapter;
         
         private SchuelerKursTableAdapter _schuelerKursTableAdapter;
@@ -19085,6 +17585,8 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
         private BerechneteNoteTableAdapter _berechneteNoteTableAdapter;
         
         private VorkommnisTableAdapter _vorkommnisTableAdapter;
+        
+        private SchuelerTableAdapter _schuelerTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -19168,20 +17670,6 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             }
             set {
                 this._notenartTableAdapter = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
-            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
-            "a", "System.Drawing.Design.UITypeEditor")]
-        public SchuelerTableAdapter SchuelerTableAdapter {
-            get {
-                return this._schuelerTableAdapter;
-            }
-            set {
-                this._schuelerTableAdapter = value;
             }
         }
         
@@ -19299,6 +17787,20 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+            "a", "System.Drawing.Design.UITypeEditor")]
+        public SchuelerTableAdapter SchuelerTableAdapter {
+            get {
+                return this._schuelerTableAdapter;
+            }
+            set {
+                this._schuelerTableAdapter = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public bool BackupDataSetBeforeUpdate {
             get {
                 return this._backupDataSetBeforeUpdate;
@@ -19336,10 +17838,6 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                             && (this._notenartTableAdapter.Connection != null))) {
                     return this._notenartTableAdapter.Connection;
                 }
-                if (((this._schuelerTableAdapter != null) 
-                            && (this._schuelerTableAdapter.Connection != null))) {
-                    return this._schuelerTableAdapter.Connection;
-                }
                 if (((this._klasseKursTableAdapter != null) 
                             && (this._klasseKursTableAdapter.Connection != null))) {
                     return this._klasseKursTableAdapter.Connection;
@@ -19372,6 +17870,10 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                             && (this._vorkommnisTableAdapter.Connection != null))) {
                     return this._vorkommnisTableAdapter.Connection;
                 }
+                if (((this._schuelerTableAdapter != null) 
+                            && (this._schuelerTableAdapter.Connection != null))) {
+                    return this._schuelerTableAdapter.Connection;
+                }
                 return null;
             }
             set {
@@ -19400,9 +17902,6 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                 if ((this._notenartTableAdapter != null)) {
                     count = (count + 1);
                 }
-                if ((this._schuelerTableAdapter != null)) {
-                    count = (count + 1);
-                }
                 if ((this._klasseKursTableAdapter != null)) {
                     count = (count + 1);
                 }
@@ -19425,6 +17924,9 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                     count = (count + 1);
                 }
                 if ((this._vorkommnisTableAdapter != null)) {
+                    count = (count + 1);
+                }
+                if ((this._schuelerTableAdapter != null)) {
                     count = (count + 1);
                 }
                 return count;
@@ -19872,11 +18374,6 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                 throw new global::System.ArgumentException("Für alle von einem TableAdapterManager verwalteten Instanzen von TableAdapter mus" +
                         "s die gleiche Verbindungszeichenfolge verwendet werden.");
             }
-            if (((this._schuelerTableAdapter != null) 
-                        && (this.MatchTableAdapterConnection(this._schuelerTableAdapter.Connection) == false))) {
-                throw new global::System.ArgumentException("Für alle von einem TableAdapterManager verwalteten Instanzen von TableAdapter mus" +
-                        "s die gleiche Verbindungszeichenfolge verwendet werden.");
-            }
             if (((this._klasseKursTableAdapter != null) 
                         && (this.MatchTableAdapterConnection(this._klasseKursTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("Für alle von einem TableAdapterManager verwalteten Instanzen von TableAdapter mus" +
@@ -19914,6 +18411,11 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             }
             if (((this._vorkommnisTableAdapter != null) 
                         && (this.MatchTableAdapterConnection(this._vorkommnisTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("Für alle von einem TableAdapterManager verwalteten Instanzen von TableAdapter mus" +
+                        "s die gleiche Verbindungszeichenfolge verwendet werden.");
+            }
+            if (((this._schuelerTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._schuelerTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("Für alle von einem TableAdapterManager verwalteten Instanzen von TableAdapter mus" +
                         "s die gleiche Verbindungszeichenfolge verwendet werden.");
             }
@@ -19996,15 +18498,6 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                         adaptersWithAcceptChangesDuringUpdate.Add(this._notenartTableAdapter.Adapter);
                     }
                 }
-                if ((this._schuelerTableAdapter != null)) {
-                    revertConnections.Add(this._schuelerTableAdapter, this._schuelerTableAdapter.Connection);
-                    this._schuelerTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
-                    this._schuelerTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
-                    if (this._schuelerTableAdapter.Adapter.AcceptChangesDuringUpdate) {
-                        this._schuelerTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
-                        adaptersWithAcceptChangesDuringUpdate.Add(this._schuelerTableAdapter.Adapter);
-                    }
-                }
                 if ((this._klasseKursTableAdapter != null)) {
                     revertConnections.Add(this._klasseKursTableAdapter, this._klasseKursTableAdapter.Connection);
                     this._klasseKursTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
@@ -20075,6 +18568,15 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                     if (this._vorkommnisTableAdapter.Adapter.AcceptChangesDuringUpdate) {
                         this._vorkommnisTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
                         adaptersWithAcceptChangesDuringUpdate.Add(this._vorkommnisTableAdapter.Adapter);
+                    }
+                }
+                if ((this._schuelerTableAdapter != null)) {
+                    revertConnections.Add(this._schuelerTableAdapter, this._schuelerTableAdapter.Connection);
+                    this._schuelerTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._schuelerTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._schuelerTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._schuelerTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._schuelerTableAdapter.Adapter);
                     }
                 }
                 // 
@@ -20155,10 +18657,6 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                     this._notenartTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._notenartTableAdapter]));
                     this._notenartTableAdapter.Transaction = null;
                 }
-                if ((this._schuelerTableAdapter != null)) {
-                    this._schuelerTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._schuelerTableAdapter]));
-                    this._schuelerTableAdapter.Transaction = null;
-                }
                 if ((this._klasseKursTableAdapter != null)) {
                     this._klasseKursTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._klasseKursTableAdapter]));
                     this._klasseKursTableAdapter.Transaction = null;
@@ -20190,6 +18688,10 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                 if ((this._vorkommnisTableAdapter != null)) {
                     this._vorkommnisTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._vorkommnisTableAdapter]));
                     this._vorkommnisTableAdapter.Transaction = null;
+                }
+                if ((this._schuelerTableAdapter != null)) {
+                    this._schuelerTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._schuelerTableAdapter]));
+                    this._schuelerTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

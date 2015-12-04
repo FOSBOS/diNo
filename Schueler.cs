@@ -53,6 +53,15 @@ namespace diNo
     }
 
     /// <summary>
+    /// Speichert den Schüler zurück in die DB
+    /// </summary>
+    public void Save()
+    {
+            (new SchuelerTableAdapter()).Update(data);
+    }
+
+
+    /// <summary>
     /// Die Id des Schülers in der Datenbank.
     /// </summary>
     [OLVColumn(Title="Id", Width = 50, DisplayIndex = 4, TextAlign = HorizontalAlignment.Right)]
@@ -119,7 +128,8 @@ namespace diNo
       {
         this.data.LRSStoerung = value;
         this.data.LRSSchwaeche = value;
-        (new SchuelerTableAdapter()).UpdateLRS(this.data.LRSStoerung, this.data.LRSSchwaeche, this.Id);
+        //new SchuelerTableAdapter()).UpdateLRS(this.data.LRSStoerung, this.data.LRSSchwaeche, this.Id);
+        (new SchuelerTableAdapter()).Update(this.data);
       }
     }
 
@@ -160,7 +170,8 @@ namespace diNo
         MeldeAn(this, value);
         this.Data.Wahlpflichtfach = value;
         this.Data.AcceptChanges();
-        new SchuelerTableAdapter().UpdateWahlpflichtfach(value, this.Id);
+        Save();                
+        //new SchuelerTableAdapter().UpdateWahlpflichtfach(value, this.Id);
       }
     }
 
@@ -182,7 +193,8 @@ namespace diNo
         MeldeAn(this, value);
         this.Data.Fremdsprache2 = value;
         this.Data.AcceptChanges();
-        new SchuelerTableAdapter().UpdateFremdsprache2(value, this.Id);
+        Save();                
+        //new SchuelerTableAdapter().UpdateFremdsprache2(value, this.Id);
       }
     }
 
@@ -211,7 +223,8 @@ namespace diNo
 
         this.Data.ReligionOderEthik = value;
         this.Data.AcceptChanges();
-        new SchuelerTableAdapter().UpdateReliOderEthik(value, this.Id);
+        Save();                
+        //new SchuelerTableAdapter().UpdateReliOderEthik(value, this.Id);
       }
     }
 
@@ -420,7 +433,8 @@ namespace diNo
       }
 
       DateTime? austrittsdatum = schueler.Data.IsAustrittsdatumNull() ? (DateTime?)null : schueler.Data.Austrittsdatum;
-      new SchuelerTableAdapter().UpdateManyThings(nachKlasse.Data.Id, schueler.Data.Fremdsprache2, schueler.Data.ReligionOderEthik, austrittsdatum, schueler.Data.LRSStoerung, schueler.Data.LRSSchwaeche, schueler.Id);
+      schueler.Save();                
+      //new SchuelerTableAdapter().UpdateManyThings(nachKlasse.Data.Id, schueler.Data.Fremdsprache2, schueler.Data.ReligionOderEthik, austrittsdatum, schueler.Data.LRSStoerung, schueler.Data.LRSSchwaeche, schueler.Id);
       schueler.Refresh();
     }
 
@@ -436,7 +450,8 @@ namespace diNo
         MeldeAb(schueler, new Kurs(kurs));
       }
 
-      new SchuelerTableAdapter().UpdateManyThings(schueler.Data.KlasseId, schueler.Data.Fremdsprache2, schueler.Data.ReligionOderEthik, when, schueler.Data.LRSStoerung, schueler.Data.LRSSchwaeche, schueler.Id);
+      schueler.Save();                
+      //new SchuelerTableAdapter().UpdateManyThings(schueler.Data.KlasseId, schueler.Data.Fremdsprache2, schueler.Data.ReligionOderEthik, when, schueler.Data.LRSStoerung, schueler.Data.LRSSchwaeche, schueler.Id);
       schueler.kurse = null;
       schueler.Data.Austrittsdatum = when;
     }

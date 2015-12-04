@@ -170,10 +170,10 @@ namespace diNo
             dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
             if (dbKlasse != null)
             {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "W");
+              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "W");
               if (schuelerDerKlasse.Count == 0)
               {
-                schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "WVR");
+                schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "WVR");
               }
             }
           }
@@ -185,7 +185,7 @@ namespace diNo
             dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
             if (dbKlasse != null)
             {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "S");
+              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "S");
             }
           }
 
@@ -196,7 +196,7 @@ namespace diNo
             dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
             if (dbKlasse != null)
             {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "T");
+              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "T");
             }
           }
 
@@ -207,7 +207,7 @@ namespace diNo
             dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
             if (dbKlasse != null)
             {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "W");
+              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "W");
             }
           }
 
@@ -218,7 +218,7 @@ namespace diNo
             dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
             if (dbKlasse != null)
             {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "T");
+              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "T");
             }
           }
 
@@ -229,7 +229,7 @@ namespace diNo
             dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
             if (dbKlasse != null)
             {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseAndZweig(dbKlasse.Id, "S");
+              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "S");
             }
           }
         }

@@ -44,6 +44,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.userControlVorkommnisse1 = new diNo.UserControlVorkommnisse();
             this.btnVerweis = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnReadLehrer
@@ -212,11 +213,23 @@
             this.btnVerweis.UseVisualStyleBackColor = true;
             this.btnVerweis.Click += new System.EventHandler(this.btnVerweis_Click);
             // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(215, 314);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(124, 55);
+            this.button4.TabIndex = 18;
+            this.button4.Text = "Test";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1287, 558);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.btnVerweis);
             this.Controls.Add(this.userControlVorkommnisse1);
             this.Controls.Add(this.button2);
@@ -258,6 +271,7 @@
     private System.Windows.Forms.Button button2;
     private UserControlVorkommnisse userControlVorkommnisse1;
         private System.Windows.Forms.Button btnVerweis;
+        private System.Windows.Forms.Button button4;
     }
 }
 
