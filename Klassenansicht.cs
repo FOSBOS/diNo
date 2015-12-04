@@ -41,7 +41,8 @@ namespace diNo
         this.treeListView1.ChildrenGetter = delegate (object x) { return KlassenTreeViewController.GetSortedSchuelerList((Klasse)x); };
         nameLabel.Text = "";
         klasseLabel.Text = "";
-        pictureBoxImage.Image = null;    
+        pictureBoxImage.Image = null; 
+        toolStripStatusLabel1.Text = "";   
     }
 
         private void btnNotenabgeben_Click(object sender, EventArgs e)
@@ -55,10 +56,14 @@ namespace diNo
               // Process input if the user clicked OK.
               if (userClickedOK == true)
               {
+                Cursor.Current = Cursors.WaitCursor;
                 foreach (string fileName in fileDialog.FileNames)
                 {
                     new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
                 }
+                MessageBox.Show("Die Notendateien wurden übertragen.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                toolStripStatusLabel1.Text = "";
+                Cursor.Current = Cursors.Default;
               }
         }
             
@@ -69,7 +74,7 @@ namespace diNo
         /// <param name="sender">Der Sender des Events.</param>
         void notenReader_OnStatusChange(Object sender, StatusChangedEventArgs e)
         {
-          //lblStatus.Text = e.Meldung;
+             toolStripStatusLabel1.Text = e.Meldung;
         }
 
         private void btnPrint_Click(object sender, EventArgs e)

@@ -32,29 +32,32 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Klassenansicht));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageStammdaten = new System.Windows.Forms.TabPage();
+            this.userControlSchueleransicht1 = new diNo.UserControlSchueleransicht();
             this.tabPageNoten = new System.Windows.Forms.TabPage();
+            this.notenbogen1 = new diNo.Notenbogen();
             this.tabPageVorkommnisse = new System.Windows.Forms.TabPage();
+            this.userControlVorkommnisse1 = new diNo.UserControlVorkommnisse();
             this.klasseLabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.treeListView1 = new BrightIdeasSoftware.TreeListView();
             this.olvColumnBezeichnung = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
             this.toolTipButtons = new System.Windows.Forms.ToolTip(this.components);
-            this.label1 = new System.Windows.Forms.Label();
             this.btnCheck = new System.Windows.Forms.Button();
             this.btnBrief = new System.Windows.Forms.Button();
             this.btnPrint = new System.Windows.Forms.Button();
             this.btnNotenabgeben = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.pictureBoxImage = new System.Windows.Forms.PictureBox();
-            this.userControlSchueleransicht1 = new diNo.UserControlSchueleransicht();
-            this.notenbogen1 = new diNo.Notenbogen();
-            this.userControlVorkommnisse1 = new diNo.UserControlVorkommnisse();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1.SuspendLayout();
             this.tabPageStammdaten.SuspendLayout();
             this.tabPageNoten.SuspendLayout();
             this.tabPageVorkommnisse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -84,6 +87,16 @@
             this.tabPageStammdaten.Text = "Schülerdaten";
             this.tabPageStammdaten.UseVisualStyleBackColor = true;
             // 
+            // userControlSchueleransicht1
+            // 
+            this.userControlSchueleransicht1.AutoScroll = true;
+            this.userControlSchueleransicht1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.userControlSchueleransicht1.Location = new System.Drawing.Point(3, 3);
+            this.userControlSchueleransicht1.Name = "userControlSchueleransicht1";
+            this.userControlSchueleransicht1.Schueler = null;
+            this.userControlSchueleransicht1.Size = new System.Drawing.Size(900, 457);
+            this.userControlSchueleransicht1.TabIndex = 7;
+            // 
             // tabPageNoten
             // 
             this.tabPageNoten.Controls.Add(this.notenbogen1);
@@ -95,6 +108,17 @@
             this.tabPageNoten.Text = "Notenbogen";
             this.tabPageNoten.UseVisualStyleBackColor = true;
             // 
+            // notenbogen1
+            // 
+            this.notenbogen1.AutoScroll = true;
+            this.notenbogen1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.notenbogen1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.notenbogen1.Location = new System.Drawing.Point(3, 3);
+            this.notenbogen1.Name = "notenbogen1";
+            this.notenbogen1.Schueler = null;
+            this.notenbogen1.Size = new System.Drawing.Size(900, 457);
+            this.notenbogen1.TabIndex = 0;
+            // 
             // tabPageVorkommnisse
             // 
             this.tabPageVorkommnisse.Controls.Add(this.userControlVorkommnisse1);
@@ -104,6 +128,16 @@
             this.tabPageVorkommnisse.TabIndex = 2;
             this.tabPageVorkommnisse.Text = "Vorkommnisse";
             this.tabPageVorkommnisse.UseVisualStyleBackColor = true;
+            // 
+            // userControlVorkommnisse1
+            // 
+            this.userControlVorkommnisse1.AutoScroll = true;
+            this.userControlVorkommnisse1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.userControlVorkommnisse1.Location = new System.Drawing.Point(0, 0);
+            this.userControlVorkommnisse1.Name = "userControlVorkommnisse1";
+            this.userControlVorkommnisse1.Schueler = null;
+            this.userControlVorkommnisse1.Size = new System.Drawing.Size(906, 463);
+            this.userControlVorkommnisse1.TabIndex = 0;
             // 
             // klasseLabel
             // 
@@ -163,17 +197,6 @@
             this.olvColumnBezeichnung.Text = "Bezeichnung";
             this.olvColumnBezeichnung.Width = 191;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(532, 88);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(509, 34);
-            this.label1.TabIndex = 36;
-            this.label1.Text = "Notendateien können ab sofort über die Excel-Schaltfläche abgegeben werden.\r\nÜber" +
-    " den Stift können z.B. Verweise gedruckt werden.\r\n";
-            // 
             // btnCheck
             // 
             this.btnCheck.ImageIndex = 1;
@@ -224,6 +247,17 @@
             this.btnNotenabgeben.UseVisualStyleBackColor = true;
             this.btnNotenabgeben.Click += new System.EventHandler(this.btnNotenabgeben_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(532, 88);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(509, 34);
+            this.label1.TabIndex = 36;
+            this.label1.Text = "Notendateien können ab sofort über die Excel-Schaltfläche abgegeben werden.\r\nÜber" +
+    " den Stift können z.B. Verweise gedruckt werden.\r\n";
+            // 
             // pictureBoxImage
             // 
             this.pictureBoxImage.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxImage.Image")));
@@ -233,36 +267,22 @@
             this.pictureBoxImage.TabIndex = 32;
             this.pictureBoxImage.TabStop = false;
             // 
-            // userControlSchueleransicht1
+            // statusStrip1
             // 
-            this.userControlSchueleransicht1.AutoScroll = true;
-            this.userControlSchueleransicht1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.userControlSchueleransicht1.Location = new System.Drawing.Point(3, 3);
-            this.userControlSchueleransicht1.Name = "userControlSchueleransicht1";
-            this.userControlSchueleransicht1.Schueler = null;
-            this.userControlSchueleransicht1.Size = new System.Drawing.Size(900, 457);
-            this.userControlSchueleransicht1.TabIndex = 7;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 623);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(1201, 22);
+            this.statusStrip1.TabIndex = 38;
+            this.statusStrip1.Text = "statusStrip1";
             // 
-            // notenbogen1
+            // toolStripStatusLabel1
             // 
-            this.notenbogen1.AutoScroll = true;
-            this.notenbogen1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notenbogen1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.notenbogen1.Location = new System.Drawing.Point(3, 3);
-            this.notenbogen1.Name = "notenbogen1";
-            this.notenbogen1.Schueler = null;
-            this.notenbogen1.Size = new System.Drawing.Size(900, 457);
-            this.notenbogen1.TabIndex = 0;
-            // 
-            // userControlVorkommnisse1
-            // 
-            this.userControlVorkommnisse1.AutoScroll = true;
-            this.userControlVorkommnisse1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.userControlVorkommnisse1.Location = new System.Drawing.Point(0, 0);
-            this.userControlVorkommnisse1.Name = "userControlVorkommnisse1";
-            this.userControlVorkommnisse1.Schueler = null;
-            this.userControlVorkommnisse1.Size = new System.Drawing.Size(906, 463);
-            this.userControlVorkommnisse1.TabIndex = 0;
+            this.toolStripStatusLabel1.MergeAction = System.Windows.Forms.MergeAction.Replace;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
             // Klassenansicht
             // 
@@ -270,6 +290,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1201, 645);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnBrief);
@@ -290,6 +311,8 @@
             this.tabPageVorkommnisse.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -315,5 +338,7 @@
         private System.Windows.Forms.ToolTip toolTipButtons;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnCheck;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
