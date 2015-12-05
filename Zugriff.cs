@@ -23,7 +23,7 @@ namespace diNo
             Klassen = new List<Klasse>();
 
             Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            // Username = "FOSBOS\\ckonrad";
+        //Username = "FOSBOS\\ckonrad";
             IsAdmin = (!Username.Contains("FOSBOS") || Username.Equals("FOSBOS\\Administrator"));
             Username = Username.Replace("FOSBOS\\", "");
             var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
@@ -50,25 +50,11 @@ namespace diNo
                 Klassen[index].eigeneSchueler.Add(s); // dieser Klassen den Schüler hinzufügen
             }
          
+            // alles sortieren
             Klassen.Sort((x, y) => x.Bezeichnung.CompareTo(y.Bezeichnung));
+            foreach (var klasse in Klassen)
+                klasse.eigeneSchueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
      }
-     /* 
-    public static bool LehrerUnterrichtetKlasse(int lehrerId, Klasse klasse)
-    {
-      foreach (Klasse teilKlasse in Klasse.GetTeilKlassen(klasse.Bezeichnung))
-      {
-        foreach (var kurs in teilKlasse.Kurse)
-        {
-          if (kurs.getLehrer.Id == lehrerId)
-          {
-            return true;
-          }
-        }
-      }
-
-      return false;
-    }
-    */
 
      public static Zugriff Instance {
         get {
