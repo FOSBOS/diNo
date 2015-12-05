@@ -16,7 +16,12 @@ namespace diNo
       
       private Zugriff()
       {
+            diNoDataSet.SchuelerDataTable dtSchueler;
+            List<int> klassenIds = new List<int>(); // für schnelles Auffinden
+            int index;
+
             Klassen = new List<Klasse>();
+
             Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             // Username = "FOSBOS\\ckonrad";
             IsAdmin = (!Username.Contains("FOSBOS") || Username.Equals("FOSBOS\\Administrator"));
@@ -29,21 +34,25 @@ namespace diNo
                 throw new InvalidOperationException("Keine Zugriffsberechtigung!");
             }
 
-            foreach (var klasse in (new KlasseTableAdapter().GetData()))
+            var ta = new SchuelerTableAdapter();
+            if (IsAdmin) dtSchueler = ta.GetData();
+            else dtSchueler = ta.GetDataByLehrerId(Lehrer.Id);
+
+            foreach (var sRow in dtSchueler)
             {
-                Klasse dieKlasse = new Klasse(klasse);
-                // Dies filtert wenigstens ein Paar Dummy- und Spassklassen heraus
-                if (dieKlasse.getSchueler.Count > 0)
-                    // TODO: die DB soll gleich die richtigen Klassen liefern
-                    if (IsAdmin || LehrerUnterrichtetKlasse(Lehrer.Id, dieKlasse))
-                    {
-                        Klassen.Add(dieKlasse);
-                    }
+                Schueler s = new Schueler(sRow);
+                index = klassenIds.IndexOf(sRow.KlasseId);
+                if (index<0) {
+                    klassenIds.Add(sRow.KlasseId);
+                    Klassen.Add(s.getKlasse);
+                    index = klassenIds.Count - 1;
+                }
+                Klassen[index].eigeneSchueler.Add(s); // dieser Klassen den Schüler hinzufügen
             }
          
             Klassen.Sort((x, y) => x.Bezeichnung.CompareTo(y.Bezeichnung));
      }
-      
+     /* 
     public static bool LehrerUnterrichtetKlasse(int lehrerId, Klasse klasse)
     {
       foreach (Klasse teilKlasse in Klasse.GetTeilKlassen(klasse.Bezeichnung))
@@ -59,6 +68,7 @@ namespace diNo
 
       return false;
     }
+    */
 
      public static Zugriff Instance {
         get {

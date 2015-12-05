@@ -66,9 +66,11 @@ namespace diNo
     private diNoDataSet.KlasseRow data;
     private diNoDataSet.SchuelerDataTable schueler;
     private diNoDataSet.LehrerRow klassenleiter;
+    public List<Schueler> eigeneSchueler;
 
     public Klasse(int id)
     {
+      eigeneSchueler = new List<Schueler>();
       var rst = new KlasseTableAdapter().GetDataById(id);
       if (rst.Count == 1)
       {
@@ -82,7 +84,8 @@ namespace diNo
 
     public Klasse(diNoDataSet.KlasseRow klasseR)
     {
-      data = klasseR;
+        eigeneSchueler = new List<Schueler>();
+        data = klasseR;
     }
 
     public diNoDataSet.KlasseRow Data

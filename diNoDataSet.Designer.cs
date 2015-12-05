@@ -17395,7 +17395,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[7];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT  Schueler.*\r\nFROM Schueler\r\nWHERE (Id = @Id)";
@@ -17408,22 +17408,51 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId) AND (Name = @Name) AND (Rufname = @Rufname)";
+            this._commandCollection[2].CommandText = "SELECT  Schueler.*\r\nFROM Schueler";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Rufname", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Rufname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId) AND (Ausbildungsrichtung = @Ausbildungsrichtung)";
+            this._commandCollection[3].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId) AND (Name = @Name) AND (Rufname = @Rufname)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Rufname", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Rufname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[4].Connection = this.Connection;
-            this._commandCollection[4].CommandText = @"SELECT Schueler.AnredeEltern1, Schueler.AnredeEltern2, Schueler.AnschriftOrt, Schueler.AnschriftPLZ, Schueler.AnschriftStrasse, Schueler.AnschriftTelefonnummer, Schueler.Ausbildungsrichtung, Schueler.Austrittsdatum, Schueler.Bekenntnis, Schueler.BeruflicheVorbildung, Schueler.EintrittAm, Schueler.EintrittAusSchulnummer, Schueler.EintrittJahrgangsstufe, Schueler.Email, Schueler.Fremdsprache2, Schueler.Geburtsdatum, Schueler.Geburtsort, Schueler.Geschlecht, Schueler.Id, Schueler.KlasseId, Schueler.LRSBisDatum, Schueler.LRSSchwaeche, Schueler.LRSStoerung, Schueler.NachnameEltern1, Schueler.NachnameEltern2, Schueler.Name, Schueler.Notfalltelefonnummer, Schueler.ProbezeitBis, Schueler.ReligionOderEthik, Schueler.Rufname, Schueler.SchulischeVorbildung, Schueler.VerwandtschaftsbezeichnungEltern1, Schueler.VerwandtschaftsbezeichnungEltern2, Schueler.Vorname, Schueler.VornameEltern1, Schueler.VornameEltern2, Schueler.Wahlfach1, Schueler.Wahlfach2, Schueler.Wahlfach3, Schueler.Wahlfach4, Schueler.Wahlpflichtfach, Schueler.Wiederholung1Grund, Schueler.Wiederholung1Jahrgangsstufe, Schueler.Wiederholung2Grund, Schueler.Wiederholung2Jahrgangsstufe FROM Schueler INNER JOIN SchuelerKurs ON Schueler.Id = SchuelerKurs.SchuelerId WHERE (SchuelerKurs.KursId = @KursId) ORDER BY Schueler.KlasseId, Schueler.Name, Schueler.Vorname";
+            this._commandCollection[4].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId) AND (Ausbildungsrichtung = @Ausbildungsrichtung)";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[5].Connection = this.Connection;
+            this._commandCollection[5].CommandText = @"SELECT Schueler.AnredeEltern1, Schueler.AnredeEltern2, Schueler.AnschriftOrt, Schueler.AnschriftPLZ, Schueler.AnschriftStrasse, Schueler.AnschriftTelefonnummer, Schueler.Ausbildungsrichtung, Schueler.Austrittsdatum, Schueler.Bekenntnis, Schueler.BeruflicheVorbildung, Schueler.EintrittAm, Schueler.EintrittAusSchulnummer, Schueler.EintrittJahrgangsstufe, Schueler.Email, Schueler.Fremdsprache2, Schueler.Geburtsdatum, Schueler.Geburtsort, Schueler.Geschlecht, Schueler.Id, Schueler.KlasseId, Schueler.LRSBisDatum, Schueler.LRSSchwaeche, Schueler.LRSStoerung, Schueler.NachnameEltern1, Schueler.NachnameEltern2, Schueler.Name, Schueler.Notfalltelefonnummer, Schueler.ProbezeitBis, Schueler.ReligionOderEthik, Schueler.Rufname, Schueler.SchulischeVorbildung, Schueler.VerwandtschaftsbezeichnungEltern1, Schueler.VerwandtschaftsbezeichnungEltern2, Schueler.Vorname, Schueler.VornameEltern1, Schueler.VornameEltern2, Schueler.Wahlfach1, Schueler.Wahlfach2, Schueler.Wahlfach3, Schueler.Wahlfach4, Schueler.Wahlpflichtfach, Schueler.Wiederholung1Grund, Schueler.Wiederholung1Jahrgangsstufe, Schueler.Wiederholung2Grund, Schueler.Wiederholung2Jahrgangsstufe FROM Schueler INNER JOIN SchuelerKurs ON Schueler.Id = SchuelerKurs.SchuelerId WHERE (SchuelerKurs.KursId = @KursId) ORDER BY Schueler.KlasseId, Schueler.Name, Schueler.Vorname";
+            this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[6] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[6].Connection = this.Connection;
+            this._commandCollection[6].CommandText = "SELECT        Schueler.Id, Schueler.Name, Schueler.Vorname, Schueler.KlasseId, Sc" +
+                "hueler.Rufname, Schueler.Geschlecht, Schueler.Geburtsdatum, Schueler.Geburtsort," +
+                " \r\n                         Schueler.Bekenntnis, Schueler.AnschriftPLZ, Schueler" +
+                ".AnschriftOrt, Schueler.AnschriftStrasse, Schueler.AnschriftTelefonnummer, Schue" +
+                "ler.Ausbildungsrichtung, \r\n                         Schueler.Fremdsprache2, Schu" +
+                "eler.ReligionOderEthik, Schueler.Wahlpflichtfach, Schueler.Wahlfach1, Schueler.W" +
+                "ahlfach2, Schueler.Wahlfach3, \r\n                         Schueler.Wahlfach4, Sch" +
+                "ueler.Wiederholung1Jahrgangsstufe, Schueler.Wiederholung2Jahrgangsstufe, Schuele" +
+                "r.Wiederholung1Grund, \r\n                         Schueler.Wiederholung2Grund, Sc" +
+                "hueler.ProbezeitBis, Schueler.Austrittsdatum, Schueler.SchulischeVorbildung, Sch" +
+                "ueler.BeruflicheVorbildung, \r\n                         Schueler.LRSStoerung, Sch" +
+                "ueler.LRSSchwaeche, Schueler.LRSBisDatum, Schueler.NachnameEltern1, Schueler.Vor" +
+                "nameEltern1, Schueler.AnredeEltern1, \r\n                         Schueler.Verwand" +
+                "tschaftsbezeichnungEltern1, Schueler.NachnameEltern2, Schueler.VornameEltern2, S" +
+                "chueler.AnredeEltern2, \r\n                         Schueler.Verwandtschaftsbezeic" +
+                "hnungEltern2, Schueler.EintrittJahrgangsstufe, Schueler.EintrittAm, Schueler.Ein" +
+                "trittAusSchulnummer, Schueler.Email, \r\n                         Schueler.Notfall" +
+                "telefonnummer\r\nFROM            Kurs INNER JOIN\r\n                         Schuele" +
+                "rKurs ON Kurs.Id = SchuelerKurs.KursId INNER JOIN\r\n                         Schu" +
+                "eler ON SchuelerKurs.SchuelerId = Schueler.Id\r\nWHERE        (Kurs.LehrerId = @Le" +
+                "hrerId)";
+            this._commandCollection[6].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17468,8 +17497,19 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.SchuelerDataTable GetDataByByKlasseUndName(int KlasseId, string Name, string Rufname) {
+        public virtual diNoDataSet.SchuelerDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[2];
+            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.SchuelerDataTable GetDataByByKlasseUndName(int KlasseId, string Name, string Rufname) {
+            this.Adapter.SelectCommand = this.CommandCollection[3];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
             if ((Name == null)) {
                 throw new global::System.ArgumentNullException("Name");
@@ -17493,7 +17533,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual diNoDataSet.SchuelerDataTable GetDataByKlasseUndZweig(int KlasseId, string Ausbildungsrichtung) {
-            this.Adapter.SelectCommand = this.CommandCollection[3];
+            this.Adapter.SelectCommand = this.CommandCollection[4];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
             if ((Ausbildungsrichtung == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -17511,8 +17551,20 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual diNoDataSet.SchuelerDataTable GetDataByKursId(int KursId) {
-            this.Adapter.SelectCommand = this.CommandCollection[4];
+            this.Adapter.SelectCommand = this.CommandCollection[5];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KursId));
+            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.SchuelerDataTable GetDataByLehrerId(int LehrerId) {
+            this.Adapter.SelectCommand = this.CommandCollection[6];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(LehrerId));
             diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
