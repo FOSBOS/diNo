@@ -39,7 +39,7 @@ namespace diNoVerwaltung
 
     private void RefreshTree()
     {
-      treeListView1.Roots = KlassenTreeViewController.GetSortedKlassenList(false);
+      treeListView1.Roots = Zugriff.Instance.Klassen; // KlassenTreeViewController.GetSortedKlassenList(false);
       treeListView1.Refresh();
     }
 
@@ -47,7 +47,7 @@ namespace diNoVerwaltung
     {
       RefreshTree();
       this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
-      this.treeListView1.ChildrenGetter = delegate (object x) { return KlassenTreeViewController.GetSortedSchuelerList((Klasse)x); };
+      this.treeListView1.ChildrenGetter = delegate (object x) { return ((Klasse)x).eigeneSchueler; };
     }
 
     private void listViewComplex_CellEditStarting(object sender, CellEditEventArgs e)

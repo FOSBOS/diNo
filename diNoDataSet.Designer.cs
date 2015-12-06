@@ -17430,27 +17430,27 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[6].Connection = this.Connection;
-            this._commandCollection[6].CommandText = "SELECT        Schueler.Id, Schueler.Name, Schueler.Vorname, Schueler.KlasseId, Sc" +
-                "hueler.Rufname, Schueler.Geschlecht, Schueler.Geburtsdatum, Schueler.Geburtsort," +
-                " \r\n                         Schueler.Bekenntnis, Schueler.AnschriftPLZ, Schueler" +
-                ".AnschriftOrt, Schueler.AnschriftStrasse, Schueler.AnschriftTelefonnummer, Schue" +
-                "ler.Ausbildungsrichtung, \r\n                         Schueler.Fremdsprache2, Schu" +
-                "eler.ReligionOderEthik, Schueler.Wahlpflichtfach, Schueler.Wahlfach1, Schueler.W" +
-                "ahlfach2, Schueler.Wahlfach3, \r\n                         Schueler.Wahlfach4, Sch" +
-                "ueler.Wiederholung1Jahrgangsstufe, Schueler.Wiederholung2Jahrgangsstufe, Schuele" +
-                "r.Wiederholung1Grund, \r\n                         Schueler.Wiederholung2Grund, Sc" +
-                "hueler.ProbezeitBis, Schueler.Austrittsdatum, Schueler.SchulischeVorbildung, Sch" +
-                "ueler.BeruflicheVorbildung, \r\n                         Schueler.LRSStoerung, Sch" +
-                "ueler.LRSSchwaeche, Schueler.LRSBisDatum, Schueler.NachnameEltern1, Schueler.Vor" +
-                "nameEltern1, Schueler.AnredeEltern1, \r\n                         Schueler.Verwand" +
-                "tschaftsbezeichnungEltern1, Schueler.NachnameEltern2, Schueler.VornameEltern2, S" +
-                "chueler.AnredeEltern2, \r\n                         Schueler.Verwandtschaftsbezeic" +
-                "hnungEltern2, Schueler.EintrittJahrgangsstufe, Schueler.EintrittAm, Schueler.Ein" +
-                "trittAusSchulnummer, Schueler.Email, \r\n                         Schueler.Notfall" +
-                "telefonnummer\r\nFROM            Kurs INNER JOIN\r\n                         Schuele" +
-                "rKurs ON Kurs.Id = SchuelerKurs.KursId INNER JOIN\r\n                         Schu" +
-                "eler ON SchuelerKurs.SchuelerId = Schueler.Id\r\nWHERE        (Kurs.LehrerId = @Le" +
-                "hrerId)";
+            this._commandCollection[6].CommandText = "SELECT DISTINCT \r\n                         Schueler.Id, Schueler.Name, Schueler.V" +
+                "orname, Schueler.KlasseId, Schueler.Rufname, Schueler.Geschlecht, Schueler.Gebur" +
+                "tsdatum, Schueler.Geburtsort, \r\n                         Schueler.Bekenntnis, Sc" +
+                "hueler.AnschriftPLZ, Schueler.AnschriftOrt, Schueler.AnschriftStrasse, Schueler." +
+                "AnschriftTelefonnummer, Schueler.Ausbildungsrichtung, \r\n                        " +
+                " Schueler.Fremdsprache2, Schueler.ReligionOderEthik, Schueler.Wahlpflichtfach, S" +
+                "chueler.Wahlfach1, Schueler.Wahlfach2, Schueler.Wahlfach3, \r\n                   " +
+                "      Schueler.Wahlfach4, Schueler.Wiederholung1Jahrgangsstufe, Schueler.Wiederh" +
+                "olung2Jahrgangsstufe, Schueler.Wiederholung1Grund, \r\n                         Sc" +
+                "hueler.Wiederholung2Grund, Schueler.ProbezeitBis, Schueler.Austrittsdatum, Schue" +
+                "ler.SchulischeVorbildung, Schueler.BeruflicheVorbildung, \r\n                     " +
+                "    Schueler.LRSStoerung, Schueler.LRSSchwaeche, Schueler.LRSBisDatum, Schueler." +
+                "NachnameEltern1, Schueler.VornameEltern1, Schueler.AnredeEltern1, \r\n            " +
+                "             Schueler.VerwandtschaftsbezeichnungEltern1, Schueler.NachnameEltern" +
+                "2, Schueler.VornameEltern2, Schueler.AnredeEltern2, \r\n                         S" +
+                "chueler.VerwandtschaftsbezeichnungEltern2, Schueler.EintrittJahrgangsstufe, Schu" +
+                "eler.EintrittAm, Schueler.EintrittAusSchulnummer, Schueler.Email, \r\n            " +
+                "             Schueler.Notfalltelefonnummer\r\nFROM            Kurs INNER JOIN\r\n   " +
+                "                      SchuelerKurs ON Kurs.Id = SchuelerKurs.KursId INNER JOIN\r\n" +
+                "                         Schueler ON SchuelerKurs.SchuelerId = Schueler.Id\r\nWHER" +
+                "E        (Kurs.LehrerId = @LehrerId)";
             this._commandCollection[6].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
