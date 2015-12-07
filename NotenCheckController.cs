@@ -14,15 +14,19 @@ namespace diNo
         public NotenCheckResults res = new NotenCheckResults();
         private IList<INotenCheck> alleNotenchecks = new List<INotenCheck>();
         private Zeitpunkt zeitpunkt;
+        private bool nurEigeneNoten;
 
-        public NotenCheckController(Zeitpunkt azeitpunkt)
+        public NotenCheckController(Zeitpunkt azeitpunkt, bool aNurEigeneNoten)
         {
             zeitpunkt = azeitpunkt;
-            alleNotenchecks.Add(new FachreferatChecker());
+            nurEigeneNoten = aNurEigeneNoten;            
             alleNotenchecks.Add(new NotenanzahlChecker());
             alleNotenchecks.Add(new UnterpunktungChecker());            
+            if (azeitpunkt == Zeitpunkt.ErstePA) // nur dort FR prüfen
+                alleNotenchecks.Add(new FachreferatChecker());
         }
 
+/*
         public NotenCheckResults CheckAll()
         {
             var klassen = KlassenController.AlleKlassen();
@@ -60,15 +64,31 @@ namespace diNo
             }
             return res;
         }
-
-        public NotenCheckResults CheckSchueler(Schueler s, IList<INotenCheck> notwendigeNotenchecks)
+*/
+        public void CheckSchueler(Schueler s)
         {            
-            foreach (var ch in notwendigeNotenchecks)
-            {
-                ch.Check(s, zeitpunkt,res);
-            }
+            Klasse klasse;
+            klasse = s.getKlasse;
+            
+            // muss dieser Schüler überhaupt geprüft werden?
 
-            return res;
+            // S ohne Probezeit oder späterer Probezeit
+            var aktJahr = (DateTime.Today).Year;                       
+            if (zeitpunkt == Zeitpunkt.ProbezeitBOS && 
+                    (s.Data.IsProbezeitBisNull() 
+                    || s.Data.ProbezeitBis < DateTime.Parse("15.09." +  aktJahr)
+                    || s.Data.ProbezeitBis > DateTime.Parse("15.12." +  aktJahr)))
+                return ;
+                
+            // 11. Klassen
+
+            // Prüfungsklassen
+
+            foreach (var ch in alleNotenchecks)
+            {
+                if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart, zeitpunkt))
+                    ch.Check(s, zeitpunkt,res);
+            }
         }
 
         /// <summary>
@@ -85,18 +105,7 @@ namespace diNo
         }
     }
 
-    /// <summary>
-    /// Verwaltet die Notenprüfung für einen Schüler
-    /// </summary>
-    public class NotenCheckSchueler
-    {
-        public NotenCheckSchueler(Schueler s, ref NotenCheckResults res)
-        {
-
-        }
-
-    }
-
+   
     /// <summary>
     /// Verwaltet die Fehlermeldungen
     /// </summary>

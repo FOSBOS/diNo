@@ -276,7 +276,7 @@ namespace diNo
         base.Check(schueler, reason, res);
         int anz=0;
         foreach (var fachNoten in noten.alleFaecher)
-        {
+        {            
             // TODO: Anzahl SA direkt aus DB lesen!
             Schulaufgabenwertung wertung = fachNoten.getFach.GetSchulaufgabenwertung(schueler.getKlasse);
             Kurs kurs = new Kurs(fachNoten.kursId);
@@ -289,8 +289,11 @@ namespace diNo
                     noetigeAnzahlSchulaufgaben = 1;
                 anz = fachNoten.getNotenanzahl(Notentyp.Schulaufgabe);
                 if (anz < noetigeAnzahlSchulaufgaben)
+                {
                     res.Add(schueler, kurs, 
                         "Es " + toText(anz) + " SA vorhanden.");
+                    continue; // eine Meldung pro Fach und Schüler reicht
+                }
             }
 
             // egal, bei welcher Entscheidung: Es müssen im ersten Halbjahr min. 2 mündliche Noten vorliegen
@@ -305,7 +308,7 @@ namespace diNo
                 if ((kurzarbeitenCount == 0 && muendlicheCount < 2) || muendlicheCount == 0)
                 {
                     res.Add(schueler, kurs,
-                        "Es " + toText(muendlicheCount) + " mündliche Noten vorhanden.");
+                        "Es " + toText(muendlicheCount) + " mündlichen Noten vorhanden.");
                 }
             }
             else if (reason == Zeitpunkt.ErstePA || reason == Zeitpunkt.Jahresende)
@@ -314,6 +317,7 @@ namespace diNo
                 {
                     res.Add(schueler, kurs,
                         "Es " + toText(kurzarbeitenCount) + " Kurzarbeit vorhanden.");
+                    continue;
                 }
                 if ((kurzarbeitenCount == 0 && muendlicheCount < 4) || muendlicheCount < 2)
                 {
@@ -389,7 +393,8 @@ namespace diNo
             byte? relevanteNote = fachNoten.getRelevanteNote(reason);                    
             if (relevanteNote == null)
             {
-                res.Add(schueler,new Kurs(fachNoten.kursId) ,"Es konnte keine Note gebildet werden.");
+                    ; // Das stellt der Unterpunktungschecker fest.
+                // res.Add(schueler,new Kurs(fachNoten.kursId) ,"Es konnte keine Note gebildet werden.");
             }
             else
             {                         

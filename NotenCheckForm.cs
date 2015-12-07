@@ -23,16 +23,19 @@ namespace diNo
 
         private void btnUnterpunktungen_Click(object sender, EventArgs e)
         {            
-            var contr = new NotenCheckController(GetZeitpunkt());
-            // Check für alle eigenen Klassen durchführen
-            progressBarChecks.Maximum = Zugriff.Instance.Klassen.Count;
+            var contr = new NotenCheckController(GetZeitpunkt(),false);
+            // Check für alle eigenen Schüler durchführen
+            progressBarChecks.Maximum = Zugriff.Instance.AnzahlSchueler;
             foreach (var k in Zugriff.Instance.Klassen)
             {
                 lbStatus.Text = "Prüfe Klasse " + k.Bezeichnung;
-                Refresh();
-                contr.CheckKlasse(k);
-                progressBarChecks.Increment(1);
-                if (abbrechen) break;
+                Refresh(); // Formular aktualisieren
+                foreach (var s in k.eigeneSchueler)
+                {
+                    contr.CheckSchueler(s);
+                    progressBarChecks.Increment(1);
+                    if (abbrechen) break;
+                }
             }            
             var r = new ReportNotencheck(contr.res);            
             Close();            

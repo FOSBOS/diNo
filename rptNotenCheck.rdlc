@@ -53,10 +53,10 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.46813cm</Width>
+                  <Width>1.01834cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.43cm</Width>
+                  <Width>1.32417cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>8.58542cm</Width>
@@ -272,7 +272,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.89146cm</Size>
+                    <Size>1.69334cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox9">
                         <CanGrow>true</CanGrow>
@@ -307,7 +307,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>3.39958cm</Size>
+                        <Size>3.08208cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox7">
                             <CanGrow>true</CanGrow>
@@ -358,7 +358,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>1.89146cm</Size>
+                    <Size>1.69334cm</Size>
                     <CellContents>
                       <Textbox Name="klasse">
                         <CanGrow>true</CanGrow>
@@ -369,6 +369,7 @@
                               <TextRun>
                                 <Value>=Fields!klasse.Value</Value>
                                 <Style>
+                                  <FontSize>9pt</FontSize>
                                   <FontWeight>SemiBold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -406,7 +407,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>3.39958cm</Size>
+                        <Size>3.08208cm</Size>
                         <CellContents>
                           <Textbox Name="schueler">
                             <CanGrow>true</CanGrow>
@@ -465,8 +466,10 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
+            <Top>0.07056cm</Top>
+            <Left>0.22521cm</Left>
             <Height>1.2cm</Height>
-            <Width>16.77458cm</Width>
+            <Width>15.70334cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -474,10 +477,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.51042in</Height>
+        <Height>0.70161in</Height>
         <Style />
       </Body>
-      <Width>6.71875in</Width>
+      <Width>6.40625in</Width>
       <Page>
         <PageHeader>
           <Height>0.82021cm</Height>
@@ -499,6 +502,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox25</rd:DefaultName>
+              <Left>0.22521cm</Left>
               <Height>0.6cm</Height>
               <Width>5.51625cm</Width>
               <Style>
@@ -519,7 +523,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>1.04662cm</Height>
+          <Height>1.25264cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -543,7 +547,8 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox26</rd:DefaultName>
-              <Top>0.17639cm</Top>
+              <Top>0.14111cm</Top>
+              <Left>0.22521cm</Left>
               <Height>0.6cm</Height>
               <Width>5.09292cm</Width>
               <Style>

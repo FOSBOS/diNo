@@ -61,6 +61,7 @@ namespace diNo
                 {
                     new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
                 }
+                Zugriff.Refresh(); // Noten neu laden
                 MessageBox.Show("Die Notendateien wurden übertragen.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 toolStripStatusLabel1.Text = "";
                 Cursor.Current = Cursors.Default;
@@ -91,7 +92,7 @@ namespace diNo
         private void btnCheck_Click(object sender, EventArgs e)
         {
             var c = new NotenCheckForm();
-             c.ShowDialog();
+             c.Show();
         }
     }
 }

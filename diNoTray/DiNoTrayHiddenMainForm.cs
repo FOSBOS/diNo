@@ -173,10 +173,10 @@ namespace diNoTray
 
     private void btnUnterpunktungen_Click(object sender, EventArgs e)
     {
-      var contr = new NotenCheckController(GetZeitpunkt());
+      //var contr = new NotenCheckController(GetZeitpunkt());
       //contr.CheckAll();
-      contr.CheckKlasse(new Klasse(55)); // 11Te
-      new ReportNotencheck(contr.res);
+      //contr.CheckKlasse(new Klasse(55)); // 11Te
+      //new ReportNotencheck(contr.res);
     }
 
     private Zeitpunkt GetZeitpunkt()

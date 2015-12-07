@@ -105,9 +105,9 @@ namespace diNo
     /// <param name="e"></param>
     private void button3_Click(object sender, EventArgs e)
     {
-        var contr = new NotenCheckController(GetZeitpunkt());
+        var contr = new NotenCheckController(GetZeitpunkt(),true);
         //contr.CheckAll();
-        contr.CheckKlasse(new Klasse(15)); // 11Te
+        //contr.CheckKlasse(new Klasse(15)); // 11Te
         new ReportNotencheck(contr.res);
 
 /*

@@ -13,15 +13,10 @@ namespace diNo
       public bool IsAdmin{ get; private set;}
       public diNoDataSet.LehrerRow Lehrer { get; private set;}
       public List<Klasse> Klassen { get; private set;}
+      public int AnzahlSchueler { get; private set;}
       
       private Zugriff()
       {
-            diNoDataSet.SchuelerDataTable dtSchueler;
-            List<int> klassenIds = new List<int>(); // für schnelles Auffinden
-            int index;
-
-            Klassen = new List<Klasse>();
-
             Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
         //Username = "FOSBOS\\ckonrad";
             IsAdmin = (!Username.Contains("FOSBOS") || Username.Equals("FOSBOS\\Administrator"));
@@ -33,10 +28,31 @@ namespace diNo
             {
                 throw new InvalidOperationException("Keine Zugriffsberechtigung!");
             }
+            LoadSchueler();
+     }
+
+    
+
+     public static Zugriff Instance {
+        get {
+          if (_Instance == null) {
+            _Instance = new Zugriff();
+          }
+          return _Instance;
+        }
+      }
+    
+      private void LoadSchueler() {
+            diNoDataSet.SchuelerDataTable dtSchueler;
+            List<int> klassenIds = new List<int>(); // für schnelles Auffinden
+            int index;
+
+            Klassen = new List<Klasse>();
 
             var ta = new SchuelerTableAdapter();
             if (IsAdmin) dtSchueler = ta.GetData();
             else dtSchueler = ta.GetDataByLehrerId(Lehrer.Id);
+            AnzahlSchueler = dtSchueler.Count;
 
             foreach (var sRow in dtSchueler)
             {
@@ -54,16 +70,15 @@ namespace diNo
             Klassen.Sort((x, y) => x.Bezeichnung.CompareTo(y.Bezeichnung));
             foreach (var klasse in Klassen)
                 klasse.eigeneSchueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
-     }
-
-     public static Zugriff Instance {
-        get {
-          if (_Instance == null) {
-            _Instance = new Zugriff();
-          }
-          return _Instance;
         }
-      }
+
+        // Lädt die Schüler in den Speicher
+        public static void Refresh()
+        {
+             Instance.Klassen = null; // Garbage-Collector 
+             Instance.LoadSchueler();
+        }
+
   }
 
 }
