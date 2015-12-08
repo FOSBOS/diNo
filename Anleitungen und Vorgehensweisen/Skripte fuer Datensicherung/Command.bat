@@ -1,0 +1,1 @@
+SQLCMD -E -SNOTENVERWALTUNG\SQLEXPRESS -idinoSicherung.sql
