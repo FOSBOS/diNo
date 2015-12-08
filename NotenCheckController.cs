@@ -13,17 +13,17 @@ namespace diNo
     {
         public NotenCheckResults res = new NotenCheckResults();
         private IList<INotenCheck> alleNotenchecks = new List<INotenCheck>();
-        private Zeitpunkt zeitpunkt;
-        private bool nurEigeneNoten;
+        public Zeitpunkt zeitpunkt;
+        public bool nurEigeneNoten;
 
         public NotenCheckController(Zeitpunkt azeitpunkt, bool aNurEigeneNoten)
         {
             zeitpunkt = azeitpunkt;
             nurEigeneNoten = aNurEigeneNoten;            
-            alleNotenchecks.Add(new NotenanzahlChecker());
-            alleNotenchecks.Add(new UnterpunktungChecker());            
+            alleNotenchecks.Add(new NotenanzahlChecker(this));
+            alleNotenchecks.Add(new UnterpunktungChecker(this));            
             if (azeitpunkt == Zeitpunkt.ErstePA) // nur dort FR prüfen
-                alleNotenchecks.Add(new FachreferatChecker());
+                alleNotenchecks.Add(new FachreferatChecker(this));
         }
 
 /*
@@ -86,11 +86,11 @@ namespace diNo
 
             foreach (var ch in alleNotenchecks)
             {
-                if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart, zeitpunkt))
-                    ch.Check(s, zeitpunkt,res);
+                if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart))
+                    ch.Check(s);
             }
         }
-
+        /*
         /// <summary>
         /// Liefert die Prüfungsergebnisse in druckbarer Form
         /// </summary>
@@ -103,6 +103,7 @@ namespace diNo
             }
             return s;
         }
+        */
     }
 
    

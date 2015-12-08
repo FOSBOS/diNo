@@ -109,7 +109,6 @@
             this.chkEigeneNoten.TabIndex = 17;
             this.chkEigeneNoten.Text = "nur eigene Noten prüfen";
             this.chkEigeneNoten.UseVisualStyleBackColor = true;
-            this.chkEigeneNoten.Visible = false;
             // 
             // NotenCheckForm
             // 

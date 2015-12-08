@@ -19,11 +19,17 @@ namespace diNo
         {
             InitializeComponent();
             lbStatus.Text = "";
+            if (Zugriff.Instance.IsAdmin)
+            {
+                chkEigeneNoten.Checked = false;
+                chkEigeneNoten.Enabled = false;
+            }
+            comboBoxZeitpunkt.SelectedIndex = 0;
         }
 
         private void btnUnterpunktungen_Click(object sender, EventArgs e)
         {            
-            var contr = new NotenCheckController(GetZeitpunkt(),false);
+            var contr = new NotenCheckController(GetZeitpunkt(),chkEigeneNoten.Checked);
             // Check für alle eigenen Schüler durchführen
             progressBarChecks.Maximum = Zugriff.Instance.AnzahlSchueler;
             foreach (var k in Zugriff.Instance.Klassen)
