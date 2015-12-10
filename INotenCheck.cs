@@ -226,73 +226,139 @@ namespace diNo
     /// </summary>
     /// <param name="schueler">Der Schüler.</param>    
     public override void Check(Schueler schueler)
-        
+
     {
-        base.Check(schueler);
-        int anz=0;
-        foreach (var fachNoten in noten.alleFaecher)
-        {            
-            Kurs kurs = new Kurs(fachNoten.kursId);
-            if (contr.nurEigeneNoten && (Zugriff.Instance.Lehrer.Id != kurs.getLehrer.Id))
-                    continue;
+      base.Check(schueler);
+      List<string> faecherOhneNoten = new List<string>();
+      foreach (var fachNoten in noten.alleFaecher)
+      {
+        Kurs kurs = new Kurs(fachNoten.kursId);
+        if (contr.nurEigeneNoten && (Zugriff.Instance.Lehrer.Id != kurs.getLehrer.Id))
+          continue;
 
-            // TODO: Anzahl SA direkt aus DB lesen!           
-            Schulaufgabenwertung wertung = fachNoten.getFach.GetSchulaufgabenwertung(schueler.getKlasse);
-            
-//es müssen 2 oder 3 Schulaufgaben zum Ende des Jahcontr.res vorliegen - zum Halbjahr min. eine                                
-            int noetigeAnzahlSchulaufgaben = GetAnzahlSchulaufgaben(wertung);
-            if (noetigeAnzahlSchulaufgaben > 0)
-            {
-                if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
-                    noetigeAnzahlSchulaufgaben = 1;
-                anz = fachNoten.getNotenanzahl(Notentyp.Schulaufgabe);
-                if (anz < noetigeAnzahlSchulaufgaben)
-                {
-                    contr.res.Add(schueler, kurs, 
-                        "Es " + toText(anz) + " SA vorhanden.");
-                    continue; // eine Meldung pro Fach und Schüler reicht
-                }
-            }
+        // TODO: Anzahl SA direkt aus DB lesen!           
+        Schulaufgabenwertung wertung = fachNoten.getFach.GetSchulaufgabenwertung(schueler.getKlasse);
 
-            // egal, bei welcher Entscheidung: Es müssen im ersten Halbjahr min. 2 mündliche Noten vorliegen
-            // am Jahcontr.resende bzw. zur PA-Sitzung müssen es entweder 2 Kurzarbeiten/Exen und 2 echte mündliche
+        // die Prüfung unterscheidet wie der bisherige Notenbogen nicht, ob die Note aus einer Ex oder echt mündlich ist - das verantwortet der Lehrer
+        int kurzarbeitenCount = fachNoten.getNotenanzahl(Notentyp.Kurzarbeit);
+        int muendlicheCount = fachNoten.getNotenanzahl(Notentyp.Ex) + fachNoten.getNotenanzahl(Notentyp.EchteMuendliche);
+        int schulaufgabenCount = fachNoten.getNotenanzahl(Notentyp.Schulaufgabe);
 
-            // die Prüfung unterscheidet wie der bisherige Notenbogen nicht, ob die Note aus einer Ex oder echt mündlich ist - das verantwortet der Lehrer
-            int kurzarbeitenCount = fachNoten.getNotenanzahl(Notentyp.Kurzarbeit);
-            int muendlicheCount = fachNoten.getNotenanzahl(Notentyp.Ex) + fachNoten.getNotenanzahl(Notentyp.EchteMuendliche);
-
-            if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS || contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
-            {
-                if ((kurzarbeitenCount == 0 && muendlicheCount < 2) || muendlicheCount == 0)
-                {
-                    contr.res.Add(schueler, kurs,
-                        "Es " + toText(muendlicheCount) + " mündlichen Noten vorhanden.");
-                }
-            }
-            else if (contr.zeitpunkt == Zeitpunkt.ErstePA || contr.zeitpunkt == Zeitpunkt.Jahresende)
-            {
-                if (kurzarbeitenCount == 1)
-                {
-                    contr.res.Add(schueler, kurs,
-                        "Es " + toText(kurzarbeitenCount) + " Kurzarbeit vorhanden.");
-                    continue;
-                }
-                if ((kurzarbeitenCount == 0 && muendlicheCount < 4) || muendlicheCount < 2)
-                {
-                    contr.res.Add(schueler, kurs,
-                        "Es " + toText(muendlicheCount) + " mündliche Noten vorhanden.");
-                }
-            }
-
-            // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
-            else if (contr.zeitpunkt == Zeitpunkt.ZweitePA && fachNoten.getFach.IstSAPFach())
-            {
-                if (fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
-                {
-                    contr.res.Add(schueler, kurs,"Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
-                }
-            }
+        if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0)
+        {
+          faecherOhneNoten.Add(kurs.getFach.Kuerzel);
+          continue; // eine Meldung pro Fach und Schüler reicht
         }
+
+        //es müssen 2 oder 3 Schulaufgaben zum Ende des Jahcontr.res vorliegen - zum Halbjahr min. eine                                
+        int noetigeAnzahlSchulaufgaben = GetAnzahlSchulaufgaben(wertung);
+        if (noetigeAnzahlSchulaufgaben > 0)
+        {
+          if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
+          {
+            if (noetigeAnzahlSchulaufgaben <= 2)
+              noetigeAnzahlSchulaufgaben = 0; // zur Probezeit BOS muss noch keine SA vorliegen, wenn nur pro HJ eine geschrieben wird
+            else
+              noetigeAnzahlSchulaufgaben = 1; // wenn mehr als 2 SA geschrieben werden, muss auch zur Probezeit BOS schon eine vorliegen
+          }
+          if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+          {
+            noetigeAnzahlSchulaufgaben = 1;
+          }
+          
+          if (schulaufgabenCount < noetigeAnzahlSchulaufgaben)
+          {
+            contr.res.Add(schueler, kurs, "Es " + toText(schulaufgabenCount) + " SA vorhanden.");
+            continue; // eine Meldung pro Fach und Schüler reicht
+          }
+        }
+
+        // egal, bei welcher Entscheidung: Es müssen im ersten Halbjahr min. 2 mündliche Noten vorliegen
+        // am Jahcontr.resende bzw. zur PA-Sitzung müssen es entweder 2 Kurzarbeiten/Exen und 2 echte mündliche
+
+
+        if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
+        {
+          if (!AnzahlMuendlicheNotenOKProbezeitBOS(schulaufgabenCount, kurzarbeitenCount, muendlicheCount, fachNoten))
+          {
+            contr.res.Add(schueler, kurs, "Es " + toText(muendlicheCount) + " mündlichen Noten vorhanden.");
+          }
+        }
+        else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+        {
+          {
+            if ((kurzarbeitenCount == 0 && muendlicheCount < 2) || muendlicheCount == 0)
+            {
+              contr.res.Add(schueler, kurs,
+                  "Es " + toText(muendlicheCount) + " mündlichen Noten vorhanden.");
+            }
+          }
+        }
+        else if (contr.zeitpunkt == Zeitpunkt.ErstePA || contr.zeitpunkt == Zeitpunkt.Jahresende)
+        {
+          if (kurzarbeitenCount == 1)
+          {
+            contr.res.Add(schueler, kurs,
+                "Es " + toText(kurzarbeitenCount) + " Kurzarbeit vorhanden.");
+            continue;
+          }
+          if ((kurzarbeitenCount == 0 && muendlicheCount < 4) || muendlicheCount < 2)
+          {
+            contr.res.Add(schueler, kurs,
+                "Es " + toText(muendlicheCount) + " mündliche Noten vorhanden.");
+          }
+        }
+
+        // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
+        else if (contr.zeitpunkt == Zeitpunkt.ZweitePA && fachNoten.getFach.IstSAPFach())
+        {
+          if (fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
+          {
+            contr.res.Add(schueler, kurs, "Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
+          }
+        }
+      }
+
+      if (faecherOhneNoten.Count > 0)
+      {
+        contr.res.Add(schueler, null, "Es sind keine Noten vorhanden in:" + string.Join(", ", faecherOhneNoten));
+      }
+    }
+
+    private bool AnzahlMuendlicheNotenOKProbezeitBOS(int schulaufgabenCount, int kurzarbeitenCount, int muendlicheCount, FachSchuelerNoten noten)
+    {
+      if (kurzarbeitenCount > 1)
+      {
+        return true; // mehr als 1 Kurzabeit oder min. 2 mündliche Noten sind auf jeden Fall OK
+      }
+
+      if (kurzarbeitenCount == 1)
+      {
+        if (muendlicheCount > 0 || schulaufgabenCount > 0)
+        {
+          return true; // wenn nur 1 Kurzarbeit vorliegt, braucht man im Normalfall noch eine andere Note. Dann ist es OK.
+        }
+        else
+        {
+          // wir akzeptieren eine Kurzarbeit als einzelne Note, wenn sie bei min. 6 Punkten liegt (somit kann der Schüler in diesem Fach nicht mehr unterpunkten)
+          var kurzarbeitNote = noten.getNoten(Halbjahr.Erstes, Notentyp.Kurzarbeit)[0];
+          return (kurzarbeitNote >= 6);
+        }
+      }
+
+      //ansonsten ist keine Kurzarbeit vorhanden. 
+      if (muendlicheCount >= 2)
+      {
+        return true; // wenn min. 2 mündliche vorliegen, ist das ok.
+      }
+      
+      if (muendlicheCount == 1)
+      {
+        return schulaufgabenCount > 0; // Eine mündliche reicht aus, wenn Schulaufgaben geschrieben wurden.
+      }
+
+      //in allen anderen Fällen sind es zu wenig Noten
+      return false;
     }
 
     private static int GetAnzahlSchulaufgaben(Schulaufgabenwertung wertung)
