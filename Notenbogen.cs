@@ -2,6 +2,7 @@
 using log4net;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -18,6 +19,7 @@ namespace diNo
     public Notenbogen()
     {
       InitializeComponent();
+      dataGridNoten.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None; // sollte das Neuzeichnen schneller machen
     }
 
     /// <summary>
@@ -117,33 +119,96 @@ namespace diNo
     // schreibt eine Notenliste (z.B. alle SA in Englisch aus dem 1. Hj. ins Grid), bez wird als Text an jede Note angefügt    
     private void InsertNoten(int startCol, int startRow, IList<string> noten)
     {
-        foreach (var note in noten)
-        {
-             dataGridNoten.Rows[startRow].Cells[startCol].Value = note;
-             startCol++;
-        }        
+      foreach (var note in noten)
+      {
+        var cell = dataGridNoten.Rows[startRow].Cells[startCol];
+        cell.Value = note;
+        SetBackgroundColor(note, cell);
+        startCol++;
+      }
     }
 
     private void InsertNoten(int startCol, int startRow, IList<int> noten)
     {
-        foreach (var note in noten)
-        {
-             dataGridNoten.Rows[startRow].Cells[startCol].Value = note;
-             startCol++;
-        }        
+      foreach (var note in noten)
+      {
+        var cell = dataGridNoten.Rows[startRow].Cells[startCol];
+        cell.Value = note;
+        SetBackgroundColor(note, cell);
+        startCol++;
+      }
     }
 
-        // schreibt eine Schnittkonstellation ins Grid    
+    // schreibt eine Schnittkonstellation ins Grid    
     private void InsertSchnitt(int startCol, int startRow, BerechneteNote b)
     {
-        if (b != null)
+      if (b != null)
+      {
+        if (b.SchnittSchulaufgaben != null)
         {
-            if (b.SchnittSchulaufgaben != null)
-                dataGridNoten.Rows[startRow].Cells[startCol].Value = b.SchnittSchulaufgaben;
-            dataGridNoten.Rows[startRow + 1].Cells[startCol].Value = b.SchnittMuendlich;
-            dataGridNoten.Rows[startRow + 1].Cells[startCol + 1].Value = b.JahresfortgangMitKomma;
-            dataGridNoten.Rows[startRow].Cells[startCol + 1].Value = b.JahresfortgangGanzzahlig;
+          var cell = dataGridNoten.Rows[startRow].Cells[startCol];
+          cell.Value = b.SchnittSchulaufgaben;
+          SetBackgroundColor((double)b.SchnittSchulaufgaben, cell);
         }
+
+        if (b.SchnittSchulaufgaben != null)
+        {
+          dataGridNoten.Rows[startRow + 1].Cells[startCol].Value = b.SchnittMuendlich;
+          SetBackgroundColor((double)b.SchnittMuendlich, dataGridNoten.Rows[startRow + 1].Cells[startCol]);
+        }
+
+        if (b.JahresfortgangMitKomma != null)
+        {
+          dataGridNoten.Rows[startRow + 1].Cells[startCol + 1].Value = b.JahresfortgangMitKomma;
+          SetBackgroundColor((double)b.JahresfortgangMitKomma, dataGridNoten.Rows[startRow + 1].Cells[startCol + 1]);
+        }
+
+        if (b.JahresfortgangGanzzahlig != null)
+        {
+          dataGridNoten.Rows[startRow].Cells[startCol + 1].Value = b.JahresfortgangGanzzahlig;
+          SetBackgroundColor((double)b.JahresfortgangGanzzahlig, dataGridNoten.Rows[startRow].Cells[startCol + 1]);
+        }
+      }
+    }
+
+    private void SetBackgroundColor(string note, DataGridViewCell cell)
+    {
+      
+      double notenwert = double.MaxValue;
+      if (!double.TryParse(note, out notenwert))
+      {
+        return; // nur zur Sicherheit: Wenn das parsen nicht klappt, muss man ja nicht gleich abstürzen
+      }
+
+      SetBackgroundColor(notenwert, cell);
+    }
+
+    private void SetBackgroundColor(double notenwert, DataGridViewCell cell)
+    {
+      Color color = GetBackgroundColor(notenwert);
+      if (color == dataGridNoten.BackgroundColor)
+      {
+        return; // nothing to do
+      }
+      else
+      {
+        cell.Style.BackColor = color;
+      }
+    }
+
+    private Color GetBackgroundColor(double notenwert)
+    {
+      if (notenwert < 1) return Color.DarkRed;
+      if (notenwert < 1.5) return Color.OrangeRed;
+      if (notenwert < 2.5) return Color.DarkOrange;
+      if (notenwert < 3.5) return Color.Orange;
+      if (notenwert < 4.5) return Color.Yellow;
+      if (notenwert < 5.5) return Color.LightYellow;
+
+      if (notenwert > 13.5) return Color.DarkGreen;
+      if (notenwert > 12.5) return Color.Green;
+      if (notenwert > 10.5) return Color.LightGreen;
+      return dataGridNoten.BackgroundColor;
     }
 
         private void buttonSpeichern_Click(object sender, EventArgs e)
