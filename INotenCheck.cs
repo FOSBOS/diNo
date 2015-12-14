@@ -342,7 +342,7 @@ namespace diNo
         {
           // wir akzeptieren eine Kurzarbeit als einzelne Note, wenn sie bei min. 6 Punkten liegt (somit kann der Schüler in diesem Fach nicht mehr unterpunkten)
           var kurzarbeitNote = noten.getNoten(Halbjahr.Erstes, Notentyp.Kurzarbeit)[0];
-          return (kurzarbeitNote >= 6);
+          return (kurzarbeitNote >= 4);
         }
       }
 
@@ -354,7 +354,11 @@ namespace diNo
       
       if (muendlicheCount == 1)
       {
-        return schulaufgabenCount > 0; // Eine mündliche reicht aus, wenn Schulaufgaben geschrieben wurden.
+        // wir akzeptieren eine Kurzarbeit als einzelne Note, wenn sie bei min. 6 Punkten liegt (somit kann der Schüler in diesem Fach nicht mehr unterpunkten)
+        var exen = noten.getNoten(Halbjahr.Erstes, Notentyp.Ex);
+        var echteMuendliche = noten.getNoten(Halbjahr.Erstes, Notentyp.EchteMuendliche);
+        var einzigeNote = exen.Count > 0 ? exen[0] : echteMuendliche[0];
+        return (einzigeNote >= 4);
       }
 
       //in allen anderen Fällen sind es zu wenig Noten

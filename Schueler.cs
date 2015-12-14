@@ -336,6 +336,11 @@ namespace diNo
     public void AddVorkommnis(Vorkommnisart art, DateTime datum, string bemerkung)
     {
       new VorkommnisTableAdapter().Insert(datum, bemerkung, this.Id, (int)art);
+      if (art == Vorkommnisart.ProbezeitNichtBestanden)
+      {
+        Schueler.Austritt(this, DateTime.Today);
+      }
+
       this.vorkommnisse = null; // damit er die neu lädt
     }
 

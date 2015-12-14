@@ -123,7 +123,7 @@ namespace diNo
       {
         var cell = dataGridNoten.Rows[startRow].Cells[startCol];
         cell.Value = note;
-        SetBackgroundColor(note, cell);
+      //  SetBackgroundColor(note, cell);
         startCol++;
       }
     }
@@ -134,7 +134,7 @@ namespace diNo
       {
         var cell = dataGridNoten.Rows[startRow].Cells[startCol];
         cell.Value = note;
-        SetBackgroundColor(note, cell);
+       // SetBackgroundColor(note, cell);
         startCol++;
       }
     }
@@ -148,13 +148,13 @@ namespace diNo
         {
           var cell = dataGridNoten.Rows[startRow].Cells[startCol];
           cell.Value = b.SchnittSchulaufgaben;
-          SetBackgroundColor((double)b.SchnittSchulaufgaben, cell);
+          // SetBackgroundColor((double)b.SchnittSchulaufgaben, cell);
         }
 
-        if (b.SchnittSchulaufgaben != null)
+        if (b.SchnittMuendlich != null)
         {
           dataGridNoten.Rows[startRow + 1].Cells[startCol].Value = b.SchnittMuendlich;
-          SetBackgroundColor((double)b.SchnittMuendlich, dataGridNoten.Rows[startRow + 1].Cells[startCol]);
+          // SetBackgroundColor((double)b.SchnittMuendlich, dataGridNoten.Rows[startRow + 1].Cells[startCol]);
         }
 
         if (b.JahresfortgangMitKomma != null)
@@ -198,16 +198,15 @@ namespace diNo
 
     private Color GetBackgroundColor(double notenwert)
     {
-      if (notenwert < 1) return Color.DarkRed;
+      if (notenwert < 1) return Color.Red;
       if (notenwert < 1.5) return Color.OrangeRed;
       if (notenwert < 2.5) return Color.DarkOrange;
       if (notenwert < 3.5) return Color.Orange;
       if (notenwert < 4.5) return Color.Yellow;
       if (notenwert < 5.5) return Color.LightYellow;
 
-      if (notenwert > 13.5) return Color.DarkGreen;
-      if (notenwert > 12.5) return Color.Green;
-      if (notenwert > 10.5) return Color.LightGreen;
+      if (notenwert > 13.5) return Color.Green;
+      if (notenwert > 11.5) return Color.LightGreen;
       return dataGridNoten.BackgroundColor;
     }
 
