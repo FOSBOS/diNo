@@ -45,7 +45,7 @@ namespace diNoVerwaltung
       var kurs = this.objectListView1.SelectedObject as Kurs;
       if (kurs != null)
       {
-        Schueler.MeldeAb(this.schueler, kurs);
+        this.schueler.MeldeAb(kurs);
         InitKurse();
       }
     }
@@ -55,7 +55,7 @@ namespace diNoVerwaltung
       var kurs = this.objectListView2.SelectedObject as Kurs;
       if (kurs != null)
       {
-        Schueler.MeldeAn(this.schueler, kurs);
+        this.schueler.MeldeAn(kurs);
         InitKurse();
       }
     }

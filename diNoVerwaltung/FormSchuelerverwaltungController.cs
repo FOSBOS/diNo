@@ -47,7 +47,7 @@ namespace diNoVerwaltung
         }
         else
         {
-          Schueler.Austritt(schueler, (DateTime)newValue);
+          schueler.Austritt((DateTime)newValue);
         }
       }
 
@@ -260,7 +260,7 @@ namespace diNoVerwaltung
       var questionResult = MessageBox.Show("Soll der Schüler " + derSchueler.NameVorname + " von der " + derSchueler.getKlasse.Bezeichnung + " in die " + targetKlasse.Bezeichnung + " verschoben werden?", "Nachfrage", MessageBoxButtons.YesNo);
       if (questionResult == DialogResult.Yes)
       {
-        Schueler.WechsleKlasse(derSchueler, targetKlasse);
+        derSchueler.WechsleKlasse(targetKlasse);
         if (this.refreshFunc != null)
         {
           this.refreshFunc();
