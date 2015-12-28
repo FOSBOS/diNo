@@ -13,6 +13,7 @@ namespace diNo
   {
     private Schueler schueler;
     private Dictionary<Vorkommnisart, string> vorkommnisarten;
+    private Vorkommnisart[] notenRelevanteVorkommnisse = new[] { Vorkommnisart.Gefaehrdungsmitteilung, Vorkommnisart.JahrgangsstufeNichtBestanden, Vorkommnisart.NichtZurPruefungZugelassen, Vorkommnisart.Notenausgleich, Vorkommnisart.ProbezeitNichtBestanden, Vorkommnisart.PruefungInsgesamtNichtBestanden, Vorkommnisart.PruefungSchriftlichNichtBestanden, Vorkommnisart.VorrueckenAufProbe };
 
     public UserControlVorkommnisse()
     {
@@ -92,11 +93,61 @@ namespace diNo
 
       if (this.schueler != null)
       {
-        this.schueler.AddVorkommnis((Vorkommnisart)this.comboBoxArt.SelectedValue, dateTimePicker1.Value, textBox1.Text);
+        var art = (Vorkommnisart)this.comboBoxArt.SelectedValue;
+        this.schueler.AddVorkommnis(art, dateTimePicker1.Value, textBox1.Text);
+        
+        if (art == Vorkommnisart.ProbezeitNichtBestanden)
+        {
+          new ReportNotenbogen(schueler); // drucke den Notenbogen als Abschluss aus
+        }
+
         this.comboBoxArt.SelectedValue = Vorkommnisart.NotSet;
         this.textBox1.Text = "";
         this.objectListViewVorkommnisse.SetObjects(this.schueler.Vorkommnisse);
       }
     }
+
+    /// <summary>
+    /// Methode trägt für manche Vorkommnisse vorsorglich die relevanten Noten als Bemerkung ein.
+    /// Funktioniert dies nicht automatisch korrekt, muss von Hand die Bemerkung angepasst werden.
+    /// </summary>
+    /// <param name="sender">Der Sender.</param>
+    /// <param name="e">Die event args.</param>
+    private void comboBoxArt_SelectedValueChanged(object sender, EventArgs e)
+    {
+      var art = (Vorkommnisart)this.comboBoxArt.SelectedValue;
+      
+      if (notenRelevanteVorkommnisse.Contains(art))
+      {
+        this.textBox1.Text = schueler.getNoten.GetUnterpunktungenString(ErrateZeitpunkt(art));
+      }
+      else
+      {
+        this.textBox1.Text = "";
+      }
+    }
+
+    /// <summary>
+    /// Methode versucht den korrekten Zeitpunkt zu erraten.
+    /// Dient nur dem Komfort, weil dann die relevanten Noten automatisch ermittelt werden.
+    /// Funktioniert dies nicht automatisch korrekt, muss von Hand die Bemerkung angepasst werden.
+    /// </summary>
+    /// <param name="vorkommnis">Das Vorkommnis.</param>
+    /// <returns>Möglicher Zeitpunkt, an welchem dieses Vorkommnis meist auftritt.</returns>
+    private Zeitpunkt ErrateZeitpunkt(Vorkommnisart vorkommnis)
+    {
+      switch (vorkommnis)
+      {
+        case Vorkommnisart.Gefaehrdungsmitteilung: return Zeitpunkt.HalbjahrUndProbezeitFOS;
+        case Vorkommnisart.ProbezeitNichtBestanden: return DateTime.Now.Month == 12 ? Zeitpunkt.ProbezeitBOS : Zeitpunkt.HalbjahrUndProbezeitFOS;
+        case Vorkommnisart.NichtZurPruefungZugelassen: return Zeitpunkt.ErstePA;
+        case Vorkommnisart.JahrgangsstufeNichtBestanden: return Zeitpunkt.Jahresende;
+        case Vorkommnisart.PruefungInsgesamtNichtBestanden: return Zeitpunkt.DrittePA;
+        case Vorkommnisart.PruefungSchriftlichNichtBestanden: return Zeitpunkt.ZweitePA;
+        case Vorkommnisart.VorrueckenAufProbe: return Zeitpunkt.Jahresende;
+        default: return Zeitpunkt.Jahresende;
+      }
+    }
+
   }
 }

@@ -51,6 +51,21 @@ namespace diNo
             }
             return liste;
         }
+
+    public string GetUnterpunktungenString(Zeitpunkt z)
+    {
+      string result = "";
+      foreach (var fach in alleFaecher)
+      {
+        byte? note = fach.getRelevanteNote(z);
+        if (note != null && note < 4)
+        {
+          result += fach.getFach.Kuerzel + "(" + note + ")";
+        }
+      }
+
+      return result;
+    }
     }
 
     /// <summary>

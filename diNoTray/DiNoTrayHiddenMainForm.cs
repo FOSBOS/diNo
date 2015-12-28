@@ -171,14 +171,6 @@ namespace diNoTray
       new Klassenansicht().Show();
     }
 
-    private void btnUnterpunktungen_Click(object sender, EventArgs e)
-    {
-      //var contr = new NotenCheckController(GetZeitpunkt());
-      //contr.CheckAll();
-      //contr.CheckKlasse(new Klasse(55)); // 11Te
-      //new ReportNotencheck(contr.res);
-    }
-
     private Zeitpunkt GetZeitpunkt()
     {
       string reason = (string)comboBoxZeitpunkt.SelectedItem;

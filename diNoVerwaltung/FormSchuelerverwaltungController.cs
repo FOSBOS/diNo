@@ -47,6 +47,7 @@ namespace diNoVerwaltung
         }
         else
         {
+          new ReportNotenbogen(schueler); // zeigt den aktuellen Notenbogen an - der muss ausgedruckt und abgeheftet werden
           Schueler.Austritt(schueler, (DateTime)newValue);
         }
       }

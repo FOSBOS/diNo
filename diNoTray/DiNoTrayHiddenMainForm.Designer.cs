@@ -91,7 +91,6 @@
       this.btnUnterpunktungen.TabIndex = 4;
       this.btnUnterpunktungen.Text = "Prüfung starten";
       this.btnUnterpunktungen.UseVisualStyleBackColor = true;
-      this.btnUnterpunktungen.Click += new System.EventHandler(this.btnUnterpunktungen_Click);
       // 
       // lblStatus
       // 
