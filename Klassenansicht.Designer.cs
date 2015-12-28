@@ -35,6 +35,8 @@
             this.userControlSchueleransicht1 = new diNo.UserControlSchueleransicht();
             this.tabPageNoten = new System.Windows.Forms.TabPage();
             this.notenbogen1 = new diNo.Notenbogen();
+            this.tabPageFPASeminar = new System.Windows.Forms.TabPage();
+            this.userControlFPAundSeminar1 = new diNo.UserControlFPAundSeminar();
             this.tabPageVorkommnisse = new System.Windows.Forms.TabPage();
             this.userControlVorkommnisse1 = new diNo.UserControlVorkommnisse();
             this.klasseLabel = new System.Windows.Forms.Label();
@@ -54,6 +56,7 @@
             this.tabControl1.SuspendLayout();
             this.tabPageStammdaten.SuspendLayout();
             this.tabPageNoten.SuspendLayout();
+            this.tabPageFPASeminar.SuspendLayout();
             this.tabPageVorkommnisse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
@@ -67,13 +70,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPageStammdaten);
             this.tabControl1.Controls.Add(this.tabPageNoten);
+            this.tabControl1.Controls.Add(this.tabPageFPASeminar);
             this.tabControl1.Controls.Add(this.tabPageVorkommnisse);
             this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(275, 133);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.Padding = new System.Drawing.Point(12, 7);
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(914, 500);
+            this.tabControl1.Size = new System.Drawing.Size(914, 487);
             this.tabControl1.TabIndex = 8;
             // 
             // tabPageStammdaten
@@ -82,20 +86,20 @@
             this.tabPageStammdaten.Location = new System.Drawing.Point(4, 33);
             this.tabPageStammdaten.Name = "tabPageStammdaten";
             this.tabPageStammdaten.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageStammdaten.Size = new System.Drawing.Size(906, 463);
+            this.tabPageStammdaten.Size = new System.Drawing.Size(906, 450);
             this.tabPageStammdaten.TabIndex = 0;
             this.tabPageStammdaten.Text = "Schülerdaten";
             this.tabPageStammdaten.UseVisualStyleBackColor = true;
             // 
             // userControlSchueleransicht1
             // 
-            this.userControlSchueleransicht1.AutoScroll = true;
-            this.userControlSchueleransicht1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.userControlSchueleransicht1.Dock = System.Windows.Forms.DockStyle.Left;
             this.userControlSchueleransicht1.Location = new System.Drawing.Point(3, 3);
+            this.userControlSchueleransicht1.Margin = new System.Windows.Forms.Padding(4);
             this.userControlSchueleransicht1.Name = "userControlSchueleransicht1";
             this.userControlSchueleransicht1.Schueler = null;
-            this.userControlSchueleransicht1.Size = new System.Drawing.Size(900, 457);
-            this.userControlSchueleransicht1.TabIndex = 7;
+            this.userControlSchueleransicht1.Size = new System.Drawing.Size(917, 444);
+            this.userControlSchueleransicht1.TabIndex = 0;
             // 
             // tabPageNoten
             // 
@@ -103,40 +107,60 @@
             this.tabPageNoten.Location = new System.Drawing.Point(4, 33);
             this.tabPageNoten.Name = "tabPageNoten";
             this.tabPageNoten.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageNoten.Size = new System.Drawing.Size(906, 463);
+            this.tabPageNoten.Size = new System.Drawing.Size(906, 450);
             this.tabPageNoten.TabIndex = 1;
             this.tabPageNoten.Text = "Notenbogen";
             this.tabPageNoten.UseVisualStyleBackColor = true;
             // 
             // notenbogen1
             // 
-            this.notenbogen1.AutoScroll = true;
             this.notenbogen1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.notenbogen1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.notenbogen1.Location = new System.Drawing.Point(3, 3);
+            this.notenbogen1.Margin = new System.Windows.Forms.Padding(4);
             this.notenbogen1.Name = "notenbogen1";
             this.notenbogen1.Schueler = null;
-            this.notenbogen1.Size = new System.Drawing.Size(900, 457);
+            this.notenbogen1.Size = new System.Drawing.Size(900, 444);
             this.notenbogen1.TabIndex = 0;
+            // 
+            // tabPageFPASeminar
+            // 
+            this.tabPageFPASeminar.Controls.Add(this.userControlFPAundSeminar1);
+            this.tabPageFPASeminar.Location = new System.Drawing.Point(4, 33);
+            this.tabPageFPASeminar.Name = "tabPageFPASeminar";
+            this.tabPageFPASeminar.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageFPASeminar.Size = new System.Drawing.Size(906, 450);
+            this.tabPageFPASeminar.TabIndex = 3;
+            this.tabPageFPASeminar.Text = "FPA / Seminar";
+            this.tabPageFPASeminar.UseVisualStyleBackColor = true;
+            // 
+            // userControlFPAundSeminar1
+            // 
+            this.userControlFPAundSeminar1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.userControlFPAundSeminar1.Location = new System.Drawing.Point(3, 3);
+            this.userControlFPAundSeminar1.Margin = new System.Windows.Forms.Padding(4);
+            this.userControlFPAundSeminar1.Name = "userControlFPAundSeminar1";
+            this.userControlFPAundSeminar1.Schueler = null;
+            this.userControlFPAundSeminar1.Size = new System.Drawing.Size(900, 444);
+            this.userControlFPAundSeminar1.TabIndex = 0;
             // 
             // tabPageVorkommnisse
             // 
             this.tabPageVorkommnisse.Controls.Add(this.userControlVorkommnisse1);
             this.tabPageVorkommnisse.Location = new System.Drawing.Point(4, 33);
             this.tabPageVorkommnisse.Name = "tabPageVorkommnisse";
-            this.tabPageVorkommnisse.Size = new System.Drawing.Size(906, 463);
+            this.tabPageVorkommnisse.Size = new System.Drawing.Size(906, 450);
             this.tabPageVorkommnisse.TabIndex = 2;
             this.tabPageVorkommnisse.Text = "Vorkommnisse";
             this.tabPageVorkommnisse.UseVisualStyleBackColor = true;
             // 
             // userControlVorkommnisse1
             // 
-            this.userControlVorkommnisse1.AutoScroll = true;
             this.userControlVorkommnisse1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.userControlVorkommnisse1.Location = new System.Drawing.Point(0, 0);
+            this.userControlVorkommnisse1.Margin = new System.Windows.Forms.Padding(4);
             this.userControlVorkommnisse1.Name = "userControlVorkommnisse1";
             this.userControlVorkommnisse1.Schueler = null;
-            this.userControlVorkommnisse1.Size = new System.Drawing.Size(906, 463);
+            this.userControlVorkommnisse1.Size = new System.Drawing.Size(906, 450);
             this.userControlVorkommnisse1.TabIndex = 0;
             // 
             // klasseLabel
@@ -308,6 +332,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPageStammdaten.ResumeLayout(false);
             this.tabPageNoten.ResumeLayout(false);
+            this.tabPageFPASeminar.ResumeLayout(false);
             this.tabPageVorkommnisse.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
@@ -321,24 +346,26 @@
     #endregion
     private BrightIdeasSoftware.TreeListView treeListView1;
     private BrightIdeasSoftware.OLVColumn olvColumnBezeichnung;
-    private UserControlSchueleransicht userControlSchueleransicht1;
     private System.Windows.Forms.TabControl tabControl1;
     private System.Windows.Forms.TabPage tabPageStammdaten;
     private System.Windows.Forms.TabPage tabPageNoten;
+    private System.Windows.Forms.Label klasseLabel;
+    private System.Windows.Forms.Label nameLabel;
+    private System.Windows.Forms.ImageList imageList1;
+    private System.Windows.Forms.PictureBox pictureBoxImage;
+    private System.Windows.Forms.TabPage tabPageVorkommnisse;
+    private System.Windows.Forms.Button btnNotenabgeben;
+    private System.Windows.Forms.Button btnPrint;
+    private System.Windows.Forms.Button btnBrief;
+    private System.Windows.Forms.ToolTip toolTipButtons;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Button btnCheck;
+    private System.Windows.Forms.StatusStrip statusStrip1;
+    private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+    private System.Windows.Forms.TabPage tabPageFPASeminar;
+    private UserControlFPAundSeminar userControlFPAundSeminar1;
+    private UserControlSchueleransicht userControlSchueleransicht1;
     private Notenbogen notenbogen1;
-        private System.Windows.Forms.Label klasseLabel;
-        private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.PictureBox pictureBoxImage;
-        private System.Windows.Forms.TabPage tabPageVorkommnisse;
-        private UserControlVorkommnisse userControlVorkommnisse1;
-        private System.Windows.Forms.Button btnNotenabgeben;
-        private System.Windows.Forms.Button btnPrint;
-        private System.Windows.Forms.Button btnBrief;
-        private System.Windows.Forms.ToolTip toolTipButtons;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button btnCheck;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-    }
+    private UserControlVorkommnisse userControlVorkommnisse1;
+}
 }

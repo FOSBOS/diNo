@@ -1,13 +1,6 @@
 ﻿todos für diNo
 --------------
 
-Kritisch:
-- Anker der UserControlForms ?
-- TableAdapter für Schueler: Email kommt zweimal vor und Reihenfolge passt nicht zur DB.
-	Gefährlich, wenn wir auf select * abfragen wollen.
-
-
-- FpA, Seminarfach irgendwie integrieren
 - Fehltage integrieren
 - Abschließen eines Notenbogens bei Austritt / Rücktritt (sinnvoller Workflow, um evtl. noch vorhandene Noten einzutreiben etc.)
 	=> simpelste Lösung: Bei Austritt oder Rücktritt wird der Notenbogen ausgedruckt und wie bisher den Lehrern ins Fach gelegt

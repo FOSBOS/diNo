@@ -290,6 +290,7 @@ namespace diNo
     {
       string result = string.Empty;
       
+            // TODO auf DBNull prüfen!!
       if (!string.IsNullOrEmpty(this.Data.Wiederholung1Jahrgangsstufe) && isAWiederholung(this.Data.Wiederholung1Jahrgangsstufe))
       {
         result += this.Data.Wiederholung1Jahrgangsstufe;

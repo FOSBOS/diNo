@@ -24,6 +24,8 @@ namespace diNo
         this.userControlSchueleransicht1.Schueler = schueler;
         this.userControlVorkommnisse1.Schueler = schueler;
         this.notenbogen1.Schueler = schueler;
+        this.userControlFPAundSeminar1.Schueler = schueler;
+
         nameLabel.Text = schueler.NameVorname;
         klasseLabel.Text = schueler.getKlasse.Bezeichnung;
         Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;

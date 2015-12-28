@@ -157,6 +157,12 @@
     <Compile Include="UserControlChecks.Designer.cs">
       <DependentUpon>UserControlChecks.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControlFPAundSeminar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlFPAundSeminar.Designer.cs">
+      <DependentUpon>UserControlFPAundSeminar.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControlSchueleransicht.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -213,6 +219,9 @@
     <EmbeddedResource Include="subrptKurs.rdlc" />
     <EmbeddedResource Include="UserControlChecks.resx">
       <DependentUpon>UserControlChecks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControlFPAundSeminar.resx">
+      <DependentUpon>UserControlFPAundSeminar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlSchueleransicht.resx">
       <DependentUpon>UserControlSchueleransicht.cs</DependentUpon>
