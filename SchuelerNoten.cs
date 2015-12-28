@@ -52,6 +52,17 @@ namespace diNo
             return liste;
         }
 
+    public IList<FachSchuelerNoten> SucheAlteNoten()
+    {
+      var result = new List<FachSchuelerNoten>();
+      foreach (var kurs in schueler.getKlasse.FindeAlleMöglichenKurse(schueler.Zweig))
+      {
+        result.Add(new FachSchuelerNoten(schueler.Id, kurs.Id));
+      }
+
+      return result;
+    }
+
     public string GetUnterpunktungenString(Zeitpunkt z)
     {
       string result = "";

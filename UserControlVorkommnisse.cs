@@ -94,13 +94,12 @@ namespace diNo
       if (this.schueler != null)
       {
         var art = (Vorkommnisart)this.comboBoxArt.SelectedValue;
-        this.schueler.AddVorkommnis(art, dateTimePicker1.Value, textBox1.Text);
-        
         if (art == Vorkommnisart.ProbezeitNichtBestanden)
         {
           new ReportNotenbogen(schueler); // drucke den Notenbogen als Abschluss aus
         }
 
+        this.schueler.AddVorkommnis(art, dateTimePicker1.Value, textBox1.Text);
         this.comboBoxArt.SelectedValue = Vorkommnisart.NotSet;
         this.textBox1.Text = "";
         this.objectListViewVorkommnisse.SetObjects(this.schueler.Vorkommnisse);
@@ -115,6 +114,9 @@ namespace diNo
     /// <param name="e">Die event args.</param>
     private void comboBoxArt_SelectedValueChanged(object sender, EventArgs e)
     {
+      if (!(this.comboBoxArt.SelectedValue is Vorkommnisart)) // beim Init wird das Ereignis einmal mit einem KeyValuePaar ausgelöst - seltsames Verhalten
+        return;
+
       var art = (Vorkommnisart)this.comboBoxArt.SelectedValue;
       
       if (notenRelevanteVorkommnisse.Contains(art))

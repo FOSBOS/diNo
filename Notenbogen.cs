@@ -49,16 +49,21 @@ namespace diNo
       }
 
       dataGridNoten.Rows.Clear();
+      dataGridNoten.RowsDefaultCellStyle.BackColor = Color.White;
       log.Debug("Öffne Notenbogen SchülerId=" + this.schueler.Id);
-      //nameLabel.Text = schueler.NameVorname;
-      //klasseTextBox.Text = schueler.getKlasse.Data.Bezeichnung;
-      //textBoxAdresse.Text = schueler.Data.AnschriftStrasse + "\n" + schueler.Data.AnschriftPLZ + " " + schueler.Data.AnschriftOrt + "\n Tel.:" + schueler.Data.AnschriftTelefonnummer;
 
-      SchuelerNoten noten = schueler.getNoten;
+      var dieNoten = schueler.getNoten.alleFaecher;
+      if (dieNoten.Count == 0)
+      {
+        // alle Kurszuordnungen des Schülers wurden gelöscht. Vermutlich schauen wir auf einen ausgetretenen Schüler.
+        // in diesem Fall suche die Noten anhand der möglichen Fächer, trage diese ein und graue den Notenbogen aus
+        dieNoten = schueler.getNoten.SucheAlteNoten();
+        dataGridNoten.RowsDefaultCellStyle.BackColor = Color.LightGray;
+      }
 
       // Row[lineCount] für schriftliche und Row[lineCount+1] für mündliche Noten
       int lineCount = 0;
-      foreach (var kursNoten in noten.alleFaecher)
+      foreach (var kursNoten in dieNoten)
       {
         dataGridNoten.Rows.Add(2);
         dataGridNoten.Rows[lineCount + 1].Height += 2;
