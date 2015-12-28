@@ -202,7 +202,7 @@ namespace diNo
       var fach = new FachTableAdapter().GetDataById(kurs.FachId)[0];
       Schueler derSchueler = new Schueler(schueler);
 
-      if (derSchueler.getKlasse.Zweig == Zweig.Wirtschaft)
+      if (derSchueler.Zweig == Zweig.Wirtschaft)
       {
         if (derSchueler.getKlasse.Schulart == Schulart.FOS)
         {
@@ -232,7 +232,7 @@ namespace diNo
       // Für Soziale gilt: Wer Kunst als Wahlpflichtfach gewählt hat geht in Kunst
       // wer Französisch als Wahlpflichtfach gewählt hat, geht in Französisch (das macht aber der
       // Fremdsprachenselector, weil dann Französisch als Sprache2 eingetragen wird)
-      if (derSchueler.getKlasse.Zweig == Zweig.Sozial)
+      if (derSchueler.Zweig == Zweig.Sozial)
       {
         if (fach.Kuerzel.Equals("Ku", StringComparison.OrdinalIgnoreCase) &&
             schueler.Wahlpflichtfach.Equals("Ku", StringComparison.OrdinalIgnoreCase))

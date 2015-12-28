@@ -168,14 +168,6 @@ namespace diNo
       throw new InvalidOperationException("Zweig nicht gefunden: " + zweigBezeichnung);
     }
 
-    public Zweig Zweig
-    {
-      get
-      {
-        return Klasse.GetZweig(this.data.Bezeichnung);
-      }
-    }
-
     public diNoDataSet.LehrerRow Klassenleiter
     {
       get
