@@ -148,27 +148,31 @@ namespace diNo
     }
 
 
+    public static Zweig GetZweig(string zweigBezeichnung)
+    {
+      if (zweigBezeichnung.Contains("W") || zweigBezeichnung.Contains("w"))
+      {
+        return Zweig.Wirtschaft;
+      }
+
+      if (zweigBezeichnung.Contains("S") || zweigBezeichnung.Contains("s"))
+      {
+        return Zweig.Sozial;
+      }
+
+      if (zweigBezeichnung.Contains("T") || zweigBezeichnung.Contains("t"))
+      {
+        return Zweig.Technik;
+      }
+
+      throw new InvalidOperationException("Zweig nicht gefunden: " + zweigBezeichnung);
+    }
+
     public Zweig Zweig
     {
       get
       {
-        string klasse = data.Bezeichnung;
-        if (klasse.Contains("W") || klasse.Contains("w"))
-        {
-          return Zweig.Wirtschaft;
-        }
-
-        if (klasse.Contains("S") || klasse.Contains("s"))
-        {
-          return Zweig.Sozial;
-        }
-
-        if (klasse.Contains("T") || klasse.Contains("t"))
-        {
-          return Zweig.Technik;
-        }
-
-        throw new InvalidOperationException("Zweig nicht gefunden: " + klasse);
+        return Klasse.GetZweig(this.data.Bezeichnung);
       }
     }
 
@@ -186,6 +190,25 @@ namespace diNo
       }
     }
 
+
+    public IList<Kurs> FindeAlleMöglichenKurse(Zweig zweig)
+    {
+      var result = new List<Kurs>(this.Kurse);
+      var teilKlasse = FindKlassenTeilMitKursen(this.Bezeichnung, zweig);
+      if (teilKlasse != null)
+      {
+        foreach (var neuerKurs in teilKlasse.Kurse)
+        {
+          var kursSchonDrin = result.Find(x => x.Id == neuerKurs.Id);
+          if (kursSchonDrin == null)
+          {
+            result.Add(neuerKurs);
+          }
+        }
+      }
+
+      return result;
+    }
 
     public IList<Kurs> Kurse
     {

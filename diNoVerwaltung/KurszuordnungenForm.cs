@@ -1,5 +1,4 @@
 ﻿using diNo;
-using diNo.diNoDataSetTableAdapters;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -27,13 +26,13 @@ namespace diNoVerwaltung
 
       this.objectListView1.SetObjects(aktuelleKurse);
 
-      var kurseDerKlasse = new KlasseKursTableAdapter().GetDataByKlasse(schueler.getKlasse.Data.Id);
+      var kurseDerKlasse = schueler.getKlasse.FindeAlleMöglichenKurse(schueler.Zweig);
       IList<Kurs> moeglicheNeueKurse = new List<Kurs>();
       foreach (var aKurs in kurseDerKlasse)
       {
-        if (!aktuelleKurse.Exists(x => x.Id == aKurs.KursId))
+        if (!aktuelleKurse.Exists(x => x.Id == aKurs.Id))
         {
-          moeglicheNeueKurse.Add(new Kurs(aKurs.KursId));
+          moeglicheNeueKurse.Add(new Kurs(aKurs.Id));
         }
       }
 
