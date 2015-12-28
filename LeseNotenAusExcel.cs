@@ -160,9 +160,8 @@ namespace diNo
           bnote.PruefungGesamt = xls.ReadSchnitt(BerechneteNotentyp.APGesamt, hj, indexAP);
           bnote.SchnittFortgangUndPruefung = xls.ReadSchnitt(BerechneteNotentyp.EndnoteMitNKS, hj, indexAP);
           bnote.Abschlusszeugnis = xls.ReadSchnittGanzzahlig(BerechneteNotentyp.Abschlusszeugnis, hj, indexAP);
-          // Erst wenn JF feststeht, wird diese Schnittkonstellation gespeichert
-          if (bnote.JahresfortgangGanzzahlig != null)
-            bnote.writeToDB();
+
+          bnote.writeToDB(); // Todo: Testen, ob der Eintrag auch funktioniert, wenn noch gar keine Jahresfortgangsnote gebildet werden kann. (solle aber schon, sind schließlich alles nullables)
         }
 
         i += 2;
