@@ -207,7 +207,7 @@ namespace diNo
         {
             foreach (var note in noten)
             {
-                    liste.Add(note + (bez=="" ? "" : " " + bez));                
+                    liste.Add(note + (bez=="" ? "" : /*" " + */ bez));                
             }        
         }
         
