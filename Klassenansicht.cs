@@ -32,6 +32,7 @@ namespace diNo
         pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
         btnBrief.Enabled = ! Zugriff.Instance.IsAdmin; // Admins haben kein Lehrerobjekt und können daher keine Briefe schreiben
         btnPrint.Enabled = true;
+        btnSave.Enabled = true;
 
       }
     }
@@ -95,6 +96,12 @@ namespace diNo
         {
             var c = new NotenCheckForm();
              c.Show();
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {   
+            userControlFPAundSeminar1.DatenUebernehmen();         
+            schueler.Save();            
         }
     }
 }

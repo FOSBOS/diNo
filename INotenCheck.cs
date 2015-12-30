@@ -134,23 +134,25 @@ namespace diNo
     /// </summary>
     /// <param name="schueler">Der Schüler.</param>
     public override void Check(Schueler schueler)
-    {
-      FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
-      var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
-      if (fpANoten.Count == 0)
-      {
-            contr.res.Add(schueler, null, "Es liegt keine FpA-Note vor.");
-      }
-      else
-      {
-            var note = fpANoten[0].Note;
-            if (note == 3)
+    {        
+        var fpANoten = schueler.FPANoten;
+        if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+        {
+            if (fpANoten.IsErfolg1HjNull() || fpANoten.IsPunkte1HjNull()) contr.res.Add(schueler, null, "Es liegt keine FpA-Note vor.");
+            else if (fpANoten.Erfolg1Hj == 4)
+            {
+                contr.res.Add(schueler, null, "Die fachpraktische Ausbildung wurde bisher ohne Erfolg durchlaufen.");
+            }
+        }            
+        else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
+        {
+            if (fpANoten.IsPunkte2HjNull() || fpANoten.IsErfolgNull() || fpANoten.IsPunkteNull()) contr.res.Add(schueler, null, "Es liegt keine FpA-Note vor.");
+            else if (fpANoten.Erfolg == 4)
             {
                 contr.res.Add(schueler, null, "Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.");
             }
-        }
+        }           
     }
-
   }
 
   /// <summary>

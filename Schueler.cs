@@ -18,6 +18,8 @@ namespace diNo
     private diNoDataSet.KursDataTable kurse; // Recordset-Menge aller Kurse dieses Schülers
     private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
     private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler
+    private diNoDataSet.FpANotenRow fpa; // Recordset der FPA-Noten
+    private diNoDataSet.FpANotenDataTable fpaDT; // wird zum Speichern benötigt
 
     public Schueler(int id)
     {
@@ -57,7 +59,12 @@ namespace diNo
     /// </summary>
     public void Save()
     {
-            (new SchuelerTableAdapter()).Update(data);
+          (new SchuelerTableAdapter()).Update(data);
+          if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && fpaDT != null)
+            {
+                (new FpANotenTableAdapter()).Update(fpaDT);
+            }
+
     }
 
 
@@ -146,6 +153,29 @@ namespace diNo
         }
 
         return klasse;
+      }
+    }
+
+
+    /// <summary>
+    /// FPA-Noten
+    /// </summary>
+    public diNoDataSet.FpANotenRow FPANoten
+    {
+      get
+      {
+        if (fpa == null)
+        {
+            fpaDT = (new FpANotenTableAdapter()).GetDataBySchuelerId(Id);
+            if (fpaDT.Count == 0)
+            {
+                fpa = fpaDT.NewFpANotenRow();
+                fpa.SchuelerId = Id;
+                fpaDT.AddFpANotenRow(fpa);
+            }
+            else fpa = fpaDT[0];
+        }
+        return fpa;
       }
     }
 
@@ -289,14 +319,13 @@ namespace diNo
     public string getWiederholungen()
     {
       string result = string.Empty;
-      
-            // TODO auf DBNull prüfen!!
-      if (!string.IsNullOrEmpty(this.Data.Wiederholung1Jahrgangsstufe) && isAWiederholung(this.Data.Wiederholung1Jahrgangsstufe))
+                  
+      if (!this.Data.IsWiederholung1JahrgangsstufeNull() && isAWiederholung(this.Data.Wiederholung1Jahrgangsstufe))
       {
         result += this.Data.Wiederholung1Jahrgangsstufe;
         result += "(" + this.Data.Wiederholung1Grund + ")";
       }
-      if (!string.IsNullOrEmpty(this.Data.Wiederholung2Jahrgangsstufe) && isAWiederholung(this.Data.Wiederholung2Jahrgangsstufe))
+      if (!this.Data.IsWiederholung2JahrgangsstufeNull() && isAWiederholung(this.Data.Wiederholung2Jahrgangsstufe))
       {
         result += this.Data.Wiederholung2Jahrgangsstufe;
         result += "(" + this.Data.Wiederholung2Grund + ")";

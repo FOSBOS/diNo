@@ -24,6 +24,8 @@ namespace diNo
             alleNotenchecks.Add(new UnterpunktungChecker(this));            
             if (azeitpunkt == Zeitpunkt.ErstePA) // nur dort FR prüfen
                 alleNotenchecks.Add(new FachreferatChecker(this));
+            if (azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
+                alleNotenchecks.Add(new FpABestandenChecker(this));
         }
 
 /*

@@ -3344,9 +3344,17 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnSchuelerId;
             
-            private global::System.Data.DataColumn columnNote;
-            
             private global::System.Data.DataColumn columnBemerkung;
+            
+            private global::System.Data.DataColumn columnPunkte1Hj;
+            
+            private global::System.Data.DataColumn columnPunkte2Hj;
+            
+            private global::System.Data.DataColumn columnPunkte;
+            
+            private global::System.Data.DataColumn columnErfolg1Hj;
+            
+            private global::System.Data.DataColumn columnErfolg;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -3391,17 +3399,49 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NoteColumn {
+            public global::System.Data.DataColumn BemerkungColumn {
                 get {
-                    return this.columnNote;
+                    return this.columnBemerkung;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn BemerkungColumn {
+            public global::System.Data.DataColumn Punkte1HjColumn {
                 get {
-                    return this.columnBemerkung;
+                    return this.columnPunkte1Hj;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Punkte2HjColumn {
+                get {
+                    return this.columnPunkte2Hj;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PunkteColumn {
+                get {
+                    return this.columnPunkte;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Erfolg1HjColumn {
+                get {
+                    return this.columnErfolg1Hj;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ErfolgColumn {
+                get {
+                    return this.columnErfolg;
                 }
             }
             
@@ -3442,12 +3482,16 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public FpANotenRow AddFpANotenRow(SchuelerRow parentSchuelerRowByFK_FpANoten_Schueler, int Note, string Bemerkung) {
+            public FpANotenRow AddFpANotenRow(SchuelerRow parentSchuelerRowByFK_FpANoten_Schueler, string Bemerkung, int Punkte1Hj, int Punkte2Hj, int Punkte, int Erfolg1Hj, int Erfolg) {
                 FpANotenRow rowFpANotenRow = ((FpANotenRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
-                        Note,
-                        Bemerkung};
+                        Bemerkung,
+                        Punkte1Hj,
+                        Punkte2Hj,
+                        Punkte,
+                        Erfolg1Hj,
+                        Erfolg};
                 if ((parentSchuelerRowByFK_FpANoten_Schueler != null)) {
                     columnValuesArray[0] = parentSchuelerRowByFK_FpANoten_Schueler[0];
                 }
@@ -3481,8 +3525,12 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnSchuelerId = base.Columns["SchuelerId"];
-                this.columnNote = base.Columns["Note"];
                 this.columnBemerkung = base.Columns["Bemerkung"];
+                this.columnPunkte1Hj = base.Columns["Punkte1Hj"];
+                this.columnPunkte2Hj = base.Columns["Punkte2Hj"];
+                this.columnPunkte = base.Columns["Punkte"];
+                this.columnErfolg1Hj = base.Columns["Erfolg1Hj"];
+                this.columnErfolg = base.Columns["Erfolg"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3490,15 +3538,22 @@ namespace diNo {
             private void InitClass() {
                 this.columnSchuelerId = new global::System.Data.DataColumn("SchuelerId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSchuelerId);
-                this.columnNote = new global::System.Data.DataColumn("Note", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNote);
                 this.columnBemerkung = new global::System.Data.DataColumn("Bemerkung", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBemerkung);
+                this.columnPunkte1Hj = new global::System.Data.DataColumn("Punkte1Hj", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPunkte1Hj);
+                this.columnPunkte2Hj = new global::System.Data.DataColumn("Punkte2Hj", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPunkte2Hj);
+                this.columnPunkte = new global::System.Data.DataColumn("Punkte", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPunkte);
+                this.columnErfolg1Hj = new global::System.Data.DataColumn("Erfolg1Hj", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnErfolg1Hj);
+                this.columnErfolg = new global::System.Data.DataColumn("Erfolg", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnErfolg);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnSchuelerId}, true));
                 this.columnSchuelerId.AllowDBNull = false;
                 this.columnSchuelerId.Unique = true;
-                this.columnNote.AllowDBNull = false;
                 this.columnBemerkung.MaxLength = 2147483647;
             }
             
@@ -7833,17 +7888,6 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Note {
-                get {
-                    return ((int)(this[this.tableFpANoten.NoteColumn]));
-                }
-                set {
-                    this[this.tableFpANoten.NoteColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Bemerkung {
                 get {
                     try {
@@ -7855,6 +7899,86 @@ namespace diNo {
                 }
                 set {
                     this[this.tableFpANoten.BemerkungColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Punkte1Hj {
+                get {
+                    try {
+                        return ((int)(this[this.tableFpANoten.Punkte1HjColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Punkte1Hj in Tabelle FpANoten ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFpANoten.Punkte1HjColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Punkte2Hj {
+                get {
+                    try {
+                        return ((int)(this[this.tableFpANoten.Punkte2HjColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Punkte2Hj in Tabelle FpANoten ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFpANoten.Punkte2HjColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Punkte {
+                get {
+                    try {
+                        return ((int)(this[this.tableFpANoten.PunkteColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Punkte in Tabelle FpANoten ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFpANoten.PunkteColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Erfolg1Hj {
+                get {
+                    try {
+                        return ((int)(this[this.tableFpANoten.Erfolg1HjColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Erfolg1Hj in Tabelle FpANoten ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFpANoten.Erfolg1HjColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Erfolg {
+                get {
+                    try {
+                        return ((int)(this[this.tableFpANoten.ErfolgColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Erfolg in Tabelle FpANoten ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFpANoten.ErfolgColumn] = value;
                 }
             }
             
@@ -7879,6 +8003,66 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetBemerkungNull() {
                 this[this.tableFpANoten.BemerkungColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPunkte1HjNull() {
+                return this.IsNull(this.tableFpANoten.Punkte1HjColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPunkte1HjNull() {
+                this[this.tableFpANoten.Punkte1HjColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPunkte2HjNull() {
+                return this.IsNull(this.tableFpANoten.Punkte2HjColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPunkte2HjNull() {
+                this[this.tableFpANoten.Punkte2HjColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPunkteNull() {
+                return this.IsNull(this.tableFpANoten.PunkteColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPunkteNull() {
+                this[this.tableFpANoten.PunkteColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsErfolg1HjNull() {
+                return this.IsNull(this.tableFpANoten.Erfolg1HjColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetErfolg1HjNull() {
+                this[this.tableFpANoten.Erfolg1HjColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsErfolgNull() {
+                return this.IsNull(this.tableFpANoten.ErfolgColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetErfolgNull() {
+                this[this.tableFpANoten.ErfolgColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -14883,33 +15067,63 @@ SELECT Id, Notenart, Punktwert, Datum, Zelle, Halbjahr, SchuelerId, KursId FROM 
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "FpANoten";
             tableMapping.ColumnMappings.Add("SchuelerId", "SchuelerId");
-            tableMapping.ColumnMappings.Add("Note", "Note");
             tableMapping.ColumnMappings.Add("Bemerkung", "Bemerkung");
+            tableMapping.ColumnMappings.Add("Punkte1Hj", "Punkte1Hj");
+            tableMapping.ColumnMappings.Add("Punkte2Hj", "Punkte2Hj");
+            tableMapping.ColumnMappings.Add("Punkte", "Punkte");
+            tableMapping.ColumnMappings.Add("Erfolg1Hj", "Erfolg1Hj");
+            tableMapping.ColumnMappings.Add("Erfolg", "Erfolg");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM FpANoten\r\nWHERE        (SchuelerId = @Original_SchuelerId)";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [FpANoten] WHERE (([SchuelerId] = @Original_SchuelerId) AND ((@IsNull_Punkte1Hj = 1 AND [Punkte1Hj] IS NULL) OR ([Punkte1Hj] = @Original_Punkte1Hj)) AND ((@IsNull_Punkte2Hj = 1 AND [Punkte2Hj] IS NULL) OR ([Punkte2Hj] = @Original_Punkte2Hj)) AND ((@IsNull_Punkte = 1 AND [Punkte] IS NULL) OR ([Punkte] = @Original_Punkte)) AND ((@IsNull_Erfolg1Hj = 1 AND [Erfolg1Hj] IS NULL) OR ([Erfolg1Hj] = @Original_Erfolg1Hj)) AND ((@IsNull_Erfolg = 1 AND [Erfolg] IS NULL) OR ([Erfolg] = @Original_Erfolg)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Punkte1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte1Hj", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Punkte1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte1Hj", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Punkte2Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte2Hj", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Punkte2Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte2Hj", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Punkte", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Punkte", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Erfolg1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg1Hj", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Erfolg1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg1Hj", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [FpANoten] ([SchuelerId], [Note], [Bemerkung]) VALUES (@SchuelerId, @" +
-                "Note, @Bemerkung);\r\nSELECT SchuelerId, Note, Bemerkung FROM FpANoten WHERE (Schu" +
-                "elerId = @SchuelerId)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [FpANoten] ([SchuelerId], [Bemerkung], [Punkte1Hj], [Punkte2Hj], [Punkte], [Erfolg1Hj], [Erfolg]) VALUES (@SchuelerId, @Bemerkung, @Punkte1Hj, @Punkte2Hj, @Punkte, @Erfolg1Hj, @Erfolg);
+SELECT SchuelerId, Bemerkung, Punkte1Hj, Punkte2Hj, Punkte, Erfolg1Hj, Erfolg FROM FpANoten WHERE (SchuelerId = @SchuelerId)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Note", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Note", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bemerkung", global::System.Data.SqlDbType.Text, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bemerkung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Punkte1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte1Hj", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Punkte2Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte2Hj", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Punkte", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Erfolg1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg1Hj", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE       FpANoten\r\nSET                SchuelerId = @SchuelerId, Note = @Note," +
-                " Bemerkung = @Bemerkung\r\nWHERE        (SchuelerId = @Original_SchuelerId); \r\nSEL" +
-                "ECT SchuelerId, Note, Bemerkung FROM FpANoten WHERE (SchuelerId = @SchuelerId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [FpANoten] SET [SchuelerId] = @SchuelerId, [Bemerkung] = @Bemerkung, [Punkte1Hj] = @Punkte1Hj, [Punkte2Hj] = @Punkte2Hj, [Punkte] = @Punkte, [Erfolg1Hj] = @Erfolg1Hj, [Erfolg] = @Erfolg WHERE (([SchuelerId] = @Original_SchuelerId) AND ((@IsNull_Punkte1Hj = 1 AND [Punkte1Hj] IS NULL) OR ([Punkte1Hj] = @Original_Punkte1Hj)) AND ((@IsNull_Punkte2Hj = 1 AND [Punkte2Hj] IS NULL) OR ([Punkte2Hj] = @Original_Punkte2Hj)) AND ((@IsNull_Punkte = 1 AND [Punkte] IS NULL) OR ([Punkte] = @Original_Punkte)) AND ((@IsNull_Erfolg1Hj = 1 AND [Erfolg1Hj] IS NULL) OR ([Erfolg1Hj] = @Original_Erfolg1Hj)) AND ((@IsNull_Erfolg = 1 AND [Erfolg] IS NULL) OR ([Erfolg] = @Original_Erfolg)));
+SELECT SchuelerId, Bemerkung, Punkte1Hj, Punkte2Hj, Punkte, Erfolg1Hj, Erfolg FROM FpANoten WHERE (SchuelerId = @SchuelerId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Note", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Note", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bemerkung", global::System.Data.SqlDbType.Text, 2147483647, global::System.Data.ParameterDirection.Input, 0, 0, "Bemerkung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bemerkung", global::System.Data.SqlDbType.Text, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bemerkung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Punkte1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte1Hj", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Punkte2Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte2Hj", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Punkte", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Erfolg1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg1Hj", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Punkte1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte1Hj", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Punkte1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte1Hj", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Punkte2Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte2Hj", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Punkte2Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte2Hj", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Punkte", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Punkte", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Erfolg1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg1Hj", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Erfolg1Hj", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg1Hj", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14925,12 +15139,12 @@ SELECT Id, Notenart, Punktwert, Datum, Zelle, Halbjahr, SchuelerId, KursId FROM 
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        SchuelerId, Note, Bemerkung\r\nFROM            FpANoten";
+            this._commandCollection[0].CommandText = "SELECT      *\r\nFROM            FpANoten";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT        SchuelerId, Note, Bemerkung\r\nFROM            FpANoten\r\nWHERE Schuel" +
-                "erId=@SchuelerId";
+            this._commandCollection[1].CommandText = "SELECT Bemerkung, Erfolg, Erfolg1Hj, Punkte, Punkte1Hj, Punkte2Hj, SchuelerId FRO" +
+                "M FpANoten WHERE (SchuelerId = @SchuelerId)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -15005,8 +15219,48 @@ SELECT Id, Notenart, Punktwert, Datum, Zelle, Halbjahr, SchuelerId, KursId FROM 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_SchuelerId) {
+        public virtual int Delete(int Original_SchuelerId, global::System.Nullable<int> Original_Punkte1Hj, global::System.Nullable<int> Original_Punkte2Hj, global::System.Nullable<int> Original_Punkte, global::System.Nullable<int> Original_Erfolg1Hj, global::System.Nullable<int> Original_Erfolg) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_SchuelerId));
+            if ((Original_Punkte1Hj.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_Punkte1Hj.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Punkte2Hj.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((int)(Original_Punkte2Hj.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Punkte.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((int)(Original_Punkte.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Erfolg1Hj.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[8].Value = ((int)(Original_Erfolg1Hj.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Erfolg.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[10].Value = ((int)(Original_Erfolg.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -15027,14 +15281,43 @@ SELECT Id, Notenart, Punktwert, Datum, Zelle, Halbjahr, SchuelerId, KursId FROM 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int SchuelerId, int Note, string Bemerkung) {
+        public virtual int Insert(int SchuelerId, string Bemerkung, global::System.Nullable<int> Punkte1Hj, global::System.Nullable<int> Punkte2Hj, global::System.Nullable<int> Punkte, global::System.Nullable<int> Erfolg1Hj, global::System.Nullable<int> Erfolg) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(SchuelerId));
-            this.Adapter.InsertCommand.Parameters[1].Value = ((int)(Note));
             if ((Bemerkung == null)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+                this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(Bemerkung));
+                this.Adapter.InsertCommand.Parameters[1].Value = ((string)(Bemerkung));
+            }
+            if ((Punkte1Hj.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((int)(Punkte1Hj.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((Punkte2Hj.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((int)(Punkte2Hj.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            if ((Punkte.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[4].Value = ((int)(Punkte.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((Erfolg1Hj.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[5].Value = ((int)(Erfolg1Hj.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            if ((Erfolg.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[6].Value = ((int)(Erfolg.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -15056,16 +15339,85 @@ SELECT Id, Notenart, Punktwert, Datum, Zelle, Halbjahr, SchuelerId, KursId FROM 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int SchuelerId, int Note, string Bemerkung, int Original_SchuelerId) {
+        public virtual int Update(int SchuelerId, string Bemerkung, global::System.Nullable<int> Punkte1Hj, global::System.Nullable<int> Punkte2Hj, global::System.Nullable<int> Punkte, global::System.Nullable<int> Erfolg1Hj, global::System.Nullable<int> Erfolg, int Original_SchuelerId, global::System.Nullable<int> Original_Punkte1Hj, global::System.Nullable<int> Original_Punkte2Hj, global::System.Nullable<int> Original_Punkte, global::System.Nullable<int> Original_Erfolg1Hj, global::System.Nullable<int> Original_Erfolg) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(SchuelerId));
-            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(Note));
             if ((Bemerkung == null)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(Bemerkung));
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(Bemerkung));
             }
-            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_SchuelerId));
+            if ((Punkte1Hj.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Punkte1Hj.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((Punkte2Hj.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Punkte2Hj.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            if ((Punkte.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Punkte.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((Erfolg1Hj.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Erfolg1Hj.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            if ((Erfolg.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Erfolg.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_SchuelerId));
+            if ((Original_Punkte1Hj.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_Punkte1Hj.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Punkte2Hj.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(Original_Punkte2Hj.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Punkte.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(Original_Punkte.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Erfolg1Hj.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((int)(Original_Erfolg1Hj.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
+            }
+            if ((Original_Erfolg.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((int)(Original_Erfolg.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -15086,8 +15438,8 @@ SELECT Id, Notenart, Punktwert, Datum, Zelle, Halbjahr, SchuelerId, KursId FROM 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int Note, string Bemerkung, int Original_SchuelerId) {
-            return this.Update(Original_SchuelerId, Note, Bemerkung, Original_SchuelerId);
+        public virtual int Update(string Bemerkung, global::System.Nullable<int> Punkte1Hj, global::System.Nullable<int> Punkte2Hj, global::System.Nullable<int> Punkte, global::System.Nullable<int> Erfolg1Hj, global::System.Nullable<int> Erfolg, int Original_SchuelerId, global::System.Nullable<int> Original_Punkte1Hj, global::System.Nullable<int> Original_Punkte2Hj, global::System.Nullable<int> Original_Punkte, global::System.Nullable<int> Original_Erfolg1Hj, global::System.Nullable<int> Original_Erfolg) {
+            return this.Update(Original_SchuelerId, Bemerkung, Punkte1Hj, Punkte2Hj, Punkte, Erfolg1Hj, Erfolg, Original_SchuelerId, Original_Punkte1Hj, Original_Punkte2Hj, Original_Punkte, Original_Erfolg1Hj, Original_Erfolg);
         }
     }
     

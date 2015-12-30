@@ -17,7 +17,7 @@ namespace diNo
 
         public UserControlFPAundSeminar()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
     
         public Schueler Schueler
@@ -36,28 +36,46 @@ namespace diNo
         }
  
       public void Init() {
-          if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
+          if (pnlFPA.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
           {
-            FpANotenTableAdapter fpAAdapter = new FpANotenTableAdapter();
-            var fpANoten = fpAAdapter.GetDataBySchuelerId(schueler.Id);
-            if (fpANoten.Count == 1)
-            {
-              textBoxFpABemerkung.Text = fpANoten[0].Bemerkung;
-              cbFPAErfolg.SelectedIndex = fpANoten[0].Note;
-            }
+                var fpANoten = schueler.FPANoten;                
+                textBoxFpABemerkung.Text = fpANoten.IsBemerkungNull() ? "" : fpANoten.Bemerkung;
+                cbFPAErfolg1Hj.SelectedIndex = fpANoten.IsErfolg1HjNull() ? 0 : fpANoten.Erfolg1Hj;
+                cbFPAErfolg.SelectedIndex = fpANoten.IsErfolgNull() ? 0 : fpANoten.Erfolg;
+          // TODO: Punktewerte übernehmen, dazu brauchen wir ein geeignetes numerisches Control, dass NULL erlaubt.
+          }
+          else
+          {
+                textBoxFpABemerkung.Text = "";
+                cbFPAErfolg1Hj.SelectedIndex = 0;
+                cbFPAErfolg.SelectedIndex = 0;
           }
 
-          if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+          if (pnlSeminar.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
           {
             SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
             var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
             if (seminarfachnoten.Count == 1)
             {
-              numSeminarfachPunkte.Value = seminarfachnoten[0].Gesamtnote;
+              //numSeminarfachPunkte.Text = seminarfachnoten[0].Gesamtnote;
               textBoxSeminarfachthemaKurz.Text = seminarfachnoten[0].ThemaKurz;
               textBoxSeminarfachthemaLang.Text = seminarfachnoten[0].ThemaLang;
             }
           }
+          else
+          {
+              textBoxSeminarfachthemaKurz.Text = "";
+              textBoxSeminarfachthemaLang.Text = "";
+          }  
         }
+
+    public void DatenUebernehmen()
+        {
+            var fpANoten = schueler.FPANoten;
+            if (textBoxFpABemerkung.Text=="") fpANoten.SetBemerkungNull(); else fpANoten.Bemerkung = textBoxFpABemerkung.Text;
+            if (cbFPAErfolg1Hj.SelectedIndex==0) fpANoten.SetErfolg1HjNull(); else fpANoten.Erfolg1Hj = cbFPAErfolg1Hj.SelectedIndex;
+            if (cbFPAErfolg.SelectedIndex==0) fpANoten.SetErfolgNull(); else fpANoten.Erfolg = cbFPAErfolg.SelectedIndex;                         
+        }
+
     }
 }

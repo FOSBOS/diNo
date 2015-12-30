@@ -53,6 +53,7 @@
             this.pictureBoxImage = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnSave = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPageStammdaten.SuspendLayout();
             this.tabPageNoten.SuspendLayout();
@@ -225,7 +226,7 @@
             // 
             this.btnCheck.ImageIndex = 1;
             this.btnCheck.ImageList = this.imageList1;
-            this.btnCheck.Location = new System.Drawing.Point(420, 88);
+            this.btnCheck.Location = new System.Drawing.Point(466, 88);
             this.btnCheck.Name = "btnCheck";
             this.btnCheck.Size = new System.Drawing.Size(40, 40);
             this.btnCheck.TabIndex = 37;
@@ -238,7 +239,7 @@
             this.btnBrief.Enabled = false;
             this.btnBrief.ImageIndex = 2;
             this.btnBrief.ImageList = this.imageList1;
-            this.btnBrief.Location = new System.Drawing.Point(374, 88);
+            this.btnBrief.Location = new System.Drawing.Point(420, 88);
             this.btnBrief.Name = "btnBrief";
             this.btnBrief.Size = new System.Drawing.Size(40, 40);
             this.btnBrief.TabIndex = 35;
@@ -251,7 +252,7 @@
             this.btnPrint.Enabled = false;
             this.btnPrint.ImageIndex = 3;
             this.btnPrint.ImageList = this.imageList1;
-            this.btnPrint.Location = new System.Drawing.Point(328, 88);
+            this.btnPrint.Location = new System.Drawing.Point(374, 88);
             this.btnPrint.Name = "btnPrint";
             this.btnPrint.Size = new System.Drawing.Size(40, 40);
             this.btnPrint.TabIndex = 34;
@@ -308,12 +309,26 @@
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
             // 
+            // btnSave
+            // 
+            this.btnSave.Enabled = false;
+            this.btnSave.ImageIndex = 4;
+            this.btnSave.ImageList = this.imageList1;
+            this.btnSave.Location = new System.Drawing.Point(328, 88);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(40, 40);
+            this.btnSave.TabIndex = 39;
+            this.toolTipButtons.SetToolTip(this.btnSave, "Daten speichern");
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // Klassenansicht
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1201, 645);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.btnCheck);
             this.Controls.Add(this.label1);
@@ -367,5 +382,6 @@
     private UserControlSchueleransicht userControlSchueleransicht1;
     private Notenbogen notenbogen1;
     private UserControlVorkommnisse userControlVorkommnisse1;
-}
+        private System.Windows.Forms.Button btnSave;
+    }
 }

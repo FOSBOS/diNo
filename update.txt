@@ -1,0 +1,17 @@
+USE [diNo]
+GO
+
+/****** Object:  Table [dbo].[FpANoten]    Script Date: 30.12.2015 09:22:11 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER TABLE [dbo].[FpANoten] Drop Column Note;
+ALTER TABLE [dbo].[FpANoten] Add Punkte1Hj int NULL;
+ALTER TABLE [dbo].[FpANoten] Add Punkte2Hj int NULL;
+ALTER TABLE [dbo].[FpANoten] Add Punkte int NULL;
+ALTER TABLE [dbo].[FpANoten] Add Erfolg1Hj int NULL;
+ALTER TABLE [dbo].[FpANoten] Add Erfolg int NULL;
+GO
