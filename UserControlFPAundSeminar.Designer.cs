@@ -32,7 +32,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.pnlFPA = new System.Windows.Forms.Panel();
-            this.numFPA2Hj = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.numFPA = new System.Windows.Forms.TextBox();
+            this.cbFPAErfolg = new System.Windows.Forms.ComboBox();
             this.numFPA1Hj = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -50,11 +52,10 @@
             this.textBoxSeminarfachthemaLang = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.numFPA = new System.Windows.Forms.TextBox();
-            this.cbFPAErfolg = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.pnlFPA.SuspendLayout();
             this.pnlSeminar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonSpeichern
@@ -89,10 +90,10 @@
             // 
             // pnlFPA
             // 
+            this.pnlFPA.Controls.Add(this.numericUpDown1);
             this.pnlFPA.Controls.Add(this.label9);
             this.pnlFPA.Controls.Add(this.numFPA);
             this.pnlFPA.Controls.Add(this.cbFPAErfolg);
-            this.pnlFPA.Controls.Add(this.numFPA2Hj);
             this.pnlFPA.Controls.Add(this.numFPA1Hj);
             this.pnlFPA.Controls.Add(this.label8);
             this.pnlFPA.Controls.Add(this.label7);
@@ -107,14 +108,39 @@
             this.pnlFPA.Size = new System.Drawing.Size(522, 289);
             this.pnlFPA.TabIndex = 49;
             // 
-            // numFPA2Hj
+            // label9
             // 
-            this.numFPA2Hj.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numFPA2Hj.Location = new System.Drawing.Point(135, 108);
-            this.numFPA2Hj.MaxLength = 2;
-            this.numFPA2Hj.Name = "numFPA2Hj";
-            this.numFPA2Hj.Size = new System.Drawing.Size(94, 23);
-            this.numFPA2Hj.TabIndex = 58;
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(14, 9);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(239, 24);
+            this.label9.TabIndex = 62;
+            this.label9.Text = "Fachpraktische Ausbildung";
+            // 
+            // numFPA
+            // 
+            this.numFPA.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numFPA.Location = new System.Drawing.Point(135, 148);
+            this.numFPA.MaxLength = 2;
+            this.numFPA.Name = "numFPA";
+            this.numFPA.Size = new System.Drawing.Size(94, 23);
+            this.numFPA.TabIndex = 61;
+            // 
+            // cbFPAErfolg
+            // 
+            this.cbFPAErfolg.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbFPAErfolg.FormattingEnabled = true;
+            this.cbFPAErfolg.Items.AddRange(new object[] {
+            "",
+            "mit sehr gutem Erfolg",
+            "mit gutem Erfolg",
+            "mit Erfolg",
+            "ohne Erfolg"});
+            this.cbFPAErfolg.Location = new System.Drawing.Point(272, 148);
+            this.cbFPAErfolg.Name = "cbFPAErfolg";
+            this.cbFPAErfolg.Size = new System.Drawing.Size(239, 24);
+            this.cbFPAErfolg.TabIndex = 60;
             // 
             // numFPA1Hj
             // 
@@ -291,39 +317,19 @@
             this.label4.TabIndex = 60;
             this.label4.Text = "Thema (lang)";
             // 
-            // numFPA
+            // numericUpDown1
             // 
-            this.numFPA.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numFPA.Location = new System.Drawing.Point(135, 148);
-            this.numFPA.MaxLength = 2;
-            this.numFPA.Name = "numFPA";
-            this.numFPA.Size = new System.Drawing.Size(94, 23);
-            this.numFPA.TabIndex = 61;
-            // 
-            // cbFPAErfolg
-            // 
-            this.cbFPAErfolg.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbFPAErfolg.FormattingEnabled = true;
-            this.cbFPAErfolg.Items.AddRange(new object[] {
-            "",
-            "mit sehr gutem Erfolg",
-            "mit gutem Erfolg",
-            "mit Erfolg",
-            "ohne Erfolg"});
-            this.cbFPAErfolg.Location = new System.Drawing.Point(272, 148);
-            this.cbFPAErfolg.Name = "cbFPAErfolg";
-            this.cbFPAErfolg.Size = new System.Drawing.Size(239, 24);
-            this.cbFPAErfolg.TabIndex = 60;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(14, 9);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(239, 24);
-            this.label9.TabIndex = 62;
-            this.label9.Text = "Fachpraktische Ausbildung";
+            this.numericUpDown1.CausesValidation = false;
+            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numericUpDown1.Location = new System.Drawing.Point(135, 111);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(91, 23);
+            this.numericUpDown1.TabIndex = 63;
             // 
             // UserControlFPAundSeminar
             // 
@@ -340,6 +346,7 @@
             this.pnlFPA.PerformLayout();
             this.pnlSeminar.ResumeLayout(false);
             this.pnlSeminar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -353,7 +360,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox numFPA;
         private System.Windows.Forms.ComboBox cbFPAErfolg;
-        private System.Windows.Forms.TextBox numFPA2Hj;
         private System.Windows.Forms.TextBox numFPA1Hj;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
@@ -371,5 +377,6 @@
         private System.Windows.Forms.TextBox textBoxSeminarfachthemaLang;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }
