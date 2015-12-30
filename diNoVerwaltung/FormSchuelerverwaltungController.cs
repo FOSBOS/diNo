@@ -48,7 +48,7 @@ namespace diNoVerwaltung
         else
         {
           new ReportNotenbogen(schueler); // zeigt den aktuellen Notenbogen an - der muss ausgedruckt und abgeheftet werden
-          Schueler.Austritt(schueler, (DateTime)newValue);
+          schueler.Austritt((DateTime)newValue);
         }
       }
 
@@ -261,7 +261,7 @@ namespace diNoVerwaltung
       var questionResult = MessageBox.Show("Soll der Schüler " + derSchueler.NameVorname + " von der " + derSchueler.getKlasse.Bezeichnung + " in die " + targetKlasse.Bezeichnung + " verschoben werden?", "Nachfrage", MessageBoxButtons.YesNo);
       if (questionResult == DialogResult.Yes)
       {
-        Schueler.WechsleKlasse(derSchueler, targetKlasse);
+        derSchueler.WechsleKlasse(targetKlasse);
         if (this.refreshFunc != null)
         {
           this.refreshFunc();

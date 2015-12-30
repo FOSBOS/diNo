@@ -186,16 +186,14 @@ namespace diNo
             kursid = aKursId;
             schuelerid = aSchuelerId;
 
-            if (d.IsSchnittSchulaufgabenNull()) SchnittSchulaufgaben = null;
-                else SchnittSchulaufgaben = d.SchnittSchulaufgaben;
             //SchnittSchulaufgaben = d.IsSchnittSchulaufgabenNull() ? null :  d.SchnittSchulaufgaben;  // frisst er nicht!!?
-            SchnittMuendlich = d.SchnittMuendlich;
-            JahresfortgangMitKomma = d.JahresfortgangMitKomma;
-            JahresfortgangGanzzahlig = d.JahresfortgangGanzzahlig;
-            if (d.IsPruefungGesamtNull()) PruefungGesamt= null;
-                else PruefungGesamt = d.PruefungGesamt;
-            SchnittFortgangUndPruefung = d.SchnittFortgangUndPruefung;
-            Abschlusszeugnis = d.Abschlusszeugnis;
+            if (d.IsSchnittSchulaufgabenNull()) SchnittSchulaufgaben = null; else SchnittSchulaufgaben = d.SchnittSchulaufgaben;
+            if (d.IsSchnittMuendlichNull()) SchnittMuendlich = null; else SchnittMuendlich = d.SchnittMuendlich;
+            if (d.IsJahresfortgangMitKommaNull()) JahresfortgangMitKomma = null; else JahresfortgangMitKomma = d.JahresfortgangMitKomma;
+            if (d.IsJahresfortgangGanzzahligNull()) JahresfortgangGanzzahlig = null; else JahresfortgangGanzzahlig = d.JahresfortgangGanzzahlig;
+            if (d.IsPruefungGesamtNull()) PruefungGesamt= null; else PruefungGesamt = d.PruefungGesamt;
+            if (d.IsSchnittFortgangUndPruefungNull()) SchnittFortgangUndPruefung = null; else SchnittFortgangUndPruefung = d.SchnittFortgangUndPruefung;
+            if (d.IsAbschlusszeugnisNull()) Abschlusszeugnis = null; else Abschlusszeugnis = d.Abschlusszeugnis;
             StandNr = (Zeitpunkt)d.StandNr;
             ErstesHalbjahr = d.ErstesHalbjahr;
         }
@@ -206,7 +204,19 @@ namespace diNo
             na.Insert(SchnittMuendlich, SchnittSchulaufgaben, JahresfortgangMitKomma, JahresfortgangGanzzahlig,
                     PruefungGesamt, SchnittFortgangUndPruefung, Abschlusszeugnis, 0, false, schuelerid, kursid, ErstesHalbjahr);
 
-        }        
+        }    
+        
+        public void RundeJFNote()
+        {
+            if (JahresfortgangMitKomma !=null)
+            {
+                if (JahresfortgangMitKomma < 1)
+                    JahresfortgangGanzzahlig=0;
+                else 
+                    JahresfortgangGanzzahlig = (byte) Math.Round((double)(JahresfortgangMitKomma.GetValueOrDefault()));
+            }
+        }
+
     }
         /// <summary>
         /// Eine Note.

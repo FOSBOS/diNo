@@ -18,6 +18,8 @@ namespace diNo
     private diNoDataSet.KursDataTable kurse; // Recordset-Menge aller Kurse dieses Schülers
     private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
     private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler
+    private diNoDataSet.FpANotenRow fpa; // Recordset der FPA-Noten
+    private diNoDataSet.FpANotenDataTable fpaDT; // wird zum Speichern benötigt
 
     public Schueler(int id)
     {
@@ -57,7 +59,12 @@ namespace diNo
     /// </summary>
     public void Save()
     {
-            (new SchuelerTableAdapter()).Update(data);
+          (new SchuelerTableAdapter()).Update(data);
+          if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && fpaDT != null)
+            {
+                (new FpANotenTableAdapter()).Update(fpaDT);
+            }
+
     }
 
 
@@ -148,6 +155,29 @@ namespace diNo
       }
     }
 
+
+    /// <summary>
+    /// FPA-Noten
+    /// </summary>
+    public diNoDataSet.FpANotenRow FPANoten
+    {
+      get
+      {
+        if (fpa == null)
+        {
+            fpaDT = (new FpANotenTableAdapter()).GetDataBySchuelerId(Id);
+            if (fpaDT.Count == 0)
+            {
+                fpa = fpaDT.NewFpANotenRow();
+                fpa.SchuelerId = Id;
+                fpaDT.AddFpANotenRow(fpa);
+            }
+            else fpa = fpaDT[0];
+        }
+        return fpa;
+      }
+    }
+
     /// <summary>
     /// Liefert entweder
     /// F für Wahlfach Französisch
@@ -165,8 +195,8 @@ namespace diNo
       }
       set
       {
-        MeldeAb(this, this.Data.Wahlpflichtfach);
-        MeldeAn(this, value);
+        MeldeAb(this.Data.Wahlpflichtfach);
+        MeldeAn(value);
         this.Data.Wahlpflichtfach = value;
         this.Data.AcceptChanges();
         Save();                
@@ -187,8 +217,8 @@ namespace diNo
       }
       set
       {
-        MeldeAb(this, this.Data.Fremdsprache2);
-        MeldeAn(this, value);
+        MeldeAb(this.Data.Fremdsprache2);
+        MeldeAn(value);
         this.Data.Fremdsprache2 = value;
         this.Data.AcceptChanges();
         Save();                
@@ -212,10 +242,10 @@ namespace diNo
 
       set
       {
-        MeldeAb(this, this.GetFachKuerzel(this.Data.ReligionOderEthik));
+        MeldeAb(this.GetFachKuerzel(this.Data.ReligionOderEthik));
         if (!string.IsNullOrEmpty(value))
         {
-          MeldeAn(this, this.GetFachKuerzel(value));
+          MeldeAn(this.GetFachKuerzel(value));
         }
 
         this.Data.ReligionOderEthik = value;
@@ -293,13 +323,13 @@ namespace diNo
     public string getWiederholungen()
     {
       string result = string.Empty;
-      
-      if (!string.IsNullOrEmpty(this.Data.Wiederholung1Jahrgangsstufe) && isAWiederholung(this.Data.Wiederholung1Jahrgangsstufe))
+                  
+      if (!this.Data.IsWiederholung1JahrgangsstufeNull() && isAWiederholung(this.Data.Wiederholung1Jahrgangsstufe))
       {
         result += this.Data.Wiederholung1Jahrgangsstufe;
         result += "(" + this.Data.Wiederholung1Grund + ")";
       }
-      if (!string.IsNullOrEmpty(this.Data.Wiederholung2Jahrgangsstufe) && isAWiederholung(this.Data.Wiederholung2Jahrgangsstufe))
+      if (!this.Data.IsWiederholung2JahrgangsstufeNull() && isAWiederholung(this.Data.Wiederholung2Jahrgangsstufe))
       {
         result += this.Data.Wiederholung2Jahrgangsstufe;
         result += "(" + this.Data.Wiederholung2Grund + ")";
@@ -342,7 +372,7 @@ namespace diNo
       new VorkommnisTableAdapter().Insert(datum, bemerkung, this.Id, (int)art);
       if (art == Vorkommnisart.ProbezeitNichtBestanden)
       {
-        Schueler.Austritt(this, DateTime.Today);
+        this.Austritt(DateTime.Today);
       }
 
       this.vorkommnisse = null; // damit er die neu lädt
@@ -418,18 +448,17 @@ namespace diNo
     /// <summary>
     /// Methode für den Klassenwechsel ohne Notenmitnahme.
     /// </summary>
-    /// <param name="schueler">Der Schüler.</param>
     /// <param name="nachKlasse"></param>
-    public static void WechsleKlasse(Schueler schueler, Klasse nachKlasse)
+    public void WechsleKlasse(Klasse nachKlasse)
     {
       // melde den Schüler aus allen Kursen ab.
-      foreach (var kurs in schueler.Kurse)
+      foreach (var kurs in this.Kurse)
       {
-        MeldeAb(schueler, new Kurs(kurs));
+        MeldeAb(new Kurs(kurs));
       }
 
       var kursSelector = UnterrichtExcelReader.GetStandardKursSelector();
-      var klasse = Klasse.FindKlassenTeilMitKursen(nachKlasse.Bezeichnung, Faecherkanon.GetZweig(schueler.Data.Ausbildungsrichtung));
+      var klasse = Klasse.FindKlassenTeilMitKursen(nachKlasse.Bezeichnung, Faecherkanon.GetZweig(this.Data.Ausbildungsrichtung));
       if (klasse == null)
       {
         throw new InvalidOperationException("Für die Klasse "+nachKlasse.Bezeichnung+ " konnten keine Kurse gefunden werden");
@@ -438,29 +467,30 @@ namespace diNo
       foreach (var kurs in klasse.Kurse)
       {
         // prüfe, ob der Schüler in diesen Kurs gehen soll und trage ihn ein.
-        UnterrichtExcelReader.AddSchuelerToKurs(kurs.Data, kursSelector, schueler.Data);
+        UnterrichtExcelReader.AddSchuelerToKurs(kurs.Data, kursSelector, this.Data);
       }
 
-      DateTime? austrittsdatum = schueler.Data.IsAustrittsdatumNull() ? (DateTime?)null : schueler.Data.Austrittsdatum;
-      schueler.Save();                
-      schueler.Refresh();
+      DateTime? austrittsdatum = this.Data.IsAustrittsdatumNull() ? (DateTime?)null : this.Data.Austrittsdatum;
+
+      this.data.KlasseId = nachKlasse.Data.Id;
+      this.Save();
+      this.Refresh();
     }
 
     /// <summary>
     /// Austritt eines Schülers. Das Feld Austrittsdatum wird gesetzt und der Schüler aus allen Kursen abgemeldet.
     /// </summary>
-    /// <param name="schueler">Der Schüler.</param>
     /// <param name="when">Wann der Schüler ausgetreten ist.</param>
-    public static void Austritt(Schueler schueler, DateTime when)
+    public void Austritt(DateTime when)
     {
-      foreach (var kurs in schueler.Kurse)
+      foreach (var kurs in this.Kurse)
       {
-        MeldeAb(schueler, new Kurs(kurs));
+        MeldeAb(new Kurs(kurs));
       }
-              
-      schueler.kurse = null;
-      schueler.Data.Austrittsdatum = when;
-      schueler.Save();
+
+      this.kurse = null;
+      this.Data.Austrittsdatum = when;
+      this.Save();
     }
 
     /// <summary>
@@ -468,53 +498,52 @@ namespace diNo
     /// Konkret: Aus dem Von-Kurs-Fachkürzel wird er rausgeworfen und im Nach-Kurs-Fachkürzel angemeldet.
     /// meist: K für katholisch, Ev für Evangelisch, Eth für Ethik, F für Französisch, F-Wi für Französisch (fortgeführt)
     /// </summary>
-    /// <param name="schueler">Der Schüler.</param>
     /// <param name="von"></param>
     /// <param name="nach">K für katholisch, Ev für Evangelisch, Eth für Ethik</param>
-    public static void WechsleKurse(Schueler schueler, string von, string nach)
+    public void WechsleKurse(string von, string nach)
     {
-      MeldeAb(schueler, von);
-      MeldeAn(schueler, nach);
+      MeldeAb(von);
+      MeldeAn(nach);
     }
 
-    public static void MeldeAb(Schueler schueler, string vonFachKuerzel)
+    public void MeldeAb(string vonFachKuerzel)
     {
       FachTableAdapter ada = new FachTableAdapter();
-      foreach (var kurs in schueler.Kurse)
+      foreach (var kurs in this.Kurse)
       {
         var fach = ada.GetDataById(kurs.FachId)[0];
         if (fach.Kuerzel == vonFachKuerzel)
         {
-          MeldeAb(schueler, new Kurs(kurs));
+          MeldeAb(new Kurs(kurs));
         }
       }
     }
 
-    public static void MeldeAb(Schueler schueler, Kurs vonKurs)
+    public void MeldeAb(Kurs vonKurs)
     {
-      new SchuelerKursTableAdapter().Delete(schueler.Id, vonKurs.Id);
-      schueler.Refresh();
+      new SchuelerKursTableAdapter().Delete(this.Id, vonKurs.Id);
+      this.Refresh();
     }
 
-    public static void MeldeAn(Schueler schueler, Kurs beiKurs)
+    public void MeldeAn(Kurs beiKurs)
     {
       SchuelerKursTableAdapter skAda = new SchuelerKursTableAdapter();
-      if (skAda.GetCountBySchuelerAndKurs(schueler.Id, beiKurs.Id) == 0)
+      if (skAda.GetCountBySchuelerAndKurs(this.Id, beiKurs.Id) == 0)
       {
-        new SchuelerKursTableAdapter().Insert(schueler.Id, beiKurs.Id);
-        schueler.Refresh();
+        new SchuelerKursTableAdapter().Insert(this.Id, beiKurs.Id);
+        this.Refresh();
       }
     }
 
-    public static void MeldeAn(Schueler schueler, string nachFachKuerzel)
+    public void MeldeAn(string nachFachKuerzel)
     {
       FachTableAdapter ada = new FachTableAdapter();
-      foreach (var kurs in schueler.klasse.FindeAlleMöglichenKurse(Klasse.GetZweig(schueler.data.Ausbildungsrichtung)))
+      foreach (var kurs in this.klasse.FindeAlleMöglichenKurse(Klasse.GetZweig(this.data.Ausbildungsrichtung)))
       {
         var fach = kurs.getFach;
         if (fach.Kuerzel == nachFachKuerzel)
         {
-          MeldeAn(schueler, kurs);
+          MeldeAn(kurs);
         }
       }
     }
