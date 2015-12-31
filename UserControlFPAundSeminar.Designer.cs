@@ -33,9 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pnlFPA = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
-            this.numFPA = new System.Windows.Forms.TextBox();
             this.cbFPAErfolg = new System.Windows.Forms.ComboBox();
-            this.numFPA1Hj = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -45,17 +43,22 @@
             this.cbFPAErfolg1Hj = new System.Windows.Forms.ComboBox();
             this.textBoxFpABemerkung = new System.Windows.Forms.TextBox();
             this.pnlSeminar = new System.Windows.Forms.Panel();
-            this.numSeminarfachPunkte = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.textBoxSeminarfachthemaKurz = new System.Windows.Forms.TextBox();
             this.textBoxSeminarfachthemaLang = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numPunkte = new diNo.NumericUpDownNullable();
+            this.numPunkte2Hj = new diNo.NumericUpDownNullable();
+            this.numPunkte1Hj = new diNo.NumericUpDownNullable();
+            this.numSeminarpunkte = new diNo.NumericUpDownNullable();
             this.pnlFPA.SuspendLayout();
             this.pnlSeminar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPunkte)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPunkte2Hj)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPunkte1Hj)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSeminarpunkte)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonSpeichern
@@ -90,11 +93,11 @@
             // 
             // pnlFPA
             // 
-            this.pnlFPA.Controls.Add(this.numericUpDown1);
+            this.pnlFPA.Controls.Add(this.numPunkte1Hj);
+            this.pnlFPA.Controls.Add(this.numPunkte2Hj);
+            this.pnlFPA.Controls.Add(this.numPunkte);
             this.pnlFPA.Controls.Add(this.label9);
-            this.pnlFPA.Controls.Add(this.numFPA);
             this.pnlFPA.Controls.Add(this.cbFPAErfolg);
-            this.pnlFPA.Controls.Add(this.numFPA1Hj);
             this.pnlFPA.Controls.Add(this.label8);
             this.pnlFPA.Controls.Add(this.label7);
             this.pnlFPA.Controls.Add(this.label6);
@@ -118,15 +121,6 @@
             this.label9.TabIndex = 62;
             this.label9.Text = "Fachpraktische Ausbildung";
             // 
-            // numFPA
-            // 
-            this.numFPA.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numFPA.Location = new System.Drawing.Point(135, 148);
-            this.numFPA.MaxLength = 2;
-            this.numFPA.Name = "numFPA";
-            this.numFPA.Size = new System.Drawing.Size(94, 23);
-            this.numFPA.TabIndex = 61;
-            // 
             // cbFPAErfolg
             // 
             this.cbFPAErfolg.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -141,15 +135,6 @@
             this.cbFPAErfolg.Name = "cbFPAErfolg";
             this.cbFPAErfolg.Size = new System.Drawing.Size(239, 24);
             this.cbFPAErfolg.TabIndex = 60;
-            // 
-            // numFPA1Hj
-            // 
-            this.numFPA1Hj.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numFPA1Hj.Location = new System.Drawing.Point(135, 78);
-            this.numFPA1Hj.MaxLength = 2;
-            this.numFPA1Hj.Name = "numFPA1Hj";
-            this.numFPA1Hj.Size = new System.Drawing.Size(94, 23);
-            this.numFPA1Hj.TabIndex = 57;
             // 
             // label8
             // 
@@ -237,7 +222,7 @@
             // 
             // pnlSeminar
             // 
-            this.pnlSeminar.Controls.Add(this.numSeminarfachPunkte);
+            this.pnlSeminar.Controls.Add(this.numSeminarpunkte);
             this.pnlSeminar.Controls.Add(this.label11);
             this.pnlSeminar.Controls.Add(this.label10);
             this.pnlSeminar.Controls.Add(this.textBoxSeminarfachthemaKurz);
@@ -248,15 +233,6 @@
             this.pnlSeminar.Name = "pnlSeminar";
             this.pnlSeminar.Size = new System.Drawing.Size(522, 253);
             this.pnlSeminar.TabIndex = 60;
-            // 
-            // numSeminarfachPunkte
-            // 
-            this.numSeminarfachPunkte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numSeminarfachPunkte.Location = new System.Drawing.Point(138, 60);
-            this.numSeminarfachPunkte.MaxLength = 2;
-            this.numSeminarfachPunkte.Name = "numSeminarfachPunkte";
-            this.numSeminarfachPunkte.Size = new System.Drawing.Size(94, 23);
-            this.numSeminarfachPunkte.TabIndex = 66;
             // 
             // label11
             // 
@@ -317,19 +293,61 @@
             this.label4.TabIndex = 60;
             this.label4.Text = "Thema (lang)";
             // 
-            // numericUpDown1
+            // numPunkte
             // 
-            this.numericUpDown1.CausesValidation = false;
-            this.numericUpDown1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDown1.Location = new System.Drawing.Point(135, 111);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numPunkte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numPunkte.Location = new System.Drawing.Point(135, 149);
+            this.numPunkte.Maximum = new decimal(new int[] {
             30,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(91, 23);
-            this.numericUpDown1.TabIndex = 63;
+            this.numPunkte.Name = "numPunkte";
+            this.numPunkte.Size = new System.Drawing.Size(88, 23);
+            this.numPunkte.TabIndex = 63;
+            this.numPunkte.Value = null;
+            // 
+            // numPunkte2Hj
+            // 
+            this.numPunkte2Hj.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numPunkte2Hj.Location = new System.Drawing.Point(135, 109);
+            this.numPunkte2Hj.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numPunkte2Hj.Name = "numPunkte2Hj";
+            this.numPunkte2Hj.Size = new System.Drawing.Size(88, 23);
+            this.numPunkte2Hj.TabIndex = 64;
+            this.numPunkte2Hj.Value = null;
+            // 
+            // numPunkte1Hj
+            // 
+            this.numPunkte1Hj.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numPunkte1Hj.Location = new System.Drawing.Point(135, 79);
+            this.numPunkte1Hj.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            this.numPunkte1Hj.Name = "numPunkte1Hj";
+            this.numPunkte1Hj.Size = new System.Drawing.Size(88, 23);
+            this.numPunkte1Hj.TabIndex = 65;
+            this.numPunkte1Hj.Value = null;
+            // 
+            // numSeminarpunkte
+            // 
+            this.numSeminarpunkte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.numSeminarpunkte.Location = new System.Drawing.Point(135, 61);
+            this.numSeminarpunkte.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+            this.numSeminarpunkte.Name = "numSeminarpunkte";
+            this.numSeminarpunkte.Size = new System.Drawing.Size(88, 23);
+            this.numSeminarpunkte.TabIndex = 66;
+            this.numSeminarpunkte.Value = null;
             // 
             // UserControlFPAundSeminar
             // 
@@ -346,7 +364,10 @@
             this.pnlFPA.PerformLayout();
             this.pnlSeminar.ResumeLayout(false);
             this.pnlSeminar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPunkte)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPunkte2Hj)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numPunkte1Hj)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSeminarpunkte)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -358,9 +379,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel pnlFPA;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox numFPA;
         private System.Windows.Forms.ComboBox cbFPAErfolg;
-        private System.Windows.Forms.TextBox numFPA1Hj;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
@@ -370,13 +389,15 @@
         private System.Windows.Forms.ComboBox cbFPAErfolg1Hj;
         private System.Windows.Forms.TextBox textBoxFpABemerkung;
         private System.Windows.Forms.Panel pnlSeminar;
-        private System.Windows.Forms.TextBox numSeminarfachPunkte;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBoxSeminarfachthemaKurz;
         private System.Windows.Forms.TextBox textBoxSeminarfachthemaLang;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private NumericUpDownNullable numPunkte;
+        private NumericUpDownNullable numPunkte1Hj;
+        private NumericUpDownNullable numPunkte2Hj;
+        private NumericUpDownNullable numSeminarpunkte;
     }
 }

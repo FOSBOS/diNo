@@ -21,12 +21,14 @@ namespace diNo
             base.OnPaint(pe);
         }
 
-        new public int? Value
+        new public decimal? Value
         {
-            get { return Value; } 
+            get {
+                if (Text=="") return null;
+                else return base.Value;
+            } 
             set
-            {
-                Value = value;
+            {               
                 if (value == null)
                 {
                     Text = "";
@@ -34,6 +36,7 @@ namespace diNo
                 else
                 {
                     Text = value.ToString();
+                    base.Value = (decimal) value;
                 }
             }
         }        
