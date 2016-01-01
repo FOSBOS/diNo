@@ -20,6 +20,8 @@ namespace diNo
     private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler
     private diNoDataSet.FpANotenRow fpa; // Recordset der FPA-Noten
     private diNoDataSet.FpANotenDataTable fpaDT; // wird zum Speichern benötigt
+    private diNoDataSet.SeminarfachnoteRow seminar;
+    private diNoDataSet.SeminarfachnoteDataTable seminarDT;
 
     public Schueler(int id)
     {
@@ -63,6 +65,10 @@ namespace diNo
           if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && fpaDT != null)
             {
                 (new FpANotenTableAdapter()).Update(fpaDT);
+            }
+          if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && seminarDT != null)
+            {
+                (new SeminarfachnoteTableAdapter()).Update(seminarDT);
             }
 
     }
@@ -177,6 +183,27 @@ namespace diNo
         return fpa;
       }
     }
+
+    public diNoDataSet.SeminarfachnoteRow Seminarfachnote
+    {
+      get
+      {
+        if (seminar == null)
+        {
+            seminarDT = (new SeminarfachnoteTableAdapter()).GetDataBySchuelerId(Id);
+            if (seminarDT.Count == 0)
+            {
+                seminar = seminarDT.NewSeminarfachnoteRow();
+                seminar.SchuelerId = Id;
+                seminarDT.AddSeminarfachnoteRow(seminar);
+            }
+            else seminar = seminarDT[0];
+        }
+        return seminar;
+      }
+    }
+
+
 
     /// <summary>
     /// Liefert entweder

@@ -15,3 +15,7 @@ ALTER TABLE [dbo].[FpANoten] Add Punkte int NULL;
 ALTER TABLE [dbo].[FpANoten] Add Erfolg1Hj int NULL;
 ALTER TABLE [dbo].[FpANoten] Add Erfolg int NULL;
 GO
+
+ALTER TABLE [dbo].[Seminarfachnote]  Drop Column Gesamtnote;
+ALTER TABLE [dbo].[Seminarfachnote]  Add Gesamtnote int NULL;
+GO
