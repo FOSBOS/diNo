@@ -20,6 +20,8 @@ namespace diNo
     private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler
     private diNoDataSet.FpANotenRow fpa; // Recordset der FPA-Noten
     private diNoDataSet.FpANotenDataTable fpaDT; // wird zum Speichern benötigt
+    private diNoDataSet.SeminarfachnoteRow seminarfach; // Recordset der Seminarfachnote
+    private diNoDataSet.SeminarfachnoteDataTable seminarfachDT; // wird zum Speichern benötigt
 
     public Schueler(int id)
     {
@@ -52,6 +54,8 @@ namespace diNo
       this.kurse = null;
       this.noten = null;
       this.vorkommnisse = null;
+      this.fpa = null;
+      this.seminarfach = null;
     }
 
     /// <summary>
@@ -59,12 +63,15 @@ namespace diNo
     /// </summary>
     public void Save()
     {
-          (new SchuelerTableAdapter()).Update(data);
-          if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && fpaDT != null)
-            {
-                (new FpANotenTableAdapter()).Update(fpaDT);
-            }
-
+      (new SchuelerTableAdapter()).Update(data);
+      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && fpaDT != null)
+      {
+        (new FpANotenTableAdapter()).Update(fpaDT);
+      }
+      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && seminarfach != null)
+      {
+        (new SeminarfachnoteTableAdapter()).Update(seminarfach);
+      }
     }
 
 
@@ -175,6 +182,29 @@ namespace diNo
             else fpa = fpaDT[0];
         }
         return fpa;
+      }
+    }
+
+    public diNoDataSet.SeminarfachnoteRow SeminarfachNote
+    {
+      get
+      {
+        if (seminarfach == null)
+        {
+          seminarfachDT = (new SeminarfachnoteTableAdapter()).GetDataBySchuelerId(Id);
+          if (seminarfachDT.Count == 0)
+          {
+            seminarfach = seminarfachDT.NewSeminarfachnoteRow();
+            seminarfach.SchuelerId = Id;
+            seminarfachDT.AddSeminarfachnoteRow(seminarfach);
+          }
+          else
+          {
+            seminarfach = seminarfachDT[0];
+          }
+        }
+
+        return seminarfach;
       }
     }
 
@@ -406,6 +436,8 @@ namespace diNo
 
     public double berechneDNote()
     {
+      // Todo: Welche Fächer zählen hier
+      // Todo: Seminarfach mitzählen?
       int summe = 0, anz = 0;
       double erg;
       var faecher = new BerechneteNoteTableAdapter().GetDataBySchueler4DNote(this.Id);
