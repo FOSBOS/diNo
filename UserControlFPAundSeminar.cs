@@ -58,16 +58,19 @@ namespace diNo
 
           if (pnlSeminar.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
           {
-            var seminarNote = schueler.SeminarfachNote;
-            numSeminarpunkte.Value = seminarNote.IsGesamtnoteNull() ? null : (decimal?)seminarNote.Gesamtnote;
-            textBoxSeminarfachthemaKurz.Text = seminarNote.IsThemaKurzNull() ? null : seminarNote.ThemaKurz;
-            textBoxSeminarfachthemaLang.Text = seminarNote.IsThemaLangNull() ? null : seminarNote.ThemaLang;
+            SeminarfachnoteTableAdapter seminarfachAdapter = new SeminarfachnoteTableAdapter();
+            var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
+            if (seminarfachnoten.Count == 1)
+            {
+              //numSeminarfachPunkte.Text = seminarfachnoten[0].Gesamtnote;
+              textBoxSeminarfachthemaKurz.Text = seminarfachnoten[0].ThemaKurz;
+              textBoxSeminarfachthemaLang.Text = seminarfachnoten[0].ThemaLang;
+            }
           }
           else
           {
-            textBoxSeminarfachthemaKurz.Text = "";
-            textBoxSeminarfachthemaLang.Text = "";
-            numSeminarpunkte.Value = null;
+              textBoxSeminarfachthemaKurz.Text = "";
+              textBoxSeminarfachthemaLang.Text = "";
           }  
         }
 
@@ -80,12 +83,7 @@ namespace diNo
             if (numPunkte.Value==null) fpANoten.SetPunkteNull(); else fpANoten.Punkte = (int) numPunkte.Value;
             if (numPunkte1Hj.Value==null) fpANoten.SetPunkte1HjNull(); else fpANoten.Punkte1Hj = (int) numPunkte1Hj.Value;
             if (numPunkte2Hj.Value==null) fpANoten.SetPunkte2HjNull(); else fpANoten.Punkte2Hj = (int) numPunkte2Hj.Value;
-
-            var seminarnote = schueler.SeminarfachNote;
-            if (numSeminarpunkte.Value == null) seminarnote.SetGesamtnoteNull(); else seminarnote.Gesamtnote = (int)numSeminarpunkte.Value;
-            if (textBoxSeminarfachthemaKurz.Text == "") seminarnote.SetThemaKurzNull(); else seminarnote.ThemaKurz = textBoxSeminarfachthemaKurz.Text;
-            if (textBoxSeminarfachthemaLang.Text == "") seminarnote.SetThemaLangNull(); else seminarnote.ThemaLang = textBoxSeminarfachthemaLang.Text;
         }
 
-  }
+    }
 }
