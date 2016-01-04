@@ -161,9 +161,20 @@ namespace diNo
           bnote.SchnittFortgangUndPruefung = xls.ReadSchnitt(BerechneteNotentyp.EndnoteMitNKS, hj, indexAP);
           bnote.Abschlusszeugnis = xls.ReadSchnittGanzzahlig(BerechneteNotentyp.Abschlusszeugnis, hj, indexAP);
 
-          bnote.writeToDB(); // Todo: Testen, ob der Eintrag auch funktioniert, wenn noch gar keine Jahresfortgangsnote gebildet werden kann. (solle aber schon, sind schließlich alles nullables)
-        }
+          // für die PZ im 1. Hj. reicht ggf. auch eine mündliche Note
+          // im 2. Hj. kann das nicht so einfach übernommen werden, da Teilnoten aus dem 1. Hj. feststehen
+          if (bnote.JahresfortgangGanzzahlig == null && bnote.ErstesHalbjahr)
+          {
+               if (bnote.SchnittMuendlich !=null) bnote.JahresfortgangMitKomma = bnote.SchnittMuendlich;
+               else if (bnote.SchnittSchulaufgaben !=null) bnote.JahresfortgangMitKomma = bnote.SchnittSchulaufgaben;
+               bnote.RundeJFNote();
+          }
 
+          // Nur wenn einer der Schnitte feststeht, wird diese Schnittkonstellation gespeichert
+          if (bnote.SchnittMuendlich != null || bnote. SchnittSchulaufgaben != null)
+            bnote.writeToDB();
+        }
+         
         i += 2;
         indexAP++;
       }
