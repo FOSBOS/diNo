@@ -13,7 +13,7 @@ namespace diNo
     {
         private Schueler schueler;
         private diNoDataSet.KursDataTable kurse;
-        public IList<FachSchuelerNoten> alleFaecher;
+        public List<FachSchuelerNoten> alleFaecher;
 
         public SchuelerNoten(Schueler s)
         {
@@ -24,6 +24,7 @@ namespace diNo
             {
                 alleFaecher.Add(new FachSchuelerNoten(schueler.Id, kurs.Id));
             }
+            alleFaecher.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));       
         }
 
         public FachSchuelerNoten getFach(int kursid)
@@ -52,7 +53,7 @@ namespace diNo
             return liste;
         }
 
-    public IList<FachSchuelerNoten> SucheAlteNoten()
+    public List<FachSchuelerNoten> SucheAlteNoten()
     {
       var result = new List<FachSchuelerNoten>();
       foreach (var kurs in schueler.getKlasse.FindeAlleMöglichenKurse(schueler.Zweig))

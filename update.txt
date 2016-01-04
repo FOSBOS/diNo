@@ -14,4 +14,34 @@ ALTER TABLE [dbo].[FpANoten] Add Punkte2Hj int NULL;
 ALTER TABLE [dbo].[FpANoten] Add Punkte int NULL;
 ALTER TABLE [dbo].[FpANoten] Add Erfolg1Hj int NULL;
 ALTER TABLE [dbo].[FpANoten] Add Erfolg int NULL;
+
+ALTER TABLE [dbo].[Fach] Add Sortierung int NULL;
 GO
+
+UPDATE [dbo].[Fach] set Sortierung=1 where Kuerzel='K';
+UPDATE [dbo].[Fach] set Sortierung=2 where Kuerzel='Ev';
+UPDATE [dbo].[Fach] set Sortierung=5 where Kuerzel='Eth';
+UPDATE [dbo].[Fach] set Sortierung=10 where Kuerzel='D';
+UPDATE [dbo].[Fach] set Sortierung=11 where Kuerzel='E';
+UPDATE [dbo].[Fach] set Sortierung=20 where Kuerzel='G';
+UPDATE [dbo].[Fach] set Sortierung=21 where Kuerzel='Sk';
+UPDATE [dbo].[Fach] set Sortierung=22 where Kuerzel='GSk';
+UPDATE [dbo].[Fach] set Sortierung=30 where Kuerzel='PP';
+UPDATE [dbo].[Fach] set Sortierung=40 where Kuerzel='M';
+UPDATE [dbo].[Fach] set Sortierung=42 where Kuerzel='Ph';
+UPDATE [dbo].[Fach] set Sortierung=44 where Kuerzel='C';
+UPDATE [dbo].[Fach] set Sortierung=46 where Kuerzel='B';
+UPDATE [dbo].[Fach] set Sortierung=50 where Kuerzel='Te';
+UPDATE [dbo].[Fach] set Sortierung=51 where Kuerzel='TeIn';
+UPDATE [dbo].[Fach] set Sortierung=52 where Kuerzel='TZ';
+UPDATE [dbo].[Fach] set Sortierung=54 where Kuerzel='Inf';
+UPDATE [dbo].[Fach] set Sortierung=60 where Kuerzel='BwR';
+UPDATE [dbo].[Fach] set Sortierung=61 where Kuerzel='VWL';
+UPDATE [dbo].[Fach] set Sortierung=64 where Kuerzel='Wl';
+UPDATE [dbo].[Fach] set Sortierung=66 where Kuerzel='Rl';
+UPDATE [dbo].[Fach] set Sortierung=68 where Kuerzel='WIn';
+UPDATE [dbo].[Fach] set Sortierung=69 where Kuerzel='F-Wi';
+UPDATE [dbo].[Fach] set Sortierung=70 where Kuerzel='Ku';
+UPDATE [dbo].[Fach] set Sortierung=72 where Kuerzel='Smw';
+GO
+

@@ -44,6 +44,12 @@ namespace diNo
             return data.IstSAP || (Kuerzel == "TeIn" || Kuerzel == "VWL" || Kuerzel == "B");
         }
 
+        public int Sortierung
+        {
+            get { return this.data.Sortierung; }
+        }
+
+
     public bool IstSAPFach()
     {
       return this.data.IstSAP;
