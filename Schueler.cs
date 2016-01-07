@@ -565,7 +565,7 @@ namespace diNo
     public void MeldeAn(string nachFachKuerzel)
     {
       FachTableAdapter ada = new FachTableAdapter();
-      foreach (var kurs in this.klasse.FindeAlleMöglichenKurse(Klasse.GetZweig(this.data.Ausbildungsrichtung)))
+      foreach (var kurs in this.getKlasse.FindeAlleMöglichenKurse(Klasse.GetZweig(this.data.Ausbildungsrichtung)))
       {
         var fach = kurs.getFach;
         if (fach.Kuerzel == nachFachKuerzel)
