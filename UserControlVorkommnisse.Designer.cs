@@ -41,16 +41,15 @@
       this.olvColumnArt = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumnBemerkung = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.label2 = new System.Windows.Forms.Label();
+      this.label3 = new System.Windows.Forms.Label();
       ((System.ComponentModel.ISupportInitialize)(this.objectListViewVorkommnisse)).BeginInit();
       this.SuspendLayout();
       // 
       // lblDatum
       // 
-      this.lblDatum.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
       this.lblDatum.AutoSize = true;
       this.lblDatum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lblDatum.Location = new System.Drawing.Point(5, 216);
+      this.lblDatum.Location = new System.Drawing.Point(7, 35);
       this.lblDatum.Name = "lblDatum";
       this.lblDatum.Size = new System.Drawing.Size(53, 17);
       this.lblDatum.TabIndex = 1;
@@ -58,20 +57,17 @@
       // 
       // dateTimePicker1
       // 
-      this.dateTimePicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.dateTimePicker1.Location = new System.Drawing.Point(95, 210);
+      this.dateTimePicker1.Location = new System.Drawing.Point(97, 29);
       this.dateTimePicker1.Name = "dateTimePicker1";
-      this.dateTimePicker1.Size = new System.Drawing.Size(424, 23);
-      this.dateTimePicker1.TabIndex = 2;
+      this.dateTimePicker1.Size = new System.Drawing.Size(327, 23);
+      this.dateTimePicker1.TabIndex = 0;
       // 
       // lblArt
       // 
-      this.lblArt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
       this.lblArt.AutoSize = true;
       this.lblArt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lblArt.Location = new System.Drawing.Point(5, 238);
+      this.lblArt.Location = new System.Drawing.Point(7, 57);
       this.lblArt.Name = "lblArt";
       this.lblArt.Size = new System.Drawing.Size(30, 17);
       this.lblArt.TabIndex = 3;
@@ -79,31 +75,28 @@
       // 
       // comboBoxArt
       // 
-      this.comboBoxArt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.comboBoxArt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.comboBoxArt.FormattingEnabled = true;
-      this.comboBoxArt.Location = new System.Drawing.Point(95, 235);
+      this.comboBoxArt.Location = new System.Drawing.Point(97, 54);
       this.comboBoxArt.Name = "comboBoxArt";
-      this.comboBoxArt.Size = new System.Drawing.Size(424, 24);
-      this.comboBoxArt.TabIndex = 4;
+      this.comboBoxArt.Size = new System.Drawing.Size(327, 24);
+      this.comboBoxArt.TabIndex = 1;
       this.comboBoxArt.SelectedValueChanged += new System.EventHandler(this.comboBoxArt_SelectedValueChanged);
       // 
       // textBox1
       // 
-      this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBox1.Location = new System.Drawing.Point(95, 262);
+      this.textBox1.Location = new System.Drawing.Point(97, 81);
+      this.textBox1.Multiline = true;
       this.textBox1.Name = "textBox1";
-      this.textBox1.Size = new System.Drawing.Size(612, 23);
-      this.textBox1.TabIndex = 5;
+      this.textBox1.Size = new System.Drawing.Size(327, 60);
+      this.textBox1.TabIndex = 2;
       // 
       // label1
       // 
-      this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
       this.label1.AutoSize = true;
       this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label1.Location = new System.Drawing.Point(5, 262);
+      this.label1.Location = new System.Drawing.Point(7, 81);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(84, 17);
       this.label1.TabIndex = 6;
@@ -111,13 +104,12 @@
       // 
       // btnNeuesVorkommnis
       // 
-      this.btnNeuesVorkommnis.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.btnNeuesVorkommnis.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.btnNeuesVorkommnis.Location = new System.Drawing.Point(549, 206);
+      this.btnNeuesVorkommnis.Image = global::diNo.Properties.Resources.Save;
+      this.btnNeuesVorkommnis.Location = new System.Drawing.Point(430, 101);
       this.btnNeuesVorkommnis.Name = "btnNeuesVorkommnis";
-      this.btnNeuesVorkommnis.Size = new System.Drawing.Size(158, 50);
-      this.btnNeuesVorkommnis.TabIndex = 7;
-      this.btnNeuesVorkommnis.Text = "speichern";
+      this.btnNeuesVorkommnis.Size = new System.Drawing.Size(40, 40);
+      this.btnNeuesVorkommnis.TabIndex = 3;
       this.btnNeuesVorkommnis.UseVisualStyleBackColor = true;
       this.btnNeuesVorkommnis.Click += new System.EventHandler(this.btnNeuesVorkommnis_Click);
       // 
@@ -134,10 +126,11 @@
             this.olvColumnArt,
             this.olvColumnBemerkung});
       this.objectListViewVorkommnisse.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.objectListViewVorkommnisse.Location = new System.Drawing.Point(7, 13);
+      this.objectListViewVorkommnisse.Location = new System.Drawing.Point(10, 183);
       this.objectListViewVorkommnisse.Name = "objectListViewVorkommnisse";
-      this.objectListViewVorkommnisse.Size = new System.Drawing.Size(700, 155);
-      this.objectListViewVorkommnisse.TabIndex = 0;
+      this.objectListViewVorkommnisse.Size = new System.Drawing.Size(704, 153);
+      this.objectListViewVorkommnisse.TabIndex = 4;
+      this.objectListViewVorkommnisse.TabStop = false;
       this.objectListViewVorkommnisse.UseCompatibleStateImageBehavior = false;
       this.objectListViewVorkommnisse.View = System.Windows.Forms.View.Details;
       // 
@@ -165,18 +158,27 @@
       // 
       // label2
       // 
-      this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label2.Location = new System.Drawing.Point(5, 184);
+      this.label2.Location = new System.Drawing.Point(7, 7);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(300, 17);
       this.label2.TabIndex = 8;
       this.label2.Text = "Hier können Sie einen neuen Eintrag anlegen:";
       // 
+      // label3
+      // 
+      this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label3.Location = new System.Drawing.Point(7, 163);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(300, 17);
+      this.label3.TabIndex = 9;
+      this.label3.Text = "bisherige Vorkommnisse:";
+      // 
       // UserControlVorkommnisse
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.label3);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.btnNeuesVorkommnis);
       this.Controls.Add(this.label1);
@@ -187,7 +189,7 @@
       this.Controls.Add(this.lblDatum);
       this.Controls.Add(this.objectListViewVorkommnisse);
       this.Name = "UserControlVorkommnisse";
-      this.Size = new System.Drawing.Size(980, 381);
+      this.Size = new System.Drawing.Size(728, 353);
       ((System.ComponentModel.ISupportInitialize)(this.objectListViewVorkommnisse)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
@@ -208,5 +210,6 @@
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Button btnNeuesVorkommnis;
         private System.Windows.Forms.Label label2;
-    }
+    private System.Windows.Forms.Label label3;
+  }
 }

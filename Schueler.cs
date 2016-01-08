@@ -399,7 +399,7 @@ namespace diNo
       new VorkommnisTableAdapter().Insert(datum, bemerkung, this.Id, (int)art);
       if (art == Vorkommnisart.ProbezeitNichtBestanden)
       {
-        this.Austritt(DateTime.Today);
+        Austritt(Data.ProbezeitBis);
       }
 
       this.vorkommnisse = null; // damit er die neu lädt

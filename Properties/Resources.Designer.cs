@@ -81,10 +81,9 @@ namespace diNo.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Schulnummer;Schultyp;Name;Straße;PLZ;Ort;Link
-        ///7166;Berufsfachschule f. Fremdsprachenberufe;Euro-Sprachenschule Aschaffenburg Priv. Berufsfachschule für Fremdsprachenberufe ;Goldbacher Str. 6;63739;Aschaffenburg;http://www.km.bayern.de/schule/7166.html
+        ///   Sucht eine lokalisierte Zeichenfolge, die 7166;Berufsfachschule f. Fremdsprachenberufe;Euro-Sprachenschule Aschaffenburg Priv. Berufsfachschule für Fremdsprachenberufe ;Goldbacher Str. 6;63739;Aschaffenburg;http://www.km.bayern.de/schule/7166.html
         ///7438;Berufsfachschule des Gesundheitswesens;Berufsfachschule f.Altenpflegehilfe Aschaffenburg der Hans-Weinberger-Akademie der Arbeiterwohlfahrt;Berliner Allee 3;63739;Aschaffenburg;http://www.km.bayern.de/schule/7438.html
-        ///7211;Berufsschule;Staatl. Berufssc [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///7211;Berufsschule;Staatl. Berufsschule II Aschaffenburg  ;Pfaffengasse 24;63739;A [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string ListeAllerSchulenInBayern {
             get {
@@ -98,6 +97,16 @@ namespace diNo.Properties {
         internal static System.Drawing.Bitmap piktogrammNotenbogen {
             get {
                 object obj = ResourceManager.GetObject("piktogrammNotenbogen", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Save {
+            get {
+                object obj = ResourceManager.GetObject("Save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

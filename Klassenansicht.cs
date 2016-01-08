@@ -88,7 +88,7 @@ namespace diNo
 
         private void btnBrief_Click(object sender, EventArgs e)
         {
-            var b = new Brief(schueler);
+            var b = new Brief(schueler,this);
             b.ShowDialog();
         }
 
@@ -103,5 +103,11 @@ namespace diNo
             userControlFPAundSeminar1.DatenUebernehmen();         
             schueler.Save();            
         }
+
+        public void RefreshVorkommnisse()
+        {          
+          userControlVorkommnisse1.RefreshVorkommnisse();
+        }
+
     }
 }

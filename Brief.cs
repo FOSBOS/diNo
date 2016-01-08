@@ -12,9 +12,11 @@ namespace diNo
     public partial class Brief : Form
     {
         private Schueler s;
-        public Brief(Schueler schueler)
+        private Klassenansicht frmKlasse;
+        public Brief(Schueler schueler, Klassenansicht aufrufendesFormular)
         {
             s = schueler;
+            frmKlasse = aufrufendesFormular;
             InitializeComponent();
             this.AcceptButton = btnOK;
             this.CancelButton = btnEsc;
@@ -34,7 +36,13 @@ namespace diNo
                 b.Betreff = edBetreff.Text;
                 b.Inhalt = edInhalt.Text;
             }
-            new ReportBrief(b); 
+            new ReportBrief(b);
+            Close();
+            if (opVerweis.Checked && MessageBox.Show("Soll der Verweis auch in den Notenbogen eingetragen werden?","diNo",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
+            {             
+              s.AddVorkommnis(Vorkommnisart.Verweis, DateTime.Today, edBetreff.Text);
+              frmKlasse.RefreshVorkommnisse();
+            }
         }
       
     }
@@ -65,8 +73,8 @@ namespace diNo
         public void Verweistext(string Grund)
         {
             Betreff = "Verweis";
-            Inhalt = "Hiermit wird " + Anrede + " " + VornameName + " aus der Klasse " + Klasse + " gemäß Art. 86(2) BayEUG ein Verweis erteilt.\n";
-            Inhalt += "Begründung der Ordnungsmaßnahme: " + Grund;
+            Inhalt = "Hiermit wird " + Anrede + " " + VornameName + " aus der Klasse " + Klasse + " gemäß Art. 86(2) BayEUG ein Verweis erteilt.\n\n";
+            Inhalt += "Begründung der Ordnungsmaßnahme:\n" + Grund;            
         }
     }
 

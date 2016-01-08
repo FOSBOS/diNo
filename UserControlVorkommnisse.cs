@@ -100,10 +100,17 @@ namespace diNo
         }
 
         this.schueler.AddVorkommnis(art, dateTimePicker1.Value, textBox1.Text);
-        this.comboBoxArt.SelectedValue = Vorkommnisart.NotSet;
-        this.textBox1.Text = "";
-        this.objectListViewVorkommnisse.SetObjects(this.schueler.Vorkommnisse);
+        // ist doch praktisch, weil meistens gleich mehrere ähnliche Vorkommnisse auftreten
+        //this.comboBoxArt.SelectedValue = Vorkommnisart.NotSet; 
+        //this.textBox1.Text = "";
+        RefreshVorkommnisse();
       }
+    }
+
+    public void RefreshVorkommnisse()
+    {
+      //schueler.Refresh();
+      objectListViewVorkommnisse.SetObjects(this.schueler.Vorkommnisse);
     }
 
     /// <summary>
@@ -116,6 +123,7 @@ namespace diNo
     {
       if (!(this.comboBoxArt.SelectedValue is Vorkommnisart)) // beim Init wird das Ereignis einmal mit einem KeyValuePaar ausgelöst - seltsames Verhalten
         return;
+      if (schueler==null) return;
 
       var art = (Vorkommnisart)this.comboBoxArt.SelectedValue;
       

@@ -153,9 +153,7 @@ namespace diNo
     }
 
         private void btnVerweis_Click(object sender, EventArgs e)
-        {
-            Brief vw = new Brief(new Schueler(8861));
-            vw.ShowDialog();
+        {           
         }
 
         private void button4_Click(object sender, EventArgs e)
