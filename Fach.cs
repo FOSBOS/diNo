@@ -24,6 +24,11 @@ namespace diNo
             }
         }
 
+        public Fach(diNoDataSet.FachRow f)
+        {
+          data = f;
+        }
+
         public int Id
         {
             get { return this.data.Id; }

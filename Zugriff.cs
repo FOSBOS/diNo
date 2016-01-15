@@ -14,6 +14,7 @@ namespace diNo
       public diNoDataSet.LehrerRow Lehrer { get; private set;}
       public List<Klasse> Klassen { get; private set;}
       public int AnzahlSchueler { get; private set;}
+      public List<Fach> eigeneFaecher { get; private set;}
       
       private Zugriff()
       {
@@ -29,6 +30,7 @@ namespace diNo
                 throw new InvalidOperationException("Keine Zugriffsberechtigung!");
             }
             LoadSchueler();
+            LoadFaecher();
      }
 
     
@@ -71,6 +73,21 @@ namespace diNo
             foreach (var klasse in Klassen)
                 klasse.eigeneSchueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
         }
+      
+        private void LoadFaecher()
+        {
+          diNoDataSet.FachDataTable dtFach;
+          eigeneFaecher = new List<Fach>();
+          var ta = new FachTableAdapter();
+          if (IsAdmin) dtFach = ta.GetData();
+          else dtFach = ta.GetDataByLehrerId(Lehrer.Id);          
+
+          foreach (var fRow in dtFach)
+          {
+            Fach f = new Fach(fRow);
+            eigeneFaecher.Add(f);
+          }
+        }  
 
         // Lädt die Schüler in den Speicher
         public static void Refresh()

@@ -9,6 +9,7 @@ namespace diNo
   public partial class Klassenansicht : Form
   {
         private Schueler schueler=null;
+        private Brief frmBrief=null;
         public Klassenansicht()
         {
           InitializeComponent();
@@ -88,8 +89,8 @@ namespace diNo
 
         private void btnBrief_Click(object sender, EventArgs e)
         {
-            var b = new Brief(schueler,this);
-            b.ShowDialog();
+            if (frmBrief== null) frmBrief = new Brief(this);
+            frmBrief.Anzeigen(schueler);
         }
 
         private void btnCheck_Click(object sender, EventArgs e)
