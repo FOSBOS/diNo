@@ -226,6 +226,7 @@
     <EmbeddedResource Include="rptSchuelerliste.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptKurs.rdlc" />
+    <EmbeddedResource Include="subrptVorkommnis.rdlc" />
     <EmbeddedResource Include="UserControlChecks.resx">
       <DependentUpon>UserControlChecks.cs</DependentUpon>
     </EmbeddedResource>

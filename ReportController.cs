@@ -65,7 +65,7 @@ namespace diNo
                     new SubreportProcessingEventHandler(subrptNotenbogenEventHandler);
         }
 
-        void subrptNotenbogenEventHandler(object sender, SubreportProcessingEventArgs e)
+        private void subrptNotenbogenEventHandler(object sender, SubreportProcessingEventArgs e)
         {
             //e.Parameters verwenden, um Fremdschlüssel abzugreifen (SchülerId)
             //warum klappt FK-Übergabe nicht?
@@ -77,6 +77,12 @@ namespace diNo
             var noten = schueler.getNoten.SchuelerNotenDruck();
             e.DataSources.Add(new ReportDataSource("DataSet1",noten));
         }
+
+        private void subrptVorkommnisEventHandler(object sender, SubreportProcessingEventArgs e)
+        {
+          
+        }
+
     }
 
     public class ReportFachliste : ReportController

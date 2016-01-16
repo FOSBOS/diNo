@@ -11,8 +11,7 @@ namespace diNo
 {
   public partial class UserControlVorkommnisse : UserControl
   {
-    private Schueler schueler;
-    private Dictionary<Vorkommnisart, string> vorkommnisarten;
+    private Schueler schueler;    
     private Vorkommnisart[] notenRelevanteVorkommnisse = new[] { Vorkommnisart.Gefaehrdungsmitteilung, Vorkommnisart.JahrgangsstufeNichtBestanden, Vorkommnisart.NichtZurPruefungZugelassen, Vorkommnisart.Notenausgleich, Vorkommnisart.ProbezeitNichtBestanden, Vorkommnisart.PruefungInsgesamtNichtBestanden, Vorkommnisart.PruefungSchriftlichNichtBestanden, Vorkommnisart.VorrueckenAufProbe };
 
     public UserControlVorkommnisse()
@@ -53,31 +52,18 @@ namespace diNo
         throw new InvalidOperationException("Übergebenes Objekt kann nicht als Vorkommnis angezeigt werden");
       }
 
-      if (!this.vorkommnisarten.ContainsKey(vorkommnis.Art))
+      if (!Vorkommnisse.Instance.Liste.ContainsKey(vorkommnis.Art))
       {
         throw new InvalidOperationException("Unbekannte Vorkommnisart "+vorkommnis.Art);
       }
 
-      return this.vorkommnisarten[vorkommnis.Art];
+      return Vorkommnisse.Instance.Liste[vorkommnis.Art];
     }
 
     private void InitVorkommnisse()
     {
-      this.vorkommnisarten = new Dictionary<Vorkommnisart, string>();
-      this.vorkommnisarten.Add(Vorkommnisart.NotSet, "");
-      this.vorkommnisarten.Add(Vorkommnisart.Gefaehrdungsmitteilung, "Gefährdungsmitteilung");
-      this.vorkommnisarten.Add(Vorkommnisart.JahrgangsstufeNichtBestanden, "Jahrgangsstufe nicht bestanden");
-      this.vorkommnisarten.Add(Vorkommnisart.NichtZurPruefungZugelassen, "Nicht zur Prüfung zugelassen");
-      this.vorkommnisarten.Add(Vorkommnisart.Notenausgleich, "Notenausgleich gewährt");
-      this.vorkommnisarten.Add(Vorkommnisart.ProbezeitNichtBestanden, "Probezeit nicht bestanden");
-      this.vorkommnisarten.Add(Vorkommnisart.PruefungInsgesamtNichtBestanden, "Prüfung im Endergebnis nicht bestanden");
-      this.vorkommnisarten.Add(Vorkommnisart.PruefungSchriftlichNichtBestanden, "Prüfung nach dem schriftlichen Teil noch nicht bestanden");
-      this.vorkommnisarten.Add(Vorkommnisart.SonstigeOrdnungsmaßnahme, "sonstige Ordnungsmaßnahme");
-      this.vorkommnisarten.Add(Vorkommnisart.Verweis, "Verweis");
-      this.vorkommnisarten.Add(Vorkommnisart.VorrueckenAufProbe, "Vorrücken auf Probe");
-
       this.comboBoxArt.BeginUpdate();
-      this.comboBoxArt.DataSource = vorkommnisarten.ToList();
+      this.comboBoxArt.DataSource = Vorkommnisse.Instance.Liste.ToList();
       this.comboBoxArt.DisplayMember = "Value";
       this.comboBoxArt.ValueMember = "Key";
       this.comboBoxArt.EndUpdate();
