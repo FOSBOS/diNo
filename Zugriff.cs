@@ -15,6 +15,7 @@ namespace diNo
       public List<Klasse> Klassen { get; private set;}
       public int AnzahlSchueler { get; private set;}
       public List<Fach> eigeneFaecher { get; private set;}
+      public Dictionary<int, string> Lehrerliste;
       
       private Zugriff()
       {
@@ -31,6 +32,7 @@ namespace diNo
             }
             LoadSchueler();
             LoadFaecher();
+            LoadLehrer();
      }
 
     
@@ -86,6 +88,19 @@ namespace diNo
           {
             Fach f = new Fach(fRow);
             eigeneFaecher.Add(f);
+          }
+        }
+
+        private void LoadLehrer()
+        {
+          diNoDataSet.LehrerDataTable dt;
+          Lehrerliste = new Dictionary<int, string>();
+          var ta = new LehrerTableAdapter();
+          dt = ta.GetData();
+                
+          foreach (var r in dt)
+          {
+            Lehrerliste.Add(r.Id,r.Name + " ("+r.Kuerzel + ")");
           }
         }  
 

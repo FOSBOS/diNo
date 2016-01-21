@@ -17,7 +17,12 @@ namespace diNo
 
         public UserControlFPAundSeminar()
         {
-            InitializeComponent();            
+            InitializeComponent();  
+            cbBetreuer.BeginUpdate();
+            cbBetreuer.DataSource = Zugriff.Instance.Lehrerliste.ToList();
+            cbBetreuer.DisplayMember = "Value";
+            cbBetreuer.ValueMember = "Key";
+            cbBetreuer.EndUpdate();        
         }
     
         public Schueler Schueler
@@ -36,6 +41,9 @@ namespace diNo
         }
  
       public void Init() {
+
+          pnlBetreuer.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn;
+          cbBetreuer.SelectedValue = schueler.Data.IsBetreuerIdNull() ? -1 : schueler.Data.BetreuerId;
           if (pnlFPA.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
           {
             var fpANoten = schueler.FPANoten;                
@@ -86,6 +94,9 @@ namespace diNo
            if (numSeminarpunkte.Value==null) sem.SetGesamtnoteNull(); else sem.Gesamtnote = (int) numSeminarpunkte.Value;
            if (textBoxSeminarfachthemaKurz.Text=="") sem.SetThemaKurzNull(); else sem.ThemaKurz = textBoxSeminarfachthemaKurz.Text;
            if (textBoxSeminarfachthemaLang.Text=="") sem.SetThemaLangNull(); else sem.ThemaLang = textBoxSeminarfachthemaLang.Text;
+
+           if (Zugriff.Instance.IsAdmin)
+             schueler.Data.BetreuerId = (int) cbBetreuer.SelectedValue;
         }
     }
 }
