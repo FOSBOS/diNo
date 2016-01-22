@@ -18,56 +18,13 @@
       </Image>
       <Textbox Name="Textbox1">
         <CanGrow>true</CanGrow>
+        <CanShrink>true</CanShrink>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Berufliche Oberschule </Value>
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontFamily>Tahoma</FontFamily>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value></Value>
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontFamily>Wingdings</FontFamily>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value> Kotterner Str. 41 </Value>
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontFamily>Tahoma</FontFamily>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value></Value>
-                <Style>
-                  <FontStyle>Normal</FontStyle>
-                  <FontFamily>Wingdings</FontFamily>
-                  <FontSize>8pt</FontSize>
-                  <FontWeight>Normal</FontWeight>
-                  <TextDecoration>Underline</TextDecoration>
-                  <Color>#000000</Color>
-                </Style>
-              </TextRun>
-              <TextRun>
-                <Value> 87435 Kempten</Value>
+                <Value>Berufliche Oberschule · Kotterner Str. 41 · 87435 Kempten</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontFamily>Tahoma</FontFamily>
@@ -82,7 +39,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>2.57155cm</Top>
+        <Top>2.50981cm</Top>
         <Height>0.60854cm</Height>
         <Width>8.46667cm</Width>
         <ZIndex>1</ZIndex>
@@ -98,6 +55,7 @@
       </Textbox>
       <Textbox Name="Textbox3">
         <CanGrow>true</CanGrow>
+        <CanShrink>true</CanShrink>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
@@ -111,26 +69,6 @@
             </TextRuns>
             <Style />
           </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>3.47113cm</Top>
-        <Height>0.6cm</Height>
-        <Width>8.46667cm</Width>
-        <ZIndex>2</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox4">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
@@ -142,26 +80,6 @@
             </TextRuns>
             <Style />
           </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>4.07113cm</Top>
-        <Height>0.6cm</Height>
-        <Width>8.46667cm</Width>
-        <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox5">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
@@ -175,22 +93,21 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>4.70641cm</Top>
-        <Height>0.6cm</Height>
+        <Top>3.22419cm</Top>
+        <Height>1.42021cm</Height>
         <Width>8.46667cm</Width>
-        <ZIndex>4</ZIndex>
+        <ZIndex>2</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
           <PaddingLeft>2pt</PaddingLeft>
           <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
       <Textbox Name="Textbox6">
         <CanGrow>true</CanGrow>
+        <CanShrink>true</CanShrink>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
@@ -206,10 +123,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>5.44752cm</Top>
+        <Top>4.71495cm</Top>
         <Height>0.6cm</Height>
         <Width>8.46667cm</Width>
-        <ZIndex>5</ZIndex>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -243,7 +160,7 @@
         <Left>11.85017cm</Left>
         <Height>0.68792cm</Height>
         <Width>4.89479cm</Width>
-        <ZIndex>6</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -287,7 +204,7 @@
         <Top>7.74912cm</Top>
         <Height>0.6cm</Height>
         <Width>16.74495cm</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -318,7 +235,7 @@
         <Top>9.07203cm</Top>
         <Height>0.82338cm</Height>
         <Width>16.74495cm</Width>
-        <ZIndex>8</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -344,10 +261,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>12.47662cm</Top>
+        <Top>11.52412cm</Top>
         <Height>0.6cm</Height>
         <Width>8.18854cm</Width>
-        <ZIndex>9</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -359,11 +276,11 @@
         </Style>
       </Textbox>
       <Line Name="Line2">
-        <Top>12.44134cm</Top>
+        <Top>11.48884cm</Top>
         <Left>0.02328cm</Left>
         <Height>0cm</Height>
         <Width>8.16527cm</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>8</ZIndex>
         <Visibility>
           <Hidden>true</Hidden>
         </Visibility>
@@ -388,11 +305,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>12.47662cm</Top>
+        <Top>11.52412cm</Top>
         <Left>8.57969cm</Left>
         <Height>0.6cm</Height>
         <Width>8.18854cm</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -404,11 +321,11 @@
         </Style>
       </Textbox>
       <Line Name="LineTraut">
-        <Top>12.44134cm</Top>
+        <Top>11.48884cm</Top>
         <Left>8.57969cm</Left>
         <Height>0cm</Height>
         <Width>8.16527cm</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>10</ZIndex>
         <Visibility>
           <Hidden>true</Hidden>
         </Visibility>
@@ -419,7 +336,7 @@
         </Style>
       </Line>
     </ReportItems>
-    <Height>5.58333in</Height>
+    <Height>4.9375in</Height>
     <Style />
   </Body>
   <Width>6.60167in</Width>
@@ -698,7 +615,7 @@
     <PageWidth>21cm</PageWidth>
     <LeftMargin>2cm</LeftMargin>
     <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
+    <TopMargin>3cm</TopMargin>
     <BottomMargin>2cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
