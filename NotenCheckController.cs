@@ -12,61 +12,26 @@ namespace diNo
     public class NotenCheckController
     {
         public NotenCheckResults res = new NotenCheckResults();
-        private IList<INotenCheck> alleNotenchecks = new List<INotenCheck>();
+        private IList<NotenCheck> alleNotenchecks = new List<NotenCheck>();
         public Zeitpunkt zeitpunkt;
         public bool nurEigeneNoten;
+        public bool erzeugeVorkommnisse;
 
-        public NotenCheckController(Zeitpunkt azeitpunkt, bool aNurEigeneNoten)
+        public NotenCheckController(Zeitpunkt azeitpunkt, bool aNurEigeneNoten, bool aerzeugeVorkommnisse)
         {
             zeitpunkt = azeitpunkt;
             nurEigeneNoten = aNurEigeneNoten;            
+            erzeugeVorkommnisse = aerzeugeVorkommnisse;
             alleNotenchecks.Add(new NotenanzahlChecker(this));
             alleNotenchecks.Add(new UnterpunktungChecker(this));            
             if (azeitpunkt == Zeitpunkt.ErstePA) // nur dort FR prüfen
                 alleNotenchecks.Add(new FachreferatChecker(this));
-            if (azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
-                alleNotenchecks.Add(new FpABestandenChecker(this));
+            // TODO: erst, wenn FPA eingebunden
+            //if (azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
+            //  alleNotenchecks.Add(new FpABestandenChecker(this));
         }
 
-/*
-        public NotenCheckResults CheckAll()
-        {
-            var klassen = KlassenController.AlleKlassen();
-            foreach (var klasse in klassen)
-            {
-                CheckKlasse(klasse);
-            }
-            return res;
-        }
 
-    public NotenCheckResults CheckKlassen(IList<Klasse> klassen)
-    {
-      IList<INotenCheck> notwendigeNotenchecks = new List<INotenCheck>();
-      foreach (var klasse in klassen)
-      {
-        CheckKlasse(klasse);
-      }
-
-      return res;
-    }
-
-    public NotenCheckResults CheckKlasse(Klasse klasse)
-        {
-            IList<INotenCheck> notwendigeNotenchecks = new List<INotenCheck>();
-            foreach (var ch in alleNotenchecks)
-            {
-                if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart, zeitpunkt))
-                    notwendigeNotenchecks.Add(ch);
-            }
-            foreach (var schueler in klasse.getSchueler)
-            {
-                // TODO: Probezeit-check nur für Schüler mit Probezeit. Achtung: teilweise stehen noch alte Datümer in der DB.
-                // können wir diesen Wert beim Import gleich löschen, wenn aus dem alten Schuljahr stammend?
-                CheckSchueler(new Schueler(schueler),notwendigeNotenchecks);
-            }
-            return res;
-        }
-*/
         public void CheckSchueler(Schueler s)
         {            
             Klasse klasse;
@@ -82,10 +47,6 @@ namespace diNo
                     || s.Data.ProbezeitBis > DateTime.Parse("15.12." +  aktJahr)))
                 return ;
                 
-            // 11. Klassen
-
-            // Prüfungsklassen
-
             foreach (var ch in alleNotenchecks)
             {
                 if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart))

@@ -23,13 +23,14 @@ namespace diNo
             {
                 chkEigeneNoten.Checked = false;
                 chkEigeneNoten.Enabled = false;
+                chkErzeugeVorkommnisse.Visible = true;
             }
             comboBoxZeitpunkt.SelectedIndex = 0;
         }
 
         private void btnUnterpunktungen_Click(object sender, EventArgs e)
         {            
-            var contr = new NotenCheckController(GetZeitpunkt(),chkEigeneNoten.Checked);
+            var contr = new NotenCheckController(GetZeitpunkt(),chkEigeneNoten.Checked,chkErzeugeVorkommnisse.Checked);
             // Check für alle eigenen Schüler durchführen
             progressBarChecks.Maximum = Zugriff.Instance.AnzahlSchueler;
             foreach (var k in Zugriff.Instance.Klassen)

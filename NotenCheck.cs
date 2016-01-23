@@ -6,35 +6,11 @@ using System.Text;
 
 namespace diNo
 {
- 
-
-  /// <summary>
-  /// Interface für Notenprüfungsklassen.
-  /// </summary>
-  public interface INotenCheck
-  {
-    
-    /// <summary>
-    /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
-    /// </summary>
-    /// <param name="jahrgangsstufe">Die Jahrgangsstufe.</param>
-    /// <param name="schulart">Die Schulart (FOS oder BOS)</param>    
-    /// <returns>true wenn check nötig.</returns>
-    bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart);
-
-    /// <summary>
-    /// Führt den Check durch.
-    /// </summary>
-    /// <param name="schueler">Der Schüler.</param>
-    /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
-    void Check(Schueler schueler);
-  }
-
-
+   
   /// <summary>
   /// Abstrakte Basis für Notenchecker. Regelt Fehlermeldungen und Controller
   /// </summary>
-  public abstract class NotenCheck : INotenCheck 
+  public abstract class NotenCheck 
   {
     protected SchuelerNoten noten;
     protected NotenCheckController contr;
@@ -410,14 +386,13 @@ namespace diNo
         base.Check(schueler);
         int anz5=0,anz6=0,anz4P=0,anz2=0,anz1=0;
         string m="";
-
-
+      
         foreach (var fachNoten in noten.alleFaecher)
         {            
             byte? relevanteNote = fachNoten.getRelevanteNote(contr.zeitpunkt);                    
             if (relevanteNote == null)
             {
-                    ; // Das stellt der Unterpunktungschecker fest.
+                    ; // Das stellt der Notenanzahlchecker fest.
                 // contr.res.Add(schueler,new Kurs(fachNoten.kursId) ,"Es konnte keine Note gebildet werden.");
             }
             else
@@ -436,21 +411,39 @@ namespace diNo
         if (contr.zeitpunkt == Zeitpunkt.ErstePA)
         {
             if (anz6 > 1 || (anz6 + anz5) > 3) contr.res.Add(schueler, null, "Zum Abitur nicht zugelassen: " + m);                
+            return;
         }
         else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {
-            if (anz6>0 || anz5 > 1) contr.res.Add(schueler, null, "Stark gefährdet: " + m); 
-            else if (anz5 > 0) contr.res.Add(schueler, null, "Gefährdet: " + m); 
-            else if (anz4P > 1) contr.res.Add(schueler, null, "Bei weiterem Absinken: " + m); 
+          if (anz6>0 || anz5 > 1)
+          {
+            contr.res.Add(schueler, null, "Stark gefährdet: " + m);
+            if (contr.erzeugeVorkommnisse) 
+              schueler.AddVorkommnis(Vorkommnisart.starkeGefaehrdungsmitteilung,DateTime.Today,m);
+          }
+          //else if (anz5 > 0) contr.res.Add(schueler, null, "Gefährdet: " + m); 
+          else if (anz4P > 1 || anz5 > 0)
+          { 
+            contr.res.Add(schueler, null, "Bei weiterem Absinken: " + m);
+            if (contr.erzeugeVorkommnisse) 
+              schueler.AddVorkommnis(Vorkommnisart.BeiWeiteremAbsinken,DateTime.Today,m);
+          }
+
+          if (schueler.Data.IsProbezeitBisNull() || !(schueler.Data.ProbezeitBis > DateTime.Parse("01.02." +  (DateTime.Today).Year)))
+            return; // bei Schülern ohne PZ geht es zum Halbjahr nur um Gefährdungen
         }
-        else
+        else if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
         {
-            // TODO: Notenausgleich sauber implementieren
-            if (anz6 > 0 || anz5 > 1)
-            {
-                if (anz2 < 2 || anz1 == 0) contr.res.Add(schueler, null, "Nicht bestanden, kein Notenausgleich möglich: " + m); 
-                else contr.res.Add(schueler, null, "Nicht bestanden, Notenausgleich prüfen: " + m); 
-            }                    
+          // TODO: Prüfen, ob der Schüler zur MAP zugelassen wird
+        }
+
+        {
+          // TODO: Notenausgleich sauber implementieren
+          if (anz6 > 0 || anz5 > 1)
+          {
+            if (anz2 < 2 || anz1 == 0) contr.res.Add(schueler, null, "Nicht bestanden, kein Notenausgleich möglich: " + m); 
+            else contr.res.Add(schueler, null, "Nicht bestanden, Notenausgleich prüfen: " + m); 
+          }                    
         }
     }
   }
