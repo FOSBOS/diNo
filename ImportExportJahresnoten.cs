@@ -73,15 +73,18 @@ namespace diNo
       using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(stream))
       {
-        string[] line = reader.ReadLine().Split(Separator);
-        int schuelerId = int.Parse(line[0]);
-        string nachname = line[1];
-        string fachKuerzel = line[2];
-        string lehrerKuerzel = line[3];
-        byte zeugnisnote = byte.Parse(line[4]);
+        while (!reader.EndOfStream)
+        {
+          string[] line = reader.ReadLine().Split(Separator);
+          int schuelerId = int.Parse(line[0]);
+          string nachname = line[1];
+          string fachKuerzel = line[2];
+          string lehrerKuerzel = line[3];
+          byte zeugnisnote = byte.Parse(line[4]);
 
-        // TODO: Künstlichen Kurs anlegen für Vorjahresnoten. Aber: Nur einen für alle Schüler / pro Lehrer / ganz ohne Lehrer
-        //       wie ist gewährleistet, dass dieser Kurs anders gehandhabt wird, z. B. bei den Noten-Checks (keine SA usw.)
+          // TODO: Künstlichen Kurs anlegen für Vorjahresnoten. Aber: Nur einen für alle Schüler / pro Lehrer / ganz ohne Lehrer
+          //       wie ist gewährleistet, dass dieser Kurs anders gehandhabt wird, z. B. bei den Noten-Checks (keine SA usw.)
+        }
       }
     }
   }

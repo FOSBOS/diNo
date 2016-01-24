@@ -35,6 +35,26 @@ namespace diNo
             }
             throw new IndexOutOfRangeException("FachSchuelerNoten.getFach: falsche kursid");            
         }
+
+    /// <summary>
+    /// Liefert die Noten des Schülers im übergebenen Fach.
+    /// </summary>
+    /// <param name="fach">Das Fach.</param>
+    /// <returns>Die FachNoten oder null, wenn der Schüler das fach nicht belegt.</returns>
+    public FachSchuelerNoten FindeFach(Fach fach, bool throwExceptionIfNotFound)
+    {
+      foreach (FachSchuelerNoten f in alleFaecher)
+      {
+        if (f.getFach.Equals(fach)) return f;
+      }
+       
+      if (throwExceptionIfNotFound)
+      {
+        throw new InvalidOperationException("Der Schüler belegt Fach "+fach.Bezeichnung + " gar nicht.")
+      }
+
+      return null;
+    }
         
         /// <summary>
         /// Liefert eine Liste in der je Fach alle Noten in druckbarer Form vorliegen.
