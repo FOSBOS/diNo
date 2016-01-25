@@ -68,10 +68,24 @@ namespace diNo
         labelInhalt.Text = (opSEP.Checked || opMEP.Checked) ? "Prüfungsstoff" : "Grund";
     }
 
+    public string erzeugeAnrede()
+    {
+      if (s.Data.Geschlecht == "M")
+          return "Sehr geehrter Herr " + s.Data.Name +",\n\n";
+      else
+          return "Sehr geehrte Frau " + s.Data.Name +",\n\n";
+    }
+
+    public string erzeugeRaum()
+    {
+      if (edRaum.Text=="") return "";
+      else return " in Raum " + edRaum.Text;
+    }
+
     public void VerweisText()
     {
         b.Betreff = "Verweis";
-        b.Inhalt = "Hiermit wird " + b.Anrede + " " + b.VornameName + " aus der Klasse " + b.Klasse + " gemäß Art. 86(2) BayEUG ein Verweis erteilt.\n\n";
+        b.Inhalt = "Hiermit wird " + b.Anrede + " " + b.VornameName + " gemäß Art. 86 (2) BayEUG ein Verweis erteilt.\n\n";
         b.Inhalt += "Begründung der Ordnungsmaßnahme:\n" + edInhalt.Text;            
     }
 
@@ -79,30 +93,36 @@ namespace diNo
     {
         string lnwart = opSA.Checked ? "Schulaufgabe" : "Kurzarbeit";
         b.Betreff = "Versäumnis einer "+lnwart;
-        b.Inhalt = "Sie haben die " + lnwart + " im Fach " + cbFach.Text + " am " + datVersaeumtAm.Text + " versäumt.\n";
+        b.Inhalt = erzeugeAnrede();
+        b.Inhalt += "Sie haben die " + lnwart + " im Fach " + cbFach.Text + " am " + datVersaeumtAm.Text + " versäumt.\n";
         
-        b.Inhalt += "Nach §50 (1) FOBOSO wird Ihnen ein Nachtermin eingeräumt.\n\n";           
-        b.Inhalt += "Der Nachtermin findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr.\n\n";           
-        b.Inhalt += "Wird dieser Termin ohne ausreichende Entschuldigung versäumt, wird die Note 6 (0 Punkte) erteilt.\n";           
+        b.Inhalt += "Nach § 50 (1) FOBOSO wird Ihnen ein Nachtermin eingeräumt.\n\n";           
+        b.Inhalt += "Der Nachtermin findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr" + erzeugeRaum() + ".\n\n";           
+        b.Inhalt += "Wird dieser Termin ohne ausreichende Entschuldigung versäumt, wird die Note 6 (0 Punkte) erteilt.\n\n";
+        b.Inhalt += "Freundliche Grüße";
     }
     public void ErsatzprText()
     {
         string lnwart = opSEP.Checked ? "schriftliche" : "mündliche";
         b.Betreff = "Nachholung von Leistungsnachweisen";
-        b.Inhalt = "Im Fach " + cbFach.Text + " konnten Sie in diesem Schuljahr wegen Ihrer Versäumnisse nicht hinreichend geprüft werden.\n\n"; 
+        b.Inhalt = erzeugeAnrede();
+        b.Inhalt += "Sie konnten Sie in diesem Schuljahr im Fach " + cbFach.Text + "  wegen Ihrer Versäumnisse nicht hinreichend geprüft werden.\n\n"; 
         b.Inhalt += "Gemäß § 50 (2) FOBOSO wird hiermit eine " +lnwart+" Ersatzprüfung angesetzt.\n\n";
         b.Inhalt += "Prüfungsstoff wird sein: \n" + edInhalt.Text + "\n\n";
-        b.Inhalt += "Die " +lnwart+" Ersatzprüfung findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr.\n\n";           
-        b.Inhalt += "Wird an der Ersatzprüfung wegen Erkrankung nicht teilgenommen, so muss die Erkrankung durch amtsärztliches Attest nachgewiesen werden; ohne ausreichende Entschuldigung wird die Note 6 (0 Punkte) erteilt.";     
+        b.Inhalt += "Die " +lnwart+" Ersatzprüfung findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr" + erzeugeRaum() + ".\n\n";           
+        b.Inhalt += "Wird an der Ersatzprüfung wegen Erkrankung nicht teilgenommen, so muss die Erkrankung durch amtsärztliches Attest nachgewiesen werden; ohne ausreichende Entschuldigung wird die Note 6 (0 Punkte) erteilt.\n\n";
+        b.Inhalt += "Freundliche Grüße";
     }
 
     public void NacharbeitText()
     {
       b.Betreff = "Nacharbeit";
-      b.Inhalt = "Hiermit wird " + b.Anrede + " " + b.VornameName + " aus der Klasse " + b.Klasse + " gemäß § 35 (4) FOBOSO zur Nacharbeit verpflichtet.\n\n";
+      b.Inhalt = erzeugeAnrede();
+      b.Inhalt += "hiermit werden Sie gemäß § 35 (4) FOBOSO zur Nacharbeit verpflichtet.\n\n";
       b.Inhalt += "Begründung:\n" + edInhalt.Text;
-      b.Inhalt += "\n\nDie Nacharbeit findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr.\n\n";           
-      b.Inhalt += "Wird die Nacharbeit wegen Erkrankung nicht ausgeführt, so muss die Erkrankung durch ärztliches Attest nachgewiesen werden.\n";           
+      b.Inhalt += "\n\nDie Nacharbeit findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr" + erzeugeRaum() + ".\n\n";           
+      b.Inhalt += "Wird die Nacharbeit wegen Erkrankung nicht ausgeführt, so muss die Erkrankung durch ärztliches Attest nachgewiesen werden.\n\n";
+      b.Inhalt += "Freundliche Grüße";
     }
   }
 

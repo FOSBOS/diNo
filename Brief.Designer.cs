@@ -50,6 +50,8 @@
       this.pnlInhalt = new System.Windows.Forms.Panel();
       this.labelInhalt = new System.Windows.Forms.Label();
       this.edInhalt = new System.Windows.Forms.TextBox();
+      this.edRaum = new System.Windows.Forms.TextBox();
+      this.label1 = new System.Windows.Forms.Label();
       this.boxAuswahl.SuspendLayout();
       this.pnlNachterminAm.SuspendLayout();
       this.pnlVersaeumtAm.SuspendLayout();
@@ -161,6 +163,8 @@
       // 
       // pnlNachterminAm
       // 
+      this.pnlNachterminAm.Controls.Add(this.label1);
+      this.pnlNachterminAm.Controls.Add(this.edRaum);
       this.pnlNachterminAm.Controls.Add(this.cbFach);
       this.pnlNachterminAm.Controls.Add(this.label2);
       this.pnlNachterminAm.Controls.Add(this.label4);
@@ -169,7 +173,7 @@
       this.pnlNachterminAm.Controls.Add(this.datTermin);
       this.pnlNachterminAm.Location = new System.Drawing.Point(256, 105);
       this.pnlNachterminAm.Name = "pnlNachterminAm";
-      this.pnlNachterminAm.Size = new System.Drawing.Size(415, 118);
+      this.pnlNachterminAm.Size = new System.Drawing.Size(429, 118);
       this.pnlNachterminAm.TabIndex = 2;
       // 
       // cbFach
@@ -178,7 +182,7 @@
       this.cbFach.FormattingEnabled = true;
       this.cbFach.Location = new System.Drawing.Point(3, 85);
       this.cbFach.Name = "cbFach";
-      this.cbFach.Size = new System.Drawing.Size(403, 24);
+      this.cbFach.Size = new System.Drawing.Size(298, 24);
       this.cbFach.TabIndex = 16;
       // 
       // label2
@@ -228,7 +232,7 @@
       this.datTermin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.datTermin.Location = new System.Drawing.Point(3, 31);
       this.datTermin.Name = "datTermin";
-      this.datTermin.Size = new System.Drawing.Size(280, 23);
+      this.datTermin.Size = new System.Drawing.Size(298, 23);
       this.datTermin.TabIndex = 11;
       this.datTermin.Value = new System.DateTime(2015, 11, 28, 10, 46, 16, 0);
       // 
@@ -238,7 +242,7 @@
       this.pnlVersaeumtAm.Controls.Add(this.datVersaeumtAm);
       this.pnlVersaeumtAm.Location = new System.Drawing.Point(256, 45);
       this.pnlVersaeumtAm.Name = "pnlVersaeumtAm";
-      this.pnlVersaeumtAm.Size = new System.Drawing.Size(415, 54);
+      this.pnlVersaeumtAm.Size = new System.Drawing.Size(429, 54);
       this.pnlVersaeumtAm.TabIndex = 1;
       // 
       // label6
@@ -256,7 +260,7 @@
       this.datVersaeumtAm.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.datVersaeumtAm.Location = new System.Drawing.Point(3, 24);
       this.datVersaeumtAm.Name = "datVersaeumtAm";
-      this.datVersaeumtAm.Size = new System.Drawing.Size(280, 23);
+      this.datVersaeumtAm.Size = new System.Drawing.Size(298, 23);
       this.datVersaeumtAm.TabIndex = 11;
       this.datVersaeumtAm.Value = new System.DateTime(2015, 12, 19, 0, 0, 0, 0);
       // 
@@ -287,6 +291,24 @@
       this.edInhalt.Name = "edInhalt";
       this.edInhalt.Size = new System.Drawing.Size(632, 104);
       this.edInhalt.TabIndex = 5;
+      // 
+      // edRaum
+      // 
+      this.edRaum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.edRaum.Location = new System.Drawing.Point(320, 86);
+      this.edRaum.Name = "edRaum";
+      this.edRaum.Size = new System.Drawing.Size(86, 23);
+      this.edRaum.TabIndex = 17;
+      // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label1.Location = new System.Drawing.Point(317, 64);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(109, 17);
+      this.label1.TabIndex = 18;
+      this.label1.Text = "Raum (optional)";
       // 
       // Brief
       // 
@@ -337,5 +359,7 @@
     private System.Windows.Forms.Panel pnlInhalt;
     private System.Windows.Forms.Label labelInhalt;
     private System.Windows.Forms.TextBox edInhalt;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.TextBox edRaum;
   }
 }

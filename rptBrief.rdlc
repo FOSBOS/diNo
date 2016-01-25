@@ -7,9 +7,9 @@
         <Value>FBLogo</Value>
         <Sizing>FitProportional</Sizing>
         <Top>1.0287cm</Top>
-        <Left>12.56454cm</Left>
-        <Height>4.28625cm</Height>
-        <Width>4.18042cm</Width>
+        <Left>13.4874cm</Left>
+        <Height>3.6157cm</Height>
+        <Width>3.28084cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -40,8 +40,9 @@
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
         <Top>2.50981cm</Top>
+        <Left>0.02329cm</Left>
         <Height>0.60854cm</Height>
-        <Width>8.46667cm</Width>
+        <Width>8.46666cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -63,6 +64,7 @@
               <TextRun>
                 <Value>=Fields!Anrede.Value</Value>
                 <Style>
+                  <FontFamily>Tahoma</FontFamily>
                   <FontSize>11pt</FontSize>
                 </Style>
               </TextRun>
@@ -74,6 +76,7 @@
               <TextRun>
                 <Value>=Fields!VornameName.Value</Value>
                 <Style>
+                  <FontFamily>Tahoma</FontFamily>
                   <FontSize>11pt</FontSize>
                 </Style>
               </TextRun>
@@ -85,6 +88,19 @@
               <TextRun>
                 <Value>=Fields!Strasse.Value</Value>
                 <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>11pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Fields!Ort.Value</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
                   <FontSize>11pt</FontSize>
                 </Style>
               </TextRun>
@@ -94,7 +110,8 @@
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
         <Top>3.22419cm</Top>
-        <Height>1.42021cm</Height>
+        <Left>0.02328cm</Left>
+        <Height>1.94938cm</Height>
         <Width>8.46667cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
@@ -105,7 +122,7 @@
           <PaddingRight>2pt</PaddingRight>
         </Style>
       </Textbox>
-      <Textbox Name="Textbox6">
+      <Textbox Name="Textbox7">
         <CanGrow>true</CanGrow>
         <CanShrink>true</CanShrink>
         <KeepTogether>true</KeepTogether>
@@ -113,39 +130,30 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Fields!Ort.Value</Value>
+                <Value>="Kempten, den " + Today()</Value>
                 <Style>
+                  <FontFamily>Tahoma</FontFamily>
                   <FontSize>11pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
-            <Style />
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
           </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>4.71495cm</Top>
-        <Height>0.6cm</Height>
-        <Width>8.46667cm</Width>
-        <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox7">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>="Kempten, den " + Today()</Value>
+                <Value>Klasse </Value>
                 <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>11pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>=Fields!Klasse.Value</Value>
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
                   <FontSize>11pt</FontSize>
                 </Style>
               </TextRun>
@@ -157,10 +165,10 @@
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
         <Top>5.84412cm</Top>
-        <Left>11.85017cm</Left>
-        <Height>0.68792cm</Height>
+        <Left>11.87345cm</Left>
+        <Height>1.11125cm</Height>
         <Width>4.89479cm</Width>
-        <ZIndex>4</ZIndex>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -180,6 +188,7 @@
               <TextRun>
                 <Value>=Fields!Betreff.Value</Value>
                 <Style>
+                  <FontFamily>Tahoma</FontFamily>
                   <FontSize>11pt</FontSize>
                   <FontWeight>Bold</FontWeight>
                 </Style>
@@ -192,8 +201,8 @@
               <TextRun>
                 <Value />
                 <Style>
+                  <FontFamily>Tahoma</FontFamily>
                   <FontSize>11pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -201,10 +210,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Betreff</rd:DefaultName>
-        <Top>7.74912cm</Top>
-        <Height>0.6cm</Height>
-        <Width>16.74495cm</Width>
-        <ZIndex>5</ZIndex>
+        <Top>8.35766cm</Top>
+        <Left>0.02329cm</Left>
+        <Height>0.60854cm</Height>
+        <Width>16.72166cm</Width>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -224,6 +234,7 @@
               <TextRun>
                 <Value>=Fields!Inhalt.Value</Value>
                 <Style>
+                  <FontFamily>Tahoma</FontFamily>
                   <FontSize>11pt</FontSize>
                 </Style>
               </TextRun>
@@ -232,10 +243,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox2</rd:DefaultName>
-        <Top>9.07203cm</Top>
-        <Height>0.82338cm</Height>
-        <Width>16.74495cm</Width>
-        <ZIndex>6</ZIndex>
+        <Top>9.14259cm</Top>
+        <Left>0.02329cm</Left>
+        <Height>0.84102cm</Height>
+        <Width>16.72166cm</Width>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -254,17 +266,20 @@
             <TextRuns>
               <TextRun>
                 <Value>=Fields!Unterschrift.Value</Value>
-                <Style />
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>11pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>11.52412cm</Top>
+        <Top>11.25954cm</Top>
         <Height>0.6cm</Height>
         <Width>8.18854cm</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -276,11 +291,11 @@
         </Style>
       </Textbox>
       <Line Name="Line2">
-        <Top>11.48884cm</Top>
+        <Top>11.22426cm</Top>
         <Left>0.02328cm</Left>
         <Height>0cm</Height>
         <Width>8.16527cm</Width>
-        <ZIndex>8</ZIndex>
+        <ZIndex>7</ZIndex>
         <Visibility>
           <Hidden>true</Hidden>
         </Visibility>
@@ -298,18 +313,21 @@
             <TextRuns>
               <TextRun>
                 <Value>=If(First(Fields!Betreff.Value, "DataSet1")="Verweis","Helga Traut, OStDin, Schulleiterin","")</Value>
-                <Style />
+                <Style>
+                  <FontFamily>Tahoma</FontFamily>
+                  <FontSize>11pt</FontSize>
+                </Style>
               </TextRun>
             </TextRuns>
             <Style />
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>11.52412cm</Top>
+        <Top>11.25954cm</Top>
         <Left>8.57969cm</Left>
         <Height>0.6cm</Height>
         <Width>8.18854cm</Width>
-        <ZIndex>9</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -321,11 +339,11 @@
         </Style>
       </Textbox>
       <Line Name="LineTraut">
-        <Top>11.48884cm</Top>
+        <Top>11.22426cm</Top>
         <Left>8.57969cm</Left>
         <Height>0cm</Height>
         <Width>8.16527cm</Width>
-        <ZIndex>10</ZIndex>
+        <ZIndex>9</ZIndex>
         <Visibility>
           <Hidden>true</Hidden>
         </Visibility>
@@ -336,10 +354,10 @@
         </Style>
       </Line>
     </ReportItems>
-    <Height>4.9375in</Height>
+    <Height>4.78125in</Height>
     <Style />
   </Body>
-  <Width>6.60167in</Width>
+  <Width>6.61084in</Width>
   <Page>
     <PageFooter>
       <Height>2.36374cm</Height>
@@ -482,7 +500,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox8</rd:DefaultName>
           <Top>0.38791cm</Top>
-          <Left>0.00001cm</Left>
+          <Left>0.02329cm</Left>
           <Height>1.97583cm</Height>
           <Width>7.3025cm</Width>
           <Style>
@@ -578,7 +596,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox9</rd:DefaultName>
           <Top>0.38791cm</Top>
-          <Left>9.07204cm</Left>
+          <Left>9.09532cm</Left>
           <Height>1.97583cm</Height>
           <Width>7.67292cm</Width>
           <ZIndex>1</ZIndex>
@@ -594,7 +612,7 @@
         </Textbox>
         <Line Name="Line1">
           <Top>0.17625cm</Top>
-          <Left>0.00001cm</Left>
+          <Left>0.02329cm</Left>
           <Height>0cm</Height>
           <Width>16.74495cm</Width>
           <ZIndex>2</ZIndex>
@@ -613,9 +631,9 @@
     </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>3cm</TopMargin>
+    <LeftMargin>2.5cm</LeftMargin>
+    <RightMargin>1.5cm</RightMargin>
+    <TopMargin>2.5cm</TopMargin>
     <BottomMargin>2cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
