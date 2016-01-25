@@ -44,6 +44,7 @@
       this.button2 = new System.Windows.Forms.Button();
       this.userControlVorkommnisse1 = new diNo.UserControlVorkommnisse();
       this.button4 = new System.Windows.Forms.Button();
+      this.btnNotenWinSV = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // btnReadLehrer
@@ -143,7 +144,7 @@
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(12, 254);
+      this.label1.Location = new System.Drawing.Point(9, 533);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(37, 13);
       this.label1.TabIndex = 11;
@@ -213,11 +214,22 @@
       this.button4.UseVisualStyleBackColor = true;
       this.button4.Click += new System.EventHandler(this.button4_Click);
       // 
+      // btnNotenWinSV
+      // 
+      this.btnNotenWinSV.Location = new System.Drawing.Point(227, 242);
+      this.btnNotenWinSV.Name = "btnNotenWinSV";
+      this.btnNotenWinSV.Size = new System.Drawing.Size(96, 39);
+      this.btnNotenWinSV.TabIndex = 19;
+      this.btnNotenWinSV.Text = "Notendatei für WinSV erstellen";
+      this.btnNotenWinSV.UseVisualStyleBackColor = true;
+      this.btnNotenWinSV.Click += new System.EventHandler(this.btnNotenWinSV_Click);
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(1287, 558);
+      this.Controls.Add(this.btnNotenWinSV);
       this.Controls.Add(this.button4);
       this.Controls.Add(this.userControlVorkommnisse1);
       this.Controls.Add(this.button2);
@@ -259,6 +271,7 @@
     private System.Windows.Forms.Button button2;
     private UserControlVorkommnisse userControlVorkommnisse1;
         private System.Windows.Forms.Button button4;
-    }
+    private System.Windows.Forms.Button btnNotenWinSV;
+  }
 }
 

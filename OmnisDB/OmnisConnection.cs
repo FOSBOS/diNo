@@ -10,172 +10,78 @@ namespace diNo.OmnisDB
 {
   public class OmnisConnection
   {
-    #region Dll Imports
-    public const int HWND_BROADCAST = 0xFFFF;
-
-    [DllImport("user32.dll")]
-    public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-    [DllImport("user32")]
-    public static extern bool PostMessage(IntPtr hwnd, int msg, IntPtr wparam, IntPtr lparam);
-
-    [DllImport("user32.dll")]
-    public static extern IntPtr SetFocus(IntPtr hWnd);
-
-    [DllImport("user32")]
-    public static extern int RegisterWindowMessage(string message);
-
-    [DllImport("user32.dll")]
-    private static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
-
-    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-    private static extern int GetWindowText(IntPtr hWnd, StringBuilder strText, int maxCount);
-
-    [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-    private static extern int GetWindowTextLength(IntPtr hWnd);
-
-    internal delegate int WindowEnumProc(IntPtr hwnd, IntPtr lparam);
-
-    [DllImport("user32.dll")]
-    internal static extern bool EnumChildWindows(IntPtr hwnd, WindowEnumProc func, IntPtr lParam);
-
-    [DllImport("user32")]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    private static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr lParam);
-    private delegate bool EnumWindowProc(IntPtr hwnd, IntPtr lParam);
-
-    // Delegate to filter which windows to include 
-    public delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
-    #endregion Dll Imports
+    private Dictionary<string, string[]> faecherspiegelFOS;
+    private Dictionary<string, string[]> faecherspiegelBOS;
 
     public OmnisConnection()
     {
-      var afenster = FindWindowsWithText("Bayerische Schülerdatei").ToList();
-      var kinder = GetAllChildHandles(afenster[0]);
+      faecherspiegelFOS = new Dictionary<string, string[]>();
+      faecherspiegelBOS = new Dictionary<string, string[]>();
 
-
-      var alleFenster = FindWindows((hWhn, lparam) => true);
-
-      List<string> fenstertexte = new List<string>();
-      foreach (var fenster in kinder)
-      {
-        string fenstertest = GetWindowText(fenster);
-        // Da sucht man nach dem Fenster "Zeugnisdaten - ..."
-        if (!string.IsNullOrEmpty(fenstertest) && fenstertest.StartsWith("Zeugnisdaten -"))
-        {
-          // aktiviere Fenster
-          SetFocus(fenster);
-        }
-      }
-
-      //OdbcConnection conn = new OdbcConnection("DRIVER={OMNIS ODBC Driver};DataFilePath=C:/Projects/diNo/OmnisDB/sd.df1;UserID=hello;Password=world;");
       OdbcConnection conn = new OdbcConnection("DSN=sd");
-      //OdbcConnection conn = new OdbcConnection("Driver={OMNIS ODBC Driver};DBQ=C:/Projects/diNo/OmnisDB/sd.df1");
-      //OdbcConnection conn = new OdbcConnection("Driver=Omnis ODBC Driver; DataFilePath=C:\\Projects\\diNo\\OmnisDB\\sd.df1;Username = myuser; Password = mypassword");
-      //OdbcConnection conn = new OdbcConnection("odbc:DRIVER=OMNIS;DataFilePath=C:\\Projects\\diNo\\OmnisDB\\sd.df1");
       conn.Open();
 
-      var tableDT = conn.GetSchema("TABLES");
-      List<object[]> tables = new List<object[]>();
-      foreach (DataRow r in tableDT.Rows)
-      {
-        tables.Add(new object[3] { r[1], r[2], r[3] });
-      }
-
       var command = conn.CreateCommand();
-      command.CommandText = "SELECT K_Name FROM DKlassen";
+      command.CommandText = "SELECT FSP_NUM, FSP_SCHULART, FSP_Z_F01, FSP_Z_F02, FSP_Z_F03, FSP_Z_F04, FSP_Z_F05, FSP_Z_F06, FSP_Z_F07, FSP_Z_F08, FSP_Z_F09, FSP_Z_F10, FSP_Z_F11, FSP_Z_F12, FSP_Z_F13, FSP_Z_F14, FSP_Z_F15, FSP_Z_F16, FSP_Z_F17, FSP_Z_F18, FSP_Z_F19, FSP_Z_F20, FSP_Z_F21, FSP_Z_F22, FSP_Z_F23, FSP_Z_F24, FSP_Z_F25, FSP_Z_F26, FSP_Z_F27, FSP_Z_F28, FSP_Z_F29, FSP_Z_F30 FROM DZeugnisFspSt WHERE FSP_Schulart='FOS' OR FSP_Schulart = 'BOS'";
       var cmdResult = command.ExecuteReader();
-      foreach (var result in cmdResult)
+      while (cmdResult.Read())
       {
-        result.ToString();
-      }
-
-      var insertCommand = conn.CreateCommand();
-      insertCommand.CommandText = "INSERT INTO DKlassen (K_Name) Values ('Spass')";
-      insertCommand.ExecuteNonQuery();
-    }
-
-    public List<IntPtr> GetAllChildHandles(IntPtr aHandle)
-    {
-      List<IntPtr> childHandles = new List<IntPtr>();
-
-      GCHandle gcChildhandlesList = GCHandle.Alloc(childHandles);
-      IntPtr pointerChildHandlesList = GCHandle.ToIntPtr(gcChildhandlesList);
-
-      try
-      {
-        EnumWindowProc childProc = new EnumWindowProc(EnumWindow);
-        EnumChildWindows(aHandle, childProc, pointerChildHandlesList);
-      }
-      finally
-      {
-        gcChildhandlesList.Free();
-      }
-
-      return childHandles;
-    }
-
-    private bool EnumWindow(IntPtr hWnd, IntPtr lParam)
-    {
-      GCHandle gcChildhandlesList = GCHandle.FromIntPtr(lParam);
-
-      if (gcChildhandlesList == null || gcChildhandlesList.Target == null)
-      {
-        return false;
-      }
-
-      List<IntPtr> childHandles = gcChildhandlesList.Target as List<IntPtr>;
-      childHandles.Add(hWnd);
-
-      return true;
-    }
-
-    /// <summary> Get the text for the window pointed to by hWnd </summary>
-    public static string GetWindowText(IntPtr hWnd)
-    {
-      int size = GetWindowTextLength(hWnd);
-      if (size > 0)
-      {
-        var builder = new StringBuilder(size + 1);
-        GetWindowText(hWnd, builder, builder.Capacity);
-        return builder.ToString();
-      }
-
-      return String.Empty;
-    }
-
-    /// <summary> Find all windows that match the given filter </summary>
-    /// <param name="filter"> A delegate that returns true for windows
-    ///    that should be returned and false for windows that should
-    ///    not be returned </param>
-    public static IEnumerable<IntPtr> FindWindows(EnumWindowsProc filter)
-    {
-      IntPtr found = IntPtr.Zero;
-      List<IntPtr> windows = new List<IntPtr>();
-
-      EnumWindows(delegate (IntPtr wnd, IntPtr param)
-      {
-        if (filter(wnd, param))
+        string code = cmdResult.GetString(0);
+        string schulart = cmdResult.GetString(1);
+        if ("FOS".Equals(schulart, StringComparison.OrdinalIgnoreCase))
         {
-          // only add the windows that pass the filter
-          windows.Add(wnd);
+          if (!faecherspiegelFOS.ContainsKey(code))
+          {
+            faecherspiegelFOS.Add(code, new string[30]);
+          }
+
+          for (int i = 0; i < 30; i++)
+          {
+            faecherspiegelFOS[code][i] = cmdResult.GetString(i + 2);
+          }
         }
+        else if ("BOS".Equals(schulart, StringComparison.OrdinalIgnoreCase))
+        {
+          if (!faecherspiegelBOS.ContainsKey(code))
+          {
+            faecherspiegelBOS.Add(code, new string[30]);
+          }
 
-        // but return true here so that we iterate all windows
-        return true;
-      }, IntPtr.Zero);
-
-      return windows;
+          for (int i = 0; i < 30; i++)
+          {
+            faecherspiegelBOS[code][i] = cmdResult.GetString(i + 1);
+          }
+        }
+      }
     }
 
-    /// <summary> Find all windows that contain the given title text </summary>
-    /// <param name="titleText"> The text that the window title must contain. </param>
-    public static IEnumerable<IntPtr> FindWindowsWithText(string titleText)
+    public string SucheFach(string faecherspiegelCode, int index, Schulart schulart)
     {
-      return FindWindows(delegate (IntPtr wnd, IntPtr param)
+      var faecherspiegel = schulart == Schulart.BOS ? this.faecherspiegelBOS : this.faecherspiegelFOS;
+
+      if (!faecherspiegel.ContainsKey(faecherspiegelCode))
       {
-        return GetWindowText(wnd).Contains(titleText);
-      });
+        throw new InvalidOperationException("Unbekannter Fächerspiegel "+faecherspiegelCode);
+      }
+
+      string fach = faecherspiegel[faecherspiegelCode][index];
+      return PasseFachKuerzelAn(fach);
+    }
+
+    private string PasseFachKuerzelAn(string fach)
+    {
+      switch (fach)
+      {
+        case "BWL": return "BwR";
+        case "PPs": return "PP";
+        case "Sp": return "Smw";
+        case "WI": return "WIn";
+        case "FF": return "F-Wi";
+        case "RL": return "Rl";
+        case "WL": return "Wl";
+        case "TI": return "TeIn";
+        default: return fach;
+      }
     }
   }
 }

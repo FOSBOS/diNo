@@ -164,5 +164,13 @@ namespace diNo
             s.Save();
             s.Refresh();
         }
+
+    private void btnNotenWinSV_Click(object sender, EventArgs e)
+    {
+      Zeitpunkt reason = GetZeitpunkt();
+      string fileName = "C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\winSVZeugnisExport.txt";
+      string fileNameNeu = "C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\winSVZeugnisExportNEU.txt";
+      OmnisDB.DZeugnisFileController controller = new OmnisDB.DZeugnisFileController(fileName, fileNameNeu, reason);
     }
+  }
 }

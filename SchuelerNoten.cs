@@ -39,18 +39,18 @@ namespace diNo
     /// <summary>
     /// Liefert die Noten des Schülers im übergebenen Fach.
     /// </summary>
-    /// <param name="fach">Das Fach.</param>
+    /// <param name="fachKuerzel">Das Fachkürzel.</param>
     /// <returns>Die FachNoten oder null, wenn der Schüler das fach nicht belegt.</returns>
-    public FachSchuelerNoten FindeFach(Fach fach, bool throwExceptionIfNotFound)
+    public FachSchuelerNoten FindeFach(string fachKuerzel, bool throwExceptionIfNotFound)
     {
       foreach (FachSchuelerNoten f in alleFaecher)
       {
-        if (f.getFach.Equals(fach)) return f;
+        if (f.getFach.Kuerzel.Equals(fachKuerzel, StringComparison.OrdinalIgnoreCase)) return f;
       }
        
       if (throwExceptionIfNotFound)
       {
-        throw new InvalidOperationException("Der Schüler belegt Fach "+fach.Bezeichnung + " gar nicht.")
+        throw new InvalidOperationException("Der Schüler belegt Fach " + fachKuerzel + " gar nicht.");
       }
 
       return null;

@@ -133,10 +133,10 @@ namespace diNo.OmnisDB
   public enum fpaNote
   {
     Entfaellt = 0,
-    OhneErfolg = 1,
-    MitErfolg = 2,
-    MitGutemErfolg = 3,
-    MitSehrGutemErfolg = 4
+    MitSehrGutemErfolg = 1,
+    MitGutemErfolg = 2,
+    MitErfolg = 3,
+    OhneErfolg = 4
   }
 
   /// <summary>

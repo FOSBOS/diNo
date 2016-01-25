@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using diNo.diNoDataSetTableAdapters;
+using System.IO;
 
 namespace diNo.OmnisDB
 {
@@ -9,9 +10,10 @@ namespace diNo.OmnisDB
     /// </summary>
     /// <param name="sourceFileName">Der Dateiname des Exportfiles der leeren DZeugnis-Tabelle.</param>
     /// <param name="targetFileName">Der Dateiname des zu erstellenden ImportFiles der DZeugnis-Tabelle.</param>
-    public DZeugnisFileController(string sourceFileName, string targetFileName)
+    public DZeugnisFileController(string sourceFileName, string targetFileName, Zeitpunkt zeitpunkt)
     {
       Faecherspiegel faecher = new Faecherspiegel();
+      SchuelerTableAdapter ada = new SchuelerTableAdapter();
 
       using (FileStream inStream = new FileStream(sourceFileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(inStream))
@@ -22,30 +24,95 @@ namespace diNo.OmnisDB
         {
           var zeile = new VerwalteZeile(reader.ReadLine());
           int schuelerId = int.Parse(zeile[Konstanten.schuelerIdCol]);
+
+          // Prüfe vorher, ob der Schüler existiert (hier kommen tausend Schüler aus den Vorjahren)
+          if (ada.GetDataById(schuelerId).Count == 0)
+          {
+            continue; //TODO: Teste, ob dessen Zeugnis ganz weg ist nach dem Import - evtl. muss die Zeile ins outfile kopiert werden
+          }
+
           Schueler schueler = new Schueler(schuelerId);
 
-          //TODO: Hier müssen die allgemeinen Infos geprüft / ausgefüllt werden, z. B. Gefährdungsmitteilung etc.
+          zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
+          zeile[Konstanten.klassenzielOderGefaehrdungCol] = Konstanten.GetKlassenzielOderGefaehrdungString(GetZielerreichung(zeitpunkt, schueler));
+
           string faecherspiegel = zeile[Konstanten.faecherspiegelCol];
+          if (string.IsNullOrEmpty(faecherspiegel))
+          {
+            //log schreiben
+            continue;
+          }
           for (int i = 0; i < 30; i++)
           {
-            var fach = faecher.GetFach(faecherspiegel, i, schueler.getKlasse.Schulart);
-            if (fach == null)
-            {
-              break; // wenn kein Fach mehr gefunden wird, brich die Noten-Schleife ab
-            }
-
-            var noten = schueler.getNoten.FindeFach(fach, false);
-            if (noten == null)
-            {
-              // TODO: Was mach'mer denn dann? Nicht jeder Schüler ist katholisch...
-            }
-
-            byte? note = noten.getRelevanteNote(Zeitpunkt.HalbjahrUndProbezeitFOS); //TODO: Nicht nur Halbjahr
-            zeile[Konstanten.notePflichtfach1Col + i] = note == null ? "-" : note.ToString();
+            zeile[Konstanten.notePflichtfach1Col + i] = faecher.GetFachNoteString(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
           }
+
+          SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach1BezeichnungCol, Konstanten.weiteresFach1NoteCol);
+          SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach2BezeichnungCol, Konstanten.weiteresFach2NoteCol);
+          SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach3BezeichnungCol, Konstanten.weiteresFach3NoteCol);
+
+          writer.WriteLine(zeile.ToString());
 
         }
       }
+    }
+
+    private static void SucheWahlpflichtfach(Zeitpunkt zeitpunkt, Faecherspiegel faecher, VerwalteZeile zeile, Schueler schueler, int bezeichnungCol, int noteCol)
+    {
+      if (string.IsNullOrEmpty(zeile[bezeichnungCol]))
+      {
+        return;
+      }
+
+      string fach = zeile[bezeichnungCol];
+      if (fach =="F3")
+      {
+        fach = "F-Wi";
+      }
+
+      var wahlpflichtfach = schueler.getNoten.FindeFach(fach, false);
+      if (wahlpflichtfach != null)
+      {
+        zeile[noteCol] = faecher.GetNotenString(wahlpflichtfach, zeitpunkt);
+      }
+      else
+      {
+        // log schreiben!
+      }
+    }
+
+    private static KlassenzielOderGefaehrdung GetZielerreichung(Zeitpunkt zeitpunkt, Schueler schueler)
+    {
+      KlassenzielOderGefaehrdung ziel = zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS ? KlassenzielOderGefaehrdung.NichtGefaehrdet : KlassenzielOderGefaehrdung.VorrueckenOK;
+      foreach (var vorkommnis in schueler.Vorkommnisse)
+      {
+        switch (vorkommnis.Art)
+        {
+          case Vorkommnisart.starkeGefaehrdungsmitteilung: ziel = KlassenzielOderGefaehrdung.SehrGefaehrdet; break;
+          case Vorkommnisart.Gefaehrdungsmitteilung: ziel = KlassenzielOderGefaehrdung.Gefaehrdet; break;
+          case Vorkommnisart.BeiWeiteremAbsinken: ziel = KlassenzielOderGefaehrdung.BeiWeiteremAbsinkenGefaehrdet; break;
+          case Vorkommnisart.NichtZurPruefungZugelassen: ziel = KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg; break;
+          case Vorkommnisart.Notenausgleich: ziel = KlassenzielOderGefaehrdung.NotenausgleichGewaehrt; break;
+          case Vorkommnisart.PruefungInsgesamtNichtBestanden: ziel = KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg; break;
+        }
+      }
+
+      return ziel;
+    }
+
+    private static fpaNote GetFpaNote(Zeitpunkt zeitpunkt, Schueler schueler)
+    {
+      if (zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS && !schueler.FPANoten.IsErfolg1HjNull())
+      {
+        //TODO Claus fragen, ob das dieselbe Zahlencodierung ist wie in der DB (0=nicht gesetzt, 1 = sehr gut, ... 4 = ohne Erfolg)
+        return (fpaNote)schueler.FPANoten.Erfolg1Hj;
+      }
+      else if (!schueler.FPANoten.IsErfolgNull())
+      {
+        return (fpaNote)schueler.FPANoten.Erfolg;
+      }
+
+      return fpaNote.Entfaellt;
     }
 
     /// <summary>
@@ -58,9 +125,9 @@ namespace diNo.OmnisDB
       public VerwalteZeile(string line)
       {
         eintraege = line.Split('\t');
-        if (eintraege.Length != 231)
+        if (eintraege.Length != 233)
         {
-          throw new InvalidDataException("ungültige zeile für DZeugnis hat nur "+eintraege.Length + "Einträge statt 231");
+          throw new InvalidDataException("ungültige zeile für DZeugnis hat "+eintraege.Length + "Einträge statt 233");
         }
       }
  
@@ -73,11 +140,11 @@ namespace diNo.OmnisDB
       {
         get
         {
-          return eintraege[i];
+          return eintraege[i].Trim('\"');
         }
         set
         {
-          eintraege[i] = value;
+          eintraege[i] = "\"" + value + "\"";
         }
       }
 
