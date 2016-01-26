@@ -40,11 +40,24 @@ namespace diNo
         noten = schueler.getNoten;
     }
 
-    protected string toText(int z)
+    // erzeugt einen grammatikalisch korrekten Satz, je nach Anzahl der LNWs
+    // Leerzeichen werden vorne und hinten angefügt.
+    protected string toText(int z, string adjektiv="", string substantiv="")
     {
-        if (z==0) return " sind keine";
-        if (z==1) return " ist nur eine";
-        return " sind nur " + z;
+        if (adjektiv!="")
+        {
+          if (z==0) adjektiv+="n "; // mündlichen
+          else adjektiv +=" ";      // mündliche
+        }
+        if (substantiv!="")
+        {
+          if (z==1) substantiv+=" "; // Note
+          else substantiv +="n ";    // Noten
+        }
+        if (z==0) return " sind keine "+adjektiv+substantiv;
+        if (z==1) return " ist nur eine "+adjektiv+substantiv;
+        return " sind nur " + z+" "+adjektiv+substantiv;
+        
     }
   }
 
@@ -207,7 +220,7 @@ namespace diNo
 
     {
       base.Check(schueler);
-      List<string> faecherOhneNoten = new List<string>();
+      //List<string> faecherOhneNoten = new List<string>(); 
       foreach (var fachNoten in noten.alleFaecher)
       {
         Kurs kurs = new Kurs(fachNoten.kursId);
@@ -224,7 +237,8 @@ namespace diNo
 
         if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0)
         {
-          faecherOhneNoten.Add(kurs.getFach.Kuerzel);
+          contr.res.Add(schueler, kurs, "Es sind keine Noten vorhanden.");
+          //faecherOhneNoten.Add(kurs.getFach.Kuerzel + "("+ kurs.getLehrer.Kuerzel+")");
           continue; // eine Meldung pro Fach und Schüler reicht
         }
 
@@ -246,7 +260,7 @@ namespace diNo
           
           if (schulaufgabenCount < noetigeAnzahlSchulaufgaben)
           {
-            contr.res.Add(schueler, kurs, "Es " + toText(schulaufgabenCount) + " SA vorhanden.");
+            contr.res.Add(schueler, kurs, "Es" + toText(schulaufgabenCount) + "SA vorhanden.");
             continue; // eine Meldung pro Fach und Schüler reicht
           }
         }
@@ -259,7 +273,7 @@ namespace diNo
         {
           if (!AnzahlMuendlicheNotenOKProbezeitBOS(schulaufgabenCount, kurzarbeitenCount, muendlicheCount, fachNoten))
           {
-            contr.res.Add(schueler, kurs, "Es " + toText(muendlicheCount) + " mündlichen Noten vorhanden.");
+            contr.res.Add(schueler, kurs, "Es" + toText(muendlicheCount,"mündliche","Note") + "vorhanden.");
           }
         }
         else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
@@ -268,7 +282,7 @@ namespace diNo
             if ((kurzarbeitenCount == 0 && muendlicheCount < 2) || muendlicheCount == 0)
             {
               contr.res.Add(schueler, kurs,
-                  "Es " + toText(muendlicheCount) + " mündlichen Noten vorhanden.");
+                  "Es" +  toText(muendlicheCount,"mündliche","Note") + "vorhanden.");
             }
           }
         }
@@ -277,13 +291,13 @@ namespace diNo
           if (kurzarbeitenCount == 1)
           {
             contr.res.Add(schueler, kurs,
-                "Es " + toText(kurzarbeitenCount) + " Kurzarbeit vorhanden.");
+                "Es" + toText(kurzarbeitenCount,"","Kurzarbeit") + "vorhanden.");
             continue;
           }
           if ((kurzarbeitenCount == 0 && muendlicheCount < 4) || muendlicheCount < 2)
           {
             contr.res.Add(schueler, kurs,
-                "Es " + toText(muendlicheCount) + " mündliche Noten vorhanden.");
+                "Es" + toText(muendlicheCount,"mündliche","Note") + "vorhanden.");
           }
         }
 
@@ -296,11 +310,11 @@ namespace diNo
           }
         }
       }
-
+      /*
       if (faecherOhneNoten.Count > 0)
       {
         contr.res.Add(schueler, null, "Es sind keine Noten vorhanden in:" + string.Join(", ", faecherOhneNoten));
-      }
+      }*/
     }
 
     private bool AnzahlMuendlicheNotenOKProbezeitBOS(int schulaufgabenCount, int kurzarbeitenCount, int muendlicheCount, FachSchuelerNoten noten)

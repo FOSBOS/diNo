@@ -30,11 +30,10 @@ namespace diNo
         nameLabel.Text = schueler.NameVorname;
         klasseLabel.Text = schueler.getKlasse.Bezeichnung;
         Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
-        pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
-        btnBrief.Enabled = ! Zugriff.Instance.IsAdmin; // Admins haben kein Lehrerobjekt und können daher keine Briefe schreiben
+        pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);  
+        btnBrief.Enabled = true;
         btnPrint.Enabled = true;
         btnSave.Enabled = true;
-
       }
     }
 
@@ -46,7 +45,7 @@ namespace diNo
         nameLabel.Text = "";
         klasseLabel.Text = "";
         pictureBoxImage.Image = null; 
-        toolStripStatusLabel1.Text = "";   
+        toolStripStatusLabel1.Text = "";
     }
 
         private void btnNotenabgeben_Click(object sender, EventArgs e)

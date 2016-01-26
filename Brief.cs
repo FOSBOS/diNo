@@ -106,7 +106,7 @@ namespace diNo
         string lnwart = opSEP.Checked ? "schriftliche" : "mündliche";
         b.Betreff = "Nachholung von Leistungsnachweisen";
         b.Inhalt = erzeugeAnrede();
-        b.Inhalt += "Sie konnten Sie in diesem Schuljahr im Fach " + cbFach.Text + "  wegen Ihrer Versäumnisse nicht hinreichend geprüft werden.\n\n"; 
+        b.Inhalt += "Sie konnten in diesem Schuljahr im Fach " + cbFach.Text + " wegen Ihrer Versäumnisse nicht hinreichend geprüft werden.\n\n"; 
         b.Inhalt += "Gemäß § 50 (2) FOBOSO wird hiermit eine " +lnwart+" Ersatzprüfung angesetzt.\n\n";
         b.Inhalt += "Prüfungsstoff wird sein: \n" + edInhalt.Text + "\n\n";
         b.Inhalt += "Die " +lnwart+" Ersatzprüfung findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr" + erzeugeRaum() + ".\n\n";           
@@ -146,7 +146,10 @@ namespace diNo
             Strasse = s.Data.AnschriftStrasse;
             Ort = s.Data.AnschriftPLZ + " " +  s.Data.AnschriftOrt;
             Klasse = s.getKlasse.Bezeichnung;
-            Unterschrift = Zugriff.Instance.Lehrer.Name + ", "+ Zugriff.Instance.Lehrer.Dienstbezeichnung;
+            if (Zugriff.Instance.IsAdmin)
+              Unterschrift = "(Systemadministration FOS/BOS Kempten)";
+            else
+              Unterschrift = Zugriff.Instance.Lehrer.Name + ", "+ Zugriff.Instance.Lehrer.Dienstbezeichnung;
         }
    }
 
