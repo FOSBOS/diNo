@@ -21,7 +21,7 @@ namespace diNo
       {
             Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
         //Username = "FOSBOS\\ckonrad";
-            IsAdmin = (!Username.Contains("FOSBOS") || Username.Equals("FOSBOS\\Administrator"));
+            IsAdmin = (!Username.Contains("FOSBOS") || Username.ToUpper().Equals("FOSBOS\\ADMINISTRATOR"));
             Username = Username.Replace("FOSBOS\\", "");
             var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
             Lehrer = (lehrerResult == null || lehrerResult.Count == 0) ? null : lehrerResult[0];
