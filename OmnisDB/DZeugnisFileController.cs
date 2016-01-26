@@ -28,7 +28,7 @@ namespace diNo.OmnisDB
           // Prüfe vorher, ob der Schüler existiert (hier kommen tausend Schüler aus den Vorjahren)
           if (ada.GetDataById(schuelerId).Count == 0)
           {
-            continue; //TODO: Teste, ob dessen Zeugnis ganz weg ist nach dem Import - evtl. muss die Zeile ins outfile kopiert werden
+            continue;
           }
 
           Schueler schueler = new Schueler(schuelerId);
