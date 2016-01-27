@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using diNo.Properties;
 
 namespace diNo
 {
@@ -20,6 +21,9 @@ namespace diNo
 
       InitVorkommnisse();
       this.olvColumnArt.AspectGetter = GetDisplayValueVorkommnisart;
+      this.olvColumnLoeschen.ImageGetter = delegate { return Resources.muell; };
+      this.olvColumnLoeschen.AspectGetter = delegate { return "Delete"; };
+      this.olvColumnLoeschen.AspectToStringConverter = delegate { return string.Empty; };
     }
 
     public Schueler Schueler
@@ -145,5 +149,23 @@ namespace diNo
       }
     }
 
+    private void objectListViewVorkommnisse_CellEditStarting(object sender, BrightIdeasSoftware.CellEditEventArgs e)
+    {      // special cell edit handling for our delete-row
+      if (e.Column == olvColumnLoeschen)
+      {
+        e.Cancel = true;        // we don't want to edit anything
+
+        Vorkommnis geklicktesVorkommnis = e.RowObject as Vorkommnis;
+        if (geklicktesVorkommnis != null && this.schueler != null)
+        {
+          DialogResult ergebnis = MessageBox.Show("Soll das Vorkommnis gelöscht werden?", "Löschen?", MessageBoxButtons.YesNo);
+          if (ergebnis == DialogResult.Yes)
+          {
+            this.schueler.RemoveVorkommnis(geklicktesVorkommnis.Id);
+            this.objectListViewVorkommnisse.RemoveObject(e.RowObject); // remove object
+          }
+        }
+      }
+    }
   }
 }

@@ -94,6 +94,16 @@ namespace diNo.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap muell {
+            get {
+                object obj = ResourceManager.GetObject("muell", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap piktogrammNotenbogen {
             get {
                 object obj = ResourceManager.GetObject("piktogrammNotenbogen", resourceCulture);

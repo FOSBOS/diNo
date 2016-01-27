@@ -40,6 +40,7 @@
       this.olvColumnDatum = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumnArt = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumnBemerkung = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.olvColumnLoeschen = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.label2 = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
       ((System.ComponentModel.ISupportInitialize)(this.objectListViewVorkommnisse)).BeginInit();
@@ -118,21 +119,27 @@
       this.objectListViewVorkommnisse.AllColumns.Add(this.olvColumnDatum);
       this.objectListViewVorkommnisse.AllColumns.Add(this.olvColumnArt);
       this.objectListViewVorkommnisse.AllColumns.Add(this.olvColumnBemerkung);
+      this.objectListViewVorkommnisse.AllColumns.Add(this.olvColumnLoeschen);
       this.objectListViewVorkommnisse.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.objectListViewVorkommnisse.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
       this.objectListViewVorkommnisse.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnDatum,
             this.olvColumnArt,
-            this.olvColumnBemerkung});
+            this.olvColumnBemerkung,
+            this.olvColumnLoeschen});
       this.objectListViewVorkommnisse.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.objectListViewVorkommnisse.Location = new System.Drawing.Point(10, 183);
       this.objectListViewVorkommnisse.Name = "objectListViewVorkommnisse";
+      this.objectListViewVorkommnisse.OwnerDraw = true;
+      this.objectListViewVorkommnisse.ShowImagesOnSubItems = true;
       this.objectListViewVorkommnisse.Size = new System.Drawing.Size(704, 153);
       this.objectListViewVorkommnisse.TabIndex = 4;
       this.objectListViewVorkommnisse.TabStop = false;
       this.objectListViewVorkommnisse.UseCompatibleStateImageBehavior = false;
       this.objectListViewVorkommnisse.View = System.Windows.Forms.View.Details;
+      this.objectListViewVorkommnisse.CellEditStarting += new BrightIdeasSoftware.CellEditEventHandler(this.objectListViewVorkommnisse_CellEditStarting);
       // 
       // olvColumnDatum
       // 
@@ -154,7 +161,17 @@
       this.olvColumnBemerkung.AspectName = "Bemerkung";
       this.olvColumnBemerkung.IsEditable = false;
       this.olvColumnBemerkung.Text = "Bemerkung";
-      this.olvColumnBemerkung.Width = 386;
+      this.olvColumnBemerkung.Width = 368;
+      // 
+      // olvColumnLoeschen
+      // 
+      this.olvColumnLoeschen.Groupable = false;
+      this.olvColumnLoeschen.Hideable = false;
+      this.olvColumnLoeschen.Searchable = false;
+      this.olvColumnLoeschen.ShowTextInHeader = false;
+      this.olvColumnLoeschen.Sortable = false;
+      this.olvColumnLoeschen.Text = "";
+      this.olvColumnLoeschen.Width = 25;
       // 
       // label2
       // 
@@ -211,5 +228,6 @@
     private System.Windows.Forms.Button btnNeuesVorkommnis;
         private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label label3;
+    private BrightIdeasSoftware.OLVColumn olvColumnLoeschen;
   }
 }

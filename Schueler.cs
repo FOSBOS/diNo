@@ -394,6 +394,12 @@ namespace diNo
       }
     }
 
+    public void RemoveVorkommnis(int vorkommnisId)
+    {
+      (new VorkommnisTableAdapter()).Delete(vorkommnisId);
+        this.vorkommnisse = null; // damit er die neu lädt
+    }
+
     public void AddVorkommnis(Vorkommnisart art, DateTime datum, string bemerkung)
     {
       new VorkommnisTableAdapter().Insert(datum, bemerkung, this.Id, (int)art);
