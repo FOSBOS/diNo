@@ -1,10 +1,13 @@
 ﻿using diNo.diNoDataSetTableAdapters;
+using log4net;
 using System.IO;
 
 namespace diNo.OmnisDB
 {
   public class DZeugnisFileController
   {
+    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
     /// <summary>
     /// Konstruktor.
     /// </summary>
@@ -39,7 +42,7 @@ namespace diNo.OmnisDB
           string faecherspiegel = zeile[Konstanten.faecherspiegelCol];
           if (string.IsNullOrEmpty(faecherspiegel))
           {
-            //log schreiben
+            log.Warn("Für den Schüler " + schueler.NameVorname + " gibt es keinen passenden Fächerspiegel!");
             continue;
           }
           for (int i = 0; i < 30; i++)
@@ -77,7 +80,7 @@ namespace diNo.OmnisDB
       }
       else
       {
-        // log schreiben!
+        log.Warn("Für den Schüler "+schueler.NameVorname+" konnte das Wahlpflichtfach "+fach+" nicht gefunden werden.");
       }
     }
 

@@ -1,15 +1,14 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data.Odbc;
-using System.Data;
-using System.Runtime.InteropServices;
 
 namespace diNo.OmnisDB
 {
   public class OmnisConnection
   {
+    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
     private Dictionary<string, string[]> faecherspiegelFOS;
     private Dictionary<string, string[]> faecherspiegelBOS;
 
