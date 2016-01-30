@@ -93,9 +93,9 @@ namespace diNo
                 sum += fach.getNotenanzahl(Notentyp.Fachreferat);
             
             if (sum == 0)
-                contr.res.Add(schueler,null,"Der Schüler hat kein Fachreferat.");           
+                contr.Add(null,"Der Schüler hat kein Fachreferat.");           
             else if (sum>1)
-                contr.res.Add(schueler, null, "Der Schüler hat " + sum + " Fachreferate.");
+                contr.Add( null, "Der Schüler hat " + sum + " Fachreferate.");
     }
   }
 
@@ -127,18 +127,18 @@ namespace diNo
         var fpANoten = schueler.FPANoten;
         if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {
-            if (fpANoten.IsErfolg1HjNull() || fpANoten.IsPunkte1HjNull()) contr.res.Add(schueler, null, "Es liegt keine FpA-Note vor.");
+            if (fpANoten.IsErfolg1HjNull() || fpANoten.IsPunkte1HjNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
             else if (fpANoten.Erfolg1Hj == 4)
             {
-                contr.res.Add(schueler, null, "Die fachpraktische Ausbildung wurde bisher ohne Erfolg durchlaufen.");
+                contr.Add(null, "Die fachpraktische Ausbildung wurde bisher ohne Erfolg durchlaufen.");
             }
         }            
         else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
         {
-            if (fpANoten.IsPunkte2HjNull() || fpANoten.IsErfolgNull() || fpANoten.IsPunkteNull()) contr.res.Add(schueler, null, "Es liegt keine FpA-Note vor.");
+            if (fpANoten.IsPunkte2HjNull() || fpANoten.IsErfolgNull() || fpANoten.IsPunkteNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
             else if (fpANoten.Erfolg == 4)
             {
-                contr.res.Add(schueler, null, "Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.");
+                contr.Add(null, "Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.");
             }
         }           
     }
@@ -172,7 +172,7 @@ namespace diNo
       var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
       if (seminarfachnoten.Count == 0)
       {
-            contr.res.Add(schueler, null,"Es liegt keine Seminarfachnote vor.");
+            contr.Add(null,"Es liegt keine Seminarfachnote vor.");
       }
       else
       {
@@ -181,12 +181,12 @@ namespace diNo
 
         if (note < 4)
         {
-            contr.res.Add(schueler, null, "Im Seminarfach wurden " +note+" Punkte erzielt.");
+            contr.Add(null, "Im Seminarfach wurden " +note+" Punkte erzielt.");
         }
 
         if (string.IsNullOrEmpty(thema))
         {
-            contr.res.Add(schueler, null, "Es liegt kein Seminarfachthema vor.");
+            contr.Add(null, "Es liegt kein Seminarfachthema vor.");
         }
     }
   }
@@ -236,7 +236,7 @@ namespace diNo
 
         if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0)
         {
-          contr.res.Add(schueler, kurs, "Es sind keine Noten vorhanden.");
+          contr.Add( kurs, "Es sind keine Noten vorhanden.");
           continue; // eine Meldung pro Fach und Schüler reicht
         }
 
@@ -257,7 +257,7 @@ namespace diNo
           
           if (schulaufgabenCount < noetigeAnzahlSchulaufgaben)
           {
-            contr.res.Add(schueler, kurs, "Es" + toText(schulaufgabenCount) + "SA vorhanden.");
+            contr.Add( kurs, "Es" + toText(schulaufgabenCount) + "SA vorhanden.");
             continue; // eine Meldung pro Fach und Schüler reicht
           }
         }
@@ -268,7 +268,7 @@ namespace diNo
         {
           if (!AnzahlMuendlicheNotenOKProbezeitBOS(schulaufgabenCount, kurzarbeitenCount, muendlicheCount, fachNoten))
           {
-            contr.res.Add(schueler, kurs, "Es" + toText(muendlicheCount,"mündliche","Note") + "vorhanden.");
+            contr.Add( kurs, "Es" + toText(muendlicheCount,"mündliche","Note") + "vorhanden.");
           }
         }
         else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
@@ -276,7 +276,7 @@ namespace diNo
           {
             if ((kurzarbeitenCount == 0 && muendlicheCount < 2) || muendlicheCount == 0)
             {
-              contr.res.Add(schueler, kurs,
+              contr.Add( kurs,
                   "Es" +  toText(muendlicheCount,"mündliche","Note") + "vorhanden.");
             }
           }
@@ -285,13 +285,13 @@ namespace diNo
         {
           if (kurzarbeitenCount == 1)
           {
-            contr.res.Add(schueler, kurs,
+            contr.Add( kurs,
                 "Es" + toText(kurzarbeitenCount,"","Kurzarbeit") + "vorhanden.");
             continue;
           }
           if ((kurzarbeitenCount == 0 && muendlicheCount < 4) || muendlicheCount < 2)
           {
-            contr.res.Add(schueler, kurs,
+            contr.Add( kurs,
                 "Es" + toText(muendlicheCount,"mündliche","Note") + "vorhanden.");
           }
         }
@@ -301,14 +301,14 @@ namespace diNo
         {
           if (fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
           {
-            contr.res.Add(schueler, kurs, "Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
+            contr.Add( kurs, "Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
           }
         }
       }
       /*
       if (faecherOhneNoten.Count > 0)
       {
-        contr.res.Add(schueler, null, "Es sind keine Noten vorhanden in:" + string.Join(", ", faecherOhneNoten));
+        contr.Add( null, "Es sind keine Noten vorhanden in:" + string.Join(", ", faecherOhneNoten));
       }*/
     }
 
@@ -402,7 +402,7 @@ namespace diNo
             if (relevanteNote == null)
             {
                     ; // Das stellt der Notenanzahlchecker fest.
-                // contr.res.Add(schueler,new Kurs(fachNoten.kursId) ,"Es konnte keine Note gebildet werden.");
+                // contr.Add(new Kurs(fachNoten.kursId) ,"Es konnte keine Note gebildet werden.");
             }
             else
             {                         
@@ -419,21 +419,21 @@ namespace diNo
 
         if (contr.zeitpunkt == Zeitpunkt.ErstePA)
         {
-            if (anz6 > 1 || (anz6 + anz5) > 3) contr.res.Add(schueler, null, "Zum Abitur nicht zugelassen: " + m);                
+            if (anz6 > 1 || (anz6 + anz5) > 3) contr.Add( null, "Zum Abitur nicht zugelassen: " + m);                
             return;
         }
         else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {
           if (anz6>0 || anz5 > 1)
           {
-            contr.res.Add(schueler, null, "Stark gefährdet: " + m);
+            contr.Add( null, "Stark gefährdet: " + m);
             if (contr.erzeugeVorkommnisse) 
               schueler.AddVorkommnis(Vorkommnisart.starkeGefaehrdungsmitteilung,DateTime.Today,m);
           }
-          //else if (anz5 > 0) contr.res.Add(schueler, null, "Gefährdet: " + m); 
+          //else if (anz5 > 0) contr.Add( null, "Gefährdet: " + m); 
           else if (anz4P > 1 || anz5 > 0)
           { 
-            contr.res.Add(schueler, null, "Bei weiterem Absinken: " + m);
+            contr.Add( null, "Bei weiterem Absinken: " + m);
             if (contr.erzeugeVorkommnisse) 
               schueler.AddVorkommnis(Vorkommnisart.BeiWeiteremAbsinken,DateTime.Today,m);
           }
@@ -450,8 +450,8 @@ namespace diNo
           // TODO: Notenausgleich sauber implementieren
           if (anz6 > 0 || anz5 > 1)
           {
-            if (anz2 < 2 || anz1 == 0) contr.res.Add(schueler, null, "Nicht bestanden, kein Notenausgleich möglich: " + m); 
-            else contr.res.Add(schueler, null, "Nicht bestanden, Notenausgleich prüfen: " + m); 
+            if (anz2 < 2 || anz1 == 0) contr.Add( null, "Nicht bestanden, kein Notenausgleich möglich: " + m); 
+            else contr.Add( null, "Nicht bestanden, Notenausgleich prüfen: " + m); 
           }                    
         }
     }

@@ -44,6 +44,7 @@ namespace diNo
                     if (abbrechen) break;
                 }
             }            
+            contr.CreateResults();
             var r = new ReportNotencheck(contr.res);            
             Close();            
         }

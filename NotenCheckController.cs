@@ -16,6 +16,10 @@ namespace diNo
         public Zeitpunkt zeitpunkt;
         public bool nurEigeneNoten;
         public bool erzeugeVorkommnisse;
+        private List<KeyValuePair<string,NotenCheckContainer>> chkContainer;
+        private Dictionary<string,NotenCheckCounter> chkCounter;
+        private int aktKlassenId=0;
+        private Schueler aktSchueler;
 
         public NotenCheckController(Zeitpunkt azeitpunkt, bool aNurEigeneNoten, bool aerzeugeVorkommnisse)
         {
@@ -36,7 +40,7 @@ namespace diNo
         {            
             Klasse klasse;
             klasse = s.getKlasse;
-            
+
             // muss dieser Schüler überhaupt geprüft werden?
 
             // S ohne Probezeit oder späterer Probezeit
@@ -46,28 +50,69 @@ namespace diNo
                     || s.Data.ProbezeitBis < DateTime.Parse("15.09." +  aktJahr)
                     || s.Data.ProbezeitBis > DateTime.Parse("15.12." +  aktJahr)))
                 return ;
+            
+            // je Klasse wird die akkumlierte Liste neu erstellt
+            if (klasse.Data.Id != aktKlassenId)
+            {
+              if (aktKlassenId!=0) CreateResults();
+              aktKlassenId = klasse.Data.Id;
+              chkContainer = new List<KeyValuePair<string, NotenCheckContainer>>();
+              chkCounter = new Dictionary<string, NotenCheckCounter>();
+            }
                 
+            aktSchueler = s; // erst hier: für CreateResults muss noch der alte drinstehen
             foreach (var ch in alleNotenchecks)
             {
                 if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart))
                     ch.Check(s);
             }
-        }
-        /*
-        /// <summary>
-        /// Liefert die Prüfungsergebnisse in druckbarer Form
-        /// </summary>
-        public List<string> PrintResults()
+        }   
+    
+    public void Add(Kurs k,string m)
+    {
+      NotenCheckCounter c;      
+      if (k!=null)
+      {
+        chkContainer.Add(new KeyValuePair<string, NotenCheckContainer>(k.Id + "_" +m,new NotenCheckContainer(k,aktSchueler,m)));
+        if (chkCounter.TryGetValue(k.Id + "_" +m,out c))
         {
-            List<string> s = new List<string>();
-            foreach (var r in res.list)
-            {
-                s.Add(r.ToString());
-            }
-            return s;
+          c.count++; // so eine ähnliche Meldung gab es schon mal
         }
-        */
+        else
+        {
+          chkCounter.Add(k.Id + "_" +m,new NotenCheckCounter(k,m));
+        }
+      }
+      else
+      {
+        chkContainer.Add(new KeyValuePair<string, NotenCheckContainer>("",new NotenCheckContainer(k,aktSchueler,m)));
+      }
     }
+
+    // am Ende einer Klasse muss die Druckliste erneuert werden
+    public void CreateResults()
+    {      
+      NotenCheckCounter cnt;
+      int maxAnzahl = 5; // ab dieser Zahl wird kumuliert
+
+      // kumulierte Meldungen für viele Schüler
+      foreach (var c in chkCounter)
+      {
+        if (c.Value.count>maxAnzahl) 
+           res.list.Add(new NotenCheckResult(aktSchueler.getKlasse,c.Value.kurs,c.Value.meldung + " ("+c.Value.count+"x)"));
+      }
+
+      // einzelne Meldungen
+      foreach (var r in chkContainer)
+      {
+        if (!chkCounter.TryGetValue(r.Key, out cnt) || cnt.count<=maxAnzahl)
+        {         
+            res.list.Add(new NotenCheckResult(r.Value.schueler,r.Value.kurs,r.Value.meldung));
+        }
+      }
+    }
+
+  }
 
    
     /// <summary>
@@ -79,11 +124,6 @@ namespace diNo
         public NotenCheckResults()
         {
             list = new List<NotenCheckResult>();
-        }
-
-        public void Add(Schueler s,Kurs k,string m)
-        {
-            list.Add(new NotenCheckResult(s,k,m));
         }
     }
 
@@ -107,10 +147,51 @@ namespace diNo
             meldung = m;
         }
 
+        public NotenCheckResult(Klasse kl,Kurs k,string m)
+        {
+            schueler = "...mehrmals...";
+            klasse = kl.Data.Bezeichnung;
+            lehrer = k!=null ? k.getLehrer.Kuerzel : "";
+            fach =   k!=null ? k.getFach.Kuerzel : "";
+            meldung = m;
+        }
+
         public override string ToString()
         {
              return klasse + ", " + schueler + ", " +
                     (lehrer=="" ? fach + " (" + lehrer + "): " : "")  + meldung;            
         }
     }
+
+    // nimmt eine Fehlermeldung zur Zwischenspeicherung auf
+    public class NotenCheckContainer
+    {     
+      public Kurs kurs;
+      public Schueler schueler;
+      public string meldung;
+
+      public NotenCheckContainer(Kurs k,Schueler s, string m)
+      {
+        kurs = k;
+        schueler = s;
+        meldung = m;
+      }
+
+    }
+
+    // verwaltet die Anzahl ähnlicher Fehlermeldungen je Klasse
+    public class NotenCheckCounter
+    {      
+      public int count;
+      public Kurs kurs;     
+      public string meldung;
+
+      public NotenCheckCounter(Kurs k, string m)
+      {
+        count =1;
+        kurs = k;        
+        meldung = m;
+      }
+    }
+
 }
