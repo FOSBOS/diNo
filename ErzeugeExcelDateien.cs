@@ -237,7 +237,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
       Schueler ersterSchueler = new Schueler(alleSchueler[0]); // muss existieren, da nur Kurse mit Schülern erzeugt werden
 
       Schulart schulart = ersterSchueler.getKlasse.Schulart;
-      Schulaufgabenwertung wertung = kurs.getFach.GetSchulaufgabenwertung(ersterSchueler.getKlasse);
+      Schulaufgabenwertung wertung = kurs.getFach.GetSchulaufgabenwertung(ersterSchueler.Zweig,ersterSchueler.getKlasse.Jahrgangsstufe);
 
       // schreibe Notenbogen - Kopf
       xls.WriteValue(xls.notenbogen, CellConstant.Wertungsart, GetWertungsString(wertung));

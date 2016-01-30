@@ -105,8 +105,13 @@ namespace diNo
     {
       get
       {
-        string klasse = data.Bezeichnung;
-        if (klasse.Contains("Vk") || klasse.Contains("vk") || klasse.Contains("Vs"))
+        string klasse = data.Bezeichnung.ToUpper();
+        if (klasse.Contains("VS"))
+        {
+          return Jahrgangsstufe.Vorkurs;
+        }
+
+        if (klasse.Contains("VK"))
         {
           return Jahrgangsstufe.Vorklasse;
         }
@@ -164,8 +169,12 @@ namespace diNo
       {
         return Zweig.Technik;
       }
+      else
+      {
+        return Zweig.None; // z.B. im Vorkurs BOS
+      }
 
-      throw new InvalidOperationException("Zweig nicht gefunden: " + zweigBezeichnung);
+      // throw new InvalidOperationException("Zweig nicht gefunden: " + zweigBezeichnung);
     }
 
     public diNoDataSet.LehrerRow Klassenleiter

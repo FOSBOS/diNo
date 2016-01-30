@@ -227,8 +227,7 @@ namespace diNo
         if (contr.nurEigeneNoten && (Zugriff.Instance.Lehrer.Id != kurs.getLehrer.Id))
           continue;
 
-        // TODO: Anzahl SA direkt aus DB lesen!           
-        Schulaufgabenwertung wertung = fachNoten.getFach.GetSchulaufgabenwertung(schueler.getKlasse);
+        int noetigeAnzahlSchulaufgaben = fachNoten.getFach.AnzahlSA(schueler.Zweig,schueler.getKlasse.Jahrgangsstufe);
 
         // die Prüfung unterscheidet wie der bisherige Notenbogen nicht, ob die Note aus einer Ex oder echt mündlich ist - das verantwortet der Lehrer
         int kurzarbeitenCount = fachNoten.getNotenanzahl(Notentyp.Kurzarbeit);
@@ -238,12 +237,10 @@ namespace diNo
         if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0)
         {
           contr.res.Add(schueler, kurs, "Es sind keine Noten vorhanden.");
-          //faecherOhneNoten.Add(kurs.getFach.Kuerzel + "("+ kurs.getLehrer.Kuerzel+")");
           continue; // eine Meldung pro Fach und Schüler reicht
         }
 
         //es müssen 2 oder 3 Schulaufgaben zum Ende des Jahcontr.res vorliegen - zum Halbjahr min. eine                                
-        int noetigeAnzahlSchulaufgaben = GetAnzahlSchulaufgaben(wertung);
         if (noetigeAnzahlSchulaufgaben > 0)
         {
           if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
@@ -266,9 +263,7 @@ namespace diNo
         }
 
         // egal, bei welcher Entscheidung: Es müssen im ersten Halbjahr min. 2 mündliche Noten vorliegen
-        // am Jahcontr.resende bzw. zur PA-Sitzung müssen es entweder 2 Kurzarbeiten/Exen und 2 echte mündliche
-
-
+        // am Jahresende bzw. zur PA-Sitzung müssen es entweder 2 Kurzarbeiten/Exen und 2 echte mündliche
         if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
         {
           if (!AnzahlMuendlicheNotenOKProbezeitBOS(schulaufgabenCount, kurzarbeitenCount, muendlicheCount, fachNoten))
@@ -302,7 +297,7 @@ namespace diNo
         }
 
         // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
-        else if (contr.zeitpunkt == Zeitpunkt.ZweitePA && fachNoten.getFach.IstSAPFach())
+        else if (contr.zeitpunkt == Zeitpunkt.ZweitePA && fachNoten.getFach.IstSAPFach(schueler.Zweig))
         {
           if (fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
           {

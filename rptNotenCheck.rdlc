@@ -53,23 +53,24 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.01834cm</Width>
+                  <Width>1.03409cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.32417cm</Width>
+                  <Width>1.26054cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>8.58542cm</Width>
+                  <Width>10.74933cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.6cm</Height>
+                  <Height>0.47653cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="Textbox2">
                           <CanGrow>true</CanGrow>
+                          <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -77,6 +78,7 @@
                                 <TextRun>
                                   <Value>Fach</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -102,6 +104,7 @@
                       <CellContents>
                         <Textbox Name="Textbox3">
                           <CanGrow>true</CanGrow>
+                          <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -109,6 +112,7 @@
                                 <TextRun>
                                   <Value>Lehrer</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -134,6 +138,7 @@
                       <CellContents>
                         <Textbox Name="Textbox5">
                           <CanGrow>true</CanGrow>
+                          <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
@@ -141,6 +146,7 @@
                                 <TextRun>
                                   <Value>Hinweis</Value>
                                   <Style>
+                                    <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -165,19 +171,22 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.6cm</Height>
+                  <Height>0.41479cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
                         <Textbox Name="fach">
                           <CanGrow>true</CanGrow>
+                          <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!fach.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -201,13 +210,16 @@
                       <CellContents>
                         <Textbox Name="lehrer">
                           <CanGrow>true</CanGrow>
+                          <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!lehrer.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -231,13 +243,16 @@
                       <CellContents>
                         <Textbox Name="meldung">
                           <CanGrow>true</CanGrow>
+                          <CanShrink>true</CanShrink>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!meldung.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -272,10 +287,11 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>1.69334cm</Size>
+                    <Size>1.57176cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox9">
                         <CanGrow>true</CanGrow>
+                        <CanShrink>true</CanShrink>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
@@ -283,6 +299,7 @@
                               <TextRun>
                                 <Value>Klasse</Value>
                                 <Style>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -307,10 +324,11 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>3.08208cm</Size>
+                        <Size>3.52116cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox7">
                             <CanGrow>true</CanGrow>
+                            <CanShrink>true</CanShrink>
                             <KeepTogether>true</KeepTogether>
                             <Paragraphs>
                               <Paragraph>
@@ -318,6 +336,7 @@
                                   <TextRun>
                                     <Value>Schüler</Value>
                                     <Style>
+                                      <FontSize>8pt</FontSize>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -358,10 +377,11 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>1.69334cm</Size>
+                    <Size>1.57176cm</Size>
                     <CellContents>
                       <Textbox Name="klasse">
                         <CanGrow>true</CanGrow>
+                        <CanShrink>true</CanShrink>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
@@ -369,7 +389,7 @@
                               <TextRun>
                                 <Value>=Fields!klasse.Value</Value>
                                 <Style>
-                                  <FontSize>9pt</FontSize>
+                                  <FontSize>8pt</FontSize>
                                   <FontWeight>SemiBold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -407,10 +427,11 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>3.08208cm</Size>
+                        <Size>3.52116cm</Size>
                         <CellContents>
                           <Textbox Name="schueler">
                             <CanGrow>true</CanGrow>
+                            <CanShrink>true</CanShrink>
                             <ToggleImage>
                               <InitialState>true</InitialState>
                             </ToggleImage>
@@ -420,7 +441,9 @@
                                 <TextRuns>
                                   <TextRun>
                                     <Value>=Fields!schueler.Value</Value>
-                                    <Style />
+                                    <Style>
+                                      <FontSize>8pt</FontSize>
+                                    </Style>
                                   </TextRun>
                                 </TextRuns>
                                 <Style />
@@ -465,11 +488,12 @@
                 </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
+            <RepeatRowHeaders>true</RepeatRowHeaders>
             <DataSetName>DataSet1</DataSetName>
             <Top>0.07056cm</Top>
             <Left>0.22521cm</Left>
-            <Height>1.2cm</Height>
-            <Width>15.70334cm</Width>
+            <Height>0.89132cm</Height>
+            <Width>18.13687cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -477,10 +501,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.70161in</Height>
+        <Height>0.48286in</Height>
         <Style />
       </Body>
-      <Width>6.40625in</Width>
+      <Width>7.22917in</Width>
       <Page>
         <PageHeader>
           <Height>0.82021cm</Height>
@@ -523,7 +547,7 @@
           </Style>
         </PageHeader>
         <PageFooter>
-          <Height>1.25264cm</Height>
+          <Height>0.77639cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -537,6 +561,7 @@
                       <Value>="Seite " &amp; Globals.PageNumber &amp; "/" &amp; Globals.TotalPages</Value>
                       <Style>
                         <FontStyle>Normal</FontStyle>
+                        <FontSize>8pt</FontSize>
                         <FontWeight>Normal</FontWeight>
                         <TextDecoration>None</TextDecoration>
                         <Color>#000000</Color>
@@ -547,7 +572,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox26</rd:DefaultName>
-              <Top>0.14111cm</Top>
+              <Top>0.07056cm</Top>
               <Left>0.22521cm</Left>
               <Height>0.6cm</Height>
               <Width>5.09292cm</Width>
@@ -570,10 +595,10 @@
         </PageFooter>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
-        <LeftMargin>2cm</LeftMargin>
-        <RightMargin>2cm</RightMargin>
-        <TopMargin>2cm</TopMargin>
-        <BottomMargin>2cm</BottomMargin>
+        <LeftMargin>1cm</LeftMargin>
+        <RightMargin>1cm</RightMargin>
+        <TopMargin>1cm</TopMargin>
+        <BottomMargin>1cm</BottomMargin>
         <ColumnSpacing>0.13cm</ColumnSpacing>
         <Style />
       </Page>

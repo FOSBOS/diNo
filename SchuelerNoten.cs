@@ -65,7 +65,7 @@ namespace diNo
             foreach (FachSchuelerNoten f in alleFaecher)
             {
                 // für SA-Fächer werden zwei Datensätze erzeugt, immer der sL-Eintrag 
-                if (f.getFach.IstSAFach())
+                if (f.getFach.IstSAFach(schueler.Zweig,schueler.getKlasse.Jahrgangsstufe))
                     liste.Add(new FachSchuelerNotenDruck(f, true)); // SA
 
                 liste.Add(new FachSchuelerNotenDruck(f, false)); // sonstige Leistungen

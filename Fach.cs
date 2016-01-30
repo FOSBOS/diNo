@@ -44,9 +44,31 @@ namespace diNo
             get { return this.data.Kuerzel; }
         }
 
-        public bool IstSAFach()
+        public int AnzahlSA(Zweig zweig, Jahrgangsstufe jg)
         {
-            return data.IstSAP || (Kuerzel == "TeIn" || Kuerzel == "VWL" || Kuerzel == "B");
+          int z=0;
+          if (jg == Jahrgangsstufe.Vorklasse)
+          {
+             // in D,E,M je 3 SA, in 2 Fächern des Profilbereichs je 2 SA
+             // (T-Zweig: Ph,C;  W: BwR,Te;  S/A: B,C)
+             if (Kuerzel == "D" || Kuerzel == "E" || Kuerzel == "M") z=3;
+             else if (Kuerzel == "Ph" || Kuerzel == "B" || Kuerzel == "C"|| Kuerzel == "Te"|| Kuerzel == "BwR") z=2;
+          }
+          else if (jg == Jahrgangsstufe.Elf || jg == Jahrgangsstufe.Vorkurs)
+          {
+            if (IstSAPFach(zweig)) z=2;
+          }
+          else // 12./13. Klasse
+          {
+            if (IstSAPFach(zweig)) z = (jg == Jahrgangsstufe.Zwoelf) ? 3 : 2;
+            else if (Kuerzel == "TeIn" || Kuerzel == "B" || Kuerzel == "VWL" ||
+              (Kuerzel == "C" && zweig==Zweig.Agrar)) z=2;
+          }
+          return z;
+        }
+        public bool IstSAFach(Zweig zweig, Jahrgangsstufe jg)
+        {
+            return AnzahlSA(zweig,jg)>0;
         }
 
         public int Sortierung
@@ -55,92 +77,28 @@ namespace diNo
         }
 
 
-    public bool IstSAPFach()
-    {
-      return this.data.IstSAP;
-    }
+        public bool IstSAPFach(Zweig zweig)
+        {
+          // TODO: für Agrarzweig brauchen wir Bio als SAP-Fach, für den Sozialzweig als SA-Fach; vorläufige Lösung:
+          if (zweig==Zweig.Agrar && Kuerzel == "B") return true;
+          else return this.data.IstSAP;
+        }
 
         // Ermittelt die SA-Wertung für diesen Kurs
-        // todo: strings durch Schlüssel ersetzen
-        public Schulaufgabenwertung GetSchulaufgabenwertung(Klasse klasse)
+        public Schulaufgabenwertung GetSchulaufgabenwertung(Zweig zweig,Jahrgangsstufe jg)
         {
-            Jahrgangsstufe jahrgang = klasse.Jahrgangsstufe;
-
-            // Prüfungsfächer haben immer SA (Vorklasse und 12. 3, sonst 2)
-            if (data.IstSAP)
-            {
-                if (klasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse || klasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
-                    return Schulaufgabenwertung.ZweiZuEins;
-                else
-                    return Schulaufgabenwertung.EinsZuEins;
-            }
-            else
-            {
-                if (Kuerzel == "TeIn" || Kuerzel == "VWL" || Kuerzel == "B")
-                    return Schulaufgabenwertung.EinsZuEins;
-                else
-                    return Schulaufgabenwertung.KurzarbeitenUndExen;
-            }
-
-            /* oder via SA-Zahl,  Problem ist ToString geht grad nicht; ToDo: Strings durch Ids ersetzen
-            var wertung = ada.GetDataByAllInfos(schulart.ToString(), jahrgang.ToString(), zweig.ToString(), fach.Id);
-            if (wertung.Count > 0)
-            {
-                schulaufgabenzahl = wertung[0].AnzahlSA;
-            }
-
-            wertung = ada.GetDataByAllInfos("ALLE", jahrgang.ToString(), zweig.ToString(), fach.Id);
-            if (wertung.Count > 0)
-            {
-                schulaufgabenzahl = wertung[0].AnzahlSA;
-            }
-
-            wertung = ada.GetDataByAllInfos("ALLE", jahrgang.ToString(), "ALLE", fach.Id);
-            if (wertung.Count > 0)
-            {
-                schulaufgabenzahl = wertung[0].AnzahlSA;
-            }
-
-            wertung = ada.GetDataByAllInfos(schulart.ToString(), jahrgang.ToString(), "ALLE", fach.Id);
-            if (wertung.Count > 0)
-            {
-                schulaufgabenzahl = wertung[0].AnzahlSA;
-            }
-
-            wertung = ada.GetDataByAllInfos("ALLE", "ALLE", zweig.ToString(), fach.Id);
-            if (wertung.Count > 0)
-            {
-                schulaufgabenzahl = wertung[0].AnzahlSA;
-            }
-
-            wertung = ada.GetDataByAllInfos("ALLE", "ALLE", "ALLE", fach.Id);
-            if (wertung.Count > 0)
-            {
-                schulaufgabenzahl = wertung[0].AnzahlSA;
-            }
-
-            if (schulaufgabenzahl == 1 || schulaufgabenzahl == 2)
-            {
-                return Schulaufgabenwertung.EinsZuEins;
-            }
-            else if (schulaufgabenzahl > 2)
-            {
-                return Schulaufgabenwertung.ZweiZuEins;
-            }
-            else
-            {
-                log.InfoFormat("keine Schulaufgabenwertung gefunden für: Schulart={0}, Jahrgang={1}, Zweig={2}, Fach={3}. Gehe von Kurzarbeiten und Exen aus.", schulart.ToString(), jahrgang.ToString(), zweig.ToString(), fach.Kuerzel);
-                return Schulaufgabenwertung.KurzarbeitenUndExen;
-            }
-            */
+          int z=0;
+          z = AnzahlSA(zweig,jg);
+          if (z==0) return Schulaufgabenwertung.KurzarbeitenUndExen;
+          else if (z<=2) return Schulaufgabenwertung.EinsZuEins;
+          else return Schulaufgabenwertung.ZweiZuEins;
         }
-    }
-
-
+      }
+    
 
 
 ///  <summary>
-/// Klasse Fächerkanon dient zur Abfrage der Modalitäten (1:1, 2:1-Fach oder KA/Ex)
+/// Klasse Fächerkanon dient der Konvertierung von Strings in Enumerables
 /// </summary>
 public static class Faecherkanon
 	{
