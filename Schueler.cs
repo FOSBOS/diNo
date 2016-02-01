@@ -405,7 +405,8 @@ namespace diNo
       new VorkommnisTableAdapter().Insert(datum, bemerkung, this.Id, (int)art);
       if (art == Vorkommnisart.ProbezeitNichtBestanden)
       {
-        Austritt(Data.ProbezeitBis);
+        if (MessageBox.Show("Soll der Schüler aus allen Kursen abgemeldet werden?","diNo",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
+          Austritt(Data.ProbezeitBis);
       }
 
       this.vorkommnisse = null; // damit er die neu lädt

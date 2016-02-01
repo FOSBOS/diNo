@@ -84,10 +84,11 @@ namespace diNo
       if (this.schueler != null)
       {
         var art = (Vorkommnisart)this.comboBoxArt.SelectedValue;
-        if (art == Vorkommnisart.ProbezeitNichtBestanden)
+        /*if (art == Vorkommnisart.ProbezeitNichtBestanden)
         {
-          new ReportNotenbogen(schueler); // drucke den Notenbogen als Abschluss aus
+          new ReportNotenbogen(schueler); // drucke den Notenbogen als Abschluss aus; geht auch nachher noch.
         }
+        */
 
         this.schueler.AddVorkommnis(art, dateTimePicker1.Value, textBox1.Text);
         // ist doch praktisch, weil meistens gleich mehrere ähnliche Vorkommnisse auftreten

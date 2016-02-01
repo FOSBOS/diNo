@@ -60,7 +60,7 @@ namespace diNo
           }
           else // 12./13. Klasse
           {
-            if (IstSAPFach(zweig)) z = (jg == Jahrgangsstufe.Zwoelf) ? 3 : 2;
+            if (IstSAPFach(zweig) || Kuerzel=="F" /*|| Kuerzel=="F-Wi"*/) z = (jg == Jahrgangsstufe.Zwoelf) ? 3 : 2;
             else if (Kuerzel == "TeIn" || Kuerzel == "B" || Kuerzel == "VWL" ||
               (Kuerzel == "C" && zweig==Zweig.Agrar)) z=2;
           }

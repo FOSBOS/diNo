@@ -101,6 +101,7 @@ namespace diNo
     public Vorkommnisse()
     {      
       Liste = new Dictionary<Vorkommnisart, string>();
+      Liste.Add(Vorkommnisart.NotSet,"");
       var dt = (new VorkommnisartTableAdapter()).GetData();
       foreach (var v in dt)
       {        
