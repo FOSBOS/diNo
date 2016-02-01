@@ -267,10 +267,13 @@ namespace diNo
       for (int i = CellConstant.zeileSIdErsterSchueler; i <= MaxAnzahlSchueler + CellConstant.zeileSIdErsterSchueler ; i++)
       {
         string aValue = ReadValue(sid, CellConstant.SId + i);
-        int intValue = int.Parse(aValue);
-        if (intValue.Equals(schuelerId))
+        if (aValue != null)
         {
-          return i;
+          int intValue = int.Parse(aValue);
+          if (intValue.Equals(schuelerId))
+          {
+            return i;
+          }
         }
       }
 
