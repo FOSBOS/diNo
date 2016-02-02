@@ -276,7 +276,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>12.84965cm</Top>
+        <Top>13.1407cm</Top>
         <Left>0.02331cm</Left>
         <Height>0.6cm</Height>
         <Width>8.18854cm</Width>
@@ -291,20 +291,6 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Line Name="Line2">
-        <Top>12.84965cm</Top>
-        <Height>0cm</Height>
-        <Width>8.16527cm</Width>
-        <ZIndex>7</ZIndex>
-        <Visibility>
-          <Hidden>true</Hidden>
-        </Visibility>
-        <Style>
-          <Border>
-            <Style>Dotted</Style>
-          </Border>
-        </Style>
-      </Line>
       <Textbox Name="Textbox11">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -312,7 +298,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=If(First(Fields!Betreff.Value, "DataSet1")="Verweis","Helga Traut, OStDin, Schulleiterin","")</Value>
+                <Value>=If(First(Fields!Betreff.Value, "DataSet1")="Verweis","Helga Traut, OStDin" + System.Environment.NewLine + "Schulleiterin","")</Value>
                 <Style>
                   <FontFamily>Tahoma</FontFamily>
                   <FontSize>11pt</FontSize>
@@ -323,11 +309,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox10</rd:DefaultName>
-        <Top>12.84965cm</Top>
+        <Top>13.1407cm</Top>
         <Left>8.53314cm</Left>
         <Height>0.6cm</Height>
         <Width>8.18854cm</Width>
-        <ZIndex>8</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -338,23 +324,8 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Line Name="LineTraut">
-        <Top>12.84965cm</Top>
-        <Left>8.55641cm</Left>
-        <Height>0cm</Height>
-        <Width>8.16527cm</Width>
-        <ZIndex>9</ZIndex>
-        <Visibility>
-          <Hidden>true</Hidden>
-        </Visibility>
-        <Style>
-          <Border>
-            <Style>Dotted</Style>
-          </Border>
-        </Style>
-      </Line>
     </ReportItems>
-    <Height>5.32292in</Height>
+    <Height>5.47917in</Height>
     <Style />
   </Body>
   <Width>6.62919in</Width>
