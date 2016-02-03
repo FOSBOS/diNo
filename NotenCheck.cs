@@ -231,7 +231,8 @@ namespace diNo
 
         // die Prüfung unterscheidet wie der bisherige Notenbogen nicht, ob die Note aus einer Ex oder echt mündlich ist - das verantwortet der Lehrer
         int kurzarbeitenCount = fachNoten.getNotenanzahl(Notentyp.Kurzarbeit);
-        int muendlicheCount = fachNoten.getNotenanzahl(Notentyp.Ex) + fachNoten.getNotenanzahl(Notentyp.EchteMuendliche);
+        // TODO: Ersatzprüfung richtig implementieren
+        int muendlicheCount = fachNoten.getNotenanzahl(Notentyp.Ex) + fachNoten.getNotenanzahl(Notentyp.EchteMuendliche)+2* fachNoten.getNotenanzahl(Notentyp.Ersatzprüfung);
         int schulaufgabenCount = fachNoten.getNotenanzahl(Notentyp.Schulaufgabe);
 
         if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0)
@@ -273,7 +274,7 @@ namespace diNo
         }
         else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {
-          {
+          {// TODO: einstündige Fächer dürfen im 1. Hj auch keine mündliche Note haen.
             if ((kurzarbeitenCount == 0 && muendlicheCount < 2) || muendlicheCount == 0)
             {
               contr.Add( kurs,
@@ -395,9 +396,12 @@ namespace diNo
         base.Check(schueler);
         int anz5=0,anz6=0,anz4P=0,anz2=0,anz1=0;
         string m="";
+        string kuerzel="";
       
         foreach (var fachNoten in noten.alleFaecher)
-        {            
+        {
+            kuerzel = fachNoten.getFach.Kuerzel;
+            if (kuerzel == "F" || kuerzel == "Smw") continue;  // keine Vorrückungsfächer (Ku?)
             byte? relevanteNote = fachNoten.getRelevanteNote(contr.zeitpunkt);                    
             if (relevanteNote == null)
             {
@@ -450,7 +454,7 @@ namespace diNo
           // TODO: Notenausgleich sauber implementieren
           if (anz6 > 0 || anz5 > 1)
           {
-            if (anz2 < 2 || anz1 == 0) contr.Add( null, "Nicht bestanden, kein Notenausgleich möglich: " + m); 
+            if (anz2 < 2 && anz1 == 0) contr.Add( null, "Nicht bestanden, kein Notenausgleich möglich: " + m); 
             else contr.Add( null, "Nicht bestanden, Notenausgleich prüfen: " + m); 
           }                    
         }
