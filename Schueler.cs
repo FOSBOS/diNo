@@ -225,7 +225,6 @@ namespace diNo
         MeldeAb(this.Data.Wahlpflichtfach);
         MeldeAn(value);
         this.Data.Wahlpflichtfach = value;
-        this.Data.AcceptChanges();
         Save();                
       }
     }
@@ -247,7 +246,6 @@ namespace diNo
         MeldeAb(this.Data.Fremdsprache2);
         MeldeAn(value);
         this.Data.Fremdsprache2 = value;
-        this.Data.AcceptChanges();
         Save();                
       }
     }
@@ -276,7 +274,6 @@ namespace diNo
         }
 
         this.Data.ReligionOderEthik = value;
-        this.Data.AcceptChanges();
         Save();                
       }
     }
