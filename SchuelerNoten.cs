@@ -55,23 +55,24 @@ namespace diNo
 
       return null;
     }
-        
-        /// <summary>
-        /// Liefert eine Liste in der je Fach alle Noten in druckbarer Form vorliegen.
-        /// </summary>
-        public IList<FachSchuelerNotenDruck> SchuelerNotenDruck()
-        {
-            IList<FachSchuelerNotenDruck> liste = new List<FachSchuelerNotenDruck>();
-            foreach (FachSchuelerNoten f in alleFaecher)
-            {
-                // für SA-Fächer werden zwei Datensätze erzeugt, immer der sL-Eintrag 
-                if (f.getFach.IstSAFach(schueler.Zweig,schueler.getKlasse.Jahrgangsstufe))
-                    liste.Add(new FachSchuelerNotenDruck(f, true)); // SA
 
-                liste.Add(new FachSchuelerNotenDruck(f, false)); // sonstige Leistungen
-            }
-            return liste;
-        }
+    /// <summary>
+    /// Liefert eine Liste in der je Fach alle Noten in druckbarer Form vorliegen.
+    /// </summary>
+    public IList<FachSchuelerNotenDruck> SchuelerNotenDruck()
+    {
+      IList<FachSchuelerNotenDruck> liste = new List<FachSchuelerNotenDruck>();
+      var zuDruckendeNoten = alleFaecher.Count > 0 ? alleFaecher : SucheAlteNoten();
+      foreach (FachSchuelerNoten f in zuDruckendeNoten)
+      {
+        // für SA-Fächer werden zwei Datensätze erzeugt, immer der sL-Eintrag 
+        if (f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe))
+          liste.Add(new FachSchuelerNotenDruck(f, true)); // SA
+
+        liste.Add(new FachSchuelerNotenDruck(f, false)); // sonstige Leistungen
+      }
+      return liste;
+    }
 
     public List<FachSchuelerNoten> SucheAlteNoten()
     {
