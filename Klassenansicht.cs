@@ -64,7 +64,9 @@ namespace diNo
                 {
                     new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
                 }
+
                 Zugriff.Refresh(); // Noten neu laden
+                this.treeListView1.Roots = Zugriff.Instance.Klassen; // Ansicht auffrischen
                 MessageBox.Show("Die Notendateien wurden übertragen.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 toolStripStatusLabel1.Text = "";
                 Cursor.Current = Cursors.Default;

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using diNo.diNoDataSetTableAdapters;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -97,7 +98,12 @@ namespace diNo
       bool sollteGesetztSein = schuelerObj.IsLegastheniker && (kurs.getFach.Kuerzel == "E" || kurs.getFach.Kuerzel == "F");
       if ((sollteGesetztSein && !isVermerkGesetzt) || (!sollteGesetztSein && isVermerkGesetzt))
       {
-        xls.SetLegasthenievermerk(schuelerObj.Id, sollteGesetztSein);
+        string textbaustein = sollteGesetztSein ? "neu gesetzt" : "gelöscht";
+        var result = MessageBox.Show("Bei " + schueler.Rufname + " " + schueler.Name + " wird der Legasthenievermerk "+ textbaustein + ". Sollte dies aus Ihrer Sicht nicht korrekt sein, wenden Sie sich bitte an einen Administrator.", "Information", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+        if (result != DialogResult.Cancel)
+        {
+          xls.SetLegasthenievermerk(schuelerObj.Id, sollteGesetztSein);
+        }
       }
     }
 
