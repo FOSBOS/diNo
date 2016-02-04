@@ -57,13 +57,26 @@ namespace diNo.OmnisDB
       var dieRichtigeNote = schueler.getNoten.FindeFach(faecherKuerzel, false);
       if (dieRichtigeNote == null)
       {
-        log.Warn(schueler.NameVorname + " sollte in " + faecherKuerzel + " gehen, aber diese Zuordnung findet diNo nicht!");
+        if (FehlendeNoteWirdWohlOKSein(faecherKuerzel))
+        {
+          log.Debug(schueler.NameVorname + " sollte in " + faecherKuerzel + " gehen, aber diese Zuordnung findet diNo nicht!");
+        }
+        else
+        {
+          log.Warn(schueler.NameVorname + " sollte in " + faecherKuerzel + " gehen, aber diese Zuordnung findet diNo nicht!");
+        }
         return "-";
       }
       else
       {
         return GetNotenString(dieRichtigeNote, zeitpunkt);
       }
+    }
+
+    public bool FehlendeNoteWirdWohlOKSein(string faecherkuerzel)
+    {
+      var fach = faecherkuerzel.ToUpper();
+      return fach == "F-WI" || fach == "MU" || fach == "WIN";
     }
 
     public string GetNotenString(FachSchuelerNoten note, Zeitpunkt zeitpunkt)

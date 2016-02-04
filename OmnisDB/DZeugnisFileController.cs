@@ -36,6 +36,11 @@ namespace diNo.OmnisDB
 
           Schueler schueler = new Schueler(schuelerId);
 
+          if (schueler.getNoten.alleFaecher.Count == 0)
+          {
+            continue; // Für die ausgetretenen Schüler auch kein Zeugnis mehr erstellen
+          }
+
           zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
           zeile[Konstanten.klassenzielOderGefaehrdungCol] = Konstanten.GetKlassenzielOderGefaehrdungString(GetZielerreichung(zeitpunkt, schueler));
 

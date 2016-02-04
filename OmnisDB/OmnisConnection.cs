@@ -48,7 +48,7 @@ namespace diNo.OmnisDB
 
           for (int i = 0; i < 30; i++)
           {
-            faecherspiegelBOS[code][i] = cmdResult.GetString(i + 1);
+            faecherspiegelBOS[code][i] = cmdResult.GetString(i + 2);
           }
         }
       }
@@ -76,9 +76,11 @@ namespace diNo.OmnisDB
         case "Sp": return "Smw";
         case "WI": return "WIn";
         case "FF": return "F-Wi";
+        case "F3": return "F-Wi";
         case "RL": return "Rl";
         case "WL": return "Wl";
         case "TI": return "TeIn";
+        case "S": return "Smw";
         default: return fach;
       }
     }
