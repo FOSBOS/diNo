@@ -157,5 +157,11 @@ namespace diNoVerwaltung
     {
       this.btnShowKurse.Enabled = this.treeListView1.SelectedObject is Schueler;
     }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+      DatenabgleichWinSV winSv = new DatenabgleichWinSV();
+      winSv.CheckSchuelerdaten();
+    }
   }
 }

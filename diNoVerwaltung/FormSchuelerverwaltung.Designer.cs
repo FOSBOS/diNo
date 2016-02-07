@@ -41,6 +41,7 @@
       this.label1 = new System.Windows.Forms.Label();
       this.pictureBox1 = new System.Windows.Forms.PictureBox();
       this.btnShowKurse = new System.Windows.Forms.Button();
+      this.button1 = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
       this.SuspendLayout();
@@ -155,11 +156,22 @@
       this.btnShowKurse.UseVisualStyleBackColor = true;
       this.btnShowKurse.Click += new System.EventHandler(this.btnShowKurse_Click);
       // 
+      // button1
+      // 
+      this.button1.Location = new System.Drawing.Point(598, 12);
+      this.button1.Name = "button1";
+      this.button1.Size = new System.Drawing.Size(97, 43);
+      this.button1.TabIndex = 8;
+      this.button1.Text = "Datenabgleich mit WinSV";
+      this.button1.UseVisualStyleBackColor = true;
+      this.button1.Click += new System.EventHandler(this.button1_Click);
+      // 
       // FormSchuelerverwaltung
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(809, 521);
+      this.Controls.Add(this.button1);
       this.Controls.Add(this.btnShowKurse);
       this.Controls.Add(this.treeListView1);
       this.Controls.Add(this.label1);
@@ -188,6 +200,7 @@
     private BrightIdeasSoftware.OLVColumn olvSpalteAustrittsdatum;
     private BrightIdeasSoftware.OLVColumn olvSpalteFremdsprache2;
     private System.Windows.Forms.Button btnShowKurse;
+    private System.Windows.Forms.Button button1;
   }
 }
 
