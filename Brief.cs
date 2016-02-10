@@ -86,7 +86,7 @@ namespace diNo
     {
         b.Betreff = "Verweis";
         b.Inhalt = "Hiermit wird " + b.Anrede + " " + b.VornameName + " gemäß Art. 86 (2) BayEUG ein Verweis erteilt.\n\n";
-        b.Inhalt += "Begründung der Ordnungsmaßnahme:\n" + edInhalt.Text;            
+        b.Inhalt += "Begründung der Ordnungsmaßnahme:\n" + edInhalt.Text + "\n\n";            
     }
 
     public void NachterminText()

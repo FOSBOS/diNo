@@ -30,10 +30,10 @@
     private void InitializeComponent()
     {
       this.lblDatum = new System.Windows.Forms.Label();
-      this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+      this.datVorkommnis = new System.Windows.Forms.DateTimePicker();
       this.lblArt = new System.Windows.Forms.Label();
       this.comboBoxArt = new System.Windows.Forms.ComboBox();
-      this.textBox1 = new System.Windows.Forms.TextBox();
+      this.edVorkommnisBemerkung = new System.Windows.Forms.TextBox();
       this.label1 = new System.Windows.Forms.Label();
       this.btnNeuesVorkommnis = new System.Windows.Forms.Button();
       this.objectListViewVorkommnisse = new BrightIdeasSoftware.ObjectListView();
@@ -56,13 +56,13 @@
       this.lblDatum.TabIndex = 1;
       this.lblDatum.Text = "Datum:";
       // 
-      // dateTimePicker1
+      // datVorkommnis
       // 
-      this.dateTimePicker1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.dateTimePicker1.Location = new System.Drawing.Point(97, 29);
-      this.dateTimePicker1.Name = "dateTimePicker1";
-      this.dateTimePicker1.Size = new System.Drawing.Size(327, 23);
-      this.dateTimePicker1.TabIndex = 0;
+      this.datVorkommnis.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.datVorkommnis.Location = new System.Drawing.Point(97, 29);
+      this.datVorkommnis.Name = "datVorkommnis";
+      this.datVorkommnis.Size = new System.Drawing.Size(327, 23);
+      this.datVorkommnis.TabIndex = 0;
       // 
       // lblArt
       // 
@@ -84,14 +84,14 @@
       this.comboBoxArt.TabIndex = 1;
       this.comboBoxArt.SelectedValueChanged += new System.EventHandler(this.comboBoxArt_SelectedValueChanged);
       // 
-      // textBox1
+      // edVorkommnisBemerkung
       // 
-      this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBox1.Location = new System.Drawing.Point(97, 81);
-      this.textBox1.Multiline = true;
-      this.textBox1.Name = "textBox1";
-      this.textBox1.Size = new System.Drawing.Size(327, 60);
-      this.textBox1.TabIndex = 2;
+      this.edVorkommnisBemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.edVorkommnisBemerkung.Location = new System.Drawing.Point(97, 81);
+      this.edVorkommnisBemerkung.Multiline = true;
+      this.edVorkommnisBemerkung.Name = "edVorkommnisBemerkung";
+      this.edVorkommnisBemerkung.Size = new System.Drawing.Size(327, 60);
+      this.edVorkommnisBemerkung.TabIndex = 2;
       // 
       // label1
       // 
@@ -199,10 +199,10 @@
       this.Controls.Add(this.label2);
       this.Controls.Add(this.btnNeuesVorkommnis);
       this.Controls.Add(this.label1);
-      this.Controls.Add(this.textBox1);
+      this.Controls.Add(this.edVorkommnisBemerkung);
       this.Controls.Add(this.comboBoxArt);
       this.Controls.Add(this.lblArt);
-      this.Controls.Add(this.dateTimePicker1);
+      this.Controls.Add(this.datVorkommnis);
       this.Controls.Add(this.lblDatum);
       this.Controls.Add(this.objectListViewVorkommnisse);
       this.Name = "UserControlVorkommnisse";
@@ -220,10 +220,10 @@
     private BrightIdeasSoftware.OLVColumn olvColumnArt;
     private BrightIdeasSoftware.OLVColumn olvColumnBemerkung;
     private System.Windows.Forms.Label lblDatum;
-    private System.Windows.Forms.DateTimePicker dateTimePicker1;
+    private System.Windows.Forms.DateTimePicker datVorkommnis;
     private System.Windows.Forms.Label lblArt;
     private System.Windows.Forms.ComboBox comboBoxArt;
-    private System.Windows.Forms.TextBox textBox1;
+    private System.Windows.Forms.TextBox edVorkommnisBemerkung;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Button btnNeuesVorkommnis;
         private System.Windows.Forms.Label label2;

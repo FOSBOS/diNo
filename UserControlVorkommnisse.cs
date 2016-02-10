@@ -13,7 +13,7 @@ namespace diNo
   public partial class UserControlVorkommnisse : UserControl
   {
     private Schueler schueler;    
-    private Vorkommnisart[] notenRelevanteVorkommnisse = new[] { Vorkommnisart.Gefaehrdungsmitteilung, Vorkommnisart.KeineVorrueckungserlaubnis, Vorkommnisart.NichtZurPruefungZugelassen, Vorkommnisart.Notenausgleich, Vorkommnisart.ProbezeitNichtBestanden, Vorkommnisart.PruefungInsgesamtNichtBestanden, Vorkommnisart.PruefungSchriftlichNichtBestanden, Vorkommnisart.VorrueckenAufProbe };
+    private Vorkommnisart[] notenRelevanteVorkommnisse = new[] { Vorkommnisart.Gefaehrdungsmitteilung,Vorkommnisart.starkeGefaehrdungsmitteilung,Vorkommnisart.BeiWeiteremAbsinken, Vorkommnisart.KeineVorrueckungserlaubnis, Vorkommnisart.NichtZurPruefungZugelassen, Vorkommnisart.Notenausgleich, Vorkommnisart.ProbezeitNichtBestanden, Vorkommnisart.PruefungInsgesamtNichtBestanden, Vorkommnisart.PruefungSchriftlichNichtBestanden, Vorkommnisart.VorrueckenAufProbe };
 
     public UserControlVorkommnisse()
     {
@@ -39,6 +39,7 @@ namespace diNo
         if (value != null)
         {
           this.objectListViewVorkommnisse.SetObjects(this.schueler.Vorkommnisse);
+          VorbelegungVorkommnistext(); // auch beim Schülerwechsel vorbelegen
         }
       }
     }
@@ -90,7 +91,7 @@ namespace diNo
         }
         */
 
-        this.schueler.AddVorkommnis(art, dateTimePicker1.Value, textBox1.Text);
+        this.schueler.AddVorkommnis(art, datVorkommnis.Value, edVorkommnisBemerkung.Text);
         // ist doch praktisch, weil meistens gleich mehrere ähnliche Vorkommnisse auftreten
         //this.comboBoxArt.SelectedValue = Vorkommnisart.NotSet; 
         //this.textBox1.Text = "";
@@ -115,18 +116,23 @@ namespace diNo
       if (!(this.comboBoxArt.SelectedValue is Vorkommnisart)) // beim Init wird das Ereignis einmal mit einem KeyValuePaar ausgelöst - seltsames Verhalten
         return;
       if (schueler==null) return;
+      VorbelegungVorkommnistext();      
+    }
 
+    private void VorbelegungVorkommnistext()
+    {
       var art = (Vorkommnisart)this.comboBoxArt.SelectedValue;
       
       if (notenRelevanteVorkommnisse.Contains(art))
       {
-        this.textBox1.Text = schueler.getNoten.GetUnterpunktungenString(ErrateZeitpunkt(art));
+        this.edVorkommnisBemerkung.Text = schueler.getNoten.GetUnterpunktungenString(ErrateZeitpunkt(art));
       }
       else
       {
-        this.textBox1.Text = "";
+        this.edVorkommnisBemerkung.Text = "";
       }
     }
+
 
     /// <summary>
     /// Methode versucht den korrekten Zeitpunkt zu erraten.

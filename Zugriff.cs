@@ -16,6 +16,8 @@ namespace diNo
       public int AnzahlSchueler { get; private set;}
       public List<Fach> eigeneFaecher { get; private set;}
       public Dictionary<int, string> Lehrerliste;
+      public int Schuljahr { get; private set;}
+      public int aktZeitpunkt;
       
       private Zugriff()
       {
@@ -33,6 +35,7 @@ namespace diNo
             LoadSchueler();
             LoadFaecher();
             LoadLehrer();
+            LoadGlobaleKonstanten();
      }
 
     
@@ -104,13 +107,21 @@ namespace diNo
           }
         }  
 
+        public void LoadGlobaleKonstanten()
+        {
+          diNoDataSet.GlobaleKonstantenDataTable dt;
+          var ta = new GlobaleKonstantenTableAdapter();
+          dt = ta.GetData();
+          aktZeitpunkt = dt[0].aktZeitpunkt;
+          Schuljahr = dt[0].Schuljahr; 
+        }
+
         // Lädt die Schüler in den Speicher
         public static void Refresh()
         {
              Instance.Klassen = null; // Garbage-Collector 
              Instance.LoadSchueler();
         }
-
   }
 
 }

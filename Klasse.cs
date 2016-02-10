@@ -7,12 +7,11 @@ namespace diNo
   public enum Jahrgangsstufe
   {
     None = 0,
-    Vorklasse = 1,
-    Elf = 2,
-    Zwoelf = 3,
-    Dreizehn = 4,
-    Vorkurs = 5,
-    ALLE = 15
+    Vorkurs = 9,
+    Vorklasse = 10,    
+    Elf = 11,
+    Zwoelf = 12,
+    Dreizehn = 13,
   }
 
   public enum Schulart

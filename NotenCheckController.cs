@@ -38,23 +38,27 @@ namespace diNo
 
         public void CheckSchueler(Schueler s)
         {            
-            Klasse klasse;
-            klasse = s.getKlasse;
+          Klasse klasse;
+          klasse = s.getKlasse;
 
-            // muss dieser Schüler überhaupt geprüft werden?
-
-            // S ohne Probezeit oder späterer Probezeit
-            var aktJahr = (DateTime.Today).Year;                       
-            if (zeitpunkt == Zeitpunkt.ProbezeitBOS && 
-                    (s.Data.IsProbezeitBisNull() 
-                    || s.Data.ProbezeitBis < DateTime.Parse("15.09." +  aktJahr)
-                    || s.Data.ProbezeitBis > DateTime.Parse("15.12." +  aktJahr)))
-                return ;
-            
+          // muss dieser Schüler überhaupt geprüft werden?
+              // S ohne Probezeit oder späterer Probezeit                             
+          if (zeitpunkt == Zeitpunkt.ProbezeitBOS && s.HatProbezeitBis()==Zeitpunkt.ProbezeitBOS ||
+              // alle zum Halbjahr
+              zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS ||
+              // Jahresende nur für Vorklasse und 11. 
+              zeitpunkt == Zeitpunkt.Jahresende && s.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Elf ||
+              // 1.-3. PA nur für 12./13.
+              s.getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf &&
+                (zeitpunkt == Zeitpunkt.ErstePA 
+                || zeitpunkt == Zeitpunkt.ZweitePA /* && zugelassen zur SAP  s.Vorkommnisse.Contains(Vorkommnisart.NichtZurPruefungZugelassen)*/
+                || zeitpunkt == Zeitpunkt.DrittePA /* && zugelassen zur SAP  */ )
+              )
+          {
             // je Klasse wird die akkumlierte Liste neu erstellt
             if (klasse.Data.Id != aktKlassenId)
             {
-              if (aktKlassenId!=0) CreateResults();
+              CreateResults();
               aktKlassenId = klasse.Data.Id;
               chkContainer = new List<KeyValuePair<string, NotenCheckContainer>>();
               chkCounter = new Dictionary<string, NotenCheckCounter>();
@@ -66,7 +70,8 @@ namespace diNo
                 if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart))
                     ch.Check(s);
             }
-        }   
+          }
+    }   
     
     public void Add(Kurs k,string m)
     {
@@ -92,6 +97,7 @@ namespace diNo
     // am Ende einer Klasse muss die Druckliste erneuert werden
     public void CreateResults()
     {      
+      if (aktKlassenId==0) return; // noch keine Klasse erzeugt
       NotenCheckCounter cnt;
       int maxAnzahl = 5; // ab dieser Zahl wird kumuliert
 

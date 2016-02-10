@@ -578,6 +578,29 @@ namespace diNo
         }
       }
     }
+
+    // Liefert den Zeitpunkt des PZ-Endes (bezogen auf das laufende Schuljahr)
+    public Zeitpunkt HatProbezeitBis()
+    {      
+      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
+      {
+        ;
+      }       
+      if (!data.IsProbezeitBisNull())
+      {
+        // PZ im Dezember = BOS
+        if (data.ProbezeitBis > DateTime.Parse("1.12." +  Zugriff.Instance.Schuljahr)
+            && data.ProbezeitBis < DateTime.Parse("20.12." +  Zugriff.Instance.Schuljahr))
+          return Zeitpunkt.ProbezeitBOS;
+        
+        // PZ im Februar = FOS
+        if (data.ProbezeitBis > DateTime.Parse("1.2." +  (Zugriff.Instance.Schuljahr + 1))
+            && data.ProbezeitBis < DateTime.Parse("1.3." +  (Zugriff.Instance.Schuljahr + 1)))
+          return Zeitpunkt.HalbjahrUndProbezeitFOS;
+      }
+      return Zeitpunkt.None;
+    }
+
   }
 
   public static class SchulnummernHolder

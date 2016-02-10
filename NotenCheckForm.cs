@@ -25,7 +25,7 @@ namespace diNo
                 chkEigeneNoten.Enabled = false;
                 chkErzeugeVorkommnisse.Visible = true;
             }
-            comboBoxZeitpunkt.SelectedIndex = 0;
+            comboBoxZeitpunkt.SelectedIndex = Zugriff.Instance.aktZeitpunkt-1;
         }
 
         private void btnUnterpunktungen_Click(object sender, EventArgs e)
@@ -51,17 +51,7 @@ namespace diNo
 
         private Zeitpunkt GetZeitpunkt()
         {
-          string reason = (string)comboBoxZeitpunkt.SelectedItem;
-          switch (reason)
-          {
-            case "Probezeit BOS": return Zeitpunkt.ProbezeitBOS;
-            case "Halbjahr": return Zeitpunkt.HalbjahrUndProbezeitFOS;
-            case "1. PA": return Zeitpunkt.ErstePA;
-            case "2. PA": return Zeitpunkt.ZweitePA;
-            case "3. PA": return Zeitpunkt.DrittePA;
-            case "Jahresende": return Zeitpunkt.Jahresende;
-            default: return Zeitpunkt.None;
-          }
+          return (Zeitpunkt)(comboBoxZeitpunkt.SelectedIndex+1);
         }
     }
 }
