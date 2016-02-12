@@ -127,7 +127,10 @@ namespace diNo
     /// </summary>
     /// <param name="schueler">Der Schüler.</param>
     public override void Check(Schueler schueler)
-    {        
+    {                
+        if (contr.modus == NotenCheckModus.EigeneNotenVollstaendigkeit && schueler.BetreuerId != Zugriff.Instance.lehrer.Id)
+          return;
+
         var fpANoten = schueler.FPANoten;
         if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {

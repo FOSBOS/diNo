@@ -75,11 +75,7 @@ namespace diNo
 
     private void btnSetVorbelegung_Click(object sender, EventArgs e)
     {
-      diNoDataSet.GlobaleKonstantenRow r;
-      var ta = new GlobaleKonstantenTableAdapter();
-      r = ta.GetData()[0];
-      r.aktZeitpunkt = (int) GetZeitpunkt();
-      ta.Update(r); // klappt grad noch nicht??
+      Zugriff.Instance.aktZeitpunkt = (int) GetZeitpunkt();   
     }
   }
 }

@@ -23,21 +23,21 @@ namespace diNo
         public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus)
         {
             zeitpunkt = azeitpunkt;
-            modus = amodus;            
-            alleNotenchecks.Add(new NotenanzahlChecker(this));
+            modus = amodus; 
+            if (modus!=NotenCheckModus.BerechnungenSpeichern && modus != NotenCheckModus.VorkommnisseErzeugen)           
+              alleNotenchecks.Add(new NotenanzahlChecker(this));
             if (modus!=NotenCheckModus.EigeneNotenVollstaendigkeit)
               alleNotenchecks.Add(new UnterpunktungChecker(this));            
-            if (azeitpunkt == Zeitpunkt.ErstePA && modus!=NotenCheckModus.EigeneNotenVollstaendigkeit) // nur dort FR prüfen
-                alleNotenchecks.Add(new FachreferatChecker(this));
-            // TODO: erst, wenn FPA eingebunden
-            //if (azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
-            //  alleNotenchecks.Add(new FpABestandenChecker(this));
+            if (azeitpunkt == Zeitpunkt.ErstePA && (modus==NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse)) // nur dort FR prüfen
+              alleNotenchecks.Add(new FachreferatChecker(this));            
+            if (azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
+              alleNotenchecks.Add(new FpABestandenChecker(this));
         }
 
 
         public void CheckSchueler(Schueler s)
         { 
-          if (modus==NotenCheckModus.EigeneKlasse && s.Data.KlasseId != Zugriff.Instance.lehrer.KlassenleiterVon.Data.Id)           
+          if (modus==NotenCheckModus.EigeneKlasse && s.getKlasse.Klassenleiter.Id != Zugriff.Instance.lehrer.Id)           
             return;
 
           Klasse klasse;
@@ -46,12 +46,12 @@ namespace diNo
           // muss dieser Schüler überhaupt geprüft werden?
               // S ohne Probezeit oder späterer Probezeit                             
           if (zeitpunkt == Zeitpunkt.ProbezeitBOS && s.HatProbezeitBis()==Zeitpunkt.ProbezeitBOS ||
-              // alle zum Halbjahr
-              zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS ||
+              // fast alle zum Halbjahr
+              zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS && klasse.Jahrgangsstufe != Jahrgangsstufe.Vorkurs ||
               // Jahresende nur für Vorklasse und 11. 
-              zeitpunkt == Zeitpunkt.Jahresende && s.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Elf ||
+              zeitpunkt == Zeitpunkt.Jahresende && klasse.Jahrgangsstufe <= Jahrgangsstufe.Elf ||
               // 1.-3. PA nur für 12./13.
-              s.getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf &&
+              klasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf &&
                 (zeitpunkt == Zeitpunkt.ErstePA 
                 || zeitpunkt == Zeitpunkt.ZweitePA /* && zugelassen zur SAP  s.Vorkommnisse.Contains(Vorkommnisart.NichtZurPruefungZugelassen)*/
                 || zeitpunkt == Zeitpunkt.DrittePA /* && zugelassen zur SAP  */ )

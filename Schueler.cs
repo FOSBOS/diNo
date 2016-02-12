@@ -161,6 +161,8 @@ namespace diNo
       }
     }
 
+    public int BetreuerId
+    { get { return  data.IsBetreuerIdNull() ? 0 : data.BetreuerId; } }
 
     /// <summary>
     /// FPA-Noten
@@ -342,6 +344,11 @@ namespace diNo
 
         return noten;
       }
+    }
+
+    public Schuelerstatus getStatus()
+    {
+      return (Schuelerstatus) data.Status;
     }
 
     public string getWiederholungen()
@@ -629,5 +636,12 @@ namespace diNo
     {
       return (schulenInBayern.ContainsKey(schulnummer)) ? schulenInBayern[schulnummer] : "";
     }
+  }
+
+  public enum Schuelerstatus 
+  {
+    Aktiv = 0,
+    Abgemeldet = 1,
+    NichtZurSAPZugelassen = 2      
   }
 }
