@@ -228,7 +228,7 @@ namespace diNo
       foreach (var fachNoten in noten.alleFaecher)
       {
         Kurs kurs = new Kurs(fachNoten.kursId);
-        if (contr.nurEigeneNoten && (Zugriff.Instance.Lehrer.Id != kurs.getLehrer.Id))
+        if (contr.modus == NotenCheckModus.EigeneNotenVollstaendigkeit && (Zugriff.Instance.lehrer.Id != kurs.getLehrer.Id))
           continue;
 
         // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
@@ -246,8 +246,7 @@ namespace diNo
         // -----------------------
         int noetigeAnzahlSchulaufgaben = fachNoten.getFach.AnzahlSA(schueler.Zweig,schueler.getKlasse.Jahrgangsstufe);
         bool istSAFach = noetigeAnzahlSchulaufgaben>0;
-        bool einstuendig = fachNoten.getFach.IstEinstuendig(schueler.getKlasse.Jahrgangsstufe,schueler.getKlasse.Schulart);
-        bool schreibtKA = fachNoten.getNotenanzahl(Notentyp.Kurzarbeit)>0;
+        bool einstuendig = fachNoten.getFach.IstEinstuendig(schueler.getKlasse.Jahrgangsstufe,schueler.getKlasse.Schulart);        
 
         // Halbjahresprüfung
         // -----------------
@@ -285,11 +284,11 @@ namespace diNo
             continue;
           }
 
-          if (schreibtKA && kurzarbeitenCount == 0)
+          if (kurs.schreibtKA && kurzarbeitenCount == 0)
             contr.Add( kurs, toText(kurzarbeitenCount,"","Kurzarbeite",hj));        
 
           // mündliche Noten (bei einstündigen Fächern reicht 1 Note im Schuljahr (also hier nicht prüfen)
-          if (!einstuendig && (schreibtKA && muendlicheCount == 0 || !schreibtKA && muendlicheCount < 2))
+          if (!einstuendig && (kurs.schreibtKA && muendlicheCount == 0 || !kurs.schreibtKA && muendlicheCount < 2))
           {
               contr.Add( kurs, toText(muendlicheCount,"mündliche","Note",hj));
           }
@@ -309,7 +308,7 @@ namespace diNo
           contr.Add(kurs, toText(schulaufgabenCount,"","Schulaufgabe"));
         }
 
-        if (schreibtKA && kurzarbeitenCount < 2)
+        if (kurs.schreibtKA && kurzarbeitenCount < 2)
         {
           contr.Add( kurs, toText(kurzarbeitenCount,"","Kurzarbeit"));
         }
@@ -321,40 +320,6 @@ namespace diNo
 
       }      
     }
-
-    // Pro Halbjahr muss mindestens 1 KA/1 mdl oder 2 mdl vorliegen; im SA-Fach auch 1 SA
-    // Rückgabe ist true, falls bereits Fehlermeldungen auftraten, die eine Prüfung des gesamten Jahres erübrigen
-    private bool CheckHalbjahr(Halbjahr hj,FachSchuelerNoten fachNoten, Klasse klasse,Kurs kurs, bool istSAFach, bool schreibtKA)
-    { 
-                 
-      int kurzarbeitenCount = fachNoten.getNotenanzahl(hj,Notentyp.Kurzarbeit);
-      int muendlicheCount = fachNoten.getNotenanzahl(hj,Notentyp.Ex) + fachNoten.getNotenanzahl(hj,Notentyp.EchteMuendliche) + fachNoten.getNotenanzahl(Notentyp.Fachreferat);
-      int schulaufgabenCount = fachNoten.getNotenanzahl(hj,Notentyp.Schulaufgabe);
-
-      // wenn gar nichts da ist...
-      if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0)
-      {
-        contr.Add(kurs, toText(0,"","Note",hj));
-        return true;
-      }
-      if (istSAFach && schulaufgabenCount == 0)      
-        contr.Add( kurs, toText(schulaufgabenCount,"","SA",hj));              
-
-      // Ist eine Ersatzprüfung da, erübrigen sich KA, mdl. Noten
-      if (fachNoten.getNotenanzahl(hj,Notentyp.Ersatzprüfung)>0) return false;
-
-      if (schreibtKA && kurzarbeitenCount == 0)
-        contr.Add( kurs, toText(kurzarbeitenCount,"","KA",hj));        
-
-      // mündliche Noten (bei einstündigen Fächern reicht 1 Note im Schuljahr (also hier nicht prüfen)
-      if (!fachNoten.getFach.IstEinstuendig(klasse.Jahrgangsstufe,klasse.Schulart) 
-          && (schreibtKA && muendlicheCount == 0 || !schreibtKA && muendlicheCount < 2))
-      {
-          contr.Add( kurs, toText(muendlicheCount,"mündliche","Note",hj));
-      }
-      return false;        
-    }
-
 
     private bool AnzahlMuendlicheNotenOKProbezeitBOS(int schulaufgabenCount, int kurzarbeitenCount, int muendlicheCount, FachSchuelerNoten noten)
     {
@@ -475,14 +440,14 @@ namespace diNo
           if (anz6>0 || anz5 > 1)
           {
             contr.Add( null, "Stark gefährdet: " + m);
-            if (contr.erzeugeVorkommnisse) 
+            if (contr.modus == NotenCheckModus.VorkommnisseErzeugen) 
               schueler.AddVorkommnis(Vorkommnisart.starkeGefaehrdungsmitteilung,DateTime.Today,m);
           }
           //else if (anz5 > 0) contr.Add( null, "Gefährdet: " + m); 
           else if (anz4P > 1 || anz5 > 0)
           { 
             contr.Add( null, "Bei weiterem Absinken: " + m);
-            if (contr.erzeugeVorkommnisse) 
+            if (contr.modus == NotenCheckModus.VorkommnisseErzeugen) 
               schueler.AddVorkommnis(Vorkommnisart.BeiWeiteremAbsinken,DateTime.Today,m);
           }
 

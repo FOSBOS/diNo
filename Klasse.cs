@@ -410,6 +410,7 @@ namespace diNo
     private diNoDataSet.SchuelerDataTable schueler;
     private Fach fach;
     private diNoDataSet.LehrerRow lehrer;
+    public bool schreibtKA;
 
 
     public Kurs(int id)
@@ -419,6 +420,7 @@ namespace diNo
       if (rst.Count == 1)
       {
         this.data = rst[0];
+        setSchreibtKA();
       }
       else
       {
@@ -430,6 +432,7 @@ namespace diNo
     {
       this.Id = data.Id;
       this.data = data;
+      setSchreibtKA();
     }
 
     /// <summary>
@@ -519,6 +522,13 @@ namespace diNo
     {
       get { return this.getFach.Bezeichnung; }
     }
+
+    private void setSchreibtKA()
+    {
+      var rst = new NoteTableAdapter().GetKAByKursId(Id);
+      schreibtKA = rst.Count > 0;
+    }
+
 
   }
 }

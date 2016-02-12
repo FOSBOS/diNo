@@ -14,21 +14,20 @@ namespace diNo
         public NotenCheckResults res = new NotenCheckResults();
         private IList<NotenCheck> alleNotenchecks = new List<NotenCheck>();
         public Zeitpunkt zeitpunkt;
-        public bool nurEigeneNoten;
-        public bool erzeugeVorkommnisse;
+        public NotenCheckModus modus;        
         private List<KeyValuePair<string,NotenCheckContainer>> chkContainer;
         private Dictionary<string,NotenCheckCounter> chkCounter;
         private int aktKlassenId=0;
         private Schueler aktSchueler;
 
-        public NotenCheckController(Zeitpunkt azeitpunkt, bool aNurEigeneNoten, bool aerzeugeVorkommnisse)
+        public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus)
         {
             zeitpunkt = azeitpunkt;
-            nurEigeneNoten = aNurEigeneNoten;            
-            erzeugeVorkommnisse = aerzeugeVorkommnisse;
+            modus = amodus;            
             alleNotenchecks.Add(new NotenanzahlChecker(this));
-            alleNotenchecks.Add(new UnterpunktungChecker(this));            
-            if (azeitpunkt == Zeitpunkt.ErstePA) // nur dort FR prüfen
+            if (modus!=NotenCheckModus.EigeneNotenVollstaendigkeit)
+              alleNotenchecks.Add(new UnterpunktungChecker(this));            
+            if (azeitpunkt == Zeitpunkt.ErstePA && modus!=NotenCheckModus.EigeneNotenVollstaendigkeit) // nur dort FR prüfen
                 alleNotenchecks.Add(new FachreferatChecker(this));
             // TODO: erst, wenn FPA eingebunden
             //if (azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
@@ -37,10 +36,13 @@ namespace diNo
 
 
         public void CheckSchueler(Schueler s)
-        {            
-          Klasse klasse;
-          klasse = s.getKlasse;
+        { 
+          if (modus==NotenCheckModus.EigeneKlasse && s.Data.KlasseId != Zugriff.Instance.lehrer.KlassenleiterVon.Data.Id)           
+            return;
 
+          Klasse klasse;
+          klasse = s.getKlasse;          
+    
           // muss dieser Schüler überhaupt geprüft werden?
               // S ohne Probezeit oder späterer Probezeit                             
           if (zeitpunkt == Zeitpunkt.ProbezeitBOS && s.HatProbezeitBis()==Zeitpunkt.ProbezeitBOS ||
@@ -200,4 +202,12 @@ namespace diNo
       }
     }
 
-}
+    public enum NotenCheckModus
+    {
+      EigeneNotenVollstaendigkeit,
+      EigeneKlasse, // nur für Klassenleiter
+      Gesamtpruefung,
+      VorkommnisseErzeugen, // nur Admin
+      BerechnungenSpeichern // nur Admin
+     }
+  }

@@ -11,7 +11,7 @@ namespace diNo
 
       public string Username { get; private set;}
       public bool IsAdmin{ get; private set;}
-      public diNoDataSet.LehrerRow Lehrer { get; private set;}
+      public Lehrer lehrer=null;
       public List<Klasse> Klassen { get; private set;}
       public int AnzahlSchueler { get; private set;}
       public List<Fach> eigeneFaecher { get; private set;}
@@ -26,9 +26,9 @@ namespace diNo
             IsAdmin = (!Username.Contains("FOSBOS") || Username.ToUpper().Equals("FOSBOS\\ADMINISTRATOR"));
             Username = Username.Replace("FOSBOS\\", "");
             var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
-            Lehrer = (lehrerResult == null || lehrerResult.Count == 0) ? null : lehrerResult[0];
+            if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
 
-            if (!IsAdmin && Lehrer == null)
+            if (!IsAdmin && lehrer == null)
             {
                 throw new InvalidOperationException("Keine Zugriffsberechtigung!");
             }
@@ -58,7 +58,7 @@ namespace diNo
 
             var ta = new SchuelerTableAdapter();
             if (IsAdmin) dtSchueler = ta.GetData();
-            else dtSchueler = ta.GetDataByLehrerId(Lehrer.Id);
+            else dtSchueler = ta.GetDataByLehrerId(lehrer.Id);
             AnzahlSchueler = dtSchueler.Count;
 
             foreach (var sRow in dtSchueler)
@@ -85,7 +85,7 @@ namespace diNo
           eigeneFaecher = new List<Fach>();
           var ta = new FachTableAdapter();
           if (IsAdmin) dtFach = ta.GetData();
-          else dtFach = ta.GetDataByLehrerId(Lehrer.Id);          
+          else dtFach = ta.GetDataByLehrerId(lehrer.Id);          
 
           foreach (var fRow in dtFach)
           {
@@ -107,7 +107,7 @@ namespace diNo
           }
         }  
 
-        public void LoadGlobaleKonstanten()
+        private void LoadGlobaleKonstanten()
         {
           diNoDataSet.GlobaleKonstantenDataTable dt;
           var ta = new GlobaleKonstantenTableAdapter();

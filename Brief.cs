@@ -149,7 +149,7 @@ namespace diNo
             if (Zugriff.Instance.IsAdmin)
               Unterschrift = "(Systemadministration FOS/BOS Kempten)";
             else
-              Unterschrift = Zugriff.Instance.Lehrer.Name + ", "+ Zugriff.Instance.Lehrer.Dienstbezeichnung;
+              Unterschrift = Zugriff.Instance.lehrer.Data.Name + ", "+ Zugriff.Instance.lehrer.Data.Dienstbezeichnung;
         }
    }
 
