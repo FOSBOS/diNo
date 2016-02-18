@@ -493,7 +493,7 @@
             <Top>0.07056cm</Top>
             <Left>0.22521cm</Left>
             <Height>0.89132cm</Height>
-            <Width>18.13687cm</Width>
+            <Width>18.13688cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -518,7 +518,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Notenprüfung vom " + DateString()</Value>
+                      <Value>="Notenprüfung vom " + Today()</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>

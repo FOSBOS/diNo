@@ -95,7 +95,7 @@ namespace diNo
            if (textBoxSeminarfachthemaKurz.Text=="") sem.SetThemaKurzNull(); else sem.ThemaKurz = textBoxSeminarfachthemaKurz.Text;
            if (textBoxSeminarfachthemaLang.Text=="") sem.SetThemaLangNull(); else sem.ThemaLang = textBoxSeminarfachthemaLang.Text;
 
-           if (Zugriff.Instance.IsAdmin)
+           if (Zugriff.Instance.Level != Zugriffslevel.Lehrer)
              schueler.Data.BetreuerId = (int) cbBetreuer.SelectedValue;
         }
     }

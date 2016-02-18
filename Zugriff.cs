@@ -10,7 +10,7 @@ namespace diNo
       private static Zugriff _Instance = null;
 
       public string Username { get; private set;}
-      public bool IsAdmin{ get; private set;}
+      public Zugriffslevel Level{ get; private set;}
       public Lehrer lehrer=null;
       public List<Klasse> Klassen { get; private set;}
       public int AnzahlSchueler { get; private set;}
@@ -18,6 +18,7 @@ namespace diNo
       public Dictionary<int, string> Lehrerliste;
       private diNoDataSet.GlobaleKonstantenRow globaleKonstanten;
       public int Schuljahr { get { return globaleKonstanten.Schuljahr;} }
+      public Sperrtyp Sperre { get { return (Sperrtyp)globaleKonstanten.Sperre;} }
       public int aktZeitpunkt{ get { return globaleKonstanten.aktZeitpunkt;}
           set { globaleKonstanten.aktZeitpunkt=value; SaveGlobaleKonstanten(); } }
       
@@ -25,15 +26,20 @@ namespace diNo
       {
             Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
         //Username = "FOSBOS\\ckonrad";
-            IsAdmin = (!Username.Contains("FOSBOS") || Username.ToUpper().Equals("FOSBOS\\ADMINISTRATOR"));
+            if (!Username.Contains("FOSBOS") || Username.ToUpper().Equals("FOSBOS\\ADMINISTRATOR"))
+              Level = Zugriffslevel.Admin;
+            else
+              Level = Zugriffslevel.Lehrer;
+
             Username = Username.Replace("FOSBOS\\", "");
             var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
             if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
 
-            if (!IsAdmin && lehrer == null)
+            if ((Level == Zugriffslevel.Lehrer) && lehrer == null)
             {
                 throw new InvalidOperationException("Keine Zugriffsberechtigung!");
             }
+            // TODO: Schulleitung einbauen
             LoadSchueler();
             LoadFaecher();
             LoadLehrer();
@@ -59,7 +65,7 @@ namespace diNo
             Klassen = new List<Klasse>();
 
             var ta = new SchuelerTableAdapter();
-            if (IsAdmin) dtSchueler = ta.GetData();
+            if (Level != Zugriffslevel.Lehrer) dtSchueler = ta.GetData();
             else dtSchueler = ta.GetDataByLehrerId(lehrer.Id);
             AnzahlSchueler = dtSchueler.Count;
 
@@ -86,7 +92,7 @@ namespace diNo
           diNoDataSet.FachDataTable dtFach;
           eigeneFaecher = new List<Fach>();
           var ta = new FachTableAdapter();
-          if (IsAdmin) dtFach = ta.GetData();
+          if (Level != Zugriffslevel.Lehrer) dtFach = ta.GetData();
           else dtFach = ta.GetDataByLehrerId(lehrer.Id);          
 
           foreach (var fRow in dtFach)
@@ -126,5 +132,19 @@ namespace diNo
              Instance.LoadSchueler();
         }
   }
+
+  public enum Sperrtyp
+  {
+    Keine = 0,
+    Notenschluss = 1
+  }
+
+  public enum Zugriffslevel
+  {
+    Lehrer,
+    Schulleitung,
+    Admin
+  }
+
 
 }

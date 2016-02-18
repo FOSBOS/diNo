@@ -46,6 +46,7 @@ namespace diNo
         klasseLabel.Text = "";
         pictureBoxImage.Image = null; 
         toolStripStatusLabel1.Text = "";
+        btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss;
     }
 
         private void btnNotenabgeben_Click(object sender, EventArgs e)

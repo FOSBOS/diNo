@@ -45,42 +45,57 @@ namespace diNo
 
     public class ReportNotenbogen : ReportController
     {
-        int schuelerId=0;
+        //int schuelerId=0;
 
         public ReportNotenbogen(Schueler dataSource) : base(dataSource) {}
-
+        
         public override void Init()
         {    
-            schuelerId = ((Schueler)bindingDataSource).Id;
-            vwNotenbogenTableAdapter ta =  new vwNotenbogenTableAdapter();
+            int schuelerId = ((Schueler)bindingDataSource).Id;
+            vwNotenbogenTableAdapter BerichtTableAdapter;
             rpt.BerichtBindingSource.DataMember = "vwNotenbogen";
-            ta.ClearBeforeFill = true;
+            BerichtTableAdapter =  new vwNotenbogenTableAdapter();            
+            BerichtTableAdapter.ClearBeforeFill = true;
             
-            ta.FillBySchuelerId(rpt.diNoDataSet.vwNotenbogen,schuelerId);   
-                              
-            //ta.FillByKlasseId(rpt.diNoDataSet.vwNotenbogen,89);  klappt noch nicht
+            BerichtTableAdapter.FillBySchuelerId(rpt.diNoDataSet.vwNotenbogen,schuelerId);                                 
+            //BerichtTableAdapter.FillByKlasseId(rpt.diNoDataSet.vwNotenbogen,89);
+            //log.Debug("DataTable geholt mit "+rpt.diNoDataSet.vwNotenbogen.Count); 
+
             rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";
             // Unterbericht einbinden
             rpt.reportViewer.LocalReport.SubreportProcessing +=
                     new SubreportProcessingEventHandler(subrptNotenbogenEventHandler);
+            rpt.reportViewer.LocalReport.SubreportProcessing +=
+                    new SubreportProcessingEventHandler(subrptVorkommnisEventHandler);
         }
 
-        private void subrptNotenbogenEventHandler(object sender, SubreportProcessingEventArgs e)
+        void subrptNotenbogenEventHandler(object sender, SubreportProcessingEventArgs e)
         {
-            //e.Parameters verwenden, um Fremdschlüssel abzugreifen (SchülerId)
-            //warum klappt FK-Übergabe nicht?
-            //log.Debug("im Subreport Notenbogen");
-          
-            //int.TryParse(e.Parameters[0].Values[0],out SchuelerId);
-            Schueler schueler = new Schueler(schuelerId);
-
-            var noten = schueler.getNoten.SchuelerNotenDruck();
-            e.DataSources.Add(new ReportDataSource("DataSet1",noten));
+            // ACHTUNG: Der Parameter muss im Haupt- und im Unterbericht definiert werden (mit gleichem Namen)
+            int schuelerId;
+            int.TryParse(e.Parameters[0].Values[0],out schuelerId);
+            if (schuelerId>0) // hier kommt er 2x rein.
+            {
+              Schueler schueler = new Schueler(schuelerId);
+              var noten = schueler.getNoten.SchuelerNotenDruck();
+              e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
+            }
         }
 
-        private void subrptVorkommnisEventHandler(object sender, SubreportProcessingEventArgs e)
+        void subrptVorkommnisEventHandler(object sender, SubreportProcessingEventArgs e)
         {
-          
+            diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
+            vwVorkommnisTableAdapter BerichtTableAdapter;
+            BerichtTableAdapter = new vwVorkommnisTableAdapter();
+            BerichtTableAdapter.ClearBeforeFill = true;
+
+            int schuelerId;
+            int.TryParse(e.Parameters[0].Values[0],out schuelerId);
+            if (schuelerId>0)
+            {     
+              BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);                 
+              e.DataSources.Add(new ReportDataSource("DataSetVorkommnis",(DataTable) vorkommnisse));
+            }
         }
 
     }

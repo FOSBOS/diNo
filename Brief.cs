@@ -146,7 +146,7 @@ namespace diNo
             Strasse = s.Data.AnschriftStrasse;
             Ort = s.Data.AnschriftPLZ + " " +  s.Data.AnschriftOrt;
             Klasse = s.getKlasse.Bezeichnung;
-            if (Zugriff.Instance.IsAdmin)
+            if (Zugriff.Instance.Level != Zugriffslevel.Lehrer)
               Unterschrift = "(Systemadministration FOS/BOS Kempten)";
             else
               Unterschrift = Zugriff.Instance.lehrer.Data.Name + ", "+ Zugriff.Instance.lehrer.Data.Dienstbezeichnung;

@@ -12,6 +12,7 @@ CREATE TABLE [dbo].[GlobaleKonstanten](
 	[Id] [int] NOT NULL,
 	[Schuljahr] [int] NULL,
 	[aktZeitpunkt] [int] NULL,
+	[Sperre] [int] NULL,
  CONSTRAINT [PK_GlobaleKonstanten] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -23,11 +24,13 @@ GO
 INSERT INTO [dbo].[GlobaleKonstanten]
            ([Id]
 			,[Schuljahr]
-           ,[aktZeitpunkt])
+           ,[aktZeitpunkt]
+		   ,[Sperre])
      VALUES
            (1
 		   ,2015
-           ,3)
+           ,3
+		   ,0)
 GO
 
 ALTER TABLE [dbo].[Schueler] ADD [Status] [int] NULL DEFAULT ((0))
@@ -35,4 +38,12 @@ GO
 
 Update Schueler set Status = 0
 UPDATE [dbo].[Schueler] SET [Status] = 1 WHERE [Austrittsdatum] is not null;
+GO
+
+CREATE VIEW [dbo].[vwVorkommnis]
+AS
+SELECT        dbo.Vorkommnis.*, dbo.Vorkommnisart.Bezeichnung
+FROM            dbo.Vorkommnis INNER JOIN
+                         dbo.Vorkommnisart ON dbo.Vorkommnis.Art = dbo.Vorkommnisart.Id
+
 GO
