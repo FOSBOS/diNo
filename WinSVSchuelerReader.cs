@@ -228,7 +228,7 @@ namespace diNo
         }
         else
         {
-          klasseTableAdapter.Insert(klasse, null);
+          klasseTableAdapter.Insert(klasse, null, null);
           var neueKlasse = klasseTableAdapter.GetDataByBezeichnung(klasse);
           return neueKlasse[0].Id;
         }

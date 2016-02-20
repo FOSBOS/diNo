@@ -36,7 +36,11 @@
 
 namespace diNo.diNoDataSetTableAdapters
 {
-    partial class vwNotenbogenTableAdapter
+  partial class KlasseTableAdapter
+  {
+  }
+
+  partial class vwNotenbogenTableAdapter
     {
     }
 

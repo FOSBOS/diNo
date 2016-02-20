@@ -1343,6 +1343,10 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnKlassenleiterId;
             
+            private global::System.Data.DataColumn columnVaterklasse;
+            
+            private global::System.Data.DataColumn columnVaterklasse1;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public KlasseDataTable() {
@@ -1402,6 +1406,22 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VaterklasseColumn {
+                get {
+                    return this.columnVaterklasse;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn Vaterklasse1Column {
+                get {
+                    return this.columnVaterklasse1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1437,12 +1457,14 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public KlasseRow AddKlasseRow(string Bezeichnung, LehrerRow parentLehrerRowByFK_Lehrer_Klasse) {
+            public KlasseRow AddKlasseRow(string Bezeichnung, LehrerRow parentLehrerRowByFK_Lehrer_Klasse, string Vaterklasse, int Vaterklasse1) {
                 KlasseRow rowKlasseRow = ((KlasseRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Bezeichnung,
-                        null};
+                        null,
+                        Vaterklasse,
+                        Vaterklasse1};
                 if ((parentLehrerRowByFK_Lehrer_Klasse != null)) {
                     columnValuesArray[2] = parentLehrerRowByFK_Lehrer_Klasse[0];
                 }
@@ -1478,6 +1500,8 @@ namespace diNo {
                 this.columnId = base.Columns["Id"];
                 this.columnBezeichnung = base.Columns["Bezeichnung"];
                 this.columnKlassenleiterId = base.Columns["KlassenleiterId"];
+                this.columnVaterklasse = base.Columns["Vaterklasse"];
+                this.columnVaterklasse1 = base.Columns["Vaterklasse1"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1489,6 +1513,10 @@ namespace diNo {
                 base.Columns.Add(this.columnBezeichnung);
                 this.columnKlassenleiterId = new global::System.Data.DataColumn("KlassenleiterId", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnKlassenleiterId);
+                this.columnVaterklasse = new global::System.Data.DataColumn("Vaterklasse", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVaterklasse);
+                this.columnVaterklasse1 = new global::System.Data.DataColumn("Vaterklasse1", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVaterklasse1);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AutoIncrement = true;
@@ -1496,6 +1524,7 @@ namespace diNo {
                 this.columnId.AllowDBNull = false;
                 this.columnId.Unique = true;
                 this.columnBezeichnung.AllowDBNull = false;
+                this.columnVaterklasse1.Caption = "Vaterklasse";
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8340,6 +8369,38 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Vaterklasse {
+                get {
+                    if (this.IsVaterklasseNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tableKlasse.VaterklasseColumn]));
+                    }
+                }
+                set {
+                    this[this.tableKlasse.VaterklasseColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Vaterklasse1 {
+                get {
+                    try {
+                        return ((int)(this[this.tableKlasse.Vaterklasse1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Vaterklasse1 in Tabelle Klasse ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableKlasse.Vaterklasse1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public LehrerRow LehrerRow {
                 get {
                     return ((LehrerRow)(this.GetParentRow(this.Table.ParentRelations["FK_Lehrer_Klasse"])));
@@ -8359,6 +8420,30 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetKlassenleiterIdNull() {
                 this[this.tableKlasse.KlassenleiterIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVaterklasseNull() {
+                return this.IsNull(this.tableKlasse.VaterklasseColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVaterklasseNull() {
+                this[this.tableKlasse.VaterklasseColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVaterklasse1Null() {
+                return this.IsNull(this.tableKlasse.Vaterklasse1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVaterklasse1Null() {
+                this[this.tableKlasse.Vaterklasse1Column] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13978,6 +14063,7 @@ SELECT Id, Bezeichnung, Kuerzel, IstSAP, Sortierung FROM Fach WHERE (Id = @Id)";
             tableMapping.ColumnMappings.Add("Id", "Id");
             tableMapping.ColumnMappings.Add("Bezeichnung", "Bezeichnung");
             tableMapping.ColumnMappings.Add("KlassenleiterId", "KlassenleiterId");
+            tableMapping.ColumnMappings.Add("Vaterklasse", "Vaterklasse1");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -13991,24 +14077,29 @@ SELECT Id, Bezeichnung, Kuerzel, IstSAP, Sortierung FROM Fach WHERE (Id = @Id)";
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_KlassenleiterId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenleiterId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [Klasse] ([Bezeichnung], [KlassenleiterId]) VALUES (@Bezeichnung, @Kl" +
-                "assenleiterId);\r\nSELECT Id, Bezeichnung, KlassenleiterId FROM Klasse WHERE (Id =" +
-                " SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO Klasse\r\n                         (Bezeichnung, KlassenleiterId, Vater" +
+                "klasse)\r\nVALUES        (@Bezeichnung,@KlassenleiterId,@Vaterklasse); \r\nSELECT Id" +
+                ", Bezeichnung, KlassenleiterId FROM Klasse WHERE (Id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlassenleiterId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenleiterId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlassenleiterId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenleiterId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Vaterklasse", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Vaterklasse", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [Klasse] SET [Bezeichnung] = @Bezeichnung, [KlassenleiterId] = @KlassenleiterId WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ((@IsNull_KlassenleiterId = 1 AND [KlassenleiterId] IS NULL) OR ([KlassenleiterId] = @Original_KlassenleiterId)));
+            this._adapter.UpdateCommand.CommandText = @"UPDATE       Klasse
+SET                Bezeichnung = @Bezeichnung, KlassenleiterId = @KlassenleiterId, Vaterklasse = @Vaterklasse
+WHERE        (Id = @Original_Id) AND (Bezeichnung = @Original_Bezeichnung) AND (@IsNull_KlassenleiterId = 1) AND (KlassenleiterId IS NULL) AND (Vaterklasse IS NULL) OR
+                         (Id = @Original_Id) AND (Bezeichnung = @Original_Bezeichnung) AND (KlassenleiterId = @Original_KlassenleiterId) AND (Vaterklasse = @Vaterklasse); 
 SELECT Id, Bezeichnung, KlassenleiterId FROM Klasse WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlassenleiterId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenleiterId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlassenleiterId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenleiterId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Vaterklasse", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Vaterklasse", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bezeichnung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_KlassenleiterId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenleiterId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_KlassenleiterId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenleiterId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_KlassenleiterId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenleiterId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14024,30 +14115,32 @@ SELECT Id, Bezeichnung, KlassenleiterId FROM Klasse WHERE (Id = @Id)";
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        Id, Bezeichnung, KlassenleiterId\r\nFROM            Klasse";
+            this._commandCollection[0].CommandText = "SELECT        Id, Bezeichnung, KlassenleiterId, Vaterklasse\r\nFROM            Klas" +
+                "se";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT Bezeichnung, Id, KlassenleiterId FROM Klasse WHERE (Bezeichnung = @bezeich" +
-                "nung)";
+            this._commandCollection[1].CommandText = "SELECT Bezeichnung, Id, KlassenleiterId, Vaterklasse FROM Klasse WHERE (Bezeichnu" +
+                "ng = @bezeichnung)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@bezeichnung", global::System.Data.SqlDbType.NChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT Bezeichnung, Id, KlassenleiterId FROM Klasse WHERE (Id = @id)";
+            this._commandCollection[2].CommandText = "SELECT Bezeichnung, Id, KlassenleiterId, Vaterklasse FROM Klasse WHERE (Id = @id)" +
+                "";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT        Id, Bezeichnung, KlassenleiterId\r\nFROM            Klasse\r\nWHERE Kla" +
-                "ssenleiterId=@KlassenleiterId";
+            this._commandCollection[3].CommandText = "SELECT Bezeichnung, Id, KlassenleiterId, Vaterklasse FROM Klasse WHERE (Klassenle" +
+                "iterId = @KlassenleiterId)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlassenleiterId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenleiterId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[4].Connection = this.Connection;
-            this._commandCollection[4].CommandText = "SELECT Klasse.Bezeichnung, Klasse.Id, Klasse.KlassenleiterId FROM Klasse INNER JO" +
-                "IN KlasseKurs ON Klasse.Id = KlasseKurs.KlasseId INNER JOIN Kurs ON KlasseKurs.K" +
-                "ursId = Kurs.Id WHERE (Kurs.LehrerId = @lehrerId)";
+            this._commandCollection[4].CommandText = "SELECT Klasse.Bezeichnung, Klasse.Id, Klasse.KlassenleiterId, Klasse.Vaterklasse " +
+                "FROM Klasse INNER JOIN KlasseKurs ON Klasse.Id = KlasseKurs.KlasseId INNER JOIN " +
+                "Kurs ON KlasseKurs.KursId = Kurs.Id WHERE (Kurs.LehrerId = @lehrerId)";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@lehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -14203,7 +14296,7 @@ SELECT Id, Bezeichnung, KlassenleiterId FROM Klasse WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string Bezeichnung, global::System.Nullable<int> KlassenleiterId) {
+        public virtual int Insert(string Bezeichnung, global::System.Nullable<int> KlassenleiterId, global::System.Nullable<int> Vaterklasse) {
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
             }
@@ -14215,6 +14308,12 @@ SELECT Id, Bezeichnung, KlassenleiterId FROM Klasse WHERE (Id = @Id)";
             }
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((Vaterklasse.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((int)(Vaterklasse.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -14236,7 +14335,7 @@ SELECT Id, Bezeichnung, KlassenleiterId FROM Klasse WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Bezeichnung, global::System.Nullable<int> KlassenleiterId, int Original_Id, string Original_Bezeichnung, global::System.Nullable<int> Original_KlassenleiterId, int Id) {
+        public virtual int Update(string Bezeichnung, global::System.Nullable<int> KlassenleiterId, global::System.Nullable<int> Vaterklasse, int Original_Id, string Original_Bezeichnung, global::System.Nullable<int> Original_KlassenleiterId, int Id) {
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
             }
@@ -14249,22 +14348,28 @@ SELECT Id, Bezeichnung, KlassenleiterId FROM Klasse WHERE (Id = @Id)";
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Original_Id));
+            if ((Vaterklasse.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Vaterklasse.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_Id));
             if ((Original_Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Original_Bezeichnung");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Original_Bezeichnung));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_Bezeichnung));
             }
             if ((Original_KlassenleiterId.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_KlassenleiterId.Value));
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_KlassenleiterId.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Id));
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -14279,14 +14384,6 @@ SELECT Id, Bezeichnung, KlassenleiterId FROM Klasse WHERE (Id = @Id)";
                     this.Adapter.UpdateCommand.Connection.Close();
                 }
             }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Bezeichnung, global::System.Nullable<int> KlassenleiterId, int Original_Id, string Original_Bezeichnung, global::System.Nullable<int> Original_KlassenleiterId) {
-            return this.Update(Bezeichnung, KlassenleiterId, Original_Id, Original_Bezeichnung, Original_KlassenleiterId, Original_Id);
         }
     }
     
