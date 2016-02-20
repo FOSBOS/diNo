@@ -1,5 +1,7 @@
 ﻿using diNo.diNoDataSetTableAdapters;
+using diNo.OmnisDB;
 using System.Data.Odbc;
+using System.IO;
 
 namespace diNo
 {
@@ -89,5 +91,25 @@ namespace diNo
         schueler.Save();
       }
     }
+
+    /*
+    public void ExportiereAbgelegteFaecherAusWinSD(string fileName)
+    {
+      using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+      using (StreamWriter writer = new StreamWriter(stream))
+      {
+        var command = conn.CreateCommand();
+        command.CommandText = "SELECT * FROM DZeugnis";
+        var cmdResult = command.ExecuteReader();
+        var schuelerTable = new SchuelerTableAdapter();
+        while (cmdResult.Read())
+        {
+          int schuelerId = cmdResult.GetInt32();
+          OmnisConnection.PasseFachKuerzelAn(cmdResult.)
+          writer.WriteLine(schueler.Id + Separator + schueler.Name + Separator + fach.getFach.Kuerzel + Separator + lehrer.Kuerzel + Separator + note);
+        }
+      }
+    }
+    */
   }
 }

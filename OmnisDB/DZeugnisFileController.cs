@@ -108,7 +108,7 @@ namespace diNo.OmnisDB
     {
       if (zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS && !schueler.FPANoten.IsErfolg1HjNull())
       {
-        //TODO Claus fragen, ob das dieselbe Zahlencodierung ist wie in der DB (0=nicht gesetzt, 1 = sehr gut, ... 4 = ohne Erfolg)
+        //das ist dieselbe Zahlencodierung ist wie in der DB (0=nicht gesetzt, 1 = sehr gut, ... 4 = ohne Erfolg)
         return (fpaNote)schueler.FPANoten.Erfolg1Hj;
       }
       else if (!schueler.FPANoten.IsErfolgNull())

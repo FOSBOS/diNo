@@ -85,3 +85,6 @@ UPDATE [dbo].[Klasse] SET [Vaterklasse] = 84 WHERE [Id] = 106;
 UPDATE [dbo].[Klasse] SET [Vaterklasse] = 94 WHERE [Id] = 101;
 UPDATE [dbo].[Klasse] SET [Vaterklasse] = 94 WHERE [Id] = 103;
 GO
+
+ALTER TABLE [dbo].[Kurs] ALTER COLUMN [LehrerId] INT NULL
+GO

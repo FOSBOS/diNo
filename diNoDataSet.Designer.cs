@@ -1836,7 +1836,6 @@ namespace diNo {
                 this.columnId.Unique = true;
                 this.columnBezeichnung.AllowDBNull = false;
                 this.columnBezeichnung.MaxLength = 256;
-                this.columnLehrerId.AllowDBNull = false;
                 this.columnFachId.AllowDBNull = false;
             }
             
@@ -8509,7 +8508,12 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int LehrerId {
                 get {
-                    return ((int)(this[this.tableKurs.LehrerIdColumn]));
+                    try {
+                        return ((int)(this[this.tableKurs.LehrerIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte LehrerId in Tabelle Kurs ist DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableKurs.LehrerIdColumn] = value;
@@ -8547,6 +8551,18 @@ namespace diNo {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Kurs_Fach"]);
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsLehrerIdNull() {
+                return this.IsNull(this.tableKurs.LehrerIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetLehrerIdNull() {
+                this[this.tableKurs.LehrerIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14637,9 +14653,14 @@ SELECT Id, Bezeichnung, LehrerId, FachId FROM Kurs WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByLehrerId(diNoDataSet.KursDataTable dataTable, int LehrerId) {
+        public virtual int FillByLehrerId(diNoDataSet.KursDataTable dataTable, global::System.Nullable<int> LehrerId) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(LehrerId));
+            if ((LehrerId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(LehrerId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -14651,9 +14672,14 @@ SELECT Id, Bezeichnung, LehrerId, FachId FROM Kurs WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.KursDataTable GetDataByLehrerId(int LehrerId) {
+        public virtual diNoDataSet.KursDataTable GetDataByLehrerId(global::System.Nullable<int> LehrerId) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(LehrerId));
+            if ((LehrerId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(LehrerId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
             diNoDataSet.KursDataTable dataTable = new diNoDataSet.KursDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -14733,7 +14759,7 @@ SELECT Id, Bezeichnung, LehrerId, FachId FROM Kurs WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, string Original_Bezeichnung, int Original_LehrerId, int Original_FachId) {
+        public virtual int Delete(int Original_Id, string Original_Bezeichnung, global::System.Nullable<int> Original_LehrerId, int Original_FachId) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             if ((Original_Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Original_Bezeichnung");
@@ -14741,7 +14767,12 @@ SELECT Id, Bezeichnung, LehrerId, FachId FROM Kurs WHERE (Id = @Id)";
             else {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_Bezeichnung));
             }
-            this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_LehrerId));
+            if ((Original_LehrerId.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_LehrerId.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
             this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(Original_FachId));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -14763,14 +14794,19 @@ SELECT Id, Bezeichnung, LehrerId, FachId FROM Kurs WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string Bezeichnung, int LehrerId, int FachId) {
+        public virtual int Insert(string Bezeichnung, global::System.Nullable<int> LehrerId, int FachId) {
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
             }
             else {
                 this.Adapter.InsertCommand.Parameters[0].Value = ((string)(Bezeichnung));
             }
-            this.Adapter.InsertCommand.Parameters[1].Value = ((int)(LehrerId));
+            if ((LehrerId.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[1].Value = ((int)(LehrerId.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
             this.Adapter.InsertCommand.Parameters[2].Value = ((int)(FachId));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -14792,14 +14828,19 @@ SELECT Id, Bezeichnung, LehrerId, FachId FROM Kurs WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Bezeichnung, int LehrerId, int FachId, int Original_Id, string Original_Bezeichnung, int Original_LehrerId, int Original_FachId, int Id) {
+        public virtual int Update(string Bezeichnung, global::System.Nullable<int> LehrerId, int FachId, int Original_Id, string Original_Bezeichnung, global::System.Nullable<int> Original_LehrerId, int Original_FachId, int Id) {
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(Bezeichnung));
             }
-            this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(LehrerId));
+            if ((LehrerId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(LehrerId.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
             this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(FachId));
             this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_Id));
             if ((Original_Bezeichnung == null)) {
@@ -14808,7 +14849,12 @@ SELECT Id, Bezeichnung, LehrerId, FachId FROM Kurs WHERE (Id = @Id)";
             else {
                 this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_Bezeichnung));
             }
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_LehrerId));
+            if ((Original_LehrerId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_LehrerId.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
             this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_FachId));
             this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
@@ -14831,7 +14877,7 @@ SELECT Id, Bezeichnung, LehrerId, FachId FROM Kurs WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Bezeichnung, int LehrerId, int FachId, int Original_Id, string Original_Bezeichnung, int Original_LehrerId, int Original_FachId) {
+        public virtual int Update(string Bezeichnung, global::System.Nullable<int> LehrerId, int FachId, int Original_Id, string Original_Bezeichnung, global::System.Nullable<int> Original_LehrerId, int Original_FachId) {
             return this.Update(Bezeichnung, LehrerId, FachId, Original_Id, Original_Bezeichnung, Original_LehrerId, Original_FachId, Original_Id);
         }
     }

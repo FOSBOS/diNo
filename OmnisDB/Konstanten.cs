@@ -51,6 +51,19 @@ namespace diNo.OmnisDB
       }
     }
 
+    public static fpaNote GetFpaNoteFromString(string fpaString)
+    {
+      switch (fpaString)
+      {
+        case "-": return fpaNote.Entfaellt;
+        case "O": return fpaNote.OhneErfolg;
+        case "M": return fpaNote.MitErfolg;
+        case "G": return fpaNote.MitGutemErfolg;
+        case "S": return fpaNote.MitSehrGutemErfolg;
+        default: throw new InvalidOperationException("unbekannter fpaNoten-Text: " + fpaString);
+      }
+    }
+
     public static string GetZeugnisartString(Zeugnisart art)
     {
       switch(art)
