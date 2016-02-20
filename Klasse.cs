@@ -104,34 +104,7 @@ namespace diNo
     {
       get
       {
-        string klasse = data.Bezeichnung.ToUpper();
-        if (klasse.Contains("VS"))
-        {
-          return Jahrgangsstufe.Vorkurs;
-        }
-
-        if (klasse.Contains("VK"))
-        {
-          return Jahrgangsstufe.Vorklasse;
-        }
-
-        if (klasse.Contains("11"))
-        {
-          return Jahrgangsstufe.Elf;
-        }
-
-        if (klasse.Contains("12"))
-        {
-          return Jahrgangsstufe.Zwoelf;
-        }
-
-        if (klasse.Contains("13"))
-        {
-          return Jahrgangsstufe.Dreizehn;
-        }
-
-        return Jahrgangsstufe.None;
-        //throw new InvalidOperationException("Jahrgangsstufe nicht gefunden: " + klasse);
+        return Faecherkanon.GetJahrgangsstufe(data.Bezeichnung);
       }
     }
 

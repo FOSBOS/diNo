@@ -205,7 +205,19 @@ namespace diNo
       }
     }
 
+    public OmnisDB.Abweisung GefahrDerAbweisung
+    {
+      get
+      {
+        if (getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung1Jahrgangsstufe)
+         || getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung2Jahrgangsstufe))
+        {
+          return getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf || getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn ? OmnisDB.Abweisung.Art54BayEUG : OmnisDB.Abweisung.Art53BayEUG;
+        }
 
+        return OmnisDB.Abweisung.Nein;
+      }
+    }
 
     /// <summary>
     /// Liefert entweder

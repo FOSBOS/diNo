@@ -1,6 +1,7 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using log4net;
 using System.IO;
+using System.Text;
 
 namespace diNo.OmnisDB
 {
@@ -19,9 +20,9 @@ namespace diNo.OmnisDB
       SchuelerTableAdapter ada = new SchuelerTableAdapter();
 
       using (FileStream inStream = new FileStream(sourceFileName, FileMode.Open, FileAccess.Read))
-      using (StreamReader reader = new StreamReader(inStream))
+      using (StreamReader reader = new StreamReader(inStream, Encoding.GetEncoding("iso-8859-1")))
       using (FileStream outStream = new FileStream(targetFileName, FileMode.Create, FileAccess.Write))
-      using (StreamWriter writer = new StreamWriter(outStream))
+      using (StreamWriter writer = new StreamWriter(outStream, Encoding.GetEncoding("iso-8859-1")))
       {
         while (!reader.EndOfStream)
         {
@@ -35,14 +36,9 @@ namespace diNo.OmnisDB
           }
 
           Schueler schueler = new Schueler(schuelerId);
-
-          if (schueler.getNoten.alleFaecher.Count == 0)
-          {
-            continue; // Für die ausgetretenen Schüler auch kein Zeugnis mehr erstellen
-          }
-
           zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
           zeile[Konstanten.klassenzielOderGefaehrdungCol] = Konstanten.GetKlassenzielOderGefaehrdungString(GetZielerreichung(zeitpunkt, schueler));
+          zeile[Konstanten.abweisungCol] = Konstanten.GetAbweisungString(schueler.GefahrDerAbweisung);
 
           string faecherspiegel = zeile[Konstanten.faecherspiegelCol];
           if (string.IsNullOrEmpty(faecherspiegel))

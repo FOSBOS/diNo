@@ -127,14 +127,37 @@ public static class Faecherkanon
 
     public static Jahrgangsstufe GetJahrgangsstufe(string jahrgangsstufe)
     {
-      switch (jahrgangsstufe)
+      if (jahrgangsstufe.ToUpper().Contains("VS"))
       {
-        case "10": return Jahrgangsstufe.Vorklasse; // FOS Vorklasse
-        case "11": return Jahrgangsstufe.Elf;
-        case "12": return Jahrgangsstufe.Zwoelf;
-        case "13": return Jahrgangsstufe.Dreizehn;
-        default: throw new InvalidOperationException("unbekannte Jahrgangsstufe " + jahrgangsstufe);
+        return Jahrgangsstufe.Vorkurs;
       }
+
+      if (jahrgangsstufe.ToUpper().Contains("VK"))
+      {
+        return Jahrgangsstufe.Vorklasse;
+      }
+
+      if (jahrgangsstufe.Contains("10"))
+      {
+        return Jahrgangsstufe.Vorklasse; // FOS Vorklasse
+      }
+
+      if (jahrgangsstufe.Contains("11"))
+      {
+        return Jahrgangsstufe.Elf;
+      }
+
+      if (jahrgangsstufe.Contains("12"))
+      {
+        return Jahrgangsstufe.Zwoelf;
+      }
+
+      if (jahrgangsstufe.Contains("13"))
+      {
+        return Jahrgangsstufe.Dreizehn;
+      }
+
+      return Jahrgangsstufe.None;
     }
 
     public static string GetJahrgangsstufe(Jahrgangsstufe jahrgangsstufe)
