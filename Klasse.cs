@@ -83,8 +83,8 @@ namespace diNo
 
     public Klasse(diNoDataSet.KlasseRow klasseR)
     {
-        eigeneSchueler = new List<Schueler>();
-        data = klasseR;
+      eigeneSchueler = new List<Schueler>();
+      data = klasseR;
     }
 
     public diNoDataSet.KlasseRow Data
@@ -151,29 +151,35 @@ namespace diNo
       }
     }
 
-
-    public static Zweig GetZweig(string zweigBezeichnung)
+    public Zweig Zweig
     {
-      if (zweigBezeichnung.Contains("W") || zweigBezeichnung.Contains("w"))
+      get
       {
-        return Zweig.Wirtschaft;
-      }
+        string bez = this.Bezeichnung.ToUpper();
 
-      if (zweigBezeichnung.Contains("S") || zweigBezeichnung.Contains("s"))
-      {
-        return Zweig.Sozial;
-      }
+        if ((bez.Contains("W") && !bez.Contains("S") && !bez.Contains("A") && !bez.Contains("T")) || bez.EndsWith("_W"))
+        {
+          return Zweig.Wirtschaft;
+        }
 
-      if (zweigBezeichnung.Contains("T") || zweigBezeichnung.Contains("t"))
-      {
-        return Zweig.Technik;
-      }
-      else
-      {
-        return Zweig.None; // z.B. im Vorkurs BOS
-      }
+        if ((bez.Contains("S") && !bez.Contains("W") && !bez.Contains("A") && !bez.Contains("T")) || bez.EndsWith("_S"))
+        {
+          return Zweig.Sozial;
+        }
 
-      // throw new InvalidOperationException("Zweig nicht gefunden: " + zweigBezeichnung);
+        if ((bez.Contains("T") && !bez.Contains("S") && !bez.Contains("A") && !bez.Contains("W")) || bez.EndsWith("_T"))
+        {
+          return Zweig.Technik;
+        }
+
+        if ((bez.Contains("A") && !bez.Contains("S") && !bez.Contains("T") && !bez.Contains("W")) || bez.EndsWith("_A"))
+        {
+          return Zweig.Agrar;
+        }
+
+        //hier stehen nur noch die Klassen, deren Zweig nicht eindeutig ist, z. B. Vorkurs BOS oder Mischklassen
+        return Zweig.None;
+      }
     }
 
     public diNoDataSet.LehrerRow Klassenleiter
@@ -190,19 +196,20 @@ namespace diNo
       }
     }
 
-
     public IList<Kurs> FindeAlleMöglichenKurse(Zweig zweig)
     {
       var result = new List<Kurs>(this.Kurse);
-      var teilKlasse = FindKlassenTeilMitKursen(this.Bezeichnung, zweig);
-      if (teilKlasse != null)
+      foreach (var teilKlasse in this.GetTeilKlassen())
       {
-        foreach (var neuerKurs in teilKlasse.Kurse)
+        if (teilKlasse.Zweig == zweig || teilKlasse.Zweig == Zweig.None) // None steht auch bei Mischklassen. Dann gehen alle Schüler in diese Kurse.
         {
-          var kursSchonDrin = result.Find(x => x.Id == neuerKurs.Id);
-          if (kursSchonDrin == null)
+          foreach (var neuerKurs in teilKlasse.Kurse)
           {
-            result.Add(neuerKurs);
+            var kursSchonDrin = result.Find(x => x.Id == neuerKurs.Id);
+            if (kursSchonDrin == null)
+            {
+              result.Add(neuerKurs);
+            }
           }
         }
       }
@@ -257,149 +264,21 @@ namespace diNo
       return null;
     }
 
-
-    public static IList<Klasse> GetTeilKlassen(string klassenBezeichnung)
+    public IList<Klasse> GetTeilKlassen()
     {
-      List<Klasse> result = new List<Klasse>();
-
-      var klasse = FindKlasse(klassenBezeichnung);
-      if (klasse != null && klasse.Kurse.Count > 0)
+      var children = new KlasseTableAdapter().GetDataByVaterklasse(this.data.Id);
+      var result = new List<Klasse>();
+      if (children != null && children.Count > 0)
       {
-        result.Add(klasse);
-      }
-
-      if (klassenBezeichnung.EndsWith("ST"))
-      {
-        string modifiedKlasse = klassenBezeichnung + "_S";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
+        foreach (var child in children)
         {
-          result.Add(klasse);
-        }
-
-        modifiedKlasse = klassenBezeichnung + "_T";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
-        {
-          result.Add(klasse);
-        }
-      }
-
-      if (klassenBezeichnung.EndsWith("SW"))
-      {
-        string modifiedKlasse = klassenBezeichnung + "_S";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
-        {
-          result.Add(klasse);
-        }
-
-        modifiedKlasse = klassenBezeichnung + "_W";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
-        {
-          result.Add(klasse);
-        }
-      }
-
-      if (klassenBezeichnung.EndsWith("TW"))
-      {
-        string modifiedKlasse = klassenBezeichnung + "_T";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
-        {
-          result.Add(klasse);
-        }
-
-        modifiedKlasse = klassenBezeichnung + "_W";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
-        {
-          result.Add(klasse);
+          result.Add(new Klasse(child));
         }
       }
 
       return result;
     }
-
-    /// <summary>
-    /// Sucht denjenigen Klassenteil der Klasse, der die Kurse für den gegebenen Zweig enthält.
-    /// </summary>
-    /// <param name="klassenBezeichnung">Die Klassenbezeichnung.</param>
-    /// <param name="zweig">Der Zweig.</param>
-    /// <returns>Der Klassenteil, der die Kurse enthält oder null (wenn keiner gefunden).</returns>
-    public static Klasse FindKlassenTeilMitKursen(string klassenBezeichnung, Zweig zweig)
-    {
-      var klasse = FindKlasse(klassenBezeichnung);
-      if (klasse != null && klasse.Kurse.Count > 0)
-      {
-        return klasse;
-      }
-
-      if (klassenBezeichnung.EndsWith("ST") && zweig == Zweig.Sozial)
-      {
-        string modifiedKlasse = klassenBezeichnung + "_S";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
-        {
-          return klasse;
-        }
-      }
-
-      if (klassenBezeichnung.EndsWith("ST") && zweig == Zweig.Technik)
-      {
-        string modifiedKlasse = klassenBezeichnung + "_T";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
-        {
-          return klasse;
-        }
-      }
-
-      if (klassenBezeichnung.EndsWith("SW") && zweig == Zweig.Sozial)
-      {
-        string modifiedKlasse = klassenBezeichnung + "_S";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
-        {
-          return klasse;
-        }
-      }
-
-      if (klassenBezeichnung.EndsWith("SW") && zweig == Zweig.Wirtschaft)
-      {
-        string modifiedKlasse = klassenBezeichnung + "_W";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
-        {
-          return klasse;
-        }
-      }
-
-      if (klassenBezeichnung.EndsWith("TW") && zweig == Zweig.Technik)
-      {
-        string modifiedKlasse = klassenBezeichnung + "_T";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
-        {
-          return klasse;
-        }
-      }
-
-      if (klassenBezeichnung.EndsWith("TW") && zweig == Zweig.Wirtschaft)
-      {
-        string modifiedKlasse = klassenBezeichnung + "_W";
-        klasse = FindKlasse(modifiedKlasse);
-        if (klasse != null && klasse.Kurse.Count > 0)
-        {
-          return klasse;
-        }
-      }
-
-      return null;
-    }
   }
-
 
   /// <summary>
   /// Ein Kurs.

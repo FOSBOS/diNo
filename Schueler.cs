@@ -326,7 +326,7 @@ namespace diNo
     {
       get
       {
-        return Klasse.GetZweig(this.data.Ausbildungsrichtung);
+        return Faecherkanon.GetZweig(this.data.Ausbildungsrichtung);
       }
     }
 
@@ -496,19 +496,17 @@ namespace diNo
       }
 
       var kursSelector = UnterrichtExcelReader.GetStandardKursSelector();
-      var klasse = Klasse.FindKlassenTeilMitKursen(nachKlasse.Bezeichnung, Faecherkanon.GetZweig(this.Data.Ausbildungsrichtung));
-      if (klasse == null)
+      var kurse = nachKlasse.FindeAlleMöglichenKurse(this.Zweig);
+      if (kurse == null || kurse.Count == 0)
       {
         throw new InvalidOperationException("Für die Klasse "+nachKlasse.Bezeichnung+ " konnten keine Kurse gefunden werden");
       }
 
-      foreach (var kurs in klasse.Kurse)
+      foreach (var kurs in kurse)
       {
         // prüfe, ob der Schüler in diesen Kurs gehen soll und trage ihn ein.
         UnterrichtExcelReader.AddSchuelerToKurs(kurs.Data, kursSelector, this.Data);
       }
-
-      DateTime? austrittsdatum = this.Data.IsAustrittsdatumNull() ? (DateTime?)null : this.Data.Austrittsdatum;
 
       this.data.KlasseId = nachKlasse.Data.Id;
       this.Save();
@@ -576,7 +574,7 @@ namespace diNo
     public void MeldeAn(string nachFachKuerzel)
     {
       FachTableAdapter ada = new FachTableAdapter();
-      foreach (var kurs in this.getKlasse.FindeAlleMöglichenKurse(Klasse.GetZweig(this.data.Ausbildungsrichtung)))
+      foreach (var kurs in this.getKlasse.FindeAlleMöglichenKurse(this.Zweig))
       {
         var fach = kurs.getFach;
         if (fach.Kuerzel == nachFachKuerzel)

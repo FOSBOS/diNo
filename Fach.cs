@@ -120,6 +120,7 @@ public static class Faecherkanon
         case "W":
           return Zweig.Wirtschaft;
         case "V": return Zweig.None; //Vorklasse FOS ohne Zweigzuordnung
+        case "A": return Zweig.Agrar;
         default: throw new InvalidOperationException("unbekannter Zweig " + zweig);
       }
     }
