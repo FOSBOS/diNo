@@ -36,6 +36,8 @@ namespace diNo
         {
           Kurs kurs = new Kurs(dbkurs);
           var lehrer = kurs.getLehrer;
+          string lehrerKuerzel = lehrer == null ? "" : lehrer.Kuerzel;
+
           foreach (var dbSchueler in schuelerAdapter.GetDataByKursId(kurs.Id))
           {
             Schueler schueler = new Schueler(dbSchueler);
@@ -43,7 +45,7 @@ namespace diNo
             {
               var fach = schueler.getNoten.getFach(kurs.Id);
               var note = fach.getRelevanteNote(Zeitpunkt.Jahresende);
-              writer.WriteLine(schueler.Id + Separator + schueler.Name + Separator + fach.getFach.Kuerzel + Separator + lehrer.Kuerzel + Separator + note);
+              writer.WriteLine(schueler.Id + Separator + schueler.Name + Separator + fach.getFach.Kuerzel + Separator + lehrerKuerzel + Separator + note);
             }
           }
         }

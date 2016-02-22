@@ -231,7 +231,7 @@ namespace diNo
       foreach (var fachNoten in noten.alleFaecher)
       {
         Kurs kurs = new Kurs(fachNoten.kursId);
-        if (contr.modus == NotenCheckModus.EigeneNotenVollstaendigkeit && (Zugriff.Instance.lehrer.Id != kurs.getLehrer.Id))
+        if (contr.modus == NotenCheckModus.EigeneNotenVollstaendigkeit && (kurs.getLehrer == null || Zugriff.Instance.lehrer.Id != kurs.getLehrer.Id))
           continue;
 
         // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
@@ -249,7 +249,20 @@ namespace diNo
         // -----------------------
         int noetigeAnzahlSchulaufgaben = fachNoten.getFach.AnzahlSA(schueler.Zweig,schueler.getKlasse.Jahrgangsstufe);
         bool istSAFach = noetigeAnzahlSchulaufgaben>0;
-        bool einstuendig = fachNoten.getFach.IstEinstuendig(schueler.getKlasse.Jahrgangsstufe,schueler.getKlasse.Schulart);        
+        bool einstuendig = fachNoten.getFach.IstEinstuendig(schueler.getKlasse.Jahrgangsstufe,schueler.getKlasse.Schulart);
+        Kurs derKurs = new Kurs(fachNoten.kursId);
+        if (derKurs.getLehrer == null)
+        {
+          // vermutlich ein Dummy-Kurs, der aus der elften Klasse übernommen wurde. Prüfe nur Jahresfortgang und Zeugnisnote
+          byte? relevanteNote = fachNoten.getRelevanteNote(contr.zeitpunkt);
+          if (relevanteNote == null)
+          {
+            contr.Add(kurs, "Es liegt keine Note aus der 11ten Klasse vor.");
+          }
+
+          continue; // in diesen Kursen nicht weiter nach Notenanzahl prüfen
+        }
+
 
         // Halbjahresprüfung
         // -----------------
@@ -415,12 +428,7 @@ namespace diNo
             kuerzel = fachNoten.getFach.Kuerzel;
             if (kuerzel == "F" || kuerzel == "Smw") continue;  // keine Vorrückungsfächer (Ku?)
             byte? relevanteNote = fachNoten.getRelevanteNote(contr.zeitpunkt);                    
-            if (relevanteNote == null)
-            {
-                    ; // Das stellt der Notenanzahlchecker fest.
-                // contr.Add(new Kurs(fachNoten.kursId) ,"Es konnte keine Note gebildet werden.");
-            }
-            else
+            if (relevanteNote != null) // null muss der notenanzahl-Checker als Problem erkennen
             {                         
                 if (relevanteNote == 0) anz6++;                    
                 else if (relevanteNote < 4) anz5++;

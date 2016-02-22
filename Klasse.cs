@@ -360,7 +360,7 @@ namespace diNo
     {
       get
       {
-        if (lehrer == null)
+        if (lehrer == null && !data.IsLehrerIdNull())
         {
           lehrer = new LehrerTableAdapter().GetDataById(data.LehrerId)[0];
         }

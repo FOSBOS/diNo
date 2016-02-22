@@ -165,6 +165,12 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
     {
 
       kurs = new Kurs(aKurs.Id);
+
+      if (kurs.getLehrer == null)
+      {
+        return; // es gibt auch Kurse ohne Lehrer, z. B. übernommene Noten aus 11ter Klasse
+      }
+
       alleSchueler = kurs.getSchueler(true); // sind bereits via SQL nach Klasse und Namen sortiert
 
       if (alleSchueler.Count == 0)

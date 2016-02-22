@@ -175,34 +175,39 @@ namespace diNo
             return s;
         }
 
-        /*
-        public IList<int> getNoten(Notentyp typ)
-        {
-            IList<int> res = new List<int>(noten[(int)Halbjahr.Erstes, (int)typ]);
-            noten[(int)Halbjahr.Zweites, (int)typ].CopyTo(res);
-            return res;
-        }
-        */
+    /*
+    public IList<int> getNoten(Notentyp typ)
+    {
+        IList<int> res = new List<int>(noten[(int)Halbjahr.Erstes, (int)typ]);
+        noten[(int)Halbjahr.Zweites, (int)typ].CopyTo(res);
+        return res;
+    }
+    */
 
-        /// <summary>
-        /// Liefert die zur Zeit z (z.B. Probezeit BOS) relevante Note (hier Jahresfortgang Ganzz. 1. Hj.)
-        /// </summary>
-        public byte? getRelevanteNote(Zeitpunkt z)
-        {
-            if (z == Zeitpunkt.ProbezeitBOS || z == Zeitpunkt.HalbjahrUndProbezeitFOS)
-            {
-                return getSchnitt(Halbjahr.Erstes).JahresfortgangGanzzahlig;
-            }
-            else if (z == Zeitpunkt.ErstePA || z == Zeitpunkt.Jahresende)
-            {
-                return getSchnitt(Halbjahr.Zweites).JahresfortgangGanzzahlig;
-            }
-            else // 2./3.PA
-            {
-                return getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
-            }
+    /// <summary>
+    /// Liefert die zur Zeit z (z.B. Probezeit BOS) relevante Note (hier Jahresfortgang Ganzz. 1. Hj.)
+    /// </summary>
+    public byte? getRelevanteNote(Zeitpunkt z)
+    {
+      if (new Kurs(kursId).getLehrer == null)
+      {
+        // wenn der Kurs keinen Lehrer hat, handelt es sich vermutlich um eine Note aus der 11ten Klasse
+        return getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
+      }
 
-        }
+      if (z == Zeitpunkt.ProbezeitBOS || z == Zeitpunkt.HalbjahrUndProbezeitFOS)
+      {
+        return getSchnitt(Halbjahr.Erstes).JahresfortgangGanzzahlig;
+      }
+      else if (z == Zeitpunkt.ErstePA || z == Zeitpunkt.Jahresende)
+      {
+        return getSchnitt(Halbjahr.Zweites).JahresfortgangGanzzahlig;
+      }
+      else // 2./3.PA
+      {
+        return getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
+      }
+    }
 
         public int getNotenanzahl(Halbjahr hj, Notentyp typ)
         {

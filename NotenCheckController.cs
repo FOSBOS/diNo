@@ -150,7 +150,7 @@ namespace diNo
         {
             schueler = s.NameVorname;
             klasse = s.getKlasse.Data.Bezeichnung;
-            lehrer = k!=null ? k.getLehrer.Kuerzel : "";
+            lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
             fach =   k!=null ? k.getFach.Kuerzel : "";
             meldung = m;
         }
@@ -159,7 +159,7 @@ namespace diNo
         {
             schueler = "...mehrmals...";
             klasse = kl.Data.Bezeichnung;
-            lehrer = k!=null ? k.getLehrer.Kuerzel : "";
+            lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
             fach =   k!=null ? k.getFach.Kuerzel : "";
             meldung = m;
         }
