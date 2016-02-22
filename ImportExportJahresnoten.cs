@@ -92,13 +92,9 @@ namespace diNo
       {
         var schuelerAdapter = new SchuelerTableAdapter();
         var fpaAdapter = new FpANotenTableAdapter();
-        Dictionary<string, Kurs> kurse = new Dictionary<string, Kurs>();
-        kurse.Add("G", FindOrCreateDummyKurs("Gechichte aus elfter Jahrgangsstufe", "G"));
-        kurse.Add("RL", FindOrCreateDummyKurs("Rechtslehre aus elfter Jahrgangsstufe", "Rl"));
-        kurse.Add("CH", FindOrCreateDummyKurs("Chemie aus elfter Jahrgangsstufe", "Ch"));
-        kurse.Add("TZ", FindOrCreateDummyKurs("TZ aus elfter Jahrgangsstufe", "TZ"));
-        // laut Stundentafel legt der Agrarzweig außer Geschichte nichts ab.
-
+        Dictionary<string, Kurs> kurse = GetKursverzeichnis();
+        kurse.Add("G", GetGeschichteKurs());
+        
         while (!reader.EndOfStream)
         {
           string[] line = reader.ReadLine().Split(Separator);
@@ -138,6 +134,47 @@ namespace diNo
             throw new InvalidOperationException("Diese Zeile hat " + line.Length + " Spalten. Das ist mir unbekannt");
         }
       }
+
+      TrageFehlendeSchülerInDummykurseEin();
+    }
+
+    /// <summary>
+    /// Geschichte wird etwas anders gehandhabt, weil jeder Geschichte ablegt - deshalb außerhalb des normalen Kursverzeichnisses.
+    /// </summary>
+    /// <returns>Der Dummy-Geschichtekurs.</returns>
+    private static Kurs GetGeschichteKurs()
+    {
+      return FindOrCreateDummyKurs("Gechichte aus elfter Jahrgangsstufe", "G");
+    }
+
+    private static Dictionary<string, Kurs> GetKursverzeichnis()
+    {
+      Dictionary<string, Kurs> kurse = new Dictionary<string, Kurs>();
+      kurse.Add("RL", FindOrCreateDummyKurs("Rechtslehre aus elfter Jahrgangsstufe", "Rl"));
+      kurse.Add("CH", FindOrCreateDummyKurs("Chemie aus elfter Jahrgangsstufe", "Ch"));
+      kurse.Add("TZ", FindOrCreateDummyKurs("TZ aus elfter Jahrgangsstufe", "TZ"));
+      // laut Stundentafel legt der Agrarzweig außer Geschichte nichts ab.
+      return kurse;
+    }
+
+    public static void TrageFehlendeSchülerInDummykurseEin()
+    {
+      var kurse = GetKursverzeichnis();
+      foreach (var dbSchueler in new SchuelerTableAdapter().GetData())
+      {
+        Schueler schueler = new Schueler(dbSchueler);
+        if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.getKlasse.Schulart == Schulart.FOS)
+        {
+          schueler.MeldeAn(GetGeschichteKurs());
+          switch (schueler.Zweig)
+          {
+            case Zweig.Agrar: break;
+            case Zweig.Sozial: schueler.MeldeAn(kurse["CH"]); break;
+            case Zweig.Technik: schueler.MeldeAn(kurse["TZ"]); break;
+            case Zweig.Wirtschaft: schueler.MeldeAn(kurse["RL"]); break;
+          }
+        }
+      }
     }
 
     /// <summary>
@@ -151,7 +188,7 @@ namespace diNo
       {
         var schuelerAdapter = new SchuelerTableAdapter();
         var fpaAdapter = new FpANotenTableAdapter();
-        Kurs geschichte = FindOrCreateDummyKurs("Gechichte aus elfter Jahrgangsstufe", "G");
+        Kurs geschichte = GetGeschichteKurs();
         Dictionary<string, Kurs> kurse = new Dictionary<string, Kurs>();
         kurse.Add("W11", FindOrCreateDummyKurs("Rechtslehre aus elfter Jahrgangsstufe", "Rl"));
         kurse.Add("S11", FindOrCreateDummyKurs("Chemie aus elfter Jahrgangsstufe", "C"));
@@ -188,13 +225,15 @@ namespace diNo
               TrageNoteEin(zweitesFach, (byte)zweitesAbgelegtesFachNote, schueler);
             }
 
- 
+
             fpaAdapter.Insert(schuelerId, "", null, null, null, null, (int)fpaNote);
           }
           else
             throw new InvalidOperationException("Diese Zeile hat " + line.Length + " Spalten. Das ist mir unbekannt");
         }
       }
+
+      TrageFehlendeSchülerInDummykurseEin();
     }
 
     private static void TrageNoteEin(Kurs kurs, byte note, Schueler schueler)
