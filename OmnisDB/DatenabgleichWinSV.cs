@@ -1,115 +1,203 @@
 ﻿using diNo.diNoDataSetTableAdapters;
-using diNo.OmnisDB;
+using log4net;
+using System;
+using System.Collections.Generic;
 using System.Data.Odbc;
-using System.IO;
+using System.Reflection;
 
 namespace diNo
 {
   public class DatenabgleichWinSV
   {
+    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
     private OdbcConnection conn;
+    private OdbcCommand command; // wird immer wieder verwendet, um RAM zu sparen (Freigabe schwierig bei OMNISDb-Objekten)
 
     public DatenabgleichWinSV()
     {
       this.conn = new OdbcConnection("DSN=sd");
       conn.Open();
+      command = conn.CreateCommand();
     }
 
     public void CheckSchuelerdaten()
     {
-      var command = conn.CreateCommand();
-      command.CommandText = "SELECT * FROM DSchueler";
-      var cmdResult = command.ExecuteReader();
-      var schuelerTable = new SchuelerTableAdapter();
-      while (cmdResult.Read())
+      foreach (int schuelerId in GetAlleGueltigenSchuelerIds())
       {
-        int schuelerId = cmdResult.GetInt32(WinSVSchuelerReader.schuelerIdSpalte);
+        Schueler schueler = new Schueler(schuelerId);
 
-        if (schuelerTable.GetDataById(schuelerId).Count == 0)
+        foreach (KeyValuePair<string, string> kvp in GetStringPropertyMapping())
         {
-          continue; // Entferne die Schülerdatensätze aus dem Vorjahr oder sonstige Wartelisten- und Spaßdatensätze
+          var aValue = ReadStringValue(schuelerId, kvp.Key);
+          if (kvp.Value == "Ausbildungsrichtung" && aValue == "WVR")
+          {
+            aValue = "W";
+          }
+
+          var propValue = (string)GetPropValue(schueler.Data, kvp.Value);
+          if (!string.Equals(propValue, aValue, System.StringComparison.OrdinalIgnoreCase))
+          {
+            log.Info(schueler.Name+", "+schueler.Vorname+"("+schueler.getKlasse.Bezeichnung+") - "+ kvp.Value.ToUpper() + ": " + propValue + " (alt) vs. " + aValue + " (neu)");
+           
+            if (kvp.Value == "Fremdsprache2")
+            {
+              schueler.Fremdsprache2 = aValue;
+              // Klappt das? Der Schüler müsste sich eigentlich dann selbst an- bzw. abmelden...
+            }
+
+            if (kvp.Value == "ReligionOderEthik")
+            {
+              schueler.ReliOderEthik = aValue;
+              // Klappt das? Der Schüler müsste sich eigentlich dann selbst an- bzw. abmelden...
+            }
+
+            if (kvp.Value == "Wahlpflichtfach")
+            {
+              schueler.Wahlpflichtfach = aValue;
+              // Klappt das? Der Schüler müsste sich eigentlich dann selbst an- bzw. abmelden...
+            }
+
+            if (kvp.Value == "Ausbildungsrichtung")
+            {
+              log.Warn(schueler.Name + ", " + schueler.Vorname + "(" + schueler.getKlasse.Bezeichnung + ") - " + kvp.Value.ToUpper() + ": " + propValue + " (alt) vs. " + aValue + " (neu)");
+              // Ausbildungsrichtungen gewechselt: Manuelle Änderung nötig!
+            }
+
+            SetPropValue(schueler.Data, kvp.Value, aValue);
+          }
         }
 
-        Schueler schueler = new Schueler(schuelerId);
-        schueler.Data.Name = cmdResult.GetString(WinSVSchuelerReader.nachnameSpalte);
-        schueler.Data.Vorname = cmdResult.GetString(WinSVSchuelerReader.vornameSpalte);
-        schueler.Data.Rufname = cmdResult.GetString(WinSVSchuelerReader.rufnameSpalte);
-        schueler.Data.Geschlecht = cmdResult.GetString(WinSVSchuelerReader.geschlechtSpalte);
-        schueler.Data.Geburtsdatum = cmdResult.GetDate(WinSVSchuelerReader.geburtsdatumSpalte);
-        schueler.Data.Geburtsort = cmdResult.GetString(WinSVSchuelerReader.geburtsortSpalte);
-        schueler.Data.Bekenntnis = cmdResult.GetString(WinSVSchuelerReader.bekenntnisSpalte);
-        schueler.Data.NachnameEltern1 = cmdResult.GetString(WinSVSchuelerReader.nachnameEltern1Spalte);
-        schueler.Data.VornameEltern1 = cmdResult.GetString(WinSVSchuelerReader.vornameEltern1Spalte);
-        schueler.Data.AnredeEltern1 = cmdResult.GetString(WinSVSchuelerReader.anredeEltern1Spalte);
-        schueler.Data.VerwandtschaftsbezeichnungEltern1 = cmdResult.GetString(WinSVSchuelerReader.verwandtschaftsbezeichnungEltern1Spalte);
-        schueler.Data.NachnameEltern2 = cmdResult.GetString(WinSVSchuelerReader.nachnameEltern2Spalte);
-        schueler.Data.VornameEltern2 = cmdResult.GetString(WinSVSchuelerReader.vornameEltern2Spalte);
-        schueler.Data.AnredeEltern2 = cmdResult.GetString(WinSVSchuelerReader.anredeEltern2Spalte);
-        schueler.Data.VerwandtschaftsbezeichnungEltern2 = cmdResult.GetString(WinSVSchuelerReader.verwandtschaftsbezeichnungEltern2Spalte);
-        schueler.Data.AnschriftPLZ = cmdResult.GetString(WinSVSchuelerReader.anschr1PlzSpalte);
-        schueler.Data.AnschriftOrt = cmdResult.GetString(WinSVSchuelerReader.anschr1OrtSpalte);
-        schueler.Data.AnschriftStrasse = cmdResult.GetString(WinSVSchuelerReader.anschr1StrasseSpalte);
-        schueler.Data.AnschriftTelefonnummer = cmdResult.GetString(WinSVSchuelerReader.anschr1TelefonSpalte);
-
-        // TODO: Klasse und Klassenwechsel: Wollen wir das automatisch? Eher nicht, oder...
-        // genauso: Wechsel von Jahrgangsstufen (Rücktritt) oder Ausbildungsrichtungen
-        // public const int klasseSpalte = 52;
-
-        // TODO: Auswerten, d.h. aus Kursen An-/Abmelden
-        schueler.Data.Fremdsprache2 = cmdResult.GetString(WinSVSchuelerReader.fremdsprache2Spalte);
-        schueler.Data.ReligionOderEthik = cmdResult.GetString(WinSVSchuelerReader.reliOderEthikSpalte);
-        schueler.Data.Wahlpflichtfach = cmdResult.GetString(WinSVSchuelerReader.wahlpflichtfachSpalte);
-        schueler.Data.Wahlfach1 = cmdResult.GetString(WinSVSchuelerReader.wahlfach1Spalte);
-        schueler.Data.Wahlfach2 = cmdResult.GetString(WinSVSchuelerReader.wahlfach2Spalte);
-        schueler.Data.Wahlfach3 = cmdResult.GetString(WinSVSchuelerReader.wahlfach3Spalte);
-        schueler.Data.Wahlfach4 = cmdResult.GetString(WinSVSchuelerReader.wahlfach4Spalte);
-
-        // TODO: Gleichen wir diese ganzen Daten überhaupt ab? Die ändern sich doch nach dem Eintritt nicht (oder gibt es auch hier Korrekturen?)
-        // Andererseits wäre es wohl unvollständig, wenn wir manche Daten abgleichen, andere aber nicht.
-        /*
-    public const int wdh1JahrgangsstufeSpalte = 86;
-    public const int wdh2JahrgangsstufeSpalte = 87;
-    public const int wdh1GrundSpalte = 91;
-    public const int wdh2GrundSpalte = 92;
-    public const int probezeitBisSpalte = 98;
-    public const int eintrittDatumSpalte = 115;
-    public const int eintrittJgstSpalte = 117;
-    public const int eintrittVonSchulnummerSpalte = 125;
-    public const int austrittsdatumSpalte = 122;
-    public const int schulischeVorbildungSpalte = 128;
-    public const int beruflicheVorbildungSpalte = 129;
-    */
-
-        // TODO: Ab hier stürzt er immer ab (evtl. kann der Treiber nicht so viele Spalten?)
-        var schwaeche = cmdResult.GetString(WinSVSchuelerReader.lrsSchwaecheSpalte);
-        schueler.Data.LRSSchwaeche = bool.Parse(cmdResult.GetString(WinSVSchuelerReader.lrsSchwaecheSpalte));
-        schueler.Data.LRSStoerung = cmdResult.GetBoolean(WinSVSchuelerReader.lrsStoerungSpalte);
-        schueler.Data.LRSBisDatum = cmdResult.GetDate(WinSVSchuelerReader.lrsBisDatumSpalte);
-        schueler.Data.Email = cmdResult.GetString(WinSVSchuelerReader.emailSpalte);
-        schueler.Data.Notfalltelefonnummer = cmdResult.GetString(WinSVSchuelerReader.notfallrufnummerSpalte);
+        CheckKlasse(schuelerId, schueler);
+        CheckLRS(schuelerId, schueler);
 
         schueler.Save();
       }
     }
 
-    /*
-    public void ExportiereAbgelegteFaecherAusWinSD(string fileName)
+    private IList<int> GetAlleGueltigenSchuelerIds()
     {
-      using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
-      using (StreamWriter writer = new StreamWriter(stream))
+      var result = new List<int>();
+      command.CommandText = "SELECT _SCHUELER_ID FROM DSchueler";
+      using (var cmdResult = command.ExecuteReader())
       {
-        var command = conn.CreateCommand();
-        command.CommandText = "SELECT * FROM DZeugnis";
-        var cmdResult = command.ExecuteReader();
         var schuelerTable = new SchuelerTableAdapter();
         while (cmdResult.Read())
         {
-          int schuelerId = cmdResult.GetInt32();
-          OmnisConnection.PasseFachKuerzelAn(cmdResult.)
-          writer.WriteLine(schueler.Id + Separator + schueler.Name + Separator + fach.getFach.Kuerzel + Separator + lehrer.Kuerzel + Separator + note);
+          int schuelerId = cmdResult.GetInt32(0);
+
+          if (schuelerTable.GetDataById(schuelerId).Count > 0) // Entferne die Schülerdatensätze aus dem Vorjahr oder sonstige Wartelisten- und Spaßdatensätze
+          {
+            result.Add(schuelerId);
+          }
+        }
+      }
+
+      return result;
+    }
+
+    private string ReadStringValue(int schuelerId, string colName)
+    {
+      command.CommandText = "SELECT " + colName + " FROM DSchueler WHERE _SCHUELER_ID=" + schuelerId;
+      using (var einzelresult = command.ExecuteReader())
+      {  //ExecuteScalar unterstützt der doofe Treiber nicht
+        if (einzelresult.Read())
+        {
+          return einzelresult.GetString(0);
+        }
+      }
+
+      return string.Empty;
+    }
+
+    private void CheckLRS(int schuelerId, Schueler schueler)
+    {
+      command.CommandText = "SELECT LRS_Schwaeche, LRS_Stoerung, LRS_BIS FROM DSchueler WHERE _SCHUELER_ID =" + schuelerId;
+      using (var lrsresult = command.ExecuteReader())
+      {
+        if (lrsresult.Read())
+        {
+          bool lrsSchwaecheNeu = lrsresult.GetString(0) != "0" && lrsresult.GetString(0) != "";
+          bool lrsStoerungNeu = lrsresult.GetString(1) != "0" && lrsresult.GetString(1) != "";
+          DateTime lrsBisDatum = lrsresult.GetString(2) != "" ? lrsresult.GetDateTime(2) : DateTime.MaxValue;
+
+          bool istLegasthenikerNeu = (lrsStoerungNeu || lrsStoerungNeu) && lrsBisDatum > DateTime.Today;
+          if (schueler.IsLegastheniker != istLegasthenikerNeu)
+          {
+            schueler.IsLegastheniker = istLegasthenikerNeu;
+            log.Info(schueler.Name + ", " + schueler.Vorname + "(" + schueler.getKlasse.Bezeichnung + ") - " + "LRS: " + schueler.IsLegastheniker + " (alt) vs. " + istLegasthenikerNeu + " (neu)");
+          }
         }
       }
     }
-    */
+
+    private void CheckKlasse(int schuelerId, Schueler schueler)
+    {
+      command.CommandText = "SELECT KLASSE FROM DSchueler WHERE _SCHUELER_ID =" + schuelerId;
+      using (var einzelresult = command.ExecuteReader())
+      {
+        if (einzelresult.Read())
+        {
+          if (!string.Equals(schueler.getKlasse.Bezeichnung, einzelresult.GetString(0), System.StringComparison.OrdinalIgnoreCase))
+          {
+            log.Warn(schueler.Name + ", " + schueler.Vorname + "(" + schueler.getKlasse.Bezeichnung + ") - " + "KLASSE: " + schueler.getKlasse.Bezeichnung + " (alt) vs. " + einzelresult.GetString(0) + " (neu)");
+            // Klasse geändert: Manuelle Änderung nötig!
+          }
+        }
+      }
+    }
+
+    private static IDictionary<string, string> GetStringPropertyMapping()
+    {
+      Dictionary<string, string> result = new Dictionary<string, string>();
+      result.Add("Familienname", "Name");
+      result.Add("Vornamen", "Vorname");
+      result.Add("Rufname", "Rufname");
+      result.Add("Geschlecht", "Geschlecht");
+      result.Add("Geburtsort", "Geburtsort");
+      result.Add("Bekenntnis", "Bekenntnis");
+      result.Add("ERZB1_Famname", "NachnameEltern1");
+      result.Add("ERZB1_Rufname", "VornameEltern1");
+      result.Add("ERZB1_Anrede", "AnredeEltern1");
+      result.Add("ERZB1_Art", "VerwandtschaftsbezeichnungEltern1");
+      result.Add("ERZB2_Famname", "NachnameEltern2");
+      result.Add("ERZB2_Rufname", "VornameEltern2");
+      result.Add("ERZB2_Anrede", "AnredeEltern2");
+      result.Add("ERZB2_Art", "VerwandtschaftsbezeichnungEltern2");
+      result.Add("ANSCHR1_PLZ", "AnschriftPLZ");
+      result.Add("ANSCHR1_Ort", "AnschriftOrt");
+      result.Add("ANSCHR1_Str", "AnschriftStrasse");
+      result.Add("ANSCHR1_Tel", "AnschriftTelefonnummer");
+      result.Add("E_Mail1", "Email");
+      result.Add("FREMDSPRACHE2", "Fremdsprache2");
+      result.Add("RELIGION_ETHIK", "ReligionOderEthik");
+      result.Add("WAHLPFLICHTF1", "Wahlpflichtfach");
+      result.Add("WAHLFACH1", "Wahlfach1");
+      // result.Add("WAHLFACH2", "Wahlfach2"); gibt es bei uns eh nicht
+      // result.Add("WAHLFACH3", "Wahlfach3");
+      // result.Add("WAHLFACH4", "Wahlfach4");
+      result.Add("AUSBILDUNGSR", "Ausbildungsrichtung");
+
+      return result;
+    }
+
+    private static object GetPropValue(object src, string propName)
+    {
+      try
+      {
+        return src.GetType().GetProperty(propName).GetValue(src, null);
+      }
+      catch (TargetInvocationException exp)
+      {
+        // die kommt evtl. ab und zu, weil bei den manuell neu eingetragenen Schülern wohl DBNull in der Datenbank an einigen Stellen steht
+        log.Error(exp.Message, exp);
+        return null;
+      }
+    }
+
+    private static void SetPropValue(object src, string propName, object value)
+    {
+      src.GetType().GetProperty(propName).SetValue(src, value, null);
+    }
   }
 }

@@ -2,8 +2,5 @@
 --------------
 
 - Fehltage integrieren
-- Aktualisieren der Schülerdaten (Adresse, was noch?)
 - Notenprüfungen (was prüfen wir alles?)
-- Zurückspielen der Noten in die WinSV und Zeugnisdruck (ohne WinSV geht es nicht wg. Statistikmeldungen - zudem beantragen da noch Schüler ihr Lateinzeugnis der neunten Klasse anzuerkennen und lauter so einen Unfug mit dem ich nicht unbedingt was zu tun haben möchte)
-- Übertrag der Noten von Geschichte und RL,TZ,.. und FpA? aus 11 in 12
-	=> simpelste Lösung: Export der Zeugnisnoten am Ende des Schuljahres und Anlegen von Dummy-Kursen im neuen Jahr mit Wieder-Import
+- Zurückspielen der Noten in die WinSV und Zeugnisdruck Jahreszeugnis bzw. Abschlusszeugnis
