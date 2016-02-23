@@ -163,7 +163,7 @@ namespace diNo
       foreach (var dbSchueler in new SchuelerTableAdapter().GetData())
       {
         Schueler schueler = new Schueler(dbSchueler);
-        if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.getKlasse.Schulart == Schulart.FOS)
+        if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf && schueler.getKlasse.Schulart == Schulart.FOS)
         {
           schueler.MeldeAn(GetGeschichteKurs());
           switch (schueler.Zweig)

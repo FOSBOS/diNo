@@ -157,7 +157,7 @@ namespace diNo
 
     private void btnNotenWinSV_Click(object sender, EventArgs e)
     {
-      ImportExportJahresnoten.ImportiereNotenAusWinSD("H:\\Sicherung SD 14_15\\NotenPerExcelAusWinSD.csv");
+      // ImportExportJahresnoten.ImportiereNotenAusWinSD("H:\\Sicherung SD 14_15\\NotenPerExcelAusWinSD.csv");
 
       Zeitpunkt reason = GetZeitpunkt();
       string fileName = "C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\winSVZeugnisExport.txt";
