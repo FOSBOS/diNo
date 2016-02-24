@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace diNo
 {
@@ -29,9 +30,12 @@ namespace diNo
         this.schueler = value;
         if (this.schueler != null)
         {
-          //nameLabel.Text = schueler.NameVorname;
-          textBoxAdresse.Lines = schueler.NameUndAdresse.Split('\n');
+          textBoxStrasse.Text = schueler.Data.AnschriftStrasse;
+          textBoxPLZ.Text = schueler.Data.AnschriftPLZ;
+          textBoxOrt.Text = schueler.Data.AnschriftOrt;
           textBoxTelefonnummer.Text = schueler.Data.AnschriftTelefonnummer;
+          textBoxNotfalltelefonnummer.Text = schueler.Data.Notfalltelefonnummer;
+
           textBoxID.Text = schueler.Id.ToString();
           textBoxGeburtsdatum.Text = schueler.Data.IsGeburtsdatumNull() ? "" : schueler.Data.Geburtsdatum.ToString("dd.MM.yyyy");
           textBoxGeburtsort.Text = schueler.Data.Geburtsort;
@@ -43,18 +47,20 @@ namespace diNo
           textBoxVorigeSchule.Text = schueler.EintrittAusSchulname;
           string kontaktEltern = schueler.Data.VornameEltern1 + " " + schueler.Data.NachnameEltern1;
           kontaktEltern += string.IsNullOrEmpty(schueler.Data.VornameEltern2) ? "" : "\n" + schueler.Data.VornameEltern2 + " " + schueler.Data.NachnameEltern2;
-          kontaktEltern += schueler.Data.IsNotfalltelefonnummerNull() ? "" : "\n" + schueler.Data.Notfalltelefonnummer; // da steht oft mehr als nur die Telefonnummer drin
           textBoxAdresseEltern.Lines = kontaktEltern.Split('\n');
+          textBoxBekenntnis.Text = schueler.Data.Bekenntnis;
+          textBoxReliUnterricht.Text = schueler.Data.ReligionOderEthik;
+
           textBoxProbezeit.Text = schueler.Data.IsProbezeitBisNull() ? "" : schueler.Data.ProbezeitBis.ToString("dd.MM.yyyy");
-         // TODO: Warum geht diese Zeile nicht?
-          // textBoxEmail.Text = schueler.Data.IsEmailNull() ? "" : schueler.Data.EMail;
-          //Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
-          //pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
+          textBoxAustritt.Text = schueler.Data.IsAustrittsdatumNull() ? "" : schueler.Data.Austrittsdatum.ToString("dd.MM.yyyy");
+          textBoxEmail.Text = schueler.Data.Email;
+          cbStatus.SelectedIndex = schueler.Data.Status;
+          textBoxDNote.Text = schueler.Data.IsDNoteNull() ? "" : schueler.Data.DNote.ToString();
         }
         else
         {
           //nameLabel.Text = "";
-          textBoxAdresse.Text = "";
+          textBoxStrasse.Text = "";
           textBoxTelefonnummer.Text = "";
           textBoxID.Text = "";
           textBoxGeburtsdatum.Text = "";
@@ -72,5 +78,26 @@ namespace diNo
         }
       }
     }
+
+    public void DatenUebernehmen()
+    {
+      schueler.Data.AnschriftStrasse = textBoxStrasse.Text;
+      schueler.Data.AnschriftPLZ = textBoxPLZ.Text;
+      schueler.Data.AnschriftOrt = textBoxOrt.Text;
+      schueler.Data.AnschriftTelefonnummer = textBoxTelefonnummer.Text;
+      schueler.Data.Notfalltelefonnummer = textBoxNotfalltelefonnummer.Text;
+          
+      schueler.Data.Bekenntnis = textBoxBekenntnis.Text;
+      // ReliUnterricht via Kurszuordnung          
+
+      if (textBoxProbezeit.Text=="") schueler.Data.SetProbezeitBisNull();
+        else schueler.Data.ProbezeitBis = DateTime.Parse(textBoxProbezeit.Text, CultureInfo.CurrentCulture);      
+      if (textBoxAustritt.Text=="") schueler.Data.SetAustrittsdatumNull();
+        else schueler.Data.Austrittsdatum = DateTime.Parse(textBoxAustritt.Text, CultureInfo.CurrentCulture);            
+
+      schueler.Data.Email = textBoxEmail.Text;
+      schueler.Data.Status = cbStatus.SelectedIndex;
+    }
+
   }
 }

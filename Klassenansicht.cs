@@ -28,12 +28,14 @@ namespace diNo
         this.userControlFPAundSeminar1.Schueler = schueler;
 
         nameLabel.Text = schueler.NameVorname;
-        klasseLabel.Text = schueler.getKlasse.Bezeichnung;
+        klasseLabel.Text = schueler.getKlasse.Bezeichnung + ((schueler.getKlasse.Zweig == Zweig.None) ? "_" + schueler.Data.Ausbildungsrichtung : "");
         Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
         pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);  
         btnBrief.Enabled = true;
         btnPrint.Enabled = true;
-        btnSave.Enabled = true;
+        btnSave.Enabled = Zugriff.Instance.Level != Zugriffslevel.Lehrer || schueler.BetreuerId == Zugriff.Instance.lehrer.Id;
+        labelHinweise.Text = (schueler.IsLegastheniker ? "Legastheniker" : "");
+        labelHinweise.ForeColor = Color.Red;
       }
     }
 
@@ -46,7 +48,7 @@ namespace diNo
         klasseLabel.Text = "";
         pictureBoxImage.Image = null; 
         toolStripStatusLabel1.Text = "";
-        btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss;
+        btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss || Zugriff.Instance.Level == Zugriffslevel.Admin;
     }
 
         private void btnNotenabgeben_Click(object sender, EventArgs e)
@@ -103,8 +105,12 @@ namespace diNo
 
         private void btnSave_Click(object sender, EventArgs e)
         {   
-            userControlFPAundSeminar1.DatenUebernehmen();         
-            schueler.Save();            
+          userControlFPAundSeminar1.DatenUebernehmen();
+          if (Zugriff.Instance.Level != Zugriffslevel.Lehrer)
+          {
+            userControlSchueleransicht1.DatenUebernehmen();  
+          }
+          schueler.Save();            
         }
 
         public void RefreshVorkommnisse()

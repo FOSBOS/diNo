@@ -358,9 +358,9 @@ namespace diNo
       }
     }
 
-    public Schuelerstatus getStatus()
-    {
-      return (Schuelerstatus) data.Status;
+    public Schuelerstatus Status
+    { get { return (Schuelerstatus) data.Status; }
+      set { data.Status = (int) value; }
     }
 
     public string getWiederholungen()
@@ -369,13 +369,13 @@ namespace diNo
                   
       if (!this.Data.IsWiederholung1JahrgangsstufeNull() && isAWiederholung(this.Data.Wiederholung1Jahrgangsstufe))
       {
-        result += this.Data.Wiederholung1Jahrgangsstufe;
-        result += "(" + this.Data.Wiederholung1Grund + ")";
+        result += Data.Wiederholung1Jahrgangsstufe;
+        result += " (" + Data.Wiederholung1Grund + ")";
       }
       if (!this.Data.IsWiederholung2JahrgangsstufeNull() && isAWiederholung(this.Data.Wiederholung2Jahrgangsstufe))
       {
-        result += this.Data.Wiederholung2Jahrgangsstufe;
-        result += "(" + this.Data.Wiederholung2Grund + ")";
+        result += ", " + Data.Wiederholung2Jahrgangsstufe;
+        result += " (" + Data.Wiederholung2Grund + ")";
       }
 
       return result;
@@ -531,14 +531,9 @@ namespace diNo
     /// <param name="when">Wann der Schüler ausgetreten ist.</param>
     public void Austritt(DateTime when)
     {
-      foreach (var kurs in this.Kurse)
-      {
-        MeldeAb(new Kurs(kurs));
-      }
-
-      this.kurse = null;
-      this.Data.Austrittsdatum = when;
-      this.Save();
+      Status = Schuelerstatus.Abgemeldet;
+      data.Austrittsdatum = when;
+      Save();
     }
 
     /// <summary>

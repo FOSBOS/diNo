@@ -50,7 +50,7 @@
       this.btnPrint = new System.Windows.Forms.Button();
       this.btnNotenabgeben = new System.Windows.Forms.Button();
       this.btnSave = new System.Windows.Forms.Button();
-      this.label1 = new System.Windows.Forms.Label();
+      this.labelHinweise = new System.Windows.Forms.Label();
       this.pictureBoxImage = new System.Windows.Forms.PictureBox();
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -108,7 +108,7 @@
       this.tabPageNoten.Location = new System.Drawing.Point(4, 33);
       this.tabPageNoten.Name = "tabPageNoten";
       this.tabPageNoten.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageNoten.Size = new System.Drawing.Size(1019, 450);
+      this.tabPageNoten.Size = new System.Drawing.Size(890, 450);
       this.tabPageNoten.TabIndex = 1;
       this.tabPageNoten.Text = "Notenbogen";
       this.tabPageNoten.UseVisualStyleBackColor = true;
@@ -120,7 +120,7 @@
       this.notenbogen1.Margin = new System.Windows.Forms.Padding(4);
       this.notenbogen1.Name = "notenbogen1";
       this.notenbogen1.Schueler = null;
-      this.notenbogen1.Size = new System.Drawing.Size(1013, 444);
+      this.notenbogen1.Size = new System.Drawing.Size(884, 444);
       this.notenbogen1.TabIndex = 0;
       // 
       // tabPageFPASeminar
@@ -129,7 +129,7 @@
       this.tabPageFPASeminar.Location = new System.Drawing.Point(4, 33);
       this.tabPageFPASeminar.Name = "tabPageFPASeminar";
       this.tabPageFPASeminar.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageFPASeminar.Size = new System.Drawing.Size(1019, 450);
+      this.tabPageFPASeminar.Size = new System.Drawing.Size(890, 450);
       this.tabPageFPASeminar.TabIndex = 3;
       this.tabPageFPASeminar.Text = "FPA / Seminar";
       this.tabPageFPASeminar.UseVisualStyleBackColor = true;
@@ -141,7 +141,7 @@
       this.userControlFPAundSeminar1.Margin = new System.Windows.Forms.Padding(4);
       this.userControlFPAundSeminar1.Name = "userControlFPAundSeminar1";
       this.userControlFPAundSeminar1.Schueler = null;
-      this.userControlFPAundSeminar1.Size = new System.Drawing.Size(1013, 444);
+      this.userControlFPAundSeminar1.Size = new System.Drawing.Size(884, 444);
       this.userControlFPAundSeminar1.TabIndex = 0;
       // 
       // tabPageVorkommnisse
@@ -149,7 +149,7 @@
       this.tabPageVorkommnisse.Controls.Add(this.userControlVorkommnisse1);
       this.tabPageVorkommnisse.Location = new System.Drawing.Point(4, 33);
       this.tabPageVorkommnisse.Name = "tabPageVorkommnisse";
-      this.tabPageVorkommnisse.Size = new System.Drawing.Size(1019, 450);
+      this.tabPageVorkommnisse.Size = new System.Drawing.Size(890, 450);
       this.tabPageVorkommnisse.TabIndex = 2;
       this.tabPageVorkommnisse.Text = "Vorkommnisse";
       this.tabPageVorkommnisse.UseVisualStyleBackColor = true;
@@ -161,7 +161,7 @@
       this.userControlVorkommnisse1.Margin = new System.Windows.Forms.Padding(4);
       this.userControlVorkommnisse1.Name = "userControlVorkommnisse1";
       this.userControlVorkommnisse1.Schueler = null;
-      this.userControlVorkommnisse1.Size = new System.Drawing.Size(1019, 450);
+      this.userControlVorkommnisse1.Size = new System.Drawing.Size(890, 450);
       this.userControlVorkommnisse1.TabIndex = 0;
       // 
       // klasseLabel
@@ -285,15 +285,15 @@
       this.btnSave.UseVisualStyleBackColor = true;
       this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
       // 
-      // label1
+      // labelHinweise
       // 
-      this.label1.AutoSize = true;
-      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label1.Location = new System.Drawing.Point(532, 88);
-      this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(509, 34);
-      this.label1.TabIndex = 36;
-      this.label1.Text = "Notendateien können ab sofort über die Excel-Schaltfläche abgegeben werden.\r\nÜber" +
+      this.labelHinweise.AutoSize = true;
+      this.labelHinweise.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.labelHinweise.Location = new System.Drawing.Point(532, 88);
+      this.labelHinweise.Name = "labelHinweise";
+      this.labelHinweise.Size = new System.Drawing.Size(509, 34);
+      this.labelHinweise.TabIndex = 36;
+      this.labelHinweise.Text = "Notendateien können ab sofort über die Excel-Schaltfläche abgegeben werden.\r\nÜber" +
     " den Stift können z.B. Verweise gedruckt werden.\r\n";
       // 
       // pictureBoxImage
@@ -331,7 +331,7 @@
       this.Controls.Add(this.btnSave);
       this.Controls.Add(this.statusStrip1);
       this.Controls.Add(this.btnCheck);
-      this.Controls.Add(this.label1);
+      this.Controls.Add(this.labelHinweise);
       this.Controls.Add(this.btnBrief);
       this.Controls.Add(this.btnPrint);
       this.Controls.Add(this.btnNotenabgeben);
@@ -373,7 +373,7 @@
     private System.Windows.Forms.Button btnPrint;
     private System.Windows.Forms.Button btnBrief;
     private System.Windows.Forms.ToolTip toolTipButtons;
-    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Label labelHinweise;
     private System.Windows.Forms.Button btnCheck;
     private System.Windows.Forms.StatusStrip statusStrip1;
     private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
