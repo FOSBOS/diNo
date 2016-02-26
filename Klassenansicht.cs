@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Collections;
 
 namespace diNo
 {
@@ -37,6 +38,8 @@ namespace diNo
         labelHinweise.Text = (schueler.IsLegastheniker ? "Legastheniker" : "");
         labelHinweise.ForeColor = Color.Red;
       }
+      else if (Zugriff.Instance.Level != Zugriffslevel.Lehrer)      
+        btnPrint.Enabled = true;
     }
 
     private void Klassenansicht_Load(object sender, EventArgs e)
@@ -87,20 +90,30 @@ namespace diNo
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
-        {
-            new ReportNotenbogen(schueler);
+        { 
+          if (Zugriff.Instance.Level!=Zugriffslevel.Lehrer)
+          {
+            var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
+            if (obj.Count>0 && obj[0] is Klasse)
+            {
+              new ReportNotenbogen((ArrayList)obj);
+              return;
+            }
+          }
+          
+          if (schueler!= null) new ReportNotenbogen(schueler);
         }
 
         private void btnBrief_Click(object sender, EventArgs e)
         {
-            if (frmBrief== null) frmBrief = new Brief(this);
-            frmBrief.Anzeigen(schueler);
+          if (frmBrief== null) frmBrief = new Brief(this);
+          frmBrief.Anzeigen(schueler);
         }
 
         private void btnCheck_Click(object sender, EventArgs e)
         {
-            var c = new NotenCheckForm();
-             c.Show();
+          var c = new NotenCheckForm();
+          c.Show();
         }
 
         private void btnSave_Click(object sender, EventArgs e)

@@ -1784,11 +1784,6 @@
                   <GroupExpression>=Fields!fachBez.Value</GroupExpression>
                 </GroupExpressions>
               </Group>
-              <SortExpressions>
-                <SortExpression>
-                  <Value>=Fields!fachBez.Value</Value>
-                </SortExpression>
-              </SortExpressions>
               <TablixHeader>
                 <Size>2.5cm</Size>
                 <CellContents>

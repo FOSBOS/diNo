@@ -6,6 +6,7 @@ using diNo.diNoDataSetTableAdapters;
 using Microsoft.Reporting.WinForms;
 using log4net;
 using System.Data;
+using System.Collections;
 
 namespace diNo
 {
@@ -45,60 +46,67 @@ namespace diNo
 
     public class ReportNotenbogen : ReportController
     {
-        //int schuelerId=0;
-
-        public ReportNotenbogen(Schueler dataSource) : base(dataSource) {}
+    public ReportNotenbogen(Schueler dataSource) : base(dataSource) {}
+    //public ReportNotenbogen(IList<int> dataSource) : base(dataSource) {}
+    public ReportNotenbogen(ArrayList dataSource) : base(dataSource) {}
         
-        public override void Init()
-        {    
-            int schuelerId = ((Schueler)bindingDataSource).Id;
-            vwNotenbogenTableAdapter BerichtTableAdapter;
-            rpt.BerichtBindingSource.DataMember = "vwNotenbogen";
-            BerichtTableAdapter =  new vwNotenbogenTableAdapter();            
-            BerichtTableAdapter.ClearBeforeFill = true;
-            
-            BerichtTableAdapter.FillBySchuelerId(rpt.diNoDataSet.vwNotenbogen,schuelerId);                                 
-            //BerichtTableAdapter.FillByKlasseId(rpt.diNoDataSet.vwNotenbogen,89);
-            //log.Debug("DataTable geholt mit "+rpt.diNoDataSet.vwNotenbogen.Count); 
+    public override void Init()
+    {    
+      vwNotenbogenTableAdapter BerichtTableAdapter;
+      rpt.BerichtBindingSource.DataMember = "vwNotenbogen";
+      BerichtTableAdapter =  new vwNotenbogenTableAdapter();            
+      BerichtTableAdapter.ClearBeforeFill = true;
 
-            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";
-            // Unterbericht einbinden
-            rpt.reportViewer.LocalReport.SubreportProcessing +=
-                    new SubreportProcessingEventHandler(subrptNotenbogenEventHandler);
-            rpt.reportViewer.LocalReport.SubreportProcessing +=
-                    new SubreportProcessingEventHandler(subrptVorkommnisEventHandler);
-        }
-
-        void subrptNotenbogenEventHandler(object sender, SubreportProcessingEventArgs e)
+      if (bindingDataSource is Schueler)      
+        BerichtTableAdapter.FillBySchuelerId(rpt.diNoDataSet.vwNotenbogen,((Schueler)bindingDataSource).Id);                                 
+      else
+      { // Klassenweise (auch mehrere) drucken
+        foreach (var klasse in (ArrayList)bindingDataSource)
         {
-            // ACHTUNG: Der Parameter muss im Haupt- und im Unterbericht definiert werden (mit gleichem Namen)
-            int schuelerId;
-            int.TryParse(e.Parameters[0].Values[0],out schuelerId);
-            if (schuelerId>0) // hier kommt er 2x rein.
-            {
-              Schueler schueler = new Schueler(schuelerId);
-              var noten = schueler.getNoten.SchuelerNotenDruck();
-              e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
-            }
+          BerichtTableAdapter.FillByKlasseId(rpt.diNoDataSet.vwNotenbogen,((Klasse)klasse).Data.Id);
+          BerichtTableAdapter.ClearBeforeFill = false;
         }
+      }
 
-        void subrptVorkommnisEventHandler(object sender, SubreportProcessingEventArgs e)
-        {
-            diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
-            vwVorkommnisTableAdapter BerichtTableAdapter;
-            BerichtTableAdapter = new vwVorkommnisTableAdapter();
-            BerichtTableAdapter.ClearBeforeFill = true;
+      rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";
 
-            int schuelerId;
-            int.TryParse(e.Parameters[0].Values[0],out schuelerId);
-            if (schuelerId>0)
-            {     
-              BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);                 
-              e.DataSources.Add(new ReportDataSource("DataSetVorkommnis",(DataTable) vorkommnisse));
-            }
-        }
-
+      // Unterberichte einbinden
+      rpt.reportViewer.LocalReport.SubreportProcessing +=
+              new SubreportProcessingEventHandler(subrptNotenbogenEventHandler);
+      rpt.reportViewer.LocalReport.SubreportProcessing +=
+              new SubreportProcessingEventHandler(subrptVorkommnisEventHandler);
     }
+
+    void subrptNotenbogenEventHandler(object sender, SubreportProcessingEventArgs e)
+    {
+        // ACHTUNG: Der Parameter muss im Haupt- und im Unterbericht definiert werden (mit gleichem Namen)
+        int schuelerId;
+        int.TryParse(e.Parameters[0].Values[0],out schuelerId);
+        if (schuelerId>0) // hier kommt er 2x rein.
+        {
+          Schueler schueler = new Schueler(schuelerId);
+          var noten = schueler.getNoten.SchuelerNotenDruck();
+          e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
+        }
+    }
+
+    void subrptVorkommnisEventHandler(object sender, SubreportProcessingEventArgs e)
+    {
+        diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
+        vwVorkommnisTableAdapter BerichtTableAdapter;
+        BerichtTableAdapter = new vwVorkommnisTableAdapter();
+        BerichtTableAdapter.ClearBeforeFill = true;
+
+        int schuelerId;
+        int.TryParse(e.Parameters[0].Values[0],out schuelerId);
+        if (schuelerId>0)
+        {     
+          BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);                 
+          e.DataSources.Add(new ReportDataSource("DataSetVorkommnis",(DataTable) vorkommnisse));
+        }
+    }
+
+  }
 
     public class ReportFachliste : ReportController
     {
