@@ -49,7 +49,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -503,7 +502,13 @@
               </Group>
               <SortExpressions>
                 <SortExpression>
-                  <Value>=Fields!Id.Value</Value>
+                  <Value>=Fields!Bezeichnung.Value</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!Name.Value</Value>
+                </SortExpression>
+                <SortExpression>
+                  <Value>=Fields!Vorname.Value</Value>
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
@@ -518,6 +523,7 @@
                       </Border>
                     </Style>
                   </Rectangle>
+                  <rd:Selected>true</rd:Selected>
                 </CellContents>
               </TablixHeader>
               <TablixMembers>

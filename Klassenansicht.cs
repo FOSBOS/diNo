@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Collections;
 
 namespace diNo
 {
@@ -28,13 +29,17 @@ namespace diNo
         this.userControlFPAundSeminar1.Schueler = schueler;
 
         nameLabel.Text = schueler.NameVorname;
-        klasseLabel.Text = schueler.getKlasse.Bezeichnung;
+        klasseLabel.Text = schueler.getKlasse.Bezeichnung + ((schueler.getKlasse.Zweig == Zweig.None) ? "_" + schueler.Data.Ausbildungsrichtung : "");
         Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
         pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);  
         btnBrief.Enabled = true;
         btnPrint.Enabled = true;
-        btnSave.Enabled = true;
+        btnSave.Enabled = Zugriff.Instance.Level != Zugriffslevel.Lehrer || schueler.BetreuerId == Zugriff.Instance.lehrer.Id;
+        labelHinweise.Text = (schueler.IsLegastheniker ? "Legastheniker" : "");
+        labelHinweise.ForeColor = Color.Red;
       }
+      else if (Zugriff.Instance.Level != Zugriffslevel.Lehrer)      
+        btnPrint.Enabled = true;
     }
 
     private void Klassenansicht_Load(object sender, EventArgs e)
@@ -46,7 +51,7 @@ namespace diNo
         klasseLabel.Text = "";
         pictureBoxImage.Image = null; 
         toolStripStatusLabel1.Text = "";
-        btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss;
+        btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss || Zugriff.Instance.Level == Zugriffslevel.Admin;
     }
 
         private void btnNotenabgeben_Click(object sender, EventArgs e)
@@ -85,26 +90,40 @@ namespace diNo
         }
 
         private void btnPrint_Click(object sender, EventArgs e)
-        {
-            new ReportNotenbogen(schueler);
+        { 
+          if (Zugriff.Instance.Level!=Zugriffslevel.Lehrer)
+          {
+            var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
+            if (obj.Count>0 && obj[0] is Klasse)
+            {
+              new ReportNotenbogen((ArrayList)obj);
+              return;
+            }
+          }
+          
+          if (schueler!= null) new ReportNotenbogen(schueler);
         }
 
         private void btnBrief_Click(object sender, EventArgs e)
         {
-            if (frmBrief== null) frmBrief = new Brief(this);
-            frmBrief.Anzeigen(schueler);
+          if (frmBrief== null) frmBrief = new Brief(this);
+          frmBrief.Anzeigen(schueler);
         }
 
         private void btnCheck_Click(object sender, EventArgs e)
         {
-            var c = new NotenCheckForm();
-             c.Show();
+          var c = new NotenCheckForm();
+          c.Show();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {   
-            userControlFPAundSeminar1.DatenUebernehmen();         
-            schueler.Save();            
+          userControlFPAundSeminar1.DatenUebernehmen();
+          if (Zugriff.Instance.Level != Zugriffslevel.Lehrer)
+          {
+            userControlSchueleransicht1.DatenUebernehmen();  
+          }
+          schueler.Save();            
         }
 
         public void RefreshVorkommnisse()

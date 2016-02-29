@@ -23,23 +23,28 @@ namespace diNo
           set { globaleKonstanten.aktZeitpunkt=value; SaveGlobaleKonstanten(); } }
       
       private Zugriff()
-      {
-            Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+      {          
+            Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;            
+            // TODO: Username ToUpper verwenden, dann muss aber die DB passen
+
         //Username = "FOSBOS\\ckonrad";
-            if (!Username.Contains("FOSBOS") || Username.ToUpper().Equals("FOSBOS\\ADMINISTRATOR"))
+        //Username = "VW\\gmerk";
+
+            if (Username.Contains("VW\\"))
+              Level = Zugriffslevel.Schulleitung;
+            else if (!Username.Contains("FOSBOS") || Username.ToUpper().Equals("FOSBOS\\ADMINISTRATOR"))
               Level = Zugriffslevel.Admin;
             else
-              Level = Zugriffslevel.Lehrer;
-
-            Username = Username.Replace("FOSBOS\\", "");
-            var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
-            if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
-
-            if ((Level == Zugriffslevel.Lehrer) && lehrer == null)
             {
-                throw new InvalidOperationException("Keine Zugriffsberechtigung!");
+              Level = Zugriffslevel.Lehrer;
+              Username = Username.Replace("FOSBOS\\", "");
+              var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
+              if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
+              else
+              {
+                  throw new InvalidOperationException("Keine Zugriffsberechtigung!");
+              }
             }
-            // TODO: Schulleitung einbauen
             LoadSchueler();
             LoadFaecher();
             LoadLehrer();
