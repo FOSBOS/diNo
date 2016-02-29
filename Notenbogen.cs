@@ -61,6 +61,8 @@ namespace diNo
         dataGridNoten.RowsDefaultCellStyle.BackColor = Color.LightGray;
       }
 
+      SetzeSichtbarkeitDerSpalten(dieNoten);
+
       // Row[lineCount] für schriftliche und Row[lineCount+1] für mündliche Noten
       int lineCount = 0;
       foreach (var kursNoten in dieNoten)
@@ -96,8 +98,39 @@ namespace diNo
         }
         lineCount = lineCount + 2;
       }
+    }
 
-   
+    private void SetzeSichtbarkeitDerSpalten(List<FachSchuelerNoten> dieNoten)
+    {
+      int maxAnzahlNotenHJ1 = 3; //zeige minimal 3 Spalten pro Halbjahr an
+      int maxAnzahlNotenHJ2 = 3;
+      foreach (var kursNoten in dieNoten)
+      {
+        var benoetigteSpaltenHJ1 = getAnzahlBenoetigterSpalten(Halbjahr.Erstes, kursNoten);
+        maxAnzahlNotenHJ1 = maxAnzahlNotenHJ1 <= benoetigteSpaltenHJ1 ? benoetigteSpaltenHJ1 : maxAnzahlNotenHJ1;
+        var benoetigteSpaltenHJ2 = getAnzahlBenoetigterSpalten(Halbjahr.Zweites, kursNoten);
+        maxAnzahlNotenHJ2 = maxAnzahlNotenHJ2 <= benoetigteSpaltenHJ2 ? benoetigteSpaltenHJ2 : maxAnzahlNotenHJ2;
+      }
+
+      for (int i = 1; i < 8; i++)
+      {
+        dataGridNoten.Columns[i].Visible = i - 1 < maxAnzahlNotenHJ1;
+      }
+      for (int i = 10; i < 18; i++)
+      {
+        dataGridNoten.Columns[i].Visible = i - 10 < maxAnzahlNotenHJ2;
+      }
+
+      dataGridNoten.Columns[8].Visible = (new int[] {1, 2, 9, 10, 11, 12 }).Contains(DateTime.Now.Month); // Zeige die Einzelschnitte aus HJ1 ab März nicht mehr an.
+    }
+
+    private int getAnzahlBenoetigterSpalten(Halbjahr hj, FachSchuelerNoten noten)
+    {
+      return noten.getNoten(hj, Notentyp.EchteMuendliche).Count +
+        noten.getNoten(hj, Notentyp.Ersatzprüfung).Count +
+        noten.getNoten(hj, Notentyp.Ex).Count +
+        noten.getNoten(hj, Notentyp.Fachreferat).Count +
+        noten.getNoten(hj, Notentyp.Kurzarbeit).Count;
     }
 
     // schreibt eine Notenliste (z.B. alle SA in Englisch aus dem 1. Hj. ins Grid), bez wird als Text an jede Note angefügt    
