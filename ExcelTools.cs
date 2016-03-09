@@ -364,7 +364,9 @@ namespace diNo
       else
         v = ReadValue(notenbogen, zelle);
 
-      return !string.IsNullOrEmpty(v) ? Convert.ToDecimal(v, CultureInfo.CurrentUICulture) : (decimal?)null;
+      var zahlenwert = !string.IsNullOrEmpty(v) ? Convert.ToDecimal(v, CultureInfo.CurrentUICulture) : (decimal?)null;
+      return (zahlenwert >= 0) ? zahlenwert : (decimal?)null; // diese Zeile unterdrückt einen Fehler bei der AP Englisch.
+      // Solange die AP noch nicht vorliegt, berechnet das Excel-Sheet in der Englisch-AP einen negativen Wert
     }
 
     public byte? ReadSchnittGanzzahlig(BerechneteNotentyp typ, Halbjahr hj, int zeile)
