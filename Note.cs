@@ -203,21 +203,15 @@ namespace diNo
             BerechneteNoteTableAdapter na = new BerechneteNoteTableAdapter();
             na.Insert(SchnittMuendlich, SchnittSchulaufgaben, JahresfortgangMitKomma, JahresfortgangGanzzahlig,
                     PruefungGesamt, SchnittFortgangUndPruefung, Abschlusszeugnis, 0, false, schuelerid, kursid, ErstesHalbjahr);
-
-        }    
-        
+        }
+    
         public void RundeJFNote()
         {
-            if (JahresfortgangMitKomma !=null)
-            {
-                if (JahresfortgangMitKomma < 1)
-                    JahresfortgangGanzzahlig=0;
-                else 
-                    JahresfortgangGanzzahlig = (byte) Math.Round((double)(JahresfortgangMitKomma.GetValueOrDefault()));
-            }
+          if (JahresfortgangMitKomma !=null)
+            JahresfortgangGanzzahlig = Notentools.RundeJF(JahresfortgangMitKomma.GetValueOrDefault());
         }
-
-    }
+      }               
+    
         /// <summary>
         /// Eine Note.
         /// </summary>
@@ -297,4 +291,36 @@ namespace diNo
                 na.Insert((int)Typ, Punktwert, DateTime.Now.Date, Zelle, (byte)Halbjahr, schuelerid, kursid, out noteid);
             }
         }
-     }
+     
+
+  public static class Notentools
+  {
+    public static decimal Aufrunden2NK(decimal schnitt)
+    {
+      return Math.Ceiling(schnitt*100)/100;
+    }
+    
+    public static byte RundeJF(decimal schnitt)
+    {
+      if (schnitt < 1)
+          return 0;
+      else 
+          return (byte) Math.Round(schnitt);
+    }
+
+    public static byte BerechneZeugnisnote(decimal? jf,int? sap, int? map)
+    {
+      decimal abi;
+      
+      // bei externen ist jf==null
+      if (jf!=null && map==null && sap==null) return RundeJF(jf.GetValueOrDefault());
+
+      if (map==null) abi = sap.GetValueOrDefault();
+      else if (sap==null) abi = map.GetValueOrDefault();
+      else abi = Aufrunden2NK((2*sap.GetValueOrDefault()+map.GetValueOrDefault())/3);
+
+      if (jf==null) return RundeJF(abi);
+      else return RundeJF((jf.GetValueOrDefault()+abi)/2);
+    }
+  }
+}

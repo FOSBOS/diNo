@@ -59,17 +59,13 @@ namespace diNo
     /// <summary>
     /// Liefert eine Liste in der je Fach alle Noten in druckbarer Form vorliegen.
     /// </summary>
-    public IList<FachSchuelerNotenDruck> SchuelerNotenDruck()
+    public IList<FachSchuelerNotenDruckKurz> SchuelerNotenDruck()
     {
-      IList<FachSchuelerNotenDruck> liste = new List<FachSchuelerNotenDruck>();
+      IList<FachSchuelerNotenDruckKurz> liste = new List<FachSchuelerNotenDruckKurz>();
       var zuDruckendeNoten = alleFaecher.Count > 0 ? alleFaecher : SucheAlteNoten();
       foreach (FachSchuelerNoten f in zuDruckendeNoten)
-      {
-        // für SA-Fächer werden zwei Datensätze erzeugt, immer der sL-Eintrag 
-        if (f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe))
-          liste.Add(new FachSchuelerNotenDruck(f, true)); // SA
-
-        liste.Add(new FachSchuelerNotenDruck(f, false)); // sonstige Leistungen
+      {               
+        liste.Add(new FachSchuelerNotenDruckKurz(f, f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe)));
       }
       return liste;
     }
@@ -263,9 +259,86 @@ namespace diNo
                     liste.Add(note + (bez=="" ? "" : /*" " + */ bez));                
             }        
         }
-        
-    }
 
+    public string NotwendigeNoteInMAP(int Zielpunkte)
+    {
+      if (getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich).Count==0) return "";
+      int? zeugnis = getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;  
+      if (zeugnis>=Zielpunkte) return ""; // Ziel schon erreicht
+      decimal? jf = getSchnitt(Halbjahr.Zweites).JahresfortgangMitKomma;
+      int sap = getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich)[0];
+      int map=sap+1; // Mündliche muss größer als schriftliche sein, sonst bringt es nichts.
+      while (map<=15 && Notentools.BerechneZeugnisnote(jf,sap,map)<Zielpunkte)
+        map++;
+
+      if (map==16) return "nicht möglich";
+      else return map.ToString();
+    }     
+  }
+
+  public class FachSchuelerNotenDruckKurz
+  {
+      // Arrays können in Bericht leider nicht gedruckt werden, daher einzeln:
+      // für SA / sL wird je ein Datensatz erzeugt
+      // JF und DGes wird nur bei sL mitgeschickt
+      public string fachBez { get; private set; }
+      public string Art { get; private set; } // gibt den Text SA oder sL aus
+      public string N1 { get; private set; }  // Einzelnoten
+      public string D1 { get; private set; }  // Durchschnitt 1. Hj.
+      public string DGes1 { get; private set; } // Schnitt Gesamt im 1. Hj.
+      public string JF1 { get; private set; }
+      public string N2 { get; private set; }
+      public string D2 { get; private set; }
+      public string DGes2 { get; private set; }
+      public string JF2 { get; private set; }
+      public string SAP { get; private set; }
+      public string MAP { get; private set; }
+      public string APG { get; private set; }
+      public string GesZ { get; private set; } // SchnittFortgangUndPruefung
+      public string Z { get; private set; }
+
+      public FachSchuelerNotenDruckKurz(FachSchuelerNoten s, bool evalSA)
+      {        
+        fachBez = s.getFach.Bezeichnung;
+        Art=""; N1=""; D1=""; N2=""; D2=""; 
+        var d1 = s.getSchnitt(Halbjahr.Erstes);
+        var d2 = s.getSchnitt(Halbjahr.Zweites);
+       
+        if (evalSA)
+        {
+          Art = "SA\n";
+          N1 = String.Join("  ", s.SA(Halbjahr.Erstes)) + "\n";
+          N2 = String.Join("  ", s.SA(Halbjahr.Zweites)) + "\n";
+          D1 = String.Format("{0:f2}", d1.SchnittSchulaufgaben) + "\n";
+          D2 = String.Format("{0:f2}", d2.SchnittSchulaufgaben) + "\n";
+        }        
+        Art += "sL";
+        N1 += String.Join("  ", s.sonstigeLeistungen(Halbjahr.Erstes));
+        N2 += String.Join("  ", s.sonstigeLeistungen(Halbjahr.Zweites));
+        D1 += String.Format("{0:f2}", d1.SchnittMuendlich);
+        D2 += String.Format("{0:f2}", d2.SchnittMuendlich);
+        DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
+        JF1 = d1.JahresfortgangGanzzahlig.ToString();
+        DGes2 = String.Format("{0:f2}", d2.JahresfortgangMitKomma);
+        JF2 = d2.JahresfortgangGanzzahlig.ToString();
+
+        SAP = put(s.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich),0);
+        MAP = put(s.getNoten(Halbjahr.Zweites,Notentyp.APMuendlich),0);
+        APG = String.Format("{0:f2}",d2.PruefungGesamt);
+        GesZ = String.Format("{0:f2}",d2.SchnittFortgangUndPruefung);                
+        Z = d2.Abschlusszeugnis.ToString();
+      }
+
+      private string put(IList<int> n, int index)
+      {
+        if (index < n.Count)
+          return n[index].ToString();
+        else
+          return "";
+      }
+
+  }
+  /*
     public class FachSchuelerNotenDruck
     {
         FachSchuelerNoten schueler;
@@ -376,4 +449,5 @@ namespace diNo
             }
         }
     }
+    */
 }

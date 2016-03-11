@@ -29,7 +29,7 @@ namespace diNo
         this.userControlFPAundSeminar1.Schueler = schueler;
 
         nameLabel.Text = schueler.NameVorname;
-        klasseLabel.Text = schueler.getKlasse.Bezeichnung + ((schueler.getKlasse.Zweig == Zweig.None) ? "_" + schueler.Data.Ausbildungsrichtung : "");
+        klasseLabel.Text = schueler.KlassenBezeichnung;
         Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
         pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);  
         btnBrief.Enabled = true;
