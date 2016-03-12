@@ -73,23 +73,55 @@ namespace diNo
       // Unterberichte einbinden
       rpt.reportViewer.LocalReport.SubreportProcessing +=
               new SubreportProcessingEventHandler(subrptNotenbogenEventHandler);
+      /*rpt.reportViewer.LocalReport.SubreportProcessing +=
+              new SubreportProcessingEventHandler(subrptSchullaufbahnEventHandler);
       rpt.reportViewer.LocalReport.SubreportProcessing +=
-              new SubreportProcessingEventHandler(subrptVorkommnisEventHandler);
+              new SubreportProcessingEventHandler(subrptVorkommnisEventHandler); */
     }
 
     void subrptNotenbogenEventHandler(object sender, SubreportProcessingEventArgs e)
     {
         // ACHTUNG: Der Parameter muss im Haupt- und im Unterbericht definiert werden (mit gleichem Namen)
+        string subrpt = e.ReportPath; // jeder Unterbericht ruft diesen EventHandler auf; hier steht drin welcher es ist.
         int schuelerId;
         int.TryParse(e.Parameters[0].Values[0],out schuelerId);
-        if (schuelerId>0) // hier kommt er 2x rein.
+        if (schuelerId>0)
         {
           Schueler schueler = new Schueler(schuelerId);
-          var noten = schueler.getNoten.SchuelerNotenDruck();
-          e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
+          if (subrpt=="subrptFachSchuelerNoten")
+          {
+            var noten = schueler.getNoten.SchuelerNotenDruck();
+            e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
+          }
+          if (subrpt=="subrptSchullaufbahn")
+          {
+            var daten = new List<SchullaufbahnDruck>();
+            daten.Add(new SchullaufbahnDruck(schueler));          
+            e.DataSources.Add(new ReportDataSource("DataSetSchullaufbahn",daten));
+          }
+          if (subrpt=="subrptVorkommnis")
+          {
+            diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
+            vwVorkommnisTableAdapter BerichtTableAdapter;
+            BerichtTableAdapter = new vwVorkommnisTableAdapter();
+            BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);                 
+            e.DataSources.Add(new ReportDataSource("DataSetVorkommnis",(DataTable) vorkommnisse));
+          }
+      }
+    }
+    /*
+    void subrptSchullaufbahnEventHandler(object sender, SubreportProcessingEventArgs e)
+    {        
+        int schuelerId;
+        int.TryParse(e.Parameters[0].Values[0],out schuelerId);
+        if (schuelerId>0)
+        {
+          Schueler schueler = new Schueler(schuelerId);
+          var daten = new List<SchullaufbahnDruck>();
+          daten.Add(new SchullaufbahnDruck(schueler));          
+          e.DataSources.Add(new ReportDataSource("DataSetSchullaufbahn",daten));
         }
     }
-
     void subrptVorkommnisEventHandler(object sender, SubreportProcessingEventArgs e)
     {
         diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
@@ -105,7 +137,7 @@ namespace diNo
           e.DataSources.Add(new ReportDataSource("DataSetVorkommnis",(DataTable) vorkommnisse));
         }
     }
-
+    */
   }
 
     public class ReportFachliste : ReportController

@@ -672,11 +672,11 @@ namespace diNo
     {
       string tmp;
       Klasse = s.KlassenBezeichnung;
-      Bekenntnis = "Bekenntnis:"+ s.Data.Bekenntnis;
+      Bekenntnis = "Bekenntnis: "+ s.Data.Bekenntnis;
       Klassenleiter = s.getKlasse.Klassenleiter.Name;
       Legasthenie = s.Data.LRSStoerung ? "\nLegasthenie" : "";
       Laufbahn = "Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm;
-      Laufbahn += " aus " + s.Data.SchulischeVorbildung + " von " + s.EintrittAusSchulname.Substring(0,25);
+      Laufbahn += " aus " + s.Data.SchulischeVorbildung + " von " + s.EintrittAusSchulname;//.Substring(0,25);
       // ggf. berufl. Bildung (aber da steht nix in der DB außer BA)      
       if (!s.Data.IsProbezeitBisNull()) Laufbahn += "\nProbezeit bis " + s.Data.ProbezeitBis.ToString("dd.MM.yyyy");
       if (!s.Data.IsAustrittsdatumNull()) Laufbahn += "\nAustritt am " + s.Data.Austrittsdatum.ToString("dd.MM.yyyy");

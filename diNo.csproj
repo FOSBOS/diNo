@@ -122,12 +122,6 @@
     <Compile Include="Notenbogen.Designer.cs">
       <DependentUpon>Notenbogen.cs</DependentUpon>
     </Compile>
-    <Compile Include="NotenbogenBericht.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="NotenbogenBericht.Designer.cs">
-      <DependentUpon>NotenbogenBericht.cs</DependentUpon>
-    </Compile>
     <Compile Include="NotenCheckController.cs" />
     <Compile Include="NotenCheckForm.cs">
       <SubType>Form</SubType>
@@ -205,9 +199,6 @@
     <EmbeddedResource Include="Notenbogen.resx">
       <DependentUpon>Notenbogen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NotenbogenBericht.resx">
-      <DependentUpon>NotenbogenBericht.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="NotenCheckForm.resx">
       <DependentUpon>NotenCheckForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -232,6 +223,7 @@
     <EmbeddedResource Include="rptSchuelerliste.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptKurs.rdlc" />
+    <EmbeddedResource Include="subrptSchullaufbahn.rdlc" />
     <EmbeddedResource Include="subrptVorkommnis.rdlc" />
     <EmbeddedResource Include="UserControlChecks.resx">
       <DependentUpon>UserControlChecks.cs</DependentUpon>
@@ -285,6 +277,7 @@
     <None Include="Properties\DataSources\FachSchuelerNotenDruck.datasource" />
     <None Include="Properties\DataSources\Klasse.datasource" />
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />
+    <None Include="Properties\DataSources\SchullaufbahnDruck.datasource" />
     <None Include="Properties\DataSources\Schueler.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
