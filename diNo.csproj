@@ -218,9 +218,11 @@
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rptLehrerliste.rdlc" />
+    <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
     <EmbeddedResource Include="rptNotenbogen.rdlc" />
     <EmbeddedResource Include="rptNotenCheck.rdlc" />
     <EmbeddedResource Include="rptSchuelerliste.rdlc" />
+    <EmbeddedResource Include="subrptAbiergebnisseNoten.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptKurs.rdlc" />
     <EmbeddedResource Include="subrptSchullaufbahn.rdlc" />

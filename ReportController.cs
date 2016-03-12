@@ -14,31 +14,37 @@ namespace diNo
     public abstract class ReportController    
     {
         protected static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        protected ReportForm rpt;
-        protected Object bindingDataSource;
+        protected ReportForm rpt;        
         
-        public ReportController(Object dataSource = null)
+        public ReportController()
         {
-            rpt = new ReportForm();          
-            bindingDataSource = dataSource;
-            Init();
-            rpt.reportViewer.RefreshReport();
-            rpt.reportViewer.SetDisplayMode( DisplayMode.PrintLayout ); // Darstellung sofort im Seitenlayout
-            rpt.reportViewer.ZoomMode = ZoomMode.Percent;
-            rpt.reportViewer.ZoomPercent = 100;
-            rpt.Show();           
+            rpt = new ReportForm();                                 
         }
         
-        public abstract void Init(); 
+        public abstract void Init();
+     
+        public void Show()
+        {
+          Init();
+          rpt.reportViewer.RefreshReport();
+          rpt.reportViewer.SetDisplayMode( DisplayMode.PrintLayout ); // Darstellung sofort im Seitenlayout
+          rpt.reportViewer.ZoomMode = ZoomMode.Percent;
+          rpt.reportViewer.ZoomPercent = 100;
+          rpt.Show();                    
+        }
     }
 
     public class ReportNotencheck : ReportController
     {
-        public ReportNotencheck(NotenCheckResults dataSource) : base(dataSource) {}
+        private NotenCheckResults bindingDataSource;
+        public ReportNotencheck(NotenCheckResults dataSource) : base()
+        {
+          bindingDataSource = dataSource;
+        }
 
         public override void Init()
         {            
-            rpt.BerichtBindingSource.DataSource = ((NotenCheckResults)bindingDataSource).list;
+            rpt.BerichtBindingSource.DataSource = bindingDataSource.list;
             rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenCheck.rdlc";            
         }
 
@@ -46,9 +52,21 @@ namespace diNo
 
     public class ReportNotenbogen : ReportController
     {
-    public ReportNotenbogen(Schueler dataSource) : base(dataSource) {}
-    //public ReportNotenbogen(IList<int> dataSource) : base(dataSource) {}
-    public ReportNotenbogen(ArrayList dataSource) : base(dataSource) {}
+    private bool nurAbi,klassenweise;
+    private Schueler DSschueler;
+    private ArrayList DSklassen;
+    public ReportNotenbogen(Schueler dataSource, bool nurAbiergebnisse=false) : base()
+    {
+      nurAbi = nurAbiergebnisse;
+      klassenweise = false;
+      DSschueler = dataSource;
+    }
+    public ReportNotenbogen(ArrayList dataSource, bool nurAbiergebnisse=false) : base()
+    {
+      nurAbi =nurAbiergebnisse;
+      klassenweise = true;
+      DSklassen = dataSource;
+    }
         
     public override void Init()
     {    
@@ -57,18 +75,18 @@ namespace diNo
       BerichtTableAdapter =  new vwNotenbogenTableAdapter();            
       BerichtTableAdapter.ClearBeforeFill = true;
 
-      if (bindingDataSource is Schueler)      
-        BerichtTableAdapter.FillBySchuelerId(rpt.diNoDataSet.vwNotenbogen,((Schueler)bindingDataSource).Id);                                 
+      if (!klassenweise)      
+        BerichtTableAdapter.FillBySchuelerId(rpt.diNoDataSet.vwNotenbogen,DSschueler.Id);                                 
       else
       { // Klassenweise (auch mehrere) drucken
-        foreach (var klasse in (ArrayList)bindingDataSource)
+        foreach (var klasse in DSklassen)
         {
           BerichtTableAdapter.FillByKlasseId(rpt.diNoDataSet.vwNotenbogen,((Klasse)klasse).Data.Id);
           BerichtTableAdapter.ClearBeforeFill = false;
         }
       }
 
-      rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenbogen.rdlc";
+      rpt.reportViewer.LocalReport.ReportEmbeddedResource = (nurAbi ? "diNo.rptAbiergebnisse.rdlc" : "diNo.rptNotenbogen.rdlc");
 
       // Unterberichte einbinden
       rpt.reportViewer.LocalReport.SubreportProcessing +=
@@ -88,23 +106,23 @@ namespace diNo
         if (schuelerId>0)
         {
           Schueler schueler = new Schueler(schuelerId);
-          if (subrpt=="subrptFachSchuelerNoten")
+          if (subrpt=="subrptFachSchuelerNoten" || subrpt=="subrptAbiergebnisseNoten")
           {
-            var noten = schueler.getNoten.SchuelerNotenDruck();
+            IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(nurAbi);
             e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
           }
-          if (subrpt=="subrptSchullaufbahn")
+          else if (subrpt=="subrptSchullaufbahn")
           {
-            var daten = new List<SchullaufbahnDruck>();
+            IList<SchullaufbahnDruck> daten = new List<SchullaufbahnDruck>();
             daten.Add(new SchullaufbahnDruck(schueler));          
             e.DataSources.Add(new ReportDataSource("DataSetSchullaufbahn",daten));
           }
-          if (subrpt=="subrptVorkommnis")
+          else if (subrpt=="subrptVorkommnis")
           {
             diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
             vwVorkommnisTableAdapter BerichtTableAdapter;
             BerichtTableAdapter = new vwVorkommnisTableAdapter();
-            BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);                 
+            BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);   // bei nurAbi: nur bestimmte Vorkommnisse selektieren              
             e.DataSources.Add(new ReportDataSource("DataSetVorkommnis",(DataTable) vorkommnisse));
           }
       }
@@ -139,7 +157,7 @@ namespace diNo
     }
     */
   }
-
+  
     public class ReportFachliste : ReportController
     {
         public override void Init()
@@ -169,20 +187,13 @@ namespace diNo
 
     public class ReportBrief : ReportController
     {
-        public ReportBrief(BriefDaten dataSource) : base(dataSource) {}
+      private BriefDaten bindingDataSource;
+        public ReportBrief(BriefDaten dataSource) : base() {bindingDataSource = dataSource; }
         public override void Init()
-        {
-            /*
-            SchuelerTableAdapter BerichtTableAdapter;
-            rpt.BerichtBindingSource.DataMember = "Schueler";
-            BerichtTableAdapter = new SchuelerTableAdapter();
-            BerichtTableAdapter.ClearBeforeFill = true;
-            BerichtTableAdapter.FillByKlasse(rpt.diNoDataSet.Schueler, 89);
-            */
-            rpt.BerichtBindingSource.DataSource = (BriefDaten)bindingDataSource;
+        {            
+            rpt.BerichtBindingSource.DataSource = bindingDataSource;
             rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptBrief.rdlc";
         }
-
     }
 
     public class ReportLehrerliste : ReportController

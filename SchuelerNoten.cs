@@ -59,13 +59,13 @@ namespace diNo
     /// <summary>
     /// Liefert eine Liste in der je Fach alle Noten in druckbarer Form vorliegen.
     /// </summary>
-    public IList<FachSchuelerNotenDruckKurz> SchuelerNotenDruck()
+    public IList<FachSchuelerNotenDruckKurz> SchuelerNotenDruck(bool nurAbiergebnisse=false)
     {
       IList<FachSchuelerNotenDruckKurz> liste = new List<FachSchuelerNotenDruckKurz>();
       var zuDruckendeNoten = alleFaecher.Count > 0 ? alleFaecher : SucheAlteNoten();
       foreach (FachSchuelerNoten f in zuDruckendeNoten)
       {               
-        liste.Add(new FachSchuelerNotenDruckKurz(f, f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe)));
+        liste.Add(new FachSchuelerNotenDruckKurz(f, f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe),nurAbiergebnisse));
       }
       return liste;
     }
@@ -296,30 +296,35 @@ namespace diNo
       public string APG { get; private set; }
       public string GesZ { get; private set; } // SchnittFortgangUndPruefung
       public string Z { get; private set; }
+      public string MAP4P { get; private set; } // nötige Punktzahl in einer mündlichen Prüfung um auf 4 im Zeugnis zu kommen
+      public string MAP1P { get; private set; }
 
-      public FachSchuelerNotenDruckKurz(FachSchuelerNoten s, bool evalSA)
+      public FachSchuelerNotenDruckKurz(FachSchuelerNoten s, bool evalSA,bool nurAbiergebnisse)
       {        
         fachBez = s.getFach.Bezeichnung;
         Art=""; N1=""; D1=""; N2=""; D2=""; 
         var d1 = s.getSchnitt(Halbjahr.Erstes);
         var d2 = s.getSchnitt(Halbjahr.Zweites);
        
-        if (evalSA)
+        if (!nurAbiergebnisse)
         {
-          Art = "SA\n";
-          N1 = String.Join("  ", s.SA(Halbjahr.Erstes)) + "\n";
-          N2 = String.Join("  ", s.SA(Halbjahr.Zweites)) + "\n";
-          D1 = String.Format("{0:f2}", d1.SchnittSchulaufgaben) + "\n";
-          D2 = String.Format("{0:f2}", d2.SchnittSchulaufgaben) + "\n";
-        }        
-        Art += "sL";
-        N1 += String.Join("  ", s.sonstigeLeistungen(Halbjahr.Erstes));
-        N2 += String.Join("  ", s.sonstigeLeistungen(Halbjahr.Zweites));
-        D1 += String.Format("{0:f2}", d1.SchnittMuendlich);
-        D2 += String.Format("{0:f2}", d2.SchnittMuendlich);
-        DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
-        JF1 = d1.JahresfortgangGanzzahlig.ToString();
-        DGes2 = String.Format("{0:f2}", d2.JahresfortgangMitKomma);
+          if (evalSA)
+          {
+            Art = "SA\n";
+            N1 = String.Join("  ", s.SA(Halbjahr.Erstes)) + "\n";
+            N2 = String.Join("  ", s.SA(Halbjahr.Zweites)) + "\n";
+            D1 = String.Format("{0:f2}", d1.SchnittSchulaufgaben) + "\n";
+            D2 = String.Format("{0:f2}", d2.SchnittSchulaufgaben) + "\n";
+          }        
+          Art += "sL";
+          N1 += String.Join("  ", s.sonstigeLeistungen(Halbjahr.Erstes));
+          N2 += String.Join("  ", s.sonstigeLeistungen(Halbjahr.Zweites));
+          D1 += String.Format("{0:f2}", d1.SchnittMuendlich);
+          D2 += String.Format("{0:f2}", d2.SchnittMuendlich);
+          DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
+          JF1 = d1.JahresfortgangGanzzahlig.ToString();
+          DGes2 = String.Format("{0:f2}", d2.JahresfortgangMitKomma);
+        }
         JF2 = d2.JahresfortgangGanzzahlig.ToString();
 
         SAP = put(s.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich),0);
@@ -327,6 +332,12 @@ namespace diNo
         APG = String.Format("{0:f2}",d2.PruefungGesamt);
         GesZ = String.Format("{0:f2}",d2.SchnittFortgangUndPruefung);                
         Z = d2.Abschlusszeugnis.ToString();
+
+        if (nurAbiergebnisse)
+        {
+          MAP4P = "12";
+          MAP1P = "3";
+        }
       }
 
       private string put(IList<int> n, int index)

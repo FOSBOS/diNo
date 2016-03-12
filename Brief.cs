@@ -50,7 +50,7 @@ namespace diNo
             else NacharbeitText();
 
             Hide();
-            new ReportBrief(b);
+            new ReportBrief(b).Show();
             
             if (opVerweis.Checked && MessageBox.Show("Soll der Verweis auch in den Notenbogen eingetragen werden?","diNo",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
             {             

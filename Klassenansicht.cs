@@ -34,6 +34,7 @@ namespace diNo
         pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);  
         btnBrief.Enabled = true;
         btnPrint.Enabled = true;
+        
         btnSave.Enabled = Zugriff.Instance.Level != Zugriffslevel.Lehrer || schueler.BetreuerId == Zugriff.Instance.lehrer.Id;
         labelHinweise.Text = (schueler.IsLegastheniker ? "Legastheniker" : "");
         labelHinweise.ForeColor = Color.Red;
@@ -52,6 +53,7 @@ namespace diNo
         pictureBoxImage.Image = null; 
         toolStripStatusLabel1.Text = "";
         btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss || Zugriff.Instance.Level == Zugriffslevel.Admin;
+        btnAbidruck.Visible = Zugriff.Instance.Level != Zugriffslevel.Lehrer;
     }
 
         private void btnNotenabgeben_Click(object sender, EventArgs e)
@@ -91,17 +93,22 @@ namespace diNo
 
         private void btnPrint_Click(object sender, EventArgs e)
         { 
+          Drucken(false);
+        }
+
+        private void Drucken(bool nurAbi)
+        { 
           if (Zugriff.Instance.Level!=Zugriffslevel.Lehrer)
           {
             var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
             if (obj.Count>0 && obj[0] is Klasse)
             {
-              new ReportNotenbogen((ArrayList)obj);
+              (new ReportNotenbogen((ArrayList)obj, nurAbi)).Show();              
               return;
             }
-          }
+          }          
+          if (schueler!= null) (new ReportNotenbogen(schueler)).Show();
           
-          if (schueler!= null) new ReportNotenbogen(schueler);
         }
 
         private void btnBrief_Click(object sender, EventArgs e)
@@ -131,5 +138,9 @@ namespace diNo
           userControlVorkommnisse1.RefreshVorkommnisse();
         }
 
+    private void btnAbidruck_Click(object sender, EventArgs e)
+    {
+      Drucken(true);
     }
+  }
 }

@@ -65,7 +65,7 @@ namespace diNo
             if (contr.res.list.Count==0)
               MessageBox.Show("Es traten keine Fehler auf.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
             else
-              new ReportNotencheck(contr.res);                                    
+              new ReportNotencheck(contr.res).Show();                                    
         }
 
         private Zeitpunkt GetZeitpunkt()
