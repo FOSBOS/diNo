@@ -128,8 +128,15 @@ namespace diNo
     {
       get
       {
-        string bez = this.Bezeichnung.ToUpper();
+        string bez = this.Bezeichnung;//.ToUpper();
+        string letztesZeichen = bez.Substring(bez.Length-1,1);
+        if (bez.Contains("_")) return CharToZweig(letztesZeichen); // Teilklasse
 
+        // Problem: Nach Zweig A kann man nicht so einfach suchen, weil das A auch hinten in der Klassenbezeichnung vorkommt!
+        // Unterschied zwischen B12Ta und B12TA als Mischklasse?
+        if (letztesZeichen=="a") bez = bez.Substring(0,bez.Length-1);
+
+        // TODO: eleganter über Regex lösen...
         if ((bez.Contains("W") && !bez.Contains("S") && !bez.Contains("A") && !bez.Contains("T")) || bez.EndsWith("_W"))
         {
           return Zweig.Wirtschaft;
@@ -152,6 +159,18 @@ namespace diNo
 
         //hier stehen nur noch die Klassen, deren Zweig nicht eindeutig ist, z. B. Vorkurs BOS oder Mischklassen
         return Zweig.None;
+      }
+    }
+
+    private Zweig CharToZweig(string c)
+    {
+      switch (c)
+      {
+        case "S" : return Zweig.Sozial;
+        case "T" : return Zweig.Technik;
+        case "W" : return Zweig.Wirtschaft;
+        case "A" : return Zweig.Agrar;
+        default: return Zweig.None; 
       }
     }
 

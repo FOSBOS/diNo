@@ -10,7 +10,9 @@
             <TextRuns>
               <TextRun>
                 <Value>=Fields!Klasse.Value</Value>
-                <Style />
+                <Style>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
               </TextRun>
               <TextRun>
                 <Value> (</Value>
@@ -53,8 +55,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Height>2.59292cm</Height>
-        <Width>5.42396cm</Width>
+        <Height>1.5875cm</Height>
+        <Width>9.23397cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -66,10 +68,10 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>1.02083in</Height>
+    <Height>0.64583in</Height>
     <Style />
   </Body>
-  <Width>2.13542in</Width>
+  <Width>3.63542in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

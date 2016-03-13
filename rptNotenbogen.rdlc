@@ -6,10 +6,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>8.40021cm</Width>
+              <Width>8.13563cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>9.08341cm</Width>
+              <Width>9.58613cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -241,11 +241,10 @@
                       </Parameters>
                       <Style>
                         <Border>
-                          <Style>None</Style>
+                          <Style>Solid</Style>
                         </Border>
                       </Style>
                     </Subreport>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -264,7 +263,7 @@
                       </Parameters>
                       <Style>
                         <Border>
-                          <Style>None</Style>
+                          <Style>Solid</Style>
                         </Border>
                       </Style>
                     </Subreport>
@@ -365,7 +364,7 @@
           <BreakLocation>End</BreakLocation>
         </PageBreak>
         <Height>5.29166cm</Height>
-        <Width>17.563cm</Width>
+        <Width>17.80113cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -378,7 +377,7 @@
     <Height>2.08333in</Height>
     <Style />
   </Body>
-  <Width>6.91457in</Width>
+  <Width>7.00832in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

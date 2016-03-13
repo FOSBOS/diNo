@@ -662,11 +662,11 @@ namespace diNo
 
   public class SchullaufbahnDruck
   {
-    public string Klasse;
-    public string Bekenntnis;
-    public string Klassenleiter;
-    public string Legasthenie;
-    public string Laufbahn;
+    public string Klasse  { get; private set; }
+    public string Bekenntnis { get; private set; }
+    public string Klassenleiter { get; private set; }
+    public string Legasthenie { get; private set; }
+    public string Laufbahn { get; private set; }
     
     public SchullaufbahnDruck(Schueler s)
     {
@@ -675,7 +675,7 @@ namespace diNo
       Bekenntnis = "Bekenntnis: "+ s.Data.Bekenntnis;
       Klassenleiter = s.getKlasse.Klassenleiter.Name;
       Legasthenie = s.Data.LRSStoerung ? "\nLegasthenie" : "";
-      Laufbahn = "Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm;
+      Laufbahn = "Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm.ToString("dd.MM.yyyy");
       Laufbahn += " aus " + s.Data.SchulischeVorbildung + " von " + s.EintrittAusSchulname;//.Substring(0,25);
       // ggf. berufl. Bildung (aber da steht nix in der DB außer BA)      
       if (!s.Data.IsProbezeitBisNull()) Laufbahn += "\nProbezeit bis " + s.Data.ProbezeitBis.ToString("dd.MM.yyyy");
