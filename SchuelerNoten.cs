@@ -271,7 +271,7 @@ namespace diNo
       while (map<=15 && Notentools.BerechneZeugnisnote(jf,sap,map)<Zielpunkte)
         map++;
 
-      if (map==16) return "nicht möglich";
+      if (map>15) return "nicht möglich";
       else return map.ToString();
     }     
   }
@@ -323,9 +323,9 @@ namespace diNo
           D2 += String.Format("{0:f2}", d2.SchnittMuendlich);
           DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
           JF1 = d1.JahresfortgangGanzzahlig.ToString();
-          DGes2 = String.Format("{0:f2}", d2.JahresfortgangMitKomma);
+          JF2 = d2.JahresfortgangGanzzahlig.ToString();  
         }
-        JF2 = d2.JahresfortgangGanzzahlig.ToString();
+        DGes2 = String.Format("{0:f2}", d2.JahresfortgangMitKomma);        
 
         SAP = put(s.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich),0);
         MAP = put(s.getNoten(Halbjahr.Zweites,Notentyp.APMuendlich),0);
@@ -333,10 +333,10 @@ namespace diNo
         GesZ = String.Format("{0:f2}",d2.SchnittFortgangUndPruefung);                
         Z = d2.Abschlusszeugnis.ToString();
 
-        if (nurAbiergebnisse)
+        if (nurAbiergebnisse && MAP=="")
         {
-          MAP4P = "12";
-          MAP1P = "3";
+          MAP4P = s.NotwendigeNoteInMAP(4);
+          MAP1P = s.NotwendigeNoteInMAP(1);
         }
       }
 

@@ -103,12 +103,11 @@ namespace diNo
             var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
             if (obj.Count>0 && obj[0] is Klasse)
             {
-              (new ReportNotenbogen((ArrayList)obj, nurAbi)).Show();              
+              new ReportNotenbogen((ArrayList)obj, nurAbi).Show();              
               return;
             }
           }          
-          if (schueler!= null) (new ReportNotenbogen(schueler)).Show();
-          
+          if (schueler!= null) new ReportNotenbogen(schueler,nurAbi).Show();          
         }
 
         private void btnBrief_Click(object sender, EventArgs e)

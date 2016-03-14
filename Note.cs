@@ -308,7 +308,7 @@ namespace diNo
           return (byte) Math.Round(schnitt);
     }
 
-    public static byte BerechneZeugnisnote(decimal? jf,int? sap, int? map)
+    public static byte BerechneZeugnisnote(decimal? jf,decimal? sap, decimal? map)
     {
       decimal abi;
       
@@ -320,7 +320,7 @@ namespace diNo
       else abi = Aufrunden2NK((2*sap.GetValueOrDefault()+map.GetValueOrDefault())/3);
 
       if (jf==null) return RundeJF(abi);
-      else return RundeJF((jf.GetValueOrDefault()+abi)/2);
+      else return RundeJF(Aufrunden2NK((jf.GetValueOrDefault()+abi)/2));
     }
   }
 }

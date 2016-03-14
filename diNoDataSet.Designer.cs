@@ -5008,6 +5008,10 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnNotfalltelefonnummer;
             
+            private global::System.Data.DataColumn columnDNote;
+            
+            private global::System.Data.DataColumn columnStatus;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public vwNotenbogenDataTable() {
@@ -5443,6 +5447,22 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DNoteColumn {
+                get {
+                    return this.columnDNote;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn StatusColumn {
+                get {
+                    return this.columnStatus;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5528,7 +5548,9 @@ namespace diNo {
                         System.DateTime EintrittAm, 
                         int EintrittAusSchulnummer, 
                         string Email, 
-                        string Notfalltelefonnummer) {
+                        string Notfalltelefonnummer, 
+                        decimal DNote, 
+                        int Status) {
                 vwNotenbogenRow rowvwNotenbogenRow = ((vwNotenbogenRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Bezeichnung,
@@ -5580,7 +5602,9 @@ namespace diNo {
                         EintrittAm,
                         EintrittAusSchulnummer,
                         Email,
-                        Notfalltelefonnummer};
+                        Notfalltelefonnummer,
+                        DNote,
+                        Status};
                 rowvwNotenbogenRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowvwNotenbogenRow);
                 return rowvwNotenbogenRow;
@@ -5660,6 +5684,8 @@ namespace diNo {
                 this.columnEintrittAusSchulnummer = base.Columns["EintrittAusSchulnummer"];
                 this.columnEmail = base.Columns["Email"];
                 this.columnNotfalltelefonnummer = base.Columns["Notfalltelefonnummer"];
+                this.columnDNote = base.Columns["DNote"];
+                this.columnStatus = base.Columns["Status"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5765,6 +5791,10 @@ namespace diNo {
                 base.Columns.Add(this.columnEmail);
                 this.columnNotfalltelefonnummer = new global::System.Data.DataColumn("Notfalltelefonnummer", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNotfalltelefonnummer);
+                this.columnDNote = new global::System.Data.DataColumn("DNote", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDNote);
+                this.columnStatus = new global::System.Data.DataColumn("Status", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStatus);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnBezeichnung.AllowDBNull = false;
@@ -5806,7 +5836,6 @@ namespace diNo {
                 this.columnVornameEltern2.MaxLength = 50;
                 this.columnAnredeEltern2.MaxLength = 10;
                 this.columnVerwandtschaftsbezeichnungEltern2.MaxLength = 10;
-                this.columnGesamtnote.AllowDBNull = false;
                 this.columnThemaLang.MaxLength = 1024;
                 this.columnThemaKurz.MaxLength = 117;
                 this.columnKlassenleiter.AllowDBNull = false;
@@ -10470,7 +10499,12 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int Gesamtnote {
                 get {
-                    return ((int)(this[this.tablevwNotenbogen.GesamtnoteColumn]));
+                    try {
+                        return ((int)(this[this.tablevwNotenbogen.GesamtnoteColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Gesamtnote in Tabelle vwNotenbogen ist DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tablevwNotenbogen.GesamtnoteColumn] = value;
@@ -10597,6 +10631,38 @@ namespace diNo {
                 }
                 set {
                     this[this.tablevwNotenbogen.NotfalltelefonnummerColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal DNote {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablevwNotenbogen.DNoteColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte DNote in Tabelle vwNotenbogen ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevwNotenbogen.DNoteColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Status {
+                get {
+                    try {
+                        return ((int)(this[this.tablevwNotenbogen.StatusColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Status in Tabelle vwNotenbogen ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevwNotenbogen.StatusColumn] = value;
                 }
             }
             
@@ -11034,6 +11100,18 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsGesamtnoteNull() {
+                return this.IsNull(this.tablevwNotenbogen.GesamtnoteColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetGesamtnoteNull() {
+                this[this.tablevwNotenbogen.GesamtnoteColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsThemaLangNull() {
                 return this.IsNull(this.tablevwNotenbogen.ThemaLangColumn);
             }
@@ -11114,6 +11192,30 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetNotfalltelefonnummerNull() {
                 this[this.tablevwNotenbogen.NotfalltelefonnummerColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDNoteNull() {
+                return this.IsNull(this.tablevwNotenbogen.DNoteColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDNoteNull() {
+                this[this.tablevwNotenbogen.DNoteColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsStatusNull() {
+                return this.IsNull(this.tablevwNotenbogen.StatusColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetStatusNull() {
+                this[this.tablevwNotenbogen.StatusColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -18921,6 +19023,8 @@ WHERE        (KursId = @KursId) AND (SchuelerId = @SchuelerId) AND (IstHistorisc
             tableMapping.ColumnMappings.Add("EintrittAusSchulnummer", "EintrittAusSchulnummer");
             tableMapping.ColumnMappings.Add("Email", "Email");
             tableMapping.ColumnMappings.Add("Notfalltelefonnummer", "Notfalltelefonnummer");
+            tableMapping.ColumnMappings.Add("DNote", "DNote");
+            tableMapping.ColumnMappings.Add("Status", "Status");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -18943,7 +19047,7 @@ WHERE        (KursId = @KursId) AND (SchuelerId = @SchuelerId) AND (IstHistorisc
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, Bezeichnung, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Gesamtnote, Geschlecht, Id, KlasseId, Klassenleiter, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, ThemaKurz, ThemaLang, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM vwNotenbogen WHERE (KlasseId = @KlasseId)";
+            this._commandCollection[1].CommandText = "SELECT *\r\nFROM vwNotenbogen \r\nWHERE (KlasseId = @KlasseId)\r\nand (Status=0)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
