@@ -12,7 +12,7 @@ using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
-    public partial class NotenCheckForm : Form
+    public partial class NotenCheckForm : BasisForm
     {
         private bool abbrechen = false;
         private Dictionary<NotenCheckModus,string> NotenCheckModusDict;

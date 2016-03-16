@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-      this.components = new System.ComponentModel.Container();
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotenCheckForm));
       this.comboBoxZeitpunkt = new System.Windows.Forms.ComboBox();
       this.btnUnterpunktungen = new System.Windows.Forms.Button();
-      this.imageList1 = new System.Windows.Forms.ImageList(this.components);
       this.progressBarChecks = new System.Windows.Forms.ProgressBar();
       this.lbStatus = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
@@ -40,6 +38,16 @@
       this.comboBoxCheckModus = new System.Windows.Forms.ComboBox();
       this.btnSetVorbelegung = new System.Windows.Forms.Button();
       this.SuspendLayout();
+      // 
+      // imageList1
+      // 
+      this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+      this.imageList1.Images.SetKeyName(0, "Cancel.png");
+      this.imageList1.Images.SetKeyName(1, "Ok.png");
+      this.imageList1.Images.SetKeyName(2, "Edit.png");
+      this.imageList1.Images.SetKeyName(3, "print.png");
+      this.imageList1.Images.SetKeyName(4, "Save.png");
+      this.imageList1.Images.SetKeyName(5, "Excel.png");
       // 
       // comboBoxZeitpunkt
       // 
@@ -59,7 +67,7 @@
       // 
       // btnUnterpunktungen
       // 
-      this.btnUnterpunktungen.ImageKey = "Ok.png";
+      this.btnUnterpunktungen.ImageIndex = 1;
       this.btnUnterpunktungen.ImageList = this.imageList1;
       this.btnUnterpunktungen.Location = new System.Drawing.Point(262, 71);
       this.btnUnterpunktungen.Name = "btnUnterpunktungen";
@@ -67,13 +75,6 @@
       this.btnUnterpunktungen.TabIndex = 13;
       this.btnUnterpunktungen.UseVisualStyleBackColor = true;
       this.btnUnterpunktungen.Click += new System.EventHandler(this.btnUnterpunktungen_Click);
-      // 
-      // imageList1
-      // 
-      this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-      this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-      this.imageList1.Images.SetKeyName(0, "Ok.png");
-      this.imageList1.Images.SetKeyName(1, "Cancel.png");
       // 
       // progressBarChecks
       // 
@@ -160,7 +161,6 @@
         #endregion
         private System.Windows.Forms.ComboBox comboBoxZeitpunkt;
         private System.Windows.Forms.Button btnUnterpunktungen;
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ProgressBar progressBarChecks;
         private System.Windows.Forms.Label lbStatus;
         private System.Windows.Forms.Label label1;

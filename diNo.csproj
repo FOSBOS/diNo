@@ -80,6 +80,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasisForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BasisForm.Designer.cs">
+      <DependentUpon>BasisForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Lehrer.cs" />
     <Compile Include="OmnisDB\DatenabgleichWinSV.cs" />
     <Compile Include="GlobalConsts.cs" />
@@ -190,6 +196,9 @@
     <Compile Include="Vorkommnis.cs" />
     <Compile Include="WinSVSchuelerReader.cs" />
     <Compile Include="Zugriff.cs" />
+    <EmbeddedResource Include="BasisForm.resx">
+      <DependentUpon>BasisForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

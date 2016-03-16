@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace diNo
 {
-  public partial class Klassenansicht : Form
+  public partial class Klassenansicht : BasisForm
   {
         private Schueler schueler=null;
         private Brief frmBrief=null;
