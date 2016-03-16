@@ -686,5 +686,57 @@ namespace diNo
     }
   }
 
+  public class BemerkungenDruck
+  {
+    public string Ueberschrift  { get; private set; }
+    public string Inhalt { get; private set; }
+    
+    public BemerkungenDruck(Schueler s)
+    {
+      Inhalt="";
+      Ueberschrift="";
+      var jg=s.getKlasse.Jahrgangsstufe;
+
+      if (!s.Data.IsDNoteNull()) 
+        Ueberschrift = "\nDurchschnittsnote: " + s.Data.DNote + "\n";
+
+      if (jg==Jahrgangsstufe.Elf)
+      {        
+        if (!s.FPANoten.IsErfolg1HjNull() && !s.FPANoten.IsPunkte1HjNull())
+          Inhalt = "Diese wurde im 1. Halbjahr " + ErfolgText(s.FPANoten.Erfolg1Hj) + " (" + s.FPANoten.Punkte1Hj + " Punkte) durchlaufen.";
+        if (!s.FPANoten.IsPunkte2HjNull())
+          Inhalt += "Im 2. Halbjahr wurden " + s.FPANoten.Punkte2Hj +" Punkte erzielt.";
+
+        if (!s.FPANoten.IsErfolgNull() && !s.FPANoten.IsPunkteNull())
+          Inhalt += "\nInsgesamt wurde die FPA " + ErfolgText(s.FPANoten.Erfolg) + " (durchschnittliche Punktzahl " + s.FPANoten.Punkte + ") durchlaufen.";
+
+        if (!s.FPANoten.IsBemerkungNull())
+          Inhalt += "\n" + s.FPANoten.Bemerkung;
+
+        if (Inhalt!="") Ueberschrift="\nFachpraktische Ausbildung";
+      }
+
+      else if (jg==Jahrgangsstufe.Dreizehn)
+      {
+        if (!s.Seminarfachnote.IsThemaKurzNull() && !s.Seminarfachnote.IsGesamtnoteNull())
+        {
+          Ueberschrift+="\nSeminarfach";
+          Inhalt = "Die Seminararbeit zum Thema \"" + s.Seminarfachnote.ThemaKurz + "\" wurde mit " + s.Seminarfachnote.Gesamtnote + " Punkten bewertet.";
+        }
+      }
+      if (Inhalt!="") Inhalt += "\n";
+    }
+
+    private string ErfolgText(int note)
+    {
+      switch (note)
+      {
+        case 1: return "mit sehr gutem Erfolg";
+        case 2: return "mit gutem Erfolg";
+        case 3: return "mit Erfolg";
+        default: return "ohne Erfolg";        
+      }
+    }
+  }
   
 }

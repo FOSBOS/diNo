@@ -117,13 +117,22 @@ namespace diNo
             daten.Add(new SchullaufbahnDruck(schueler));          
             e.DataSources.Add(new ReportDataSource("DataSetSchullaufbahn",daten));
           }
-          else if (subrpt=="subrptVorkommnis")
+          else if (subrpt=="subrptVorkommnis" || subrpt=="subrptAbiVorkommnis" )
           {
             diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
             vwVorkommnisTableAdapter BerichtTableAdapter;
             BerichtTableAdapter = new vwVorkommnisTableAdapter();
-            BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);   // bei nurAbi: nur bestimmte Vorkommnisse selektieren              
+            if (nurAbi)
+              BerichtTableAdapter.FillBySchuelerIdForAbi(vorkommnisse, schuelerId);   //nur bestimmte Vorkommnisse selektieren              
+            else 
+              BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);
             e.DataSources.Add(new ReportDataSource("DataSetVorkommnis",(DataTable) vorkommnisse));
+          }
+          else if (subrpt=="subrptBemerkungen")
+          {
+            IList<BemerkungenDruck> daten = new List<BemerkungenDruck>();
+            daten.Add(new BemerkungenDruck(schueler));          
+            e.DataSources.Add(new ReportDataSource("DataSetBemerkungen",daten));
           }
       }
     }

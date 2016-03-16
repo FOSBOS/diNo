@@ -300,8 +300,16 @@ namespace diNo
       public string MAP1P { get; private set; }
 
       public FachSchuelerNotenDruckKurz(FachSchuelerNoten s, bool evalSA,bool nurAbiergebnisse)
-      {        
+      {
         fachBez = s.getFach.Bezeichnung;
+        if (!nurAbiergebnisse && fachBez.Contains("irtschafts")) // Fachbezeichnung sind zu lang für Notenbogen
+        {
+          string kuerzel = s.getFach.Kuerzel;
+          if (kuerzel == "BwR") fachBez = "Betriebswirt-schaftslehre";
+          else if (kuerzel == "VWL") fachBez = "Volkswirt-schaftslehre";
+          else if (kuerzel == "WIn") fachBez = "Wirtschafts-informatik";                      
+        }
+
         Art=""; N1=""; D1=""; N2=""; D2=""; 
         var d1 = s.getSchnitt(Halbjahr.Erstes);
         var d2 = s.getSchnitt(Halbjahr.Zweites);

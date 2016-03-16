@@ -234,7 +234,9 @@
     <EmbeddedResource Include="subrptAbiergebnisseNoten.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptKurs.rdlc" />
+    <EmbeddedResource Include="subrptBemerkungen.rdlc" />
     <EmbeddedResource Include="subrptSchullaufbahn.rdlc" />
+    <EmbeddedResource Include="subrptAbiVorkommnis.rdlc" />
     <EmbeddedResource Include="subrptVorkommnis.rdlc" />
     <EmbeddedResource Include="UserControlChecks.resx">
       <DependentUpon>UserControlChecks.cs</DependentUpon>
