@@ -4,3 +4,11 @@
 - Fehltage integrieren
 - Notenprüfungen (was prüfen wir alles?)
 - Zurückspielen der Noten in die WinSV und Zeugnisdruck Jahreszeugnis bzw. Abschlusszeugnis
+- Elftklassnoten der Wiederholer
+- Legastheniker abgleichen
+- Excel-Datei Vorlage Englisch: AP 0 Punkte
+- Excel-Datei Vorlage andere Fächer: AP Eingabe gesperrt
+- Seminarfachlehrer zuordnen
+- Liste von Mederer: FpA zuordnen
+- Test der Darstellung des Notenbogens auf dem Beamer
+- Sicherungskopie der Notenlisten auf Server ?
