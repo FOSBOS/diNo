@@ -718,10 +718,10 @@ namespace diNo
 
       else if (jg==Jahrgangsstufe.Dreizehn)
       {
-        if (!s.Seminarfachnote.IsThemaKurzNull() && !s.Seminarfachnote.IsGesamtnoteNull())
+        if (!s.Seminarfachnote.IsThemaKurzNull())
         {
-          Ueberschrift+="\nSeminarfach";
-          Inhalt = "Die Seminararbeit zum Thema \"" + s.Seminarfachnote.ThemaKurz + "\" wurde mit " + s.Seminarfachnote.Gesamtnote + " Punkten bewertet.";
+          Ueberschrift+="\nThema der Seminararbeit:\n";
+          Inhalt = s.Seminarfachnote.ThemaKurz;
         }
       }
       if (Inhalt!="") Inhalt += "\n";

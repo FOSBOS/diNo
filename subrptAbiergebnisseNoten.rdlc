@@ -645,9 +645,9 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>JF=Jahresfortgang, SAP/MAP=schriftl./mdl. Abschlussprüfung, APG=Gesamtschnitt Abitur, G=Gesamtschnitt, Z=Abiturzeugnis</Value>
+                <Value>JF=Jahresfortgang, SAP/MAP=schriftl./mdl. Abschlussprüfung, G=Gesamtschnitt, Z=Abiturzeugnis</Value>
                 <Style>
-                  <FontSize>8pt</FontSize>
+                  <FontSize>9pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -658,7 +658,7 @@
               <TextRun>
                 <Value>4P/1P = nötige Punktzahl in einer mündlichen Prüfung um im Zeugnis auf 4 bzw. 1 Punkt zu kommen</Value>
                 <Style>
-                  <FontSize>8pt</FontSize>
+                  <FontSize>9pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -690,7 +690,7 @@
       </Border>
     </Style>
   </Body>
-  <Width>6.95883in</Width>
+  <Width>6.85786in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

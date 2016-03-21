@@ -220,6 +220,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Notenbogen.rdlc" />
+    <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
     <EmbeddedResource Include="rptBrief.rdlc" />
     <EmbeddedResource Include="rptKlassenliste.rdlc" />
     <EmbeddedResource Include="rptFachliste.rdlc" />
@@ -227,7 +228,6 @@
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rptLehrerliste.rdlc" />
-    <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
     <EmbeddedResource Include="rptNotenbogen.rdlc" />
     <EmbeddedResource Include="rptNotenCheck.rdlc" />
     <EmbeddedResource Include="rptSchuelerliste.rdlc" />
