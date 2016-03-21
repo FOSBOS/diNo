@@ -289,31 +289,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>1.76675cm</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Subreport Name="subrptAbiergebnisseNoten">
-                      <ReportName>subrptAbiergebnisseNoten</ReportName>
-                      <Parameters>
-                        <Parameter Name="SId">
-                          <Value>=Fields!Id.Value</Value>
-                        </Parameter>
-                      </Parameters>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                      </Style>
-                    </Subreport>
-                    <ColSpan>2</ColSpan>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell />
-              </TablixCells>
-            </TablixRow>
-            <TablixRow>
-              <Height>0.81425cm</Height>
+              <Height>1.07883cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -337,36 +313,23 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>5.89571cm</Height>
+              <Height>9.48809cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox3">
-                      <CanGrow>true</CanGrow>
-                      <CanShrink>true</CanShrink>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox3</rd:DefaultName>
+                    <Subreport Name="subrptAbiergebnisseNoten">
+                      <ReportName>subrptAbiergebnisseNoten</ReportName>
+                      <Parameters>
+                        <Parameter Name="SId">
+                          <Value>=Fields!Id.Value</Value>
+                        </Parameter>
+                      </Parameters>
                       <Style>
                         <Border>
                           <Style>None</Style>
                         </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
                       </Style>
-                    </Textbox>
+                    </Subreport>
                     <ColSpan>2</ColSpan>
                   </CellContents>
                 </TablixCell>
@@ -400,53 +363,6 @@
                   <Value>=Fields!Vorname.Value</Value>
                 </SortExpression>
               </SortExpressions>
-              <TablixHeader>
-                <Size>0.07938cm</Size>
-                <CellContents>
-                  <Rectangle Name="Rectangle1">
-                    <ReportItems>
-                      <Textbox Name="Textbox2">
-                        <CanGrow>true</CanGrow>
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value />
-                                <Style />
-                              </TextRun>
-                            </TextRuns>
-                            <Style />
-                          </Paragraph>
-                        </Paragraphs>
-                        <rd:DefaultName>Textbox2</rd:DefaultName>
-                        <Height>12cm</Height>
-                        <Width>0.02646cm</Width>
-                        <Visibility>
-                          <Hidden>true</Hidden>
-                        </Visibility>
-                        <Style>
-                          <Border>
-                            <Style>Solid</Style>
-                          </Border>
-                          <PaddingLeft>2pt</PaddingLeft>
-                          <PaddingRight>2pt</PaddingRight>
-                          <PaddingTop>2pt</PaddingTop>
-                          <PaddingBottom>2pt</PaddingBottom>
-                        </Style>
-                      </Textbox>
-                    </ReportItems>
-                    <KeepTogether>true</KeepTogether>
-                    <ZIndex>1</ZIndex>
-                    <Style>
-                      <Border>
-                        <Style>None</Style>
-                      </Border>
-                    </Style>
-                  </Rectangle>
-                  <rd:Selected>true</rd:Selected>
-                </CellContents>
-              </TablixHeader>
               <TablixMembers>
                 <TablixMember>
                   <Group Name="Details" />
@@ -455,9 +371,6 @@
                     <TablixMember />
                     <TablixMember />
                   </TablixMembers>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>Before</KeepWithGroup>
                 </TablixMember>
                 <TablixMember>
                   <KeepWithGroup>Before</KeepWithGroup>
@@ -474,8 +387,8 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>12cm</Height>
-        <Width>17.68833cm</Width>
+        <Height>14.09021cm</Height>
+        <Width>17.60896cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -485,10 +398,10 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>12cm</Height>
+    <Height>14.09021cm</Height>
     <Style />
   </Body>
-  <Width>17.68833cm</Width>
+  <Width>17.60896cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

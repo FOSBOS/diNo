@@ -24,19 +24,19 @@
                             <TextRun>
                               <Value>=Fields!Bezeichnung.Value</Value>
                               <Style>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                             <TextRun>
                               <Value xml:space="preserve">  </Value>
                               <Style>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                             <TextRun>
                               <Value>=Fields!Bemerkung.Value</Value>
                               <Style>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -81,7 +81,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.1633in</Height>
+    <Height>0.18414in</Height>
     <Style />
   </Body>
   <Width>6.51934in</Width>
