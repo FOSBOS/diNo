@@ -479,6 +479,12 @@ namespace diNo
           anz++;
         }
       }
+      if (!Seminarfachnote.IsGesamtnoteNull())
+      {
+        summe += Seminarfachnote.Gesamtnote;
+        anz++;
+      }
+
       if (anz > 0)
       {
         erg = (17 - (decimal)summe / anz) / 3;
