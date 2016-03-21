@@ -159,11 +159,15 @@ namespace diNo
             set;
         }
 
+        private byte? _Abschlusszeugnis=null; 
+
+        // gibt es keinen eigenen Wert im Zeugnis wird der JF übernommen.
         public byte? Abschlusszeugnis
         {
-            get;
-            set;
+           get { if (_Abschlusszeugnis!=null) return _Abschlusszeugnis;  else return JahresfortgangGanzzahlig; } 
+           set { _Abschlusszeugnis=value; } 
         }
+
         public bool ErstesHalbjahr { get; set; }
 
         public Zeitpunkt StandNr

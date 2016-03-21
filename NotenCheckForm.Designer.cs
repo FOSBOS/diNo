@@ -30,7 +30,7 @@
         {
       System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NotenCheckForm));
       this.comboBoxZeitpunkt = new System.Windows.Forms.ComboBox();
-      this.btnUnterpunktungen = new System.Windows.Forms.Button();
+      this.btnStart = new System.Windows.Forms.Button();
       this.progressBarChecks = new System.Windows.Forms.ProgressBar();
       this.lbStatus = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
@@ -65,16 +65,16 @@
       this.comboBoxZeitpunkt.Size = new System.Drawing.Size(218, 24);
       this.comboBoxZeitpunkt.TabIndex = 12;
       // 
-      // btnUnterpunktungen
+      // btnStart
       // 
-      this.btnUnterpunktungen.ImageIndex = 1;
-      this.btnUnterpunktungen.ImageList = this.imageList1;
-      this.btnUnterpunktungen.Location = new System.Drawing.Point(262, 71);
-      this.btnUnterpunktungen.Name = "btnUnterpunktungen";
-      this.btnUnterpunktungen.Size = new System.Drawing.Size(40, 40);
-      this.btnUnterpunktungen.TabIndex = 13;
-      this.btnUnterpunktungen.UseVisualStyleBackColor = true;
-      this.btnUnterpunktungen.Click += new System.EventHandler(this.btnUnterpunktungen_Click);
+      this.btnStart.ImageIndex = 1;
+      this.btnStart.ImageList = this.imageList1;
+      this.btnStart.Location = new System.Drawing.Point(262, 71);
+      this.btnStart.Name = "btnStart";
+      this.btnStart.Size = new System.Drawing.Size(40, 40);
+      this.btnStart.TabIndex = 13;
+      this.btnStart.UseVisualStyleBackColor = true;
+      this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
       // 
       // progressBarChecks
       // 
@@ -149,7 +149,7 @@
       this.Controls.Add(this.label1);
       this.Controls.Add(this.lbStatus);
       this.Controls.Add(this.progressBarChecks);
-      this.Controls.Add(this.btnUnterpunktungen);
+      this.Controls.Add(this.btnStart);
       this.Controls.Add(this.comboBoxZeitpunkt);
       this.Name = "NotenCheckForm";
       this.Text = "Notenprüfung durchführen";
@@ -160,7 +160,7 @@
 
         #endregion
         private System.Windows.Forms.ComboBox comboBoxZeitpunkt;
-        private System.Windows.Forms.Button btnUnterpunktungen;
+        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ProgressBar progressBarChecks;
         private System.Windows.Forms.Label lbStatus;
         private System.Windows.Forms.Label label1;

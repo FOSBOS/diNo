@@ -87,6 +87,7 @@
       <DependentUpon>BasisForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Lehrer.cs" />
+    <Compile Include="Berechnungen.cs" />
     <Compile Include="OmnisDB\DatenabgleichWinSV.cs" />
     <Compile Include="GlobalConsts.cs" />
     <Compile Include="CellConstant.cs" />

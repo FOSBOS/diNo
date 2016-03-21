@@ -454,40 +454,34 @@ namespace diNo
         return this.vorkommnisse;
       }
     }
-
-    [OLVColumn(Title = "DNote", Width = 50)]
-    public double DNote
-    {
-      get
-      {
-        return this.berechneDNote();
-      }
-    }
-
-    public double berechneDNote()
+   
+    public void berechneDNote()
     {
       int summe = 0, anz = 0;
-      double erg;
-      var faecher = new BerechneteNoteTableAdapter().GetDataBySchueler4DNote(this.Id);
+      decimal erg;
+      var faecher = getNoten.alleFaecher;
+        //new BerechneteNoteTableAdapter().GetDataBySchueler4DNote(this.Id);
       foreach (var fach in faecher)
       {
-        if (true /*!fach.KursRow.FachRow.Kuerzel in ['F','Ku','Sp']*/)
+        // alle Fächer außer Sport und Kunst, Franz. nur in der 13. 
+        var fk = fach.getFach.Kuerzel;
+        byte? note = fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
+        if (note!=null && fk != "Ku" && fk != "Smw" && (fk!="F" || getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn))         
         {
-          if (fach.Abschlusszeugnis == 0)
+          if (note == 0)
           {
             summe--; // Punktwert 0 wird als -1 gezählt
           }
           else
           {
-            summe += fach.Abschlusszeugnis;
+            summe += note.GetValueOrDefault();
           }
-
           anz++;
         }
       }
       if (anz > 0)
       {
-        erg = (17 - summe / anz) / 3;
+        erg = (17 - (decimal)summe / anz) / 3;
         if (erg < 1)
         {
           erg = 1;
@@ -496,13 +490,12 @@ namespace diNo
         {
           erg = Math.Floor(erg * 10) / 10; // auf 1 NK abrunden
         }
+        data.DNote = erg;
       }
       else
       {
-        erg = 0;
-      }
-
-      return erg;
+        data.SetDNoteNull();
+      }      
     }
 
     /// <summary>
