@@ -42,7 +42,7 @@ namespace diNo
               string mailAdresse = cleanArray[vornameSpalte] + "." + cleanArray[nachnameSpalte] + "@fosbos-kempten.de";
               mailAdresse = ReplaceUmlaute(mailAdresse);
               string windowsname = cleanArray[vornameSpalte].Substring(0, 1) + ReplaceUmlaute(cleanArray[nachnameSpalte]);
-              adapter.Insert(cleanArray[kuerzelSpalte], cleanArray[vornameSpalte] + " " + cleanArray[nachnameSpalte], cleanArray[dienstbezeichnungSpalte], mailAdresse, windowsname);
+              adapter.Insert(cleanArray[kuerzelSpalte], cleanArray[vornameSpalte] + " " + cleanArray[nachnameSpalte], cleanArray[vornameSpalte], cleanArray[nachnameSpalte], cleanArray[dienstbezeichnungSpalte], mailAdresse, windowsname);
             }
           }
         }

@@ -27,3 +27,12 @@ FROM            dbo.Seminarfachnote RIGHT OUTER JOIN
                          dbo.Klasse ON dbo.Schueler.KlasseId = dbo.Klasse.Id ON dbo.Lehrer.Id = dbo.Klasse.KlassenleiterId ON dbo.Seminarfachnote.SchuelerId = dbo.Schueler.Id
 
 GO
+
+ALTER TABLE [dbo].[Lehrer] ADD Vorname NVARCHAR(50) NULL;
+ALTER TABLE [dbo].[Lehrer] ADD Nachname NVARCHAR(50) NULL;
+UPDATE Lehrer SET Nachname = substring(Name, CHARINDEX(' ', NAME, 1) + 1, 256),
+Vorname = substring(Name, 1, CHARINDEX(' ', NAME, 1) - 1);
+
+GO
+
+

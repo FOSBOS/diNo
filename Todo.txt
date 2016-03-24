@@ -8,4 +8,3 @@
 - Liste von Mederer: FpA zuordnen
 - Test der Darstellung des Notenbogens auf dem Beamer
 - Sicherungskopie der Notenlisten auf Server ?
-- Trennen von Vor- und Nachname der Lehrer

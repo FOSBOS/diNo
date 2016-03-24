@@ -1982,6 +1982,10 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnWindowsname;
             
+            private global::System.Data.DataColumn columnVorname;
+            
+            private global::System.Data.DataColumn columnNachname;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public LehrerDataTable() {
@@ -2065,6 +2069,22 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VornameColumn {
+                get {
+                    return this.columnVorname;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn NachnameColumn {
+                get {
+                    return this.columnNachname;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2100,7 +2120,7 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public LehrerRow AddLehrerRow(string Kuerzel, string Name, string Dienstbezeichnung, string EMail, string Windowsname) {
+            public LehrerRow AddLehrerRow(string Kuerzel, string Name, string Dienstbezeichnung, string EMail, string Windowsname, string Vorname, string Nachname) {
                 LehrerRow rowLehrerRow = ((LehrerRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2108,7 +2128,9 @@ namespace diNo {
                         Name,
                         Dienstbezeichnung,
                         EMail,
-                        Windowsname};
+                        Windowsname,
+                        Vorname,
+                        Nachname};
                 rowLehrerRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowLehrerRow);
                 return rowLehrerRow;
@@ -2144,6 +2166,8 @@ namespace diNo {
                 this.columnDienstbezeichnung = base.Columns["Dienstbezeichnung"];
                 this.columnEMail = base.Columns["EMail"];
                 this.columnWindowsname = base.Columns["Windowsname"];
+                this.columnVorname = base.Columns["Vorname"];
+                this.columnNachname = base.Columns["Nachname"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2161,6 +2185,10 @@ namespace diNo {
                 base.Columns.Add(this.columnEMail);
                 this.columnWindowsname = new global::System.Data.DataColumn("Windowsname", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnWindowsname);
+                this.columnVorname = new global::System.Data.DataColumn("Vorname", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVorname);
+                this.columnNachname = new global::System.Data.DataColumn("Nachname", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNachname);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AutoIncrement = true;
@@ -8736,6 +8764,38 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Vorname {
+                get {
+                    try {
+                        return ((string)(this[this.tableLehrer.VornameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Vorname in Tabelle Lehrer ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableLehrer.VornameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Nachname {
+                get {
+                    try {
+                        return ((string)(this[this.tableLehrer.NachnameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Nachname in Tabelle Lehrer ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableLehrer.NachnameColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsDienstbezeichnungNull() {
                 return this.IsNull(this.tableLehrer.DienstbezeichnungColumn);
             }
@@ -8768,6 +8828,30 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetWindowsnameNull() {
                 this[this.tableLehrer.WindowsnameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVornameNull() {
+                return this.IsNull(this.tableLehrer.VornameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVornameNull() {
+                this[this.tableLehrer.VornameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsNachnameNull() {
+                return this.IsNull(this.tableLehrer.NachnameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetNachnameNull() {
+                this[this.tableLehrer.NachnameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -15118,14 +15202,20 @@ SELECT Id, Bezeichnung, LehrerId, FachId FROM Kurs WHERE (Id = @Id)";
             tableMapping.ColumnMappings.Add("Dienstbezeichnung", "Dienstbezeichnung");
             tableMapping.ColumnMappings.Add("EMail", "EMail");
             tableMapping.ColumnMappings.Add("Windowsname", "Windowsname");
+            tableMapping.ColumnMappings.Add("Vorname", "Vorname");
+            tableMapping.ColumnMappings.Add("Nachname", "Nachname");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Lehrer] WHERE (([Id] = @Original_Id) AND ([Kuerzel] = @Original_Kuerzel) AND ([Name] = @Original_Name) AND ((@IsNull_Dienstbezeichnung = 1 AND [Dienstbezeichnung] IS NULL) OR ([Dienstbezeichnung] = @Original_Dienstbezeichnung)) AND ((@IsNull_EMail = 1 AND [EMail] IS NULL) OR ([EMail] = @Original_EMail)) AND ((@IsNull_Windowsname = 1 AND [Windowsname] IS NULL) OR ([Windowsname] = @Original_Windowsname)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Lehrer] WHERE (([Id] = @Original_Id) AND ([Kuerzel] = @Original_Kuerzel) AND ([Name] = @Original_Name) AND ((@IsNull_Vorname = 1 AND [Vorname] IS NULL) OR ([Vorname] = @Original_Vorname)) AND ((@IsNull_Nachname = 1 AND [Nachname] IS NULL) OR ([Nachname] = @Original_Nachname)) AND ((@IsNull_Dienstbezeichnung = 1 AND [Dienstbezeichnung] IS NULL) OR ([Dienstbezeichnung] = @Original_Dienstbezeichnung)) AND ((@IsNull_EMail = 1 AND [EMail] IS NULL) OR ([EMail] = @Original_EMail)) AND ((@IsNull_Windowsname = 1 AND [Windowsname] IS NULL) OR ([Windowsname] = @Original_Windowsname)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Kuerzel", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Vorname", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Vorname", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Vorname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Vorname", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Nachname", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Nachname", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Nachname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Nachname", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Dienstbezeichnung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Dienstbezeichnung", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Dienstbezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Dienstbezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_EMail", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EMail", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -15134,27 +15224,35 @@ SELECT Id, Bezeichnung, LehrerId, FachId FROM Kurs WHERE (Id = @Id)";
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Windowsname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Windowsname", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [Lehrer] ([Kuerzel], [Name], [Dienstbezeichnung], [EMail], [Windowsna" +
-                "me]) VALUES (@Kuerzel, @Name, @Dienstbezeichnung, @EMail, @Windowsname)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Lehrer] ([Kuerzel], [Name], [Vorname], [Nachname], [Dienstbezeichnung], [EMail], [Windowsname]) VALUES (@Kuerzel, @Name, @Vorname, @Nachname, @Dienstbezeichnung, @EMail, @Windowsname);
+SELECT Id, Kuerzel, Name, Vorname, Nachname, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHERE (Id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Kuerzel", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Vorname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Vorname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Nachname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Nachname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Dienstbezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Dienstbezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EMail", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EMail", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Windowsname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Windowsname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [Lehrer] SET [Kuerzel] = @Kuerzel, [Name] = @Name, [Dienstbezeichnung] = @Dienstbezeichnung, [EMail] = @EMail, [Windowsname] = @Windowsname WHERE (([Id] = @Original_Id) AND ([Kuerzel] = @Original_Kuerzel) AND ([Name] = @Original_Name) AND ((@IsNull_Dienstbezeichnung = 1 AND [Dienstbezeichnung] IS NULL) OR ([Dienstbezeichnung] = @Original_Dienstbezeichnung)) AND ((@IsNull_EMail = 1 AND [EMail] IS NULL) OR ([EMail] = @Original_EMail)) AND ((@IsNull_Windowsname = 1 AND [Windowsname] IS NULL) OR ([Windowsname] = @Original_Windowsname)));
-SELECT Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Lehrer] SET [Kuerzel] = @Kuerzel, [Name] = @Name, [Vorname] = @Vorname, [Nachname] = @Nachname, [Dienstbezeichnung] = @Dienstbezeichnung, [EMail] = @EMail, [Windowsname] = @Windowsname WHERE (([Id] = @Original_Id) AND ([Kuerzel] = @Original_Kuerzel) AND ([Name] = @Original_Name) AND ((@IsNull_Vorname = 1 AND [Vorname] IS NULL) OR ([Vorname] = @Original_Vorname)) AND ((@IsNull_Nachname = 1 AND [Nachname] IS NULL) OR ([Nachname] = @Original_Nachname)) AND ((@IsNull_Dienstbezeichnung = 1 AND [Dienstbezeichnung] IS NULL) OR ([Dienstbezeichnung] = @Original_Dienstbezeichnung)) AND ((@IsNull_EMail = 1 AND [EMail] IS NULL) OR ([EMail] = @Original_EMail)) AND ((@IsNull_Windowsname = 1 AND [Windowsname] IS NULL) OR ([Windowsname] = @Original_Windowsname)));
+SELECT Id, Kuerzel, Name, Vorname, Nachname, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Kuerzel", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Vorname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Vorname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Nachname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Nachname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Dienstbezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Dienstbezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EMail", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EMail", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Windowsname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Windowsname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Kuerzel", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Vorname", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Vorname", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Vorname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Vorname", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Nachname", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Nachname", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Nachname", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Nachname", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Dienstbezeichnung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Dienstbezeichnung", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Dienstbezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Dienstbezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_EMail", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EMail", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -15177,25 +15275,25 @@ SELECT Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHER
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname\r\nFROM     " +
-                "       Lehrer";
+            this._commandCollection[0].CommandText = "SELECT        Id, Kuerzel, Name, Vorname, Nachname, Dienstbezeichnung, EMail, Win" +
+                "dowsname\r\nFROM            Lehrer";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT        Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname\r\nFROM     " +
-                "       Lehrer\r\nWHERE Windowsname=@Windowsname";
+            this._commandCollection[1].CommandText = "SELECT Dienstbezeichnung, EMail, Id, Kuerzel, Nachname, Name, Vorname, Windowsnam" +
+                "e FROM Lehrer WHERE (Windowsname = @Windowsname)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Windowsname", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Windowsname", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT Dienstbezeichnung, EMail, Id, Kuerzel, Name, Windowsname FROM Lehrer WHERE" +
-                " (Id = @Id)";
+            this._commandCollection[2].CommandText = "SELECT Dienstbezeichnung, EMail, Id, Kuerzel, Nachname, Name, Vorname, Windowsnam" +
+                "e FROM Lehrer WHERE (Id = @Id)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT Dienstbezeichnung, EMail, Id, Kuerzel, Name, Windowsname FROM Lehrer WHERE" +
-                " (Kuerzel = @kuerzel)";
+            this._commandCollection[3].CommandText = "SELECT Dienstbezeichnung, EMail, Id, Kuerzel, Nachname, Name, Vorname, Windowsnam" +
+                "e FROM Lehrer WHERE (Kuerzel = @kuerzel)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@kuerzel", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -15322,7 +15420,7 @@ SELECT Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHER
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, string Original_Kuerzel, string Original_Name, string Original_Dienstbezeichnung, string Original_EMail, string Original_Windowsname) {
+        public virtual int Delete(int Original_Id, string Original_Kuerzel, string Original_Name, string Original_Vorname, string Original_Nachname, string Original_Dienstbezeichnung, string Original_EMail, string Original_Windowsname) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             if ((Original_Kuerzel == null)) {
                 throw new global::System.ArgumentNullException("Original_Kuerzel");
@@ -15336,29 +15434,45 @@ SELECT Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHER
             else {
                 this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_Name));
             }
-            if ((Original_Dienstbezeichnung == null)) {
+            if ((Original_Vorname == null)) {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_Dienstbezeichnung));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_Vorname));
             }
-            if ((Original_EMail == null)) {
+            if ((Original_Nachname == null)) {
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((string)(Original_EMail));
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((string)(Original_Nachname));
             }
-            if ((Original_Windowsname == null)) {
+            if ((Original_Dienstbezeichnung == null)) {
                 this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((string)(Original_Windowsname));
+                this.Adapter.DeleteCommand.Parameters[8].Value = ((string)(Original_Dienstbezeichnung));
+            }
+            if ((Original_EMail == null)) {
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[10].Value = ((string)(Original_EMail));
+            }
+            if ((Original_Windowsname == null)) {
+                this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[12].Value = ((string)(Original_Windowsname));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -15380,7 +15494,7 @@ SELECT Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHER
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string Kuerzel, string Name, string Dienstbezeichnung, string EMail, string Windowsname) {
+        public virtual int Insert(string Kuerzel, string Name, string Vorname, string Nachname, string Dienstbezeichnung, string EMail, string Windowsname) {
             if ((Kuerzel == null)) {
                 throw new global::System.ArgumentNullException("Kuerzel");
             }
@@ -15393,23 +15507,35 @@ SELECT Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHER
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(Name));
             }
-            if ((Dienstbezeichnung == null)) {
+            if ((Vorname == null)) {
                 this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(Dienstbezeichnung));
+                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(Vorname));
             }
-            if ((EMail == null)) {
+            if ((Nachname == null)) {
                 this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(EMail));
+                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(Nachname));
             }
-            if ((Windowsname == null)) {
+            if ((Dienstbezeichnung == null)) {
                 this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(Windowsname));
+                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(Dienstbezeichnung));
+            }
+            if ((EMail == null)) {
+                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[5].Value = ((string)(EMail));
+            }
+            if ((Windowsname == null)) {
+                this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[6].Value = ((string)(Windowsname));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -15431,7 +15557,23 @@ SELECT Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHER
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Kuerzel, string Name, string Dienstbezeichnung, string EMail, string Windowsname, int Original_Id, string Original_Kuerzel, string Original_Name, string Original_Dienstbezeichnung, string Original_EMail, string Original_Windowsname, int Id) {
+        public virtual int Update(
+                    string Kuerzel, 
+                    string Name, 
+                    string Vorname, 
+                    string Nachname, 
+                    string Dienstbezeichnung, 
+                    string EMail, 
+                    string Windowsname, 
+                    int Original_Id, 
+                    string Original_Kuerzel, 
+                    string Original_Name, 
+                    string Original_Vorname, 
+                    string Original_Nachname, 
+                    string Original_Dienstbezeichnung, 
+                    string Original_EMail, 
+                    string Original_Windowsname, 
+                    int Id) {
             if ((Kuerzel == null)) {
                 throw new global::System.ArgumentNullException("Kuerzel");
             }
@@ -15444,62 +15586,90 @@ SELECT Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHER
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(Name));
             }
-            if ((Dienstbezeichnung == null)) {
+            if ((Vorname == null)) {
                 this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(Dienstbezeichnung));
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(Vorname));
             }
-            if ((EMail == null)) {
+            if ((Nachname == null)) {
                 this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(EMail));
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Nachname));
             }
-            if ((Windowsname == null)) {
+            if ((Dienstbezeichnung == null)) {
                 this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Windowsname));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Dienstbezeichnung));
             }
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_Id));
+            if ((EMail == null)) {
+                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(EMail));
+            }
+            if ((Windowsname == null)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Windowsname));
+            }
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_Id));
             if ((Original_Kuerzel == null)) {
                 throw new global::System.ArgumentNullException("Original_Kuerzel");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_Kuerzel));
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_Kuerzel));
             }
             if ((Original_Name == null)) {
                 throw new global::System.ArgumentNullException("Original_Name");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_Name));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Original_Name));
             }
-            if ((Original_Dienstbezeichnung == null)) {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Original_Dienstbezeichnung));
-            }
-            if ((Original_EMail == null)) {
+            if ((Original_Vorname == null)) {
                 this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(Original_EMail));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(Original_Vorname));
             }
-            if ((Original_Windowsname == null)) {
+            if ((Original_Nachname == null)) {
                 this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Original_Windowsname));
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Original_Nachname));
             }
-            this.Adapter.UpdateCommand.Parameters[14].Value = ((int)(Id));
+            if ((Original_Dienstbezeichnung == null)) {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(Original_Dienstbezeichnung));
+            }
+            if ((Original_EMail == null)) {
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((string)(Original_EMail));
+            }
+            if ((Original_Windowsname == null)) {
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((string)(Original_Windowsname));
+            }
+            this.Adapter.UpdateCommand.Parameters[20].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -15520,8 +15690,8 @@ SELECT Id, Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname FROM Lehrer WHER
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Kuerzel, string Name, string Dienstbezeichnung, string EMail, string Windowsname, int Original_Id, string Original_Kuerzel, string Original_Name, string Original_Dienstbezeichnung, string Original_EMail, string Original_Windowsname) {
-            return this.Update(Kuerzel, Name, Dienstbezeichnung, EMail, Windowsname, Original_Id, Original_Kuerzel, Original_Name, Original_Dienstbezeichnung, Original_EMail, Original_Windowsname, Original_Id);
+        public virtual int Update(string Kuerzel, string Name, string Vorname, string Nachname, string Dienstbezeichnung, string EMail, string Windowsname, int Original_Id, string Original_Kuerzel, string Original_Name, string Original_Vorname, string Original_Nachname, string Original_Dienstbezeichnung, string Original_EMail, string Original_Windowsname) {
+            return this.Update(Kuerzel, Name, Vorname, Nachname, Dienstbezeichnung, EMail, Windowsname, Original_Id, Original_Kuerzel, Original_Name, Original_Vorname, Original_Nachname, Original_Dienstbezeichnung, Original_EMail, Original_Windowsname, Original_Id);
         }
     }
     

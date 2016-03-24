@@ -4,6 +4,10 @@
 
   public partial class diNoDataSet
   {
+    partial class LehrerDataTable
+    {
+    }
+
     partial class VorkommnisDataTable
     {
     }
