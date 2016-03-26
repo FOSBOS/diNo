@@ -35,11 +35,17 @@ namespace diNo
         btnBrief.Enabled = true;
         btnPrint.Enabled = true;
         
-        btnSave.Enabled = Zugriff.Instance.Level != Zugriffslevel.Lehrer || schueler.BetreuerId == Zugriff.Instance.lehrer.Id;
+        btnSave.Enabled = Zugriff.Instance.lehrer.HatRolle(Rolle.Admin) || 
+          Zugriff.Instance.lehrer.HatRolle(Rolle.Seminarfach) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn || 
+          schueler.BetreuerId == Zugriff.Instance.lehrer.Id || 
+          Zugriff.Instance.lehrer.HatRolle(Rolle.FpAWirtschaft) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && (schueler.Data.Ausbildungsrichtung =="W" || schueler.Data.Ausbildungsrichtung == "WVR") ||
+          Zugriff.Instance.lehrer.HatRolle(Rolle.FpASozial) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.Data.Ausbildungsrichtung == "S" ||
+          Zugriff.Instance.lehrer.HatRolle(Rolle.FpATechnik) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.Data.Ausbildungsrichtung == "T" ||
+          Zugriff.Instance.lehrer.HatRolle(Rolle.FpAAgrar) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && (schueler.Data.Ausbildungsrichtung == "A");
         labelHinweise.Text = (schueler.IsLegastheniker ? "Legastheniker" : "");
         labelHinweise.ForeColor = Color.Red;
       }
-      else if (Zugriff.Instance.Level != Zugriffslevel.Lehrer)      
+      else if (!Zugriff.Instance.IstNurNormalerLehrer)      
         btnPrint.Enabled = true;
     }
 
@@ -52,8 +58,8 @@ namespace diNo
         klasseLabel.Text = "";
         pictureBoxImage.Image = null; 
         toolStripStatusLabel1.Text = "";
-        btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss || Zugriff.Instance.Level == Zugriffslevel.Admin;
-        btnAbidruck.Visible = Zugriff.Instance.Level != Zugriffslevel.Lehrer;
+        btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
+        btnAbidruck.Visible = !Zugriff.Instance.IstNurNormalerLehrer;
     }
 
         private void btnNotenabgeben_Click(object sender, EventArgs e)
@@ -98,7 +104,7 @@ namespace diNo
 
         private void Drucken(bool nurAbi)
         { 
-          if (Zugriff.Instance.Level!=Zugriffslevel.Lehrer)
+          if (!Zugriff.Instance.IstNurNormalerLehrer)
           {
             var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
             if (obj.Count>0 && obj[0] is Klasse)
@@ -125,7 +131,7 @@ namespace diNo
         private void btnSave_Click(object sender, EventArgs e)
         {   
           userControlFPAundSeminar1.DatenUebernehmen();
-          if (Zugriff.Instance.Level != Zugriffslevel.Lehrer)
+          if (!Zugriff.Instance.IstNurNormalerLehrer)
           {
             userControlSchueleransicht1.DatenUebernehmen();  
           }

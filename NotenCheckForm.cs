@@ -22,14 +22,14 @@ namespace diNo
       InitializeComponent();
       lbStatus.Text = "";
       NotenCheckModusDict = new Dictionary<NotenCheckModus,string>();
-      if (Zugriff.Instance.Level == Zugriffslevel.Lehrer)
+      if (Zugriff.Instance.lehrer.HatRolle(Rolle.Lehrer))
       {
         NotenCheckModusDict.Add(NotenCheckModus.EigeneNotenVollstaendigkeit,"eigene Noten vollständig?");
         if (Zugriff.Instance.lehrer.KlassenleiterVon!=null)
           NotenCheckModusDict.Add(NotenCheckModus.EigeneKlasse,"eigene Klasse prüfen");
       }
       NotenCheckModusDict.Add(NotenCheckModus.Gesamtpruefung,"Gesamtprüfung");
-      if (Zugriff.Instance.Level == Zugriffslevel.Admin)
+      if (Zugriff.Instance.lehrer.HatRolle(Rolle.Admin))
       {
         NotenCheckModusDict.Add(NotenCheckModus.VorkommnisseErzeugen,"Vorkommnisse erzeugen");
         NotenCheckModusDict.Add(NotenCheckModus.BerechnungenSpeichern,"Berechnungen speichern");
