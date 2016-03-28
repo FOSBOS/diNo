@@ -66,37 +66,47 @@ namespace diNo
     {
       get
       {
-        return this.lehrer.rollen.Count > 0;
+        return this.lehrer.rollen.Count == 0;
       }
     }
 
     private void LoadSchueler()
     {
-      diNoDataSet.SchuelerDataTable dtSchueler;
       List<int> klassenIds = new List<int>(); // für schnelles Auffinden
-      int index;
-
       Klassen = new List<Klasse>();
 
       var ta = new SchuelerTableAdapter();
 
-      dtSchueler = (this.lehrer.HatRolle(Rolle.Admin)) ? ta.GetData() : ta.GetDataByLehrerId(lehrer.Id);
-      // TODO: Für Rolle Seminarfach, fPa: entsprechende Klassenstufen auch mit aufnehmen
-
-      AnzahlSchueler = dtSchueler.Count;
-
-      foreach (var sRow in dtSchueler)
+      Dictionary<int, Schueler> schueler = new Dictionary<int, Schueler>();
+      foreach (var aSchueler in ta.GetDataByLehrerId(lehrer.Id))
       {
-        Schueler s = new Schueler(sRow);
-        index = klassenIds.IndexOf(sRow.KlasseId);
+        // erstmal alle eigenen Schueler einladen, damit die sicher sichtbar sind.
+        schueler.Add(aSchueler.Id, new Schueler(aSchueler));
+      }
+
+      if (!this.IstNurNormalerLehrer)
+      {
+        // danach schauen, ob aufgrund einer besonderen Rolle des Lehrers noch andere Schueler angezeigt werden müssen
+        foreach (var aSchueler in ta.GetData())
+        {
+          Schueler derSchueler = new Schueler(aSchueler);
+          if (!schueler.ContainsKey(aSchueler.Id) && SollSichtbarSein(derSchueler))
+            schueler.Add(aSchueler.Id, derSchueler);
+        }
+      }
+
+      AnzahlSchueler = schueler.Count;
+      foreach (var sRow in schueler.Values)
+      {
+        int index = klassenIds.IndexOf(sRow.Data.KlasseId);
         if (index < 0)
         {
-          klassenIds.Add(sRow.KlasseId);
-          Klassen.Add(s.getKlasse);
+          klassenIds.Add(sRow.Data.KlasseId);
+          Klassen.Add(sRow.getKlasse);
           index = klassenIds.Count - 1;
         }
 
-        Klassen[index].eigeneSchueler.Add(s); // dieser Klassen den Schüler hinzufügen
+        Klassen[index].eigeneSchueler.Add(sRow); // dieser Klassen den Schüler hinzufügen
       }
 
       // alles sortieren
@@ -145,6 +155,36 @@ namespace diNo
     {
       Instance.Klassen = null; // Garbage-Collector 
       Instance.LoadSchueler();
+    }
+
+    private bool SollSichtbarSein(Schueler schueler)
+    {
+      if (this.lehrer.HatRolle(Rolle.Admin))
+      {
+        return true;
+      }
+      if (this.lehrer.HatRolle(Rolle.FpAAgrar) && (schueler.Zweig == Zweig.Agrar && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf))
+      {
+        return true;
+      }
+      if (this.lehrer.HatRolle(Rolle.FpASozial) && (schueler.Zweig == Zweig.Sozial && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf))
+      {
+        return true;
+      }
+      if (this.lehrer.HatRolle(Rolle.FpATechnik) && (schueler.Zweig == Zweig.Technik && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf))
+      {
+        return true;
+      }
+      if (this.lehrer.HatRolle(Rolle.FpAWirtschaft) && (schueler.Zweig == Zweig.Wirtschaft && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf))
+      {
+        return true;
+      }
+      if (this.lehrer.HatRolle(Rolle.Seminarfach) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      {
+        return true;
+      }
+
+      return false;
     }
   }
 
