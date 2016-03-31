@@ -1,6 +1,6 @@
-﻿namespace diNoVerwaltung
+﻿namespace diNo
 {
-  partial class KurszuordnungenForm
+  partial class UserControlKurszuordnungen
   {
     /// <summary>
     /// Required designer variable.
@@ -28,7 +28,6 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.lblSchuelername = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
       this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
@@ -41,21 +40,10 @@
       ((System.ComponentModel.ISupportInitialize)(this.objectListView2)).BeginInit();
       this.SuspendLayout();
       // 
-      // lblSchuelername
-      // 
-      this.lblSchuelername.AutoSize = true;
-      this.lblSchuelername.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lblSchuelername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-      this.lblSchuelername.Location = new System.Drawing.Point(12, 9);
-      this.lblSchuelername.Name = "lblSchuelername";
-      this.lblSchuelername.Size = new System.Drawing.Size(114, 20);
-      this.lblSchuelername.TabIndex = 0;
-      this.lblSchuelername.Text = "Schülername";
-      // 
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(13, 51);
+      this.label2.Location = new System.Drawing.Point(11, 9);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(74, 13);
       this.label2.TabIndex = 2;
@@ -64,7 +52,7 @@
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(315, 51);
+      this.label3.Location = new System.Drawing.Point(313, 9);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(123, 13);
       this.label3.TabIndex = 3;
@@ -77,9 +65,9 @@
       this.objectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnCurrentId,
             this.olvColumnCurrentBezeichnung});
-      this.objectListView1.Location = new System.Drawing.Point(16, 67);
+      this.objectListView1.Location = new System.Drawing.Point(14, 25);
       this.objectListView1.Name = "objectListView1";
-      this.objectListView1.Size = new System.Drawing.Size(210, 266);
+      this.objectListView1.Size = new System.Drawing.Size(210, 243);
       this.objectListView1.TabIndex = 4;
       this.objectListView1.UseCompatibleStateImageBehavior = false;
       this.objectListView1.View = System.Windows.Forms.View.Details;
@@ -107,13 +95,14 @@
       this.objectListView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn1,
             this.olvColumn2});
-      this.objectListView2.Location = new System.Drawing.Point(318, 67);
+      this.objectListView2.Location = new System.Drawing.Point(316, 25);
       this.objectListView2.Name = "objectListView2";
-      this.objectListView2.Size = new System.Drawing.Size(210, 266);
+      this.objectListView2.Size = new System.Drawing.Size(210, 243);
       this.objectListView2.TabIndex = 5;
       this.objectListView2.UseCompatibleStateImageBehavior = false;
       this.objectListView2.View = System.Windows.Forms.View.Details;
-      this.objectListView2.DoubleClick += new System.EventHandler(this.objectListView2_DoubleClick);      // 
+      this.objectListView2.DoubleClick += new System.EventHandler(this.objectListView2_DoubleClick);
+      // 
       // olvColumn1
       // 
       this.olvColumn1.AspectName = "Id";
@@ -129,18 +118,16 @@
       this.olvColumn2.Text = "Bezeichnung";
       this.olvColumn2.Width = 145;
       // 
-      // KurszuordnungenForm
+      // UserControlKurszuordnungen
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(571, 345);
       this.Controls.Add(this.objectListView2);
       this.Controls.Add(this.objectListView1);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.label2);
-      this.Controls.Add(this.lblSchuelername);
-      this.Name = "KurszuordnungenForm";
-      this.Text = "KurszuordnungenForm";
+      this.Name = "UserControlKurszuordnungen";
+      this.Size = new System.Drawing.Size(571, 277);
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView2)).EndInit();
       this.ResumeLayout(false);
@@ -149,8 +136,6 @@
     }
 
     #endregion
-
-    private System.Windows.Forms.Label lblSchuelername;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.Label label3;
     private BrightIdeasSoftware.ObjectListView objectListView1;

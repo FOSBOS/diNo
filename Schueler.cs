@@ -242,11 +242,12 @@ namespace diNo
     {
       get
       {
-        return this.Data.Wahlpflichtfach;
+        return this.Data.IsWahlpflichtfachNull() ? "": this.Data.Wahlpflichtfach;
       }
       set
       {
-        MeldeAb(this.Data.Wahlpflichtfach);
+        if (!this.Data.IsWahlpflichtfachNull())
+          MeldeAb(this.Data.Wahlpflichtfach);
         MeldeAn(value);
         this.Data.Wahlpflichtfach = value;
         Save();                
@@ -263,11 +264,12 @@ namespace diNo
     {
       get
       {
-        return this.Data.Fremdsprache2;
+        return this.Data.IsFremdsprache2Null() ? "": this.Data.Fremdsprache2;
       }
       set
       {
-        MeldeAb(this.Data.Fremdsprache2);
+        if (!this.Data.IsFremdsprache2Null())
+          MeldeAb(this.Data.Fremdsprache2);
         MeldeAn(value);
         this.Data.Fremdsprache2 = value;
         Save();                
@@ -286,12 +288,13 @@ namespace diNo
     {
       get
       {
-        return this.Data.ReligionOderEthik;
+        return this.Data.IsReligionOderEthikNull()? "" : this.Data.ReligionOderEthik;
       }
 
       set
       {
-        MeldeAb(this.GetFachKuerzel(this.Data.ReligionOderEthik));
+        if (!this.Data.IsReligionOderEthikNull())
+          MeldeAb(this.GetFachKuerzel(this.Data.ReligionOderEthik));
         if (!string.IsNullOrEmpty(value))
         {
           MeldeAn(this.GetFachKuerzel(value));

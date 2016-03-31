@@ -49,7 +49,7 @@ namespace diNo
           kontaktEltern += string.IsNullOrEmpty(schueler.Data.VornameEltern2) ? "" : "\n" + schueler.Data.VornameEltern2 + " " + schueler.Data.NachnameEltern2;
           textBoxAdresseEltern.Lines = kontaktEltern.Split('\n');
           textBoxBekenntnis.Text = schueler.Data.Bekenntnis;
-          textBoxReliUnterricht.Text = schueler.Data.ReligionOderEthik;
+          textBoxReliUnterricht.Text = schueler.Data.IsReligionOderEthikNull() ? "" : schueler.Data.ReligionOderEthik;
 
           textBoxProbezeit.Text = schueler.Data.IsProbezeitBisNull() ? "" : schueler.Data.ProbezeitBis.ToString("dd.MM.yyyy");
           textBoxAustritt.Text = schueler.Data.IsAustrittsdatumNull() ? "" : schueler.Data.Austrittsdatum.ToString("dd.MM.yyyy");

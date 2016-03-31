@@ -1,18 +1,17 @@
 ﻿using BrightIdeasSoftware;
-using diNo;
 using System;
 using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace diNoVerwaltung
+namespace diNo
 {
-  public class FormSchuelerverwaltungController
+  public class SchuelerverwaltungController
   {
     public static DateTime NullDate = new DateTimePicker().MinDate;
     private Action refreshFunc;
 
-    public FormSchuelerverwaltungController(Action aRefreshFunc)
+    public SchuelerverwaltungController(Action aRefreshFunc)
     {
       this.refreshFunc = aRefreshFunc;
     }
@@ -45,11 +44,14 @@ namespace diNoVerwaltung
         {
           return;
         }
-        else
+
+        if (!schueler.Data.IsAustrittsdatumNull() && (schueler.Data.Austrittsdatum == (DateTime)newValue))
         {
-          new ReportNotenbogen(schueler).Show(); // zeigt den aktuellen Notenbogen an - der muss ausgedruckt und abgeheftet werden
-          schueler.Austritt((DateTime)newValue);
+          return;
         }
+
+        new ReportNotenbogen(schueler).Show(); // zeigt den aktuellen Notenbogen an - der muss ausgedruckt und abgeheftet werden
+        schueler.Austritt((DateTime)newValue);
       }
 
       //ToDo: Sollte es möglich sein, einen Austritt wieder rückgängig zu machen (z. B. wenn beim falschen Schüler gesetzt)?
@@ -63,7 +65,11 @@ namespace diNoVerwaltung
         return;
       }
 
-      schueler.ReliOderEthik = (string)newValue;
+      string neu = newValue is ComboBoxItem ? (string)((ComboBoxItem)newValue).Key : (string)newValue;
+      if (schueler.ReliOderEthik != neu)
+      {
+        schueler.ReliOderEthik = neu;
+      }
     }
 
     /// <summary>
@@ -79,9 +85,10 @@ namespace diNoVerwaltung
         return;
       }
 
-      if (schueler.Wahlpflichtfach != (string)newValue)
+      string neu = newValue is ComboBoxItem ? (string)((ComboBoxItem)newValue).Key : (string)newValue;
+      if (schueler.Wahlpflichtfach != neu)
       {
-        schueler.Wahlpflichtfach = (string)newValue;
+        schueler.Wahlpflichtfach = neu;
       }
     }
 
@@ -98,9 +105,11 @@ namespace diNoVerwaltung
         return;
       }
 
-      if (schueler.Fremdsprache2 != (string)newValue)
+      string neu = newValue is ComboBoxItem ? (string)((ComboBoxItem)newValue).Key : (string)newValue;
+
+      if (schueler.Fremdsprache2 != neu)
       {
-        schueler.Fremdsprache2 = (string)newValue;
+        schueler.Fremdsprache2 = neu;
       }
     }
 
@@ -116,7 +125,6 @@ namespace diNoVerwaltung
     }
 
     #endregion
-
 
     #region AspectSelection
 
@@ -275,14 +283,10 @@ namespace diNoVerwaltung
 
     #endregion
 
-    public static DateTimePicker CreateDateTimePicker(Rectangle bounds, object value)
+    public static void InitDateTimePicker(DateTimePicker picker)
     {
-      DateTimePicker picker = new DateTimePicker();
       picker.Format = DateTimePickerFormat.Custom;
-      picker.Bounds = bounds;
       picker.ValueChanged += (s, eventArgs) => { picker.CustomFormat = (picker.Checked && picker.Value != picker.MinDate) ? "dd.MM.yyyy" : " "; };
-      picker.Value = (value != null) ? (DateTime)value : picker.MinDate;
-      return picker;
     }
 
     public static void FillCheckboxWahlpflichtfach(Schueler schueler, ComboBox cb)
@@ -292,27 +296,12 @@ namespace diNoVerwaltung
       cb.Items.Add(new ComboBoxItem("F-Wi", "F3"));
       cb.Items.Add(new ComboBoxItem("Ku", "Ku"));
       cb.Items.Add(new ComboBoxItem("WIn", "WIn"));
-      switch (schueler.Wahlpflichtfach)
-      {
-        case "": cb.SelectedIndex = 0; break;
-        case "F": cb.SelectedIndex = 1; break;
-        case "F-Wi": cb.SelectedIndex = 2; break;
-        case "Ku": cb.SelectedIndex = 3; break;
-        case "WIn": cb.SelectedIndex = 4; break;
-        default: throw new InvalidOperationException("Unbekannter Wert für Wahlpflichtfach" + schueler.Wahlpflichtfach);
-      }
     }
 
     public static void FillCheckboxFremdsprache2(Schueler schueler, ComboBox cb)
     {
       cb.Items.Add(new ComboBoxItem("", ""));
       cb.Items.Add(new ComboBoxItem("F", "F"));
-        switch (schueler.Fremdsprache2)
-        {
-          case "": cb.SelectedIndex = 0; break;
-          case "F": cb.SelectedIndex = 1; break;
-        default: throw new InvalidOperationException("Unbekannter Wert für Fremdsprache2" + schueler.Fremdsprache2);
-      }
     }
 
     public static void FillCheckBoxReliOderEthik(Schueler schueler, ComboBox cb)
@@ -321,15 +310,6 @@ namespace diNoVerwaltung
       cb.Items.Add(new ComboBoxItem("RK", "katholisch"));
       cb.Items.Add(new ComboBoxItem("EV", "evangelisch"));
       cb.Items.Add(new ComboBoxItem("Eth", "Ethik"));
-      switch (schueler.ReliOderEthik)
-      {
-        case "":
-        case null: cb.SelectedIndex = 0; break;
-        case "RK": cb.SelectedIndex = 1; break;
-        case "EV": cb.SelectedIndex = 2; break;
-        case "Eth": cb.SelectedIndex = 3; break;
-        default: throw new InvalidOperationException("Unbekannter Wert für Religionskurs" + schueler.ReliOderEthik);
-      }
     }
       
 
