@@ -75,6 +75,43 @@ namespace diNo
           }
     }   
     
+    public void ErzeugeZeugnisVorkommnis()
+    {
+      if (modus!=NotenCheckModus.VorkommnisseErzeugen) return;
+
+      if (zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS)
+        aktSchueler.AddVorkommnis(Vorkommnisart.Zwischenzeugnis, "");
+
+      else if (zeitpunkt==Zeitpunkt.DrittePA)
+      {
+        if (aktSchueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
+          aktSchueler.AddVorkommnis(Vorkommnisart.Fachabiturzeugnis,"");
+        else if (aktSchueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+        {
+          var f = aktSchueler.getNoten.FindeFach("F",false);
+          if (aktSchueler.Wahlpflichtfach=="F3" || // fortgef. F
+            f != null && f.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis > 3) // TODO: es fehlen S die Franz. in der RS hatten
+            aktSchueler.AddVorkommnis(Vorkommnisart.allgemeineHochschulreife,"");
+          else 
+            aktSchueler.AddVorkommnis(Vorkommnisart.fachgebundeneHochschulreife,"");          
+        }
+      }
+      else if (zeitpunkt==Zeitpunkt.Jahresende && aktSchueler.getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
+        aktSchueler.AddVorkommnis(Vorkommnisart.Jahreszeugnis,"");
+    }
+
+    public void Add(Vorkommnisart nr, string meldung)
+    {
+      if (modus==NotenCheckModus.VorkommnisseErzeugen)
+      {
+        aktSchueler.AddVorkommnis(nr,meldung);
+      }
+      else
+      {
+        Add(null, Vorkommnisse.Instance.VorkommnisText(nr) + " " + meldung);
+      }
+    }
+
     public void Add(Kurs k,string m)
     {
       NotenCheckCounter c;      

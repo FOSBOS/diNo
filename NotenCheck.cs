@@ -216,7 +216,7 @@ namespace diNo
     public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
     {
       // Diese Prüfung kann immer durchgeführt werden
-      return true;
+      return contr.zeitpunkt != Zeitpunkt.DrittePA; // in der 3. PA wird nur noch auf Bestehen geprüft
     }
 
     /// <summary>
@@ -250,6 +250,7 @@ namespace diNo
         int noetigeAnzahlSchulaufgaben = fachNoten.getFach.AnzahlSA(schueler.Zweig,schueler.getKlasse.Jahrgangsstufe);
         bool istSAFach = noetigeAnzahlSchulaufgaben>0;
         bool einstuendig = fachNoten.getFach.IstEinstuendig(schueler.getKlasse.Jahrgangsstufe,schueler.getKlasse.Schulart);
+        int noetigeAnzahlEchteMdl = (einstuendig ? 1 : 2);
         Kurs derKurs = new Kurs(fachNoten.kursId);
         if (derKurs.getLehrer == null)
         {
@@ -318,6 +319,7 @@ namespace diNo
         muendlicheCount = fachNoten.getNotenanzahl(Notentyp.Ex) + fachNoten.getNotenanzahl(Notentyp.EchteMuendliche);
         schulaufgabenCount = fachNoten.getNotenanzahl(Notentyp.Schulaufgabe);
         hatErsatzpruefung = fachNoten.getNotenanzahl(Notentyp.Ersatzprüfung)>0;
+       
                          
         if (schulaufgabenCount < noetigeAnzahlSchulaufgaben)
         {
@@ -329,7 +331,7 @@ namespace diNo
           contr.Add( kurs, toText(kurzarbeitenCount,"","Kurzarbeit"));
         }
 
-        if ((kurzarbeitenCount == 0 && muendlicheCount < 4) || muendlicheCount < 2)
+        if ((kurzarbeitenCount == 0 && muendlicheCount < 3+noetigeAnzahlEchteMdl) || muendlicheCount < noetigeAnzahlEchteMdl)
         {
           contr.Add( kurs,toText(muendlicheCount,"mündliche","Note"));
         }
@@ -443,40 +445,51 @@ namespace diNo
 
         if (contr.zeitpunkt == Zeitpunkt.ErstePA)
         {
-            if (anz6 > 1 || (anz6 + anz5) > 3) contr.Add( null, "Zum Abitur nicht zugelassen: " + m);                
-            return;
+          if (anz6 > 1 || (anz6 + anz5) > 3)
+          {
+            contr.Add(Vorkommnisart.NichtZurPruefungZugelassen,m);            
+          }          
+          return;
         }
         else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {
           if (anz6>0 || anz5 > 1)
           {
-            contr.Add( null, "Stark gefährdet: " + m);
-            if (contr.modus == NotenCheckModus.VorkommnisseErzeugen) 
-              schueler.AddVorkommnis(Vorkommnisart.starkeGefaehrdungsmitteilung,DateTime.Today,m);
+            contr.Add(Vorkommnisart.starkeGefaehrdungsmitteilung,m);
           }
           //else if (anz5 > 0) contr.Add( null, "Gefährdet: " + m); 
           else if (anz4P > 1 || anz5 > 0)
           { 
-            contr.Add( null, "Bei weiterem Absinken: " + m);
-            if (contr.modus == NotenCheckModus.VorkommnisseErzeugen) 
-              schueler.AddVorkommnis(Vorkommnisart.BeiWeiteremAbsinken,DateTime.Today,m);
+            contr.Add(Vorkommnisart.BeiWeiteremAbsinken,m);
           }
+          contr.ErzeugeZeugnisVorkommnis();
 
           if (schueler.Data.IsProbezeitBisNull() || !(schueler.Data.ProbezeitBis > DateTime.Parse("01.02." +  (DateTime.Today).Year)))
             return; // bei Schülern ohne PZ geht es zum Halbjahr nur um Gefährdungen
         }
         else if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
         {
-          // TODO: Prüfen, ob der Schüler zur MAP zugelassen wird
+          if (anz6 > 0 || anz5 > 1)
+          {         
+            if (anz6 < 2 && anz6 + anz5 < 3)
+              contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich,m);
+            else 
+              contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen,m);
+          }          
+          return;        
         }
-
+        
         {
           // TODO: Notenausgleich sauber implementieren
           if (anz6 > 0 || anz5 > 1)
           {
             if (anz2 < 2 && anz1 == 0) contr.Add( null, "Nicht bestanden, kein Notenausgleich möglich: " + m); 
             else contr.Add( null, "Nicht bestanden, Notenausgleich prüfen: " + m); 
-          }                    
+
+            if (contr.zeitpunkt == Zeitpunkt.DrittePA) schueler.AddVorkommnis(Vorkommnisart.endgueltigNichtBestanden,"");
+          }
+          else
+            contr.ErzeugeZeugnisVorkommnis();
         }
     }
   }

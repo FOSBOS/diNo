@@ -8,28 +8,12 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE VIEW [dbo].[vwNotenbogen]
-AS
-SELECT        dbo.Klasse.Bezeichnung, dbo.Lehrer.Name AS Klassenleiter, dbo.Seminarfachnote.Gesamtnote, dbo.Seminarfachnote.ThemaLang, 
-                         dbo.Seminarfachnote.ThemaKurz, dbo.Schueler.Id, dbo.Schueler.Name, dbo.Schueler.Vorname, dbo.Schueler.KlasseId, dbo.Schueler.Rufname, 
-                         dbo.Schueler.Geschlecht, dbo.Schueler.Geburtsdatum, dbo.Schueler.Geburtsort, dbo.Schueler.Bekenntnis, dbo.Schueler.AnschriftPLZ, dbo.Schueler.AnschriftOrt, 
-                         dbo.Schueler.AnschriftStrasse, dbo.Schueler.AnschriftTelefonnummer, dbo.Schueler.Ausbildungsrichtung, dbo.Schueler.Fremdsprache2, 
-                         dbo.Schueler.ReligionOderEthik, dbo.Schueler.Wahlpflichtfach, dbo.Schueler.Wahlfach1, dbo.Schueler.Wahlfach2, dbo.Schueler.Wahlfach3, dbo.Schueler.Wahlfach4, 
-                         dbo.Schueler.Wiederholung1Jahrgangsstufe, dbo.Schueler.Wiederholung2Jahrgangsstufe, dbo.Schueler.Wiederholung1Grund, dbo.Schueler.Wiederholung2Grund, 
-                         dbo.Schueler.ProbezeitBis, dbo.Schueler.Austrittsdatum, dbo.Schueler.SchulischeVorbildung, dbo.Schueler.BeruflicheVorbildung, dbo.Schueler.LRSStoerung, 
-                         dbo.Schueler.LRSSchwaeche, dbo.Schueler.LRSBisDatum, dbo.Schueler.NachnameEltern1, dbo.Schueler.VornameEltern1, dbo.Schueler.AnredeEltern1, 
-                         dbo.Schueler.VerwandtschaftsbezeichnungEltern1, dbo.Schueler.NachnameEltern2, dbo.Schueler.VornameEltern2, dbo.Schueler.AnredeEltern2, 
-                         dbo.Schueler.VerwandtschaftsbezeichnungEltern2, dbo.Schueler.EintrittJahrgangsstufe, dbo.Schueler.EintrittAm, dbo.Schueler.EintrittAusSchulnummer, 
-                         dbo.Schueler.Email, dbo.Schueler.Notfalltelefonnummer, dbo.Schueler.DNote, dbo.Schueler.Status
-FROM            dbo.Seminarfachnote RIGHT OUTER JOIN
-                         dbo.Lehrer INNER JOIN
-                         dbo.Schueler INNER JOIN
-                         dbo.Klasse ON dbo.Schueler.KlasseId = dbo.Klasse.Id ON dbo.Lehrer.Id = dbo.Klasse.KlassenleiterId ON dbo.Seminarfachnote.SchuelerId = dbo.Schueler.Id
 
-GO
 
 ALTER TABLE [dbo].[Lehrer] ADD Vorname NVARCHAR(50) NULL;
 ALTER TABLE [dbo].[Lehrer] ADD Nachname NVARCHAR(50) NULL;
+GO
+
 UPDATE Lehrer SET Nachname = substring(Name, CHARINDEX(' ', NAME, 1) + 1, 256),
 Vorname = substring(Name, 1, CHARINDEX(' ', NAME, 1) - 1);
 
@@ -117,3 +101,29 @@ ALTER TABLE dbo.LehrerRolle SET (LOCK_ESCALATION = TABLE)
 GO
 COMMIT
 
+ALTER VIEW [dbo].[vwNotenbogen]
+AS
+SELECT        dbo.Klasse.Bezeichnung, dbo.Lehrer.Nachname AS Klassenleiter, dbo.Seminarfachnote.Gesamtnote, dbo.Seminarfachnote.ThemaLang, 
+                         dbo.Seminarfachnote.ThemaKurz, dbo.Schueler.Id, dbo.Schueler.Name, dbo.Schueler.Vorname, dbo.Schueler.KlasseId, dbo.Schueler.Rufname, 
+                         dbo.Schueler.Geschlecht, dbo.Schueler.Geburtsdatum, dbo.Schueler.Geburtsort, dbo.Schueler.Bekenntnis, dbo.Schueler.AnschriftPLZ, dbo.Schueler.AnschriftOrt, 
+                         dbo.Schueler.AnschriftStrasse, dbo.Schueler.AnschriftTelefonnummer, dbo.Schueler.Ausbildungsrichtung, dbo.Schueler.Fremdsprache2, 
+                         dbo.Schueler.ReligionOderEthik, dbo.Schueler.Wahlpflichtfach, dbo.Schueler.Wahlfach1, dbo.Schueler.Wahlfach2, dbo.Schueler.Wahlfach3, dbo.Schueler.Wahlfach4, 
+                         dbo.Schueler.Wiederholung1Jahrgangsstufe, dbo.Schueler.Wiederholung2Jahrgangsstufe, dbo.Schueler.Wiederholung1Grund, dbo.Schueler.Wiederholung2Grund, 
+                         dbo.Schueler.ProbezeitBis, dbo.Schueler.Austrittsdatum, dbo.Schueler.SchulischeVorbildung, dbo.Schueler.BeruflicheVorbildung, dbo.Schueler.LRSStoerung, 
+                         dbo.Schueler.LRSSchwaeche, dbo.Schueler.LRSBisDatum, dbo.Schueler.NachnameEltern1, dbo.Schueler.VornameEltern1, dbo.Schueler.AnredeEltern1, 
+                         dbo.Schueler.VerwandtschaftsbezeichnungEltern1, dbo.Schueler.NachnameEltern2, dbo.Schueler.VornameEltern2, dbo.Schueler.AnredeEltern2, 
+                         dbo.Schueler.VerwandtschaftsbezeichnungEltern2, dbo.Schueler.EintrittJahrgangsstufe, dbo.Schueler.EintrittAm, dbo.Schueler.EintrittAusSchulnummer, 
+                         dbo.Schueler.Email, dbo.Schueler.Notfalltelefonnummer, dbo.Schueler.DNote, dbo.Schueler.Status
+FROM            dbo.Seminarfachnote RIGHT OUTER JOIN
+                         dbo.Lehrer INNER JOIN
+                         dbo.Schueler INNER JOIN
+                         dbo.Klasse ON dbo.Schueler.KlasseId = dbo.Klasse.Id ON dbo.Lehrer.Id = dbo.Klasse.KlassenleiterId ON dbo.Seminarfachnote.SchuelerId = dbo.Schueler.Id
+
+GO
+
+
+Update Vorkommnisart set Bezeichnung='bisher nicht bestanden, mündliche Prüfung möglich' where Id=7;
+Update Vorkommnisart set Bezeichnung='nicht bestanden, nicht zur MAP zugelassen' where Id=8;
+INSERT INTO [dbo].[Vorkommnisart] ([Bezeichnung]) VALUES ('endgültig nicht bestanden');
+INSERT INTO [dbo].[Vorkommnisart] ([Bezeichnung]) VALUES ('nicht zur MAP angetreten');
+INSERT INTO [dbo].[Vorkommnisart] ([Bezeichnung]) VALUES ('Vorrücken zur BOS 13 möglich');

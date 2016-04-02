@@ -59,6 +59,7 @@
             "Halbjahr",
             "1. PA",
             "2. PA",
+            "3. PA",
             "Jahresende"});
       this.comboBoxZeitpunkt.Location = new System.Drawing.Point(25, 80);
       this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";

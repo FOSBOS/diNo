@@ -429,6 +429,11 @@ namespace diNo
         this.vorkommnisse = null; // damit er die neu lädt
     }
 
+    public void AddVorkommnis(Vorkommnisart art, string bemerkung)
+    {
+      AddVorkommnis(art, DateTime.Today, bemerkung);
+    }
+
     public void AddVorkommnis(Vorkommnisart art, DateTime datum, string bemerkung)
     {
       new VorkommnisTableAdapter().Insert(datum, bemerkung, this.Id, (int)art);

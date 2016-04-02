@@ -78,7 +78,9 @@ namespace diNo
         numPunkte2Hj.Value = null;
       }
 
-      pnlSeminar.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && (Zugriff.Instance.lehrer.HatRolle(Rolle.Seminarfach) || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin) || Zugriff.Instance.lehrer.Id == schueler.Data.BetreuerId);
+      pnlSeminar.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && 
+        (Zugriff.Instance.lehrer.HatRolle(Rolle.Seminarfach) || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin));
+        // || Zugriff.Instance.lehrer.Id == schueler.Data.BetreuerId);
       if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
       {
         var sem = schueler.Seminarfachnote;

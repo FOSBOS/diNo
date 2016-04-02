@@ -97,7 +97,8 @@ namespace diNo.OmnisDB
           case Vorkommnisart.BeiWeiteremAbsinken: ziel = KlassenzielOderGefaehrdung.BeiWeiteremAbsinkenGefaehrdet; break;
           case Vorkommnisart.NichtZurPruefungZugelassen: ziel = KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg; break;
           case Vorkommnisart.Notenausgleich: ziel = KlassenzielOderGefaehrdung.NotenausgleichGewaehrt; break;
-          case Vorkommnisart.PruefungInsgesamtNichtBestanden: ziel = KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg; break;
+          case Vorkommnisart.endgueltigNichtBestanden: ziel = KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg; break;
+            // TODO: weitere nicht bestehen-Gründe aufnehmen
         }
       }
 

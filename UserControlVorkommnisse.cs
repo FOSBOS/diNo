@@ -13,7 +13,7 @@ namespace diNo
   public partial class UserControlVorkommnisse : UserControl
   {
     private Schueler schueler;    
-    private Vorkommnisart[] notenRelevanteVorkommnisse = new[] { Vorkommnisart.Gefaehrdungsmitteilung,Vorkommnisart.starkeGefaehrdungsmitteilung,Vorkommnisart.BeiWeiteremAbsinken, Vorkommnisart.KeineVorrueckungserlaubnis, Vorkommnisart.NichtZurPruefungZugelassen, Vorkommnisart.Notenausgleich, Vorkommnisart.ProbezeitNichtBestanden, Vorkommnisart.PruefungInsgesamtNichtBestanden, Vorkommnisart.PruefungSchriftlichNichtBestanden, Vorkommnisart.VorrueckenAufProbe };
+    private Vorkommnisart[] notenRelevanteVorkommnisse = new[] { Vorkommnisart.Gefaehrdungsmitteilung,Vorkommnisart.starkeGefaehrdungsmitteilung,Vorkommnisart.BeiWeiteremAbsinken, Vorkommnisart.KeineVorrueckungserlaubnis, Vorkommnisart.NichtZurPruefungZugelassen, Vorkommnisart.Notenausgleich, Vorkommnisart.ProbezeitNichtBestanden, Vorkommnisart.endgueltigNichtBestanden, Vorkommnisart.nichtBestandenMAPnichtZugelassen, Vorkommnisart.VorrueckenAufProbe };
 
     public UserControlVorkommnisse()
     {
@@ -149,8 +149,8 @@ namespace diNo
         case Vorkommnisart.ProbezeitNichtBestanden: return DateTime.Now.Month == 12 ? Zeitpunkt.ProbezeitBOS : Zeitpunkt.HalbjahrUndProbezeitFOS;
         case Vorkommnisart.NichtZurPruefungZugelassen: return Zeitpunkt.ErstePA;
         case Vorkommnisart.KeineVorrueckungserlaubnis: return Zeitpunkt.Jahresende;
-        case Vorkommnisart.PruefungInsgesamtNichtBestanden: return Zeitpunkt.DrittePA;
-        case Vorkommnisart.PruefungSchriftlichNichtBestanden: return Zeitpunkt.ZweitePA;
+        case Vorkommnisart.endgueltigNichtBestanden: return Zeitpunkt.DrittePA;
+        case Vorkommnisart.bisherNichtBestandenMAPmoeglich: return Zeitpunkt.ZweitePA;
         case Vorkommnisart.VorrueckenAufProbe: return Zeitpunkt.Jahresende;
         default: return Zeitpunkt.Jahresende;
       }
