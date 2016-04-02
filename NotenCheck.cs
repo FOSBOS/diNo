@@ -216,7 +216,7 @@ namespace diNo
     public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
     {
       // Diese Prüfung kann immer durchgeführt werden
-      return contr.zeitpunkt != Zeitpunkt.DrittePA; // in der 3. PA wird nur noch auf Bestehen geprüft
+      return true; // bei der 3. PA wird nur noch auf Bestehen geprüft --> s. Konstruktor NotenCheckController
     }
 
     /// <summary>
@@ -331,7 +331,8 @@ namespace diNo
           contr.Add( kurs, toText(kurzarbeitenCount,"","Kurzarbeit"));
         }
 
-        if ((kurzarbeitenCount == 0 && muendlicheCount < 3+noetigeAnzahlEchteMdl) || muendlicheCount < noetigeAnzahlEchteMdl)
+        // wenn Exen geschrieben werden, reichen 2 Exen + 2 mdl. pro Schüler (weil ja eine nicht mitgeschrieben werden muss)
+        if ((!kurs.schreibtKA && muendlicheCount < 2+noetigeAnzahlEchteMdl) || muendlicheCount < noetigeAnzahlEchteMdl)
         {
           contr.Add( kurs,toText(muendlicheCount,"mündliche","Note"));
         }
@@ -437,6 +438,7 @@ namespace diNo
                 else if (relevanteNote == 4) anz4P++;
                 else if (relevanteNote >=13) anz1++;
                 else if (relevanteNote >= 10) anz2++;
+                //else if (relevanteNote >= 7 && fachNoten.getFach.IstSAPFach()) anz3++;
 
                 if (relevanteNote <4 || relevanteNote == 4 && contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
                     m = m + fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
@@ -483,10 +485,18 @@ namespace diNo
           // TODO: Notenausgleich sauber implementieren
           if (anz6 > 0 || anz5 > 1)
           {
-            if (anz2 < 2 && anz1 == 0) contr.Add( null, "Nicht bestanden, kein Notenausgleich möglich: " + m); 
-            else contr.Add( null, "Nicht bestanden, Notenausgleich prüfen: " + m); 
+            if (anz2 > 1 || anz1 > 0) contr.Add( null, "Nicht bestanden, Notenausgleich prüfen: " + m);
+            else
+            {
+              if (contr.zeitpunkt == Zeitpunkt.DrittePA)
+                contr.Add(Vorkommnisart.endgueltigNichtBestanden,m);
+              else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
+                contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,m);
+              else 
+                contr.Add( null, "Nicht bestanden, kein Notenausgleich möglich: " + m); 
 
-            if (contr.zeitpunkt == Zeitpunkt.DrittePA) schueler.AddVorkommnis(Vorkommnisart.endgueltigNichtBestanden,"");
+
+            }
           }
           else
             contr.ErzeugeZeugnisVorkommnis();

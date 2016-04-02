@@ -54,7 +54,7 @@ namespace diNo
             
             if (opVerweis.Checked && MessageBox.Show("Soll der Verweis auch in den Notenbogen eingetragen werden?","diNo",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
             {             
-              s.AddVorkommnis(Vorkommnisart.Verweis, DateTime.Today, edInhalt.Text);
+              s.AddVorkommnis(Vorkommnisart.Verweis, edInhalt.Text, true);
               frmKlasse.RefreshVorkommnisse();
             }
         }

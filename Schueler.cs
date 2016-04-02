@@ -215,12 +215,17 @@ namespace diNo
       }
     }
 
+    public bool Wiederholt()
+    {
+      return (getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung1Jahrgangsstufe)
+         || getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung2Jahrgangsstufe));
+    }
+
     public OmnisDB.Abweisung GefahrDerAbweisung
     {
       get
       {
-        if (getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung1Jahrgangsstufe)
-         || getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung2Jahrgangsstufe))
+        if (Wiederholt())
         {
           return getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf || getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn ? OmnisDB.Abweisung.Art54BayEUG : OmnisDB.Abweisung.Art53BayEUG;
         }
@@ -429,21 +434,26 @@ namespace diNo
         this.vorkommnisse = null; // damit er die neu lädt
     }
 
-    public void AddVorkommnis(Vorkommnisart art, string bemerkung)
+    public void AddVorkommnis(Vorkommnisart art, string bemerkung, bool DuplikateErlaubt=false)
     {
-      AddVorkommnis(art, DateTime.Today, bemerkung);
+      AddVorkommnis(art, DateTime.Today, bemerkung,DuplikateErlaubt);
     }
 
-    public void AddVorkommnis(Vorkommnisart art, DateTime datum, string bemerkung)
+    public void AddVorkommnis(Vorkommnisart art, DateTime datum, string bemerkung,bool DuplikateErlaubt=false)
     {
-      new VorkommnisTableAdapter().Insert(datum, bemerkung, this.Id, (int)art);
-      if (art == Vorkommnisart.ProbezeitNichtBestanden)
+      if (DuplikateErlaubt || !hatVorkommnis(art))
       {
-        if (MessageBox.Show("Soll der Schüler aus allen Kursen abgemeldet werden?","diNo",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
-          Austritt(Data.ProbezeitBis);
-      }
+        new VorkommnisTableAdapter().Insert(datum, bemerkung, this.Id, (int)art);
 
-      this.vorkommnisse = null; // damit er die neu lädt
+        if (art == Vorkommnisart.ProbezeitNichtBestanden)
+        {
+          if (MessageBox.Show("Soll der Schüler aus allen Kursen abgemeldet werden?","diNo",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
+            Austritt(Data.ProbezeitBis);
+        }
+
+        
+        this.vorkommnisse = null; // damit er die neu lädt
+      }
     }
 
     public IList<Vorkommnis> Vorkommnisse
@@ -451,7 +461,7 @@ namespace diNo
       get
       {
         if (this.vorkommnisse == null)
-        {
+        {          
           this.vorkommnisse = new List<Vorkommnis>();
           foreach (var vorkommnis in new VorkommnisTableAdapter().GetDataBySchuelerId(this.Id))
           {
@@ -463,18 +473,39 @@ namespace diNo
       }
     }
    
+    // gibt an, ob der Schüler das übergebene Vorkommnis bereits gespeichert hat (z.B. um Duplikate zu vermeiden)
+    public bool hatVorkommnis(Vorkommnisart art)
+    {
+      foreach (var v in vorkommnisse)
+      {
+        if (v.Art == art) return true;
+      }
+      return false;
+    }
+
+
     public void berechneDNote()
     {
       int summe = 0, anz = 0;
       decimal erg;
       var faecher = getNoten.alleFaecher;
         //new BerechneteNoteTableAdapter().GetDataBySchueler4DNote(this.Id);
+
+      // Französisch wird nur in der 13. Klasse gewertet, wenn der Kurs belegt ist und
+      // der Schüler nicht nur fachgebundene HSR bekommt (z.B. wegen Note 5 in F)
+      bool mitFranz = false;
+      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      {
+        if (!hatVorkommnis(Vorkommnisart.fachgebundeneHochschulreife)) mitFranz = true;
+      }
+      
       foreach (var fach in faecher)
       {
         // alle Fächer außer Sport und Kunst, Franz. nur in der 13. 
         var fk = fach.getFach.Kuerzel;
         byte? note = fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
-        if (note!=null && fk != "Ku" && fk != "Smw" && (fk!="F" || getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn))         
+
+        if (note!=null && fk != "Ku" && fk != "Smw" && (fk!="F" || mitFranz))         
         {
           if (note == 0)
           {

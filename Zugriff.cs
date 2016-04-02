@@ -33,8 +33,10 @@ namespace diNo
       {
         Username = "FOSBOS\\msiegel";
       }
-
-      //Username = "FOSBOS\\ckonrad";
+      if (Username == "Betzigau\\Claus")
+      {
+        Username = "FOSBOS\\ckonrad";
+      }
       //Username = "VW\\gmerk";
       Username = Username.Replace("FOSBOS\\", "");
       var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);

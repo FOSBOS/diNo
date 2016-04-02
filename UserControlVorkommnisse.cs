@@ -91,7 +91,7 @@ namespace diNo
         }
         */
 
-        this.schueler.AddVorkommnis(art, datVorkommnis.Value, edVorkommnisBemerkung.Text);
+        this.schueler.AddVorkommnis(art, datVorkommnis.Value, edVorkommnisBemerkung.Text, true);
         // ist doch praktisch, weil meistens gleich mehrere ähnliche Vorkommnisse auftreten
         //this.comboBoxArt.SelectedValue = Vorkommnisart.NotSet; 
         //this.textBox1.Text = "";
@@ -125,7 +125,10 @@ namespace diNo
       
       if (notenRelevanteVorkommnisse.Contains(art))
       {
-        this.edVorkommnisBemerkung.Text = schueler.getNoten.GetUnterpunktungenString(ErrateZeitpunkt(art));
+        // ich ersetzen nun durch aktuellen (globalen) Zeitpunkt
+        // das macht die etwas dubiose Methode ErrateZeitpunkt überflüssig (es gibt inzwischen zuviele Vorkommnisse):
+        edVorkommnisBemerkung.Text = schueler.getNoten.GetUnterpunktungenString((Zeitpunkt)Zugriff.Instance.aktZeitpunkt);
+        //edVorkommnisBemerkung.Text = schueler.getNoten.GetUnterpunktungenString(ErrateZeitpunkt(art));
       }
       else
       {
@@ -133,7 +136,7 @@ namespace diNo
       }
     }
 
-
+/*
     /// <summary>
     /// Methode versucht den korrekten Zeitpunkt zu erraten.
     /// Dient nur dem Komfort, weil dann die relevanten Noten automatisch ermittelt werden.
@@ -155,7 +158,7 @@ namespace diNo
         default: return Zeitpunkt.Jahresende;
       }
     }
-
+*/
     private void objectListViewVorkommnisse_CellEditStarting(object sender, BrightIdeasSoftware.CellEditEventArgs e)
     {      // special cell edit handling for our delete-row
       if (e.Column == olvColumnLoeschen)

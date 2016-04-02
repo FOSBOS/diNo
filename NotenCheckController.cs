@@ -24,7 +24,8 @@ namespace diNo
         {
             zeitpunkt = azeitpunkt;
             modus = amodus; 
-            if (modus!=NotenCheckModus.BerechnungenSpeichern && modus != NotenCheckModus.VorkommnisseErzeugen)           
+            if (modus!=NotenCheckModus.BerechnungenSpeichern && modus != NotenCheckModus.VorkommnisseErzeugen
+              && azeitpunkt !=Zeitpunkt.DrittePA)           
               alleNotenchecks.Add(new NotenanzahlChecker(this));
             if (modus!=NotenCheckModus.EigeneNotenVollstaendigkeit)
               alleNotenchecks.Add(new UnterpunktungChecker(this));            
@@ -100,15 +101,32 @@ namespace diNo
         aktSchueler.AddVorkommnis(Vorkommnisart.Jahreszeugnis,"");
     }
 
-    public void Add(Vorkommnisart nr, string meldung)
+    // fügt eine Meldung/Vorkommnis hinzu, und erzeugt ggf. abhängige Vorkommnisse
+    public void Add(Vorkommnisart art, string meldung)
+    {     
+      AddVorkommnis(art, meldung);
+     
+      // bei Wiederholungsschülern wird bei bestimmten Ereignissen automatisch Gefahr d. Abw. oder d.n.w erzeugt
+      if (aktSchueler.Wiederholt())
+      {
+        if (art==Vorkommnisart.endgueltigNichtBestanden || art==Vorkommnisart.nichtBestandenMAPnichtZugelassen ||
+          art==Vorkommnisart.NichtZurPruefungZugelassen || art==Vorkommnisart.KeineVorrueckungserlaubnis)           
+            AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen,"");
+
+        if (art==Vorkommnisart.Gefaehrdungsmitteilung || art==Vorkommnisart.starkeGefaehrdungsmitteilung || art==Vorkommnisart.BeiWeiteremAbsinken)           
+            AddVorkommnis(Vorkommnisart.GefahrDerAbweisung,"");
+      }
+    }
+
+    private void AddVorkommnis(Vorkommnisart art, string meldung)
     {
       if (modus==NotenCheckModus.VorkommnisseErzeugen)
       {
-        aktSchueler.AddVorkommnis(nr,meldung);
+        aktSchueler.AddVorkommnis(art,meldung);
       }
       else
       {
-        Add(null, Vorkommnisse.Instance.VorkommnisText(nr) + " " + meldung);
+        Add(null, Vorkommnisse.Instance.VorkommnisText(art) + " " + meldung);
       }
     }
 
