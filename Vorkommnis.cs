@@ -63,8 +63,8 @@ namespace diNo
     RuecktrittVorklasse = 4,
     KeineVorrueckungserlaubnis = 5,
     NichtZurPruefungZugelassen = 6,
-    PruefungSchriftlichNichtBestanden = 7,
-    PruefungInsgesamtNichtBestanden = 8,
+    bisherNichtBestandenMAPmoeglich = 7,
+    nichtBestandenMAPnichtZugelassen = 8,
     Verweis = 9,
     SonstigeOrdnungsmaßnahme = 10,    
     Gefaehrdungsmitteilung = 11,
@@ -81,7 +81,10 @@ namespace diNo
     allgemeineHochschulreife = 22,
     EnglischNiveauB2 = 23,
     Bemerkung = 24,
-    FranzNurBisSAP = 25
+    FranzNurBisSAP = 25,
+    endgueltigNichtBestanden = 26,
+    nichtZurMAPangetreten = 27,
+    VorrueckenBOS13moeglich = 28
   }
 
   public class Vorkommnisse
