@@ -32,7 +32,7 @@ namespace diNo
 
     public void InitKurse()
     {
-      if (this.schueler == null)
+      if (this.schueler == null || this.Schueler.Status == Schuelerstatus.Abgemeldet)
       {
         this.objectListView1.SetObjects(new List<Kurs>());
         this.objectListView2.SetObjects(new List<Kurs>());
