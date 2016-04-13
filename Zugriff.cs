@@ -39,6 +39,7 @@ namespace diNo
       }
       //Username = "VW\\gmerk";
       Username = Username.Replace("FOSBOS\\", "");
+      Username = Username.Replace("VW\\", "");
       var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
       if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
       else

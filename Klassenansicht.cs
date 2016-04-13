@@ -90,7 +90,8 @@ namespace diNo
         {
           case "": this.comboBoxWahlpflichtfach.SelectedIndex = 0; break;
           case "F": this.comboBoxWahlpflichtfach.SelectedIndex = 1; break;
-          case "F-Wi": this.comboBoxWahlpflichtfach.SelectedIndex = 2; break;
+          case "F-Wi":
+          case "F3": this.comboBoxWahlpflichtfach.SelectedIndex = 2; break;
           case "Ku": this.comboBoxWahlpflichtfach.SelectedIndex = 3; break;
           case "WIn": this.comboBoxWahlpflichtfach.SelectedIndex = 4; break;
           default: throw new InvalidOperationException("Unbekannter Wert für Wahlpflichtfach" + schueler.Wahlpflichtfach);
