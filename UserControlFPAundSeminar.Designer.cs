@@ -53,22 +53,18 @@
       this.textBoxSeminarfachthemaLang = new System.Windows.Forms.TextBox();
       this.label5 = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
-      this.pnlBetreuer = new System.Windows.Forms.Panel();
-      this.label12 = new System.Windows.Forms.Label();
-      this.cbBetreuer = new System.Windows.Forms.ComboBox();
       this.pnlFPA.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numPunkte1Hj)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numPunkte2Hj)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numPunkte)).BeginInit();
       this.pnlSeminar.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numSeminarpunkte)).BeginInit();
-      this.pnlBetreuer.SuspendLayout();
       this.SuspendLayout();
       // 
       // buttonSpeichern
       // 
       this.buttonSpeichern.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-      this.buttonSpeichern.Location = new System.Drawing.Point(-135, 475);
+      this.buttonSpeichern.Location = new System.Drawing.Point(-135, 371);
       this.buttonSpeichern.Name = "buttonSpeichern";
       this.buttonSpeichern.Size = new System.Drawing.Size(75, 23);
       this.buttonSpeichern.TabIndex = 28;
@@ -79,7 +75,7 @@
       // 
       this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(-138, 435);
+      this.label3.Location = new System.Drawing.Point(-138, 331);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(92, 13);
       this.label3.TabIndex = 22;
@@ -89,7 +85,7 @@
       // 
       this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(-138, 376);
+      this.label1.Location = new System.Drawing.Point(-138, 272);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(132, 13);
       this.label1.TabIndex = 19;
@@ -110,9 +106,9 @@
       this.pnlFPA.Controls.Add(this.lbHj1);
       this.pnlFPA.Controls.Add(this.cbFPAErfolg1Hj);
       this.pnlFPA.Controls.Add(this.textBoxFpABemerkung);
-      this.pnlFPA.Location = new System.Drawing.Point(15, 96);
+      this.pnlFPA.Location = new System.Drawing.Point(15, 12);
       this.pnlFPA.Name = "pnlFPA";
-      this.pnlFPA.Size = new System.Drawing.Size(522, 289);
+      this.pnlFPA.Size = new System.Drawing.Size(532, 275);
       this.pnlFPA.TabIndex = 0;
       // 
       // numPunkte1Hj
@@ -275,9 +271,9 @@
       this.pnlSeminar.Controls.Add(this.textBoxSeminarfachthemaLang);
       this.pnlSeminar.Controls.Add(this.label5);
       this.pnlSeminar.Controls.Add(this.label4);
-      this.pnlSeminar.Location = new System.Drawing.Point(15, 391);
+      this.pnlSeminar.Location = new System.Drawing.Point(15, 293);
       this.pnlSeminar.Name = "pnlSeminar";
-      this.pnlSeminar.Size = new System.Drawing.Size(522, 253);
+      this.pnlSeminar.Size = new System.Drawing.Size(532, 243);
       this.pnlSeminar.TabIndex = 1;
       // 
       // numSeminarpunkte
@@ -353,52 +349,17 @@
       this.label4.TabIndex = 60;
       this.label4.Text = "Thema (lang)";
       // 
-      // pnlBetreuer
-      // 
-      this.pnlBetreuer.Controls.Add(this.label12);
-      this.pnlBetreuer.Controls.Add(this.cbBetreuer);
-      this.pnlBetreuer.Location = new System.Drawing.Point(17, 14);
-      this.pnlBetreuer.Name = "pnlBetreuer";
-      this.pnlBetreuer.Size = new System.Drawing.Size(519, 66);
-      this.pnlBetreuer.TabIndex = 29;
-      // 
-      // label12
-      // 
-      this.label12.AutoSize = true;
-      this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label12.Location = new System.Drawing.Point(10, 11);
-      this.label12.Name = "label12";
-      this.label12.Size = new System.Drawing.Size(143, 17);
-      this.label12.TabIndex = 55;
-      this.label12.Text = "Betreuende Lehrkraft";
-      // 
-      // cbBetreuer
-      // 
-      this.cbBetreuer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.cbBetreuer.FormattingEnabled = true;
-      this.cbBetreuer.Items.AddRange(new object[] {
-            "",
-            "mit sehr gutem Erfolg",
-            "mit gutem Erfolg",
-            "mit Erfolg",
-            "ohne Erfolg"});
-      this.cbBetreuer.Location = new System.Drawing.Point(13, 31);
-      this.cbBetreuer.Name = "cbBetreuer";
-      this.cbBetreuer.Size = new System.Drawing.Size(496, 24);
-      this.cbBetreuer.TabIndex = 54;
-      // 
       // UserControlFPAundSeminar
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.Controls.Add(this.pnlBetreuer);
       this.Controls.Add(this.pnlSeminar);
       this.Controls.Add(this.pnlFPA);
       this.Controls.Add(this.buttonSpeichern);
       this.Controls.Add(this.label3);
       this.Controls.Add(this.label1);
       this.Name = "UserControlFPAundSeminar";
-      this.Size = new System.Drawing.Size(565, 647);
+      this.Size = new System.Drawing.Size(565, 543);
       this.pnlFPA.ResumeLayout(false);
       this.pnlFPA.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numPunkte1Hj)).EndInit();
@@ -407,8 +368,6 @@
       this.pnlSeminar.ResumeLayout(false);
       this.pnlSeminar.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numSeminarpunkte)).EndInit();
-      this.pnlBetreuer.ResumeLayout(false);
-      this.pnlBetreuer.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -440,8 +399,5 @@
         private NumericUpDownNullable numPunkte1Hj;
         private NumericUpDownNullable numPunkte2Hj;
         private NumericUpDownNullable numSeminarpunkte;
-    private System.Windows.Forms.Panel pnlBetreuer;
-    private System.Windows.Forms.Label label12;
-    private System.Windows.Forms.ComboBox cbBetreuer;
   }
 }

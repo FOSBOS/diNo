@@ -8,7 +8,6 @@ namespace diNo
   public partial class Klassenansicht : BasisForm
   {
         private Schueler schueler=null;
-        private Brief frmBrief=null;
     private SchuelerverwaltungController verwaltungController;
 
     public Klassenansicht()
@@ -179,7 +178,7 @@ namespace diNo
 
         private void btnBrief_Click(object sender, EventArgs e)
         {
-          if (frmBrief== null) frmBrief = new Brief(this);
+          var frmBrief = new Brief(this);
           frmBrief.Anzeigen(schueler);
         }
 

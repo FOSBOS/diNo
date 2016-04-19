@@ -10,11 +10,6 @@ namespace diNo
     public UserControlFPAundSeminar()
     {
       InitializeComponent();
-      cbBetreuer.BeginUpdate();
-      cbBetreuer.DataSource = Zugriff.Instance.Lehrerliste.ToList();
-      cbBetreuer.DisplayMember = "Value";
-      cbBetreuer.ValueMember = "Key";
-      cbBetreuer.EndUpdate();
     }
 
     public Schueler Schueler
@@ -53,8 +48,6 @@ namespace diNo
 
     public void Init()
     {
-      pnlBetreuer.Enabled = (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn) && Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
-      cbBetreuer.SelectedValue = schueler.Data.IsBetreuerIdNull() ? -1 : schueler.Data.BetreuerId;
       pnlFPA.Enabled = IstFpaAenderbar();
       if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
       {
@@ -111,12 +104,6 @@ namespace diNo
       if (numSeminarpunkte.Value == null) sem.SetGesamtnoteNull(); else sem.Gesamtnote = (int)numSeminarpunkte.Value;
       if (textBoxSeminarfachthemaKurz.Text == "") sem.SetThemaKurzNull(); else sem.ThemaKurz = textBoxSeminarfachthemaKurz.Text;
       if (textBoxSeminarfachthemaLang.Text == "") sem.SetThemaLangNull(); else sem.ThemaLang = textBoxSeminarfachthemaLang.Text;
-
-      if (Zugriff.Instance.lehrer.HatRolle(Rolle.Admin))
-      {
-        if (cbBetreuer.SelectedValue == null) schueler.Data.SetBetreuerIdNull();
-        else schueler.Data.BetreuerId = (int)cbBetreuer.SelectedValue;
-      }
     }
   }
 }
