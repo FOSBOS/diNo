@@ -1,5 +1,6 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using log4net;
+using System.Globalization;
 using System.IO;
 using System.Text;
 
@@ -40,6 +41,13 @@ namespace diNo.OmnisDB
           zeile[Konstanten.klassenzielOderGefaehrdungCol] = Konstanten.GetKlassenzielOderGefaehrdungString(GetZielerreichung(zeitpunkt, schueler));
           zeile[Konstanten.abweisungCol] = Konstanten.GetAbweisungString(schueler.GefahrDerAbweisung);
 
+          var seminarfachNote = new SeminarfachnoteTableAdapter().GetDataBySchuelerId(schuelerId);
+          if (seminarfachNote != null && seminarfachNote.Count == 1)
+          {
+            zeile[Konstanten.seminarfachGesamtnote] = string.Format(CultureInfo.CurrentCulture, "{0:00}", seminarfachNote[0].Gesamtnote);
+            zeile[Konstanten.seminarfachThema] = !string.IsNullOrEmpty(seminarfachNote[0].ThemaKurz) ? seminarfachNote[0].ThemaKurz : seminarfachNote[0].ThemaLang.Substring(0, 128);
+          }
+
           string faecherspiegel = zeile[Konstanten.faecherspiegelCol];
           if (string.IsNullOrEmpty(faecherspiegel))
           {
@@ -49,6 +57,12 @@ namespace diNo.OmnisDB
           for (int i = 0; i < 30; i++)
           {
             zeile[Konstanten.notePflichtfach1Col + i] = faecher.GetFachNoteString(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+          }
+
+          if (Konstanten.ZeugnisartFromString(zeile[Konstanten.zeugnisartCol]) != Zeugnisart.Zwischenzeugnis)
+          {
+            
+            // Suche AP Noten und trage diese ein
           }
 
           SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach1BezeichnungCol, Konstanten.weiteresFach1NoteCol);

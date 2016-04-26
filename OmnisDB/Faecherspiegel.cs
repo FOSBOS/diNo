@@ -1,5 +1,6 @@
 ﻿using log4net;
 using System;
+using System.Globalization;
 
 namespace diNo.OmnisDB
 {
@@ -28,33 +29,13 @@ namespace diNo.OmnisDB
     /// <returns>Das Fach oder null, wenn kein weiteres Fach mehr im Fächerspiegel vorhanden ist.</returns>
     public string GetFachNoteString(string faecherspiegel, int index, Schulart schulart, Schueler schueler, Zeitpunkt zeitpunkt)
     {
-      string faecherKuerzel = omnis.SucheFach(faecherspiegel, index, schulart);
+      string faecherKuerzel = omnis.SucheFach(faecherspiegel, index, schulart); // hier nur zur Anzeige etwaiger Fehlermeldungen benötigt
       if (string.IsNullOrEmpty(faecherKuerzel))
       {
         return ""; // Wenn kein sinnvolles Fach mehr kommt, bleibt das Notenfeld leer
       }
 
-      if (faecherKuerzel.Equals("Rel", StringComparison.OrdinalIgnoreCase))
-      {
-        // Relinote - je nachdem, ob Schüler Evangelisch oder Katholisch ist. Geht er in Ethik: "-"
-        var kath = schueler.getNoten.FindeFach("K", false);
-        if (kath != null)
-          return GetNotenString(kath, zeitpunkt);
-
-        var ev = schueler.getNoten.FindeFach("Ev", false);
-        if (ev != null)
-          return GetNotenString(ev, zeitpunkt);
-
-        return "-"; //offenbar weder kath. noch ev.
-      }
-      if (faecherKuerzel.Equals("Eth", StringComparison.OrdinalIgnoreCase))
-      {
-        //Ethiknote (wenn der Schüler in Ethik geht, sonst "-")
-        var ethik = schueler.getNoten.FindeFach("Eth", false);
-        return ethik != null ? GetNotenString(ethik, zeitpunkt) : "-";
-      }
-
-      var dieRichtigeNote = schueler.getNoten.FindeFach(faecherKuerzel, false);
+      var dieRichtigeNote = FindeFachNoten(faecherKuerzel, schueler);
       if (dieRichtigeNote == null)
       {
         if (FehlendeNoteWirdWohlOKSein(faecherKuerzel))
@@ -73,10 +54,86 @@ namespace diNo.OmnisDB
       }
     }
 
+    public string FindeJahresfortgangsNoten(string faecherspiegel, int index, Schulart schulart, Schueler schueler, Zeitpunkt zeitpunkt)
+    {
+      string faecherKuerzel = omnis.SucheFach(faecherspiegel, index, schulart); // hier nur zur Anzeige etwaiger Fehlermeldungen benötigt
+      if (string.IsNullOrEmpty(faecherKuerzel))
+      {
+        return "";
+      }
+
+      var noten = FindeFachNoten(faecherKuerzel, schueler);
+      if (noten == null)
+      {
+        return "-";
+      }
+
+      return string.Format(CultureInfo.CurrentCulture, "{0:00.00}", noten.getSchnitt(Halbjahr.Zweites).JahresfortgangMitKomma);
+    }
+
+    public string FindeAPSchriftlichNoten(string faecherspiegel, int index, Schulart schulart, Schueler schueler, Zeitpunkt zeitpunkt)
+    {
+      string faecherKuerzel = omnis.SucheFach(faecherspiegel, index, schulart); // hier nur zur Anzeige etwaiger Fehlermeldungen benötigt
+      if (string.IsNullOrEmpty(faecherKuerzel))
+      {
+        return "";
+      }
+
+      var noten = FindeFachNoten(faecherKuerzel, schueler);
+      if (noten == null)
+      {
+        return "-";
+      }
+
+      return ""; //TODO string.Format(CultureInfo.CurrentCulture, "{0:00}", noten.getSchnitt);
+    }
+
+    public string FindeAPMuendlichNoten(string faecherspiegel, int index, Schulart schulart, Schueler schueler, Zeitpunkt zeitpunkt)
+    {
+      string faecherKuerzel = omnis.SucheFach(faecherspiegel, index, schulart); // hier nur zur Anzeige etwaiger Fehlermeldungen benötigt
+      if (string.IsNullOrEmpty(faecherKuerzel))
+      {
+        return "";
+      }
+
+      var noten = FindeFachNoten(faecherKuerzel, schueler);
+      if (noten == null)
+      {
+        return "-";
+      }
+
+      return ""; 
+
+    }
+
+    public FachSchuelerNoten FindeFachNoten(string faecherKuerzel, Schueler schueler)
+    {
+      if (faecherKuerzel.Equals("Rel", StringComparison.OrdinalIgnoreCase))
+      {
+        // Relinote - je nachdem, ob Schüler Evangelisch oder Katholisch ist. Geht er in Ethik: "-"
+        var kath = schueler.getNoten.FindeFach("K", false);
+        if (kath != null)
+          return kath;
+
+        var ev = schueler.getNoten.FindeFach("Ev", false);
+        if (ev != null)
+          return ev;
+
+        return null; //offenbar weder kath. noch ev.
+      }
+      if (faecherKuerzel.Equals("Eth", StringComparison.OrdinalIgnoreCase))
+      {
+        //Ethiknote (wenn der Schüler in Ethik geht, sonst null)
+        return schueler.getNoten.FindeFach("Eth", false);
+      }
+
+      return schueler.getNoten.FindeFach(faecherKuerzel, false);
+    }
+
     public bool FehlendeNoteWirdWohlOKSein(string faecherkuerzel)
     {
       var fach = faecherkuerzel.ToUpper();
-      return fach == "F-WI" || fach == "MU" || fach == "WIN";
+      return fach == "F-WI" || fach == "MU" || fach == "WIN" || fach == "Rel" || fach == "Eth";
     }
 
     public string GetNotenString(FachSchuelerNoten note, Zeitpunkt zeitpunkt)

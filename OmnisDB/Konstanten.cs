@@ -15,6 +15,8 @@ namespace diNo.OmnisDB
     public static int klassenzielOderGefaehrdungCol = 9;
     public static int abweisungCol = 11;
     public static int fachDerErgaenzungspruefungCol = 28;
+    public static int seminarfachGesamtnote = 42;
+    public static int seminarfachThema = 43;
     public static int faecherspiegelAPCol = 66;
     public static int viertesPruefungsfachCol = 68;
     public static int APBestandenCol = 75;
@@ -31,6 +33,10 @@ namespace diNo.OmnisDB
     public static int wahlfach3NoteCol = 101;
     public static int wahlfach4NoteCol = 102;
     public static int notePflichtfach1Col = 110; // geht bis 139, also 30 Fächer denkbar
+    public static int jahresfortgangPflichtfach1Col = 140; // Reihenfolge wie im Fächerspiegel definiert.
+    public static int APschriftlichPflichtfach1Col = 160; // Die Reihenfolge ist dieselbe. Für Nebenfächer halt leer.
+    public static int APmuendlichPflichtfach1Col = 180; // Die Reihenfolge ist dieselbe. Für Nebenfächer halt leer.
+
     public static int noteMitTendenzAP1Col = 140; // geht bis 229, was wo reingehört weiß ich momentan noch nicht
 
     /// <summary>

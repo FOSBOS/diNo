@@ -184,14 +184,13 @@ namespace diNo
       else
       {
         var note = seminarfachnoten[0].Gesamtnote;
-        var thema = seminarfachnoten[0].ThemaLang;
 
         if (note < 4)
         {
             contr.Add(null, "Im Seminarfach wurden " +note+" Punkte erzielt.");
         }
 
-        if (string.IsNullOrEmpty(thema))
+        if (string.IsNullOrEmpty(seminarfachnoten[0].ThemaLang) && string.IsNullOrEmpty(seminarfachnoten[0].ThemaKurz))
         {
             contr.Add(null, "Es liegt kein Seminarfachthema vor.");
         }
