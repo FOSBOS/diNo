@@ -82,10 +82,16 @@ namespace diNo.OmnisDB
       var noten = FindeFachNoten(faecherKuerzel, schueler);
       if (noten == null)
       {
-        return "-";
+        return "-"; // Fach wurde wohl nicht belegt (kann ab und zu vorkommen, z. B. bei Wahlfächern)
       }
 
-      return ""; //TODO string.Format(CultureInfo.CurrentCulture, "{0:00}", noten.getSchnitt);
+      var apnote = noten.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich);
+      if (apnote == null || apnote.Count == 0)
+      {
+        return "";
+      }
+
+      return string.Format(CultureInfo.CurrentCulture, "{0:00}", apnote[0]);
     }
 
     public string FindeAPMuendlichNoten(string faecherspiegel, int index, Schulart schulart, Schueler schueler, Zeitpunkt zeitpunkt)
@@ -99,11 +105,16 @@ namespace diNo.OmnisDB
       var noten = FindeFachNoten(faecherKuerzel, schueler);
       if (noten == null)
       {
-        return "-";
+        return "-"; // Fach wurde wohl nicht belegt (kann ab und zu vorkommen, z. B. bei Wahlfächern)
       }
 
-      return ""; 
+      var apnote = noten.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich);
+      if (apnote == null || apnote.Count == 0)
+      {
+        return "";
+      }
 
+      return string.Format(CultureInfo.CurrentCulture, "{0:00}", apnote[0]);
     }
 
     public FachSchuelerNoten FindeFachNoten(string faecherKuerzel, Schueler schueler)

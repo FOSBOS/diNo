@@ -36,8 +36,7 @@ namespace diNo.OmnisDB
     public static int jahresfortgangPflichtfach1Col = 140; // Reihenfolge wie im Fächerspiegel definiert.
     public static int APschriftlichPflichtfach1Col = 160; // Die Reihenfolge ist dieselbe. Für Nebenfächer halt leer.
     public static int APmuendlichPflichtfach1Col = 180; // Die Reihenfolge ist dieselbe. Für Nebenfächer halt leer.
-
-    public static int noteMitTendenzAP1Col = 140; // geht bis 229, was wo reingehört weiß ich momentan noch nicht
+    public static int gesamtNoteMitAPGanzzahlig1Col = 200; // Reihenfolge wie im Fächerspiegel definiert.
 
     /// <summary>
     /// Liefert den String, den die OmnisDB zur übergebenen fpa-Note erwartet.

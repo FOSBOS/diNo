@@ -61,8 +61,13 @@ namespace diNo.OmnisDB
 
           if (Konstanten.ZeugnisartFromString(zeile[Konstanten.zeugnisartCol]) != Zeugnisart.Zwischenzeugnis)
           {
-            
-            // Suche AP Noten und trage diese ein
+            for (int i = 0; i < 20; i++)
+            {
+              zeile[Konstanten.jahresfortgangPflichtfach1Col + i] = faecher.FindeJahresfortgangsNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+              zeile[Konstanten.APschriftlichPflichtfach1Col + i] = faecher.FindeAPSchriftlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+              zeile[Konstanten.APmuendlichPflichtfach1Col + i] = faecher.FindeAPMuendlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+              zeile[Konstanten.gesamtNoteMitAPGanzzahlig1Col + i] = faecher.GetFachNoteString(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+            }
           }
 
           SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach1BezeichnungCol, Konstanten.weiteresFach1NoteCol);
