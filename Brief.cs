@@ -146,10 +146,10 @@ namespace diNo
             Strasse = s.Data.AnschriftStrasse;
             Ort = s.Data.AnschriftPLZ + " " +  s.Data.AnschriftOrt;
             Klasse = s.getKlasse.Bezeichnung;
-            if (Zugriff.Instance.lehrer.HatRolle(Rolle.Admin))
-              Unterschrift = "(Systemadministration FOS/BOS Kempten)";
-            else
-              Unterschrift = Zugriff.Instance.lehrer.Data.Name + ", "+ Zugriff.Instance.lehrer.Data.Dienstbezeichnung;
+            //if (Zugriff.Instance.lehrer==null) // ist jetzt immer belegt!
+            //  Unterschrift = "(Systemadministration FOS/BOS Kempten)";
+            //else
+            Unterschrift = Zugriff.Instance.lehrer.Data.Name + ", "+ Zugriff.Instance.lehrer.Data.Dienstbezeichnung;
         }
    }
 

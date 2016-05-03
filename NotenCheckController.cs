@@ -38,7 +38,8 @@ namespace diNo
 
         public void CheckSchueler(Schueler s)
         { 
-          if (modus==NotenCheckModus.EigeneKlasse && s.getKlasse.Klassenleiter.Id != Zugriff.Instance.lehrer.Id)           
+          if ((modus==NotenCheckModus.EigeneKlasse && s.getKlasse.Klassenleiter.Id != Zugriff.Instance.lehrer.Id)           
+              || s.Status!=Schuelerstatus.Aktiv) // nicht zugelassene raus
             return;
 
           Klasse klasse;
@@ -54,8 +55,8 @@ namespace diNo
               // 1.-3. PA nur für 12./13.
               klasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf &&
                 (zeitpunkt == Zeitpunkt.ErstePA 
-                || zeitpunkt == Zeitpunkt.ZweitePA /* && zugelassen zur SAP  s.Vorkommnisse.Contains(Vorkommnisart.NichtZurPruefungZugelassen)*/
-                || zeitpunkt == Zeitpunkt.DrittePA /* && zugelassen zur SAP  */ )
+                || zeitpunkt == Zeitpunkt.ZweitePA
+                || zeitpunkt == Zeitpunkt.DrittePA)
               )
           {
             // je Klasse wird die akkumlierte Liste neu erstellt

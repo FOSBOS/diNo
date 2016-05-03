@@ -7,8 +7,9 @@ namespace diNo
 {
   public partial class Klassenansicht : BasisForm
   {
-        private Schueler schueler=null;
+    private Schueler schueler=null;
     private SchuelerverwaltungController verwaltungController;
+    private Brief frmBrief=null;
 
     public Klassenansicht()
     {
@@ -119,7 +120,7 @@ namespace diNo
         pictureBoxImage.Image = null; 
         toolStripStatusLabel1.Text = "";
         btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
-        btnAbidruck.Visible = !Zugriff.Instance.IstNurNormalerLehrer;
+        btnAbidruck.Visible = Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
     }
 
         private void btnNotenabgeben_Click(object sender, EventArgs e)
@@ -178,7 +179,7 @@ namespace diNo
 
         private void btnBrief_Click(object sender, EventArgs e)
         {
-          var frmBrief = new Brief(this);
+          if (frmBrief== null) frmBrief = new Brief(this);
           frmBrief.Anzeigen(schueler);
         }
 

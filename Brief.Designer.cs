@@ -38,6 +38,8 @@
       this.opKA = new System.Windows.Forms.RadioButton();
       this.opSA = new System.Windows.Forms.RadioButton();
       this.pnlNachterminAm = new System.Windows.Forms.Panel();
+      this.label1 = new System.Windows.Forms.Label();
+      this.edRaum = new System.Windows.Forms.TextBox();
       this.cbFach = new System.Windows.Forms.ComboBox();
       this.label2 = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
@@ -50,8 +52,6 @@
       this.pnlInhalt = new System.Windows.Forms.Panel();
       this.labelInhalt = new System.Windows.Forms.Label();
       this.edInhalt = new System.Windows.Forms.TextBox();
-      this.edRaum = new System.Windows.Forms.TextBox();
-      this.label1 = new System.Windows.Forms.Label();
       this.boxAuswahl.SuspendLayout();
       this.pnlNachterminAm.SuspendLayout();
       this.pnlVersaeumtAm.SuspendLayout();
@@ -176,6 +176,24 @@
       this.pnlNachterminAm.Size = new System.Drawing.Size(429, 118);
       this.pnlNachterminAm.TabIndex = 2;
       // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label1.Location = new System.Drawing.Point(317, 64);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(109, 17);
+      this.label1.TabIndex = 18;
+      this.label1.Text = "Raum (optional)";
+      // 
+      // edRaum
+      // 
+      this.edRaum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.edRaum.Location = new System.Drawing.Point(320, 86);
+      this.edRaum.Name = "edRaum";
+      this.edRaum.Size = new System.Drawing.Size(86, 23);
+      this.edRaum.TabIndex = 17;
+      // 
       // cbFach
       // 
       this.cbFach.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -217,7 +235,7 @@
       // 
       // datZeit
       // 
-      this.datZeit.CustomFormat = "H\':\'m";
+      this.datZeit.CustomFormat = "H\':\'mm";
       this.datZeit.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.datZeit.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
       this.datZeit.Location = new System.Drawing.Point(320, 31);
@@ -291,24 +309,6 @@
       this.edInhalt.Name = "edInhalt";
       this.edInhalt.Size = new System.Drawing.Size(632, 104);
       this.edInhalt.TabIndex = 5;
-      // 
-      // edRaum
-      // 
-      this.edRaum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.edRaum.Location = new System.Drawing.Point(320, 86);
-      this.edRaum.Name = "edRaum";
-      this.edRaum.Size = new System.Drawing.Size(86, 23);
-      this.edRaum.TabIndex = 17;
-      // 
-      // label1
-      // 
-      this.label1.AutoSize = true;
-      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label1.Location = new System.Drawing.Point(317, 64);
-      this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(109, 17);
-      this.label1.TabIndex = 18;
-      this.label1.Text = "Raum (optional)";
       // 
       // Brief
       // 

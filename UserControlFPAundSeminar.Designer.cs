@@ -342,12 +342,13 @@
       // label4
       // 
       this.label4.AutoSize = true;
+      this.label4.Cursor = System.Windows.Forms.Cursors.Default;
       this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.label4.Location = new System.Drawing.Point(15, 157);
       this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(93, 17);
+      this.label4.Size = new System.Drawing.Size(464, 17);
       this.label4.TabIndex = 60;
-      this.label4.Text = "Thema (lang)";
+      this.label4.Text = "Thema (lang; muss nur ausgefüllt werden, wenn länger als 117 Zeichen)";
       // 
       // UserControlFPAundSeminar
       // 

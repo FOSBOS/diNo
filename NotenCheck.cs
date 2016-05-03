@@ -97,9 +97,9 @@ namespace diNo
                 sum += fach.getNotenanzahl(Notentyp.Fachreferat);
             
             if (sum == 0)
-                contr.Add(null,"Der Schüler hat kein Fachreferat.");           
+                contr.Add(null,"Es ist keine Note für das Fachreferat vorhanden.");
             else if (sum>1)
-                contr.Add( null, "Der Schüler hat " + sum + " Fachreferate.");
+                contr.Add( null, "Es sind " + sum + " Noten für das Fachreferat vorhanden.");
     }
   }
 
@@ -250,6 +250,7 @@ namespace diNo
         bool istSAFach = noetigeAnzahlSchulaufgaben>0;
         bool einstuendig = fachNoten.getFach.IstEinstuendig(schueler.getKlasse.Jahrgangsstufe,schueler.getKlasse.Schulart);
         int noetigeAnzahlEchteMdl = (einstuendig ? 1 : 2);
+        bool meldungKA=false, meldungMdl=false, meldungSA=false;
         Kurs derKurs = new Kurs(fachNoten.kursId);
         if (derKurs.getLehrer == null)
         {
@@ -286,7 +287,10 @@ namespace diNo
         // zur Probezeit BOS muss noch keine SA vorliegen, wenn nur pro HJ eine geschrieben wird        
         if (istSAFach && schulaufgabenCount == 0)      
           if (!(contr.zeitpunkt == Zeitpunkt.ProbezeitBOS && noetigeAnzahlSchulaufgaben <= 2))
+          {
             contr.Add(kurs, toText(schulaufgabenCount,"","Schulaufgabe",hj));              
+            meldungSA=true;
+          }
 
         // Ist eine Ersatzprüfung da, erübrigen sich KA, mdl. Noten
         if (!hatErsatzpruefung)
@@ -301,12 +305,16 @@ namespace diNo
           }
 
           if (kurs.schreibtKA && kurzarbeitenCount == 0)
+          {
             contr.Add( kurs, toText(kurzarbeitenCount,"","Kurzarbeite",hj));        
+            meldungKA=true;
+          }
 
           // mündliche Noten (bei einstündigen Fächern reicht 1 Note im Schuljahr (also hier nicht prüfen)
           if (!einstuendig && (kurs.schreibtKA && muendlicheCount == 0 || !kurs.schreibtKA && muendlicheCount < 2))
           {
-              contr.Add( kurs, toText(muendlicheCount,"mündliche","Note",hj));
+            contr.Add( kurs, toText(muendlicheCount,"mündliche","Note",hj));
+            meldungMdl=true;
           }
         }
 
@@ -320,18 +328,18 @@ namespace diNo
         hatErsatzpruefung = fachNoten.getNotenanzahl(Notentyp.Ersatzprüfung)>0;
        
                          
-        if (schulaufgabenCount < noetigeAnzahlSchulaufgaben)
+        if (schulaufgabenCount < noetigeAnzahlSchulaufgaben && !meldungSA)
         {
           contr.Add(kurs, toText(schulaufgabenCount,"","Schulaufgabe"));
         }
 
-        if (kurs.schreibtKA && kurzarbeitenCount < 2)
+        if (kurs.schreibtKA && kurzarbeitenCount < 2 && !meldungKA)
         {
           contr.Add( kurs, toText(kurzarbeitenCount,"","Kurzarbeit"));
         }
 
         // wenn Exen geschrieben werden, reichen 2 Exen + 2 mdl. pro Schüler (weil ja eine nicht mitgeschrieben werden muss)
-        if ((!kurs.schreibtKA && muendlicheCount < 2+noetigeAnzahlEchteMdl) || muendlicheCount < noetigeAnzahlEchteMdl)
+        if (((!kurs.schreibtKA && muendlicheCount < 2+noetigeAnzahlEchteMdl) || muendlicheCount < noetigeAnzahlEchteMdl)  && !meldungMdl)
         {
           contr.Add( kurs,toText(muendlicheCount,"mündliche","Note"));
         }
