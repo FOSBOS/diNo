@@ -510,4 +510,50 @@ namespace diNo
         }
     }
   }
+
+  // Prüft, ob in der 13. Klasse die Abiergebnisse zum Bestehen ausreichen
+  public class AbiergebnisChecker : NotenCheck
+  {
+    public AbiergebnisChecker(NotenCheckController contr) :base (contr)
+        { }
+        
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
+    {
+      return jahrgangsstufe == Jahrgangsstufe.Dreizehn;
+    }
+   
+    public override void Check(Schueler schueler)
+    {
+      base.Check(schueler);
+      int anz6=0;
+      int anz5=0;
+      string m="";
+      decimal apg;
+          
+      foreach (var fach in noten.alleFaecher)
+      {
+        
+        if (fach.getSchnitt(Halbjahr.Zweites).PruefungGesamt.HasValue)
+        {
+          apg=fach.getSchnitt(Halbjahr.Zweites).PruefungGesamt.GetValueOrDefault();
+          if (apg < (decimal)1.0)
+          {
+            anz6++;
+            m+= fach.getFach.Kuerzel + "(" + apg + ") ";
+          }
+          if (apg < (decimal)3.5)
+          {
+            anz5++;
+            m+= fach.getFach.Kuerzel + "(" + apg + ") ";
+          }
+        }
+      } 
+           
+      if (anz6 > 0 || anz5>2)
+      {        
+        contr.Add(null,"Abiturprüfung nicht bestanden: " + m);
+      }
+    }
+  }
+
 }
