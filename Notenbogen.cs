@@ -72,18 +72,18 @@ namespace diNo
         dataGridNoten.Rows[lineCount + 1].DividerHeight = 2;
         dataGridNoten.Rows[lineCount].Cells[0].Value = kursNoten.getFach.Bezeichnung;
 
-        InsertNoten(1, lineCount, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Schulaufgabe));
+        InsertNoten(1, lineCount, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Schulaufgabe), false);
         InsertNoten(1, lineCount + 1, kursNoten.sonstigeLeistungen(Halbjahr.Erstes));
 
-        InsertNoten(10, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Schulaufgabe));
+        InsertNoten(10, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.Schulaufgabe), false);
         InsertNoten(10, lineCount + 1, kursNoten.sonstigeLeistungen(Halbjahr.Zweites));
 
         InsertSchnitt(8, lineCount, kursNoten.getSchnitt(Halbjahr.Erstes));
         BerechneteNote zeugnis = kursNoten.getSchnitt(Halbjahr.Zweites);
         InsertSchnitt(18, lineCount, zeugnis);
 
-        InsertNoten(20, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich));
-        InsertNoten(20, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich));
+        InsertNoten(20, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich), Zugriff.Instance.aktZeitpunkt > 3);
+        InsertNoten(20, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich), Zugriff.Instance.aktZeitpunkt > 3);
 
         if (zeugnis != null)
         {
@@ -92,10 +92,23 @@ namespace diNo
             dataGridNoten.Rows[lineCount].Cells[21].Value = zeugnis.PruefungGesamt;
             dataGridNoten.Rows[lineCount].Cells[22].Value = zeugnis.SchnittFortgangUndPruefung;
             dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.Abschlusszeugnis;
+            if (Zugriff.Instance.aktZeitpunkt > 3) // ab der 2.PA werden die Prüfungsnoten auch farblich hervorgehoben
+            {
+              SetBackgroundColor((double)zeugnis.PruefungGesamt, dataGridNoten.Rows[lineCount].Cells[21]);
+              SetBackgroundColor((double)zeugnis.SchnittFortgangUndPruefung, dataGridNoten.Rows[lineCount].Cells[22]);
+              SetBackgroundColor((double)zeugnis.Abschlusszeugnis, dataGridNoten.Rows[lineCount].Cells[23]);
+            }
           }
           else
+          {
             dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.JahresfortgangGanzzahlig;
+            if (Zugriff.Instance.aktZeitpunkt > 3 && zeugnis.JahresfortgangGanzzahlig != null) // ab der 2.PA werden die Prüfungsnoten auch farblich hervorgehoben
+            {
+              SetBackgroundColor((double)zeugnis.JahresfortgangGanzzahlig, dataGridNoten.Rows[lineCount].Cells[23]);
+            }
+          }
         }
+
         lineCount = lineCount + 2;
       }
     }
@@ -115,13 +128,19 @@ namespace diNo
       for (int i = 1; i < 8; i++)
       {
         dataGridNoten.Columns[i].Visible = i - 1 < maxAnzahlNotenHJ1;
+        dataGridNoten.Columns[i].DividerWidth = (i == maxAnzahlNotenHJ1) ? 10 : 0;
+        dataGridNoten.Columns[i].Width = (i == maxAnzahlNotenHJ1) ? 45 : 35;
       }
+
+      // ab dem Vorlauf der 1. PA interessiert das Zwischenzeugnis nicht mehr
+      dataGridNoten.Columns[8].Visible = (Zugriff.Instance.aktZeitpunkt <= 2);
+      dataGridNoten.Columns[9].Visible = (Zugriff.Instance.aktZeitpunkt <= 2);
+
       for (int i = 10; i < 18; i++)
       {
         dataGridNoten.Columns[i].Visible = i - 10 < maxAnzahlNotenHJ2;
       }
 
-      dataGridNoten.Columns[8].Visible = (new int[] {1, 2, 9, 10, 11, 12 }).Contains(DateTime.Now.Month); // Zeige die Einzelschnitte aus HJ1 ab März nicht mehr an.
     }
 
     private int getAnzahlBenoetigterSpalten(Halbjahr hj, FachSchuelerNoten noten)
@@ -145,13 +164,16 @@ namespace diNo
       }
     }
 
-    private void InsertNoten(int startCol, int startRow, IList<int> noten)
+    private void InsertNoten(int startCol, int startRow, IList<int> noten, bool setzeFarbe)
     {
       foreach (var note in noten)
       {
         var cell = dataGridNoten.Rows[startRow].Cells[startCol];
         cell.Value = note;
-       // SetBackgroundColor(note, cell);
+        if (setzeFarbe)
+        {
+          SetBackgroundColor(note, cell);
+        }
         startCol++;
       }
     }
@@ -165,25 +187,29 @@ namespace diNo
         {
           var cell = dataGridNoten.Rows[startRow].Cells[startCol];
           cell.Value = b.SchnittSchulaufgaben;
-          // SetBackgroundColor((double)b.SchnittSchulaufgaben, cell);
         }
 
         if (b.SchnittMuendlich != null)
         {
           dataGridNoten.Rows[startRow + 1].Cells[startCol].Value = b.SchnittMuendlich;
-          // SetBackgroundColor((double)b.SchnittMuendlich, dataGridNoten.Rows[startRow + 1].Cells[startCol]);
         }
 
         if (b.JahresfortgangMitKomma != null)
         {
           dataGridNoten.Rows[startRow + 1].Cells[startCol + 1].Value = b.JahresfortgangMitKomma;
-          SetBackgroundColor((double)b.JahresfortgangMitKomma, dataGridNoten.Rows[startRow + 1].Cells[startCol + 1]);
+          if ((b.ErstesHalbjahr && Zugriff.Instance.aktZeitpunkt <= 2) || (!b.ErstesHalbjahr && Zugriff.Instance.aktZeitpunkt == 3))
+          {
+            SetBackgroundColor((double)b.JahresfortgangMitKomma, dataGridNoten.Rows[startRow + 1].Cells[startCol + 1]);
+          }
         }
 
         if (b.JahresfortgangGanzzahlig != null)
         {
           dataGridNoten.Rows[startRow].Cells[startCol + 1].Value = b.JahresfortgangGanzzahlig;
-          SetBackgroundColor((double)b.JahresfortgangGanzzahlig, dataGridNoten.Rows[startRow].Cells[startCol + 1]);
+          if ((b.ErstesHalbjahr && Zugriff.Instance.aktZeitpunkt <= 2) || (!b.ErstesHalbjahr && Zugriff.Instance.aktZeitpunkt == 3))
+          {
+            SetBackgroundColor((double)b.JahresfortgangGanzzahlig, dataGridNoten.Rows[startRow].Cells[startCol + 1]);
+          }
         }
       }
     }

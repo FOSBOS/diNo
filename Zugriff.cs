@@ -37,7 +37,7 @@ namespace diNo
       {
         Username = "FOSBOS\\ckonrad";
       }
-      //Username = "VW\\gmerk";
+      // Username = "VW\\gmerk";
       Username = Username.Replace("FOSBOS\\", "");
       Username = Username.Replace("VW\\", "");
       var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
@@ -162,7 +162,7 @@ namespace diNo
 
     private bool SollSichtbarSein(Schueler schueler)
     {
-      if (this.lehrer.HatRolle(Rolle.Admin))
+      if (this.lehrer.HatRolle(Rolle.Admin) || this.lehrer.HatRolle(Rolle.Sekretariat) || this.lehrer.HatRolle(Rolle.Schulleitung))
       {
         return true;
       }
