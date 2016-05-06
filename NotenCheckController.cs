@@ -72,7 +72,7 @@ namespace diNo
             aktSchueler = s; // erst hier: für CreateResults muss noch der alte drinstehen
             foreach (var ch in alleNotenchecks)
             {
-                if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart))
+                if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart) && s.Status != Schuelerstatus.Abgemeldet)
                     ch.Check(s);
             }
           }

@@ -250,6 +250,10 @@ namespace diNo
         bool istSAFach = noetigeAnzahlSchulaufgaben>0;
         bool einstuendig = fachNoten.getFach.IstEinstuendig(schueler.getKlasse.Jahrgangsstufe,schueler.getKlasse.Schulart);
         int noetigeAnzahlEchteMdl = (einstuendig ? 1 : 2);
+        if (fachNoten.getNotenanzahl(Notentyp.Fachreferat) > 0)
+        {
+          noetigeAnzahlEchteMdl = noetigeAnzahlEchteMdl - 1; // wenn Fachreferat vorliegt darf echte mündliche fehlen
+        }
         bool meldungKA=false, meldungMdl=false, meldungSA=false;
         Kurs derKurs = new Kurs(fachNoten.kursId);
         if (derKurs.getLehrer == null)
