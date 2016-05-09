@@ -250,10 +250,6 @@ namespace diNo
         bool istSAFach = noetigeAnzahlSchulaufgaben>0;
         bool einstuendig = fachNoten.getFach.IstEinstuendig(schueler.getKlasse.Jahrgangsstufe,schueler.getKlasse.Schulart);
         int noetigeAnzahlEchteMdl = (einstuendig ? 1 : 2);
-        if (fachNoten.getNotenanzahl(Notentyp.Fachreferat) > 0)
-        {
-          noetigeAnzahlEchteMdl = noetigeAnzahlEchteMdl - 1; // wenn Fachreferat vorliegt darf echte mündliche fehlen
-        }
         bool meldungKA=false, meldungMdl=false, meldungSA=false;
         Kurs derKurs = new Kurs(fachNoten.kursId);
         if (derKurs.getLehrer == null)
@@ -277,7 +273,7 @@ namespace diNo
 
         // die Prüfung unterscheidet wie der bisherige Notenbogen nicht, ob die Note aus einer Ex oder echt mündlich ist - das verantwortet der Lehrer
         int kurzarbeitenCount = fachNoten.getNotenanzahl(hj,Notentyp.Kurzarbeit);
-        int muendlicheCount = fachNoten.getNotenanzahl(hj,Notentyp.Ex) + fachNoten.getNotenanzahl(hj,Notentyp.EchteMuendliche) + fachNoten.getNotenanzahl(Notentyp.Fachreferat);
+        int muendlicheCount = fachNoten.getNotenanzahl(hj,Notentyp.Ex) + fachNoten.getNotenanzahl(hj,Notentyp.EchteMuendliche) + fachNoten.getNotenanzahl(hj,Notentyp.Fachreferat);
         int schulaufgabenCount = fachNoten.getNotenanzahl(hj,Notentyp.Schulaufgabe);
         bool hatErsatzpruefung = fachNoten.getNotenanzahl(hj,Notentyp.Ersatzprüfung)>0;
 
@@ -327,7 +323,7 @@ namespace diNo
         // Gesamtjahresprüfung
         // -------------------
         kurzarbeitenCount = fachNoten.getNotenanzahl(Notentyp.Kurzarbeit);
-        muendlicheCount = fachNoten.getNotenanzahl(Notentyp.Ex) + fachNoten.getNotenanzahl(Notentyp.EchteMuendliche);
+        muendlicheCount = fachNoten.getNotenanzahl(Notentyp.Ex) + fachNoten.getNotenanzahl(Notentyp.EchteMuendliche) + fachNoten.getNotenanzahl(Notentyp.Fachreferat);
         schulaufgabenCount = fachNoten.getNotenanzahl(Notentyp.Schulaufgabe);
         hatErsatzpruefung = fachNoten.getNotenanzahl(Notentyp.Ersatzprüfung)>0;
        
