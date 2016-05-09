@@ -327,23 +327,24 @@ namespace diNo
         schulaufgabenCount = fachNoten.getNotenanzahl(Notentyp.Schulaufgabe);
         hatErsatzpruefung = fachNoten.getNotenanzahl(Notentyp.Ersatzprüfung)>0;
        
-                         
-        if (schulaufgabenCount < noetigeAnzahlSchulaufgaben && !meldungSA)
-        {
-          contr.Add(kurs, toText(schulaufgabenCount,"","Schulaufgabe"));
-        }
+        if (!hatErsatzpruefung)
+        {                 
+          if (schulaufgabenCount < noetigeAnzahlSchulaufgaben && !meldungSA)
+          {
+            contr.Add(kurs, toText(schulaufgabenCount,"","Schulaufgabe"));
+          }
 
-        if (kurs.schreibtKA && kurzarbeitenCount < 2 && !meldungKA)
-        {
-          contr.Add( kurs, toText(kurzarbeitenCount,"","Kurzarbeit"));
-        }
+          if (kurs.schreibtKA && kurzarbeitenCount < 2 && !meldungKA)
+          {
+            contr.Add( kurs, toText(kurzarbeitenCount,"","Kurzarbeit"));
+          }
 
-        // wenn Exen geschrieben werden, reichen 2 Exen + 2 mdl. pro Schüler (weil ja eine nicht mitgeschrieben werden muss)
-        if (((!kurs.schreibtKA && muendlicheCount < 2+noetigeAnzahlEchteMdl) || muendlicheCount < noetigeAnzahlEchteMdl)  && !meldungMdl)
-        {
-          contr.Add( kurs,toText(muendlicheCount,"mündliche","Note"));
+          // wenn Exen geschrieben werden, reichen 2 Exen + 2 mdl. pro Schüler (weil ja eine nicht mitgeschrieben werden muss)
+          if (((!kurs.schreibtKA && muendlicheCount < 2+noetigeAnzahlEchteMdl) || muendlicheCount < noetigeAnzahlEchteMdl)  && !meldungMdl)
+          {
+            contr.Add( kurs,toText(muendlicheCount,"mündliche","Note"));
+          }
         }
-
       }      
     }
 
