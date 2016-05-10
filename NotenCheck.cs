@@ -433,11 +433,12 @@ namespace diNo
         int anz5=0,anz6=0,anz4P=0,anz2=0,anz1=0;
         string m="";
         string kuerzel="";
+        bool NichtSAPFachMit5=false; // Ausgabe der 5er in Nichtprüfungsfächern für die 1. PA
       
         foreach (var fachNoten in noten.alleFaecher)
         {
             kuerzel = fachNoten.getFach.Kuerzel;
-            if (kuerzel == "F" || kuerzel == "Smw") continue;  // keine Vorrückungsfächer (Ku?)
+            if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
             byte? relevanteNote = fachNoten.getRelevanteNote(contr.zeitpunkt);                    
             if (relevanteNote != null) // null muss der notenanzahl-Checker als Problem erkennen
             {                         
@@ -446,10 +447,12 @@ namespace diNo
                 else if (relevanteNote == 4) anz4P++;
                 else if (relevanteNote >=13) anz1++;
                 else if (relevanteNote >= 10) anz2++;
-                //else if (relevanteNote >= 7 && fachNoten.getFach.IstSAPFach()) anz3++;
+                //else if (relevanteNote >= 7 && fachNoten.getFach.IstSAPFach(schueler.Zweig)) anz3++;
 
                 if (relevanteNote <4 || relevanteNote == 4 && contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
-                    m = m + fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
+                  m = m + fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
+                if (relevanteNote < 4 && contr.zeitpunkt == Zeitpunkt.ErstePA && !fachNoten.getFach.IstSAPFach(schueler.Zweig))
+                  NichtSAPFachMit5 = true;
             }
         }
 
@@ -458,7 +461,9 @@ namespace diNo
           if (anz6 > 1 || (anz6 + anz5) > 3)
           {
             contr.Add(Vorkommnisart.NichtZurPruefungZugelassen,m);            
-          }          
+          }
+          else if (NichtSAPFachMit5)
+            contr.Add(null, "Weniger als 4 Punkte in einem Nichtprüfungsfach: " +m);
           return;
         }
         else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
