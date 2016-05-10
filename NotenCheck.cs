@@ -189,8 +189,8 @@ namespace diNo
         {
             contr.Add(null, "Im Seminarfach wurden " +note+" Punkte erzielt.");
         }
-
-        if (string.IsNullOrEmpty(seminarfachnoten[0].ThemaLang) && string.IsNullOrEmpty(seminarfachnoten[0].ThemaKurz))
+        
+        if (seminarfachnoten[0].IsThemaLangNull() && seminarfachnoten[0].IsThemaKurzNull())
         {
             contr.Add(null, "Es liegt kein Seminarfachthema vor.");
         }

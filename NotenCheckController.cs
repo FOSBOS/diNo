@@ -30,7 +30,10 @@ namespace diNo
             if (modus!=NotenCheckModus.EigeneNotenVollstaendigkeit)
               alleNotenchecks.Add(new UnterpunktungChecker(this));            
             if (azeitpunkt == Zeitpunkt.ErstePA && (modus==NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse)) // nur dort FR prüfen
-              alleNotenchecks.Add(new FachreferatChecker(this));            
+            {
+              alleNotenchecks.Add(new FachreferatChecker(this));
+              alleNotenchecks.Add(new SeminarfachChecker(this));
+            }
             if (azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
               alleNotenchecks.Add(new FpABestandenChecker(this));
             if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA)  && (modus==NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse))
