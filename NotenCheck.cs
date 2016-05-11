@@ -463,7 +463,9 @@ namespace diNo
             contr.Add(Vorkommnisart.NichtZurPruefungZugelassen,m);            
           }
           else if (NichtSAPFachMit5)
-            contr.Add(null, "Weniger als 4 Punkte in einem Nichtprüfungsfach: " +m);
+            contr.Add(null, "Unterpunktet in einem Nichtprüfungsfach " +m);
+          else if (anz6 + anz5 > 0)
+            contr.Add(null, "Unterpunktet in " +m);
           return;
         }
         else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)

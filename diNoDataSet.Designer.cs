@@ -20861,7 +20861,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
 FROM            Kurs INNER JOIN
                          SchuelerKurs ON Kurs.Id = SchuelerKurs.KursId INNER JOIN
                          Schueler ON SchuelerKurs.SchuelerId = Schueler.Id
-WHERE        ((Kurs.LehrerId = @LehrerId) OR (Schueler.BetreuerId=@LehrerId)) and Schueler.Status=0";
+WHERE        ((Kurs.LehrerId = @LehrerId) OR (Schueler.BetreuerId=@LehrerId)) and Schueler.Status<>1";
             this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -20949,9 +20949,14 @@ WHERE        ((Kurs.LehrerId = @LehrerId) OR (Schueler.BetreuerId=@LehrerId)) an
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.SchuelerDataTable GetDataByLehrerId(int LehrerId) {
+        public virtual diNoDataSet.SchuelerDataTable GetDataByLehrerId(global::System.Nullable<int> LehrerId) {
             this.Adapter.SelectCommand = this.CommandCollection[5];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(LehrerId));
+            if ((LehrerId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(LehrerId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
             diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
