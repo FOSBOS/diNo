@@ -476,7 +476,7 @@ namespace diNo
     // gibt an, ob der Schüler das übergebene Vorkommnis bereits gespeichert hat (z.B. um Duplikate zu vermeiden)
     public bool hatVorkommnis(Vorkommnisart art)
     {
-      foreach (var v in vorkommnisse)
+      foreach (var v in Vorkommnisse)
       {
         if (v.Art == art) return true;
       }
