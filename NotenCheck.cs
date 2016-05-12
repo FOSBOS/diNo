@@ -183,16 +183,23 @@ namespace diNo
       }
       else
       {
-        var note = seminarfachnoten[0].Gesamtnote;
-
-        if (note < 4)
+        if (seminarfachnoten[0].IsGesamtnoteNull())
         {
-            contr.Add(null, "Im Seminarfach wurden " +note+" Punkte erzielt.");
+          contr.Add(null, "Es liegt keine Seminarfachnote vor.");
         }
-        
-        if (seminarfachnoten[0].IsThemaLangNull() && seminarfachnoten[0].IsThemaKurzNull())
+        else
         {
+          var note = seminarfachnoten[0].Gesamtnote;
+
+          if (note < 4)
+          {
+            contr.Add(null, "Im Seminarfach wurden " + note + " Punkte erzielt.");
+          }
+
+          if (seminarfachnoten[0].IsThemaLangNull() && seminarfachnoten[0].IsThemaKurzNull())
+          {
             contr.Add(null, "Es liegt kein Seminarfachthema vor.");
+          }
         }
     }
   }
