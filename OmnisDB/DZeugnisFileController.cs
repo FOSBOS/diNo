@@ -42,7 +42,7 @@ namespace diNo.OmnisDB
           zeile[Konstanten.abweisungCol] = Konstanten.GetAbweisungString(schueler.GefahrDerAbweisung);
 
           var seminarfachNote = new SeminarfachnoteTableAdapter().GetDataBySchuelerId(schuelerId);
-          if (seminarfachNote != null && seminarfachNote.Count == 1)
+          if (seminarfachNote != null && seminarfachNote.Count == 1 && !seminarfachNote[0].IsGesamtnoteNull())
           {
             zeile[Konstanten.seminarfachGesamtnote] = string.Format(CultureInfo.CurrentCulture, "{0:00}", seminarfachNote[0].Gesamtnote);
             zeile[Konstanten.seminarfachThema] = !string.IsNullOrEmpty(seminarfachNote[0].ThemaKurz) ? seminarfachNote[0].ThemaKurz : seminarfachNote[0].ThemaLang.Substring(0, 128);

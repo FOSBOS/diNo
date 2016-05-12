@@ -144,7 +144,7 @@ namespace diNo.OmnisDB
     public bool FehlendeNoteWirdWohlOKSein(string faecherkuerzel)
     {
       var fach = faecherkuerzel.ToUpper();
-      return fach == "F-WI" || fach == "MU" || fach == "WIN" || fach == "Rel" || fach == "Eth";
+      return fach == "F-WI" || fach == "MU" || fach == "WIN" || fach == "REL" || fach == "ETH";
     }
 
     public string GetNotenString(FachSchuelerNoten note, Zeitpunkt zeitpunkt)

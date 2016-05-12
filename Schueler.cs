@@ -217,8 +217,17 @@ namespace diNo
 
     public bool Wiederholt()
     {
-      return (getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung1Jahrgangsstufe)
-         || getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung2Jahrgangsstufe));
+      if (!Data.IsWiederholung1JahrgangsstufeNull())
+      {
+        return getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung1Jahrgangsstufe);
+      }
+
+      if (!Data.IsWiederholung2JahrgangsstufeNull())
+      {
+        return getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung2Jahrgangsstufe);
+      }
+
+      return false;
     }
 
     public OmnisDB.Abweisung GefahrDerAbweisung
