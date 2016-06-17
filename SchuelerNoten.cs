@@ -67,8 +67,15 @@ namespace diNo
       {               
         liste.Add(new FachSchuelerNotenDruckKurz(f, f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe),nurAbiergebnisse));
       }
-      if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Dreizehn) 
+      if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Dreizehn)
+      {
+        if (!schueler.Data.IsAndereFremdspr2NoteNull())
+        {
+          liste.Add(new FachSchuelerNotenDruckKurz("Andere 2. Fremdsprache",schueler.Data.AndereFremdspr2Note));
+        }
+
         liste.Add(new FachSchuelerNotenDruckKurz(schueler.Seminarfachnote));
+      }
       return liste;
     }
 
@@ -359,6 +366,14 @@ namespace diNo
           JF2  =Z;
         }
       }
+
+      public FachSchuelerNotenDruckKurz(string fach, int note)
+      {
+        fachBez = fach;
+        Z = note.ToString();
+        JF2  =Z;
+      }
+
       private string put(IList<int> n, int index)
       {
         if (index < n.Count)

@@ -56,7 +56,9 @@ namespace diNo
           textBoxEmail.Text = schueler.Data.Email;
           cbStatus.SelectedIndex = schueler.Data.Status;
           textBoxDNote.Text = schueler.Data.IsDNoteNull() ? "" : string.Format("{0:F1}", schueler.Data.DNote);
+          numAndereFremdspr2Note.Value = schueler.Data.IsAndereFremdspr2NoteNull() ? null : (decimal?) schueler.Data.AndereFremdspr2Note;
         }
+        /*
         else
         {
           //nameLabel.Text = "";
@@ -75,7 +77,7 @@ namespace diNo
           textBoxProbezeit.Text = "";
           textBoxEmail.Text = "";
           //pictureBoxImage.Image = null;
-        }
+        }*/
       }
     }
 
@@ -97,6 +99,8 @@ namespace diNo
 
       schueler.Data.Email = textBoxEmail.Text;
       schueler.Data.Status = cbStatus.SelectedIndex;
+      if (numAndereFremdspr2Note.Value==null) schueler.Data.SetAndereFremdspr2NoteNull();
+        else schueler.Data.AndereFremdspr2Note = (int) numAndereFremdspr2Note.Value.GetValueOrDefault();            
     }
 
   }

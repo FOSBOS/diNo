@@ -75,6 +75,9 @@ namespace diNo
       this.label11 = new System.Windows.Forms.Label();
       this.textBoxDNote = new System.Windows.Forms.TextBox();
       this.label12 = new System.Windows.Forms.Label();
+      this.label13 = new System.Windows.Forms.Label();
+      this.numAndereFremdspr2Note = new diNo.NumericUpDownNullable();
+      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
       this.SuspendLayout();
       // 
       // lblAdresse
@@ -262,7 +265,7 @@ namespace diNo
       // textBoxID
       // 
       this.textBoxID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxID.Location = new System.Drawing.Point(318, 382);
+      this.textBoxID.Location = new System.Drawing.Point(28, 422);
       this.textBoxID.Name = "textBoxID";
       this.textBoxID.Size = new System.Drawing.Size(84, 20);
       this.textBoxID.TabIndex = 13;
@@ -271,7 +274,7 @@ namespace diNo
       // 
       this.label1.AutoSize = true;
       this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label1.Location = new System.Drawing.Point(317, 366);
+      this.label1.Location = new System.Drawing.Point(25, 406);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(57, 13);
       this.label1.TabIndex = 32;
@@ -474,25 +477,51 @@ namespace diNo
       // textBoxDNote
       // 
       this.textBoxDNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxDNote.Location = new System.Drawing.Point(466, 382);
+      this.textBoxDNote.Location = new System.Drawing.Point(321, 421);
       this.textBoxDNote.Name = "textBoxDNote";
-      this.textBoxDNote.Size = new System.Drawing.Size(92, 20);
+      this.textBoxDNote.Size = new System.Drawing.Size(100, 20);
       this.textBoxDNote.TabIndex = 54;
       // 
       // label12
       // 
       this.label12.AutoSize = true;
       this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label12.Location = new System.Drawing.Point(463, 366);
+      this.label12.Location = new System.Drawing.Point(318, 406);
       this.label12.Name = "label12";
       this.label12.Size = new System.Drawing.Size(93, 13);
       this.label12.TabIndex = 55;
       this.label12.Text = "Durchschnittsnote";
       // 
+      // label13
+      // 
+      this.label13.AutoSize = true;
+      this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label13.Location = new System.Drawing.Point(319, 366);
+      this.label13.Name = "label13";
+      this.label13.Size = new System.Drawing.Size(235, 13);
+      this.label13.TabIndex = 57;
+      this.label13.Text = "Notenpunkte einer alternativen 2. Fremdsprache";
+      // 
+      // numAndereFremdspr2Note
+      // 
+      this.numAndereFremdspr2Note.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numAndereFremdspr2Note.Location = new System.Drawing.Point(321, 381);
+      this.numAndereFremdspr2Note.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numAndereFremdspr2Note.Name = "numAndereFremdspr2Note";
+      this.numAndereFremdspr2Note.Size = new System.Drawing.Size(100, 23);
+      this.numAndereFremdspr2Note.TabIndex = 58;
+      this.numAndereFremdspr2Note.Value = null;
+      // 
       // UserControlSchueleransicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.numAndereFremdspr2Note);
+      this.Controls.Add(this.label13);
       this.Controls.Add(this.textBoxDNote);
       this.Controls.Add(this.label12);
       this.Controls.Add(this.textBoxJahrgangsstufe);
@@ -540,6 +569,7 @@ namespace diNo
       this.Controls.Add(this.lblAdresse);
       this.Name = "UserControlSchueleransicht";
       this.Size = new System.Drawing.Size(611, 502);
+      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -591,5 +621,7 @@ namespace diNo
     private System.Windows.Forms.Label label11;
     private System.Windows.Forms.TextBox textBoxDNote;
     private System.Windows.Forms.Label label12;
+    private System.Windows.Forms.Label label13;
+    private NumericUpDownNullable numAndereFremdspr2Note;
   }
 }

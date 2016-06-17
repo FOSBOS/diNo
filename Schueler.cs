@@ -503,7 +503,7 @@ namespace diNo
       // Französisch wird nur in der 13. Klasse gewertet, wenn der Kurs belegt ist und
       // der Schüler nicht nur fachgebundene HSR bekommt (z.B. wegen Note 5 in F)
       bool mitFranz = false;
-      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && Data.IsAndereFremdspr2NoteNull())
       {
         if (!hatVorkommnis(Vorkommnisart.fachgebundeneHochschulreife)) mitFranz = true;
       }
@@ -527,12 +527,23 @@ namespace diNo
           anz++;
         }
       }
-      if (!Seminarfachnote.IsGesamtnoteNull())
-      {
-        summe += Seminarfachnote.Gesamtnote;
-        anz++;
-      }
 
+      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      {
+        if (!Seminarfachnote.IsGesamtnoteNull())
+        {
+          summe += Seminarfachnote.Gesamtnote;
+          anz++;
+        }
+
+        // Alternative 2. Fremdsprache für die allgemeine Hochschulreife
+        if (!Data.IsAndereFremdspr2NoteNull())
+        {
+          summe += Data.AndereFremdspr2Note;
+          anz++;
+        }
+      }
+                  
       if (anz > 0)
       {
         erg = (17 - (decimal)summe / anz) / 3;
