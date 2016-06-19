@@ -664,11 +664,22 @@
             </TextRuns>
             <Style />
           </Paragraph>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Berechnung der Durchschnittsnote und der Werte in den Spalten 4P/1P ohne Gewähr!</Value>
+                <Style>
+                  <FontSize>9pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox60</rd:DefaultName>
         <Top>1.39912cm</Top>
         <Left>0.10266cm</Left>
-        <Height>0.91751cm</Height>
+        <Height>1.36731cm</Height>
         <Width>16.9988cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
@@ -682,7 +693,7 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>0.92248in</Height>
+    <Height>1.08915in</Height>
     <Style>
       <Border>
         <Color>White</Color>

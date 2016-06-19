@@ -502,11 +502,8 @@ namespace diNo
 
       // Französisch wird nur in der 13. Klasse gewertet, wenn der Kurs belegt ist und
       // der Schüler nicht nur fachgebundene HSR bekommt (z.B. wegen Note 5 in F)
-      bool mitFranz = false;
-      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && Data.IsAndereFremdspr2NoteNull())
-      {
-        if (!hatVorkommnis(Vorkommnisart.fachgebundeneHochschulreife)) mitFranz = true;
-      }
+      // eine andere eingetragene 2. Fremdsprache hat immer Vorrang (so zählt F-Wi nicht, wenn der S die Note aus der RS übernimmt)
+      bool mitFranz = getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && Data.IsAndereFremdspr2NoteNull();
       
       foreach (var fach in faecher)
       {
@@ -514,18 +511,19 @@ namespace diNo
         var fk = fach.getFach.Kuerzel;
         byte? note = fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
 
-        if (note!=null && fk != "Ku" && fk != "Smw" && (fk!="F" || mitFranz))         
+
+        if (note==null || fk == "Ku" || fk == "Smw" || ((fk=="F" || fk=="F-Wi") && !mitFranz))
+          continue;
+
+        if (note == 0)
         {
-          if (note == 0)
-          {
-            summe--; // Punktwert 0 wird als -1 gezählt
-          }
-          else
-          {
-            summe += note.GetValueOrDefault();
-          }
-          anz++;
+          summe--; // Punktwert 0 wird als -1 gezählt
         }
+        else
+        {
+          summe += note.GetValueOrDefault();
+        }
+        anz++;
       }
 
       if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
