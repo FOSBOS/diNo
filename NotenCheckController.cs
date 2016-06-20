@@ -37,8 +37,13 @@ namespace diNo
             if (azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
               alleNotenchecks.Add(new FpABestandenChecker(this));
             if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA)  && (modus==NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse))
+            {
               alleNotenchecks.Add(new AbiergebnisChecker(this));
-    }
+              alleNotenchecks.Add(new EliteChecker(this));
+            } 
+            if (azeitpunkt == Zeitpunkt.DrittePA  && (modus==NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse))
+              alleNotenchecks.Add(new MAPChecker(this));
+        }
 
         public void CheckSchueler(Schueler s)
         { 
@@ -82,7 +87,7 @@ namespace diNo
           }
     }   
     
-    public void ErzeugeZeugnisVorkommnis()
+    public void ErzeugeZeugnisVorkommnis(bool bestanden=true)
     {
       if (modus!=NotenCheckModus.VorkommnisseErzeugen) return;
 
@@ -91,13 +96,16 @@ namespace diNo
 
       else if (zeitpunkt==Zeitpunkt.DrittePA)
       {
-        if (aktSchueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
+        if (!bestanden)
+          aktSchueler.AddVorkommnis(Vorkommnisart.Jahreszeugnis,"");   
+        else if (aktSchueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
           aktSchueler.AddVorkommnis(Vorkommnisart.Fachabiturzeugnis,"");
         else if (aktSchueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
         {
           var f = aktSchueler.getNoten.FindeFach("F",false);
           if (aktSchueler.Wahlpflichtfach=="F3" || // fortgef. F
-            f != null && f.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis > 3) // TODO: es fehlen S die Franz. in der RS hatten
+            (!aktSchueler.Data.IsAndereFremdspr2NoteNull()) ||
+            f != null && f.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis > 3)
             aktSchueler.AddVorkommnis(Vorkommnisart.allgemeineHochschulreife,"");
           else 
             aktSchueler.AddVorkommnis(Vorkommnisart.fachgebundeneHochschulreife,"");          

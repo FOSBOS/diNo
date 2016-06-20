@@ -458,7 +458,7 @@ namespace diNo
 
                 if (relevanteNote <4 || relevanteNote == 4 && contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
                   m = m + fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
-                if (relevanteNote < 4 && contr.zeitpunkt == Zeitpunkt.ErstePA && !fachNoten.getFach.IstSAPFach(schueler.Zweig))
+                if (relevanteNote < 4 && /* contr.zeitpunkt == Zeitpunkt.ErstePA && */ !fachNoten.getFach.IstSAPFach())
                   NichtSAPFachMit5 = true;
             }
         }
@@ -472,7 +472,7 @@ namespace diNo
           else if (NichtSAPFachMit5)
             contr.Add(null, "Unterpunktet in einem Nichtprüfungsfach " +m);
           else if (anz6 + anz5 > 0)
-            contr.Add(null, "Unterpunktet in " +m);
+            contr.Add(null, "Unterpunktet in " +m); // sollen in der 1. PA nochmal angesprochen werden
           return;
         }
         else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
@@ -493,9 +493,10 @@ namespace diNo
         }
         else if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
         {
-          if (anz6 > 0 || anz5 > 1)
+          if (anz6 > 0  || anz5 > 1 )
           {         
-            if (anz6 < 2 && anz6 + anz5 < 3)
+            int MapNf = NichtSAPFachMit5 ? 1 : 0; // Ist im Nebenfach eine 5 oder 6, darf dort eine zusätzlich MAP stattfinden.
+            if (anz6 < 2+MapNf  && anz6 + anz5 < 3+MapNf )
               contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich,m);
             else 
               contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen,m);
@@ -516,12 +517,11 @@ namespace diNo
                 contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,m);
               else 
                 contr.Add( null, "Nicht bestanden, kein Notenausgleich möglich: " + m); 
-
-
             }
+            contr.ErzeugeZeugnisVorkommnis(false);
           }
           else
-            contr.ErzeugeZeugnisVorkommnis();
+            contr.ErzeugeZeugnisVorkommnis(true);
         }
     }
   }
@@ -568,6 +568,70 @@ namespace diNo
       {        
         contr.Add(null,"Abiturprüfung nicht bestanden: " + m);
       }
+    }
+  }
+
+  // Gibt nur die Ergebnisse der MAP für die 3. PA aus
+  public class MAPChecker : NotenCheck
+  {
+    public MAPChecker(NotenCheckController contr) :base (contr)
+        { }
+        
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
+    {
+      return true;
+    }
+   
+    public override void Check(Schueler schueler)
+    {
+      base.Check(schueler);
+          
+      foreach (var fach in noten.alleFaecher)
+      {         
+        if (fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APMuendlich)>0)
+        {
+          contr.Add(null,"MAP in " + fach.getFach.Kuerzel + ": " + fach.getNoten(Halbjahr.Zweites,Notentyp.APMuendlich) 
+            + ", Zeugnispunkte: " + fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis.GetValueOrDefault());
+        }
+      } 
+    }
+  }
+
+  // Ermittelt bei 2./3.PA, ob ein Schüler für die Eliteförderung in Frage kommt.
+  public class EliteChecker : NotenCheck
+  {
+    public EliteChecker(NotenCheckController contr) :base (contr)
+    { }
+        
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
+    {
+      return true;
+    }
+   
+    public override void Check(Schueler schueler)
+    {
+      int sumSAP=0;
+      int noteSAP;
+      base.Check(schueler);
+         
+      if (Math.Floor(10*schueler.Data.DNote) > 13 ) // Schnitt mindestens 1.3
+        return;
+
+      foreach (var fach in noten.alleFaecher)
+      { 
+                        
+        if (fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APMuendlich)>0) 
+        {
+          if (!fach.getFach.IstSAPFach()) continue;
+          if (fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APSchriftlich)==0) return; // Note fehlt
+          noteSAP = fach.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich)[0];
+          if (noteSAP<10) return; // keine SAP-Note darf einstellig sein.
+          sumSAP += noteSAP;
+        }
+      } 
+      if (sumSAP>=50) // Schnitt aller SAP muss mindestens 12,5 Punkte sein
+        contr.Add(null,"Vorschlag für Eliteförderung, Durchschnitt: " + schueler.Data.DNote);
+
     }
   }
 

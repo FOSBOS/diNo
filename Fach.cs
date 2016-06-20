@@ -76,6 +76,11 @@ namespace diNo
             get { return this.data.Sortierung; }
         }
 
+        // solange Agrar nicht ist, tut es auch aus Performancegründen das:
+        public bool IstSAPFach()
+        {
+          return data.IstSAP;
+        }
 
         public bool IstSAPFach(Zweig zweig)
         {
