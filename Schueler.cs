@@ -498,21 +498,21 @@ namespace diNo
       int summe = 0, anz = 0;
       decimal erg;
       var faecher = getNoten.alleFaecher;
-        //new BerechneteNoteTableAdapter().GetDataBySchueler4DNote(this.Id);
+      bool mitFranz = getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && Data.IsAndereFremdspr2NoteNull();
 
       // Französisch wird nur in der 13. Klasse gewertet, wenn der Kurs belegt ist und
       // der Schüler nicht nur fachgebundene HSR bekommt (z.B. wegen Note 5 in F)
-      // eine andere eingetragene 2. Fremdsprache hat immer Vorrang (so zählt F-Wi nicht, wenn der S die Note aus der RS übernimmt)
-      bool mitFranz = getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && Data.IsAndereFremdspr2NoteNull();
+      // F-Wi zählt immer (auch 12. Klasse), weil es WIn ersetzt
+      // eine andere eingetragene 2. Fremdsprache zählt auch immer (in der 13.); dies kann eine RS-Note, Ergänzungspr.,
+      // aber auch bei fortgeführtem Franz. die Note der 11./12. oder 13. Klasse sein. Dadurch kann F-Wi sogar doppelt zählen!
       
       foreach (var fach in faecher)
       {
         // alle Fächer außer Sport und Kunst, Franz. nur in der 13. 
         var fk = fach.getFach.Kuerzel;
         byte? note = fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
-
-
-        if (note==null || fk == "Ku" || fk == "Smw" || ((fk=="F" || fk=="F-Wi") && !mitFranz))
+        
+        if (note==null || fk == "Ku" || fk == "Smw" || (fk=="F" && (!mitFranz || note.GetValueOrDefault()<4)))
           continue;
 
         if (note == 0)

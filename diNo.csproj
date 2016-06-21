@@ -213,6 +213,7 @@
     <EmbeddedResource Include="Klassenansicht.resx">
       <DependentUpon>Klassenansicht.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="rptAbiergebnisseA5.rdlc" />
     <EmbeddedResource Include="UserControlKurszuordnungen.resx">
       <DependentUpon>UserControlKurszuordnungen.cs</DependentUpon>
     </EmbeddedResource>
