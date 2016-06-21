@@ -8,3 +8,4 @@
 - Liste von Mederer: FpA zuordnen
 - Test der Darstellung des Notenbogens auf dem Beamer
 - Sicherungskopie der Notenlisten auf Server ?
+- Vorkommnisarten AutoKey abstellen (und DB-Tabelle bereinigen)

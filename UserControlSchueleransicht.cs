@@ -57,6 +57,7 @@ namespace diNo
           cbStatus.SelectedIndex = schueler.Data.Status;
           textBoxDNote.Text = schueler.Data.IsDNoteNull() ? "" : string.Format("{0:F1}", schueler.Data.DNote);
           numAndereFremdspr2Note.Value = schueler.Data.IsAndereFremdspr2NoteNull() ? null : (decimal?) schueler.Data.AndereFremdspr2Note;
+          textBoxAndereFremdspr2Text.Text = schueler.Data.IsAndereFremdspr2TextNull() ? "" : schueler.Data.AndereFremdspr2Text;
         }
         /*
         else
@@ -101,7 +102,8 @@ namespace diNo
       schueler.Data.Status = cbStatus.SelectedIndex;
       if (numAndereFremdspr2Note.Value==null) schueler.Data.SetAndereFremdspr2NoteNull();
         else schueler.Data.AndereFremdspr2Note = (int) numAndereFremdspr2Note.Value.GetValueOrDefault();            
+      if (textBoxAndereFremdspr2Text.Text=="") schueler.Data.SetAndereFremdspr2TextNull();
+        else schueler.Data.AndereFremdspr2Text = textBoxAndereFremdspr2Text.Text;
     }
-
   }
 }

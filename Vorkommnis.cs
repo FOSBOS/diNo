@@ -82,9 +82,9 @@ namespace diNo
     EnglischNiveauB2 = 23,
     Bemerkung = 24,
     FranzNurBisSAP = 25,
-    endgueltigNichtBestanden = 26,
-    nichtZurMAPangetreten = 27,
-    VorrueckenBOS13moeglich = 28
+    endgueltigNichtBestanden = 29,
+    nichtZurMAPangetreten = 30,
+    VorrueckenBOS13moeglich = 31
   }
 
   public class Vorkommnisse

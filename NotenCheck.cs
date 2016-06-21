@@ -242,9 +242,9 @@ namespace diNo
 
         // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
         // -------------------------------------------------
-        if (contr.zeitpunkt == Zeitpunkt.ZweitePA && fachNoten.getFach.IstSAPFach(schueler.Zweig))
+        if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
         {
-          if (fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
+          if (fachNoten.getFach.IstSAPFach() && fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
           {
             contr.Add( kurs, "Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
           }
@@ -437,92 +437,67 @@ namespace diNo
     public override void Check(Schueler schueler)
     {
         base.Check(schueler);
-        int anz5=0,anz6=0,anz4P=0,anz2=0,anz1=0;
-        string m="";
-        string kuerzel="";
-        bool NichtSAPFachMit5=false; // Ausgabe der 5er in Nichtprüfungsfächern für die 1. PA
       
-        foreach (var fachNoten in noten.alleFaecher)
+        SchuelerNoten n = schueler.getNoten;
+        n.SetZeitpunkt(contr.zeitpunkt);
+        if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {
-            kuerzel = fachNoten.getFach.Kuerzel;
-            if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
-            byte? relevanteNote = fachNoten.getRelevanteNote(contr.zeitpunkt);                    
-            if (relevanteNote != null) // null muss der notenanzahl-Checker als Problem erkennen
-            {                         
-                if (relevanteNote == 0) anz6++;                    
-                else if (relevanteNote < 4) anz5++;
-                else if (relevanteNote == 4) anz4P++;
-                else if (relevanteNote >=13) anz1++;
-                else if (relevanteNote >= 10) anz2++;
-                //else if (relevanteNote >= 7 && fachNoten.getFach.IstSAPFach(schueler.Zweig)) anz3++;
-
-                if (relevanteNote <4 || relevanteNote == 4 && contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
-                  m = m + fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
-                if (relevanteNote < 4 && /* contr.zeitpunkt == Zeitpunkt.ErstePA && */ !fachNoten.getFach.IstSAPFach())
-                  NichtSAPFachMit5 = true;
-            }
-        }
-
-        if (contr.zeitpunkt == Zeitpunkt.ErstePA)
-        {
-          if (anz6 > 1 || (anz6 + anz5) > 3)
+          if (n.HatNichtBestanden())
           {
-            contr.Add(Vorkommnisart.NichtZurPruefungZugelassen,m);            
-          }
-          else if (NichtSAPFachMit5)
-            contr.Add(null, "Unterpunktet in einem Nichtprüfungsfach " +m);
-          else if (anz6 + anz5 > 0)
-            contr.Add(null, "Unterpunktet in " +m); // sollen in der 1. PA nochmal angesprochen werden
-          return;
-        }
-        else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
-        {
-          if (anz6>0 || anz5 > 1)
-          {
-            contr.Add(Vorkommnisart.starkeGefaehrdungsmitteilung,m);
+            contr.Add(Vorkommnisart.starkeGefaehrdungsmitteilung,n.Unterpunktungen);
           }
           //else if (anz5 > 0) contr.Add( null, "Gefährdet: " + m); 
-          else if (anz4P > 1 || anz5 > 0)
+          else if (n.AnzahlNoten(4) > 1 || n.AnzahlNoten(5) > 0)
           { 
-            contr.Add(Vorkommnisart.BeiWeiteremAbsinken,m);
+            contr.Add(Vorkommnisart.BeiWeiteremAbsinken,n.Unterpunktungen);
           }
           contr.ErzeugeZeugnisVorkommnis();
 
           if (schueler.Data.IsProbezeitBisNull() || !(schueler.Data.ProbezeitBis > DateTime.Parse("01.02." +  (DateTime.Today).Year)))
             return; // bei Schülern ohne PZ geht es zum Halbjahr nur um Gefährdungen
         }
+        else if (contr.zeitpunkt == Zeitpunkt.ErstePA)
+        {
+          if (n.AnzahlNoten(6) > 1 || (n.AnzahlNoten(6) + n.AnzahlNoten(5)) > 3)
+          {
+            contr.Add(Vorkommnisart.NichtZurPruefungZugelassen,n.Unterpunktungen);
+          }
+          else if (n.AnzahlNoten(6,false) + n.AnzahlNoten(5,false) > 0)
+            contr.Add(null, "Unterpunktet in einem Nichtprüfungsfach " + n.Unterpunktungen);
+          else if (n.AnzahlNoten(6) + n.AnzahlNoten(5) > 0)
+            contr.Add(null, "Unterpunktet in " + n.Unterpunktungen); // sollen in der 1. PA nochmal angesprochen werden
+          return;
+        }
         else if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
         {
-          if (anz6 > 0  || anz5 > 1 )
+          if (n.HatNichtBestanden())
           {         
-            int MapNf = NichtSAPFachMit5 ? 1 : 0; // Ist im Nebenfach eine 5 oder 6, darf dort eine zusätzlich MAP stattfinden.
-            if (anz6 < 2+MapNf  && anz6 + anz5 < 3+MapNf )
-              contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich,m);
+            if (n.MAPmoeglich())
+              contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich,n.Unterpunktungen);
             else 
-              contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen,m);
+              contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen,n.Unterpunktungen);
           }          
           return;        
         }
-        
+          
+        // Jahresende, 3. PA, Probezeit (BOS und Hj.)
+        if (n.HatNichtBestanden())
         {
-          // TODO: Notenausgleich sauber implementieren
-          if (anz6 > 0 || anz5 > 1)
-          {
-            if (anz2 > 1 || anz1 > 0) contr.Add( null, "Nicht bestanden, Notenausgleich prüfen: " + m);
-            else
-            {
-              if (contr.zeitpunkt == Zeitpunkt.DrittePA)
-                contr.Add(Vorkommnisart.endgueltigNichtBestanden,m);
-              else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
-                contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,m);
-              else 
-                contr.Add( null, "Nicht bestanden, kein Notenausgleich möglich: " + m); 
-            }
-            contr.ErzeugeZeugnisVorkommnis(false);
-          }
+          if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich prüfen: " + n.Unterpunktungen);
           else
-            contr.ErzeugeZeugnisVorkommnis(true);
+          {
+            if (contr.zeitpunkt == Zeitpunkt.DrittePA)
+              contr.Add(Vorkommnisart.endgueltigNichtBestanden,n.Unterpunktungen);
+            else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
+              contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,n.Unterpunktungen);
+            else 
+              contr.Add(null, "Nicht bestanden, kein Notenausgleich möglich: " + n.Unterpunktungen); 
+          }
+          contr.ErzeugeZeugnisVorkommnis(false);
         }
+        else
+          contr.ErzeugeZeugnisVorkommnis(true);
+      
     }
   }
 
@@ -588,10 +563,10 @@ namespace diNo
           
       foreach (var fach in noten.alleFaecher)
       {         
-        if (fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APMuendlich)>0)
+        if (fach.getFach.Kuerzel!="E" && fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APMuendlich)>0)
         {
-          contr.Add(null,"MAP in " + fach.getFach.Kuerzel + ": " + fach.getNoten(Halbjahr.Zweites,Notentyp.APMuendlich) 
-            + ", Zeugnispunkte: " + fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis.GetValueOrDefault());
+          contr.Add(null,"MAP in " + fach.getFach.Kuerzel + " mit " + fach.getNoten(Halbjahr.Zweites,Notentyp.APMuendlich)[0]
+            + " Punkten ergibt im Zeugnis: " + fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis.GetValueOrDefault());
         }
       } 
     }
@@ -618,16 +593,12 @@ namespace diNo
         return;
 
       foreach (var fach in noten.alleFaecher)
-      { 
-                        
-        if (fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APMuendlich)>0) 
-        {
-          if (!fach.getFach.IstSAPFach()) continue;
-          if (fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APSchriftlich)==0) return; // Note fehlt
-          noteSAP = fach.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich)[0];
-          if (noteSAP<10) return; // keine SAP-Note darf einstellig sein.
-          sumSAP += noteSAP;
-        }
+      {                       
+        if (!fach.getFach.IstSAPFach()) continue;
+        if (fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APSchriftlich)==0) return; // Note fehlt
+        noteSAP = fach.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich)[0];
+        if (noteSAP<10) return; // keine SAP-Note darf einstellig sein.
+        sumSAP += noteSAP;
       } 
       if (sumSAP>=50) // Schnitt aller SAP muss mindestens 12,5 Punkte sein
         contr.Add(null,"Vorschlag für Eliteförderung, Durchschnitt: " + schueler.Data.DNote);

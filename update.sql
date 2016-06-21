@@ -9,4 +9,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 ALTER TABLE [dbo].[Schueler] ADD AndereFremdspr2Note int NULL;
+ALTER TABLE [dbo].[Schueler] ADD AndereFremdspr2Text [nvarchar](50) NULL;
 GO
+
+Delete from Vorkommnisart where id >31

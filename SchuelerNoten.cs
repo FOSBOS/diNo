@@ -15,6 +15,13 @@ namespace diNo
         private diNoDataSet.KursDataTable kurse;
         public List<FachSchuelerNoten> alleFaecher;
 
+        // die folgendes Array verwaltet die Anzahl der Einser, Zweier, usw., getrennt nach SAP-Fach und Nebenfach
+        // anzahlNoten[6,1] ergibt z.B. die Anzahl der Sechser in SAP-Fächern, anzahlNoten[5,0] die Anzahl der Fünfer in Nebenfächern
+        private int[,] anzahlNoten;
+        private Zeitpunkt zeitpunkt=Zeitpunkt.None;
+        public string Unterpunktungen;
+        bool hatDeutsch6 = false; // kann nicht ausgeglichen werden
+
         public SchuelerNoten(Schueler s)
         {
             schueler = s;
@@ -71,7 +78,9 @@ namespace diNo
       {
         if (!schueler.Data.IsAndereFremdspr2NoteNull())
         {
-          liste.Add(new FachSchuelerNotenDruckKurz("Andere 2. Fremdsprache",schueler.Data.AndereFremdspr2Note));
+          liste.Add(new FachSchuelerNotenDruckKurz("Andere 2. Fremdsprache" + 
+            (schueler.Data.IsAndereFremdspr2TextNull() ? "" : " (" + schueler.Data.AndereFremdspr2Text + ")"),
+            schueler.Data.AndereFremdspr2Note));
         }
 
         liste.Add(new FachSchuelerNotenDruckKurz(schueler.Seminarfachnote));
@@ -90,6 +99,7 @@ namespace diNo
       return result;
     }
 
+    // TODO: Überflüssig, wegen lokaler Variable
     public string GetUnterpunktungenString(Zeitpunkt z)
     {
       string result = "";
@@ -104,7 +114,94 @@ namespace diNo
 
       return result;
     }
+    
+    // Zu diesem Zeitpunkt werden die Notenanzahlen gebildet,
+    // wird dieser geändert, muss neu gerechnet werden
+    public void SetZeitpunkt(Zeitpunkt z)
+    {
+      if (zeitpunkt!=z)
+      {
+        anzahlNoten = null;
+        zeitpunkt = z;
+      }
     }
+    
+    // liefert Anzahl der Sechser, Fünfer, ..., egal ob Prüfungsfach oder nicht
+    public int AnzahlNoten(int note)
+    {
+      return AnzahlNoten(note,true) + AnzahlNoten(note, false);      
+    }
+
+    // Doku s. private Variable
+    public int AnzahlNoten(int note, bool SAP)
+    {
+      if (anzahlNoten == null)
+      {
+        if (zeitpunkt==Zeitpunkt.None) zeitpunkt = (Zeitpunkt)Zugriff.Instance.aktZeitpunkt;
+        anzahlNoten = new int[7,2];
+        InitAnzahlNoten();
+      }
+      if (SAP) return anzahlNoten[note,1];
+      else return anzahlNoten[note,0];
+    }
+
+    private void InitAnzahlNoten()
+    {      
+      string kuerzel;
+      Unterpunktungen="";
+      foreach (var fachNoten in alleFaecher)
+      {
+        kuerzel = fachNoten.getFach.Kuerzel;
+        if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
+        byte? relevanteNote = fachNoten.getRelevanteNote(zeitpunkt);
+        int istSAP = fachNoten.getFach.IstSAPFach() ? 1:0;
+        if (relevanteNote != null)
+        {                         
+          if (relevanteNote == 0)
+          {
+            anzahlNoten[6,istSAP]++;
+            if (kuerzel=="D") hatDeutsch6=true;
+          }
+          else if (relevanteNote < 4) anzahlNoten[5,istSAP]++;
+          else if (relevanteNote == 4) anzahlNoten[4,istSAP]++; // als 4 zählen wir nur 4P für Gefährdungsmitteilung
+          else if (relevanteNote >=13) anzahlNoten[1,istSAP]++;
+          else if (relevanteNote >= 10) anzahlNoten[2,istSAP]++;
+          else if (relevanteNote >= 7) anzahlNoten[3,istSAP]++;
+
+          if (relevanteNote <4 || relevanteNote == 4 && zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+            Unterpunktungen += fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
+        }
+      }
+    }
+
+    public bool HatNichtBestanden()
+    {
+      return AnzahlNoten(6) > 0 || AnzahlNoten(5) > 1;
+    }
+
+    public bool KannAusgleichen()
+    {
+      // geht nur, wenn 1x6 und keine 5 oder 2x5 und keine 6 vorliegt.
+      if (hatDeutsch6 || 2*AnzahlNoten(6) + AnzahlNoten(5) >2)
+        return false;
+
+      if (AnzahlNoten(3,true)>=3) return true; // Ausgleich mit 3x3 in Prüfungsfächern
+      if (AnzahlNoten(1)>=1 || AnzahlNoten(2)>=2) // Ausgleich mit 1x1 oder 2x2
+      {
+        // Prüfungsfächer müssen mit Prüfungsfächern ausgeglichen werden:
+        if (2*AnzahlNoten(6,true) + AnzahlNoten(5, true) <= 2*AnzahlNoten(1,true) + AnzahlNoten(2,true))
+          return true;
+      }
+      return false;
+    }
+
+    public bool MAPmoeglich()
+    {
+      return true;
+    }
+
+
+  }
 
     /// <summary>
     /// Verwaltet alle Noten eines Schülers in einem Fach (=Kurs)
@@ -124,6 +221,7 @@ namespace diNo
         // jedes Arrayelement enthält eine Liste mit Noten dieses Typs.
         private IList<int>[,] noten = new List<int>[Enum.GetValues(typeof(Halbjahr)).Length,Enum.GetValues(typeof(Notentyp)).Length];
         private BerechneteNote[] schnitte = new BerechneteNote[Enum.GetValues(typeof(Halbjahr)).Length];
+
 
         public FachSchuelerNoten(int aschuelerid, int akursid)
         {

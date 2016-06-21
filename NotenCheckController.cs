@@ -48,7 +48,7 @@ namespace diNo
         public void CheckSchueler(Schueler s)
         { 
           if ((modus==NotenCheckModus.EigeneKlasse && s.getKlasse.Klassenleiter.Id != Zugriff.Instance.lehrer.Id) ||
-               s.Status==Schuelerstatus.Abgemeldet || 
+               s.Status==Schuelerstatus.Abgemeldet || s.Status==Schuelerstatus.SAPabgebrochen || 
                s.Status==Schuelerstatus.NichtZurSAPZugelassen && zeitpunkt > Zeitpunkt.ErstePA ) // nicht zugelassene raus
             return;
 

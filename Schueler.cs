@@ -713,7 +713,8 @@ namespace diNo
   {
     Aktiv = 0,
     Abgemeldet = 1,
-    NichtZurSAPZugelassen = 2      
+    NichtZurSAPZugelassen = 2,
+    SAPabgebrochen = 3         
   }
 
   public class SchullaufbahnDruck

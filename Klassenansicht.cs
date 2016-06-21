@@ -32,7 +32,8 @@ namespace diNo
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
     {
-      schueler = treeListView1.SelectedObject as Schueler;
+      if (treeListView1.SelectedObject is Schueler)
+        schueler = treeListView1.SelectedObject as Schueler;
       bool adminEnabled = schueler != null && (Zugriff.Instance.lehrer.HatRolle(Rolle.Admin) || Zugriff.Instance.lehrer.HatRolle(Rolle.Sekretariat));
       this.tabPageAdmin.Enabled = adminEnabled;
       this.userControlKurszuordnungen1.Enabled = adminEnabled;
