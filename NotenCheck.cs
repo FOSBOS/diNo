@@ -189,12 +189,14 @@ namespace diNo
         }
         else
         {
+          /* s. UnterpunktungsChecker
           var note = seminarfachnoten[0].Gesamtnote;
 
           if (note < 4)
           {
             contr.Add(null, "Im Seminarfach wurden " + note + " Punkte erzielt.");
           }
+          */
 
           if (seminarfachnoten[0].IsThemaLangNull() && seminarfachnoten[0].IsThemaKurzNull())
           {
@@ -451,7 +453,6 @@ namespace diNo
           { 
             contr.Add(Vorkommnisart.BeiWeiteremAbsinken,n.Unterpunktungen);
           }
-          contr.ErzeugeZeugnisVorkommnis();
 
           if (schueler.Data.IsProbezeitBisNull() || !(schueler.Data.ProbezeitBis > DateTime.Parse("01.02." +  (DateTime.Today).Year)))
             return; // bei Schülern ohne PZ geht es zum Halbjahr nur um Gefährdungen
@@ -493,11 +494,7 @@ namespace diNo
             else 
               contr.Add(null, "Nicht bestanden, kein Notenausgleich möglich: " + n.Unterpunktungen); 
           }
-          contr.ErzeugeZeugnisVorkommnis(false);
         }
-        else
-          contr.ErzeugeZeugnisVorkommnis(true);
-      
     }
   }
 

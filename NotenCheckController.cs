@@ -48,7 +48,13 @@ namespace diNo
         public void CheckSchueler(Schueler s)
         { 
           if ((modus==NotenCheckModus.EigeneKlasse && s.getKlasse.Klassenleiter.Id != Zugriff.Instance.lehrer.Id) ||
-               s.Status==Schuelerstatus.Abgemeldet || s.Status==Schuelerstatus.SAPabgebrochen || 
+               s.Status==Schuelerstatus.Abgemeldet) return;
+              
+          // auch abgebrochene bekommen ein Jahreszeugnis
+          if (modus!=NotenCheckModus.EigeneNotenVollstaendigkeit && (zeitpunkt >= Zeitpunkt.DrittePA || zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS))
+            ZeugnisVorkommnisAnlegen(s);
+
+          if (s.Status==Schuelerstatus.SAPabgebrochen || 
                s.Status==Schuelerstatus.NichtZurSAPZugelassen && zeitpunkt > Zeitpunkt.ErstePA ) // nicht zugelassene raus
             return;
 
@@ -87,32 +93,12 @@ namespace diNo
           }
     }   
     
-    public void ErzeugeZeugnisVorkommnis(bool bestanden=true)
+    public void ZeugnisVorkommnisAnlegen(Schueler s)
     {
-      if (modus!=NotenCheckModus.VorkommnisseErzeugen) return;
-
-      if (zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS)
-        aktSchueler.AddVorkommnis(Vorkommnisart.Zwischenzeugnis, "");
-
-      else if (zeitpunkt==Zeitpunkt.DrittePA)
-      {
-        if (!bestanden)
-          aktSchueler.AddVorkommnis(Vorkommnisart.Jahreszeugnis,"");   
-        else if (aktSchueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
-          aktSchueler.AddVorkommnis(Vorkommnisart.Fachabiturzeugnis,"");
-        else if (aktSchueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
-        {
-          var f = aktSchueler.getNoten.FindeFach("F",false);
-          if (aktSchueler.Wahlpflichtfach=="F3" || // fortgef. F
-            (!aktSchueler.Data.IsAndereFremdspr2NoteNull()) ||
-            f != null && f.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis > 3)
-            aktSchueler.AddVorkommnis(Vorkommnisart.allgemeineHochschulreife,"");
-          else 
-            aktSchueler.AddVorkommnis(Vorkommnisart.fachgebundeneHochschulreife,"");          
-        }
-      }
-      else if (zeitpunkt==Zeitpunkt.Jahresende && aktSchueler.getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
-        aktSchueler.AddVorkommnis(Vorkommnisart.Jahreszeugnis,"");
+      Vorkommnisart v = s.getNoten.Zeugnisart(zeitpunkt);
+      
+      if (v!=Vorkommnisart.NotSet && (v==Vorkommnisart.allgemeineHochschulreife || modus==NotenCheckModus.VorkommnisseErzeugen))
+        Add(v,"");
     }
 
     // fügt eine Meldung/Vorkommnis hinzu, und erzeugt ggf. abhängige Vorkommnisse

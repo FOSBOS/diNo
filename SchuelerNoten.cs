@@ -29,7 +29,7 @@ namespace diNo
             alleFaecher = new List<FachSchuelerNoten>();
             foreach (var kurs in kurse)
             {
-                alleFaecher.Add(new FachSchuelerNoten(schueler.Id, kurs.Id));
+              alleFaecher.Add(new FachSchuelerNoten(schueler.Id, kurs.Id));
             }
             alleFaecher.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));       
         }
@@ -172,6 +172,19 @@ namespace diNo
             Unterpunktungen += fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
         }
       }
+
+      // TODO: in alleFaecher integrieren
+      if (!schueler.Seminarfachnote.IsGesamtnoteNull())
+      {
+        int relevanteNote = schueler.Seminarfachnote.Gesamtnote;
+        if (relevanteNote == 0) anzahlNoten[6,0]++;          
+        else if (relevanteNote < 4) anzahlNoten[5,0]++;
+        else if (relevanteNote >=13) anzahlNoten[1,0]++;
+        else if (relevanteNote >= 10) anzahlNoten[2,0]++;        
+
+        if (relevanteNote <4)
+          Unterpunktungen += "Sem (" + relevanteNote +") ";
+      }
     }
 
     public bool HatNichtBestanden()
@@ -197,9 +210,87 @@ namespace diNo
 
     public bool MAPmoeglich()
     {
-      return true;
+      // Anzahl 5er und 6er nach einen MAP mit "bestmöglichem" Ergebnis
+      int anz5=0; 
+      int anz6=0;
+      bool MAPinSAPFach=false; // je eine MAP möglich
+      bool MAPinNebenFach=false;
+      bool istSAPFach;
+      decimal? jf=null;
+      decimal? sap=null;
+      
+      // Seminarfachnote ist gesetzt
+      if (!schueler.Seminarfachnote.IsGesamtnoteNull() && schueler.Seminarfachnote.Gesamtnote<4) anz5++;
+
+      foreach (var f in alleFaecher)
+      {
+        string kuerzel = f.getFach.Kuerzel;
+        if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
+
+        byte? note = f.getRelevanteNote(Zeitpunkt.ZweitePA);
+        if (note<4)
+        {          
+          jf = f.getSchnitt(Halbjahr.Zweites).JahresfortgangMitKomma;
+          istSAPFach = f.getFach.IstSAPFach();
+
+          // Nur Fächer in denen eine MAP möglich ist (nicht Englisch und Fächer aus der 11. Klasse)
+          if (kuerzel!="E" && jf!=null)
+          {
+            // 1x MAP im Prüfungsfach und 1x im Nebenfach möglich:
+            if (istSAPFach && !MAPinSAPFach) 
+            {
+              if (f.getNotenanzahl(Halbjahr.Zweites,Notentyp.APSchriftlich)==0) // Note liegt ggf. noch nicht vor.
+                return true;                                                    // Meldung über NotenanzahlChecker
+              
+              sap = f.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich)[0];
+              byte noteMoegl = Notentools.BerechneZeugnisnote(jf,sap,15);
+              if (noteMoegl>=4 || note==0) // wenn er auf dem 5er bleibt, soll er lieber ein anderes Fach nehmen
+              {
+                note = noteMoegl;
+                MAPinSAPFach = true;
+              }
+            }
+            if (!istSAPFach && !MAPinNebenFach)
+            {
+              note = 5; // im Nebenfach nie ein Problem (wenn er sich anstrengt)
+              MAPinNebenFach = true;
+            }
+          }
+          if (note==0) anz6++;
+          else if (note<4) anz5++;
+        }
+      }    
+
+      return (anz6==0 && anz5<=1); // dann hätte er bestanden
     }
 
+    public Vorkommnisart Zeugnisart(Zeitpunkt zeitpunkt)
+    {    
+      if (zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS)
+        return Vorkommnisart.Zwischenzeugnis;
+
+      else if (zeitpunkt==Zeitpunkt.DrittePA && schueler.getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
+      {
+        if (HatNichtBestanden())
+          return Vorkommnisart.Jahreszeugnis;
+        else if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
+          return Vorkommnisart.Fachabiturzeugnis;
+        else if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+        {
+          var f = schueler.getNoten.FindeFach("F",false);
+          if (/*aktSchueler.Wahlpflichtfach=="F3" || */ // fortgef. F, da muss die andere Fremdspr. immer belegt sein!
+            !schueler.Data.IsAndereFremdspr2NoteNull() ||
+            f != null && f.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis > 3)
+              return Vorkommnisart.allgemeineHochschulreife;
+          else 
+            return Vorkommnisart.fachgebundeneHochschulreife;
+        }
+      }
+      else if (zeitpunkt==Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
+        return Vorkommnisart.Jahreszeugnis;
+
+      return Vorkommnisart.NotSet;
+    }
 
   }
 
