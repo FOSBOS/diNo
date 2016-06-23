@@ -54,8 +54,10 @@ namespace diNo
           if (modus!=NotenCheckModus.EigeneNotenVollstaendigkeit && (zeitpunkt >= Zeitpunkt.DrittePA || zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS))
             ZeugnisVorkommnisAnlegen(s);
 
-          if (s.Status==Schuelerstatus.SAPabgebrochen || 
-               s.Status==Schuelerstatus.NichtZurSAPZugelassen && zeitpunkt > Zeitpunkt.ErstePA ) // nicht zugelassene raus
+          if (s.Status == Schuelerstatus.SAPabgebrochen && zeitpunkt == Zeitpunkt.ZweitePA)
+            Add(null, "Prüfung abgebrochen"); // TODO: dazu Vorkommnis anlegen
+          
+           if ((s.Status == Schuelerstatus.SAPabgebrochen|| s.Status==Schuelerstatus.NichtZurSAPZugelassen) && zeitpunkt > Zeitpunkt.ErstePA ) // nicht zugelassene raus
             return;
 
           Klasse klasse;

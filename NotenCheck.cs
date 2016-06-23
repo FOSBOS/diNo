@@ -248,7 +248,11 @@ namespace diNo
         {
           if (fachNoten.getFach.IstSAPFach() && fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
           {
-            contr.Add( kurs, "Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
+            contr.Add(kurs, "Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
+            if (fachNoten.getFach.Kuerzel == "E" && fachNoten.getNotenanzahl(Notentyp.APMuendlich) == 0)
+            {
+              contr.Add(kurs, "Es liegt keine Note in der Gruppenprüfung vor.");
+            }
           }
           continue;
         }
