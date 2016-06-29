@@ -63,6 +63,7 @@ namespace diNo
         btnPrint.Enabled = true;
 
         btnSave.Enabled = Zugriff.Instance.lehrer.HatRolle(Rolle.Admin) ||
+          Zugriff.Instance.lehrer.HatRolle(Rolle.Sekretariat) ||
           Zugriff.Instance.lehrer.HatRolle(Rolle.Seminarfach) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn ||
           schueler.BetreuerId == Zugriff.Instance.lehrer.Id ||
           Zugriff.Instance.lehrer.HatRolle(Rolle.FpAWirtschaft) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && (schueler.Data.Ausbildungsrichtung == "W" || schueler.Data.Ausbildungsrichtung == "WVR") ||
