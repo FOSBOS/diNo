@@ -1,0 +1,8 @@
+Hallo Markus,
+
+ich habe den Fehler mit der allg. HSR ausgebaut.
+Um beide DNoten für die 13. zu speichern musste ich die DB anpassen (s. update.sql).
+Installiere also bitte die neue Version und führe Berechnungen speichern aus, damit beide DNoten berechnet werden.
+Dann kannst du mit dem Skript DNote.sql unter SQL-Skripte dem Josef nochmal beide Schnitte geben.
+
+Grüße Claus

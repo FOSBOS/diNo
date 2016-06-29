@@ -23,7 +23,9 @@ namespace diNo
       schueler = s;
       if ((zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA) && s.getKlasse.Jahrgangsstufe > Jahrgangsstufe.Elf)
       {
-        s.berechneDNote();
+        s.berechneDNote(false);
+        if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+          s.berechneDNote(true); // DNote für allg. HSR
 
         s.Save();
       }
