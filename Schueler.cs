@@ -169,6 +169,12 @@ namespace diNo
 
         return klasse;
       }
+      set
+      {
+        klasse = value;
+        if (klasse.Data.Id != data.KlasseId)
+          throw new InvalidOperationException("Klasse passt nicht zur KlassenID des Schülers.");
+      }
     }
 
     public int BetreuerId

@@ -481,6 +481,8 @@ namespace diNo
               contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich,n.Unterpunktungen);
             else 
               contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen,n.Unterpunktungen);
+            if (n.KannAusgleichen())
+              contr.Add(null,"Notenausgleich möglich");
           }          
           return;        
         }
@@ -488,7 +490,7 @@ namespace diNo
         // Jahresende, 3. PA, Probezeit (BOS und Hj.)
         if (n.HatNichtBestanden())
         {
-          if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich prüfen: " + n.Unterpunktungen);
+          if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich möglich: " + n.Unterpunktungen);
           else
           {
             if (contr.zeitpunkt == Zeitpunkt.DrittePA)
@@ -496,7 +498,7 @@ namespace diNo
             else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
               contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,n.Unterpunktungen);
             else 
-              contr.Add(null, "Nicht bestanden, kein Notenausgleich möglich: " + n.Unterpunktungen); 
+              contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen); 
           }
         }
     }
