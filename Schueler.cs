@@ -169,6 +169,12 @@ namespace diNo
 
         return klasse;
       }
+      set
+      {
+        klasse = value;
+        if (klasse.Data.Id != data.KlasseId)
+          throw new InvalidOperationException("Klasse passt nicht zur KlassenID des Schülers.");
+      }
     }
 
     public int BetreuerId
@@ -492,13 +498,12 @@ namespace diNo
       return false;
     }
 
-
-    public void berechneDNote()
+    public void berechneDNote(bool allgHSR)
     {
       int summe = 0, anz = 0;
       decimal erg;
       var faecher = getNoten.alleFaecher;
-      bool mitFranz = getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && Data.IsAndereFremdspr2NoteNull();
+      bool FranzVorhanden = !Data.IsAndereFremdspr2NoteNull();
 
       // Französisch wird nur in der 13. Klasse gewertet, wenn der Kurs belegt ist und
       // der Schüler nicht nur fachgebundene HSR bekommt (z.B. wegen Note 5 in F)
@@ -512,8 +517,12 @@ namespace diNo
         var fk = fach.getFach.Kuerzel;
         byte? note = fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
         
-        if (note==null || fk == "Ku" || fk == "Smw" || (fk=="F" && (!mitFranz || note.GetValueOrDefault()<4)))
+        if (note==null || fk == "Ku" || fk == "Smw" || (fk=="F" && !allgHSR))
           continue;
+
+        // liegen die Voraussetzungen für allg. HSR vor?
+        if (allgHSR && (fk=="F-Wi" ||  fk=="F" && note.GetValueOrDefault()>3))
+          FranzVorhanden = true;
 
         if (note == 0)
         {
@@ -535,14 +544,16 @@ namespace diNo
         }
 
         // Alternative 2. Fremdsprache für die allgemeine Hochschulreife
-        if (!Data.IsAndereFremdspr2NoteNull())
+        if (allgHSR && !Data.IsAndereFremdspr2NoteNull())
         {
           summe += Data.AndereFremdspr2Note;
           anz++;
         }
       }
-                  
-      if (anz > 0)
+       
+      if (allgHSR && !FranzVorhanden)           
+        Data.SetDNoteAllgNull();
+      else if (anz > 0)
       {
         erg = (17 - (decimal)summe / anz) / 3;
         if (erg < 1)
@@ -553,7 +564,10 @@ namespace diNo
         {
           erg = Math.Floor(erg * 10) / 10; // auf 1 NK abrunden
         }
-        data.DNote = erg;
+        if (allgHSR)
+          data.DNoteAllg = erg;
+        else
+          data.DNote = erg;
       }
       else
       {

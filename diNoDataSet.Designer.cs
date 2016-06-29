@@ -6517,6 +6517,8 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnAndereFremdspr2Text;
             
+            private global::System.Data.DataColumn columnDNoteAllg;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SchuelerDataTable() {
@@ -6952,6 +6954,14 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DNoteAllgColumn {
+                get {
+                    return this.columnDNoteAllg;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -7037,7 +7047,8 @@ namespace diNo {
                         decimal DNote, 
                         int Status, 
                         int AndereFremdspr2Note, 
-                        string AndereFremdspr2Text) {
+                        string AndereFremdspr2Text, 
+                        decimal DNoteAllg) {
                 SchuelerRow rowSchuelerRow = ((SchuelerRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
@@ -7089,7 +7100,8 @@ namespace diNo {
                         DNote,
                         Status,
                         AndereFremdspr2Note,
-                        AndereFremdspr2Text};
+                        AndereFremdspr2Text,
+                        DNoteAllg};
                 if ((parentKlasseRowByFK_Schueler_ToTable != null)) {
                     columnValuesArray[3] = parentKlasseRowByFK_Schueler_ToTable[0];
                 }
@@ -7175,6 +7187,7 @@ namespace diNo {
                 this.columnStatus = base.Columns["Status"];
                 this.columnAndereFremdspr2Note = base.Columns["AndereFremdspr2Note"];
                 this.columnAndereFremdspr2Text = base.Columns["AndereFremdspr2Text"];
+                this.columnDNoteAllg = base.Columns["DNoteAllg"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7280,6 +7293,8 @@ namespace diNo {
                 base.Columns.Add(this.columnAndereFremdspr2Note);
                 this.columnAndereFremdspr2Text = new global::System.Data.DataColumn("AndereFremdspr2Text", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAndereFremdspr2Text);
+                this.columnDNoteAllg = new global::System.Data.DataColumn("DNoteAllg", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDNoteAllg);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AllowDBNull = false;
@@ -12862,6 +12877,22 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal DNoteAllg {
+                get {
+                    try {
+                        return ((decimal)(this[this.tableSchueler.DNoteAllgColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte DNoteAllg in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.DNoteAllgColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public KlasseRow KlasseRow {
                 get {
                     return ((KlasseRow)(this.GetParentRow(this.Table.ParentRelations["FK_Schueler_ToTable"])));
@@ -13432,6 +13463,18 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetAndereFremdspr2TextNull() {
                 this[this.tableSchueler.AndereFremdspr2TextColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDNoteAllgNull() {
+                return this.IsNull(this.tableSchueler.DNoteAllgColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDNoteAllgNull() {
+                this[this.tableSchueler.DNoteAllgColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -20751,6 +20794,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             tableMapping.ColumnMappings.Add("Status", "Status");
             tableMapping.ColumnMappings.Add("AndereFremdspr2Note", "AndereFremdspr2Note");
             tableMapping.ColumnMappings.Add("AndereFremdspr2Text", "AndereFremdspr2Text");
+            tableMapping.ColumnMappings.Add("DNoteAllg", "DNoteAllg");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -20770,18 +20814,18 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                 "ftsbezeichnungEltern1], [NachnameEltern2], [VornameEltern2], [AnredeEltern2], [V" +
                 "erwandtschaftsbezeichnungEltern2], [EintrittJahrgangsstufe], [EintrittAm], [Eint" +
                 "rittAusSchulnummer], [Email], [Notfalltelefonnummer], [BetreuerId], [DNote], [St" +
-                "atus], [AndereFremdspr2Note], [AndereFremdspr2Text]) VALUES (@Id, @Name, @Vornam" +
-                "e, @KlasseId, @Rufname, @Geschlecht, @Geburtsdatum, @Geburtsort, @Bekenntnis, @A" +
-                "nschriftPLZ, @AnschriftOrt, @AnschriftStrasse, @AnschriftTelefonnummer, @Ausbild" +
-                "ungsrichtung, @Fremdsprache2, @ReligionOderEthik, @Wahlpflichtfach, @Wahlfach1, " +
-                "@Wahlfach2, @Wahlfach3, @Wahlfach4, @Wiederholung1Jahrgangsstufe, @Wiederholung2" +
-                "Jahrgangsstufe, @Wiederholung1Grund, @Wiederholung2Grund, @ProbezeitBis, @Austri" +
-                "ttsdatum, @SchulischeVorbildung, @BeruflicheVorbildung, @LRSStoerung, @LRSSchwae" +
-                "che, @LRSBisDatum, @NachnameEltern1, @VornameEltern1, @AnredeEltern1, @Verwandts" +
-                "chaftsbezeichnungEltern1, @NachnameEltern2, @VornameEltern2, @AnredeEltern2, @Ve" +
-                "rwandtschaftsbezeichnungEltern2, @EintrittJahrgangsstufe, @EintrittAm, @Eintritt" +
-                "AusSchulnummer, @Email, @Notfalltelefonnummer, @BetreuerId, @DNote, @Status, @An" +
-                "dereFremdspr2Note, @AndereFremdspr2Text)";
+                "atus], [AndereFremdspr2Note], [AndereFremdspr2Text], [DNoteAllg]) VALUES (@Id, @" +
+                "Name, @Vorname, @KlasseId, @Rufname, @Geschlecht, @Geburtsdatum, @Geburtsort, @B" +
+                "ekenntnis, @AnschriftPLZ, @AnschriftOrt, @AnschriftStrasse, @AnschriftTelefonnum" +
+                "mer, @Ausbildungsrichtung, @Fremdsprache2, @ReligionOderEthik, @Wahlpflichtfach," +
+                " @Wahlfach1, @Wahlfach2, @Wahlfach3, @Wahlfach4, @Wiederholung1Jahrgangsstufe, @" +
+                "Wiederholung2Jahrgangsstufe, @Wiederholung1Grund, @Wiederholung2Grund, @Probezei" +
+                "tBis, @Austrittsdatum, @SchulischeVorbildung, @BeruflicheVorbildung, @LRSStoerun" +
+                "g, @LRSSchwaeche, @LRSBisDatum, @NachnameEltern1, @VornameEltern1, @AnredeEltern" +
+                "1, @VerwandtschaftsbezeichnungEltern1, @NachnameEltern2, @VornameEltern2, @Anred" +
+                "eEltern2, @VerwandtschaftsbezeichnungEltern2, @EintrittJahrgangsstufe, @Eintritt" +
+                "Am, @EintrittAusSchulnummer, @Email, @Notfalltelefonnummer, @BetreuerId, @DNote," +
+                " @Status, @AndereFremdspr2Note, @AndereFremdspr2Text, @DNoteAllg)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -20833,6 +20877,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Status", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Note", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Note", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Text", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Text", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DNoteAllg", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 1, "DNoteAllg", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [Schueler] SET [Id] = @Id, [Name] = @Name, [Vorname] = @Vorname, [KlasseId" +
@@ -20857,8 +20902,8 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                 "tJahrgangsstufe, [EintrittAm] = @EintrittAm, [EintrittAusSchulnummer] = @Eintrit" +
                 "tAusSchulnummer, [Email] = @Email, [Notfalltelefonnummer] = @Notfalltelefonnumme" +
                 "r, [BetreuerId] = @BetreuerId, [DNote] = @DNote, [Status] = @Status, [AndereFrem" +
-                "dspr2Note] = @AndereFremdspr2Note, [AndereFremdspr2Text] = @AndereFremdspr2Text " +
-                "WHERE (([Id] = @Original_Id))";
+                "dspr2Note] = @AndereFremdspr2Note, [AndereFremdspr2Text] = @AndereFremdspr2Text," +
+                " [DNoteAllg] = @DNoteAllg WHERE (([Id] = @Original_Id))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -20910,6 +20955,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Status", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Note", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Note", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Text", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Text", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DNoteAllg", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 1, "DNoteAllg", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
@@ -20931,22 +20977,22 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT AndereFremdspr2Note, AndereFremdspr2Text, AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, BetreuerId, DNote, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, Status, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId)";
+            this._commandCollection[1].CommandText = @"SELECT AndereFremdspr2Note, AndereFremdspr2Text, AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, BetreuerId, DNote, DNoteAllg, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, Status, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = @"SELECT AndereFremdspr2Note, AndereFremdspr2Text, AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, BetreuerId, DNote, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, Status, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler";
+            this._commandCollection[2].CommandText = @"SELECT AndereFremdspr2Note, AndereFremdspr2Text, AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, BetreuerId, DNote, DNoteAllg, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, Status, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = @"SELECT AndereFremdspr2Note, AndereFremdspr2Text, AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, BetreuerId, DNote, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, Status, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId) AND (Ausbildungsrichtung = @Ausbildungsrichtung)";
+            this._commandCollection[3].CommandText = @"SELECT AndereFremdspr2Note, AndereFremdspr2Text, AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, BetreuerId, DNote, DNoteAllg, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, SchulischeVorbildung, Status, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM Schueler WHERE (KlasseId = @KlasseId) AND (Ausbildungsrichtung = @Ausbildungsrichtung)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[4].Connection = this.Connection;
-            this._commandCollection[4].CommandText = @"SELECT Schueler.AndereFremdspr2Note, Schueler.AndereFremdspr2Text, Schueler.AnredeEltern1, Schueler.AnredeEltern2, Schueler.AnschriftOrt, Schueler.AnschriftPLZ, Schueler.AnschriftStrasse, Schueler.AnschriftTelefonnummer, Schueler.Ausbildungsrichtung, Schueler.Austrittsdatum, Schueler.Bekenntnis, Schueler.BeruflicheVorbildung, Schueler.BetreuerId, Schueler.DNote, Schueler.EintrittAm, Schueler.EintrittAusSchulnummer, Schueler.EintrittJahrgangsstufe, Schueler.Email, Schueler.Fremdsprache2, Schueler.Geburtsdatum, Schueler.Geburtsort, Schueler.Geschlecht, Schueler.Id, Schueler.KlasseId, Schueler.LRSBisDatum, Schueler.LRSSchwaeche, Schueler.LRSStoerung, Schueler.NachnameEltern1, Schueler.NachnameEltern2, Schueler.Name, Schueler.Notfalltelefonnummer, Schueler.ProbezeitBis, Schueler.ReligionOderEthik, Schueler.Rufname, Schueler.SchulischeVorbildung, Schueler.Status, Schueler.VerwandtschaftsbezeichnungEltern1, Schueler.VerwandtschaftsbezeichnungEltern2, Schueler.Vorname, Schueler.VornameEltern1, Schueler.VornameEltern2, Schueler.Wahlfach1, Schueler.Wahlfach2, Schueler.Wahlfach3, Schueler.Wahlfach4, Schueler.Wahlpflichtfach, Schueler.Wiederholung1Grund, Schueler.Wiederholung1Jahrgangsstufe, Schueler.Wiederholung2Grund, Schueler.Wiederholung2Jahrgangsstufe FROM Schueler INNER JOIN SchuelerKurs ON Schueler.Id = SchuelerKurs.SchuelerId WHERE (SchuelerKurs.KursId = @KursId) ORDER BY Schueler.KlasseId, Schueler.Name, Schueler.Vorname";
+            this._commandCollection[4].CommandText = @"SELECT Schueler.AndereFremdspr2Note, Schueler.AndereFremdspr2Text, Schueler.AnredeEltern1, Schueler.AnredeEltern2, Schueler.AnschriftOrt, Schueler.AnschriftPLZ, Schueler.AnschriftStrasse, Schueler.AnschriftTelefonnummer, Schueler.Ausbildungsrichtung, Schueler.Austrittsdatum, Schueler.Bekenntnis, Schueler.BeruflicheVorbildung, Schueler.BetreuerId, Schueler.DNote, Schueler.DNoteAllg, Schueler.EintrittAm, Schueler.EintrittAusSchulnummer, Schueler.EintrittJahrgangsstufe, Schueler.Email, Schueler.Fremdsprache2, Schueler.Geburtsdatum, Schueler.Geburtsort, Schueler.Geschlecht, Schueler.Id, Schueler.KlasseId, Schueler.LRSBisDatum, Schueler.LRSSchwaeche, Schueler.LRSStoerung, Schueler.NachnameEltern1, Schueler.NachnameEltern2, Schueler.Name, Schueler.Notfalltelefonnummer, Schueler.ProbezeitBis, Schueler.ReligionOderEthik, Schueler.Rufname, Schueler.SchulischeVorbildung, Schueler.Status, Schueler.VerwandtschaftsbezeichnungEltern1, Schueler.VerwandtschaftsbezeichnungEltern2, Schueler.Vorname, Schueler.VornameEltern1, Schueler.VornameEltern2, Schueler.Wahlfach1, Schueler.Wahlfach2, Schueler.Wahlfach3, Schueler.Wahlfach4, Schueler.Wahlpflichtfach, Schueler.Wiederholung1Grund, Schueler.Wiederholung1Jahrgangsstufe, Schueler.Wiederholung2Grund, Schueler.Wiederholung2Jahrgangsstufe FROM Schueler INNER JOIN SchuelerKurs ON Schueler.Id = SchuelerKurs.SchuelerId WHERE (SchuelerKurs.KursId = @KursId) ORDER BY Schueler.KlasseId, Schueler.Name, Schueler.Vorname";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
@@ -21162,7 +21208,8 @@ WHERE        ((Kurs.LehrerId = @LehrerId) OR (Schueler.BetreuerId=@LehrerId)) an
                     global::System.Nullable<decimal> DNote, 
                     global::System.Nullable<int> Status, 
                     global::System.Nullable<int> AndereFremdspr2Note, 
-                    string AndereFremdspr2Text) {
+                    string AndereFremdspr2Text, 
+                    global::System.Nullable<decimal> DNoteAllg) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(Id));
             if ((Name == null)) {
                 throw new global::System.ArgumentNullException("Name");
@@ -21453,6 +21500,12 @@ WHERE        ((Kurs.LehrerId = @LehrerId) OR (Schueler.BetreuerId=@LehrerId)) an
             else {
                 this.Adapter.InsertCommand.Parameters[49].Value = ((string)(AndereFremdspr2Text));
             }
+            if ((DNoteAllg.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[50].Value = ((decimal)(DNoteAllg.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[50].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -21524,6 +21577,7 @@ WHERE        ((Kurs.LehrerId = @LehrerId) OR (Schueler.BetreuerId=@LehrerId)) an
                     global::System.Nullable<int> Status, 
                     global::System.Nullable<int> AndereFremdspr2Note, 
                     string AndereFremdspr2Text, 
+                    global::System.Nullable<decimal> DNoteAllg, 
                     int Original_Id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(Id));
             if ((Name == null)) {
@@ -21815,7 +21869,13 @@ WHERE        ((Kurs.LehrerId = @LehrerId) OR (Schueler.BetreuerId=@LehrerId)) an
             else {
                 this.Adapter.UpdateCommand.Parameters[49].Value = ((string)(AndereFremdspr2Text));
             }
-            this.Adapter.UpdateCommand.Parameters[50].Value = ((int)(Original_Id));
+            if ((DNoteAllg.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[50].Value = ((decimal)(DNoteAllg.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[50].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[51].Value = ((int)(Original_Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -21886,8 +21946,9 @@ WHERE        ((Kurs.LehrerId = @LehrerId) OR (Schueler.BetreuerId=@LehrerId)) an
                     global::System.Nullable<int> Status, 
                     global::System.Nullable<int> AndereFremdspr2Note, 
                     string AndereFremdspr2Text, 
+                    global::System.Nullable<decimal> DNoteAllg, 
                     int Original_Id) {
-            return this.Update(Original_Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, AnschriftPLZ, AnschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Fremdsprache2, ReligionOderEthik, Wahlpflichtfach, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wiederholung1Jahrgangsstufe, Wiederholung2Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, LRSSchwaeche, LRSBisDatum, NachnameEltern1, VornameEltern1, AnredeEltern1, VerwandtschaftsbezeichnungEltern1, NachnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2, EintrittJahrgangsstufe, EintrittAm, EintrittAusSchulnummer, Email, Notfalltelefonnummer, BetreuerId, DNote, Status, AndereFremdspr2Note, AndereFremdspr2Text, Original_Id);
+            return this.Update(Original_Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, AnschriftPLZ, AnschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Fremdsprache2, ReligionOderEthik, Wahlpflichtfach, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wiederholung1Jahrgangsstufe, Wiederholung2Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, LRSSchwaeche, LRSBisDatum, NachnameEltern1, VornameEltern1, AnredeEltern1, VerwandtschaftsbezeichnungEltern1, NachnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2, EintrittJahrgangsstufe, EintrittAm, EintrittAusSchulnummer, Email, Notfalltelefonnummer, BetreuerId, DNote, Status, AndereFremdspr2Note, AndereFremdspr2Text, DNoteAllg, Original_Id);
         }
     }
     

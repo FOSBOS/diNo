@@ -11,7 +11,7 @@ namespace diNo
     private static Zugriff _Instance = null;
 
     public string Username { get; private set; }
-    public Lehrer lehrer = null;
+    public Lehrer lehrer = null; // angemeldeter Lehrer
     public List<Klasse> Klassen { get; private set; }
     public int AnzahlSchueler { get; private set; }
     public List<Fach> eigeneFaecher { get; private set; }
@@ -188,6 +188,11 @@ namespace diNo
       }
 
       return false;
+    }
+
+    public bool HatRolle(Rolle typ)
+    {
+      return lehrer.HatRolle(typ);
     }
   }
 

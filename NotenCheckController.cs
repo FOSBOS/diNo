@@ -18,7 +18,7 @@ namespace diNo
         private List<KeyValuePair<string,NotenCheckContainer>> chkContainer;
         private Dictionary<string,NotenCheckCounter> chkCounter;
         private int aktKlassenId=0;
-        private Schueler aktSchueler;
+        private Schueler aktSchueler,vorigerSchueler;
 
         public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus)
         {
@@ -47,6 +47,7 @@ namespace diNo
 
         public void CheckSchueler(Schueler s)
         { 
+          aktSchueler = s;
           if ((modus==NotenCheckModus.EigeneKlasse && s.getKlasse.Klassenleiter.Id != Zugriff.Instance.lehrer.Id) ||
                s.Status==Schuelerstatus.Abgemeldet) return;
               
@@ -86,12 +87,12 @@ namespace diNo
               chkCounter = new Dictionary<string, NotenCheckCounter>();
             }
                 
-            aktSchueler = s; // erst hier: für CreateResults muss noch der alte drinstehen
             foreach (var ch in alleNotenchecks)
             {
                 if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart))
                     ch.Check(s);
             }
+            vorigerSchueler = s; // CreateResults braucht noch den
           }
     }   
     
@@ -153,7 +154,7 @@ namespace diNo
       }
     }
 
-    // am Ende einer Klasse muss die Druckliste erneuert werden
+    // am Ende einer Klasse muss die Druckliste erneuert werden, das merkt man erst, wenn einer neuer Schüler aus einer anderen Klasse kommt
     public void CreateResults()
     {      
       if (aktKlassenId==0) return; // noch keine Klasse erzeugt
@@ -164,7 +165,7 @@ namespace diNo
       foreach (var c in chkCounter)
       {
         if (c.Value.count>maxAnzahl) 
-           res.list.Add(new NotenCheckResult(aktSchueler.getKlasse,c.Value.kurs,c.Value.meldung + " ("+c.Value.count+"x)"));
+           res.list.Add(new NotenCheckResult(vorigerSchueler.getKlasse,c.Value.kurs,c.Value.meldung + " ("+c.Value.count+"x)"));
       }
 
       // einzelne Meldungen
