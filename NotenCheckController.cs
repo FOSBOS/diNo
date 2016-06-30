@@ -98,7 +98,7 @@ namespace diNo
     
     public void ZeugnisVorkommnisAnlegen(Schueler s)
     {
-      Vorkommnisart v = s.getNoten.Zeugnisart(zeitpunkt);
+      Vorkommnisart v = s.Zeugnisart(zeitpunkt);
       
       if (v!=Vorkommnisart.NotSet && (v==Vorkommnisart.allgemeineHochschulreife || modus==NotenCheckModus.VorkommnisseErzeugen))
         Add(v,"");

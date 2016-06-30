@@ -591,8 +591,7 @@ namespace diNo
       int sumSAP=0;
       int noteSAP;
       base.Check(schueler);
-         
-      if (Math.Floor(10*schueler.Data.DNote) > 13 ) // Schnitt mindestens 1.3
+      if (Math.Floor(10*schueler.Data.DNote) > 13 || !schueler.Data.IsDNoteAllgNull() && Math.Floor(10*schueler.Data.DNoteAllg) > 13) // Schnitt mindestens 1.3
         return;
 
       foreach (var fach in noten.alleFaecher)

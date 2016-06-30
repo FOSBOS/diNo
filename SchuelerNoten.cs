@@ -264,34 +264,6 @@ namespace diNo
       return (anz6==0 && anz5<=1); // dann hätte er bestanden
     }
 
-    public Vorkommnisart Zeugnisart(Zeitpunkt zeitpunkt)
-    {    
-      if (zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS)
-        return Vorkommnisart.Zwischenzeugnis;
-
-      else if (zeitpunkt==Zeitpunkt.DrittePA && schueler.getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
-      {
-        if (HatNichtBestanden())
-          return Vorkommnisart.Jahreszeugnis;
-        else if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
-          return Vorkommnisart.Fachabiturzeugnis;
-        else if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
-        {
-          var f = schueler.getNoten.FindeFach("F",false);
-          if (/*aktSchueler.Wahlpflichtfach=="F3" || */ // fortgef. F, da muss die andere Fremdspr. immer belegt sein!
-            !schueler.Data.IsAndereFremdspr2NoteNull() ||
-            f != null && f.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis > 3)
-              return Vorkommnisart.allgemeineHochschulreife;
-          else 
-            return Vorkommnisart.fachgebundeneHochschulreife;
-        }
-      }
-      else if (zeitpunkt==Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
-        return Vorkommnisart.Jahreszeugnis;
-
-      return Vorkommnisart.NotSet;
-    }
-
   }
 
     /// <summary>

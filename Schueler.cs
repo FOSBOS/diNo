@@ -575,6 +575,28 @@ namespace diNo
       }      
     }
 
+    public Vorkommnisart Zeugnisart(Zeitpunkt zeitpunkt)
+    {    
+      if (zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS)
+        return Vorkommnisart.Zwischenzeugnis;
+
+      else if (zeitpunkt==Zeitpunkt.DrittePA && getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
+      {
+        if (getNoten.HatNichtBestanden())
+          return Vorkommnisart.Jahreszeugnis;
+        else if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
+          return Vorkommnisart.Fachabiturzeugnis;
+        else if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+          return (Data.IsDNoteAllgNull() ? Vorkommnisart.fachgebundeneHochschulreife : Vorkommnisart.allgemeineHochschulreife);
+      }
+      else if (zeitpunkt==Zeitpunkt.Jahresende && getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
+        return Vorkommnisart.Jahreszeugnis;
+
+      return Vorkommnisart.NotSet;
+    }
+
+
+
     /// <summary>
     /// Methode für den Klassenwechsel ohne Notenmitnahme.
     /// </summary>
