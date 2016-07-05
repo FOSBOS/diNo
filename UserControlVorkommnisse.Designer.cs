@@ -134,7 +134,7 @@
       this.objectListViewVorkommnisse.Name = "objectListViewVorkommnisse";
       this.objectListViewVorkommnisse.OwnerDraw = true;
       this.objectListViewVorkommnisse.ShowImagesOnSubItems = true;
-      this.objectListViewVorkommnisse.Size = new System.Drawing.Size(704, 153);
+      this.objectListViewVorkommnisse.Size = new System.Drawing.Size(460, 153);
       this.objectListViewVorkommnisse.TabIndex = 4;
       this.objectListViewVorkommnisse.TabStop = false;
       this.objectListViewVorkommnisse.UseCompatibleStateImageBehavior = false;
@@ -148,13 +148,13 @@
       this.olvColumnDatum.Groupable = false;
       this.olvColumnDatum.IsEditable = false;
       this.olvColumnDatum.Text = "Datum";
-      this.olvColumnDatum.Width = 100;
+      this.olvColumnDatum.Width = 67;
       // 
       // olvColumnArt
       // 
       this.olvColumnArt.IsEditable = false;
       this.olvColumnArt.Text = "Art";
-      this.olvColumnArt.Width = 200;
+      this.olvColumnArt.Width = 167;
       // 
       // olvColumnBemerkung
       // 
@@ -195,6 +195,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScroll = true;
       this.Controls.Add(this.label3);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.btnNeuesVorkommnis);
@@ -206,7 +207,7 @@
       this.Controls.Add(this.lblDatum);
       this.Controls.Add(this.objectListViewVorkommnisse);
       this.Name = "UserControlVorkommnisse";
-      this.Size = new System.Drawing.Size(728, 353);
+      this.Size = new System.Drawing.Size(487, 353);
       ((System.ComponentModel.ISupportInitialize)(this.objectListViewVorkommnisse)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();

@@ -583,6 +583,7 @@ namespace diNo
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScroll = true;
       this.Controls.Add(this.label17);
       this.Controls.Add(this.textBoxDNoteAllg);
       this.Controls.Add(this.label16);
