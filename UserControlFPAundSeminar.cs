@@ -105,5 +105,40 @@ namespace diNo
       if (textBoxSeminarfachthemaKurz.Text == "") sem.SetThemaKurzNull(); else sem.ThemaKurz = textBoxSeminarfachthemaKurz.Text;
       if (textBoxSeminarfachthemaLang.Text == "") sem.SetThemaLangNull(); else sem.ThemaLang = textBoxSeminarfachthemaLang.Text;
     }
+
+    // gibt zu den FAP-Rohpunkten die zugehörige Erfolgsnote aus
+    private int FPAErfolgErmitteln(decimal? Punkte)
+    {
+      if (Punkte== null) return 0;
+      else if (Punkte>=28) return 1; // sehr gutem Erfolg
+      else if (Punkte>=23) return 2;
+      else if (Punkte>=14) return 3;
+      else return 4; // ohne Erfolg
+    }
+
+    private void FPAGesamtnoteErmitteln()
+    {
+      if (numPunkte1Hj.Value!=null && numPunkte2Hj.Value!=null)
+      {
+        numPunkte.Value = (decimal)System.Math.Ceiling(((double)(numPunkte1Hj.Value + numPunkte2Hj.Value))/2);
+        cbFPAErfolg.SelectedIndex = FPAErfolgErmitteln(numPunkte.Value);
+      }
+      else
+      {
+        numPunkte.Value = null;
+        cbFPAErfolg.SelectedIndex = 0;
+      }
+    }
+
+    private void numPunkte1Hj_Leave(object sender, System.EventArgs e)
+    {
+      cbFPAErfolg1Hj.SelectedIndex = FPAErfolgErmitteln(numPunkte1Hj.Value);
+      FPAGesamtnoteErmitteln();
+    }
+
+    private void numPunkte2Hj_Leave(object sender, System.EventArgs e)
+    {
+      FPAGesamtnoteErmitteln();
+    }
   }
 }

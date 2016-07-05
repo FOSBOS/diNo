@@ -32,9 +32,6 @@
       this.label3 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
       this.pnlFPA = new System.Windows.Forms.Panel();
-      this.numPunkte1Hj = new diNo.NumericUpDownNullable();
-      this.numPunkte2Hj = new diNo.NumericUpDownNullable();
-      this.numPunkte = new diNo.NumericUpDownNullable();
       this.label9 = new System.Windows.Forms.Label();
       this.cbFPAErfolg = new System.Windows.Forms.ComboBox();
       this.label8 = new System.Windows.Forms.Label();
@@ -46,19 +43,22 @@
       this.cbFPAErfolg1Hj = new System.Windows.Forms.ComboBox();
       this.textBoxFpABemerkung = new System.Windows.Forms.TextBox();
       this.pnlSeminar = new System.Windows.Forms.Panel();
-      this.numSeminarpunkte = new diNo.NumericUpDownNullable();
       this.label11 = new System.Windows.Forms.Label();
       this.label10 = new System.Windows.Forms.Label();
       this.textBoxSeminarfachthemaKurz = new System.Windows.Forms.TextBox();
       this.textBoxSeminarfachthemaLang = new System.Windows.Forms.TextBox();
       this.label5 = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
+      this.numSeminarpunkte = new diNo.NumericUpDownNullable();
+      this.numPunkte1Hj = new diNo.NumericUpDownNullable();
+      this.numPunkte2Hj = new diNo.NumericUpDownNullable();
+      this.numPunkte = new diNo.NumericUpDownNullable();
       this.pnlFPA.SuspendLayout();
+      this.pnlSeminar.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numSeminarpunkte)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numPunkte1Hj)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numPunkte2Hj)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numPunkte)).BeginInit();
-      this.pnlSeminar.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numSeminarpunkte)).BeginInit();
       this.SuspendLayout();
       // 
       // buttonSpeichern
@@ -111,48 +111,6 @@
       this.pnlFPA.Size = new System.Drawing.Size(532, 275);
       this.pnlFPA.TabIndex = 0;
       // 
-      // numPunkte1Hj
-      // 
-      this.numPunkte1Hj.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numPunkte1Hj.Location = new System.Drawing.Point(135, 79);
-      this.numPunkte1Hj.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-      this.numPunkte1Hj.Name = "numPunkte1Hj";
-      this.numPunkte1Hj.Size = new System.Drawing.Size(88, 23);
-      this.numPunkte1Hj.TabIndex = 1;
-      this.numPunkte1Hj.Value = null;
-      // 
-      // numPunkte2Hj
-      // 
-      this.numPunkte2Hj.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numPunkte2Hj.Location = new System.Drawing.Point(135, 109);
-      this.numPunkte2Hj.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-      this.numPunkte2Hj.Name = "numPunkte2Hj";
-      this.numPunkte2Hj.Size = new System.Drawing.Size(88, 23);
-      this.numPunkte2Hj.TabIndex = 3;
-      this.numPunkte2Hj.Value = null;
-      // 
-      // numPunkte
-      // 
-      this.numPunkte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numPunkte.Location = new System.Drawing.Point(135, 149);
-      this.numPunkte.Maximum = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-      this.numPunkte.Name = "numPunkte";
-      this.numPunkte.Size = new System.Drawing.Size(88, 23);
-      this.numPunkte.TabIndex = 4;
-      this.numPunkte.Value = null;
-      // 
       // label9
       // 
       this.label9.AutoSize = true;
@@ -165,6 +123,7 @@
       // 
       // cbFPAErfolg
       // 
+      this.cbFPAErfolg.Enabled = false;
       this.cbFPAErfolg.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.cbFPAErfolg.FormattingEnabled = true;
       this.cbFPAErfolg.Items.AddRange(new object[] {
@@ -240,6 +199,7 @@
       // 
       // cbFPAErfolg1Hj
       // 
+      this.cbFPAErfolg1Hj.Enabled = false;
       this.cbFPAErfolg1Hj.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.cbFPAErfolg1Hj.FormattingEnabled = true;
       this.cbFPAErfolg1Hj.Items.AddRange(new object[] {
@@ -275,20 +235,6 @@
       this.pnlSeminar.Name = "pnlSeminar";
       this.pnlSeminar.Size = new System.Drawing.Size(532, 243);
       this.pnlSeminar.TabIndex = 1;
-      // 
-      // numSeminarpunkte
-      // 
-      this.numSeminarpunkte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numSeminarpunkte.Location = new System.Drawing.Point(135, 61);
-      this.numSeminarpunkte.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numSeminarpunkte.Name = "numSeminarpunkte";
-      this.numSeminarpunkte.Size = new System.Drawing.Size(88, 23);
-      this.numSeminarpunkte.TabIndex = 0;
-      this.numSeminarpunkte.Value = null;
       // 
       // label11
       // 
@@ -350,6 +296,65 @@
       this.label4.TabIndex = 60;
       this.label4.Text = "Thema (lang; muss nur ausgefüllt werden, wenn länger als 117 Zeichen)";
       // 
+      // numSeminarpunkte
+      // 
+      this.numSeminarpunkte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numSeminarpunkte.Location = new System.Drawing.Point(135, 61);
+      this.numSeminarpunkte.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numSeminarpunkte.Name = "numSeminarpunkte";
+      this.numSeminarpunkte.Size = new System.Drawing.Size(88, 23);
+      this.numSeminarpunkte.TabIndex = 0;
+      this.numSeminarpunkte.Value = null;
+      // 
+      // numPunkte1Hj
+      // 
+      this.numPunkte1Hj.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numPunkte1Hj.Location = new System.Drawing.Point(135, 79);
+      this.numPunkte1Hj.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+      this.numPunkte1Hj.Name = "numPunkte1Hj";
+      this.numPunkte1Hj.Size = new System.Drawing.Size(88, 23);
+      this.numPunkte1Hj.TabIndex = 1;
+      this.numPunkte1Hj.Value = null;
+      this.numPunkte1Hj.Leave += new System.EventHandler(this.numPunkte1Hj_Leave);
+      // 
+      // numPunkte2Hj
+      // 
+      this.numPunkte2Hj.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numPunkte2Hj.Location = new System.Drawing.Point(135, 109);
+      this.numPunkte2Hj.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+      this.numPunkte2Hj.Name = "numPunkte2Hj";
+      this.numPunkte2Hj.Size = new System.Drawing.Size(88, 23);
+      this.numPunkte2Hj.TabIndex = 3;
+      this.numPunkte2Hj.Value = null;
+      this.numPunkte2Hj.Leave += new System.EventHandler(this.numPunkte2Hj_Leave);
+      // 
+      // numPunkte
+      // 
+      this.numPunkte.Enabled = false;
+      this.numPunkte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numPunkte.Location = new System.Drawing.Point(135, 149);
+      this.numPunkte.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+      this.numPunkte.Name = "numPunkte";
+      this.numPunkte.Size = new System.Drawing.Size(88, 23);
+      this.numPunkte.TabIndex = 4;
+      this.numPunkte.Value = null;
+      // 
       // UserControlFPAundSeminar
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -363,12 +368,12 @@
       this.Size = new System.Drawing.Size(565, 543);
       this.pnlFPA.ResumeLayout(false);
       this.pnlFPA.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numPunkte1Hj)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.numPunkte2Hj)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.numPunkte)).EndInit();
       this.pnlSeminar.ResumeLayout(false);
       this.pnlSeminar.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numSeminarpunkte)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.numPunkte1Hj)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.numPunkte2Hj)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.numPunkte)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
