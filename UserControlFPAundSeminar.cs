@@ -35,7 +35,7 @@ namespace diNo
         return false;
       }
 
-      if (schueler.BetreuerId == Zugriff.Instance.lehrer.Id || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin))
+      if (Zugriff.Instance.lehrer.HatRolle(Rolle.Admin))
       {
         return true;
       }
@@ -50,8 +50,7 @@ namespace diNo
     {
       pnlFPA.Enabled = IstFpaAenderbar();
       if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
-      {
-        pnlFPA.Enabled = true;
+      {        
         var fpANoten = schueler.FPANoten;
         textBoxFpABemerkung.Text = fpANoten.IsBemerkungNull() ? "" : fpANoten.Bemerkung;
         cbFPAErfolg1Hj.SelectedIndex = fpANoten.IsErfolg1HjNull() ? 0 : fpANoten.Erfolg1Hj;
@@ -72,8 +71,7 @@ namespace diNo
       }
 
       pnlSeminar.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && 
-        (Zugriff.Instance.lehrer.HatRolle(Rolle.Seminarfach) || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin));
-        // || Zugriff.Instance.lehrer.Id == schueler.Data.BetreuerId);
+        (Zugriff.Instance.lehrer.HatRolle(Rolle.Seminarfach) || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin));        
       if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
       {
         var sem = schueler.Seminarfachnote;
