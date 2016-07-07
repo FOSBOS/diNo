@@ -61,15 +61,7 @@ namespace diNo
         pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
         btnBrief.Enabled = true;
         btnPrint.Enabled = true;
-
-        btnSave.Enabled = Zugriff.Instance.lehrer.HatRolle(Rolle.Admin) ||
-          Zugriff.Instance.lehrer.HatRolle(Rolle.Sekretariat) ||
-          Zugriff.Instance.lehrer.HatRolle(Rolle.Seminarfach) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn ||
-          schueler.BetreuerId == Zugriff.Instance.lehrer.Id ||
-          Zugriff.Instance.lehrer.HatRolle(Rolle.FpAWirtschaft) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && (schueler.Data.Ausbildungsrichtung == "W" || schueler.Data.Ausbildungsrichtung == "WVR") ||
-          Zugriff.Instance.lehrer.HatRolle(Rolle.FpASozial) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.Data.Ausbildungsrichtung == "S" ||
-          Zugriff.Instance.lehrer.HatRolle(Rolle.FpATechnik) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.Data.Ausbildungsrichtung == "T" ||
-          Zugriff.Instance.lehrer.HatRolle(Rolle.FpAAgrar) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && (schueler.Data.Ausbildungsrichtung == "A");
+        
         labelHinweise.Text = (schueler.IsLegastheniker ? "Legastheniker" : "");
         labelHinweise.ForeColor = Color.Red;
 
@@ -199,16 +191,6 @@ namespace diNo
         {
           var c = new NotenCheckForm();
           c.Show();
-        }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {   
-          userControlFPAundSeminar1.DatenUebernehmen();
-          if (!Zugriff.Instance.IstNurNormalerLehrer)
-          {
-            userControlSchueleransicht1.DatenUebernehmen();  
-          }
-          schueler.Save();            
         }
 
         public void RefreshVorkommnisse()

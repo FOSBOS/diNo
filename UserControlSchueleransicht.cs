@@ -59,6 +59,8 @@ namespace diNo
           textBoxDNoteAllg.Text = schueler.Data.IsDNoteAllgNull() ? "" : string.Format("{0:F1}", schueler.Data.DNoteAllg);
           numAndereFremdspr2Note.Value = schueler.Data.IsAndereFremdspr2NoteNull() ? null : (decimal?) schueler.Data.AndereFremdspr2Note;
           textBoxAndereFremdspr2Text.Text = schueler.Data.IsAndereFremdspr2TextNull() ? "" : schueler.Data.AndereFremdspr2Text;
+
+          btnSave.Enabled = Zugriff.Instance.HatRolle(Rolle.Admin) || Zugriff.Instance.HatRolle(Rolle.Sekretariat);
         }
         /*
         else
@@ -83,7 +85,7 @@ namespace diNo
       }
     }
 
-    public void DatenUebernehmen()
+    private void btnSave_Click(object sender, EventArgs e)
     {
       schueler.Data.AnschriftStrasse = textBoxStrasse.Text;
       schueler.Data.AnschriftPLZ = textBoxPLZ.Text;
@@ -105,7 +107,8 @@ namespace diNo
         else schueler.Data.AndereFremdspr2Note = (int) numAndereFremdspr2Note.Value.GetValueOrDefault();            
       if (textBoxAndereFremdspr2Text.Text=="") schueler.Data.SetAndereFremdspr2TextNull();
         else schueler.Data.AndereFremdspr2Text = textBoxAndereFremdspr2Text.Text;
+
+      schueler.Save();
     }
-    
   }
 }

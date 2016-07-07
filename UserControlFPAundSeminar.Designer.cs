@@ -49,6 +49,8 @@
       this.textBoxSeminarfachthemaLang = new System.Windows.Forms.TextBox();
       this.label5 = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
+      this.btnSaveSeminar = new System.Windows.Forms.Button();
+      this.btnSaveFPA = new System.Windows.Forms.Button();
       this.numSeminarpunkte = new diNo.NumericUpDownNullable();
       this.numPunkte1Hj = new diNo.NumericUpDownNullable();
       this.numPunkte2Hj = new diNo.NumericUpDownNullable();
@@ -93,6 +95,7 @@
       // 
       // pnlFPA
       // 
+      this.pnlFPA.Controls.Add(this.btnSaveFPA);
       this.pnlFPA.Controls.Add(this.numPunkte1Hj);
       this.pnlFPA.Controls.Add(this.numPunkte2Hj);
       this.pnlFPA.Controls.Add(this.numPunkte);
@@ -106,6 +109,7 @@
       this.pnlFPA.Controls.Add(this.lbHj1);
       this.pnlFPA.Controls.Add(this.cbFPAErfolg1Hj);
       this.pnlFPA.Controls.Add(this.textBoxFpABemerkung);
+      this.pnlFPA.Enabled = false;
       this.pnlFPA.Location = new System.Drawing.Point(15, 12);
       this.pnlFPA.Name = "pnlFPA";
       this.pnlFPA.Size = new System.Drawing.Size(532, 275);
@@ -134,7 +138,7 @@
             "ohne Erfolg"});
       this.cbFPAErfolg.Location = new System.Drawing.Point(272, 148);
       this.cbFPAErfolg.Name = "cbFPAErfolg";
-      this.cbFPAErfolg.Size = new System.Drawing.Size(239, 24);
+      this.cbFPAErfolg.Size = new System.Drawing.Size(207, 24);
       this.cbFPAErfolg.TabIndex = 5;
       // 
       // label8
@@ -210,7 +214,7 @@
             "ohne Erfolg"});
       this.cbFPAErfolg1Hj.Location = new System.Drawing.Point(272, 78);
       this.cbFPAErfolg1Hj.Name = "cbFPAErfolg1Hj";
-      this.cbFPAErfolg1Hj.Size = new System.Drawing.Size(239, 24);
+      this.cbFPAErfolg1Hj.Size = new System.Drawing.Size(207, 24);
       this.cbFPAErfolg1Hj.TabIndex = 2;
       // 
       // textBoxFpABemerkung
@@ -219,11 +223,12 @@
       this.textBoxFpABemerkung.Location = new System.Drawing.Point(15, 208);
       this.textBoxFpABemerkung.Multiline = true;
       this.textBoxFpABemerkung.Name = "textBoxFpABemerkung";
-      this.textBoxFpABemerkung.Size = new System.Drawing.Size(496, 59);
+      this.textBoxFpABemerkung.Size = new System.Drawing.Size(464, 59);
       this.textBoxFpABemerkung.TabIndex = 6;
       // 
       // pnlSeminar
       // 
+      this.pnlSeminar.Controls.Add(this.btnSaveSeminar);
       this.pnlSeminar.Controls.Add(this.numSeminarpunkte);
       this.pnlSeminar.Controls.Add(this.label11);
       this.pnlSeminar.Controls.Add(this.label10);
@@ -231,6 +236,7 @@
       this.pnlSeminar.Controls.Add(this.textBoxSeminarfachthemaLang);
       this.pnlSeminar.Controls.Add(this.label5);
       this.pnlSeminar.Controls.Add(this.label4);
+      this.pnlSeminar.Enabled = false;
       this.pnlSeminar.Location = new System.Drawing.Point(15, 293);
       this.pnlSeminar.Name = "pnlSeminar";
       this.pnlSeminar.Size = new System.Drawing.Size(532, 243);
@@ -262,7 +268,7 @@
       this.textBoxSeminarfachthemaKurz.Location = new System.Drawing.Point(18, 123);
       this.textBoxSeminarfachthemaKurz.MaxLength = 117;
       this.textBoxSeminarfachthemaKurz.Name = "textBoxSeminarfachthemaKurz";
-      this.textBoxSeminarfachthemaKurz.Size = new System.Drawing.Size(496, 23);
+      this.textBoxSeminarfachthemaKurz.Size = new System.Drawing.Size(461, 23);
       this.textBoxSeminarfachthemaKurz.TabIndex = 1;
       // 
       // textBoxSeminarfachthemaLang
@@ -272,7 +278,7 @@
       this.textBoxSeminarfachthemaLang.MaxLength = 1024;
       this.textBoxSeminarfachthemaLang.Multiline = true;
       this.textBoxSeminarfachthemaLang.Name = "textBoxSeminarfachthemaLang";
-      this.textBoxSeminarfachthemaLang.Size = new System.Drawing.Size(496, 63);
+      this.textBoxSeminarfachthemaLang.Size = new System.Drawing.Size(461, 63);
       this.textBoxSeminarfachthemaLang.TabIndex = 2;
       // 
       // label5
@@ -295,6 +301,28 @@
       this.label4.Size = new System.Drawing.Size(464, 17);
       this.label4.TabIndex = 60;
       this.label4.Text = "Thema (lang; muss nur ausgefüllt werden, wenn länger als 117 Zeichen)";
+      // 
+      // btnSaveSeminar
+      // 
+      this.btnSaveSeminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.btnSaveSeminar.Image = global::diNo.Properties.Resources.Save;
+      this.btnSaveSeminar.Location = new System.Drawing.Point(485, 177);
+      this.btnSaveSeminar.Name = "btnSaveSeminar";
+      this.btnSaveSeminar.Size = new System.Drawing.Size(40, 40);
+      this.btnSaveSeminar.TabIndex = 66;
+      this.btnSaveSeminar.UseVisualStyleBackColor = true;
+      this.btnSaveSeminar.Click += new System.EventHandler(this.btnSaveSeminar_Click);
+      // 
+      // btnSaveFPA
+      // 
+      this.btnSaveFPA.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.btnSaveFPA.Image = global::diNo.Properties.Resources.Save;
+      this.btnSaveFPA.Location = new System.Drawing.Point(485, 208);
+      this.btnSaveFPA.Name = "btnSaveFPA";
+      this.btnSaveFPA.Size = new System.Drawing.Size(40, 40);
+      this.btnSaveFPA.TabIndex = 63;
+      this.btnSaveFPA.UseVisualStyleBackColor = true;
+      this.btnSaveFPA.Click += new System.EventHandler(this.btnSaveFPA_Click);
       // 
       // numSeminarpunkte
       // 
@@ -366,7 +394,7 @@
       this.Controls.Add(this.label3);
       this.Controls.Add(this.label1);
       this.Name = "UserControlFPAundSeminar";
-      this.Size = new System.Drawing.Size(565, 543);
+      this.Size = new System.Drawing.Size(564, 543);
       this.pnlFPA.ResumeLayout(false);
       this.pnlFPA.PerformLayout();
       this.pnlSeminar.ResumeLayout(false);
@@ -406,5 +434,7 @@
         private NumericUpDownNullable numPunkte1Hj;
         private NumericUpDownNullable numPunkte2Hj;
         private NumericUpDownNullable numSeminarpunkte;
+    private System.Windows.Forms.Button btnSaveFPA;
+    private System.Windows.Forms.Button btnSaveSeminar;
   }
 }

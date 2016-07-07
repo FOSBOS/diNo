@@ -89,23 +89,7 @@ namespace diNo
         textBoxSeminarfachthemaLang.Text = "";
       }
     }
-
-    public void DatenUebernehmen()
-    {
-      var fpANoten = schueler.FPANoten;
-      if (textBoxFpABemerkung.Text == "") fpANoten.SetBemerkungNull(); else fpANoten.Bemerkung = textBoxFpABemerkung.Text;
-      if (cbFPAErfolg1Hj.SelectedIndex == 0) fpANoten.SetErfolg1HjNull(); else fpANoten.Erfolg1Hj = cbFPAErfolg1Hj.SelectedIndex;
-      if (cbFPAErfolg.SelectedIndex == 0) fpANoten.SetErfolgNull(); else fpANoten.Erfolg = cbFPAErfolg.SelectedIndex;
-      if (numPunkte.Value == null) fpANoten.SetPunkteNull(); else fpANoten.Punkte = (int)numPunkte.Value;
-      if (numPunkte1Hj.Value == null) fpANoten.SetPunkte1HjNull(); else fpANoten.Punkte1Hj = (int)numPunkte1Hj.Value;
-      if (numPunkte2Hj.Value == null) fpANoten.SetPunkte2HjNull(); else fpANoten.Punkte2Hj = (int)numPunkte2Hj.Value;
-
-      var sem = schueler.Seminarfachnote;
-      if (numSeminarpunkte.Value == null) sem.SetGesamtnoteNull(); else sem.Gesamtnote = (int)numSeminarpunkte.Value;
-      if (textBoxSeminarfachthemaKurz.Text == "") sem.SetThemaKurzNull(); else sem.ThemaKurz = textBoxSeminarfachthemaKurz.Text;
-      if (textBoxSeminarfachthemaLang.Text == "") sem.SetThemaLangNull(); else sem.ThemaLang = textBoxSeminarfachthemaLang.Text;
-    }
-
+   
     // gibt zu den FAP-Rohpunkten die zugehörige Erfolgsnote aus
     private int FPAErfolgErmitteln(decimal? Punkte)
     {
@@ -139,6 +123,27 @@ namespace diNo
     private void numPunkte2Hj_Leave(object sender, System.EventArgs e)
     {
       FPAGesamtnoteErmitteln();
+    }
+
+    private void btnSaveFPA_Click(object sender, System.EventArgs e)
+    {
+      var fpANoten = schueler.FPANoten;
+      if (textBoxFpABemerkung.Text == "") fpANoten.SetBemerkungNull(); else fpANoten.Bemerkung = textBoxFpABemerkung.Text;
+      if (cbFPAErfolg1Hj.SelectedIndex == 0) fpANoten.SetErfolg1HjNull(); else fpANoten.Erfolg1Hj = cbFPAErfolg1Hj.SelectedIndex;
+      if (cbFPAErfolg.SelectedIndex == 0) fpANoten.SetErfolgNull(); else fpANoten.Erfolg = cbFPAErfolg.SelectedIndex;
+      if (numPunkte.Value == null) fpANoten.SetPunkteNull(); else fpANoten.Punkte = (int)numPunkte.Value;
+      if (numPunkte1Hj.Value == null) fpANoten.SetPunkte1HjNull(); else fpANoten.Punkte1Hj = (int)numPunkte1Hj.Value;
+      if (numPunkte2Hj.Value == null) fpANoten.SetPunkte2HjNull(); else fpANoten.Punkte2Hj = (int)numPunkte2Hj.Value;
+      schueler.Save();
+    }
+
+    private void btnSaveSeminar_Click(object sender, System.EventArgs e)
+    {      
+      var sem = schueler.Seminarfachnote;
+      if (numSeminarpunkte.Value == null) sem.SetGesamtnoteNull(); else sem.Gesamtnote = (int)numSeminarpunkte.Value;
+      if (textBoxSeminarfachthemaKurz.Text == "") sem.SetThemaKurzNull(); else sem.ThemaKurz = textBoxSeminarfachthemaKurz.Text;
+      if (textBoxSeminarfachthemaLang.Text == "") sem.SetThemaLangNull(); else sem.ThemaLang = textBoxSeminarfachthemaLang.Text;
+      schueler.Save();
     }
   }
 }

@@ -83,6 +83,7 @@ namespace diNo
       this.label16 = new System.Windows.Forms.Label();
       this.textBoxDNoteAllg = new System.Windows.Forms.TextBox();
       this.label17 = new System.Windows.Forms.Label();
+      this.btnSave = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
       this.SuspendLayout();
       // 
@@ -579,11 +580,24 @@ namespace diNo
       this.label17.TabIndex = 65;
       this.label17.Text = "fachgeb.";
       // 
+      // btnSave
+      // 
+      this.btnSave.Enabled = false;
+      this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.btnSave.Image = global::diNo.Properties.Resources.Save;
+      this.btnSave.Location = new System.Drawing.Point(518, 466);
+      this.btnSave.Name = "btnSave";
+      this.btnSave.Size = new System.Drawing.Size(40, 40);
+      this.btnSave.TabIndex = 67;
+      this.btnSave.UseVisualStyleBackColor = true;
+      this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+      // 
       // UserControlSchueleransicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
+      this.Controls.Add(this.btnSave);
       this.Controls.Add(this.label17);
       this.Controls.Add(this.textBoxDNoteAllg);
       this.Controls.Add(this.label16);
@@ -699,5 +713,6 @@ namespace diNo
     private System.Windows.Forms.Label label16;
     private System.Windows.Forms.TextBox textBoxDNoteAllg;
     private System.Windows.Forms.Label label17;
+    private System.Windows.Forms.Button btnSave;
   }
 }

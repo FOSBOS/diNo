@@ -59,7 +59,6 @@
       this.btnBrief = new System.Windows.Forms.Button();
       this.btnPrint = new System.Windows.Forms.Button();
       this.btnNotenabgeben = new System.Windows.Forms.Button();
-      this.btnSave = new System.Windows.Forms.Button();
       this.btnAbidruck = new System.Windows.Forms.Button();
       this.labelHinweise = new System.Windows.Forms.Label();
       this.pictureBoxImage = new System.Windows.Forms.PictureBox();
@@ -119,6 +118,7 @@
       // 
       // userControlSchueleransicht1
       // 
+      this.userControlSchueleransicht1.AutoScroll = true;
       this.userControlSchueleransicht1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.userControlSchueleransicht1.Location = new System.Drawing.Point(3, 3);
       this.userControlSchueleransicht1.Margin = new System.Windows.Forms.Padding(4);
@@ -140,6 +140,7 @@
       // 
       // notenbogen1
       // 
+      this.notenbogen1.AutoScroll = true;
       this.notenbogen1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.notenbogen1.Location = new System.Drawing.Point(3, 3);
       this.notenbogen1.Margin = new System.Windows.Forms.Padding(4);
@@ -161,6 +162,7 @@
       // 
       // userControlFPAundSeminar1
       // 
+      this.userControlFPAundSeminar1.AutoScroll = true;
       this.userControlFPAundSeminar1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.userControlFPAundSeminar1.Location = new System.Drawing.Point(3, 3);
       this.userControlFPAundSeminar1.Margin = new System.Windows.Forms.Padding(4);
@@ -181,6 +183,7 @@
       // 
       // userControlVorkommnisse1
       // 
+      this.userControlVorkommnisse1.AutoScroll = true;
       this.userControlVorkommnisse1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.userControlVorkommnisse1.Location = new System.Drawing.Point(0, 0);
       this.userControlVorkommnisse1.Margin = new System.Windows.Forms.Padding(4);
@@ -308,11 +311,12 @@
       this.userControlKurszuordnungen1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+      this.userControlKurszuordnungen1.AutoScroll = true;
       this.userControlKurszuordnungen1.Location = new System.Drawing.Point(9, 99);
       this.userControlKurszuordnungen1.Margin = new System.Windows.Forms.Padding(4);
       this.userControlKurszuordnungen1.Name = "userControlKurszuordnungen1";
       this.userControlKurszuordnungen1.Schueler = null;
-      this.userControlKurszuordnungen1.Size = new System.Drawing.Size(876, 344);
+      this.userControlKurszuordnungen1.Size = new System.Drawing.Size(178, 0);
       this.userControlKurszuordnungen1.TabIndex = 0;
       // 
       // klasseLabel
@@ -366,7 +370,7 @@
       // 
       this.btnCheck.ImageIndex = 1;
       this.btnCheck.ImageList = this.imageList1;
-      this.btnCheck.Location = new System.Drawing.Point(466, 88);
+      this.btnCheck.Location = new System.Drawing.Point(420, 87);
       this.btnCheck.Name = "btnCheck";
       this.btnCheck.Size = new System.Drawing.Size(40, 40);
       this.btnCheck.TabIndex = 5;
@@ -379,7 +383,7 @@
       this.btnBrief.Enabled = false;
       this.btnBrief.ImageIndex = 2;
       this.btnBrief.ImageList = this.imageList1;
-      this.btnBrief.Location = new System.Drawing.Point(420, 88);
+      this.btnBrief.Location = new System.Drawing.Point(374, 88);
       this.btnBrief.Name = "btnBrief";
       this.btnBrief.Size = new System.Drawing.Size(40, 40);
       this.btnBrief.TabIndex = 4;
@@ -392,7 +396,7 @@
       this.btnPrint.Enabled = false;
       this.btnPrint.ImageIndex = 3;
       this.btnPrint.ImageList = this.imageList1;
-      this.btnPrint.Location = new System.Drawing.Point(374, 88);
+      this.btnPrint.Location = new System.Drawing.Point(328, 88);
       this.btnPrint.Name = "btnPrint";
       this.btnPrint.Size = new System.Drawing.Size(40, 40);
       this.btnPrint.TabIndex = 3;
@@ -412,24 +416,11 @@
       this.btnNotenabgeben.UseVisualStyleBackColor = true;
       this.btnNotenabgeben.Click += new System.EventHandler(this.btnNotenabgeben_Click);
       // 
-      // btnSave
-      // 
-      this.btnSave.Enabled = false;
-      this.btnSave.ImageIndex = 4;
-      this.btnSave.ImageList = this.imageList1;
-      this.btnSave.Location = new System.Drawing.Point(328, 88);
-      this.btnSave.Name = "btnSave";
-      this.btnSave.Size = new System.Drawing.Size(40, 40);
-      this.btnSave.TabIndex = 2;
-      this.toolTipButtons.SetToolTip(this.btnSave, "Daten speichern");
-      this.btnSave.UseVisualStyleBackColor = true;
-      this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-      // 
       // btnAbidruck
       // 
       this.btnAbidruck.ImageIndex = 3;
       this.btnAbidruck.ImageList = this.imageList1;
-      this.btnAbidruck.Location = new System.Drawing.Point(512, 88);
+      this.btnAbidruck.Location = new System.Drawing.Point(466, 88);
       this.btnAbidruck.Name = "btnAbidruck";
       this.btnAbidruck.Size = new System.Drawing.Size(40, 40);
       this.btnAbidruck.TabIndex = 39;
@@ -481,7 +472,6 @@
       this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
       this.ClientSize = new System.Drawing.Size(1185, 645);
       this.Controls.Add(this.btnAbidruck);
-      this.Controls.Add(this.btnSave);
       this.Controls.Add(this.statusStrip1);
       this.Controls.Add(this.btnCheck);
       this.Controls.Add(this.labelHinweise);
@@ -535,7 +525,6 @@
     private UserControlSchueleransicht userControlSchueleransicht1;
     private Notenbogen notenbogen1;
     private UserControlVorkommnisse userControlVorkommnisse1;
-        private System.Windows.Forms.Button btnSave;
     private System.Windows.Forms.Button btnAbidruck;
     private System.Windows.Forms.TabPage tabPageAdmin;
     private BrightIdeasSoftware.MultiImageRenderer multiImageRenderer1;
