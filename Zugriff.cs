@@ -36,7 +36,7 @@ namespace diNo
       }
       if (Username == "Betzigau\\Claus")
       {
-        Username = "FOSBOS\\ckonrad";
+        Username = "FOSBOS\\aenge";
       }
       
       Username = Username.Replace("FOSBOS\\", "");

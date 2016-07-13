@@ -21054,7 +21054,7 @@ WHERE        Schueler.Status<>@NotStatus and
             this._commandCollection[6].Connection = this.Connection;
             this._commandCollection[6].CommandText = @"SELECT DISTINCT Schueler.*
 FROM            Kurs INNER JOIN
-                         SchuelerKurs ON Kurs.Id = SchuelerKurs.KursId INNER JOIN
+                         SchuelerKurs ON Kurs.Id = SchuelerKurs.KursId RIGHT JOIN
                          Schueler ON SchuelerKurs.SchuelerId = Schueler.Id INNER JOIN
                          Klasse ON Schueler.KlasseId = Klasse.Id
 WHERE        (Schueler.Status <> @NotStatus) AND 

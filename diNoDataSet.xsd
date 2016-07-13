@@ -1586,7 +1586,7 @@ WHERE        Schueler.Status&lt;&gt;@NotStatus and
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT DISTINCT Schueler.*
 FROM            Kurs INNER JOIN
-                         SchuelerKurs ON Kurs.Id = SchuelerKurs.KursId INNER JOIN
+                         SchuelerKurs ON Kurs.Id = SchuelerKurs.KursId RIGHT JOIN
                          Schueler ON SchuelerKurs.SchuelerId = Schueler.Id INNER JOIN
                          Klasse ON Schueler.KlasseId = Klasse.Id
 WHERE        (Schueler.Status &lt;&gt; @NotStatus) AND 
