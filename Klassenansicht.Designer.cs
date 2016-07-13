@@ -65,6 +65,7 @@
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
       this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
       this.multiImageRenderer1 = new BrightIdeasSoftware.MultiImageRenderer();
+      this.chkNurAktive = new System.Windows.Forms.CheckBox();
       this.tabControl1.SuspendLayout();
       this.tabPageStammdaten.SuspendLayout();
       this.tabPageNoten.SuspendLayout();
@@ -316,7 +317,7 @@
       this.userControlKurszuordnungen1.Margin = new System.Windows.Forms.Padding(4);
       this.userControlKurszuordnungen1.Name = "userControlKurszuordnungen1";
       this.userControlKurszuordnungen1.Schueler = null;
-      this.userControlKurszuordnungen1.Size = new System.Drawing.Size(178, 0);
+      this.userControlKurszuordnungen1.Size = new System.Drawing.Size(0, 0);
       this.userControlKurszuordnungen1.TabIndex = 0;
       // 
       // klasseLabel
@@ -348,11 +349,11 @@
       this.treeListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnBezeichnung});
       this.treeListView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.treeListView1.Location = new System.Drawing.Point(12, 12);
+      this.treeListView1.Location = new System.Drawing.Point(12, 43);
       this.treeListView1.Name = "treeListView1";
       this.treeListView1.OwnerDraw = true;
       this.treeListView1.ShowGroups = false;
-      this.treeListView1.Size = new System.Drawing.Size(240, 617);
+      this.treeListView1.Size = new System.Drawing.Size(240, 586);
       this.treeListView1.TabIndex = 0;
       this.treeListView1.UseCompatibleStateImageBehavior = false;
       this.treeListView1.View = System.Windows.Forms.View.Details;
@@ -465,12 +466,25 @@
       this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
       this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
       // 
+      // chkNurAktive
+      // 
+      this.chkNurAktive.AutoSize = true;
+      this.chkNurAktive.Checked = true;
+      this.chkNurAktive.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.chkNurAktive.Location = new System.Drawing.Point(16, 20);
+      this.chkNurAktive.Name = "chkNurAktive";
+      this.chkNurAktive.Size = new System.Drawing.Size(185, 17);
+      this.chkNurAktive.TabIndex = 40;
+      this.chkNurAktive.Text = "Abgemeldete Schüler ausblenden";
+      this.chkNurAktive.UseVisualStyleBackColor = true;
+      // 
       // Klassenansicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
       this.ClientSize = new System.Drawing.Size(1185, 645);
+      this.Controls.Add(this.chkNurAktive);
       this.Controls.Add(this.btnAbidruck);
       this.Controls.Add(this.statusStrip1);
       this.Controls.Add(this.btnCheck);
@@ -539,5 +553,6 @@
     private System.Windows.Forms.ComboBox comboBoxWahlpflichtfach;
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.DateTimePicker dateTimePicker1;
+    private System.Windows.Forms.CheckBox chkNurAktive;
   }
 }

@@ -20969,7 +20969,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[6];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[8];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT  Schueler.*\r\nFROM Schueler\r\nWHERE (Id = @Id)";
@@ -21002,9 +21002,35 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
 FROM            Kurs INNER JOIN
                          SchuelerKurs ON Kurs.Id = SchuelerKurs.KursId INNER JOIN
                          Schueler ON SchuelerKurs.SchuelerId = Schueler.Id
-WHERE        ((Kurs.LehrerId = @LehrerId) OR (Schueler.BetreuerId=@LehrerId)) and Schueler.Status<>1";
+WHERE        Schueler.Status<>@NotStatus and 
+                     Kurs.LehrerId = @LehrerId";
             this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NotStatus", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[6] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[6].Connection = this.Connection;
+            this._commandCollection[6].CommandText = @"SELECT DISTINCT Schueler.*
+FROM            Kurs INNER JOIN
+                         SchuelerKurs ON Kurs.Id = SchuelerKurs.KursId INNER JOIN
+                         Schueler ON SchuelerKurs.SchuelerId = Schueler.Id INNER JOIN
+                         Klasse ON Schueler.KlasseId = Klasse.Id
+WHERE        (Schueler.Status <> @NotStatus) AND 
+((Kurs.LehrerId = @LehrerId) OR 
+(@IstSeminarlehrer=1 and Klasse.Bezeichnung Like '%13%') OR
+(Left(Klasse.Bezeichnung,4) = ANY
+(SELECT KlassenString
+FROM Rolle,LehrerRolle
+where Rolle.Id = LehrerRolle.RolleId and LehrerId = @LehrerId)))
+";
+            this._commandCollection[6].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NotStatus", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IstSeminarlehrer", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[7] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[7].Connection = this.Connection;
+            this._commandCollection[7].CommandText = "SELECT  Schueler.*\r\nFROM Schueler\r\nWHERE (Status <> @NotStatus)";
+            this._commandCollection[7].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NotStatus", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -21090,10 +21116,62 @@ WHERE        ((Kurs.LehrerId = @LehrerId) OR (Schueler.BetreuerId=@LehrerId)) an
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.SchuelerDataTable GetDataByLehrerId(global::System.Nullable<int> LehrerId) {
+        public virtual diNoDataSet.SchuelerDataTable GetDataByLehrerId(global::System.Nullable<int> NotStatus, global::System.Nullable<int> LehrerId) {
             this.Adapter.SelectCommand = this.CommandCollection[5];
+            if ((NotStatus.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(NotStatus.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
             if ((LehrerId.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(LehrerId.Value));
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(LehrerId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.SchuelerDataTable GetDataByLehrerIdFPASem(global::System.Nullable<int> NotStatus, global::System.Nullable<int> LehrerId, string IstSeminarlehrer) {
+            this.Adapter.SelectCommand = this.CommandCollection[6];
+            if ((NotStatus.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(NotStatus.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((LehrerId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(LehrerId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((IstSeminarlehrer == null)) {
+                throw new global::System.ArgumentNullException("IstSeminarlehrer");
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(IstSeminarlehrer));
+            }
+            diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.SchuelerDataTable GetDataByStatus(global::System.Nullable<int> NotStatus) {
+            this.Adapter.SelectCommand = this.CommandCollection[7];
+            if ((NotStatus.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(NotStatus.Value));
             }
             else {
                 this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;

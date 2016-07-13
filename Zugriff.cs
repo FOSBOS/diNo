@@ -19,6 +19,7 @@ namespace diNo
     private diNoDataSet.GlobaleKonstantenRow globaleKonstanten;
     public int Schuljahr { get { return globaleKonstanten.Schuljahr; } }
     public Sperrtyp Sperre { get { return (Sperrtyp)globaleKonstanten.Sperre; } }
+    public bool SiehtAlles{ get; private set; }
     public int aktZeitpunkt
     {
       get { return globaleKonstanten.aktZeitpunkt; }
@@ -37,7 +38,7 @@ namespace diNo
       {
         Username = "FOSBOS\\ckonrad";
       }
-      // Username = "VW\\gmerk";
+      
       Username = Username.Replace("FOSBOS\\", "");
       Username = Username.Replace("VW\\", "");
       var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
@@ -46,6 +47,7 @@ namespace diNo
       {
         throw new InvalidOperationException("Keine Zugriffsberechtigung!");
       }
+      SiehtAlles = (this.lehrer.HatRolle(Rolle.Admin) || this.lehrer.HatRolle(Rolle.Sekretariat) || this.lehrer.HatRolle(Rolle.Schulleitung));
 
       LoadSchueler();
       LoadFaecher();
@@ -72,32 +74,32 @@ namespace diNo
         return this.lehrer.rollen.Count == 0;
       }
     }
-
-    private void LoadSchueler()
+   
+    private void LoadSchueler(bool nurAktive=true)
     {
       List<int> klassenIds = new List<int>(); // für schnelles Auffinden
       Klassen = new List<Klasse>();
+      diNoDataSet.SchuelerDataTable sListe;
+      int NotStatus = nurAktive?1:255; // Status=1 bedeutet abgemeldet,
 
       var ta = new SchuelerTableAdapter();
+      if (SiehtAlles)
+        sListe = ta.GetDataByStatus(NotStatus); // alle Schüler reinladen
+      else if (IstNurNormalerLehrer)
+        sListe = ta.GetDataByLehrerId(NotStatus,lehrer.Id); //  nur eigene Schüler      
+      else if (HatRolle(Rolle.Seminarfach))
+        sListe = ta.GetDataByLehrerIdFPASem(NotStatus,lehrer.Id,"1");
+       // TODO: Die Rolle Seminar sollte auch die DB hinkriegen, aber Unterabfragen kann man angeblich nicht mit LIKE ausführen!
+      else
+        sListe = ta.GetDataByLehrerIdFPASem(NotStatus,lehrer.Id,"0");
 
       Dictionary<int, Schueler> schueler = new Dictionary<int, Schueler>();
-      foreach (var aSchueler in ta.GetDataByLehrerId(lehrer.Id))
+      foreach (var aSchueler in sListe)
       {
         // erstmal alle eigenen Schueler einladen, damit die sicher sichtbar sind.
         schueler.Add(aSchueler.Id, new Schueler(aSchueler));
       }
-
-      if (!this.IstNurNormalerLehrer)
-      {
-        // danach schauen, ob aufgrund einer besonderen Rolle des Lehrers noch andere Schueler angezeigt werden müssen
-        foreach (var aSchueler in ta.GetData())
-        {
-          Schueler derSchueler = new Schueler(aSchueler);
-          if (!schueler.ContainsKey(aSchueler.Id) && SollSichtbarSein(derSchueler))
-            schueler.Add(aSchueler.Id, derSchueler);
-        }
-      }
-
+     
       AnzahlSchueler = schueler.Count;
       foreach (var sRow in schueler.Values)
       {
@@ -159,37 +161,7 @@ namespace diNo
       Instance.Klassen = null; // Garbage-Collector 
       Instance.LoadSchueler();
     }
-
-    private bool SollSichtbarSein(Schueler schueler)
-    {
-      if (this.lehrer.HatRolle(Rolle.Admin) || this.lehrer.HatRolle(Rolle.Sekretariat) || this.lehrer.HatRolle(Rolle.Schulleitung))
-      {
-        return true;
-      }
-      if (this.lehrer.HatRolle(Rolle.FpAAgrar) && (schueler.Zweig == Zweig.Agrar && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf))
-      {
-        return true;
-      }
-      if (this.lehrer.HatRolle(Rolle.FpASozial) && (schueler.Zweig == Zweig.Sozial && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf))
-      {
-        return true;
-      }
-      if (this.lehrer.HatRolle(Rolle.FpATechnik) && (schueler.Zweig == Zweig.Technik && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf))
-      {
-        return true;
-      }
-      if (this.lehrer.HatRolle(Rolle.FpAWirtschaft) && (schueler.Zweig == Zweig.Wirtschaft && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf))
-      {
-        return true;
-      }
-      if (this.lehrer.HatRolle(Rolle.Seminarfach) && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
-      {
-        return true;
-      }
-
-      return false;
-    }
-
+    
     public bool HatRolle(Rolle typ)
     {
       return lehrer.HatRolle(typ);
