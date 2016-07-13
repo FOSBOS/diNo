@@ -477,6 +477,7 @@
       this.chkNurAktive.TabIndex = 40;
       this.chkNurAktive.Text = "Abgemeldete Schüler ausblenden";
       this.chkNurAktive.UseVisualStyleBackColor = true;
+      this.chkNurAktive.Click += new System.EventHandler(this.chkNurAktive_Click);
       // 
       // Klassenansicht
       // 

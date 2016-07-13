@@ -49,7 +49,7 @@ namespace diNo
       }
       SiehtAlles = (this.lehrer.HatRolle(Rolle.Admin) || this.lehrer.HatRolle(Rolle.Sekretariat) || this.lehrer.HatRolle(Rolle.Schulleitung));
 
-      LoadSchueler();
+      // LoadSchueler(); erst in Klassenansicht, wegen Parameter nurAktive
       LoadFaecher();
       LoadLehrer();
       LoadGlobaleKonstanten();
@@ -75,7 +75,7 @@ namespace diNo
       }
     }
    
-    private void LoadSchueler(bool nurAktive=true)
+    public void LoadSchueler(bool nurAktive=true)
     {
       List<int> klassenIds = new List<int>(); // für schnelles Auffinden
       Klassen = new List<Klasse>();
@@ -86,12 +86,9 @@ namespace diNo
       if (SiehtAlles)
         sListe = ta.GetDataByStatus(NotStatus); // alle Schüler reinladen
       else if (IstNurNormalerLehrer)
-        sListe = ta.GetDataByLehrerId(NotStatus,lehrer.Id); //  nur eigene Schüler      
-      else if (HatRolle(Rolle.Seminarfach))
-        sListe = ta.GetDataByLehrerIdFPASem(NotStatus,lehrer.Id,"1");
-       // TODO: Die Rolle Seminar sollte auch die DB hinkriegen, aber Unterabfragen kann man angeblich nicht mit LIKE ausführen!
+        sListe = ta.GetDataByLehrerId(NotStatus,lehrer.Id); //  nur eigene Schüler            
       else
-        sListe = ta.GetDataByLehrerIdFPASem(NotStatus,lehrer.Id,"0");
+        sListe = ta.GetDataByLehrerIdFPASem(NotStatus,lehrer.Id); // Lehrer mit erweiterten Rollen
 
       Dictionary<int, Schueler> schueler = new Dictionary<int, Schueler>();
       foreach (var aSchueler in sListe)

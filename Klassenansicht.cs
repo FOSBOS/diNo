@@ -19,7 +19,7 @@ namespace diNo
       // Verwaltungsreiter
       if (Zugriff.Instance.lehrer.HatRolle(Rolle.Admin) || Zugriff.Instance.lehrer.HatRolle(Rolle.Sekretariat))
       {
-        this.verwaltungController = new SchuelerverwaltungController(() => { Zugriff.Refresh(); this.treeListView1.Roots = Zugriff.Instance.Klassen; });
+        this.verwaltungController = new SchuelerverwaltungController(() => { RefreshTreeView(); });
         this.treeListView1.IsSimpleDragSource = true;
         this.treeListView1.IsSimpleDropSink = true;
         this.treeListView1.ModelCanDrop += this.verwaltungController.treeListView1_ModelCanDrop;
@@ -113,44 +113,49 @@ namespace diNo
         }
       }
     }
-
+    
     private void Klassenansicht_Load(object sender, EventArgs e)
     {
-        this.treeListView1.Roots = Zugriff.Instance.Klassen;
-        this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
-        this.treeListView1.ChildrenGetter = delegate (object x) { return ((Klasse)x).eigeneSchueler; };
-        nameLabel.Text = "";
-        klasseLabel.Text = "";
-        pictureBoxImage.Image = null; 
-        toolStripStatusLabel1.Text = "";
-        btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
-        btnAbidruck.Visible = Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
+      btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
+      btnAbidruck.Visible = Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
+      RefreshTreeView();
     }
 
-        private void btnNotenabgeben_Click(object sender, EventArgs e)
+    private void RefreshTreeView()
+    {
+      Zugriff.Instance.LoadSchueler(chkNurAktive.Checked);
+      this.treeListView1.Roots = Zugriff.Instance.Klassen;
+      this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
+      this.treeListView1.ChildrenGetter = delegate (object x) { return ((Klasse)x).eigeneSchueler; };
+      nameLabel.Text = "";
+      klasseLabel.Text = "";
+      pictureBoxImage.Image = null; 
+      toolStripStatusLabel1.Text = "";
+    }
+
+    private void btnNotenabgeben_Click(object sender, EventArgs e)
+    {
+      var fileDialog = new OpenFileDialog();
+      fileDialog.Filter = "Excel Files|*.xls*";
+      fileDialog.Multiselect = true;
+      // Call the ShowDialog method to show the dialog box.
+      bool userClickedOK = fileDialog.ShowDialog() == DialogResult.OK;
+
+      // Process input if the user clicked OK.
+      if (userClickedOK == true)
+      {
+        Cursor.Current = Cursors.WaitCursor;
+        foreach (string fileName in fileDialog.FileNames)
         {
-              var fileDialog = new OpenFileDialog();
-              fileDialog.Filter = "Excel Files|*.xls*";
-              fileDialog.Multiselect = true;
-              // Call the ShowDialog method to show the dialog box.
-              bool userClickedOK = fileDialog.ShowDialog() == DialogResult.OK;
-
-              // Process input if the user clicked OK.
-              if (userClickedOK == true)
-              {
-                Cursor.Current = Cursors.WaitCursor;
-                foreach (string fileName in fileDialog.FileNames)
-                {
-                    new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
-                }
-
-                Zugriff.Refresh(); // Noten neu laden
-                this.treeListView1.Roots = Zugriff.Instance.Klassen; // Ansicht auffrischen
-                MessageBox.Show("Die Notendateien wurden übertragen.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                toolStripStatusLabel1.Text = "";
-                Cursor.Current = Cursors.Default;
-              }
+          new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
         }
+
+        RefreshTreeView(); // Noten neu laden
+        MessageBox.Show("Die Notendateien wurden übertragen.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
+        toolStripStatusLabel1.Text = "";
+        Cursor.Current = Cursors.Default;
+      }
+    }
             
         /// <summary>
         /// Event Handler für Statusmeldungen vom Notenleser.
@@ -238,6 +243,11 @@ namespace diNo
     {
       SchuelerverwaltungController.SetValueAustrittsdatum(this.schueler, this.dateTimePicker1.Value);
       this.userControlKurszuordnungen1.InitKurse();
+    }
+
+    private void chkNurAktive_Click(object sender, EventArgs e)
+    {
+      RefreshTreeView();
     }
   }
 }

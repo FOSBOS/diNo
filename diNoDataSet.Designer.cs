@@ -8655,6 +8655,8 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnBezeichnung;
             
+            private global::System.Data.DataColumn columnKlassenString;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public RolleDataTable() {
@@ -8706,6 +8708,14 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn KlassenStringColumn {
+                get {
+                    return this.columnKlassenString;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -8741,11 +8751,12 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public RolleRow AddRolleRow(int Id, string Bezeichnung) {
+            public RolleRow AddRolleRow(int Id, string Bezeichnung, string KlassenString) {
                 RolleRow rowRolleRow = ((RolleRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
-                        Bezeichnung};
+                        Bezeichnung,
+                        KlassenString};
                 rowRolleRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowRolleRow);
                 return rowRolleRow;
@@ -8777,6 +8788,7 @@ namespace diNo {
             internal void InitVars() {
                 this.columnId = base.Columns["Id"];
                 this.columnBezeichnung = base.Columns["Bezeichnung"];
+                this.columnKlassenString = base.Columns["KlassenString"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8786,12 +8798,15 @@ namespace diNo {
                 base.Columns.Add(this.columnId);
                 this.columnBezeichnung = new global::System.Data.DataColumn("Bezeichnung", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBezeichnung);
+                this.columnKlassenString = new global::System.Data.DataColumn("KlassenString", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnKlassenString);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AllowDBNull = false;
                 this.columnId.Unique = true;
                 this.columnBezeichnung.AllowDBNull = false;
                 this.columnBezeichnung.MaxLength = 50;
+                this.columnKlassenString.MaxLength = 6;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13910,6 +13925,34 @@ namespace diNo {
                 set {
                     this[this.tableRolle.BezeichnungColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string KlassenString {
+                get {
+                    try {
+                        return ((string)(this[this.tableRolle.KlassenStringColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte KlassenString in Tabelle Rolle ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableRolle.KlassenStringColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsKlassenStringNull() {
+                return this.IsNull(this.tableRolle.KlassenStringColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetKlassenStringNull() {
+                this[this.tableRolle.KlassenStringColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -21016,16 +21059,17 @@ FROM            Kurs INNER JOIN
                          Klasse ON Schueler.KlasseId = Klasse.Id
 WHERE        (Schueler.Status <> @NotStatus) AND 
 ((Kurs.LehrerId = @LehrerId) OR 
-(@IstSeminarlehrer=1 and Klasse.Bezeichnung Like '%13%') OR
-(Left(Klasse.Bezeichnung,4) = ANY
-(SELECT KlassenString
-FROM Rolle,LehrerRolle
-where Rolle.Id = LehrerRolle.RolleId and LehrerId = @LehrerId)))
+(Klasse.Id = ANY
+(SELECT DISTINCT Klasse.Id
+FROM Rolle,LehrerRolle, Klasse
+Where LehrerRolle.LehrerId =@LehrerId  and 
+Rolle.Id = LehrerRolle.RolleId and 
+Klasse.Vaterklasse is null and
+Klasse.Bezeichnung LIKE Rolle.KlassenString)))
 ";
             this._commandCollection[6].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NotStatus", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IstSeminarlehrer", global::System.Data.SqlDbType.VarChar, 1024, global::System.Data.ParameterDirection.Input, 0, 0, "", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[7] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[7].Connection = this.Connection;
             this._commandCollection[7].CommandText = "SELECT  Schueler.*\r\nFROM Schueler\r\nWHERE (Status <> @NotStatus)";
@@ -21139,7 +21183,7 @@ where Rolle.Id = LehrerRolle.RolleId and LehrerId = @LehrerId)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.SchuelerDataTable GetDataByLehrerIdFPASem(global::System.Nullable<int> NotStatus, global::System.Nullable<int> LehrerId, string IstSeminarlehrer) {
+        public virtual diNoDataSet.SchuelerDataTable GetDataByLehrerIdFPASem(global::System.Nullable<int> NotStatus, global::System.Nullable<int> LehrerId) {
             this.Adapter.SelectCommand = this.CommandCollection[6];
             if ((NotStatus.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[0].Value = ((int)(NotStatus.Value));
@@ -21152,12 +21196,6 @@ where Rolle.Id = LehrerRolle.RolleId and LehrerId = @LehrerId)))
             }
             else {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            if ((IstSeminarlehrer == null)) {
-                throw new global::System.ArgumentNullException("IstSeminarlehrer");
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[2].Value = ((string)(IstSeminarlehrer));
             }
             diNoDataSet.SchuelerDataTable dataTable = new diNoDataSet.SchuelerDataTable();
             this.Adapter.Fill(dataTable);
@@ -23339,31 +23377,39 @@ where Rolle.Id = LehrerRolle.RolleId and LehrerId = @LehrerId)))
             tableMapping.DataSetTable = "Rolle";
             tableMapping.ColumnMappings.Add("Id", "Id");
             tableMapping.ColumnMappings.Add("Bezeichnung", "Bezeichnung");
+            tableMapping.ColumnMappings.Add("KlassenString", "KlassenString");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
             this._adapter.DeleteCommand.CommandText = "DELETE FROM [Rolle] WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_B" +
-                "ezeichnung))";
+                "ezeichnung) AND ((@IsNull_KlassenString = 1 AND [KlassenString] IS NULL) OR ([Kl" +
+                "assenString] = @Original_KlassenString)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_KlassenString", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenString", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_KlassenString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenString", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [Rolle] ([Id], [Bezeichnung]) VALUES (@Id, @Bezeichnung);\r\nSELECT Id," +
-                " Bezeichnung FROM Rolle WHERE (Id = @Id)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [Rolle] ([Id], [Bezeichnung], [KlassenString]) VALUES (@Id, @Bezeichn" +
+                "ung, @KlassenString);\r\nSELECT Id, Bezeichnung, KlassenString FROM Rolle WHERE (I" +
+                "d = @Id)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlassenString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenString", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = "UPDATE [Rolle] SET [Id] = @Id, [Bezeichnung] = @Bezeichnung WHERE (([Id] = @Origi" +
-                "nal_Id) AND ([Bezeichnung] = @Original_Bezeichnung));\r\nSELECT Id, Bezeichnung FR" +
-                "OM Rolle WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Rolle] SET [Id] = @Id, [Bezeichnung] = @Bezeichnung, [KlassenString] = @KlassenString WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ((@IsNull_KlassenString = 1 AND [KlassenString] IS NULL) OR ([KlassenString] = @Original_KlassenString)));
+SELECT Id, Bezeichnung, KlassenString FROM Rolle WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlassenString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenString", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_KlassenString", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenString", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_KlassenString", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenString", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -23379,11 +23425,11 @@ where Rolle.Id = LehrerRolle.RolleId and LehrerId = @LehrerId)))
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        Id, Bezeichnung\r\nFROM            Rolle";
+            this._commandCollection[0].CommandText = "SELECT     *\r\nFROM            Rolle";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT        Id, Bezeichnung\r\nFROM            Rolle\r\nWHERE Id=@Id";
+            this._commandCollection[1].CommandText = "SELECT Bezeichnung, Id, KlassenString FROM Rolle WHERE (Id = @Id)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -23457,13 +23503,21 @@ where Rolle.Id = LehrerRolle.RolleId and LehrerId = @LehrerId)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, string Original_Bezeichnung) {
+        public virtual int Delete(int Original_Id, string Original_Bezeichnung, string Original_KlassenString) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             if ((Original_Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Original_Bezeichnung");
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((string)(Original_Bezeichnung));
+            }
+            if ((Original_KlassenString == null)) {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((string)(Original_KlassenString));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -23485,13 +23539,19 @@ where Rolle.Id = LehrerRolle.RolleId and LehrerId = @LehrerId)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int Id, string Bezeichnung) {
+        public virtual int Insert(int Id, string Bezeichnung, string KlassenString) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(Id));
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
             }
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(Bezeichnung));
+            }
+            if ((KlassenString == null)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(KlassenString));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -23513,7 +23573,7 @@ where Rolle.Id = LehrerRolle.RolleId and LehrerId = @LehrerId)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int Id, string Bezeichnung, int Original_Id, string Original_Bezeichnung) {
+        public virtual int Update(int Id, string Bezeichnung, string KlassenString, int Original_Id, string Original_Bezeichnung, string Original_KlassenString) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(Id));
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
@@ -23521,12 +23581,26 @@ where Rolle.Id = LehrerRolle.RolleId and LehrerId = @LehrerId)))
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(Bezeichnung));
             }
-            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Original_Id));
+            if ((KlassenString == null)) {
+                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(KlassenString));
+            }
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_Id));
             if ((Original_Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Original_Bezeichnung");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Original_Bezeichnung));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Original_Bezeichnung));
+            }
+            if ((Original_KlassenString == null)) {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_KlassenString));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -23548,8 +23622,8 @@ where Rolle.Id = LehrerRolle.RolleId and LehrerId = @LehrerId)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Bezeichnung, int Original_Id, string Original_Bezeichnung) {
-            return this.Update(Original_Id, Bezeichnung, Original_Id, Original_Bezeichnung);
+        public virtual int Update(string Bezeichnung, string KlassenString, int Original_Id, string Original_Bezeichnung, string Original_KlassenString) {
+            return this.Update(Original_Id, Bezeichnung, KlassenString, Original_Id, Original_Bezeichnung, Original_KlassenString);
         }
     }
     
