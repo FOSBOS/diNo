@@ -48,7 +48,7 @@ namespace diNo
         public void CheckSchueler(Schueler s)
         { 
           aktSchueler = s;
-          if ((modus==NotenCheckModus.EigeneKlasse && s.getKlasse.Klassenleiter.Id != Zugriff.Instance.lehrer.Id) ||
+          if ((modus==NotenCheckModus.EigeneKlasse && s.getKlasse.KlassenleiterId != Zugriff.Instance.lehrer.Id) ||
                s.Status==Schuelerstatus.Abgemeldet) return;
               
           // auch abgebrochene bekommen ein Jahreszeugnis

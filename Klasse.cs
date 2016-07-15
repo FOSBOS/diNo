@@ -66,6 +66,7 @@ namespace diNo
     private diNoDataSet.SchuelerDataTable schueler;
     private diNoDataSet.LehrerRow klassenleiter;
     public List<Schueler> eigeneSchueler;
+    private List<Kurs> kurse = null;
 
     public Klasse(int id)
     {
@@ -174,6 +175,12 @@ namespace diNo
       }
     }
 
+    public int KlassenleiterId
+    {
+      get { return Data.IsKlassenleiterIdNull() ? 0 : Data.KlassenleiterId;  }
+    }
+
+
     public diNoDataSet.LehrerRow Klassenleiter
     {
       get
@@ -209,27 +216,25 @@ namespace diNo
       return result;
     }
 
+    // alle Kurse, die in dieser Klasse angeboten werden
     public IList<Kurs> Kurse
     {
       get
       {
-        var ada = new KlasseKursTableAdapter();
-        List<Kurs> result = new List<Kurs>();
-        foreach (var klasseZukursRow in ada.GetDataByKlasse(this.Data.Id))
+        if (kurse==null)
         {
+          var ta = new KursTableAdapter();
+          kurse = new List<Kurs>();
+          var dt = ta.GetDataByKlasseId(Data.Id);
+          foreach (var kursRow in dt)
+          {
           // TODO: Wie kann es sein, dass in der BVkST_S manche Kurse doppelt existieren? 
           //       Gibt es hier ein Problem beim Import, z. B. wegen der Lehrertandems?
           //       Und wieso lässt die Datenbank dies überhaupt zu?
-          var found = result.Find(
-            x => x.Id == klasseZukursRow.KursId
-            );
-          if (found == null)
-          {
-            result.Add(new Kurs(klasseZukursRow.KursId));
+            kurse.Add(new Kurs(kursRow));
           }
         }
-
-        return result;
+        return kurse;
       }
     }
 
@@ -245,18 +250,8 @@ namespace diNo
         return schueler;
       }
     }
-
-    public static Klasse FindKlasse(string bezeichnung)
-    {
-      foreach (var klasseRow in new KlasseTableAdapter().GetDataByBezeichnung(bezeichnung))
-      {
-        return new Klasse(klasseRow);
-      }
-
-      return null;
-    }
-
-    public IList<Klasse> GetTeilKlassen()
+    
+    private IList<Klasse> GetTeilKlassen()
     {
       var children = new KlasseTableAdapter().GetDataByVaterklasse(this.data.Id);
       var result = new List<Klasse>();

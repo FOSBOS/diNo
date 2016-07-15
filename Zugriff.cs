@@ -13,9 +13,16 @@ namespace diNo
     public string Username { get; private set; }
     public Lehrer lehrer = null; // angemeldeter Lehrer
     public List<Klasse> Klassen { get; private set; }
-    public int AnzahlSchueler { get; private set; }
     public List<Fach> eigeneFaecher { get; private set; }
-    public Dictionary<int, string> Lehrerliste;
+    public Klasse eigeneKlasse { get; private set; } // Verweis auf die Klasse, in der der User Klassenleiter ist
+    public int AnzahlSchueler { get; private set; }
+
+    // folgende Nachschlagelisten dienen v.a. der Performance, damit die Objekte insgesamt nur 1x im Speicher angelegt werden müssen!
+    public Dictionary<int, Schueler> SchuelerListe = new Dictionary<int, Schueler>();
+    public Dictionary<int, Kurs> KursListe = new Dictionary<int, Kurs>();
+    public Dictionary<int, string> LehrerListe = new Dictionary<int, string>(); // aktuell nicht verwendet
+
+
     private diNoDataSet.GlobaleKonstantenRow globaleKonstanten;
     public int Schuljahr { get { return globaleKonstanten.Schuljahr; } }
     public Sperrtyp Sperre { get { return (Sperrtyp)globaleKonstanten.Sperre; } }
@@ -36,7 +43,7 @@ namespace diNo
       }
       if (Username == "Betzigau\\Claus")
       {
-        Username = "FOSBOS\\aenge";
+        Username = "FOSBOS\\ckonrad";
       }
       
       Username = Username.Replace("FOSBOS\\", "");
@@ -51,7 +58,7 @@ namespace diNo
 
       // LoadSchueler(); erst in Klassenansicht, wegen Parameter nurAktive
       LoadFaecher();
-      LoadLehrer();
+      // LoadLehrer(); wird aktuell nicht benötigt
       LoadGlobaleKonstanten();
     }
 
@@ -90,31 +97,28 @@ namespace diNo
       else
         sListe = ta.GetDataByLehrerIdFPASem(NotStatus,lehrer.Id); // Lehrer mit erweiterten Rollen
 
-      Dictionary<int, Schueler> schueler = new Dictionary<int, Schueler>();
-      foreach (var aSchueler in sListe)
+      AnzahlSchueler = sListe.Count;
+      foreach (var sRow in sListe)
       {
-        // erstmal alle eigenen Schueler einladen, damit die sicher sichtbar sind.
-        schueler.Add(aSchueler.Id, new Schueler(aSchueler));
-      }
-     
-      AnzahlSchueler = schueler.Count;
-      foreach (var sRow in schueler.Values)
-      {
-        int index = klassenIds.IndexOf(sRow.Data.KlasseId);
-        if (index < 0)
+        Schueler s = new Schueler(sRow);
+        int index = klassenIds.IndexOf(sRow.KlasseId);
+        if (index < 0) // Klasse kam bis jetzt nicht vor, also anlegen
         {
-          klassenIds.Add(sRow.Data.KlasseId);
-          Klassen.Add(sRow.getKlasse);
+          klassenIds.Add(sRow.KlasseId);
+          Klassen.Add(s.getKlasse);
           index = klassenIds.Count - 1;
-        }
-
-        Klassen[index].eigeneSchueler.Add(sRow); // dieser Klassen den Schüler hinzufügen
+        }        
+        s.getKlasse = Klassen[index]; // dem Schüler die Klasseninstanz zuweisen, damit die nicht jedesmal neu erzeugt werden muss!
+        Klassen[index].eigeneSchueler.Add(s); // und umgekehrt dieser Klasse den Schüler hinzufügen
       }
 
       // alles sortieren
       Klassen.Sort((x, y) => x.Bezeichnung.CompareTo(y.Bezeichnung));
       foreach (var klasse in Klassen)
+      {
         klasse.eigeneSchueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
+        if (klasse.KlassenleiterId == lehrer.Id) eigeneKlasse = klasse;
+      }
     }
 
     private void LoadFaecher()
@@ -131,14 +135,13 @@ namespace diNo
 
     private void LoadLehrer()
     {
-      diNoDataSet.LehrerDataTable dt;
-      Lehrerliste = new Dictionary<int, string>();
+      diNoDataSet.LehrerDataTable dt;      
       var ta = new LehrerTableAdapter();
       dt = ta.GetData();
 
       foreach (var r in dt)
       {
-        Lehrerliste.Add(r.Id, r.Name + " (" + r.Kuerzel + ")");
+        LehrerListe.Add(r.Id, r.Name + " (" + r.Kuerzel + ")");
       }
     }
 
