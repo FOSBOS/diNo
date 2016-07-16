@@ -114,6 +114,7 @@
       // 
       // Fachname
       // 
+      this.Fachname.Frozen = true;
       this.Fachname.HeaderText = "Fach";
       this.Fachname.Name = "Fachname";
       this.Fachname.ReadOnly = true;

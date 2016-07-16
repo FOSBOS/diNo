@@ -82,8 +82,8 @@ namespace diNo
         BerechneteNote zeugnis = kursNoten.getSchnitt(Halbjahr.Zweites);
         InsertSchnitt(18, lineCount, zeugnis);
 
-        InsertNoten(20, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich), Zugriff.Instance.aktZeitpunkt > 3);
-        InsertNoten(20, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich), Zugriff.Instance.aktZeitpunkt > 3);
+        InsertNoten(20, lineCount, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich), Zugriff.Instance.aktZeitpunkt == 4); // AP Einzelergebnisse nur zur zweiten PA hervorheben
+        InsertNoten(20, lineCount + 1, kursNoten.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich), Zugriff.Instance.aktZeitpunkt == 4);
 
         if (zeugnis != null)
         {
@@ -241,15 +241,21 @@ namespace diNo
 
     private Color GetBackgroundColor(double notenwert)
     {
-      if (notenwert < 1) return Color.Red;
-      if (notenwert < 1.5) return Color.OrangeRed;
-      if (notenwert < 2.5) return Color.DarkOrange;
-      if (notenwert < 3.5) return Color.Orange;
-      if (notenwert < 4.5) return Color.Yellow;
-      if (notenwert < 5.5) return Color.LightYellow;
+      int aktuellerZeitpunkt = Zugriff.Instance.aktZeitpunkt;
 
-      if (notenwert > 13.5) return Color.Green;
-      if (notenwert > 11.5) return Color.LightGreen;
+      if (notenwert < 1) return Color.Crimson;
+      if (notenwert < 1.5) return Color.Coral;
+      if (notenwert < 2.5) return Color.Orange;
+      if (notenwert < 3.5) return Color.Gold;
+      // Ab der zweiten PA interessieren Vierer niemanden mehr
+      if (aktuellerZeitpunkt < (int)Zeitpunkt.ZweitePA)
+      {
+        if (notenwert < 4.5) return Color.Yellow;
+        if (notenwert < 5.5) return Color.LightYellow;
+      }
+
+      if (notenwert > 13.5) return Color.LimeGreen;
+      if (notenwert > 11.5) return Color.PaleGreen;
       return dataGridNoten.BackgroundColor;
     }
 
