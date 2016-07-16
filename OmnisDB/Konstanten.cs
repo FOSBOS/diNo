@@ -200,7 +200,7 @@ namespace diNo.OmnisDB
   }
 
   /// <summary>
-  /// Abschlussprüfung Bestanden. Todo: Was heißt denn NichtWiederholung Art 54? Darf nicht wiederholen oder hat bei Wiederholung nicht bestanden?
+  /// Abschlussprüfung Bestanden.
   /// </summary>
   public enum AbschlusspruefungBestanden
   {
@@ -208,7 +208,7 @@ namespace diNo.OmnisDB
     BestandenMitInternemAusgleichArt45 = 1,
     BestandenMitNotenausgleichArt33 = 2,
     NichtBestanden = 3,
-    NichtWiederholungArt54 = 4,
+    NichtWiederholungArt54 = 4, // Schüler war auf Probe vorgerückt. Wiederholung zählt nicht als Wiederholung oder so ähnlich
     Nachtermin = 5,
     NachterminGenehmigt = 6,
     KeineFHRPruefung = 7 //gilt nur bei BOS

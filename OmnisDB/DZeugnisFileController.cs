@@ -38,7 +38,14 @@ namespace diNo.OmnisDB
 
           Schueler schueler = new Schueler(schuelerId);
           zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
-          zeile[Konstanten.klassenzielOderGefaehrdungCol] = Konstanten.GetKlassenzielOderGefaehrdungString(GetZielerreichung(zeitpunkt, schueler));
+          KlassenzielOderGefaehrdung zielerreichung = GetZielerreichung(zeitpunkt, schueler);
+          zeile[Konstanten.klassenzielOderGefaehrdungCol] = Konstanten.GetKlassenzielOderGefaehrdungString(zielerreichung);
+          if (zeitpunkt == Zeitpunkt.ErstePA || zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA || zeitpunkt == Zeitpunkt.Jahresende)
+          {
+            zeile[Konstanten.zeugnisartCol] = zielerreichung == KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg ? "J" : "A";
+            zeile[Konstanten.APBestandenCol] = Konstanten.GetBestandenString(GetBestanden(zeitpunkt, schueler));
+          }
+
           zeile[Konstanten.abweisungCol] = Konstanten.GetAbweisungString(schueler.GefahrDerAbweisung);
 
           var seminarfachNote = new SeminarfachnoteTableAdapter().GetDataBySchuelerId(schuelerId);
@@ -75,7 +82,6 @@ namespace diNo.OmnisDB
           SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach3BezeichnungCol, Konstanten.weiteresFach3NoteCol);
 
           writer.WriteLine(zeile.ToString());
-
         }
       }
     }
@@ -114,15 +120,31 @@ namespace diNo.OmnisDB
           case Vorkommnisart.starkeGefaehrdungsmitteilung: ziel = KlassenzielOderGefaehrdung.SehrGefaehrdet; break;
           case Vorkommnisart.Gefaehrdungsmitteilung: ziel = KlassenzielOderGefaehrdung.Gefaehrdet; break;
           case Vorkommnisart.BeiWeiteremAbsinken: ziel = KlassenzielOderGefaehrdung.BeiWeiteremAbsinkenGefaehrdet; break;
-          case Vorkommnisart.NichtZurPruefungZugelassen: ziel = KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg; break;
-          case Vorkommnisart.Notenausgleich: ziel = KlassenzielOderGefaehrdung.NotenausgleichGewaehrt; break;
-          case Vorkommnisart.endgueltigNichtBestanden: ziel = KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg; break;
-            // TODO: weitere nicht bestehen-Gründe aufnehmen
+          case Vorkommnisart.NichtZurPruefungZugelassen: return KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg;
+          case Vorkommnisart.Notenausgleich: return KlassenzielOderGefaehrdung.NotenausgleichGewaehrt;
+          case Vorkommnisart.endgueltigNichtBestanden: return KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg;
         }
       }
 
       return ziel;
     }
+
+    private static AbschlusspruefungBestanden GetBestanden(Zeitpunkt zeitpunkt, Schueler schueler)
+    {
+      KlassenzielOderGefaehrdung zielerreichung = GetZielerreichung(zeitpunkt, schueler);
+      if (zielerreichung == KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg)
+      {
+        return AbschlusspruefungBestanden.NichtBestanden;
+      }
+
+      if (zielerreichung == KlassenzielOderGefaehrdung.NotenausgleichGewaehrt)
+      {
+        return AbschlusspruefungBestanden.BestandenMitNotenausgleichArt33;
+      }
+
+      return AbschlusspruefungBestanden.Bestanden;
+    }
+
 
     private static fpaNote GetFpaNote(Zeitpunkt zeitpunkt, Schueler schueler)
     {
@@ -168,8 +190,25 @@ namespace diNo.OmnisDB
         }
         set
         {
+          // wenn die Sekretärinnen etwas nicht-leeres eingetragen haben und wir gerne den Eintrag löschen würden, dann "gewinnt" das Sekretariat (also keine Änderung)
+          if (IstLeer(value) && !IstLeer(eintraege[i]))
+          {
+            return;
+          }
+
+          //dasselbe gilt, wenn die Sekretärinnen ein "-" zum leermachen verwenden, dann bleibt das auch drin
+          if (string.IsNullOrEmpty(value) && eintraege[i]=="-")
+          {
+            return;
+          }
+
           eintraege[i] = "\"" + value + "\"";
         }
+      }
+
+      private bool IstLeer(string eintrag)
+      {
+        return string.IsNullOrEmpty(eintrag) || eintrag == "-";
       }
 
       /// <summary>
