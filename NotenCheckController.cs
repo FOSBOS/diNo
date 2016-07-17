@@ -15,6 +15,8 @@ namespace diNo
         private IList<NotenCheck> alleNotenchecks = new List<NotenCheck>();
         public Zeitpunkt zeitpunkt;
         public NotenCheckModus modus;        
+        public List<Klasse> zuPruefendeKlassen = new List<Klasse>();
+        public int AnzahlSchueler=0;
         private List<KeyValuePair<string,NotenCheckContainer>> chkContainer;
         private Dictionary<string,NotenCheckCounter> chkCounter;
         private int aktKlassenId=0;
@@ -22,8 +24,24 @@ namespace diNo
 
         public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus)
         {
-            zeitpunkt = azeitpunkt;
+            zeitpunkt = azeitpunkt;            
             modus = amodus; 
+            // je nach Modus und Zeitpunkt werden nur bestimmte Klassen ausgewählt
+            if (modus == NotenCheckModus.EigeneKlasse)
+            {
+              KlasseInNotenpruefungAufnehmen(Zugriff.Instance.eigeneKlasse);
+            }
+            else if (zeitpunkt==Zeitpunkt.ProbezeitBOS || zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS)
+            {
+              zuPruefendeKlassen = Zugriff.Instance.Klassen;
+              AnzahlSchueler = Zugriff.Instance.AnzahlSchueler;
+            }
+            else
+            {
+              foreach (var k in Zugriff.Instance.Klassen)
+                KlasseInNotenpruefungAufnehmen(k);
+            }
+
             if (modus!=NotenCheckModus.BerechnungenSpeichern && modus != NotenCheckModus.VorkommnisseErzeugen
               && azeitpunkt !=Zeitpunkt.DrittePA)           
               alleNotenchecks.Add(new NotenanzahlChecker(this));
@@ -43,6 +61,16 @@ namespace diNo
             } 
             if (azeitpunkt == Zeitpunkt.DrittePA  && (modus==NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse))
               alleNotenchecks.Add(new MAPChecker(this));
+        }
+      
+        private void KlasseInNotenpruefungAufnehmen(Klasse k)
+        {
+            if (k.Jahrgangsstufe>=Jahrgangsstufe.Zwoelf && zeitpunkt<=Zeitpunkt.DrittePA || 
+                k.Jahrgangsstufe<Jahrgangsstufe.Zwoelf && zeitpunkt==Zeitpunkt.Jahresende)
+            {
+              zuPruefendeKlassen.Add(k);
+              AnzahlSchueler += k.eigeneSchueler.Count;
+            }  
         }
 
         public void CheckSchueler(Schueler s)

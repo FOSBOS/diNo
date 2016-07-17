@@ -43,8 +43,7 @@ namespace diNo
     }
 
     private void btnStart_Click(object sender, EventArgs e)
-    {
-      progressBarChecks.Maximum = Zugriff.Instance.AnzahlSchueler;
+    {      
       if ((NotenCheckModus)comboBoxCheckModus.SelectedValue == NotenCheckModus.BerechnungenSpeichern)
         StarteBerechnungen();
       else
@@ -54,6 +53,7 @@ namespace diNo
     private void StarteBerechnungen()
     {
       var contr = new Berechnungen(GetZeitpunkt());
+      progressBarChecks.Maximum = Zugriff.Instance.AnzahlSchueler;
       foreach (var k in Zugriff.Instance.Klassen)
       {
         //if (k.Data.Id!=62) continue; // zum Test
@@ -72,8 +72,15 @@ namespace diNo
     private void StarteNotenCheck()
     {                        
       var contr = new NotenCheckController(GetZeitpunkt(),(NotenCheckModus)comboBoxCheckModus.SelectedValue);
+      progressBarChecks.Maximum = contr.AnzahlSchueler;
+      if (contr.zuPruefendeKlassen.Count == 0)
+      {
+        MessageBox.Show("Diese Klasse muss zu diesem Zeitpunkt nicht geprüft werden.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
+        return;
+      }
+
       // Check für alle eigenen Schüler durchführen      
-      foreach (var k in Zugriff.Instance.Klassen)
+      foreach (var k in contr.zuPruefendeKlassen)
       {
         lbStatus.Text = "Prüfe Klasse " + k.Bezeichnung;
         Refresh(); // Formular aktualisieren
@@ -91,7 +98,7 @@ namespace diNo
       else
         new ReportNotencheck(contr.res).Show();                                    
     }
-
+    
     private Zeitpunkt GetZeitpunkt()
     {
       return (Zeitpunkt)(comboBoxZeitpunkt.SelectedIndex+1);
