@@ -26,8 +26,8 @@ namespace diNo
 
       // Datei sichern
       try
-      {
-        File.Copy(fileName, "\\192.168.235.3\\Excelbackup\\" + Path.GetFileNameWithoutExtension(fileName) + DateTime.Now.ToString("_yyMMdd_hhmmss") + Path.GetExtension(fileName));
+      {        
+        File.Copy(fileName, "\\\\192.168.235.3\\NotendateienBackup\\" + Path.GetFileNameWithoutExtension(fileName) + DateTime.Now.ToString("_yyMMdd_hhmmss") + Path.GetExtension(fileName));
       }
       catch
       {
