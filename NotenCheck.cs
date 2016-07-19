@@ -492,6 +492,8 @@ namespace diNo
         {
           if (n.HatNichtBestanden())
             contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen);
+          else if (n.Unterpunktungen!="")
+            contr.Add(null, "Unterpunktet in: " + n.Unterpunktungen);
           if (schueler.getKlasse.Schulart == Schulart.BOS && n.HatIn12KeinePZ())
             contr.Add(null, "Hat in der 12. Klasse keine Probezeit.");
         }
