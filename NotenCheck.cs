@@ -488,7 +488,14 @@ namespace diNo
         }
           
         // Jahresende, 3. PA, Probezeit (BOS und Hj.)
-        if (n.HatNichtBestanden())
+        if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse && contr.zeitpunkt == Zeitpunkt.Jahresende)
+        {
+          if (n.HatNichtBestanden())
+            contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen);
+          if (schueler.getKlasse.Schulart == Schulart.BOS && n.HatIn12KeinePZ())
+            contr.Add(null, "Hat in der 12. Klasse keine Probezeit.");
+        }
+        else if (n.HatNichtBestanden())
         {
           if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich möglich: " + n.Unterpunktungen);
           else

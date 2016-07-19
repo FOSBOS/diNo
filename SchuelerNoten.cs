@@ -189,13 +189,20 @@ namespace diNo
 
     public bool HatNichtBestanden()
     {
+      if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse)
+      {
+        // bestanden, falls nur 4er oder 1x5,1x2 oder 1x5,2x3, vgl. §58(5)
+        return !(AnzahlNoten(6) == 0 && 
+          (AnzahlNoten(5) == 0 ||
+          AnzahlNoten(5) == 1 && (AnzahlNoten(1) > 0 || AnzahlNoten(2) > 0 || AnzahlNoten(3) > 1)));
+      }
       return AnzahlNoten(6) > 0 || AnzahlNoten(5) > 1;
     }
 
     public bool KannAusgleichen()
     {
       // geht nur, wenn 1x6 und keine 5 oder 2x5 und keine 6 vorliegt.
-      if (hatDeutsch6 || 2*AnzahlNoten(6) + AnzahlNoten(5) >2)
+      if (hatDeutsch6 || 2*AnzahlNoten(6) + AnzahlNoten(5) >2 || schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse)
         return false;
 
       if (AnzahlNoten(3,true)>=3) return true; // Ausgleich mit 3x3 in Prüfungsfächern
@@ -208,6 +215,11 @@ namespace diNo
       return false;
     }
 
+    public bool HatIn12KeinePZ()
+    { // überall mindestens eine 3
+      return AnzahlNoten(6) == 0 && AnzahlNoten(5) == 0 && AnzahlNoten(4) == 0;
+    }
+    
     public bool MAPmoeglich()
     {
       // Anzahl 5er und 6er nach einen MAP mit "bestmöglichem" Ergebnis
