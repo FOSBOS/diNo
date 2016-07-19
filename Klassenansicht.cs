@@ -147,7 +147,7 @@ namespace diNo
         Cursor.Current = Cursors.WaitCursor;
         foreach (string fileName in fileDialog.FileNames)
         {
-          new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
+          new LeseNotenAusExcel(fileName, notenReader_OnStatusChange, Properties.Settings.Default.sicherungsverzeichnis);
         }
 
         RefreshTreeView(); // Noten neu laden

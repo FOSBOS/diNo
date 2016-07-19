@@ -19,21 +19,23 @@ namespace diNo
     public bool success = false;
     public StatusChanged StatusChanged;
 
-    public LeseNotenAusExcel(string afileName, StatusChanged StatusChangedMethod)
+    public LeseNotenAusExcel(string afileName, StatusChanged StatusChangedMethod, string sicherungsverzeichnis)
     {
       fileName = afileName;
       this.StatusChanged = StatusChangedMethod;
 
       // Datei sichern
-      try
-      {        
-        File.Copy(fileName, "\\\\192.168.235.3\\NotendateienBackup\\" + Path.GetFileNameWithoutExtension(fileName) + DateTime.Now.ToString("_yyMMdd_hhmmss") + Path.GetExtension(fileName));
-      }
-      catch
+      if (!string.IsNullOrEmpty(sicherungsverzeichnis))
       {
-        // wenn's nicht klappt, ist es halt so...
+        try
+        {
+          File.Copy(fileName, "\\\\192.168.235.3\\NotendateienBackup\\" + Path.GetFileNameWithoutExtension(fileName) + DateTime.Now.ToString("_yyMMdd_hhmmss") + Path.GetExtension(fileName));
+        }
+        catch
+        {
+          // wenn's nicht klappt, ist es halt so...
+        }
       }
-    
       xls = new OpenNotendatei(fileName);
 
       // Liste der gespeicherten Sids bereitstellen (alte Sids sollen nicht aus Excel gelöscht werden)

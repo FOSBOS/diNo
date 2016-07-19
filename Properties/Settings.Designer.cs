@@ -26,10 +26,20 @@ namespace diNo.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=BETZIGAU\\SQLEXPRESS;Initial Catalog=diNo;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.235.3,1433;Network Library=DBMSSOCN;Initial Catalog=diNo;Inte" +
+            "grated Security=True")]
         public string diNoConnectionString {
             get {
                 return ((string)(this["diNoConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\192.168.235.3\\\\NotendateienBackup\\\\")]
+        public string sicherungsverzeichnis {
+            get {
+                return ((string)(this["sicherungsverzeichnis"]));
             }
         }
     }

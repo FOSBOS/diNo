@@ -50,7 +50,7 @@ namespace diNo
     {            
       foreach (string file in Directory.GetFiles(Konstanten.ExcelPfad + "\\Abgabe"))
       {
-            var reader = new LeseNotenAusExcel(file, notenReader_OnStatusChange);
+            var reader = new LeseNotenAusExcel(file, notenReader_OnStatusChange, null);
             if (reader.success)
                 Directory.Move(file, Konstanten.ExcelPfad + "\\Archiv");
       }

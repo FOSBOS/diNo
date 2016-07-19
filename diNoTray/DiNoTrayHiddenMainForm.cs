@@ -131,7 +131,7 @@ namespace diNoTray
     /// <param name="fileName">Name der Excel-Datei, die die Noten enthält.</param>
     private void Synchronisiere(string fileName)
     {
-      var notenReader = new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
+      var notenReader = new LeseNotenAusExcel(fileName, notenReader_OnStatusChange, null);
     }
 
     
