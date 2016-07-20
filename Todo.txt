@@ -2,12 +2,9 @@
 --------------
 
 - Fehltage integrieren
-- Notenprüfungen (was prüfen wir alles?)
-- Zurückspielen der Noten in die WinSV und Zeugnisdruck Jahreszeugnis bzw. Abschlusszeugnis
-- Seminarfachlehrer zuordnen
-- Liste von Mederer: FpA zuordnen
-- Test der Darstellung des Notenbogens auf dem Beamer
-- Sicherungskopie der Notenlisten auf Server ?
 - Vorkommnisarten AutoKey abstellen (und DB-Tabelle bereinigen)
 - Seminarfachnote in SchuelerNoten.alleFaecher integrieren, dann muss die nicht immer extra überprüft werden
 dazu den Dummykurs Seminarfach anlegen
+- Admin-Oberfläche Zuordnung Lehrer-Kurs
+- Admin-Oberfläche für Berechtigungen ?
+- Statistiken ?
