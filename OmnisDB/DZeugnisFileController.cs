@@ -37,53 +37,78 @@ namespace diNo.OmnisDB
           }
 
           Schueler schueler = new Schueler(schuelerId);
-          zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
-          KlassenzielOderGefaehrdung zielerreichung = GetZielerreichung(zeitpunkt, schueler);
-          zeile[Konstanten.klassenzielOderGefaehrdungCol] = Konstanten.GetKlassenzielOderGefaehrdungString(zielerreichung);
-          if (zeitpunkt == Zeitpunkt.ErstePA || zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA || zeitpunkt == Zeitpunkt.Jahresende)
+          if (BrauchtZeugnis(schueler, zeitpunkt))
           {
-            zeile[Konstanten.zeugnisartCol] = zielerreichung == KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg ? "J" : "A";
-            zeile[Konstanten.APBestandenCol] = Konstanten.GetBestandenString(GetBestanden(zeitpunkt, schueler));
-          }
-
-          zeile[Konstanten.abweisungCol] = Konstanten.GetAbweisungString(schueler.GefahrDerAbweisung);
-
-          var seminarfachNote = new SeminarfachnoteTableAdapter().GetDataBySchuelerId(schuelerId);
-          if (seminarfachNote != null && seminarfachNote.Count == 1 && !seminarfachNote[0].IsGesamtnoteNull())
-          {
-            zeile[Konstanten.seminarfachGesamtnote] = string.Format(CultureInfo.CurrentCulture, "{0:00}", seminarfachNote[0].Gesamtnote);
-            zeile[Konstanten.seminarfachThema] = !string.IsNullOrEmpty(seminarfachNote[0].ThemaKurz) ? seminarfachNote[0].ThemaKurz : seminarfachNote[0].ThemaLang.Substring(0, 128);
-          }
-
-          string faecherspiegel = zeile[Konstanten.faecherspiegelCol];
-          if (string.IsNullOrEmpty(faecherspiegel))
-          {
-            log.Warn("Für den Schüler " + schueler.NameVorname + " gibt es keinen passenden Fächerspiegel!");
-            continue;
-          }
-          for (int i = 0; i < 30; i++)
-          {
-            zeile[Konstanten.notePflichtfach1Col + i] = faecher.GetFachNoteString(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
-          }
-
-          if (Konstanten.ZeugnisartFromString(zeile[Konstanten.zeugnisartCol]) != Zeugnisart.Zwischenzeugnis)
-          {
-            for (int i = 0; i < 20; i++)
+            zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
+            KlassenzielOderGefaehrdung zielerreichung = GetZielerreichung(zeitpunkt, schueler);
+            zeile[Konstanten.klassenzielOderGefaehrdungCol] = Konstanten.GetKlassenzielOderGefaehrdungString(zielerreichung);
+            if (zeitpunkt == Zeitpunkt.ErstePA || zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
             {
-              zeile[Konstanten.jahresfortgangPflichtfach1Col + i] = faecher.FindeJahresfortgangsNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
-              zeile[Konstanten.APschriftlichPflichtfach1Col + i] = faecher.FindeAPSchriftlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
-              zeile[Konstanten.APmuendlichPflichtfach1Col + i] = faecher.FindeAPMuendlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
-              zeile[Konstanten.gesamtNoteMitAPGanzzahlig1Col + i] = faecher.GetFachNoteString(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+              zeile[Konstanten.zeugnisartCol] = zielerreichung == KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg ? "J" : "A";
+              zeile[Konstanten.APBestandenCol] = Konstanten.GetBestandenString(GetBestanden(zeitpunkt, schueler));
             }
+
+            zeile[Konstanten.abweisungCol] = Konstanten.GetAbweisungString(schueler.GefahrDerAbweisung);
+
+            var seminarfachNote = new SeminarfachnoteTableAdapter().GetDataBySchuelerId(schuelerId);
+            if (seminarfachNote != null && seminarfachNote.Count == 1 && !seminarfachNote[0].IsGesamtnoteNull())
+            {
+              zeile[Konstanten.seminarfachGesamtnote] = string.Format(CultureInfo.CurrentCulture, "{0:00}", seminarfachNote[0].Gesamtnote);
+              zeile[Konstanten.seminarfachThema] = !string.IsNullOrEmpty(seminarfachNote[0].ThemaKurz) ? seminarfachNote[0].ThemaKurz : seminarfachNote[0].ThemaLang.Substring(0, 128);
+            }
+
+            string faecherspiegel = zeile[Konstanten.faecherspiegelCol];
+            if (string.IsNullOrEmpty(faecherspiegel))
+            {
+              log.Warn("Für den Schüler " + schueler.NameVorname + " gibt es keinen passenden Fächerspiegel!");
+              continue;
+            }
+            for (int i = 0; i < 30; i++)
+            {
+              zeile[Konstanten.notePflichtfach1Col + i] = faecher.GetFachNoteString(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+            }
+
+            if (Konstanten.ZeugnisartFromString(zeile[Konstanten.zeugnisartCol]) != Zeugnisart.Zwischenzeugnis)
+            {
+              for (int i = 0; i < 20; i++)
+              {
+                zeile[Konstanten.jahresfortgangPflichtfach1Col + i] = faecher.FindeJahresfortgangsNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+                zeile[Konstanten.APschriftlichPflichtfach1Col + i] = faecher.FindeAPSchriftlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+                zeile[Konstanten.APmuendlichPflichtfach1Col + i] = faecher.FindeAPMuendlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+                zeile[Konstanten.gesamtNoteMitAPGanzzahlig1Col + i] = faecher.GetFachNoteString(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+              }
+            }
+
+            SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach1BezeichnungCol, Konstanten.weiteresFach1NoteCol);
+            SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach2BezeichnungCol, Konstanten.weiteresFach2NoteCol);
+            SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach3BezeichnungCol, Konstanten.weiteresFach3NoteCol);
           }
 
-          SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach1BezeichnungCol, Konstanten.weiteresFach1NoteCol);
-          SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach2BezeichnungCol, Konstanten.weiteresFach2NoteCol);
-          SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach3BezeichnungCol, Konstanten.weiteresFach3NoteCol);
-
+          // rausgeschrieben werden immer alle Zeugnisse, da im Import "ersetzen" angehakt werden muss
           writer.WriteLine(zeile.ToString());
         }
       }
+    }
+
+    private bool BrauchtZeugnis(Schueler schueler, Zeitpunkt zeitpunkt)
+    {
+      if (zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+      {
+        return true; // zum Halbjahr bekommen alle ein Zeugnis
+      }
+
+      // zu den PA-Sitzungen werden nur für die 12. und 13. Jahrgangsstufe Zeugnisse übertragen
+      if (zeitpunkt == Zeitpunkt.ErstePA || zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
+      {
+        return schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf;
+      }
+
+      if (zeitpunkt == Zeitpunkt.Jahresende)
+      {
+        return schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorkurs;
+      }
+
+      return false;
     }
 
     private static void SucheWahlpflichtfach(Zeitpunkt zeitpunkt, Faecherspiegel faecher, VerwalteZeile zeile, Schueler schueler, int bezeichnungCol, int noteCol)
