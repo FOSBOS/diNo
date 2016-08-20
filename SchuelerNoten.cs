@@ -20,7 +20,8 @@ namespace diNo
         private int[,] anzahlNoten;
         private Zeitpunkt zeitpunkt=Zeitpunkt.None;
         public string Unterpunktungen;
-        bool hatDeutsch6 = false; // kann nicht ausgeglichen werden
+        public bool hatDeutsch6 = false; // kann nicht ausgeglichen werden
+        public int anz4P=0;
 
         public SchuelerNoten(Schueler s)
         {
@@ -162,11 +163,13 @@ namespace diNo
             anzahlNoten[6,istSAP]++;
             if (kuerzel=="D") hatDeutsch6=true;
           }
-          else if (relevanteNote < 4) anzahlNoten[5,istSAP]++;
-          else if (relevanteNote == 4) anzahlNoten[4,istSAP]++; // als 4 zählen wir nur 4P für Gefährdungsmitteilung
+          else if (relevanteNote < 4) anzahlNoten[5,istSAP]++;          
           else if (relevanteNote >=13) anzahlNoten[1,istSAP]++;
           else if (relevanteNote >= 10) anzahlNoten[2,istSAP]++;
           else if (relevanteNote >= 7) anzahlNoten[3,istSAP]++;
+          else anzahlNoten[4,istSAP]++; 
+
+          if (relevanteNote==4) anz4P++; // nur 4P für Gefährdungsmitteilung
 
           if (relevanteNote <4 || relevanteNote == 4 && zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
             Unterpunktungen += fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
@@ -189,13 +192,7 @@ namespace diNo
 
     public bool HatNichtBestanden()
     {
-      if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse)
-      {
-        // bestanden, falls nur 4er oder 1x5,1x2 oder 1x5,2x3, vgl. §58(5)
-        return !(AnzahlNoten(6) == 0 && 
-          (AnzahlNoten(5) == 0 ||
-          AnzahlNoten(5) == 1 && (AnzahlNoten(1) > 0 || AnzahlNoten(2) > 0 || AnzahlNoten(3) > 1)));
-      }
+      // Achtung: Vorklasse hat am Jahresende eine besondere Bestanden-Regelung
       return AnzahlNoten(6) > 0 || AnzahlNoten(5) > 1;
     }
 

@@ -13,7 +13,7 @@ namespace diNo
   public partial class UserControlVorkommnisse : UserControl
   {
     private Schueler schueler;    
-    private Vorkommnisart[] notenRelevanteVorkommnisse = new[] { Vorkommnisart.Gefaehrdungsmitteilung,Vorkommnisart.starkeGefaehrdungsmitteilung,Vorkommnisart.BeiWeiteremAbsinken, Vorkommnisart.KeineVorrueckungserlaubnis, Vorkommnisart.NichtZurPruefungZugelassen, Vorkommnisart.Notenausgleich, Vorkommnisart.ProbezeitNichtBestanden, Vorkommnisart.endgueltigNichtBestanden, Vorkommnisart.nichtBestandenMAPnichtZugelassen, Vorkommnisart.VorrueckenAufProbe };
+    private Vorkommnisart[] notenRelevanteVorkommnisse = new[] { Vorkommnisart.Gefaehrdungsmitteilung,Vorkommnisart.starkeGefaehrdungsmitteilung,Vorkommnisart.BeiWeiteremAbsinken, Vorkommnisart.KeineVorrueckungserlaubnis, Vorkommnisart.NichtZurPruefungZugelassen, Vorkommnisart.Notenausgleich, Vorkommnisart.ProbezeitNichtBestanden, Vorkommnisart.NichtBestanden, Vorkommnisart.nichtBestandenMAPnichtZugelassen, Vorkommnisart.VorrueckenAufProbe };
 
     public UserControlVorkommnisse()
     {

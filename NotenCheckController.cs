@@ -140,7 +140,7 @@ namespace diNo
       // bei Wiederholungsschülern wird bei bestimmten Ereignissen automatisch Gefahr d. Abw. oder d.n.w erzeugt
       if (aktSchueler.Wiederholt())
       {
-        if (art==Vorkommnisart.endgueltigNichtBestanden || art==Vorkommnisart.nichtBestandenMAPnichtZugelassen ||
+        if (art==Vorkommnisart.NichtBestanden || art==Vorkommnisart.nichtBestandenMAPnichtZugelassen ||
           art==Vorkommnisart.NichtZurPruefungZugelassen || art==Vorkommnisart.KeineVorrueckungserlaubnis)           
             AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen,"");
 

@@ -57,34 +57,46 @@ namespace diNo
   public enum Vorkommnisart
   {
     NotSet = 0,
-    ProbezeitNichtBestanden = 1,
-    VorrueckenAufProbe = 2,
-    Notenausgleich = 3,
-    RuecktrittVorklasse = 4,
-    KeineVorrueckungserlaubnis = 5,
-    NichtZurPruefungZugelassen = 6,
-    bisherNichtBestandenMAPmoeglich = 7,
-    nichtBestandenMAPnichtZugelassen = 8,
-    Verweis = 9,
-    SonstigeOrdnungsmaßnahme = 10,    
-    Gefaehrdungsmitteilung = 11,
-    starkeGefaehrdungsmitteilung = 12,
-    BeiWeiteremAbsinken = 13,
-    GefahrDerAbweisung = 14,
-    DarfNichtMehrWiederholen = 15,
-    Zwischenzeugnis = 16,
-    keinZwischenzeugnis = 17,
-    Jahreszeugnis = 18,
-    keinJahreszeugnis = 19,
-    Fachabiturzeugnis = 20,
-    fachgebundeneHochschulreife = 21,
-    allgemeineHochschulreife = 22,
-    EnglischNiveauB2 = 23,
-    Bemerkung = 24,
-    FranzNurBisSAP = 25,
-    endgueltigNichtBestanden = 29,
-    nichtZurMAPangetreten = 30,
-    VorrueckenBOS13moeglich = 31
+
+    // Probezeit und Gefährdungen
+    ProbezeitNichtBestanden = 11,
+    BeiWeiteremAbsinken = 12,
+    Gefaehrdungsmitteilung = 13,
+    starkeGefaehrdungsmitteilung = 14,
+    GefahrDerAbweisung = 15,
+    RuecktrittVorklasse = 16,
+
+    // 1.-3. PA
+    NichtZurPruefungZugelassen = 21,
+    bisherNichtBestandenMAPmoeglich = 22,
+    nichtBestandenMAPnichtZugelassen = 23,
+    nichtZurMAPangetreten = 24,
+    VorrueckenBOS13moeglich = 25,
+
+    // Jahresende
+    NichtBestanden = 31,
+    KeineVorrueckungserlaubnis = 32,
+    DarfNichtMehrWiederholen = 33,
+    Notenausgleich = 34,
+    VorrueckenAufProbe = 35,
+
+    // Zeugnisse
+    Zwischenzeugnis = 41,
+    keinZwischenzeugnis = 42,
+    Jahreszeugnis = 43,
+    keinJahreszeugnis = 44,
+    Fachabiturzeugnis = 45,
+    fachgebundeneHochschulreife = 46,
+    allgemeineHochschulreife = 47,
+    EnglischNiveauB2 = 48,
+
+    // Ordnungsmaßnahmen
+    Verweis = 51,
+    SonstigeOrdnungsmaßnahme = 52,
+
+    // Sonstiges
+    Bemerkung = 61,
+    FranzNurBisSAP = 62
   }
 
   public class Vorkommnisse

@@ -452,8 +452,7 @@ namespace diNo
           {
             contr.Add(Vorkommnisart.starkeGefaehrdungsmitteilung,n.Unterpunktungen);
           }
-          //else if (anz5 > 0) contr.Add( null, "Gefährdet: " + m); 
-          else if (n.AnzahlNoten(4) > 1 || n.AnzahlNoten(5) > 0)
+          else if (n.anz4P > 1 || n.AnzahlNoten(5) > 0)
           { 
             contr.Add(Vorkommnisart.BeiWeiteremAbsinken,n.Unterpunktungen);
           }
@@ -490,11 +489,18 @@ namespace diNo
         // Jahresende, 3. PA, Probezeit (BOS und Hj.)
         if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse && contr.zeitpunkt == Zeitpunkt.Jahresende)
         {
-          if (n.HatNichtBestanden())
-            contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen);
+        // nur bestanden ohne 5er/6er §28(4); Mittlere Reife, falls nur 4er oder 1x5,1x2 oder 1x5,2x3, vgl. §58(5)
+          if (n.AnzahlNoten(6) > 0 || n.AnzahlNoten(5) > 0)
+          {
+            if (n.AnzahlNoten(5) == 1 && (n.AnzahlNoten(1) > 0 || n.AnzahlNoten(2) > 0 || n.AnzahlNoten(3) > 1))
+              contr.Add(null, "Nicht bestanden, aber mittlere Reife: " + n.Unterpunktungen);
+            else
+              contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen);
+          }
           else if (n.Unterpunktungen!="")
             contr.Add(null, "Unterpunktet in: " + n.Unterpunktungen);
-          if (schueler.getKlasse.Schulart == Schulart.BOS && n.HatIn12KeinePZ())
+
+          if (/*schueler.getKlasse.Schulart == Schulart.BOS &&*/ n.HatIn12KeinePZ())
             contr.Add(null, "Hat in der 12. Klasse keine Probezeit.");
         }
         else if (n.HatNichtBestanden())
@@ -503,7 +509,7 @@ namespace diNo
           else
           {
             if (contr.zeitpunkt == Zeitpunkt.DrittePA)
-              contr.Add(Vorkommnisart.endgueltigNichtBestanden,n.Unterpunktungen);
+              contr.Add(Vorkommnisart.NichtBestanden,n.Unterpunktungen);
             else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
               contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,n.Unterpunktungen);
             else 
