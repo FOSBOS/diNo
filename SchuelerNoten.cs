@@ -69,9 +69,8 @@ namespace diNo
     /// </summary>
     public IList<FachSchuelerNotenDruckKurz> SchuelerNotenDruck(bool nurAbiergebnisse=false)
     {
-      IList<FachSchuelerNotenDruckKurz> liste = new List<FachSchuelerNotenDruckKurz>();
-      var zuDruckendeNoten = alleFaecher.Count > 0 ? alleFaecher : SucheAlteNoten();
-      foreach (FachSchuelerNoten f in zuDruckendeNoten)
+      IList<FachSchuelerNotenDruckKurz> liste = new List<FachSchuelerNotenDruckKurz>();      
+      foreach (FachSchuelerNoten f in alleFaecher)
       {               
         liste.Add(new FachSchuelerNotenDruckKurz(f, f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe),nurAbiergebnisse));
       }
@@ -88,18 +87,7 @@ namespace diNo
       }
       return liste;
     }
-
-    public List<FachSchuelerNoten> SucheAlteNoten()
-    {
-      var result = new List<FachSchuelerNoten>();
-      foreach (var kurs in schueler.getKlasse.FindeAlleMöglichenKurse(schueler.Zweig))
-      {
-        result.Add(new FachSchuelerNoten(schueler.Id, kurs.Id));
-      }
-
-      return result;
-    }
-
+    
     // TODO: Überflüssig, wegen lokaler Variable
     public string GetUnterpunktungenString(Zeitpunkt z)
     {

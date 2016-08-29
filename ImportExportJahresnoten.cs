@@ -254,7 +254,7 @@ namespace diNo
       var kurse = kursAdapter.GetDataByBezeichnung(bezeichnung);
       if (kurse == null || kurse.Count == 0)
       {
-        kursAdapter.Insert(bezeichnung, null, fachAdapter.GetDataByKuerzel(fachKuerzel)[0].Id);
+        kursAdapter.Insert(bezeichnung, null, fachAdapter.GetDataByKuerzel(fachKuerzel)[0].Id,null);
         kurse = kursAdapter.GetDataByBezeichnung(bezeichnung);
       }
       if (kurse == null || kurse.Count == 0)

@@ -288,7 +288,8 @@ namespace diNo
         {
           // suche Fach in der Datenbank
           var fach = FindOrCreateFach(aFach);
-          kursAdapter.Insert(aKursBezeichung, aLehrerId, fach.Id);
+          // TODO: Zweigzuordnung automatisch ?
+          kursAdapter.Insert(aKursBezeichung, aLehrerId, fach.Id, null);
         }
 
         kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);

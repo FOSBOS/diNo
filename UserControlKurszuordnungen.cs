@@ -48,7 +48,7 @@ namespace diNo
       this.objectListView1.SetObjects(aktuelleKurse);
       this.objectListView1.Enabled = Zugriff.Instance.lehrer.HatRolle(Rolle.Admin) || Zugriff.Instance.lehrer.HatRolle(Rolle.Sekretariat);
 
-        var kurseDerKlasse = schueler.getKlasse.FindeAlleMöglichenKurse(schueler.Zweig);
+      var kurseDerKlasse = schueler.AlleMoeglichenKurse();
       IList<Kurs> moeglicheNeueKurse = new List<Kurs>();
       foreach (var aKurs in kurseDerKlasse)
       {

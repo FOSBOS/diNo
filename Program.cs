@@ -16,7 +16,7 @@ namespace diNo
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
       log4net.Config.XmlConfigurator.Configure();
-			Application.Run(new Form1());
+			Application.Run(new Klassenansicht());
 		}
 	}
 }

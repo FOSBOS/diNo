@@ -609,8 +609,13 @@ namespace diNo
         MeldeAb(new Kurs(kurs));
       }
 
+
+      this.data.KlasseId = nachKlasse.Data.Id;
+      getKlasse = nachKlasse;
+      this.Save();
+
       var kursSelector = UnterrichtExcelReader.GetStandardKursSelector();
-      var kurse = nachKlasse.FindeAlleMöglichenKurse(this.Zweig);
+      var kurse = AlleMoeglichenKurse();
       if (kurse == null || kurse.Count == 0)
       {
         throw new InvalidOperationException("Für die Klasse "+nachKlasse.Bezeichnung+ " konnten keine Kurse gefunden werden");
@@ -619,11 +624,10 @@ namespace diNo
       foreach (var kurs in kurse)
       {
         // prüfe, ob der Schüler in diesen Kurs gehen soll und trage ihn ein.
-        UnterrichtExcelReader.AddSchuelerToKurs(kurs.Data, kursSelector, this.Data);
+        //UnterrichtExcelReader.AddSchuelerToKurs(kurs.Data, kursSelector, this.Data);
+        MeldeAn(kurs);
       }
 
-      this.data.KlasseId = nachKlasse.Data.Id;
-      this.Save();
       this.Refresh();
     }
 
@@ -683,7 +687,7 @@ namespace diNo
     public void MeldeAn(string nachFachKuerzel)
     {
       FachTableAdapter ada = new FachTableAdapter();
-      foreach (var kurs in this.getKlasse.FindeAlleMöglichenKurse(this.Zweig))
+      foreach (var kurs in AlleMoeglichenKurse())
       {
         var fach = kurs.getFach;
         if (fach.Kuerzel == nachFachKuerzel)
@@ -691,6 +695,28 @@ namespace diNo
           MeldeAn(kurs);
         }
       }
+    }
+
+    // prüft, ob der übergebene Kurs ein potenzielle Kandidat für diesen Schüler ist
+    // berücksichtigt dabei den gewählten Zweig bei Mischklassen, die Religionszugehörigkeit und Wahlfach Französisch
+    public bool KursPasstZumSchueler(Kurs k)
+    {
+      string kuerzel = k.getFach.Kuerzel;
+      string reli = Data.IsReligionOderEthikNull() ? Data.Bekenntnis : Data.ReligionOderEthik;
+
+      if ((kuerzel == "K" || kuerzel == "Ev" ||kuerzel == "Eth") && (kuerzel == reli)) return true;
+      else if (k.Data.IsZweigNull()) return true;
+      else return (k.Data.Zweig==Data.Ausbildungsrichtung);
+    }
+
+    public IList<Kurs> AlleMoeglichenKurse()
+    {
+      var result = new List<Kurs>();
+      foreach (Kurs k in getKlasse.Kurse)
+        if (KursPasstZumSchueler(k)) 
+          result.Add(k);
+
+      return result;
     }
 
     // Liefert den Zeitpunkt des PZ-Endes (bezogen auf das laufende Schuljahr)

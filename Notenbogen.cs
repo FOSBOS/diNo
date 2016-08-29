@@ -53,11 +53,9 @@ namespace diNo
       log.Debug("Öffne Notenbogen SchülerId=" + this.schueler.Id);
 
       var dieNoten = schueler.getNoten.alleFaecher;
-      if (dieNoten.Count == 0)
+      if (schueler.Status == Schuelerstatus.Abgemeldet)
       {
-        // alle Kurszuordnungen des Schülers wurden gelöscht. Vermutlich schauen wir auf einen ausgetretenen Schüler.
-        // in diesem Fall suche die Noten anhand der möglichen Fächer, trage diese ein und graue den Notenbogen aus
-        dieNoten = schueler.getNoten.SucheAlteNoten();
+        //dieNoten = schueler.getNoten.SucheAlteNoten();
         dataGridNoten.RowsDefaultCellStyle.BackColor = Color.LightGray;
       }
 
