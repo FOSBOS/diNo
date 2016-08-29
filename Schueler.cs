@@ -150,8 +150,7 @@ namespace diNo
       set
       {
         this.data.LRSStoerung = value;
-        this.data.LRSSchwaeche = value;
-        Save();
+        this.data.LRSSchwaeche = value;        
       }
     }
 
@@ -609,13 +608,11 @@ namespace diNo
         MeldeAb(new Kurs(kurs));
       }
 
-
-      this.data.KlasseId = nachKlasse.Data.Id;
+      data.KlasseId = nachKlasse.Data.Id;
       getKlasse = nachKlasse;
-      this.Save();
+      Save();
 
-      var kursSelector = UnterrichtExcelReader.GetStandardKursSelector();
-      var kurse = AlleMoeglichenKurse();
+      var kurse = AlleNotwendigenKurse();
       if (kurse == null || kurse.Count == 0)
       {
         throw new InvalidOperationException("Für die Klasse "+nachKlasse.Bezeichnung+ " konnten keine Kurse gefunden werden");
@@ -623,8 +620,6 @@ namespace diNo
 
       foreach (var kurs in kurse)
       {
-        // prüfe, ob der Schüler in diesen Kurs gehen soll und trage ihn ein.
-        //UnterrichtExcelReader.AddSchuelerToKurs(kurs.Data, kursSelector, this.Data);
         MeldeAn(kurs);
       }
 
@@ -698,18 +693,60 @@ namespace diNo
     }
 
     // prüft, ob der übergebene Kurs ein potenzielle Kandidat für diesen Schüler ist
-    // berücksichtigt dabei den gewählten Zweig bei Mischklassen, die Religionszugehörigkeit und Wahlfach Französisch
+    // berücksichtigt dabei den gewählten Zweig bei Mischklassen
+    public bool KursPasstZumZweig(Kurs k)
+    {
+      string kuerzel = k.getFach.Kuerzel;
+      /*
+      string reli = getReliKuerzel();
+
+      if ((kuerzel == "K" || kuerzel == "Ev" ||kuerzel == "Eth") && (kuerzel == reli)) return true;
+      else*/
+      if (k.Data.IsZweigNull()) return true;
+      else return (k.Data.Zweig==Data.Ausbildungsrichtung);
+    }
+
+    // prüft, ob der übergebene Kurs ein potenzielle Kandidat für diesen Schüler ist
+    // berücksichtigt dabei den gewählten Zweig bei Mischklassen, Reliunterricht, Französisch
+    // eignet sich für die Vorbelegung von Kursen beim Schülerimport
     public bool KursPasstZumSchueler(Kurs k)
     {
       string kuerzel = k.getFach.Kuerzel;
-      string reli = Data.IsReligionOderEthikNull() ? Data.Bekenntnis : Data.ReligionOderEthik;
+      string reli = getReliKuerzel();
 
-      if ((kuerzel == "K" || kuerzel == "Ev" ||kuerzel == "Eth") && (kuerzel == reli)) return true;
+      // Ku ist bei uns immer Pflichtfach
+      if (kuerzel == "K" || kuerzel == "Ev" || kuerzel == "Eth") return (kuerzel == reli);
+      else if (kuerzel=="F") return (kuerzel==Data.Fremdsprache2);
+      else if (kuerzel=="F-Wi" && Data.Wahlpflichtfach=="F3") return true;
+      else if (kuerzel=="WIn" && (Data.IsWahlpflichtfachNull() || Data.Wahlpflichtfach=="")) return true; // Standardfall (oft unbelegt)
+      else if (kuerzel == "F-Wi" || kuerzel == "WIn") return (kuerzel==Data.Wahlpflichtfach);           
       else if (k.Data.IsZweigNull()) return true;
       else return (k.Data.Zweig==Data.Ausbildungsrichtung);
     }
 
+    // wandelt das beim Schüler gespeicherte Bekenntnis in das Fachkürzel um
+    public string getReliKuerzel()
+    {
+      // manche belegen einen anderen Reliunterricht als das zugehörige Bekenntnis:
+      string unt = Data.IsReligionOderEthikNull() ? Data.Bekenntnis : Data.ReligionOderEthik;
+
+      if (unt=="RK") return "K";
+      else if (unt=="EV") return "Ev";
+      else return "Eth";
+    }
+
     public IList<Kurs> AlleMoeglichenKurse()
+    {
+      var result = new List<Kurs>();
+      foreach (Kurs k in getKlasse.Kurse)
+        if (KursPasstZumZweig(k)) 
+          result.Add(k);
+
+      return result;
+    }
+
+    // liefert alle Kurse, die der Schüler besuchen sollte (je nach Einstellungen in seinen Wahlpflichtfächern)    
+    public IList<Kurs> AlleNotwendigenKurse()
     {
       var result = new List<Kurs>();
       foreach (Kurs k in getKlasse.Kurse)
@@ -718,6 +755,20 @@ namespace diNo
 
       return result;
     }
+
+    // wenn dem Schüler ein neuer Kurs hinzugefügt wird, z.B. kath. Religion, dann wird automatisch das
+    // Feld ReligionOderEthik angepasst, anlog für Französisch etc.
+    public void PasseWahlfachschluesselAn(Kurs k)
+    {
+      string kuerzel = k.getFach.Kuerzel;
+      if (kuerzel=="K") Data.ReligionOderEthik="RK";      
+      else if (kuerzel=="Ev") Data.ReligionOderEthik="EV";
+      else if (kuerzel=="Eth") Data.ReligionOderEthik="Eth";
+      else if (kuerzel=="F") Data.Fremdsprache2="F";
+      else if (kuerzel=="F-Wi" || kuerzel=="WIn" || kuerzel=="Ku" || kuerzel=="F3" )
+        Data.Wahlpflichtfach=kuerzel;      
+    }
+
 
     // Liefert den Zeitpunkt des PZ-Endes (bezogen auf das laufende Schuljahr)
     public Zeitpunkt HatProbezeitBis()

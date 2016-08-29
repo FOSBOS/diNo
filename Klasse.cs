@@ -195,27 +195,6 @@ namespace diNo
       }
     }
 
-    public IList<Kurs> FindeAlleMöglichenKurse(Zweig zweig)
-    {
-      var result = new List<Kurs>(this.Kurse);
-      foreach (var teilKlasse in this.GetTeilKlassen())
-      {
-        if (teilKlasse.Zweig == zweig || teilKlasse.Zweig == Zweig.None) // None steht auch bei Mischklassen. Dann gehen alle Schüler in diese Kurse.
-        {
-          foreach (var neuerKurs in teilKlasse.Kurse)
-          {
-            var kursSchonDrin = result.Find(x => x.Id == neuerKurs.Id);
-            if (kursSchonDrin == null)
-            {
-              result.Add(neuerKurs);
-            }
-          }
-        }
-      }
-
-      return result;
-    }
-
     // alle Kurse, die in dieser Klasse angeboten werden
     public IList<Kurs> Kurse
     {
@@ -251,20 +230,6 @@ namespace diNo
       }
     }
     
-    private IList<Klasse> GetTeilKlassen()
-    {
-      var children = new KlasseTableAdapter().GetDataByVaterklasse(this.data.Id);
-      var result = new List<Klasse>();
-      if (children != null && children.Count > 0)
-      {
-        foreach (var child in children)
-        {
-          result.Add(new Klasse(child));
-        }
-      }
-
-      return result;
-    }
   }
 
   /// <summary>

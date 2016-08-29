@@ -40,17 +40,8 @@
       this.tabPageVorkommnisse = new System.Windows.Forms.TabPage();
       this.userControlVorkommnisse1 = new diNo.UserControlVorkommnisse();
       this.tabPageAdmin = new System.Windows.Forms.TabPage();
-      this.label5 = new System.Windows.Forms.Label();
-      this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-      this.comboBoxReliOderEthik = new System.Windows.Forms.ComboBox();
-      this.comboBoxFremdsprache2 = new System.Windows.Forms.ComboBox();
-      this.comboBoxWahlpflichtfach = new System.Windows.Forms.ComboBox();
-      this.checkBoxLegasthenie = new System.Windows.Forms.CheckBox();
-      this.label4 = new System.Windows.Forms.Label();
-      this.label3 = new System.Windows.Forms.Label();
-      this.label2 = new System.Windows.Forms.Label();
-      this.label1 = new System.Windows.Forms.Label();
       this.userControlKurszuordnungen1 = new diNo.UserControlKurszuordnungen();
+      this.label2 = new System.Windows.Forms.Label();
       this.klasseLabel = new System.Windows.Forms.Label();
       this.nameLabel = new System.Windows.Forms.Label();
       this.treeListView1 = new BrightIdeasSoftware.TreeListView();
@@ -195,17 +186,8 @@
       // 
       // tabPageAdmin
       // 
-      this.tabPageAdmin.Controls.Add(this.label5);
-      this.tabPageAdmin.Controls.Add(this.dateTimePicker1);
-      this.tabPageAdmin.Controls.Add(this.comboBoxReliOderEthik);
-      this.tabPageAdmin.Controls.Add(this.comboBoxFremdsprache2);
-      this.tabPageAdmin.Controls.Add(this.comboBoxWahlpflichtfach);
-      this.tabPageAdmin.Controls.Add(this.checkBoxLegasthenie);
-      this.tabPageAdmin.Controls.Add(this.label4);
-      this.tabPageAdmin.Controls.Add(this.label3);
-      this.tabPageAdmin.Controls.Add(this.label2);
-      this.tabPageAdmin.Controls.Add(this.label1);
       this.tabPageAdmin.Controls.Add(this.userControlKurszuordnungen1);
+      this.tabPageAdmin.Controls.Add(this.label2);
       this.tabPageAdmin.Location = new System.Drawing.Point(4, 33);
       this.tabPageAdmin.Name = "tabPageAdmin";
       this.tabPageAdmin.Padding = new System.Windows.Forms.Padding(3);
@@ -214,81 +196,16 @@
       this.tabPageAdmin.Text = "Administration";
       this.tabPageAdmin.UseVisualStyleBackColor = true;
       // 
-      // label5
+      // userControlKurszuordnungen1
       // 
-      this.label5.AutoSize = true;
-      this.label5.Location = new System.Drawing.Point(278, 33);
-      this.label5.Name = "label5";
-      this.label5.Size = new System.Drawing.Size(98, 17);
-      this.label5.TabIndex = 13;
-      this.label5.Text = "Austrittsdatum";
-      // 
-      // dateTimePicker1
-      // 
-      this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-      this.dateTimePicker1.Location = new System.Drawing.Point(381, 30);
-      this.dateTimePicker1.Name = "dateTimePicker1";
-      this.dateTimePicker1.Size = new System.Drawing.Size(90, 23);
-      this.dateTimePicker1.TabIndex = 12;
-      this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
-      // 
-      // comboBoxReliOderEthik
-      // 
-      this.comboBoxReliOderEthik.FormattingEnabled = true;
-      this.comboBoxReliOderEthik.Location = new System.Drawing.Point(126, 56);
-      this.comboBoxReliOderEthik.Name = "comboBoxReliOderEthik";
-      this.comboBoxReliOderEthik.Size = new System.Drawing.Size(121, 24);
-      this.comboBoxReliOderEthik.TabIndex = 11;
-      this.comboBoxReliOderEthik.SelectedValueChanged += new System.EventHandler(this.comboBoxReliOderEthik_SelectedValueChanged);
-      // 
-      // comboBoxFremdsprache2
-      // 
-      this.comboBoxFremdsprache2.FormattingEnabled = true;
-      this.comboBoxFremdsprache2.Location = new System.Drawing.Point(126, 30);
-      this.comboBoxFremdsprache2.Name = "comboBoxFremdsprache2";
-      this.comboBoxFremdsprache2.Size = new System.Drawing.Size(121, 24);
-      this.comboBoxFremdsprache2.TabIndex = 10;
-      this.comboBoxFremdsprache2.SelectedValueChanged += new System.EventHandler(this.comboBoxFremdsprache2_SelectedValueChanged);
-      // 
-      // comboBoxWahlpflichtfach
-      // 
-      this.comboBoxWahlpflichtfach.FormattingEnabled = true;
-      this.comboBoxWahlpflichtfach.Location = new System.Drawing.Point(126, 4);
-      this.comboBoxWahlpflichtfach.Name = "comboBoxWahlpflichtfach";
-      this.comboBoxWahlpflichtfach.Size = new System.Drawing.Size(121, 24);
-      this.comboBoxWahlpflichtfach.TabIndex = 9;
-      this.comboBoxWahlpflichtfach.SelectedValueChanged += new System.EventHandler(this.comboBoxWahlpflichtfach_SelectedValueChanged);
-      // 
-      // checkBoxLegasthenie
-      // 
-      this.checkBoxLegasthenie.AutoSize = true;
-      this.checkBoxLegasthenie.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.checkBoxLegasthenie.Location = new System.Drawing.Point(278, 4);
-      this.checkBoxLegasthenie.Name = "checkBoxLegasthenie";
-      this.checkBoxLegasthenie.Size = new System.Drawing.Size(117, 21);
-      this.checkBoxLegasthenie.TabIndex = 8;
-      this.checkBoxLegasthenie.Text = "Legasthenie   ";
-      this.checkBoxLegasthenie.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-      this.checkBoxLegasthenie.UseVisualStyleBackColor = true;
-      this.checkBoxLegasthenie.CheckedChanged += new System.EventHandler(this.checkBoxLegasthenie_CheckedChanged);
-      // 
-      // label4
-      // 
-      this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(7, 59);
-      this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(100, 17);
-      this.label4.TabIndex = 4;
-      this.label4.Text = "Reli oder Ethik";
-      // 
-      // label3
-      // 
-      this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(6, 33);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(111, 17);
-      this.label3.TabIndex = 3;
-      this.label3.Text = "Fremdsprache 2";
+      this.userControlKurszuordnungen1.AutoScroll = true;
+      this.userControlKurszuordnungen1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.userControlKurszuordnungen1.Location = new System.Drawing.Point(3, 3);
+      this.userControlKurszuordnungen1.Margin = new System.Windows.Forms.Padding(4);
+      this.userControlKurszuordnungen1.Name = "userControlKurszuordnungen1";
+      this.userControlKurszuordnungen1.Schueler = null;
+      this.userControlKurszuordnungen1.Size = new System.Drawing.Size(884, 444);
+      this.userControlKurszuordnungen1.TabIndex = 0;
       // 
       // label2
       // 
@@ -297,28 +214,6 @@
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(0, 17);
       this.label2.TabIndex = 2;
-      // 
-      // label1
-      // 
-      this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(6, 7);
-      this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(104, 17);
-      this.label1.TabIndex = 1;
-      this.label1.Text = "Wahlpflichtfach";
-      // 
-      // userControlKurszuordnungen1
-      // 
-      this.userControlKurszuordnungen1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-      this.userControlKurszuordnungen1.AutoScroll = true;
-      this.userControlKurszuordnungen1.Location = new System.Drawing.Point(9, 99);
-      this.userControlKurszuordnungen1.Margin = new System.Windows.Forms.Padding(4);
-      this.userControlKurszuordnungen1.Name = "userControlKurszuordnungen1";
-      this.userControlKurszuordnungen1.Schueler = null;
-      this.userControlKurszuordnungen1.Size = new System.Drawing.Size(0, 0);
-      this.userControlKurszuordnungen1.TabIndex = 0;
       // 
       // klasseLabel
       // 
@@ -544,16 +439,7 @@
     private System.Windows.Forms.TabPage tabPageAdmin;
     private BrightIdeasSoftware.MultiImageRenderer multiImageRenderer1;
     private UserControlKurszuordnungen userControlKurszuordnungen1;
-    private System.Windows.Forms.CheckBox checkBoxLegasthenie;
-    private System.Windows.Forms.Label label4;
-    private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Label label2;
-    private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.ComboBox comboBoxReliOderEthik;
-    private System.Windows.Forms.ComboBox comboBoxFremdsprache2;
-    private System.Windows.Forms.ComboBox comboBoxWahlpflichtfach;
-    private System.Windows.Forms.Label label5;
-    private System.Windows.Forms.DateTimePicker dateTimePicker1;
     private System.Windows.Forms.CheckBox chkNurAktive;
   }
 }

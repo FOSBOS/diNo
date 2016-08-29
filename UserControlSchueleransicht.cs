@@ -17,6 +17,8 @@ namespace diNo
     public UserControlSchueleransicht()
     {
       InitializeComponent();
+      SchuelerverwaltungController.InitDateTimePicker(this.dateTimeProbezeit);
+      SchuelerverwaltungController.InitDateTimePicker(this.dateTimeAustritt);
     }
 
     public Schueler Schueler
@@ -49,10 +51,12 @@ namespace diNo
           kontaktEltern += string.IsNullOrEmpty(schueler.Data.VornameEltern2) ? "" : "\n" + schueler.Data.VornameEltern2 + " " + schueler.Data.NachnameEltern2;
           textBoxAdresseEltern.Lines = kontaktEltern.Split('\n');
           textBoxBekenntnis.Text = schueler.Data.Bekenntnis;
-          textBoxReliUnterricht.Text = schueler.Data.IsReligionOderEthikNull() ? "" : schueler.Data.ReligionOderEthik;
-
-          textBoxProbezeit.Text = schueler.Data.IsProbezeitBisNull() ? "" : schueler.Data.ProbezeitBis.ToString("dd.MM.yyyy");
-          textBoxAustritt.Text = schueler.Data.IsAustrittsdatumNull() ? "" : schueler.Data.Austrittsdatum.ToString("dd.MM.yyyy");
+          textBoxReliOderEthik.Text = schueler.Data.IsReligionOderEthikNull() ? "" : schueler.Data.ReligionOderEthik;
+          checkBoxLegasthenie.Checked = schueler.IsLegastheniker;
+          
+          //this.dateTimePicker1.Value = !schueler.Data.IsAustrittsdatumNull() ? schueler.Data.Austrittsdatum : this.dateTimePicker1.MinDate;
+          dateTimeProbezeit.Value = schueler.Data.IsProbezeitBisNull() ? dateTimeProbezeit.MinDate : schueler.Data.ProbezeitBis;          
+          dateTimeAustritt.Value = schueler.Data.IsAustrittsdatumNull() ? dateTimeAustritt.MinDate : schueler.Data.Austrittsdatum;
           textBoxEmail.Text = schueler.Data.Email;
           cbStatus.SelectedIndex = schueler.Data.Status;
           textBoxDNote.Text = schueler.Data.IsDNoteNull() ? "" : string.Format("{0:F1}", schueler.Data.DNote);
@@ -78,7 +82,7 @@ namespace diNo
           textBoxEintrittAm.Text = ""; 
           textBoxVorigeSchule.Text = "";
           textBoxAdresseEltern.Text = "";
-          textBoxProbezeit.Text = "";
+          dateTimeProbezeit.Text = "";
           textBoxEmail.Text = "";
           //pictureBoxImage.Image = null;
         }*/
@@ -93,13 +97,15 @@ namespace diNo
       schueler.Data.AnschriftTelefonnummer = textBoxTelefonnummer.Text;
       schueler.Data.Notfalltelefonnummer = textBoxNotfalltelefonnummer.Text;
           
-      schueler.Data.Bekenntnis = textBoxBekenntnis.Text;
-      // ReliUnterricht via Kurszuordnung          
+      schueler.Data.Bekenntnis = textBoxBekenntnis.Text;      
+      // ReliUnterricht via Kurszuordnung wird automatisch gesetzt!       
 
-      if (textBoxProbezeit.Text=="") schueler.Data.SetProbezeitBisNull();
-        else schueler.Data.ProbezeitBis = DateTime.Parse(textBoxProbezeit.Text, CultureInfo.CurrentCulture);      
-      if (textBoxAustritt.Text=="") schueler.Data.SetAustrittsdatumNull();
-        else schueler.Data.Austrittsdatum = DateTime.Parse(textBoxAustritt.Text, CultureInfo.CurrentCulture);            
+      schueler.IsLegastheniker = checkBoxLegasthenie.Checked;
+
+      if (dateTimeProbezeit.Value==dateTimeProbezeit.MinDate) schueler.Data.SetProbezeitBisNull();
+        else schueler.Data.ProbezeitBis = dateTimeProbezeit.Value;
+      if (dateTimeAustritt.Value==dateTimeAustritt.MinDate) schueler.Data.SetAustrittsdatumNull();
+        else schueler.Data.Austrittsdatum = dateTimeAustritt.Value;
 
       schueler.Data.Email = textBoxEmail.Text;
       schueler.Data.Status = cbStatus.SelectedIndex;
@@ -109,6 +115,22 @@ namespace diNo
         else schueler.Data.AndereFremdspr2Text = textBoxAndereFremdspr2Text.Text;
 
       schueler.Save();
+    }
+
+    private void dateTimeAustritt_ValueChanged(object sender, EventArgs e)
+    {
+      if (dateTimeAustritt.Value!=dateTimeAustritt.MinDate) cbStatus.SelectedIndex=1; // abgemeldet
+        else cbStatus.SelectedIndex=0; // aktiv
+
+    }
+    
+    private void cbStatus_SelectedIndexChanged(object sender, EventArgs e)
+    {
+      if (cbStatus.SelectedIndex==0)
+        dateTimeAustritt.Value = dateTimeAustritt.MinDate;
+      else if (cbStatus.SelectedIndex==1)
+        dateTimeAustritt.Value = DateTime.Today;
+
     }
   }
 }

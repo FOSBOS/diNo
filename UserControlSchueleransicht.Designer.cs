@@ -49,7 +49,6 @@ namespace diNo
       this.labelAdresseEltern = new System.Windows.Forms.Label();
       this.textBoxAdresseEltern = new System.Windows.Forms.TextBox();
       this.labelProbezeitBis = new System.Windows.Forms.Label();
-      this.textBoxProbezeit = new System.Windows.Forms.TextBox();
       this.textBoxID = new System.Windows.Forms.TextBox();
       this.label1 = new System.Windows.Forms.Label();
       this.lblEmail = new System.Windows.Forms.Label();
@@ -63,9 +62,7 @@ namespace diNo
       this.label5 = new System.Windows.Forms.Label();
       this.textBoxBekenntnis = new System.Windows.Forms.TextBox();
       this.label6 = new System.Windows.Forms.Label();
-      this.textBoxReliUnterricht = new System.Windows.Forms.TextBox();
       this.label7 = new System.Windows.Forms.Label();
-      this.textBoxAustritt = new System.Windows.Forms.TextBox();
       this.label8 = new System.Windows.Forms.Label();
       this.textBoxNotfalltelefonnummer = new System.Windows.Forms.TextBox();
       this.label9 = new System.Windows.Forms.Label();
@@ -76,7 +73,6 @@ namespace diNo
       this.textBoxDNote = new System.Windows.Forms.TextBox();
       this.label12 = new System.Windows.Forms.Label();
       this.label13 = new System.Windows.Forms.Label();
-      this.numAndereFremdspr2Note = new diNo.NumericUpDownNullable();
       this.label14 = new System.Windows.Forms.Label();
       this.textBoxAndereFremdspr2Text = new System.Windows.Forms.TextBox();
       this.label15 = new System.Windows.Forms.Label();
@@ -84,6 +80,11 @@ namespace diNo
       this.textBoxDNoteAllg = new System.Windows.Forms.TextBox();
       this.label17 = new System.Windows.Forms.Label();
       this.btnSave = new System.Windows.Forms.Button();
+      this.dateTimeAustritt = new System.Windows.Forms.DateTimePicker();
+      this.dateTimeProbezeit = new System.Windows.Forms.DateTimePicker();
+      this.checkBoxLegasthenie = new System.Windows.Forms.CheckBox();
+      this.textBoxReliOderEthik = new System.Windows.Forms.TextBox();
+      this.numAndereFremdspr2Note = new diNo.NumericUpDownNullable();
       ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
       this.SuspendLayout();
       // 
@@ -121,7 +122,7 @@ namespace diNo
       this.textBoxTelefonnummer.Location = new System.Drawing.Point(27, 118);
       this.textBoxTelefonnummer.Name = "textBoxTelefonnummer";
       this.textBoxTelefonnummer.Size = new System.Drawing.Size(240, 20);
-      this.textBoxTelefonnummer.TabIndex = 1;
+      this.textBoxTelefonnummer.TabIndex = 3;
       // 
       // lblGeburtsdatum
       // 
@@ -139,7 +140,7 @@ namespace diNo
       this.textBoxGeburtsdatum.Location = new System.Drawing.Point(27, 252);
       this.textBoxGeburtsdatum.Name = "textBoxGeburtsdatum";
       this.textBoxGeburtsdatum.Size = new System.Drawing.Size(83, 20);
-      this.textBoxGeburtsdatum.TabIndex = 3;
+      this.textBoxGeburtsdatum.TabIndex = 6;
       // 
       // lblGeburtsort
       // 
@@ -157,7 +158,7 @@ namespace diNo
       this.textBoxGeburtsort.Location = new System.Drawing.Point(118, 252);
       this.textBoxGeburtsort.Name = "textBoxGeburtsort";
       this.textBoxGeburtsort.Size = new System.Drawing.Size(149, 20);
-      this.textBoxGeburtsort.TabIndex = 4;
+      this.textBoxGeburtsort.TabIndex = 7;
       // 
       // lblSchulischeVorbildung
       // 
@@ -171,11 +172,12 @@ namespace diNo
       // 
       // textBoxSchulischeVorbildung
       // 
+      this.textBoxSchulischeVorbildung.Enabled = false;
       this.textBoxSchulischeVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxSchulischeVorbildung.Location = new System.Drawing.Point(318, 213);
       this.textBoxSchulischeVorbildung.Name = "textBoxSchulischeVorbildung";
       this.textBoxSchulischeVorbildung.Size = new System.Drawing.Size(240, 20);
-      this.textBoxSchulischeVorbildung.TabIndex = 7;
+      this.textBoxSchulischeVorbildung.TabIndex = 19;
       // 
       // labelBeruflicheVorbildung
       // 
@@ -189,11 +191,12 @@ namespace diNo
       // 
       // textBoxBeruflicheVorbildung
       // 
+      this.textBoxBeruflicheVorbildung.Enabled = false;
       this.textBoxBeruflicheVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxBeruflicheVorbildung.Location = new System.Drawing.Point(318, 252);
       this.textBoxBeruflicheVorbildung.Name = "textBoxBeruflicheVorbildung";
       this.textBoxBeruflicheVorbildung.Size = new System.Drawing.Size(240, 20);
-      this.textBoxBeruflicheVorbildung.TabIndex = 8;
+      this.textBoxBeruflicheVorbildung.TabIndex = 20;
       // 
       // labelWiederholungen
       // 
@@ -207,11 +210,12 @@ namespace diNo
       // 
       // textBoxWiederholungen
       // 
+      this.textBoxWiederholungen.Enabled = false;
       this.textBoxWiederholungen.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxWiederholungen.Location = new System.Drawing.Point(318, 155);
       this.textBoxWiederholungen.Name = "textBoxWiederholungen";
       this.textBoxWiederholungen.Size = new System.Drawing.Size(240, 20);
-      this.textBoxWiederholungen.TabIndex = 11;
+      this.textBoxWiederholungen.TabIndex = 18;
       // 
       // labelVorigeSchule
       // 
@@ -225,12 +229,13 @@ namespace diNo
       // 
       // textBoxVorigeSchule
       // 
+      this.textBoxVorigeSchule.Enabled = false;
       this.textBoxVorigeSchule.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxVorigeSchule.Location = new System.Drawing.Point(318, 291);
       this.textBoxVorigeSchule.Multiline = true;
       this.textBoxVorigeSchule.Name = "textBoxVorigeSchule";
       this.textBoxVorigeSchule.Size = new System.Drawing.Size(240, 60);
-      this.textBoxVorigeSchule.TabIndex = 6;
+      this.textBoxVorigeSchule.TabIndex = 21;
       // 
       // labelAdresseEltern
       // 
@@ -249,7 +254,7 @@ namespace diNo
       this.textBoxAdresseEltern.Multiline = true;
       this.textBoxAdresseEltern.Name = "textBoxAdresseEltern";
       this.textBoxAdresseEltern.Size = new System.Drawing.Size(240, 60);
-      this.textBoxAdresseEltern.TabIndex = 5;
+      this.textBoxAdresseEltern.TabIndex = 8;
       // 
       // labelProbezeitBis
       // 
@@ -261,27 +266,20 @@ namespace diNo
       this.labelProbezeitBis.TabIndex = 29;
       this.labelProbezeitBis.Text = "Probezeit bis";
       // 
-      // textBoxProbezeit
-      // 
-      this.textBoxProbezeit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxProbezeit.Location = new System.Drawing.Point(318, 116);
-      this.textBoxProbezeit.Name = "textBoxProbezeit";
-      this.textBoxProbezeit.Size = new System.Drawing.Size(103, 20);
-      this.textBoxProbezeit.TabIndex = 12;
-      // 
       // textBoxID
       // 
+      this.textBoxID.Enabled = false;
       this.textBoxID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxID.Location = new System.Drawing.Point(27, 440);
+      this.textBoxID.Location = new System.Drawing.Point(177, 424);
       this.textBoxID.Name = "textBoxID";
-      this.textBoxID.Size = new System.Drawing.Size(92, 20);
-      this.textBoxID.TabIndex = 13;
+      this.textBoxID.Size = new System.Drawing.Size(90, 20);
+      this.textBoxID.TabIndex = 12;
       // 
       // label1
       // 
       this.label1.AutoSize = true;
       this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label1.Location = new System.Drawing.Point(24, 422);
+      this.label1.Location = new System.Drawing.Point(174, 408);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(57, 13);
       this.label1.TabIndex = 32;
@@ -303,7 +301,7 @@ namespace diNo
       this.textBoxEmail.Location = new System.Drawing.Point(27, 213);
       this.textBoxEmail.Name = "textBoxEmail";
       this.textBoxEmail.Size = new System.Drawing.Size(240, 20);
-      this.textBoxEmail.TabIndex = 2;
+      this.textBoxEmail.TabIndex = 5;
       // 
       // cbStatus
       // 
@@ -317,7 +315,8 @@ namespace diNo
       this.cbStatus.Location = new System.Drawing.Point(318, 38);
       this.cbStatus.Name = "cbStatus";
       this.cbStatus.Size = new System.Drawing.Size(240, 21);
-      this.cbStatus.TabIndex = 35;
+      this.cbStatus.TabIndex = 13;
+      this.cbStatus.SelectedIndexChanged += new System.EventHandler(this.cbStatus_SelectedIndexChanged);
       // 
       // textBoxPLZ
       // 
@@ -325,7 +324,7 @@ namespace diNo
       this.textBoxPLZ.Location = new System.Drawing.Point(27, 79);
       this.textBoxPLZ.Name = "textBoxPLZ";
       this.textBoxPLZ.Size = new System.Drawing.Size(60, 20);
-      this.textBoxPLZ.TabIndex = 36;
+      this.textBoxPLZ.TabIndex = 1;
       // 
       // label2
       // 
@@ -362,7 +361,7 @@ namespace diNo
       this.textBoxOrt.Location = new System.Drawing.Point(93, 79);
       this.textBoxOrt.Name = "textBoxOrt";
       this.textBoxOrt.Size = new System.Drawing.Size(174, 20);
-      this.textBoxOrt.TabIndex = 39;
+      this.textBoxOrt.TabIndex = 2;
       // 
       // label5
       // 
@@ -380,7 +379,7 @@ namespace diNo
       this.textBoxBekenntnis.Location = new System.Drawing.Point(29, 380);
       this.textBoxBekenntnis.Name = "textBoxBekenntnis";
       this.textBoxBekenntnis.Size = new System.Drawing.Size(84, 20);
-      this.textBoxBekenntnis.TabIndex = 42;
+      this.textBoxBekenntnis.TabIndex = 9;
       // 
       // label6
       // 
@@ -392,31 +391,15 @@ namespace diNo
       this.label6.TabIndex = 43;
       this.label6.Text = "Bekenntnis";
       // 
-      // textBoxReliUnterricht
-      // 
-      this.textBoxReliUnterricht.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxReliUnterricht.Location = new System.Drawing.Point(186, 380);
-      this.textBoxReliUnterricht.Name = "textBoxReliUnterricht";
-      this.textBoxReliUnterricht.Size = new System.Drawing.Size(81, 20);
-      this.textBoxReliUnterricht.TabIndex = 44;
-      // 
       // label7
       // 
       this.label7.AutoSize = true;
       this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label7.Location = new System.Drawing.Point(176, 367);
+      this.label7.Location = new System.Drawing.Point(25, 408);
       this.label7.Name = "label7";
       this.label7.Size = new System.Drawing.Size(94, 13);
       this.label7.TabIndex = 45;
       this.label7.Text = "Religionsunterricht";
-      // 
-      // textBoxAustritt
-      // 
-      this.textBoxAustritt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxAustritt.Location = new System.Drawing.Point(453, 116);
-      this.textBoxAustritt.Name = "textBoxAustritt";
-      this.textBoxAustritt.Size = new System.Drawing.Size(105, 20);
-      this.textBoxAustritt.TabIndex = 46;
       // 
       // label8
       // 
@@ -434,7 +417,7 @@ namespace diNo
       this.textBoxNotfalltelefonnummer.Location = new System.Drawing.Point(27, 155);
       this.textBoxNotfalltelefonnummer.Name = "textBoxNotfalltelefonnummer";
       this.textBoxNotfalltelefonnummer.Size = new System.Drawing.Size(240, 20);
-      this.textBoxNotfalltelefonnummer.TabIndex = 48;
+      this.textBoxNotfalltelefonnummer.TabIndex = 4;
       // 
       // label9
       // 
@@ -448,11 +431,12 @@ namespace diNo
       // 
       // textBoxJahrgangsstufe
       // 
+      this.textBoxJahrgangsstufe.Enabled = false;
       this.textBoxJahrgangsstufe.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxJahrgangsstufe.Location = new System.Drawing.Point(453, 77);
       this.textBoxJahrgangsstufe.Name = "textBoxJahrgangsstufe";
       this.textBoxJahrgangsstufe.Size = new System.Drawing.Size(105, 20);
-      this.textBoxJahrgangsstufe.TabIndex = 52;
+      this.textBoxJahrgangsstufe.TabIndex = 15;
       // 
       // label10
       // 
@@ -466,11 +450,12 @@ namespace diNo
       // 
       // textBoxEintrittAm
       // 
+      this.textBoxEintrittAm.Enabled = false;
       this.textBoxEintrittAm.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxEintrittAm.Location = new System.Drawing.Point(318, 77);
       this.textBoxEintrittAm.Name = "textBoxEintrittAm";
       this.textBoxEintrittAm.Size = new System.Drawing.Size(103, 20);
-      this.textBoxEintrittAm.TabIndex = 50;
+      this.textBoxEintrittAm.TabIndex = 14;
       // 
       // label11
       // 
@@ -484,11 +469,12 @@ namespace diNo
       // 
       // textBoxDNote
       // 
+      this.textBoxDNote.Enabled = false;
       this.textBoxDNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxDNote.Location = new System.Drawing.Point(453, 380);
       this.textBoxDNote.Name = "textBoxDNote";
       this.textBoxDNote.Size = new System.Drawing.Size(47, 20);
-      this.textBoxDNote.TabIndex = 54;
+      this.textBoxDNote.TabIndex = 22;
       // 
       // label12
       // 
@@ -510,20 +496,6 @@ namespace diNo
       this.label13.TabIndex = 57;
       this.label13.Text = "Alternative 2. Fremdsprache";
       // 
-      // numAndereFremdspr2Note
-      // 
-      this.numAndereFremdspr2Note.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numAndereFremdspr2Note.Location = new System.Drawing.Point(321, 440);
-      this.numAndereFremdspr2Note.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numAndereFremdspr2Note.Name = "numAndereFremdspr2Note";
-      this.numAndereFremdspr2Note.Size = new System.Drawing.Size(63, 23);
-      this.numAndereFremdspr2Note.TabIndex = 58;
-      this.numAndereFremdspr2Note.Value = null;
-      // 
       // label14
       // 
       this.label14.AutoSize = true;
@@ -540,7 +512,7 @@ namespace diNo
       this.textBoxAndereFremdspr2Text.Location = new System.Drawing.Point(393, 440);
       this.textBoxAndereFremdspr2Text.Name = "textBoxAndereFremdspr2Text";
       this.textBoxAndereFremdspr2Text.Size = new System.Drawing.Size(165, 20);
-      this.textBoxAndereFremdspr2Text.TabIndex = 60;
+      this.textBoxAndereFremdspr2Text.TabIndex = 25;
       // 
       // label15
       // 
@@ -564,11 +536,12 @@ namespace diNo
       // 
       // textBoxDNoteAllg
       // 
+      this.textBoxDNoteAllg.Enabled = false;
       this.textBoxDNoteAllg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxDNoteAllg.Location = new System.Drawing.Point(511, 380);
       this.textBoxDNoteAllg.Name = "textBoxDNoteAllg";
       this.textBoxDNoteAllg.Size = new System.Drawing.Size(47, 20);
-      this.textBoxDNoteAllg.TabIndex = 64;
+      this.textBoxDNoteAllg.TabIndex = 23;
       // 
       // label17
       // 
@@ -588,15 +561,71 @@ namespace diNo
       this.btnSave.Location = new System.Drawing.Point(518, 466);
       this.btnSave.Name = "btnSave";
       this.btnSave.Size = new System.Drawing.Size(40, 40);
-      this.btnSave.TabIndex = 67;
+      this.btnSave.TabIndex = 26;
       this.btnSave.UseVisualStyleBackColor = true;
       this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+      // 
+      // dateTimeAustritt
+      // 
+      this.dateTimeAustritt.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+      this.dateTimeAustritt.Location = new System.Drawing.Point(453, 113);
+      this.dateTimeAustritt.Name = "dateTimeAustritt";
+      this.dateTimeAustritt.Size = new System.Drawing.Size(105, 20);
+      this.dateTimeAustritt.TabIndex = 17;
+      this.dateTimeAustritt.ValueChanged += new System.EventHandler(this.dateTimeAustritt_ValueChanged);
+      // 
+      // dateTimeProbezeit
+      // 
+      this.dateTimeProbezeit.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+      this.dateTimeProbezeit.Location = new System.Drawing.Point(321, 113);
+      this.dateTimeProbezeit.Name = "dateTimeProbezeit";
+      this.dateTimeProbezeit.Size = new System.Drawing.Size(100, 20);
+      this.dateTimeProbezeit.TabIndex = 16;
+      // 
+      // checkBoxLegasthenie
+      // 
+      this.checkBoxLegasthenie.AutoSize = true;
+      this.checkBoxLegasthenie.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.checkBoxLegasthenie.Location = new System.Drawing.Point(174, 379);
+      this.checkBoxLegasthenie.Name = "checkBoxLegasthenie";
+      this.checkBoxLegasthenie.Size = new System.Drawing.Size(93, 17);
+      this.checkBoxLegasthenie.TabIndex = 11;
+      this.checkBoxLegasthenie.Text = "Legasthenie   ";
+      this.checkBoxLegasthenie.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+      this.checkBoxLegasthenie.UseVisualStyleBackColor = true;
+      // 
+      // textBoxReliOderEthik
+      // 
+      this.textBoxReliOderEthik.Enabled = false;
+      this.textBoxReliOderEthik.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxReliOderEthik.Location = new System.Drawing.Point(29, 424);
+      this.textBoxReliOderEthik.Name = "textBoxReliOderEthik";
+      this.textBoxReliOderEthik.Size = new System.Drawing.Size(84, 20);
+      this.textBoxReliOderEthik.TabIndex = 10;
+      // 
+      // numAndereFremdspr2Note
+      // 
+      this.numAndereFremdspr2Note.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numAndereFremdspr2Note.Location = new System.Drawing.Point(321, 440);
+      this.numAndereFremdspr2Note.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numAndereFremdspr2Note.Name = "numAndereFremdspr2Note";
+      this.numAndereFremdspr2Note.Size = new System.Drawing.Size(63, 23);
+      this.numAndereFremdspr2Note.TabIndex = 24;
+      this.numAndereFremdspr2Note.Value = null;
       // 
       // UserControlSchueleransicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
+      this.Controls.Add(this.textBoxReliOderEthik);
+      this.Controls.Add(this.checkBoxLegasthenie);
+      this.Controls.Add(this.dateTimeProbezeit);
+      this.Controls.Add(this.dateTimeAustritt);
       this.Controls.Add(this.btnSave);
       this.Controls.Add(this.label17);
       this.Controls.Add(this.textBoxDNoteAllg);
@@ -614,9 +643,7 @@ namespace diNo
       this.Controls.Add(this.label11);
       this.Controls.Add(this.textBoxNotfalltelefonnummer);
       this.Controls.Add(this.label9);
-      this.Controls.Add(this.textBoxAustritt);
       this.Controls.Add(this.label8);
-      this.Controls.Add(this.textBoxReliUnterricht);
       this.Controls.Add(this.label7);
       this.Controls.Add(this.textBoxBekenntnis);
       this.Controls.Add(this.label6);
@@ -631,7 +658,6 @@ namespace diNo
       this.Controls.Add(this.lblEmail);
       this.Controls.Add(this.textBoxID);
       this.Controls.Add(this.label1);
-      this.Controls.Add(this.textBoxProbezeit);
       this.Controls.Add(this.labelProbezeitBis);
       this.Controls.Add(this.textBoxAdresseEltern);
       this.Controls.Add(this.labelAdresseEltern);
@@ -679,7 +705,6 @@ namespace diNo
     private System.Windows.Forms.Label labelAdresseEltern;
     private System.Windows.Forms.TextBox textBoxAdresseEltern;
     private System.Windows.Forms.Label labelProbezeitBis;
-    private System.Windows.Forms.TextBox textBoxProbezeit;
         private System.Windows.Forms.TextBox textBoxID;
         private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Label lblEmail;
@@ -693,9 +718,7 @@ namespace diNo
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.TextBox textBoxBekenntnis;
     private System.Windows.Forms.Label label6;
-    private System.Windows.Forms.TextBox textBoxReliUnterricht;
     private System.Windows.Forms.Label label7;
-    private System.Windows.Forms.TextBox textBoxAustritt;
     private System.Windows.Forms.Label label8;
     private System.Windows.Forms.TextBox textBoxNotfalltelefonnummer;
     private System.Windows.Forms.Label label9;
@@ -714,5 +737,9 @@ namespace diNo
     private System.Windows.Forms.TextBox textBoxDNoteAllg;
     private System.Windows.Forms.Label label17;
     private System.Windows.Forms.Button btnSave;
+    private System.Windows.Forms.DateTimePicker dateTimeAustritt;
+    private System.Windows.Forms.DateTimePicker dateTimeProbezeit;
+    private System.Windows.Forms.CheckBox checkBoxLegasthenie;
+    private System.Windows.Forms.TextBox textBoxReliOderEthik;
   }
 }

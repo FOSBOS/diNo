@@ -52,7 +52,7 @@
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(313, 9);
+      this.label3.Location = new System.Drawing.Point(251, 9);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(123, 13);
       this.label3.TabIndex = 3;
@@ -95,7 +95,7 @@
       this.objectListView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn1,
             this.olvColumn2});
-      this.objectListView2.Location = new System.Drawing.Point(316, 25);
+      this.objectListView2.Location = new System.Drawing.Point(254, 25);
       this.objectListView2.Name = "objectListView2";
       this.objectListView2.Size = new System.Drawing.Size(210, 243);
       this.objectListView2.TabIndex = 5;
@@ -128,7 +128,7 @@
       this.Controls.Add(this.label3);
       this.Controls.Add(this.label2);
       this.Name = "UserControlKurszuordnungen";
-      this.Size = new System.Drawing.Size(571, 277);
+      this.Size = new System.Drawing.Size(728, 365);
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView2)).EndInit();
       this.ResumeLayout(false);

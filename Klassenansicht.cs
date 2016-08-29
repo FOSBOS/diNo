@@ -23,11 +23,7 @@ namespace diNo
         this.treeListView1.IsSimpleDragSource = true;
         this.treeListView1.IsSimpleDropSink = true;
         this.treeListView1.ModelCanDrop += this.verwaltungController.treeListView1_ModelCanDrop;
-        this.treeListView1.ModelDropped += this.verwaltungController.treeListView1_ModelDropped;
-        SchuelerverwaltungController.InitDateTimePicker(this.dateTimePicker1);
-        SchuelerverwaltungController.FillCheckboxWahlpflichtfach(this.schueler, this.comboBoxWahlpflichtfach);
-        SchuelerverwaltungController.FillCheckboxFremdsprache2(this.schueler, this.comboBoxFremdsprache2);
-        SchuelerverwaltungController.FillCheckBoxReliOderEthik(this.schueler, this.comboBoxReliOderEthik);        
+        this.treeListView1.ModelDropped += this.verwaltungController.treeListView1_ModelDropped;               
       }
       else 
         tabControl1.Controls.Remove(tabPageAdmin); // man kann die Seite nicht unsichtbar machen, nur entfernen
@@ -68,15 +64,8 @@ namespace diNo
         if (adminEnabled)
         {
           this.userControlKurszuordnungen1.Schueler = schueler;
-          this.dateTimePicker1.Value = !schueler.Data.IsAustrittsdatumNull() ? schueler.Data.Austrittsdatum : this.dateTimePicker1.MinDate;
-          this.checkBoxLegasthenie.Checked = schueler.IsLegastheniker;
-          switch (schueler.Fremdsprache2)
-          {
-            case "": this.comboBoxFremdsprache2.SelectedIndex = 0; break;
-            case "F": this.comboBoxFremdsprache2.SelectedIndex = 1; break;
-            default: throw new InvalidOperationException("Unbekannter Wert für Fremdsprache2" + schueler.Fremdsprache2);
-          }
-
+          //this.dateTimePicker1.Value = !schueler.Data.IsAustrittsdatumNull() ? schueler.Data.Austrittsdatum : this.dateTimePicker1.MinDate;
+          /*
           switch (schueler.ReliOderEthik)
           {
             case "":
@@ -86,7 +75,7 @@ namespace diNo
             case "Eth": this.comboBoxReliOderEthik.SelectedIndex = 3; break;
             default: throw new InvalidOperationException("Unbekannter Wert für Religionskurs" + schueler.ReliOderEthik);
           }
-
+         
           switch (schueler.Wahlpflichtfach)
           {
             case "": this.comboBoxWahlpflichtfach.SelectedIndex = 0; break;
@@ -96,21 +85,14 @@ namespace diNo
             case "Ku": this.comboBoxWahlpflichtfach.SelectedIndex = 3; break;
             case "WIn": this.comboBoxWahlpflichtfach.SelectedIndex = 4; break;
             default: throw new InvalidOperationException("Unbekannter Wert für Wahlpflichtfach" + schueler.Wahlpflichtfach);
-          }
+          } */
         }
       }
       else
       {
         if (!Zugriff.Instance.IstNurNormalerLehrer)
           btnPrint.Enabled = true;
-        if (adminEnabled)
-        {
-          this.dateTimePicker1.Value = this.dateTimePicker1.MinDate;
-          this.comboBoxFremdsprache2.SelectedIndex = 0;
-          this.comboBoxReliOderEthik.SelectedIndex = 0;
-          this.comboBoxWahlpflichtfach.SelectedIndex = 0;
-          this.checkBoxLegasthenie.Checked = false;
-        }
+        
       }
     }
     
@@ -214,35 +196,6 @@ namespace diNo
       {
         UserControlKurszuordnungen form = new UserControlKurszuordnungen(this.schueler);
       }
-    }
-
-    private void comboBoxWahlpflichtfach_SelectedValueChanged(object sender, EventArgs e)
-    {
-      SchuelerverwaltungController.SetValueWahlpflichtfach(this.schueler, this.comboBoxWahlpflichtfach.SelectedItem);
-      this.userControlKurszuordnungen1.InitKurse();
-    }
-
-    private void comboBoxFremdsprache2_SelectedValueChanged(object sender, EventArgs e)
-    {
-      SchuelerverwaltungController.SetValueFremdsprache2(this.schueler, this.comboBoxFremdsprache2.SelectedItem);
-      this.userControlKurszuordnungen1.InitKurse();
-    }
-
-    private void comboBoxReliOderEthik_SelectedValueChanged(object sender, EventArgs e)
-    {
-      SchuelerverwaltungController.SetValueReliOderEthik(this.schueler, this.comboBoxReliOderEthik.SelectedItem);
-      this.userControlKurszuordnungen1.InitKurse();
-    }
-
-    private void checkBoxLegasthenie_CheckedChanged(object sender, EventArgs e)
-    {
-      SchuelerverwaltungController.SetValueLegasthenie(this.schueler, this.checkBoxLegasthenie.Checked);
-    }
-
-    private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-    {
-      SchuelerverwaltungController.SetValueAustrittsdatum(this.schueler, this.dateTimePicker1.Value);
-      this.userControlKurszuordnungen1.InitKurse();
     }
 
     private void chkNurAktive_Click(object sender, EventArgs e)
