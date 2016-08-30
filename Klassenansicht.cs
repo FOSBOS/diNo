@@ -26,7 +26,7 @@ namespace diNo
         this.treeListView1.ModelDropped += this.verwaltungController.treeListView1_ModelDropped;               
       }
       else 
-        tabControl1.Controls.Remove(tabPageAdmin); // man kann die Seite nicht unsichtbar machen, nur entfernen
+        tabControl1.Controls.Remove(tabPageKurszuordnungen); // man kann die Seite nicht unsichtbar machen, nur entfernen
     }
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)

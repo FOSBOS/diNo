@@ -50,8 +50,7 @@ namespace diNo
           string kontaktEltern = schueler.Data.VornameEltern1 + " " + schueler.Data.NachnameEltern1;
           kontaktEltern += string.IsNullOrEmpty(schueler.Data.VornameEltern2) ? "" : "\n" + schueler.Data.VornameEltern2 + " " + schueler.Data.NachnameEltern2;
           textBoxAdresseEltern.Lines = kontaktEltern.Split('\n');
-          textBoxBekenntnis.Text = schueler.Data.Bekenntnis;
-          textBoxReliOderEthik.Text = schueler.Data.IsReligionOderEthikNull() ? "" : schueler.Data.ReligionOderEthik;
+          textBoxBekenntnis.Text = schueler.Data.Bekenntnis;          
           checkBoxLegasthenie.Checked = schueler.IsLegastheniker;
           
           //this.dateTimePicker1.Value = !schueler.Data.IsAustrittsdatumNull() ? schueler.Data.Austrittsdatum : this.dateTimePicker1.MinDate;

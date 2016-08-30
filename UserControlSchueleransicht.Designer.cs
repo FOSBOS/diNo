@@ -62,7 +62,6 @@ namespace diNo
       this.label5 = new System.Windows.Forms.Label();
       this.textBoxBekenntnis = new System.Windows.Forms.TextBox();
       this.label6 = new System.Windows.Forms.Label();
-      this.label7 = new System.Windows.Forms.Label();
       this.label8 = new System.Windows.Forms.Label();
       this.textBoxNotfalltelefonnummer = new System.Windows.Forms.TextBox();
       this.label9 = new System.Windows.Forms.Label();
@@ -83,7 +82,6 @@ namespace diNo
       this.dateTimeAustritt = new System.Windows.Forms.DateTimePicker();
       this.dateTimeProbezeit = new System.Windows.Forms.DateTimePicker();
       this.checkBoxLegasthenie = new System.Windows.Forms.CheckBox();
-      this.textBoxReliOderEthik = new System.Windows.Forms.TextBox();
       this.numAndereFremdspr2Note = new diNo.NumericUpDownNullable();
       ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
       this.SuspendLayout();
@@ -270,16 +268,16 @@ namespace diNo
       // 
       this.textBoxID.Enabled = false;
       this.textBoxID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxID.Location = new System.Drawing.Point(177, 424);
+      this.textBoxID.Location = new System.Drawing.Point(29, 421);
       this.textBoxID.Name = "textBoxID";
-      this.textBoxID.Size = new System.Drawing.Size(90, 20);
+      this.textBoxID.Size = new System.Drawing.Size(84, 20);
       this.textBoxID.TabIndex = 12;
       // 
       // label1
       // 
       this.label1.AutoSize = true;
       this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label1.Location = new System.Drawing.Point(174, 408);
+      this.label1.Location = new System.Drawing.Point(26, 405);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(57, 13);
       this.label1.TabIndex = 32;
@@ -390,16 +388,6 @@ namespace diNo
       this.label6.Size = new System.Drawing.Size(60, 13);
       this.label6.TabIndex = 43;
       this.label6.Text = "Bekenntnis";
-      // 
-      // label7
-      // 
-      this.label7.AutoSize = true;
-      this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label7.Location = new System.Drawing.Point(25, 408);
-      this.label7.Name = "label7";
-      this.label7.Size = new System.Drawing.Size(94, 13);
-      this.label7.TabIndex = 45;
-      this.label7.Text = "Religionsunterricht";
       // 
       // label8
       // 
@@ -586,22 +574,13 @@ namespace diNo
       // 
       this.checkBoxLegasthenie.AutoSize = true;
       this.checkBoxLegasthenie.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.checkBoxLegasthenie.Location = new System.Drawing.Point(174, 379);
+      this.checkBoxLegasthenie.Location = new System.Drawing.Point(174, 376);
       this.checkBoxLegasthenie.Name = "checkBoxLegasthenie";
       this.checkBoxLegasthenie.Size = new System.Drawing.Size(93, 17);
       this.checkBoxLegasthenie.TabIndex = 11;
       this.checkBoxLegasthenie.Text = "Legasthenie   ";
       this.checkBoxLegasthenie.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
       this.checkBoxLegasthenie.UseVisualStyleBackColor = true;
-      // 
-      // textBoxReliOderEthik
-      // 
-      this.textBoxReliOderEthik.Enabled = false;
-      this.textBoxReliOderEthik.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxReliOderEthik.Location = new System.Drawing.Point(29, 424);
-      this.textBoxReliOderEthik.Name = "textBoxReliOderEthik";
-      this.textBoxReliOderEthik.Size = new System.Drawing.Size(84, 20);
-      this.textBoxReliOderEthik.TabIndex = 10;
       // 
       // numAndereFremdspr2Note
       // 
@@ -622,7 +601,6 @@ namespace diNo
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
-      this.Controls.Add(this.textBoxReliOderEthik);
       this.Controls.Add(this.checkBoxLegasthenie);
       this.Controls.Add(this.dateTimeProbezeit);
       this.Controls.Add(this.dateTimeAustritt);
@@ -644,7 +622,6 @@ namespace diNo
       this.Controls.Add(this.textBoxNotfalltelefonnummer);
       this.Controls.Add(this.label9);
       this.Controls.Add(this.label8);
-      this.Controls.Add(this.label7);
       this.Controls.Add(this.textBoxBekenntnis);
       this.Controls.Add(this.label6);
       this.Controls.Add(this.label5);
@@ -718,7 +695,6 @@ namespace diNo
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.TextBox textBoxBekenntnis;
     private System.Windows.Forms.Label label6;
-    private System.Windows.Forms.Label label7;
     private System.Windows.Forms.Label label8;
     private System.Windows.Forms.TextBox textBoxNotfalltelefonnummer;
     private System.Windows.Forms.Label label9;
@@ -740,6 +716,5 @@ namespace diNo
     private System.Windows.Forms.DateTimePicker dateTimeAustritt;
     private System.Windows.Forms.DateTimePicker dateTimeProbezeit;
     private System.Windows.Forms.CheckBox checkBoxLegasthenie;
-    private System.Windows.Forms.TextBox textBoxReliOderEthik;
   }
 }

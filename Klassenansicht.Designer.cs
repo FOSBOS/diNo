@@ -39,7 +39,7 @@
       this.userControlFPAundSeminar1 = new diNo.UserControlFPAundSeminar();
       this.tabPageVorkommnisse = new System.Windows.Forms.TabPage();
       this.userControlVorkommnisse1 = new diNo.UserControlVorkommnisse();
-      this.tabPageAdmin = new System.Windows.Forms.TabPage();
+      this.tabPageKurszuordnungen = new System.Windows.Forms.TabPage();
       this.userControlKurszuordnungen1 = new diNo.UserControlKurszuordnungen();
       this.label2 = new System.Windows.Forms.Label();
       this.klasseLabel = new System.Windows.Forms.Label();
@@ -62,7 +62,7 @@
       this.tabPageNoten.SuspendLayout();
       this.tabPageFPASeminar.SuspendLayout();
       this.tabPageVorkommnisse.SuspendLayout();
-      this.tabPageAdmin.SuspendLayout();
+      this.tabPageKurszuordnungen.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
       this.statusStrip1.SuspendLayout();
@@ -88,7 +88,7 @@
       this.tabControl1.Controls.Add(this.tabPageNoten);
       this.tabControl1.Controls.Add(this.tabPageFPASeminar);
       this.tabControl1.Controls.Add(this.tabPageVorkommnisse);
-      this.tabControl1.Controls.Add(this.tabPageAdmin);
+      this.tabControl1.Controls.Add(this.tabPageKurszuordnungen);
       this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.tabControl1.Location = new System.Drawing.Point(275, 133);
       this.tabControl1.Name = "tabControl1";
@@ -184,17 +184,17 @@
       this.userControlVorkommnisse1.Size = new System.Drawing.Size(890, 450);
       this.userControlVorkommnisse1.TabIndex = 0;
       // 
-      // tabPageAdmin
+      // tabPageKurszuordnungen
       // 
-      this.tabPageAdmin.Controls.Add(this.userControlKurszuordnungen1);
-      this.tabPageAdmin.Controls.Add(this.label2);
-      this.tabPageAdmin.Location = new System.Drawing.Point(4, 33);
-      this.tabPageAdmin.Name = "tabPageAdmin";
-      this.tabPageAdmin.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageAdmin.Size = new System.Drawing.Size(890, 450);
-      this.tabPageAdmin.TabIndex = 4;
-      this.tabPageAdmin.Text = "Administration";
-      this.tabPageAdmin.UseVisualStyleBackColor = true;
+      this.tabPageKurszuordnungen.Controls.Add(this.userControlKurszuordnungen1);
+      this.tabPageKurszuordnungen.Controls.Add(this.label2);
+      this.tabPageKurszuordnungen.Location = new System.Drawing.Point(4, 33);
+      this.tabPageKurszuordnungen.Name = "tabPageKurszuordnungen";
+      this.tabPageKurszuordnungen.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageKurszuordnungen.Size = new System.Drawing.Size(890, 450);
+      this.tabPageKurszuordnungen.TabIndex = 4;
+      this.tabPageKurszuordnungen.Text = "Kurszuordnungen";
+      this.tabPageKurszuordnungen.UseVisualStyleBackColor = true;
       // 
       // userControlKurszuordnungen1
       // 
@@ -402,8 +402,8 @@
       this.tabPageNoten.ResumeLayout(false);
       this.tabPageFPASeminar.ResumeLayout(false);
       this.tabPageVorkommnisse.ResumeLayout(false);
-      this.tabPageAdmin.ResumeLayout(false);
-      this.tabPageAdmin.PerformLayout();
+      this.tabPageKurszuordnungen.ResumeLayout(false);
+      this.tabPageKurszuordnungen.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
       this.statusStrip1.ResumeLayout(false);
@@ -436,7 +436,7 @@
     private Notenbogen notenbogen1;
     private UserControlVorkommnisse userControlVorkommnisse1;
     private System.Windows.Forms.Button btnAbidruck;
-    private System.Windows.Forms.TabPage tabPageAdmin;
+    private System.Windows.Forms.TabPage tabPageKurszuordnungen;
     private BrightIdeasSoftware.MultiImageRenderer multiImageRenderer1;
     private UserControlKurszuordnungen userControlKurszuordnungen1;
     private System.Windows.Forms.Label label2;

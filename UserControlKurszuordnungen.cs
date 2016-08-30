@@ -57,7 +57,12 @@ namespace diNo
         }
       }
 
-      this.objectListView2.SetObjects(moeglicheNeueKurse);      
+      this.objectListView2.SetObjects(moeglicheNeueKurse);     
+      
+      // Kontrollfelder aktualisieren
+      textBoxWahlpflichtfach.Text = schueler.Data.IsWahlpflichtfachNull() ? "" : schueler.Data.Wahlpflichtfach; 
+      textBoxFremdsprache2.Text = schueler.Data.IsFremdsprache2Null() ? "" : schueler.Data.Fremdsprache2; 
+      textBoxReliOderEthik.Text = schueler.Data.IsReligionOderEthikNull() ? "" : schueler.Data.ReligionOderEthik; 
     }
 
     private void objectListView1_DoubleClick(object sender, System.EventArgs e)
