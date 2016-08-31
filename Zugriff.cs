@@ -82,6 +82,16 @@ namespace diNo
       }
     }
    
+    public bool HatVerwaltungsrechte
+    {
+      get
+      {
+        return lehrer.HatRolle(Rolle.Admin) || lehrer.HatRolle(Rolle.Sekretariat);
+      }
+    }
+   
+
+
     public void LoadSchueler(bool nurAktive=true)
     {
       List<int> klassenIds = new List<int>(); // für schnelles Auffinden

@@ -25,25 +25,19 @@ namespace diNo
         this.treeListView1.ModelCanDrop += this.verwaltungController.treeListView1_ModelCanDrop;
         this.treeListView1.ModelDropped += this.verwaltungController.treeListView1_ModelDropped;               
       }
-      else 
+      else
+      { 
         tabControl1.Controls.Remove(tabPageKurszuordnungen); // man kann die Seite nicht unsichtbar machen, nur entfernen
+        tabControl1.Controls.Remove(tabPageAdministration);
+      }
     }
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
     {
       if (treeListView1.SelectedObject is Schueler)
         schueler = treeListView1.SelectedObject as Schueler;
-      bool adminEnabled = schueler != null && (Zugriff.Instance.HatRolle(Rolle.Admin) || Zugriff.Instance.HatRolle(Rolle.Sekretariat));
-      /*
-      this.tabPageAdmin.Enabled = adminEnabled;
-      this.userControlKurszuordnungen1.Enabled = adminEnabled;
-      this.dateTimePicker1.Enabled = adminEnabled;
-      this.comboBoxFremdsprache2.Enabled = adminEnabled;
-      this.comboBoxReliOderEthik.Enabled = adminEnabled;
-      this.comboBoxWahlpflichtfach.Enabled = adminEnabled;
-      this.checkBoxLegasthenie.Enabled = adminEnabled;
-      */
-
+      bool adminEnabled = Zugriff.Instance.HatRolle(Rolle.Admin) || Zugriff.Instance.HatRolle(Rolle.Sekretariat);
+      
       if (schueler != null)
       {
         this.userControlSchueleransicht1.Schueler = schueler;
@@ -55,51 +49,24 @@ namespace diNo
         klasseLabel.Text = schueler.KlassenBezeichnung;
         Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
         pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
-        btnBrief.Enabled = true;
-        btnPrint.Enabled = true;
+        btnBrief.Enabled = true;        
         
-        labelHinweise.Text = (schueler.IsLegastheniker ? "Legastheniker" : "");
+        labelHinweise.Text = (schueler.IsLegastheniker ? "Legasthenie" : "");
         labelHinweise.ForeColor = Color.Red;
 
         if (adminEnabled)
         {
-          this.userControlKurszuordnungen1.Schueler = schueler;
-          //this.dateTimePicker1.Value = !schueler.Data.IsAustrittsdatumNull() ? schueler.Data.Austrittsdatum : this.dateTimePicker1.MinDate;
-          /*
-          switch (schueler.ReliOderEthik)
-          {
-            case "":
-            case null: this.comboBoxReliOderEthik.SelectedIndex = 0; break;
-            case "RK": this.comboBoxReliOderEthik.SelectedIndex = 1; break;
-            case "EV": this.comboBoxReliOderEthik.SelectedIndex = 2; break;
-            case "Eth": this.comboBoxReliOderEthik.SelectedIndex = 3; break;
-            default: throw new InvalidOperationException("Unbekannter Wert für Religionskurs" + schueler.ReliOderEthik);
-          }
-         
-          switch (schueler.Wahlpflichtfach)
-          {
-            case "": this.comboBoxWahlpflichtfach.SelectedIndex = 0; break;
-            case "F": this.comboBoxWahlpflichtfach.SelectedIndex = 1; break;
-            case "F-Wi":
-            case "F3": this.comboBoxWahlpflichtfach.SelectedIndex = 2; break;
-            case "Ku": this.comboBoxWahlpflichtfach.SelectedIndex = 3; break;
-            case "WIn": this.comboBoxWahlpflichtfach.SelectedIndex = 4; break;
-            default: throw new InvalidOperationException("Unbekannter Wert für Wahlpflichtfach" + schueler.Wahlpflichtfach);
-          } */
+          userControlKurszuordnungen1.Schueler = schueler;
+          userControlAdministration1.Schueler = schueler;
         }
       }
-      else
-      {
-        if (!Zugriff.Instance.IstNurNormalerLehrer)
-          btnPrint.Enabled = true;
-        
-      }
+
+      btnPrint.Enabled = adminEnabled || schueler != null;
     }
     
     private void Klassenansicht_Load(object sender, EventArgs e)
     {
       btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
-      btnAbidruck.Visible = Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
       RefreshTreeView();
     }
 
@@ -139,63 +106,50 @@ namespace diNo
       }
     }
             
-        /// <summary>
-        /// Event Handler für Statusmeldungen vom Notenleser.
-        /// </summary>
-        /// <param name="e">Event Args mit dem neuen Status.</param>
-        /// <param name="sender">Der Sender des Events.</param>
-        void notenReader_OnStatusChange(Object sender, StatusChangedEventArgs e)
-        {
-             toolStripStatusLabel1.Text = e.Meldung;
-        }
-
-        private void btnPrint_Click(object sender, EventArgs e)
-        { 
-          Drucken(false);
-        }
-
-        private void Drucken(bool nurAbi)
-        { 
-          if (!Zugriff.Instance.IstNurNormalerLehrer)
-          {
-            var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
-            if (obj.Count>0 && obj[0] is Klasse)
-            {
-              new ReportNotenbogen((ArrayList)obj, nurAbi).Show();              
-              return;
-            }
-          }          
-          if (schueler!= null) new ReportNotenbogen(schueler,nurAbi).Show();          
-        }
-
-        private void btnBrief_Click(object sender, EventArgs e)
-        {
-          if (frmBrief== null) frmBrief = new Brief(this);
-          frmBrief.Anzeigen(schueler);
-        }
-
-        private void btnCheck_Click(object sender, EventArgs e)
-        {
-          var c = new NotenCheckForm();
-          c.Show();
-        }
-
-        public void RefreshVorkommnisse()
-        {          
-          userControlVorkommnisse1.RefreshVorkommnisse();
-        }
-
-    private void btnAbidruck_Click(object sender, EventArgs e)
+    /// <summary>
+    /// Event Handler für Statusmeldungen vom Notenleser.
+    /// </summary>
+    /// <param name="e">Event Args mit dem neuen Status.</param>
+    /// <param name="sender">Der Sender des Events.</param>
+    void notenReader_OnStatusChange(Object sender, StatusChangedEventArgs e)
     {
-      Drucken(true);
+          toolStripStatusLabel1.Text = e.Meldung;
     }
 
-    private void btnAdministration_Click(object sender, EventArgs e)
+    private void btnPrint_Click(object sender, EventArgs e)
+    { 
+      new ReportNotenbogen(SelectedObjects()).Show();
+    }
+
+    // liefert den angeklickten Schüler, oder eine Liste von Klassen (nur für Admins)
+    public Object SelectedObjects()
     {
-      if (this.schueler != null)
+      if (Zugriff.Instance.HatVerwaltungsrechte)
       {
-        UserControlKurszuordnungen form = new UserControlKurszuordnungen(this.schueler);
+        var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
+        if (obj.Count>0 && obj[0] is Klasse)
+        {
+          return (ArrayList)obj;          
+        }
       }
+      return schueler;
+    } 
+
+    private void btnBrief_Click(object sender, EventArgs e)
+    {
+      if (frmBrief== null) frmBrief = new Brief(this);
+      frmBrief.Anzeigen(schueler);
+    }
+
+    private void btnCheck_Click(object sender, EventArgs e)
+    {
+      var c = new NotenCheckForm();
+      c.Show();
+    }
+
+    public void RefreshVorkommnisse()
+    {          
+      userControlVorkommnisse1.RefreshVorkommnisse();
     }
 
     private void chkNurAktive_Click(object sender, EventArgs e)

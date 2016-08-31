@@ -42,6 +42,8 @@
       this.tabPageKurszuordnungen = new System.Windows.Forms.TabPage();
       this.userControlKurszuordnungen1 = new diNo.UserControlKurszuordnungen();
       this.label2 = new System.Windows.Forms.Label();
+      this.tabPageAdministration = new System.Windows.Forms.TabPage();
+      this.userControlAdministration1 = new diNo.UserControlAdministration();
       this.klasseLabel = new System.Windows.Forms.Label();
       this.nameLabel = new System.Windows.Forms.Label();
       this.treeListView1 = new BrightIdeasSoftware.TreeListView();
@@ -50,7 +52,6 @@
       this.btnBrief = new System.Windows.Forms.Button();
       this.btnPrint = new System.Windows.Forms.Button();
       this.btnNotenabgeben = new System.Windows.Forms.Button();
-      this.btnAbidruck = new System.Windows.Forms.Button();
       this.labelHinweise = new System.Windows.Forms.Label();
       this.pictureBoxImage = new System.Windows.Forms.PictureBox();
       this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -63,6 +64,7 @@
       this.tabPageFPASeminar.SuspendLayout();
       this.tabPageVorkommnisse.SuspendLayout();
       this.tabPageKurszuordnungen.SuspendLayout();
+      this.tabPageAdministration.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
       this.statusStrip1.SuspendLayout();
@@ -89,6 +91,7 @@
       this.tabControl1.Controls.Add(this.tabPageFPASeminar);
       this.tabControl1.Controls.Add(this.tabPageVorkommnisse);
       this.tabControl1.Controls.Add(this.tabPageKurszuordnungen);
+      this.tabControl1.Controls.Add(this.tabPageAdministration);
       this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.tabControl1.Location = new System.Drawing.Point(275, 133);
       this.tabControl1.Name = "tabControl1";
@@ -215,6 +218,26 @@
       this.label2.Size = new System.Drawing.Size(0, 17);
       this.label2.TabIndex = 2;
       // 
+      // tabPageAdministration
+      // 
+      this.tabPageAdministration.Controls.Add(this.userControlAdministration1);
+      this.tabPageAdministration.Location = new System.Drawing.Point(4, 33);
+      this.tabPageAdministration.Name = "tabPageAdministration";
+      this.tabPageAdministration.Size = new System.Drawing.Size(890, 450);
+      this.tabPageAdministration.TabIndex = 5;
+      this.tabPageAdministration.Text = "Administration";
+      this.tabPageAdministration.UseVisualStyleBackColor = true;
+      // 
+      // userControlAdministration1
+      // 
+      this.userControlAdministration1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.userControlAdministration1.Location = new System.Drawing.Point(0, 0);
+      this.userControlAdministration1.Margin = new System.Windows.Forms.Padding(4);
+      this.userControlAdministration1.Name = "userControlAdministration1";
+      this.userControlAdministration1.Schueler = null;
+      this.userControlAdministration1.Size = new System.Drawing.Size(890, 450);
+      this.userControlAdministration1.TabIndex = 0;
+      // 
       // klasseLabel
       // 
       this.klasseLabel.AutoSize = true;
@@ -312,18 +335,6 @@
       this.btnNotenabgeben.UseVisualStyleBackColor = true;
       this.btnNotenabgeben.Click += new System.EventHandler(this.btnNotenabgeben_Click);
       // 
-      // btnAbidruck
-      // 
-      this.btnAbidruck.ImageIndex = 3;
-      this.btnAbidruck.ImageList = this.imageList1;
-      this.btnAbidruck.Location = new System.Drawing.Point(466, 88);
-      this.btnAbidruck.Name = "btnAbidruck";
-      this.btnAbidruck.Size = new System.Drawing.Size(40, 40);
-      this.btnAbidruck.TabIndex = 39;
-      this.toolTipButtons.SetToolTip(this.btnAbidruck, "Abiergebnisse drucken");
-      this.btnAbidruck.UseVisualStyleBackColor = true;
-      this.btnAbidruck.Click += new System.EventHandler(this.btnAbidruck_Click);
-      // 
       // labelHinweise
       // 
       this.labelHinweise.AutoSize = true;
@@ -381,7 +392,6 @@
       this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
       this.ClientSize = new System.Drawing.Size(1185, 645);
       this.Controls.Add(this.chkNurAktive);
-      this.Controls.Add(this.btnAbidruck);
       this.Controls.Add(this.statusStrip1);
       this.Controls.Add(this.btnCheck);
       this.Controls.Add(this.labelHinweise);
@@ -404,6 +414,7 @@
       this.tabPageVorkommnisse.ResumeLayout(false);
       this.tabPageKurszuordnungen.ResumeLayout(false);
       this.tabPageKurszuordnungen.PerformLayout();
+      this.tabPageAdministration.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
       this.statusStrip1.ResumeLayout(false);
@@ -435,11 +446,12 @@
     private UserControlSchueleransicht userControlSchueleransicht1;
     private Notenbogen notenbogen1;
     private UserControlVorkommnisse userControlVorkommnisse1;
-    private System.Windows.Forms.Button btnAbidruck;
     private System.Windows.Forms.TabPage tabPageKurszuordnungen;
     private BrightIdeasSoftware.MultiImageRenderer multiImageRenderer1;
     private UserControlKurszuordnungen userControlKurszuordnungen1;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.CheckBox chkNurAktive;
+    private System.Windows.Forms.TabPage tabPageAdministration;
+    private UserControlAdministration userControlAdministration1;
   }
 }

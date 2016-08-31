@@ -87,6 +87,12 @@
       <DependentUpon>BasisForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SchuelerverwaltungController.cs" />
+    <Compile Include="UserControlAdministration.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlAdministration.Designer.cs">
+      <DependentUpon>UserControlAdministration.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControlKurszuordnungen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -214,6 +220,9 @@
       <DependentUpon>Klassenansicht.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rptAbiergebnisseA5.rdlc" />
+    <EmbeddedResource Include="UserControlAdministration.resx">
+      <DependentUpon>UserControlAdministration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControlKurszuordnungen.resx">
       <DependentUpon>UserControlKurszuordnungen.cs</DependentUpon>
     </EmbeddedResource>

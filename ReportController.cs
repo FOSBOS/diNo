@@ -55,17 +55,15 @@ namespace diNo
     private bool nurAbi,klassenweise;
     private Schueler DSschueler;
     private ArrayList DSklassen;
-    public ReportNotenbogen(Schueler dataSource, bool nurAbiergebnisse=false) : base()
+
+    public ReportNotenbogen(Object dataSource, bool nurAbiergebnisse=false) : base()
     {
       nurAbi = nurAbiergebnisse;
-      klassenweise = false;
-      DSschueler = dataSource;
-    }
-    public ReportNotenbogen(ArrayList dataSource, bool nurAbiergebnisse=false) : base()
-    {
-      nurAbi =nurAbiergebnisse;
-      klassenweise = true;
-      DSklassen = dataSource;
+      klassenweise = dataSource is ArrayList;
+      if (klassenweise)
+        DSklassen = (ArrayList)dataSource;
+      else 
+        DSschueler = (Schueler)dataSource;
     }
         
     public override void Init()
