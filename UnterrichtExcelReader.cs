@@ -139,7 +139,7 @@ namespace diNo
       // ansonsten (d.h. wenn nur ein Klassenteil in den Kurs gehen soll) trage im Kurs den Zweig ein.
       // TODO: Ist das wirklich eine EIgenschaft des Kurses? Wenn ein Mischkurs die Sozialen aus der einen Klasse und die
       //       Wirtschaftler aus der anderen Klasse vereint, dann geht das so nicht. Gibt es sowas? Dann diese Spalte an die KlasseKurs-Zuordnung hängen!
-      string teilklasse = "";
+      string teilklasse = null;
       foreach (var klasseKvp in unterschiedlicheKlassen)
       {
         if (klasseKvp.Value.Count == 1)

@@ -76,5 +76,15 @@ namespace diNo
         UnterrichtExcelReader.ReadUnterricht(dia.FileName);
       }
     }
+
+    private void btnImportSchueler_Click(object sender, EventArgs e)
+    {
+      OpenFileDialog dia = new OpenFileDialog();
+      dia.Title = "Dateiname wählen";
+      if (dia.ShowDialog() == DialogResult.OK)
+      {
+        WinSVSchuelerReader.ReadSchueler(dia.FileName);
+      }
+    }
   }
 }

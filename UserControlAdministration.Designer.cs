@@ -37,6 +37,7 @@
       this.groupBoxImport = new System.Windows.Forms.GroupBox();
       this.importNoten = new System.Windows.Forms.Button();
       this.btnImportUnterricht = new System.Windows.Forms.Button();
+      this.btnImportSchueler = new System.Windows.Forms.Button();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
@@ -104,6 +105,7 @@
       // 
       // groupBoxImport
       // 
+      this.groupBoxImport.Controls.Add(this.btnImportSchueler);
       this.groupBoxImport.Controls.Add(this.btnImportUnterricht);
       this.groupBoxImport.Controls.Add(this.importNoten);
       this.groupBoxImport.Location = new System.Drawing.Point(324, 28);
@@ -133,6 +135,16 @@
       this.btnImportUnterricht.UseVisualStyleBackColor = true;
       this.btnImportUnterricht.Click += new System.EventHandler(this.btnImportUnterricht_Click);
       // 
+      // btnImportSchueler
+      // 
+      this.btnImportSchueler.Location = new System.Drawing.Point(6, 77);
+      this.btnImportSchueler.Name = "btnImportSchueler";
+      this.btnImportSchueler.Size = new System.Drawing.Size(182, 23);
+      this.btnImportSchueler.TabIndex = 5;
+      this.btnImportSchueler.Text = "Schülerdaten aus WinSV";
+      this.btnImportSchueler.UseVisualStyleBackColor = true;
+      this.btnImportSchueler.Click += new System.EventHandler(this.btnImportSchueler_Click);
+      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -161,5 +173,6 @@
     private System.Windows.Forms.Button exportNoten;
     private System.Windows.Forms.Button importNoten;
     private System.Windows.Forms.Button btnImportUnterricht;
+    private System.Windows.Forms.Button btnImportSchueler;
   }
 }
