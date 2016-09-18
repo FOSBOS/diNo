@@ -46,5 +46,25 @@ namespace diNo
       var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
       new ReportNotenbogen(obj,true).Show();
     }
+
+    private void exportNoten_Click(object sender, EventArgs e)
+    {
+      SaveFileDialog dia = new SaveFileDialog();
+      dia.Title = "Dateiname wählen";
+      if (dia.ShowDialog() == DialogResult.OK)
+      {
+        ImportExportJahresnoten.ExportiereNoten(dia.FileName);
+      }
+    }
+
+    private void importNoten_Click(object sender, EventArgs e)
+    {
+      OpenFileDialog dia = new OpenFileDialog();
+      dia.Title = "Dateiname wählen";
+      if (dia.ShowDialog() == DialogResult.OK)
+      {
+        ImportExportJahresnoten.ImportiereNoten(dia.FileName);
+      }
+    }
   }
 }

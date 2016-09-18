@@ -17,9 +17,11 @@ namespace diNo
   public class ImportExportJahresnoten
   {
     /// <summary>
-    /// Trennzeichen für csv-Export
+    /// Trennzeichen für csv-Export als char und string
+    /// string benötigt, da sonst glatt Id 55+';'=114 ausgerechnet wird...
     /// </summary>
-    private static char Separator = ';';
+    private static char SeparatorChar = ';';
+    private static string Separator = "" + SeparatorChar;
 
     /// <summary>
     /// Methode exportiert alle Noten in eine csv-Datei
@@ -32,31 +34,31 @@ namespace diNo
       using (StreamWriter writer = new StreamWriter(stream))
       {
         var schuelerAdapter = new SchuelerTableAdapter();
-        foreach (var dbkurs in new KursTableAdapter().GetData())
-        {
-          Kurs kurs = new Kurs(dbkurs);
-          var lehrer = kurs.getLehrer;
-          string lehrerKuerzel = lehrer == null ? "" : lehrer.Kuerzel;
-
-          foreach (var dbSchueler in schuelerAdapter.GetDataByKursId(kurs.Id))
-          {
-            Schueler schueler = new Schueler(dbSchueler);
-            if (IsExportNecessary(kurs.getFach.Kuerzel, schueler))
-            {
-              var fach = schueler.getNoten.getFach(kurs.Id);
-              var note = fach.getRelevanteNote(Zeitpunkt.Jahresende);
-              writer.WriteLine(schueler.Id + Separator + schueler.Name + Separator + fach.getFach.Kuerzel + Separator + lehrerKuerzel + Separator + note);
-            }
-          }
-        }
-
         foreach (var dbSchueler in schuelerAdapter.GetData())
         {
           Schueler schueler = new Schueler(dbSchueler);
+          foreach (var fachNote in schueler.getNoten.alleFaecher)
+          {
+            var fachKuerzel = fachNote.getFach.Kuerzel;
+
+            if (IsExportNecessary(fachKuerzel, schueler))
+            {
+              var lehrer = new Kurs(fachNote.kursId).getLehrer;
+              string lehrerKuerzel = lehrer == null ? "" : lehrer.Kuerzel;
+              var noteImFach = schueler.getNoten.getFach(fachNote.kursId);
+              var note = noteImFach.getRelevanteNote(Zeitpunkt.Jahresende);
+              writer.WriteLine(schueler.Id +""+ Separator + schueler.Name + Separator + noteImFach.getFach.Kuerzel + Separator + lehrerKuerzel + Separator + note);
+
+            }
+          }
+
           if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.getKlasse.Schulart == Schulart.FOS)
           {
             var fpa = schueler.FPANoten;
-            writer.WriteLine(schueler.Id + Separator + schueler.Name + Separator + fpa.Erfolg);
+            if (!fpa.IsErfolgNull())
+            {
+              writer.WriteLine(schueler.Id + Separator + schueler.Name + Separator + fpa.Erfolg);
+            }
           }
         }
       }
@@ -70,8 +72,8 @@ namespace diNo
     /// <returns>Ob für diesen Schüler die Note des genannten Faches exportiert werden soll.</returns>
     private static bool IsExportNecessary(string fachKuerzel, Schueler schueler)
     {
-      // Momentan exportieren wir nur die Noten der FOS11 in den Fächern, die dort abgelegt werden.
-      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.getKlasse.Schulart == Schulart.FOS)
+      // Momentan exportieren wir nur die Noten der FOS in den Fächern, die dort abgelegt werden.
+      if (schueler.getKlasse.Schulart == Schulart.FOS)
       {
         return fachKuerzel == "G" ||
           (schueler.Data.Ausbildungsrichtung == "W" && fachKuerzel == "Rl") ||
@@ -97,7 +99,7 @@ namespace diNo
         
         while (!reader.EndOfStream)
         {
-          string[] line = reader.ReadLine().Split(Separator);
+          string[] line = reader.ReadLine().Split(SeparatorChar);
           if (line.Length == 5)
           {
             //notenzeile
@@ -197,7 +199,7 @@ namespace diNo
 
         while (!reader.EndOfStream)
         {
-          string[] line = reader.ReadLine().Split(Separator);
+          string[] line = reader.ReadLine().Split(SeparatorChar);
           if (line.Length == 5)
           {
             //notenzeile
@@ -254,7 +256,7 @@ namespace diNo
       var kurse = kursAdapter.GetDataByBezeichnung(bezeichnung);
       if (kurse == null || kurse.Count == 0)
       {
-        kursAdapter.Insert(bezeichnung, null, fachAdapter.GetDataByKuerzel(fachKuerzel)[0].Id,null);
+        kursAdapter.Insert(bezeichnung, null, fachAdapter.GetDataByKuerzel(fachKuerzel)[0].Id);
         kurse = kursAdapter.GetDataByBezeichnung(bezeichnung);
       }
       if (kurse == null || kurse.Count == 0)

@@ -30,12 +30,15 @@
     {
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
-      this.groupBoxExport = new System.Windows.Forms.GroupBox();
-      this.groupBoxImport = new System.Windows.Forms.GroupBox();
-      this.btnFrm1 = new System.Windows.Forms.Button();
       this.btnAbiergebnisse = new System.Windows.Forms.Button();
+      this.groupBoxExport = new System.Windows.Forms.GroupBox();
+      this.btnFrm1 = new System.Windows.Forms.Button();
+      this.groupBoxImport = new System.Windows.Forms.GroupBox();
+      this.exportNoten = new System.Windows.Forms.Button();
+      this.importNoten = new System.Windows.Forms.Button();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
+      this.groupBoxImport.SuspendLayout();
       this.SuspendLayout();
       // 
       // groupBoxAnalyse
@@ -57,35 +60,6 @@
       this.groupBoxDrucken.TabStop = false;
       this.groupBoxDrucken.Text = "Drucken";
       // 
-      // groupBoxExport
-      // 
-      this.groupBoxExport.Controls.Add(this.btnFrm1);
-      this.groupBoxExport.Location = new System.Drawing.Point(324, 268);
-      this.groupBoxExport.Name = "groupBoxExport";
-      this.groupBoxExport.Size = new System.Drawing.Size(288, 226);
-      this.groupBoxExport.TabIndex = 4;
-      this.groupBoxExport.TabStop = false;
-      this.groupBoxExport.Text = "Export";
-      // 
-      // groupBoxImport
-      // 
-      this.groupBoxImport.Location = new System.Drawing.Point(324, 28);
-      this.groupBoxImport.Name = "groupBoxImport";
-      this.groupBoxImport.Size = new System.Drawing.Size(288, 233);
-      this.groupBoxImport.TabIndex = 3;
-      this.groupBoxImport.TabStop = false;
-      this.groupBoxImport.Text = "Import";
-      // 
-      // btnFrm1
-      // 
-      this.btnFrm1.Location = new System.Drawing.Point(159, 19);
-      this.btnFrm1.Name = "btnFrm1";
-      this.btnFrm1.Size = new System.Drawing.Size(105, 42);
-      this.btnFrm1.TabIndex = 1;
-      this.btnFrm1.Text = "Die berühmte Form1 aufrufen";
-      this.btnFrm1.UseVisualStyleBackColor = true;
-      this.btnFrm1.Click += new System.EventHandler(this.btnFrm1_Click);
-      // 
       // btnAbiergebnisse
       // 
       this.btnAbiergebnisse.Location = new System.Drawing.Point(20, 28);
@@ -95,6 +69,57 @@
       this.btnAbiergebnisse.Text = "Abiergebnisse";
       this.btnAbiergebnisse.UseVisualStyleBackColor = true;
       this.btnAbiergebnisse.Click += new System.EventHandler(this.btnAbiergebnisse_Click);
+      // 
+      // groupBoxExport
+      // 
+      this.groupBoxExport.Controls.Add(this.exportNoten);
+      this.groupBoxExport.Controls.Add(this.btnFrm1);
+      this.groupBoxExport.Location = new System.Drawing.Point(324, 268);
+      this.groupBoxExport.Name = "groupBoxExport";
+      this.groupBoxExport.Size = new System.Drawing.Size(288, 226);
+      this.groupBoxExport.TabIndex = 4;
+      this.groupBoxExport.TabStop = false;
+      this.groupBoxExport.Text = "Export";
+      // 
+      // btnFrm1
+      // 
+      this.btnFrm1.Location = new System.Drawing.Point(177, 70);
+      this.btnFrm1.Name = "btnFrm1";
+      this.btnFrm1.Size = new System.Drawing.Size(105, 42);
+      this.btnFrm1.TabIndex = 1;
+      this.btnFrm1.Text = "Die berühmte Form1 aufrufen";
+      this.btnFrm1.UseVisualStyleBackColor = true;
+      this.btnFrm1.Click += new System.EventHandler(this.btnFrm1_Click);
+      // 
+      // groupBoxImport
+      // 
+      this.groupBoxImport.Controls.Add(this.importNoten);
+      this.groupBoxImport.Location = new System.Drawing.Point(324, 28);
+      this.groupBoxImport.Name = "groupBoxImport";
+      this.groupBoxImport.Size = new System.Drawing.Size(288, 233);
+      this.groupBoxImport.TabIndex = 3;
+      this.groupBoxImport.TabStop = false;
+      this.groupBoxImport.Text = "Import";
+      // 
+      // exportNoten
+      // 
+      this.exportNoten.Location = new System.Drawing.Point(6, 19);
+      this.exportNoten.Name = "exportNoten";
+      this.exportNoten.Size = new System.Drawing.Size(182, 23);
+      this.exportNoten.TabIndex = 2;
+      this.exportNoten.Text = "Noten und FpA nach csv";
+      this.exportNoten.UseVisualStyleBackColor = true;
+      this.exportNoten.Click += new System.EventHandler(this.exportNoten_Click);
+      // 
+      // importNoten
+      // 
+      this.importNoten.Location = new System.Drawing.Point(6, 19);
+      this.importNoten.Name = "importNoten";
+      this.importNoten.Size = new System.Drawing.Size(182, 23);
+      this.importNoten.TabIndex = 3;
+      this.importNoten.Text = "Noten abgelegter Fächer aus csv";
+      this.importNoten.UseVisualStyleBackColor = true;
+      this.importNoten.Click += new System.EventHandler(this.importNoten_Click);
       // 
       // UserControlAdministration
       // 
@@ -108,6 +133,7 @@
       this.Size = new System.Drawing.Size(671, 530);
       this.groupBoxDrucken.ResumeLayout(false);
       this.groupBoxExport.ResumeLayout(false);
+      this.groupBoxImport.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -120,5 +146,7 @@
     private System.Windows.Forms.Button btnFrm1;
     private System.Windows.Forms.GroupBox groupBoxImport;
     private System.Windows.Forms.Button btnAbiergebnisse;
+    private System.Windows.Forms.Button exportNoten;
+    private System.Windows.Forms.Button importNoten;
   }
 }
