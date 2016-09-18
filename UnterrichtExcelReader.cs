@@ -6,6 +6,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using diNo.diNoDataSetTableAdapters;
 using System.Runtime.InteropServices;
 using System.Data;
+using System.Collections.Generic;
 
 namespace diNo
 {
@@ -41,7 +42,7 @@ namespace diNo
     /// Die eigentliche Lese-Methode. Benutzt den Standardkursselektor.
     /// </summary>
     /// <param name="fileName">Der Dateiname.</param>
-    public static void ReadUnterricht (string fileName)
+    public static void ReadUnterricht(string fileName)
     {
       ReadUnterricht(fileName, GetStandardKursSelector());
     }
@@ -92,7 +93,7 @@ namespace diNo
         var dbFach = FindOrCreateFach(fach);
         if (string.IsNullOrEmpty(dbFach.Bezeichnung.Trim()))
         {
-          log.Debug("Ignoriere Ignoriere Fach ohne Namen : Kürzel "+dbFach.Kuerzel);
+          log.Debug("Ignoriere Ignoriere Fach ohne Namen : Kürzel " + dbFach.Kuerzel);
           continue;
         }
 
@@ -102,26 +103,85 @@ namespace diNo
           log.Error("Ignoriere Kurse des unbekannten Lehrers " + lehrer);
           continue;
         }
-        
-        var kurs = FindOrCreateKurs(dbFach.Bezeichnung.Trim() + " " + klassenString, dblehrer.Id, fach);
 
         var klassen = klassenString.Split(',');
         var klasseKursAdapter = new KlasseKursTableAdapter();
-        foreach (var klasse in klassen)
+        Dictionary<string, IList<string>> unterschiedlicheKlassen = GetKlassenTeile(klassen);
+        string zweig = GetZweig(unterschiedlicheKlassen);
+        var kurs = FindOrCreateKurs(dbFach.Bezeichnung.Trim() + " " + klassenString, dblehrer.Id, fach, zweig);
+
+        foreach (var klasseKvp in unterschiedlicheKlassen)
         {
-          var dbKlasse = FindOrCreateKlasse(klasse, true);
+          // nur die eigentliche Klasse als Klasse erzeugen, nicht die Klassenteile
+          var dbKlasse = FindOrCreateKlasse(klasseKvp.Key, true);
+
           if (klasseKursAdapter.ScalarQueryCountByKlasseAndKurs(dbKlasse.Id, kurs.Id) == 0)
           {
             klasseKursAdapter.Insert(dbKlasse.Id, kurs.Id);
           }
 
-          AddSchuelerToKurs(kurs, dbKlasse, kursSelector);
+          // AddSchuelerToKurs(kurs, dbKlasse, kursSelector); Das machen wir beim Einlesen der Schüler
         }
       }
 
       workbook.Close(false, fileName, Type.Missing);
       Marshal.ReleaseComObject(workbook);
       excelApp.Quit();
+    }
+
+    /// <summary>
+    /// Sucht den Klassenteil, für welchen der Kurs gilt.
+    /// </summary>
+    /// <param name="unterschiedlicheKlassen">Alle unterschiedlichen Klassen, die in den Kurs sollen samt deren Klassenteilen.</param>
+    private static string GetZweig(Dictionary<string, IList<string>> unterschiedlicheKlassen)
+    {
+      // sind keine Klassenteile vorhanden oder mehrere Teilklassen in dem Kurs, dann trage die ganze Klasse ohne Zweigangabe ein
+      // ansonsten (d.h. wenn nur ein Klassenteil in den Kurs gehen soll) trage im Kurs den Zweig ein.
+      // TODO: Ist das wirklich eine EIgenschaft des Kurses? Wenn ein Mischkurs die Sozialen aus der einen Klasse und die
+      //       Wirtschaftler aus der anderen Klasse vereint, dann geht das so nicht. Gibt es sowas? Dann diese Spalte an die KlasseKurs-Zuordnung hängen!
+      string teilklasse = "";
+      foreach (var klasseKvp in unterschiedlicheKlassen)
+      {
+        if (klasseKvp.Value.Count == 1)
+        {
+          teilklasse = klasseKvp.Value[0];
+        }
+      }
+
+      return teilklasse;
+    }
+
+    /// <summary>
+    /// Teilt die Angabe aus Untis in Klassen und eine Liste deren Teilklassen auf (sofern vorhanden).
+    /// </summary>
+    /// <param name="klassen">Die Klassen wie sie aus Untis kommen.</param>
+    /// <returns>Klassen und deren Teile.</returns>
+    private static Dictionary<string, IList<string>> GetKlassenTeile(string[] klassen)
+    {
+      Dictionary<string, IList<string>> unterschiedlicheKlassen = new Dictionary<string, IList<string>>();
+      foreach (var klasse in klassen)
+      {
+        string eigentlicheKlasse = klasse;
+        string klassenteil = "";
+        if (klasse.Contains("_"))
+        {
+          string[] teilstrings = klasse.Split('_');
+          eigentlicheKlasse = teilstrings[0];
+          klassenteil = teilstrings[1].Trim();
+        }
+
+        if (!unterschiedlicheKlassen.ContainsKey(eigentlicheKlasse))
+        {
+          unterschiedlicheKlassen.Add(eigentlicheKlasse, new List<string>());
+        }
+
+        if (!string.IsNullOrEmpty(klassenteil))
+        {
+          unterschiedlicheKlassen[eigentlicheKlasse].Add(klassenteil);
+        }
+      }
+
+      return unterschiedlicheKlassen;
     }
 
     /// <summary>
@@ -277,8 +337,9 @@ namespace diNo
     /// <param name="aKursBezeichung">Die Bezeichnung des Kurses.</param>
     /// <param name="aLehrerId">Die Id des Lehrers.</param>
     /// <param name="aFach">Das Fach.</param>
+    /// <param name="aZweig">Der Zweig, für welchen der Kurs gilt.</param>
     /// <returns>Die Zurszeile in der Datenbank.</returns>
-    public static diNoDataSet.KursRow FindOrCreateKurs(string aKursBezeichung, int aLehrerId, string aFach)
+    public static diNoDataSet.KursRow FindOrCreateKurs(string aKursBezeichung, int aLehrerId, string aFach, string aZweig)
     {
       using (var kursAdapter = new KursTableAdapter())
       {
@@ -288,8 +349,7 @@ namespace diNo
         {
           // suche Fach in der Datenbank
           var fach = FindOrCreateFach(aFach);
-          // TODO: Zweigzuordnung automatisch ?
-          kursAdapter.Insert(aKursBezeichung, aLehrerId, fach.Id, null);
+          kursAdapter.Insert(aKursBezeichung, aLehrerId, fach.Id, aZweig);
         }
 
         kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);

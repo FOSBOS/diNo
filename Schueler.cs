@@ -697,12 +697,9 @@ namespace diNo
     public bool KursPasstZumZweig(Kurs k)
     {
       string kuerzel = k.getFach.Kuerzel;
-      /*
-      string reli = getReliKuerzel();
-
-      if ((kuerzel == "K" || kuerzel == "Ev" ||kuerzel == "Eth") && (kuerzel == reli)) return true;
-      else*/
       if (k.Data.IsZweigNull()) return true;
+
+      //TODO: FOS/BOS prüfen!
       else return (k.Data.Zweig==Data.Ausbildungsrichtung);
     }
 
@@ -716,12 +713,11 @@ namespace diNo
 
       // Ku ist bei uns immer Pflichtfach
       if (kuerzel == "K" || kuerzel == "Ev" || kuerzel == "Eth") return (kuerzel == reli);
-      else if (kuerzel=="F") return (kuerzel==Data.Fremdsprache2);
-      else if (kuerzel=="F-Wi" && Data.Wahlpflichtfach=="F3") return true;
-      else if (kuerzel=="WIn" && (Data.IsWahlpflichtfachNull() || Data.Wahlpflichtfach=="")) return true; // Standardfall (oft unbelegt)
-      else if (kuerzel == "F-Wi" || kuerzel == "WIn") return (kuerzel==Data.Wahlpflichtfach);           
-      else if (k.Data.IsZweigNull()) return true;
-      else return (k.Data.Zweig==Data.Ausbildungsrichtung);
+      else if (kuerzel == "F") return (kuerzel == Data.Fremdsprache2);
+      else if (kuerzel == "F-Wi" && Data.Wahlpflichtfach == "F3") return true;
+      else if (kuerzel == "WIn" && (Data.IsWahlpflichtfachNull() || Data.Wahlpflichtfach == "")) return true; // Standardfall (oft unbelegt)
+      else if (kuerzel == "F-Wi" || kuerzel == "WIn") return (kuerzel == Data.Wahlpflichtfach);
+      else return KursPasstZumZweig(k);
     }
 
     // wandelt das beim Schüler gespeicherte Bekenntnis in das Fachkürzel um
