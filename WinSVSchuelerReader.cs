@@ -89,6 +89,7 @@ namespace diNo
           string[] array = line.Split(new string[] { "\t" }, StringSplitOptions.None);
           string[] cleanArray = array.Select(aString => aString.Trim(new char[] { '\"', ' ', '\n' })).ToArray();
 
+          //TODO: Schueler nicht in Teilklassen stecken (bei Mischklassen, vor allem FOS/BOS-Mischung problematisch)
           int klasseId = GetKlasseId(klasseTableAdapter, cleanArray[klasseSpalte].Trim());
           if (klasseId == -1)
           {
@@ -98,108 +99,224 @@ namespace diNo
 
           // wenn der Schüler noch nicht vorhanden ist
           // TODO: die Daten direkt in ein SchuelerRow schreiben, und dann den Insert auf dieses Objekt machen
-          if (tableAdapter.GetDataById(int.Parse(cleanArray[schuelerIdSpalte])).Count == 0)
-          {/*
-            tableAdapter.Insert(
-              int.Parse(cleanArray[schuelerIdSpalte]),
-              cleanArray[nachnameSpalte],
-              cleanArray[vornameSpalte],
-              klasseId,
-              cleanArray[rufnameSpalte],
-              cleanArray[geschlechtSpalte],
-              ParseDate(cleanArray[geburtsdatumSpalte]),
-              cleanArray[geburtsortSpalte],
-              cleanArray[bekenntnisSpalte],
-              cleanArray[anschr1PlzSpalte],
-              cleanArray[anschr1OrtSpalte],
-              cleanArray[anschr1StrasseSpalte],
-              cleanArray[anschr1TelefonSpalte],
-              ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]),
-              cleanArray[fremdsprache2Spalte],
-              cleanArray[reliOderEthikSpalte],
-              cleanArray[wahlpflichtfachSpalte],
-              cleanArray[wahlfach1Spalte],
-              cleanArray[wahlfach2Spalte],
-              cleanArray[wahlfach3Spalte],
-              cleanArray[wahlfach4Spalte],
-              cleanArray[wdh1JahrgangsstufeSpalte],
-              cleanArray[wdh2JahrgangsstufeSpalte],
-              cleanArray[wdh1GrundSpalte],
-              cleanArray[wdh2GrundSpalte],
-              ParseDate(cleanArray[probezeitBisSpalte]),
-              ParseDate(cleanArray[austrittsdatumSpalte]),
-              cleanArray[schulischeVorbildungSpalte],
-              cleanArray[beruflicheVorbildungSpalte],
-              cleanArray[lrsStoerungSpalte] == "1",
-              cleanArray[lrsSchwaecheSpalte] == "1",
-              ParseDate(cleanArray[lrsBisDatumSpalte]),
-              cleanArray[verwandtschaftsbezeichnungEltern1Spalte],
-              cleanArray[nachnameEltern1Spalte],
-              cleanArray[vornameEltern1Spalte],
-              cleanArray[anredeEltern1Spalte],
-              cleanArray[nachnameEltern2Spalte],
-              cleanArray[vornameEltern2Spalte],
-              cleanArray[anredeEltern2Spalte],
-              cleanArray[verwandtschaftsbezeichnungEltern2Spalte],
-              cleanArray[eintrittJgstSpalte],
-              ParseDate(cleanArray[eintrittDatumSpalte]),
-              !string.IsNullOrEmpty(cleanArray[eintrittVonSchulnummerSpalte]) ? int.Parse(cleanArray[eintrittVonSchulnummerSpalte]) : -1,
-              cleanArray[emailSpalte],
-              cleanArray[notfallrufnummerSpalte]
-              );
-          }
-          else
-          {
-            tableAdapter.Update(
-              cleanArray[nachnameSpalte],
-              cleanArray[vornameSpalte],
-              klasseId,
-              cleanArray[rufnameSpalte],
-              cleanArray[geschlechtSpalte],
-              ParseDate(cleanArray[geburtsdatumSpalte]),
-              cleanArray[geburtsortSpalte],
-              cleanArray[bekenntnisSpalte],
-              cleanArray[anschr1PlzSpalte],
-              cleanArray[anschr1OrtSpalte],
-              cleanArray[anschr1StrasseSpalte],
-              cleanArray[anschr1TelefonSpalte],
-              ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]),
-              cleanArray[fremdsprache2Spalte],
-              cleanArray[reliOderEthikSpalte],
-              cleanArray[wahlpflichtfachSpalte],
-              cleanArray[wahlfach1Spalte],
-              cleanArray[wahlfach2Spalte],
-              cleanArray[wahlfach3Spalte],
-              cleanArray[wahlfach4Spalte],
-              cleanArray[wdh1JahrgangsstufeSpalte],
-              cleanArray[wdh2JahrgangsstufeSpalte],
-              cleanArray[wdh1GrundSpalte],
-              cleanArray[wdh2GrundSpalte],
-              ParseDate(cleanArray[probezeitBisSpalte]),
-              ParseDate(cleanArray[austrittsdatumSpalte]),
-              cleanArray[schulischeVorbildungSpalte],
-              cleanArray[beruflicheVorbildungSpalte],
-              cleanArray[lrsStoerungSpalte] == "1",
-              cleanArray[lrsSchwaecheSpalte] == "1",
-              ParseDate(cleanArray[lrsBisDatumSpalte]),
-              cleanArray[verwandtschaftsbezeichnungEltern1Spalte],
-              cleanArray[nachnameEltern1Spalte],
-              cleanArray[vornameEltern1Spalte],
-              cleanArray[anredeEltern1Spalte],
-              cleanArray[nachnameEltern2Spalte],
-              cleanArray[vornameEltern2Spalte],
-              cleanArray[anredeEltern2Spalte],
-              cleanArray[verwandtschaftsbezeichnungEltern2Spalte],
-              cleanArray[eintrittJgstSpalte],
-              ParseDate(cleanArray[eintrittDatumSpalte]),
-              !string.IsNullOrEmpty(cleanArray[eintrittVonSchulnummerSpalte]) ? int.Parse(cleanArray[eintrittVonSchulnummerSpalte]) : -1,
-              cleanArray[emailSpalte],
-              cleanArray[notfallrufnummerSpalte],
-              int.Parse(cleanArray[schuelerIdSpalte])
-              ); */
-          }
+          var table = tableAdapter.GetDataById(int.Parse(cleanArray[schuelerIdSpalte]));
+          diNoDataSet.SchuelerRow row = (table.Count == 0) ? table.NewSchuelerRow() : table[0];
+          FillRow(cleanArray, klasseId, row);
+
+
+          //if (table.Count == 0)
+          //{
+
+          /*
+          tableAdapter.Insert(
+            int.Parse(cleanArray[schuelerIdSpalte]),
+            cleanArray[nachnameSpalte],
+            cleanArray[vornameSpalte],
+            klasseId,
+            cleanArray[rufnameSpalte],
+            cleanArray[geschlechtSpalte],
+            ParseDate(cleanArray[geburtsdatumSpalte]),
+            cleanArray[geburtsortSpalte],
+            cleanArray[bekenntnisSpalte],
+            cleanArray[anschr1PlzSpalte],
+            cleanArray[anschr1OrtSpalte],
+            cleanArray[anschr1StrasseSpalte],
+            cleanArray[anschr1TelefonSpalte],
+            ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]),
+            cleanArray[fremdsprache2Spalte],
+            cleanArray[reliOderEthikSpalte],
+            cleanArray[wahlpflichtfachSpalte],
+            cleanArray[wahlfach1Spalte],
+            cleanArray[wahlfach2Spalte],
+            cleanArray[wahlfach3Spalte],
+            cleanArray[wahlfach4Spalte],
+            cleanArray[wdh1JahrgangsstufeSpalte],
+            cleanArray[wdh2JahrgangsstufeSpalte],
+            cleanArray[wdh1GrundSpalte],
+            cleanArray[wdh2GrundSpalte],
+            ParseDate(cleanArray[probezeitBisSpalte]),
+            ParseDate(cleanArray[austrittsdatumSpalte]),
+            cleanArray[schulischeVorbildungSpalte],
+            cleanArray[beruflicheVorbildungSpalte],
+            cleanArray[lrsStoerungSpalte] == "1",
+            cleanArray[lrsSchwaecheSpalte] == "1",
+            ParseDate(cleanArray[lrsBisDatumSpalte]),
+            cleanArray[verwandtschaftsbezeichnungEltern1Spalte],
+            cleanArray[nachnameEltern1Spalte],
+            cleanArray[vornameEltern1Spalte],
+            cleanArray[anredeEltern1Spalte],
+            cleanArray[nachnameEltern2Spalte],
+            cleanArray[vornameEltern2Spalte],
+            cleanArray[anredeEltern2Spalte],
+            cleanArray[verwandtschaftsbezeichnungEltern2Spalte],
+            cleanArray[eintrittJgstSpalte],
+            ParseDate(cleanArray[eintrittDatumSpalte]),
+            !string.IsNullOrEmpty(cleanArray[eintrittVonSchulnummerSpalte]) ? int.Parse(cleanArray[eintrittVonSchulnummerSpalte]) : -1,
+            cleanArray[emailSpalte],
+            cleanArray[notfallrufnummerSpalte]
+            );
+        }
+        else
+        {
+          tableAdapter.Update(
+            cleanArray[nachnameSpalte],
+            cleanArray[vornameSpalte],
+            klasseId,
+            cleanArray[rufnameSpalte],
+            cleanArray[geschlechtSpalte],
+            ParseDate(cleanArray[geburtsdatumSpalte]),
+            cleanArray[geburtsortSpalte],
+            cleanArray[bekenntnisSpalte],
+            cleanArray[anschr1PlzSpalte],
+            cleanArray[anschr1OrtSpalte],
+            cleanArray[anschr1StrasseSpalte],
+            cleanArray[anschr1TelefonSpalte],
+            ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]),
+            cleanArray[fremdsprache2Spalte],
+            cleanArray[reliOderEthikSpalte],
+            cleanArray[wahlpflichtfachSpalte],
+            cleanArray[wahlfach1Spalte],
+            cleanArray[wahlfach2Spalte],
+            cleanArray[wahlfach3Spalte],
+            cleanArray[wahlfach4Spalte],
+            cleanArray[wdh1JahrgangsstufeSpalte],
+            cleanArray[wdh2JahrgangsstufeSpalte],
+            cleanArray[wdh1GrundSpalte],
+            cleanArray[wdh2GrundSpalte],
+            ParseDate(cleanArray[probezeitBisSpalte]),
+            ParseDate(cleanArray[austrittsdatumSpalte]),
+            cleanArray[schulischeVorbildungSpalte],
+            cleanArray[beruflicheVorbildungSpalte],
+            cleanArray[lrsStoerungSpalte] == "1",
+            cleanArray[lrsSchwaecheSpalte] == "1",
+            ParseDate(cleanArray[lrsBisDatumSpalte]),
+            cleanArray[verwandtschaftsbezeichnungEltern1Spalte],
+            cleanArray[nachnameEltern1Spalte],
+            cleanArray[vornameEltern1Spalte],
+            cleanArray[anredeEltern1Spalte],
+            cleanArray[nachnameEltern2Spalte],
+            cleanArray[vornameEltern2Spalte],
+            cleanArray[anredeEltern2Spalte],
+            cleanArray[verwandtschaftsbezeichnungEltern2Spalte],
+            cleanArray[eintrittJgstSpalte],
+            ParseDate(cleanArray[eintrittDatumSpalte]),
+            !string.IsNullOrEmpty(cleanArray[eintrittVonSchulnummerSpalte]) ? int.Parse(cleanArray[eintrittVonSchulnummerSpalte]) : -1,
+            cleanArray[emailSpalte],
+            cleanArray[notfallrufnummerSpalte],
+            int.Parse(cleanArray[schuelerIdSpalte])
+            ); */
+
+          //}
+
+          tableAdapter.Update(row);
+
+          // Diese Zeile meldet den Schüler bei allen notwendigen Kursen seiner Klasse an
+          new Schueler(row).WechsleKlasse(new Klasse(klasseId));
         }
       }
+    }
+
+    /// <summary>
+    /// Füllt die SchuelerRow mit ihren Daten aus WinSV
+    /// </summary>
+    /// <param name="cleanArray">Das Array mit Daten.</param>
+    /// <param name="klasseId">Die Id der Klasse in welche der Schüler gehen soll.</param>
+    /// <param name="row">Die SchuelerRow.</param>
+    private static void FillRow(string[] cleanArray, int klasseId, diNoDataSet.SchuelerRow row)
+    {
+      row.Id = int.Parse(cleanArray[schuelerIdSpalte]);
+      row.Name = cleanArray[nachnameSpalte];
+      row.Vorname = cleanArray[vornameSpalte];
+      row.KlasseId = klasseId;
+      row.Rufname = cleanArray[rufnameSpalte];
+      row.Geschlecht = cleanArray[geschlechtSpalte];
+      DateTime? geburtsdatum = ParseDate(cleanArray[geburtsdatumSpalte]);
+      if (geburtsdatum == null)
+      {
+        row.SetGeburtsdatumNull();
+      }
+      else
+      {
+        row.Geburtsdatum = (DateTime)geburtsdatum;
+      }
+
+      row.Geburtsort = cleanArray[geburtsortSpalte];
+      row.Bekenntnis = cleanArray[bekenntnisSpalte];
+      row.AnschriftPLZ = cleanArray[anschr1PlzSpalte];
+      row.AnschriftOrt = cleanArray[anschr1OrtSpalte];
+      row.AnschriftStrasse = cleanArray[anschr1StrasseSpalte];
+      row.AnschriftTelefonnummer = cleanArray[anschr1TelefonSpalte];
+      row.Ausbildungsrichtung = ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]);
+      row.Fremdsprache2 = cleanArray[fremdsprache2Spalte];
+      row.ReligionOderEthik = cleanArray[reliOderEthikSpalte];
+      row.Wahlpflichtfach = cleanArray[wahlpflichtfachSpalte];
+      row.Wahlfach1 = cleanArray[wahlfach1Spalte];
+      row.Wahlfach2 = cleanArray[wahlfach2Spalte];
+      row.Wahlfach3 = cleanArray[wahlfach3Spalte];
+      row.Wahlfach4 = cleanArray[wahlfach4Spalte];
+      row.Wiederholung1Jahrgangsstufe = cleanArray[wdh1JahrgangsstufeSpalte];
+      row.Wiederholung2Jahrgangsstufe = cleanArray[wdh2JahrgangsstufeSpalte];
+      row.Wiederholung1Grund = cleanArray[wdh1GrundSpalte];
+      row.Wiederholung2Grund = cleanArray[wdh2GrundSpalte];
+      DateTime? probezeit = ParseDate(cleanArray[probezeitBisSpalte]);
+      if (probezeit == null)
+      {
+        row.SetProbezeitBisNull();
+      }
+      else
+      {
+        row.ProbezeitBis = (DateTime)probezeit;
+      }
+
+      DateTime? austrittsdatum = ParseDate(cleanArray[austrittsdatumSpalte]);
+      if (austrittsdatum == null)
+      {
+        row.SetAustrittsdatumNull();
+      }
+      else
+      {
+        row.Austrittsdatum = (DateTime)austrittsdatum;
+      }
+
+      row.SchulischeVorbildung = cleanArray[schulischeVorbildungSpalte];
+      row.BeruflicheVorbildung = cleanArray[beruflicheVorbildungSpalte];
+      // TODO: Wie wird die Legasthenie neuerdings in der Schulverwaltung gehandhabt?
+      row.LRSStoerung = cleanArray[lrsStoerungSpalte] == "1";
+      row.LRSSchwaeche = cleanArray[lrsSchwaecheSpalte] == "1";
+
+      DateTime? lrsBis = ParseDate(cleanArray[lrsBisDatumSpalte]);
+      if (lrsBis == null)
+      {
+        row.SetLRSBisDatumNull();
+      }
+      else
+      {
+        row.LRSBisDatum = (DateTime)lrsBis;
+      }
+
+      row.VerwandtschaftsbezeichnungEltern1 = cleanArray[verwandtschaftsbezeichnungEltern1Spalte];
+      row.NachnameEltern1 = cleanArray[nachnameEltern1Spalte];
+      row.VornameEltern1 = cleanArray[vornameEltern1Spalte];
+      row.AnredeEltern1 = cleanArray[anredeEltern1Spalte];
+      row.NachnameEltern2 = cleanArray[nachnameEltern2Spalte];
+      row.VornameEltern2 = cleanArray[vornameEltern2Spalte];
+      row.AnredeEltern2 = cleanArray[anredeEltern2Spalte];
+      row.VerwandtschaftsbezeichnungEltern2 = cleanArray[verwandtschaftsbezeichnungEltern2Spalte];
+      row.EintrittJahrgangsstufe = cleanArray[eintrittJgstSpalte];
+
+      DateTime? eintrittDatum = ParseDate(cleanArray[eintrittDatumSpalte]);
+      if (eintrittDatum == null)
+      {
+        row.SetEintrittAmNull();
+      }
+      else
+      {
+        row.EintrittAm = (DateTime)eintrittDatum;
+      }
+
+      row.EintrittAusSchulnummer = !string.IsNullOrEmpty(cleanArray[eintrittVonSchulnummerSpalte]) ? int.Parse(cleanArray[eintrittVonSchulnummerSpalte]) : -1;
+      row.Email = cleanArray[emailSpalte];
+      row.Notfalltelefonnummer = cleanArray[notfallrufnummerSpalte];
     }
 
     /// <summary>
