@@ -90,8 +90,8 @@ namespace diNo
           string[] cleanArray = array.Select(aString => aString.Trim(new char[] { '\"', ' ', '\n' })).ToArray();
 
           //TODO: Schueler nicht in Teilklassen stecken (bei Mischklassen, vor allem FOS/BOS-Mischung problematisch)
-          int klasseId = GetKlasseId(klasseTableAdapter, cleanArray[klasseSpalte].Trim());
-          if (klasseId == -1)
+          var klasse = GetKlasseId(klasseTableAdapter, cleanArray[klasseSpalte].Trim());
+          if (klasse == null)
           {
             log.Debug("Ignoriere einen Schüler ohne richtige Klasse. Übergebene Klasse war " + cleanArray[klasseSpalte]);
             continue;
@@ -101,117 +101,17 @@ namespace diNo
           // TODO: die Daten direkt in ein SchuelerRow schreiben, und dann den Insert auf dieses Objekt machen
           var table = tableAdapter.GetDataById(int.Parse(cleanArray[schuelerIdSpalte]));
           diNoDataSet.SchuelerRow row = (table.Count == 0) ? table.NewSchuelerRow() : table[0];
-          FillRow(cleanArray, klasseId, row);
+          FillRow(cleanArray, klasse, row);
+          if (table.Count == 0)
+          {
+            table.AddSchuelerRow(row);
+          }
 
-
-          //if (table.Count == 0)
-          //{
-
-          /*
-          tableAdapter.Insert(
-            int.Parse(cleanArray[schuelerIdSpalte]),
-            cleanArray[nachnameSpalte],
-            cleanArray[vornameSpalte],
-            klasseId,
-            cleanArray[rufnameSpalte],
-            cleanArray[geschlechtSpalte],
-            ParseDate(cleanArray[geburtsdatumSpalte]),
-            cleanArray[geburtsortSpalte],
-            cleanArray[bekenntnisSpalte],
-            cleanArray[anschr1PlzSpalte],
-            cleanArray[anschr1OrtSpalte],
-            cleanArray[anschr1StrasseSpalte],
-            cleanArray[anschr1TelefonSpalte],
-            ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]),
-            cleanArray[fremdsprache2Spalte],
-            cleanArray[reliOderEthikSpalte],
-            cleanArray[wahlpflichtfachSpalte],
-            cleanArray[wahlfach1Spalte],
-            cleanArray[wahlfach2Spalte],
-            cleanArray[wahlfach3Spalte],
-            cleanArray[wahlfach4Spalte],
-            cleanArray[wdh1JahrgangsstufeSpalte],
-            cleanArray[wdh2JahrgangsstufeSpalte],
-            cleanArray[wdh1GrundSpalte],
-            cleanArray[wdh2GrundSpalte],
-            ParseDate(cleanArray[probezeitBisSpalte]),
-            ParseDate(cleanArray[austrittsdatumSpalte]),
-            cleanArray[schulischeVorbildungSpalte],
-            cleanArray[beruflicheVorbildungSpalte],
-            cleanArray[lrsStoerungSpalte] == "1",
-            cleanArray[lrsSchwaecheSpalte] == "1",
-            ParseDate(cleanArray[lrsBisDatumSpalte]),
-            cleanArray[verwandtschaftsbezeichnungEltern1Spalte],
-            cleanArray[nachnameEltern1Spalte],
-            cleanArray[vornameEltern1Spalte],
-            cleanArray[anredeEltern1Spalte],
-            cleanArray[nachnameEltern2Spalte],
-            cleanArray[vornameEltern2Spalte],
-            cleanArray[anredeEltern2Spalte],
-            cleanArray[verwandtschaftsbezeichnungEltern2Spalte],
-            cleanArray[eintrittJgstSpalte],
-            ParseDate(cleanArray[eintrittDatumSpalte]),
-            !string.IsNullOrEmpty(cleanArray[eintrittVonSchulnummerSpalte]) ? int.Parse(cleanArray[eintrittVonSchulnummerSpalte]) : -1,
-            cleanArray[emailSpalte],
-            cleanArray[notfallrufnummerSpalte]
-            );
-        }
-        else
-        {
-          tableAdapter.Update(
-            cleanArray[nachnameSpalte],
-            cleanArray[vornameSpalte],
-            klasseId,
-            cleanArray[rufnameSpalte],
-            cleanArray[geschlechtSpalte],
-            ParseDate(cleanArray[geburtsdatumSpalte]),
-            cleanArray[geburtsortSpalte],
-            cleanArray[bekenntnisSpalte],
-            cleanArray[anschr1PlzSpalte],
-            cleanArray[anschr1OrtSpalte],
-            cleanArray[anschr1StrasseSpalte],
-            cleanArray[anschr1TelefonSpalte],
-            ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]),
-            cleanArray[fremdsprache2Spalte],
-            cleanArray[reliOderEthikSpalte],
-            cleanArray[wahlpflichtfachSpalte],
-            cleanArray[wahlfach1Spalte],
-            cleanArray[wahlfach2Spalte],
-            cleanArray[wahlfach3Spalte],
-            cleanArray[wahlfach4Spalte],
-            cleanArray[wdh1JahrgangsstufeSpalte],
-            cleanArray[wdh2JahrgangsstufeSpalte],
-            cleanArray[wdh1GrundSpalte],
-            cleanArray[wdh2GrundSpalte],
-            ParseDate(cleanArray[probezeitBisSpalte]),
-            ParseDate(cleanArray[austrittsdatumSpalte]),
-            cleanArray[schulischeVorbildungSpalte],
-            cleanArray[beruflicheVorbildungSpalte],
-            cleanArray[lrsStoerungSpalte] == "1",
-            cleanArray[lrsSchwaecheSpalte] == "1",
-            ParseDate(cleanArray[lrsBisDatumSpalte]),
-            cleanArray[verwandtschaftsbezeichnungEltern1Spalte],
-            cleanArray[nachnameEltern1Spalte],
-            cleanArray[vornameEltern1Spalte],
-            cleanArray[anredeEltern1Spalte],
-            cleanArray[nachnameEltern2Spalte],
-            cleanArray[vornameEltern2Spalte],
-            cleanArray[anredeEltern2Spalte],
-            cleanArray[verwandtschaftsbezeichnungEltern2Spalte],
-            cleanArray[eintrittJgstSpalte],
-            ParseDate(cleanArray[eintrittDatumSpalte]),
-            !string.IsNullOrEmpty(cleanArray[eintrittVonSchulnummerSpalte]) ? int.Parse(cleanArray[eintrittVonSchulnummerSpalte]) : -1,
-            cleanArray[emailSpalte],
-            cleanArray[notfallrufnummerSpalte],
-            int.Parse(cleanArray[schuelerIdSpalte])
-            ); */
-
-          //}
-
+          row.AcceptChanges();
           tableAdapter.Update(row);
 
           // Diese Zeile meldet den Schüler bei allen notwendigen Kursen seiner Klasse an
-          new Schueler(row).WechsleKlasse(new Klasse(klasseId));
+          new Schueler(row).WechsleKlasse(new Klasse(klasse));
         }
       }
     }
@@ -220,14 +120,15 @@ namespace diNo
     /// Füllt die SchuelerRow mit ihren Daten aus WinSV
     /// </summary>
     /// <param name="cleanArray">Das Array mit Daten.</param>
-    /// <param name="klasseId">Die Id der Klasse in welche der Schüler gehen soll.</param>
+    /// <param name="klasse">Die Klasse in welche der Schüler gehen soll.</param>
     /// <param name="row">Die SchuelerRow.</param>
-    private static void FillRow(string[] cleanArray, int klasseId, diNoDataSet.SchuelerRow row)
+    private static void FillRow(string[] cleanArray, diNoDataSet.KlasseRow klasse, diNoDataSet.SchuelerRow row)
     {
       row.Id = int.Parse(cleanArray[schuelerIdSpalte]);
       row.Name = cleanArray[nachnameSpalte];
       row.Vorname = cleanArray[vornameSpalte];
-      row.KlasseId = klasseId;
+      row.KlasseId = klasse.Id;
+      row.Schulart = klasse.Bezeichnung.StartsWith("B") ? "B" : "F";
       row.Rufname = cleanArray[rufnameSpalte];
       row.Geschlecht = cleanArray[geschlechtSpalte];
       DateTime? geburtsdatum = ParseDate(cleanArray[geburtsdatumSpalte]);
@@ -326,12 +227,12 @@ namespace diNo
     /// <param name="klasseTableAdapter">Der Table Adapter für Klassen.</param>
     /// <param name="klasse">Die Klassenbezeichnung.</param>
     /// <returns>Die Id der Klasse oder -1 falls die Klasse ungültig ist.</returns>
-    private static int GetKlasseId(KlasseTableAdapter klasseTableAdapter, string klasse)
+    private static diNoDataSet.KlasseRow GetKlasseId(KlasseTableAdapter klasseTableAdapter, string klasse)
     {
       var klasseDBresult = klasseTableAdapter.GetDataByBezeichnung(klasse);
       if (klasseDBresult.Count == 1)
       {
-        return klasseDBresult[0].Id;
+        return klasseDBresult[0];
       }
       else
       {
@@ -341,13 +242,13 @@ namespace diNo
         // Ex, Import: ?
         if (klasse.EndsWith("-N") || klasse.Contains("AHR") || klasse.Contains("FHR") || klasse.Contains("Abm") || klasse.Equals("Ex") || klasse.Equals("Import"))
         {
-          return -1;
+          return null;
         }
         else
         {
           klasseTableAdapter.Insert(klasse, null, null);
           var neueKlasse = klasseTableAdapter.GetDataByBezeichnung(klasse);
-          return neueKlasse[0].Id;
+          return neueKlasse[0];
         }
       }
     }

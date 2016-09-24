@@ -613,11 +613,6 @@ namespace diNo
       Save();
 
       var kurse = AlleNotwendigenKurse();
-      if (kurse == null || kurse.Count == 0)
-      {
-        throw new InvalidOperationException("Für die Klasse "+nachKlasse.Bezeichnung+ " konnten keine Kurse gefunden werden");
-      }
-
       foreach (var kurs in kurse)
       {
         MeldeAn(kurs);
@@ -698,9 +693,15 @@ namespace diNo
     {
       string kuerzel = k.getFach.Kuerzel;
       if (k.Data.IsZweigNull()) return true;
-
-      //TODO: FOS/BOS prüfen!
-      else return (k.Data.Zweig==Data.Ausbildungsrichtung);
+      if (k.Data.Zweig == "F" || k.Data.Zweig == "B")
+      {
+        if (Data.IsSchulartNull()) return true;
+        return k.Data.Zweig == Data.Schulart;
+      }
+      else
+      {
+        return k.Data.Zweig == Data.Ausbildungsrichtung;
+      }
     }
 
     // prüft, ob der übergebene Kurs ein potenzielle Kandidat für diesen Schüler ist
@@ -715,7 +716,9 @@ namespace diNo
       if (kuerzel == "K" || kuerzel == "Ev" || kuerzel == "Eth") return (kuerzel == reli);
       else if (kuerzel == "F") return (kuerzel == Data.Fremdsprache2);
       else if (kuerzel == "F-Wi" && Data.Wahlpflichtfach == "F3") return true;
-      else if (kuerzel == "WIn" && (Data.IsWahlpflichtfachNull() || Data.Wahlpflichtfach == "")) return true; // Standardfall (oft unbelegt)
+      // die Wirtschaftler gehen in Wirtschaftsinformatik, sofern sie nicht franz. fortgeführt als wahlpflichtfach haben
+      else if (kuerzel == "WIn" && Zweig == Zweig.Wirtschaft && (Data.IsWahlpflichtfachNull() || Data.Wahlpflichtfach != "F3")) return true; // Standardfall (oft unbelegt)
+      // alle anderen Zweige müssen den Franz. oder WInf Kurs schon wählen, damit sie reingehen
       else if (kuerzel == "F-Wi" || kuerzel == "WIn") return (kuerzel == Data.Wahlpflichtfach);
       else return KursPasstZumZweig(k);
     }

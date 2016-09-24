@@ -77,7 +77,7 @@ namespace diNo
       {
         return fachKuerzel == "G" ||
           (schueler.Data.Ausbildungsrichtung == "W" && fachKuerzel == "Rl") ||
-          (schueler.Data.Ausbildungsrichtung == "S" && fachKuerzel == "Ch") ||
+          (schueler.Data.Ausbildungsrichtung == "S" && fachKuerzel == "C") ||
           (schueler.Data.Ausbildungsrichtung == "T" && fachKuerzel == "TZ");
       }
       else return false;
@@ -107,6 +107,12 @@ namespace diNo
             string nachname = line[1];
             string fachKuerzel = line[2];
             string lehrerKuerzel = line[3];
+
+            if (string.IsNullOrEmpty(line[4])) // was das heißt ist aber auch fraglich. keine Note?
+            {
+              continue;
+            }
+
             byte zeugnisnote = byte.Parse(line[4]);
 
             var schuelerGefunden = schuelerAdapter.GetDataById(schuelerId);
@@ -130,6 +136,11 @@ namespace diNo
             string nachname = line[1];
             int gesamterfolg = int.Parse(line[2]);
 
+            var schuelerGefunden = schuelerAdapter.GetDataById(schuelerId);
+            if (schuelerGefunden == null || schuelerGefunden.Count == 0)
+            {
+              continue;
+            }
             fpaAdapter.Insert(schuelerId, "", null, null, null, null, gesamterfolg);
           }
           else
@@ -153,7 +164,7 @@ namespace diNo
     {
       Dictionary<string, Kurs> kurse = new Dictionary<string, Kurs>();
       kurse.Add("RL", FindOrCreateDummyKurs("Rechtslehre aus elfter Jahrgangsstufe", "Rl"));
-      kurse.Add("CH", FindOrCreateDummyKurs("Chemie aus elfter Jahrgangsstufe", "Ch"));
+      kurse.Add("CH", FindOrCreateDummyKurs("Chemie aus elfter Jahrgangsstufe", "C"));
       kurse.Add("TZ", FindOrCreateDummyKurs("TZ aus elfter Jahrgangsstufe", "TZ"));
       // laut Stundentafel legt der Agrarzweig außer Geschichte nichts ab.
       return kurse;

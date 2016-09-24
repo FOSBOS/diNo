@@ -81,7 +81,7 @@ namespace diNo
       {
         if (!sidList.Contains(schueler.Id))
         {
-          xls.AppendSchueler(schueler);
+          xls.AppendSchueler(schueler, kurs.getFach.Kuerzel == "F" || kurs.getFach.Kuerzel == "E");
           sidList.Add(schueler.Id);
         }
 

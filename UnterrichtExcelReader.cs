@@ -26,33 +26,10 @@ namespace diNo
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
     /// <summary>
-    /// Methode liefert den Standardkursselektor.
-    /// </summary>
-    /// <returns>Einen Standaradkursselektor.</returns>
-    public static SchuelerKursSelectorHolder GetStandardKursSelector()
-    {
-      SchuelerKursSelectorHolder kursSelector = new SchuelerKursSelectorHolder();
-      kursSelector.AddSelector(new FremdspracheSelector());
-      kursSelector.AddSelector(new ReliOderEthikSelector());
-      kursSelector.AddSelector(new WahlpflichtfachSelector());
-      return kursSelector;
-    }
-
-    /// <summary>
-    /// Die eigentliche Lese-Methode. Benutzt den Standardkursselektor.
-    /// </summary>
-    /// <param name="fileName">Der Dateiname.</param>
-    public static void ReadUnterricht(string fileName)
-    {
-      ReadUnterricht(fileName, GetStandardKursSelector());
-    }
-
-    /// <summary>
     /// Die eigentliche Lese-Methode.
     /// </summary>
     /// <param name="fileName">Der Dateiname.</param>
-    /// <param name="kursSelector">Ein Selektor zur Prüfung, welche Schüler in welchen Kurs auch wirklich müssen.</param>
-    public static void ReadUnterricht(string fileName, ISchuelerKursSelector kursSelector)
+    public static void ReadUnterricht(string fileName)
     {
       var excelApp = new Microsoft.Office.Interop.Excel.Application();
       var workbook = excelApp.Workbooks.Open(fileName, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
@@ -182,141 +159,6 @@ namespace diNo
       }
 
       return unterschiedlicheKlassen;
-    }
-
-    /// <summary>
-    /// Trägt alle Schüler einer Klasse in einen Kurs in der Datenbank ein.
-    /// </summary>
-    /// <param name="kurs">Der Kurs.</param>
-    /// <param name="dbKlasse">Die Klasse.</param>
-    /// <param name="kursSelector">Ein Selektor zur Prüfung, welche Schüler in welchen Kurs auch wirklich müssen.</param>
-    public static void AddSchuelerToKurs(diNoDataSet.KursRow kurs, diNoDataSet.KlasseRow dbKlasse, ISchuelerKursSelector kursSelector)
-    {
-      using (SchuelerTableAdapter sAdapter = new SchuelerTableAdapter())
-      {
-        sAdapter.ClearBeforeFill = true;
-        var schuelerDerKlasse = sAdapter.GetDataByKlasse(dbKlasse.Id);
-        if (schuelerDerKlasse.Count == 0)
-        {
-
-          if (dbKlasse.Bezeichnung.StartsWith("FB") && dbKlasse.Bezeichnung.EndsWith("F"))
-          {
-            // z.B. FB13T_F meint die FOSler der Mischklasse FB13T. Evtl. sind die als eigene Klasse F13T in der DB
-            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("FB", "F");
-            modifizierteKlasse = modifizierteKlasse.Replace("_F", string.Empty);
-            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
-            if (dbKlasse != null)
-            {
-              schuelerDerKlasse = sAdapter.GetDataByKlasse(dbKlasse.Id);
-            }
-          }
-
-          if (dbKlasse.Bezeichnung.StartsWith("FB") && dbKlasse.Bezeichnung.EndsWith("B"))
-          {
-            // z.B. FB13T_B meint die BOSler der Mischklasse FB13T. Evtl. sind die als eigene Klasse B13T in der DB
-            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("FB", "B");
-            modifizierteKlasse = modifizierteKlasse.Replace("_B", string.Empty);
-            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
-            if (dbKlasse != null)
-            {
-              schuelerDerKlasse = sAdapter.GetDataByKlasse(dbKlasse.Id);
-            }
-          }
-
-          if (dbKlasse.Bezeichnung.EndsWith("_W") && dbKlasse.Bezeichnung.Contains("SW"))
-          {
-            // z.B. B13SW_W meint die Wirtschaftler der Mischklasse B13SW. Evtl. sind die nur als Mischklasse in der DB
-            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("_W", string.Empty);
-            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
-            if (dbKlasse != null)
-            {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "W");
-              if (schuelerDerKlasse.Count == 0)
-              {
-                schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "WVR");
-              }
-            }
-          }
-
-          if (dbKlasse.Bezeichnung.EndsWith("_S") && dbKlasse.Bezeichnung.Contains("SW"))
-          {
-            // z.B. B13SW_S meint die Wirtschaftler der Mischklasse B13SW. Evtl. sind die nur als Mischklasse in der DB
-            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("_S", string.Empty);
-            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
-            if (dbKlasse != null)
-            {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "S");
-            }
-          }
-
-          if (dbKlasse.Bezeichnung.EndsWith("_T") && dbKlasse.Bezeichnung.Contains("TW"))
-          {
-            // Techniker aus der Mischklasse
-            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("_T", string.Empty);
-            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
-            if (dbKlasse != null)
-            {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "T");
-            }
-          }
-
-          if (dbKlasse.Bezeichnung.EndsWith("_W") && dbKlasse.Bezeichnung.Contains("TW"))
-          {
-            // Wirtschaftler aus der Mischklasse
-            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("_W", string.Empty);
-            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
-            if (dbKlasse != null)
-            {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "W");
-            }
-          }
-
-          if (dbKlasse.Bezeichnung.EndsWith("_T") && dbKlasse.Bezeichnung.Contains("ST"))
-          {
-            // Techniker aus der Mischklasse
-            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("_T", string.Empty);
-            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
-            if (dbKlasse != null)
-            {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "T");
-            }
-          }
-
-          if (dbKlasse.Bezeichnung.EndsWith("_S") && dbKlasse.Bezeichnung.Contains("ST"))
-          {
-            // Soziale aus der Mischklasse
-            string modifizierteKlasse = dbKlasse.Bezeichnung.Replace("_S", string.Empty);
-            dbKlasse = FindOrCreateKlasse(modifizierteKlasse, false);
-            if (dbKlasse != null)
-            {
-              schuelerDerKlasse = sAdapter.GetDataByKlasseUndZweig(dbKlasse.Id, "S");
-            }
-          }
-        }
-
-        if (schuelerDerKlasse.Count == 0)
-        {
-          //throw new InvalidOperationException("Klasse " + dbKlasse.Bezeichnung + " ist leer");
-          log.Error("Klasse " + dbKlasse.Bezeichnung + " ist leer");
-        }
-
-        foreach (var schueler in schuelerDerKlasse)
-        {
-          AddSchuelerToKurs(kurs, kursSelector, schueler);
-        }
-      }
-    }
-
-    public static void AddSchuelerToKurs(diNoDataSet.KursRow kurs, ISchuelerKursSelector kursSelector, diNoDataSet.SchuelerRow schueler)
-    {
-      using (SchuelerKursTableAdapter skursAdapter = new SchuelerKursTableAdapter())
-      {
-        if (kursSelector.IsInKurs(schueler, kurs) && skursAdapter.GetCountBySchuelerAndKurs(schueler.Id, kurs.Id) == 0)
-        {
-          log.Warn("neuer Schüler im Kurs " + kurs.Bezeichnung);
-          skursAdapter.Insert(schueler.Id, kurs.Id);
-        }
-      }
     }
 
     /// <summary>

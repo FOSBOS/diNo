@@ -106,17 +106,14 @@ namespace diNo
  
 diese Nachricht wurde maschinell von unserer digitalen Notenverwaltung diNo erzeugt.
 Im Anhang finden Sie die Excel-Notenlisten für das kommende Schuljahr.
-Da wir dieses Verfahren dieses Jahr zum ersten Mal durchführen: prüfen Sie bitte 
+Prüfen Sie bitte 
 - ob es sich um Ihre Kurse handelt und die Schülerliste vollständig ist
 - ob die Einstellungen in der Datei korrekt sind (z. B. Lehrername, Schulaufgabenwertung und ähnliche Eintragungen)
 - ob sich sonstige offensichtliche Fehler, z. B. beim Notenschlüssel eingeschlichen haben
 
 Bei Problemen bitte ich um eine Nachricht.          
 
-Verwenden Sie die Dateien mit noch mehr Vorsicht als in den vergangenen Jahren, da aufgrund der vielen Änderungen
-die Wahrscheinlichkeit für Fehler erhöht ist. 
-
-Als Erinnerung: Die Note gibt auch künftig immer der Lehrer, das Programm hilft hier bestenfalls mit ;-)
+Verwenden Sie die Dateien mit gebotener Skepsis und Vorsicht. Wie bisher gilt: Die Note gibt auch künftig immer der Lehrer, das Programm hilft hier bestenfalls mit ;-)
 
 Viele Grüße
 Markus Siegel
@@ -163,7 +160,6 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
     /// </summary>
     public ErzeugeExcelDatei(diNoDataSet.KursRow aKurs)
     {
-
       kurs = new Kurs(aKurs.Id);
 
       if (kurs.getLehrer == null)
@@ -200,7 +196,6 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
 
       // speichere und schließe Datei
       xls.workbook.Save();
-      //TODO: ich halte es für gefährlich, private Variablen zu disposen
       xls.Dispose(); // Destruktor aufrufen
       xls = null;
     }
@@ -210,7 +205,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
     /// </summary>
     private void CopyExcelFile()
     {
-      string directoryName = Konstanten.ExcelPfad + "\\" + kurs.getLehrer.Kuerzel;
+      string directoryName = Konstanten.ExcelPfad + kurs.getLehrer.Kuerzel;
       if (!Directory.Exists(directoryName))
       {
         Directory.CreateDirectory(directoryName);
@@ -265,8 +260,8 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
         }
 
         // Schüler in die Exceldatei schreiben
-        xls.WriteValue(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name);
-        xls.WriteValue(xls.notenbogen, CellConstant.Vorname + (zeile + 1), "   " + schueler.benutzterVorname);
+        xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name);
+        xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Vorname + (zeile + 1), "   " + schueler.benutzterVorname);
         xls.WriteValueProtectedCell(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
 
         if (schueler.IsLegastheniker && (kurs.getFach.Kuerzel == "E" || kurs.getFach.Kuerzel == "F"))

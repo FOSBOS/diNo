@@ -176,18 +176,17 @@ namespace diNo
     /// Hängt einen neuen Schüler unten an die Datei an.
     /// </summary>
     /// <param name="aSchueler">Der Schüler.</param>
-    public void AppendSchueler(diNoDataSet.SchuelerRow aSchueler)
+    /// <param name="setzeLegasthenie">Ob der Legasthenievermerk geprüft werden soll.</param>
+    public void AppendSchueler(diNoDataSet.SchuelerRow aSchueler, bool setzeLegasthenie)
     {
       UnsavedChanges = true;
 
-      // TODO: Methode ungetestet
-      // muss von unten her gesucht werden, da in der DB dieser Schüler schon weg sein kann.
       int zeile = GetErsteFreieZeile(notenbogen);
       int zeileFuerSId = GetSidZeileForNotenbogenZeile(zeile);
-      WriteValue(notenbogen, CellConstant.Nachname + zeile, aSchueler.Name);
-      WriteValue(notenbogen, CellConstant.Vorname + (zeile + 1), "   " + aSchueler.Rufname);
+      WriteValueProtectedCell(notenbogen, CellConstant.Nachname + zeile, aSchueler.Name);
+      WriteValueProtectedCell(notenbogen, CellConstant.Vorname + (zeile + 1), "   " + aSchueler.Rufname);
       WriteValueProtectedCell(sid, CellConstant.SId + zeileFuerSId, aSchueler.Id.ToString());
-      if (aSchueler.LRSStoerung || aSchueler.LRSSchwaeche)
+      if (setzeLegasthenie && (aSchueler.LRSStoerung || aSchueler.LRSSchwaeche))
       {
         WriteValue(notenbogen, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
       }
@@ -199,7 +198,6 @@ namespace diNo
     /// <param name="aSchueler">der Schüler.</param>
     public void RemoveSchueler(diNoDataSet.SchuelerRow aSchueler)
     {
-      UnsavedChanges = true;
       RemoveSchueler(aSchueler.Id);
     }
 
