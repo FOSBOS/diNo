@@ -122,12 +122,15 @@ namespace diNo
             }
 
             var schueler = new Schueler(schuelerGefunden[0]);
-            schueler.MeldeAn(kurse[fachKuerzel.ToUpper()]);
-            BerechneteNote bnote = new BerechneteNote(kurse[fachKuerzel.ToUpper()].Id, schueler.Id);
-            bnote.ErstesHalbjahr = false;
-            bnote.JahresfortgangGanzzahlig = zeugnisnote;
-            bnote.Abschlusszeugnis = zeugnisnote;
-            bnote.writeToDB();
+            if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
+            {
+              schueler.MeldeAn(kurse[fachKuerzel.ToUpper()]);
+              BerechneteNote bnote = new BerechneteNote(kurse[fachKuerzel.ToUpper()].Id, schueler.Id);
+              bnote.ErstesHalbjahr = false;
+              bnote.JahresfortgangGanzzahlig = zeugnisnote;
+              bnote.Abschlusszeugnis = zeugnisnote;
+              bnote.writeToDB();
+            }
           }
           else if (line.Length == 3)
           {
@@ -157,14 +160,14 @@ namespace diNo
     /// <returns>Der Dummy-Geschichtekurs.</returns>
     private static Kurs GetGeschichteKurs()
     {
-      return FindOrCreateDummyKurs("Gechichte aus elfter Jahrgangsstufe", "G");
+      return FindOrCreateDummyKurs("Geschichte aus elfter Jahrgangsstufe", "G");
     }
 
     private static Dictionary<string, Kurs> GetKursverzeichnis()
     {
       Dictionary<string, Kurs> kurse = new Dictionary<string, Kurs>();
       kurse.Add("RL", FindOrCreateDummyKurs("Rechtslehre aus elfter Jahrgangsstufe", "Rl"));
-      kurse.Add("CH", FindOrCreateDummyKurs("Chemie aus elfter Jahrgangsstufe", "C"));
+      kurse.Add("C", FindOrCreateDummyKurs("Chemie aus elfter Jahrgangsstufe", "C"));
       kurse.Add("TZ", FindOrCreateDummyKurs("TZ aus elfter Jahrgangsstufe", "TZ"));
       // laut Stundentafel legt der Agrarzweig außer Geschichte nichts ab.
       return kurse;
@@ -182,7 +185,7 @@ namespace diNo
           switch (schueler.Zweig)
           {
             case Zweig.Agrar: break;
-            case Zweig.Sozial: schueler.MeldeAn(kurse["CH"]); break;
+            case Zweig.Sozial: schueler.MeldeAn(kurse["C"]); break;
             case Zweig.Technik: schueler.MeldeAn(kurse["TZ"]); break;
             case Zweig.Wirtschaft: schueler.MeldeAn(kurse["RL"]); break;
           }

@@ -70,7 +70,7 @@ namespace diNo
       int count = 0;
       foreach (diNoDataSet.LehrerRow row in rows)
       {
-        string directoryName = Konstanten.ExcelPfad + "\\" + row.Kuerzel;
+        string directoryName = Konstanten.ExcelPfad + row.Kuerzel;
         if (!Directory.Exists(directoryName) || Directory.GetFiles(directoryName).Count() == 0)
         {
           log.Warn("Unterrichtet der Lehrer " + row.Name + " nix ?");
@@ -105,17 +105,21 @@ namespace diNo
 @"Liebe Kolleginnen und Kollegen,
  
 diese Nachricht wurde maschinell von unserer digitalen Notenverwaltung diNo erzeugt.
-Im Anhang finden Sie die Excel-Notenlisten für das kommende Schuljahr.
-Prüfen Sie bitte 
+
+Im Anhang finden Sie die Excel-Notenlisten für das kommende Schuljahr. Ich habe die Dateien stichprobenhaft auf Plausibilität geprüft.
+Prüfen Sie dennoch bitte 
 - ob es sich um Ihre Kurse handelt und die Schülerliste vollständig ist
 - ob die Einstellungen in der Datei korrekt sind (z. B. Lehrername, Schulaufgabenwertung und ähnliche Eintragungen)
 - ob sich sonstige offensichtliche Fehler, z. B. beim Notenschlüssel eingeschlichen haben
 
-Bei Problemen bitte ich um eine Nachricht.          
+Bei Problemen oder Fragen bitte ich um eine Nachricht an markus.siegel@fosbos-kempten.de.          
 
 Verwenden Sie die Dateien mit gebotener Skepsis und Vorsicht. Wie bisher gilt: Die Note gibt auch künftig immer der Lehrer, das Programm hilft hier bestenfalls mit ;-)
 
-Viele Grüße
+Bei allen Kursen, die von Tandems unterrichtet werden (v. a. Vorklassen, Flüchtlingsklasse) ist der Kurs momentan dem ersten Lehrer aus UNTIS zugeordnet. Meistens ist das auch der/diejenige mit den meisten Stunden, aber leider nicht immer.
+Dieser Lehrkraft werden auch die Notendateien übersandt. Sollten Sie hierbei eine Änderung wünschen bitte ich um eine kurze Rückmeldung.
+
+Viele Grüße und schönes Wochenende.
 Markus Siegel
 
 PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel@fosbos-kempten.de
@@ -125,7 +129,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
         mailServer.EnableSsl = false;
         mailServer.UseDefaultCredentials = false;
 
-        mailServer.Credentials = new System.Net.NetworkCredential(from, "bitte Passwort hier eingeben");
+        mailServer.Credentials = new System.Net.NetworkCredential(from, "Passwort eingeben!!!");
         MailMessage msg = new MailMessage(from, to);
         msg.Subject = subject;
         msg.Body = body;
