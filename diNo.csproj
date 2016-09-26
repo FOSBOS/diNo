@@ -52,6 +52,9 @@
   <PropertyGroup>
     <StartupObject>diNo.Program</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>stegosaurus-304011__180 klein.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
       <HintPath>log4net\log4net.dll</HintPath>
@@ -403,6 +406,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\muell.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="stegosaurus-304011__180 klein.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
