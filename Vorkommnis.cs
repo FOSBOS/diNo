@@ -93,7 +93,8 @@ namespace diNo
 
     // Ordnungsmaßnahmen
     Verweis = 51,
-    SonstigeOrdnungsmaßnahme = 52,
+    verschaerfterVerweis = 52,
+    SonstigeOrdnungsmaßnahme = 59,
 
     // Sonstiges
     Bemerkung = 61,

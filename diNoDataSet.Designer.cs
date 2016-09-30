@@ -21171,8 +21171,7 @@ WHERE        (Schueler.Status <> @NotStatus) AND
 (SELECT DISTINCT Klasse.Id
 FROM Rolle,LehrerRolle, Klasse
 Where LehrerRolle.LehrerId =@LehrerId  and 
-Rolle.Id = LehrerRolle.RolleId and 
-Klasse.Vaterklasse is null and
+Rolle.Id = LehrerRolle.RolleId and
 Klasse.Bezeichnung LIKE Rolle.KlassenString)))
 ";
             this._commandCollection[6].CommandType = global::System.Data.CommandType.Text;
