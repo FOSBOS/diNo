@@ -42,6 +42,7 @@
       this.textBoxFremdsprache2 = new System.Windows.Forms.TextBox();
       this.label5 = new System.Windows.Forms.Label();
       this.textBoxReliOderEthik = new System.Windows.Forms.TextBox();
+      this.label6 = new System.Windows.Forms.Label();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView2)).BeginInit();
       this.SuspendLayout();
@@ -49,20 +50,20 @@
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(11, 9);
+      this.label2.Location = new System.Drawing.Point(17, 52);
       this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(74, 13);
+      this.label2.Size = new System.Drawing.Size(186, 13);
       this.label2.TabIndex = 2;
-      this.label2.Text = "aktuelle Kurse";
+      this.label2.Text = "Kurse, die der Schüler aktuell besucht";
       // 
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(251, 9);
+      this.label3.Location = new System.Drawing.Point(257, 52);
       this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(123, 13);
+      this.label3.Size = new System.Drawing.Size(168, 13);
       this.label3.TabIndex = 3;
-      this.label3.Text = "weitere Kurse der Klasse";
+      this.label3.Text = "weitere mögliche Kurse der Klasse";
       // 
       // objectListView1
       // 
@@ -71,7 +72,7 @@
       this.objectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnCurrentId,
             this.olvColumnCurrentBezeichnung});
-      this.objectListView1.Location = new System.Drawing.Point(14, 25);
+      this.objectListView1.Location = new System.Drawing.Point(20, 68);
       this.objectListView1.Name = "objectListView1";
       this.objectListView1.Size = new System.Drawing.Size(210, 270);
       this.objectListView1.TabIndex = 4;
@@ -101,7 +102,7 @@
       this.objectListView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn1,
             this.olvColumn2});
-      this.objectListView2.Location = new System.Drawing.Point(254, 25);
+      this.objectListView2.Location = new System.Drawing.Point(260, 68);
       this.objectListView2.Name = "objectListView2";
       this.objectListView2.Size = new System.Drawing.Size(210, 270);
       this.objectListView2.TabIndex = 5;
@@ -175,11 +176,22 @@
       this.textBoxReliOderEthik.Size = new System.Drawing.Size(78, 20);
       this.textBoxReliOderEthik.TabIndex = 10;
       // 
+      // label6
+      // 
+      this.label6.AutoSize = true;
+      this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label6.Location = new System.Drawing.Point(17, 15);
+      this.label6.Name = "label6";
+      this.label6.Size = new System.Drawing.Size(508, 17);
+      this.label6.TabIndex = 12;
+      this.label6.Text = "Um Kurse hinzuzufügen oder wegzunehmen auf die Kursnummer doppelclicken";
+      // 
       // UserControlKurszuordnungen
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
+      this.Controls.Add(this.label6);
       this.Controls.Add(this.label5);
       this.Controls.Add(this.textBoxReliOderEthik);
       this.Controls.Add(this.label4);
@@ -214,5 +226,6 @@
     private System.Windows.Forms.TextBox textBoxFremdsprache2;
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.TextBox textBoxReliOderEthik;
+    private System.Windows.Forms.Label label6;
   }
 }

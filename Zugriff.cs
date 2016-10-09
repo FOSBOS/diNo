@@ -27,6 +27,8 @@ namespace diNo
     public int Schuljahr { get { return globaleKonstanten.Schuljahr; } }
     public Sperrtyp Sperre { get { return (Sperrtyp)globaleKonstanten.Sperre; } }
     public bool SiehtAlles{ get; private set; }
+    public bool HatVerwaltungsrechte{ get; private set; }
+
     public int aktZeitpunkt
     {
       get { return globaleKonstanten.aktZeitpunkt; }
@@ -41,7 +43,7 @@ namespace diNo
       {
         Username = "FOSBOS\\msiegel";
       }
-      if (Username == "Betzigau\\Claus")
+      if (Username == "CLAUSPC\\Claus")
       {
         Username = "FOSBOS\\ckonrad";
       }
@@ -55,6 +57,9 @@ namespace diNo
         throw new InvalidOperationException("Keine Zugriffsberechtigung!");
       }
       SiehtAlles = (this.lehrer.HatRolle(Rolle.Admin) || this.lehrer.HatRolle(Rolle.Sekretariat) || this.lehrer.HatRolle(Rolle.Schulleitung));
+      HatVerwaltungsrechte = lehrer.HatRolle(Rolle.Admin) || lehrer.HatRolle(Rolle.Sekretariat);      
+    
+   
 
       // LoadSchueler(); erst in Klassenansicht, wegen Parameter nurAktive
       LoadFaecher();
@@ -82,14 +87,7 @@ namespace diNo
       }
     }
    
-    public bool HatVerwaltungsrechte
-    {
-      get
-      {
-        return lehrer.HatRolle(Rolle.Admin) || lehrer.HatRolle(Rolle.Sekretariat);
-      }
-    }
-   
+    
 
 
     public void LoadSchueler(bool nurAktive=true)

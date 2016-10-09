@@ -115,8 +115,11 @@ namespace diNo
     // Klassenbezeichnung des Schülers, ggf. bei Mischklassen um den Zweig ergänzt.
     public string KlassenBezeichnung
     { get
-      {var k = getKlasse;         
-       return k.Bezeichnung + (k.Zweig==Zweig.None ? "_" + data.Ausbildungsrichtung : "");            
+      {var k = getKlasse;    
+       if (k.Bezeichnung.Substring(0,2)=="FB")
+          return k.Bezeichnung + "_" + Data.Schulart;
+        else
+          return k.Bezeichnung + (k.Zweig==Zweig.None ? "_" + data.Ausbildungsrichtung : "");            
       }    
     }
 

@@ -35,8 +35,7 @@ namespace diNo
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
     {
       if (treeListView1.SelectedObject is Schueler)
-        schueler = treeListView1.SelectedObject as Schueler;
-      bool adminEnabled = Zugriff.Instance.HatRolle(Rolle.Admin) || Zugriff.Instance.HatRolle(Rolle.Sekretariat);
+        schueler = treeListView1.SelectedObject as Schueler;      
       
       if (schueler != null)
       {
@@ -54,14 +53,14 @@ namespace diNo
         labelHinweise.Text = (schueler.IsLegastheniker ? "Legasthenie" : "");
         labelHinweise.ForeColor = Color.Red;
 
-        if (adminEnabled)
+        if (Zugriff.Instance.HatVerwaltungsrechte)
         {
           userControlKurszuordnungen1.Schueler = schueler;
           userControlAdministration1.Schueler = schueler;
         }
       }
 
-      btnPrint.Enabled = adminEnabled || schueler != null;
+      btnPrint.Enabled = Zugriff.Instance.HatVerwaltungsrechte || schueler != null;
     }
     
     private void Klassenansicht_Load(object sender, EventArgs e)

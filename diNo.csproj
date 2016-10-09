@@ -89,6 +89,7 @@
     <Compile Include="BasisForm.Designer.cs">
       <DependentUpon>BasisForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImportKlassenleiter.cs" />
     <Compile Include="SchuelerverwaltungController.cs" />
     <Compile Include="UserControlAdministration.cs">
       <SubType>UserControl</SubType>

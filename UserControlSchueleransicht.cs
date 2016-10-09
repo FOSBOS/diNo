@@ -63,7 +63,15 @@ namespace diNo
           numAndereFremdspr2Note.Value = schueler.Data.IsAndereFremdspr2NoteNull() ? null : (decimal?) schueler.Data.AndereFremdspr2Note;
           textBoxAndereFremdspr2Text.Text = schueler.Data.IsAndereFremdspr2TextNull() ? "" : schueler.Data.AndereFremdspr2Text;
 
-          btnSave.Enabled = Zugriff.Instance.HatRolle(Rolle.Admin) || Zugriff.Instance.HatRolle(Rolle.Sekretariat);
+          textBoxNachname.Text = schueler.Data.Name;
+          textBoxVorname.Text = schueler.Data.Vorname;
+          textBoxRufname.Text = schueler.Data.Rufname;
+
+          btnSave.Visible = Zugriff.Instance.HatVerwaltungsrechte;
+          panelSekretariat.Visible = btnSave.Visible;
+          btnResetProbezeit.Visible = btnSave.Visible;
+          labelAustrittHinweis.Visible = btnSave.Visible;
+
         }
         /*
         else
@@ -112,6 +120,10 @@ namespace diNo
         else schueler.Data.AndereFremdspr2Note = (int) numAndereFremdspr2Note.Value.GetValueOrDefault();            
       if (textBoxAndereFremdspr2Text.Text=="") schueler.Data.SetAndereFremdspr2TextNull();
         else schueler.Data.AndereFremdspr2Text = textBoxAndereFremdspr2Text.Text;
+    
+      schueler.Data.Name = textBoxNachname.Text;
+      schueler.Data.Vorname = textBoxVorname.Text;
+      schueler.Data.Rufname = textBoxRufname.Text;
 
       schueler.Save();
     }
@@ -130,6 +142,11 @@ namespace diNo
       else if (cbStatus.SelectedIndex==1)
         dateTimeAustritt.Value = DateTime.Today;
 
+    }
+
+    private void buttonResetProbezeit_Click(object sender, EventArgs e)
+    {
+      dateTimeProbezeit.Value = dateTimeProbezeit.MinDate;
     }
   }
 }
