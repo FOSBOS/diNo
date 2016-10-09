@@ -144,7 +144,7 @@ namespace diNo
             {
               continue;
             }
-            fpaAdapter.Insert(schuelerId, "", null, null, null, null, gesamterfolg);
+            fpaAdapter.Insert(schuelerId, "", null, null, null, null, gesamterfolg, null, null);
           }
           else
             throw new InvalidOperationException("Diese Zeile hat " + line.Length + " Spalten. Das ist mir unbekannt");
@@ -242,7 +242,7 @@ namespace diNo
             }
 
 
-            fpaAdapter.Insert(schuelerId, "", null, null, null, null, (int)fpaNote);
+            fpaAdapter.Insert(schuelerId, "", null, null, null, null, (int)fpaNote,null,null);
           }
           else
             throw new InvalidOperationException("Diese Zeile hat " + line.Length + " Spalten. Das ist mir unbekannt");

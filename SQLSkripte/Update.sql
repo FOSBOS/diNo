@@ -29,3 +29,7 @@ FROM            dbo.Seminarfachnote RIGHT OUTER JOIN
 
 GO
 
+
+
+alter table FpaNoten add Stelle1Hj nvarchar(256) null;  
+alter table FpaNoten add Stelle2Hj nvarchar(256) null;

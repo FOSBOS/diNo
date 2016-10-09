@@ -58,6 +58,8 @@ namespace diNo
         numPunkte.Value = fpANoten.IsPunkteNull() ? null : (decimal?)fpANoten.Punkte;
         numPunkte1Hj.Value = fpANoten.IsPunkte1HjNull() ? null : (decimal?)fpANoten.Punkte1Hj;
         numPunkte2Hj.Value = fpANoten.IsPunkte2HjNull() ? null : (decimal?)fpANoten.Punkte2Hj;
+        edStelle1Hj.Text = fpANoten.IsStelle1HjNull() ? "" : fpANoten.Stelle1Hj;
+        edStelle2Hj.Text = fpANoten.IsStelle2HjNull() ? "" : fpANoten.Stelle2Hj;
       }
       else
       {
@@ -68,6 +70,8 @@ namespace diNo
         numPunkte.Value = null;
         numPunkte1Hj.Value = null;
         numPunkte2Hj.Value = null;
+        edStelle1Hj.Text = "";
+        edStelle2Hj.Text = "";
       }
 
       pnlSeminar.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && 
@@ -132,6 +136,8 @@ namespace diNo
       if (numPunkte.Value == null) fpANoten.SetPunkteNull(); else fpANoten.Punkte = (int)numPunkte.Value;
       if (numPunkte1Hj.Value == null) fpANoten.SetPunkte1HjNull(); else fpANoten.Punkte1Hj = (int)numPunkte1Hj.Value;
       if (numPunkte2Hj.Value == null) fpANoten.SetPunkte2HjNull(); else fpANoten.Punkte2Hj = (int)numPunkte2Hj.Value;
+      if (edStelle1Hj.Text == "") fpANoten.SetStelle1HjNull(); else fpANoten.Stelle1Hj = edStelle1Hj.Text;
+      if (edStelle2Hj.Text == "") fpANoten.SetStelle2HjNull(); else fpANoten.Stelle2Hj = edStelle2Hj.Text;
       schueler.Save();
     }
 
