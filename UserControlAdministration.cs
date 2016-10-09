@@ -86,5 +86,10 @@ namespace diNo
         WinSVSchuelerReader.ReadSchueler(dia.FileName);
       }
     }
+
+    private void btnImportKlassenleiter_Click(object sender, EventArgs e)
+    {
+        new ImportKlassenleiter();
+    }
   }
 }

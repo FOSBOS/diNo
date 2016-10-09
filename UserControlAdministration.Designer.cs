@@ -35,9 +35,10 @@
       this.exportNoten = new System.Windows.Forms.Button();
       this.btnFrm1 = new System.Windows.Forms.Button();
       this.groupBoxImport = new System.Windows.Forms.GroupBox();
-      this.importNoten = new System.Windows.Forms.Button();
-      this.btnImportUnterricht = new System.Windows.Forms.Button();
       this.btnImportSchueler = new System.Windows.Forms.Button();
+      this.btnImportUnterricht = new System.Windows.Forms.Button();
+      this.importNoten = new System.Windows.Forms.Button();
+      this.btnImportKlassenleiter = new System.Windows.Forms.Button();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
@@ -105,6 +106,7 @@
       // 
       // groupBoxImport
       // 
+      this.groupBoxImport.Controls.Add(this.btnImportKlassenleiter);
       this.groupBoxImport.Controls.Add(this.btnImportSchueler);
       this.groupBoxImport.Controls.Add(this.btnImportUnterricht);
       this.groupBoxImport.Controls.Add(this.importNoten);
@@ -115,15 +117,15 @@
       this.groupBoxImport.TabStop = false;
       this.groupBoxImport.Text = "Import";
       // 
-      // importNoten
+      // btnImportSchueler
       // 
-      this.importNoten.Location = new System.Drawing.Point(6, 19);
-      this.importNoten.Name = "importNoten";
-      this.importNoten.Size = new System.Drawing.Size(182, 23);
-      this.importNoten.TabIndex = 3;
-      this.importNoten.Text = "Noten abgelegter Fächer aus csv";
-      this.importNoten.UseVisualStyleBackColor = true;
-      this.importNoten.Click += new System.EventHandler(this.importNoten_Click);
+      this.btnImportSchueler.Location = new System.Drawing.Point(6, 77);
+      this.btnImportSchueler.Name = "btnImportSchueler";
+      this.btnImportSchueler.Size = new System.Drawing.Size(182, 23);
+      this.btnImportSchueler.TabIndex = 5;
+      this.btnImportSchueler.Text = "Schülerdaten aus WinSV";
+      this.btnImportSchueler.UseVisualStyleBackColor = true;
+      this.btnImportSchueler.Click += new System.EventHandler(this.btnImportSchueler_Click);
       // 
       // btnImportUnterricht
       // 
@@ -135,15 +137,25 @@
       this.btnImportUnterricht.UseVisualStyleBackColor = true;
       this.btnImportUnterricht.Click += new System.EventHandler(this.btnImportUnterricht_Click);
       // 
-      // btnImportSchueler
+      // importNoten
       // 
-      this.btnImportSchueler.Location = new System.Drawing.Point(6, 77);
-      this.btnImportSchueler.Name = "btnImportSchueler";
-      this.btnImportSchueler.Size = new System.Drawing.Size(182, 23);
-      this.btnImportSchueler.TabIndex = 5;
-      this.btnImportSchueler.Text = "Schülerdaten aus WinSV";
-      this.btnImportSchueler.UseVisualStyleBackColor = true;
-      this.btnImportSchueler.Click += new System.EventHandler(this.btnImportSchueler_Click);
+      this.importNoten.Location = new System.Drawing.Point(6, 19);
+      this.importNoten.Name = "importNoten";
+      this.importNoten.Size = new System.Drawing.Size(182, 23);
+      this.importNoten.TabIndex = 3;
+      this.importNoten.Text = "Noten abgelegter Fächer aus csv";
+      this.importNoten.UseVisualStyleBackColor = true;
+      this.importNoten.Click += new System.EventHandler(this.importNoten_Click);
+      // 
+      // btnImportKlassenleiter
+      // 
+      this.btnImportKlassenleiter.Location = new System.Drawing.Point(6, 106);
+      this.btnImportKlassenleiter.Name = "btnImportKlassenleiter";
+      this.btnImportKlassenleiter.Size = new System.Drawing.Size(182, 23);
+      this.btnImportKlassenleiter.TabIndex = 6;
+      this.btnImportKlassenleiter.Text = "Import Klassenleiter aus Excel";
+      this.btnImportKlassenleiter.UseVisualStyleBackColor = true;
+      this.btnImportKlassenleiter.Click += new System.EventHandler(this.btnImportKlassenleiter_Click);
       // 
       // UserControlAdministration
       // 
@@ -174,5 +186,6 @@
     private System.Windows.Forms.Button importNoten;
     private System.Windows.Forms.Button btnImportUnterricht;
     private System.Windows.Forms.Button btnImportSchueler;
+    private System.Windows.Forms.Button btnImportKlassenleiter;
   }
 }
