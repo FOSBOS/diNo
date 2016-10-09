@@ -26,6 +26,7 @@ namespace diNo
         xls = new OpenExcel(fileDialog.FileName);
         LoadLehrer();
         LeseKlassenleiter();
+        MessageBox.Show("Bitte in der Datenbank prüfen, ob alle Klassen richtig angelegt wurden.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
       }
     }
 
@@ -43,19 +44,19 @@ namespace diNo
     }
 
     private void LeseKlassenleiter()
-    {
+    {      
       KlasseTableAdapter ta  = new KlasseTableAdapter();
-      Workbook wb = xls.workbook;
-      Worksheet s = wb.ActiveSheet;
+      Worksheet s = xls.workbook.Worksheets[1];
+      //Worksheet s = wb.ActiveSheet;
       int zeile=2;
       string kuerzel, klasse;
       int lehrerid;
 
-      kuerzel = s.Cells[zeile,3];
-      klasse = s.Cells[zeile,4];
-      while (kuerzel!="")
+      kuerzel = (string)(s.Cells[zeile,3].Value);
+      klasse = (string)(s.Cells[zeile,4].Value);
+      while (kuerzel!=null)
       {
-        if (klasse!="")
+        if (klasse!=null)
         {
           LehrerListe.TryGetValue(kuerzel,out lehrerid);
           var dt = ta.GetDataByBezeichnung(klasse);
@@ -66,7 +67,10 @@ namespace diNo
             ta.Update(klassenRow);
           }
         }
+        zeile++;
+      kuerzel = (string)(s.Cells[zeile,3].Value);
+      klasse = (string)(s.Cells[zeile,4].Value);
       }
     }
-  }
+  }  
 }

@@ -17,7 +17,7 @@ namespace diNo
       this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
 
       // Verwaltungsreiter
-      if (Zugriff.Instance.lehrer.HatRolle(Rolle.Admin) || Zugriff.Instance.lehrer.HatRolle(Rolle.Sekretariat))
+      if (Zugriff.Instance.HatVerwaltungsrechte)
       {
         this.verwaltungController = new SchuelerverwaltungController(() => { RefreshTreeView(); });
         this.treeListView1.IsSimpleDragSource = true;
@@ -28,8 +28,12 @@ namespace diNo
       else
       { 
         tabControl1.Controls.Remove(tabPageKurszuordnungen); // man kann die Seite nicht unsichtbar machen, nur entfernen
+      }
+      if (!Zugriff.Instance.HatRolle(Rolle.Admin))
+      {
         tabControl1.Controls.Remove(tabPageAdministration);
       }
+
     }
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,7 +60,8 @@ namespace diNo
         if (Zugriff.Instance.HatVerwaltungsrechte)
         {
           userControlKurszuordnungen1.Schueler = schueler;
-          userControlAdministration1.Schueler = schueler;
+          if (Zugriff.Instance.HatRolle(Rolle.Admin))
+            userControlAdministration1.Schueler = schueler;
         }
       }
 

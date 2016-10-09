@@ -33,3 +33,5 @@ GO
 
 alter table FpaNoten add Stelle1Hj nvarchar(256) null;  
 alter table FpaNoten add Stelle2Hj nvarchar(256) null;
+alter table Klasse drop column Zweig;
+update Klasse set Bezeichnung='IntVk' where Id=28;
