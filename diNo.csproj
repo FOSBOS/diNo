@@ -83,6 +83,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminKursLehrerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminKursLehrerForm.Designer.cs">
+      <DependentUpon>AdminKursLehrerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BasisForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +96,11 @@
       <DependentUpon>BasisForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ImportKlassenleiter.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SchuelerverwaltungController.cs" />
     <Compile Include="UserControlAdministration.cs">
       <SubType>UserControl</SubType>
@@ -164,11 +175,6 @@
     <Compile Include="OmnisDB\OmnisConnection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="ReportController.cs" />
     <Compile Include="ReportForm.cs">
       <SubType>Form</SubType>
@@ -213,6 +219,9 @@
     <Compile Include="Vorkommnis.cs" />
     <Compile Include="WinSVSchuelerReader.cs" />
     <Compile Include="Zugriff.cs" />
+    <EmbeddedResource Include="AdminKursLehrerForm.resx">
+      <DependentUpon>AdminKursLehrerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BasisForm.resx">
       <DependentUpon>BasisForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -409,6 +418,7 @@
     <None Include="Resources\muell.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Lupe.png" />
     <Content Include="stegosaurus-304011__180 klein.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

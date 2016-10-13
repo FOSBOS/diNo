@@ -71,5 +71,9 @@ namespace diNo
       if (rst.Count>0) KlassenleiterVon = new Klasse(rst[0]);
     }
 
+    public string KompletterName
+    {
+      get { return this.Data.Nachname + ", " + this.Data.Vorname; }
+    }
   }
 }

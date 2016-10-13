@@ -94,6 +94,16 @@ namespace diNo.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Lupe {
+            get {
+                object obj = ResourceManager.GetObject("Lupe", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap muell {
             get {
                 object obj = ResourceManager.GetObject("muell", resourceCulture);

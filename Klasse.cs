@@ -349,6 +349,11 @@ namespace diNo
       }
     }
 
+    public string Kursbezeichnung
+    {
+      get { return this.Data.Bezeichnung; }
+    }
+
     public string FachBezeichnung
     {
       get { return this.getFach.Bezeichnung; }
@@ -360,6 +365,11 @@ namespace diNo
       schreibtKA = rst.Count > 0;
     }
 
-
+    public void SetzeNeuenLehrer(Lehrer lehrer)
+    {
+      this.data.LehrerId = lehrer.Id;
+      (new KursTableAdapter()).Update(this.data);
+      this.lehrer = lehrer.Data;
+    }
   }
 }

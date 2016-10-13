@@ -117,43 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="avatarMann" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\diNoTray\avatarMann.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="piktogrammNotenbogen" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADr8AAA6/ATgFUyQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuNvyMY98A
-        AALnSURBVEhL7VZLT1NBGOV3sFWI8nAhccFONIiJxIR1VdRE6IuAQhNQBFqgDwGjvbfFEATB+IBQClek
-        CQJtoUApLX3R3sa4c6ErMCasJDl25tILhgW2F4kLTjKZk2lyTmfmfN/crBMchp1IFPzQEPg3b7G7dDzo
-        KStD8FETmEslWO3q/vfm22t+fB0cQG9xMTDwEsHKm7BXVGBr9tPRm3MTk+DGbVi0TyA8+ApNhYUw5uag
-        vyAPz7KzYcrJgfWGDF9cTnwcGcH4mA0rKyvS/ojVasXd23eg12nxvq+PijVeLEFj7hm0nzqNrrN5eJiX
-        D9/QIKJuJ/qem/Gg7j5UKoU0Y5Zl0draekDk16IHmHcCC4vYXnD/8XtoPYjq6nvSjBkLC61Wm7ZIbW2t
-        dGODyUhFIpEI/H4/5U63i87xeBzLy8uUz8zMiGYqlUrkGYFlzTAYOtMWkcvl0o31+g4q4vP54PF4KOe4
-        KToHAgE4nU7KJ7hJRKNRytVqNZ0zBglXd3f6DUKhlGhssViSO9ZTEXKfGxsblHu9XlE4HA5TnrprAqWq
-        RuQZgTUzMOoNVCSRSCAUClG+v0EsLS1R7nbvlZXkcFkYFk+MprRFjuSOU0dNwjU3N0c5x3F0JuFyOByU
-        22w28UQUComdi2EYdHQIqU4HVVVV0ozJjjs7hTomzSO1Y7vdLq5NT09TPjo6ChJAwuXyIzA2GIRwpYMa
-        tVKaMSknk+lguFI7249YMCiu1Sslt8y9HZN6De6Ku1xCr+Z5HqteoX7XZ2ex6V+j/JtP6OkZY3+qD8PP
-        ZOpflF9HS8E5jNXVHZ/xQPJhMOUXwFZ6BT/6+8E1N2dubjabodFo/kqg/Vo5AvUa7DC9eFd2Fa8rb2Vu
-        PDw8DJlMhoaGBuh0Ojra2troxwEZpMb1j1vAz7vxedyOpqILsFwuhe58ETanPkg7btKjSbBisRgIJ4lO
-        DfIMJuK8aPA9+Ww6ep5ia00I2Qn+E2Rl/QYNew681d2pwQAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="avatarFrau" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\diNoTray\avatarFrau.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ListeAllerSchulenInBayern" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ListeAllerSchulenInBayern.csv;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="muell" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\muell.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Save" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Lupe" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Lupe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>
