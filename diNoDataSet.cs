@@ -40,6 +40,10 @@
 
 namespace diNo.diNoDataSetTableAdapters
 {
+  partial class KursTableAdapter
+  {
+  }
+
   partial class KlasseTableAdapter
   {
   }

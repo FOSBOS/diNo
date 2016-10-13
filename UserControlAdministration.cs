@@ -91,5 +91,10 @@ namespace diNo
     {
         new ImportKlassenleiter();
     }
+
+    private void btnKurseLehrer_Click(object sender, EventArgs e)
+    {
+      new AdminKursLehrerForm().ShowDialog();
+    }
   }
 }
