@@ -5140,6 +5140,14 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnStatus;
             
+            private global::System.Data.DataColumn columnAndereFremdspr2Note;
+            
+            private global::System.Data.DataColumn columnAndereFremdspr2Text;
+            
+            private global::System.Data.DataColumn columnDNoteAllg;
+            
+            private global::System.Data.DataColumn columnSchulart;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public vwNotenbogenDataTable() {
@@ -5591,6 +5599,38 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AndereFremdspr2NoteColumn {
+                get {
+                    return this.columnAndereFremdspr2Note;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn AndereFremdspr2TextColumn {
+                get {
+                    return this.columnAndereFremdspr2Text;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn DNoteAllgColumn {
+                get {
+                    return this.columnDNoteAllg;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SchulartColumn {
+                get {
+                    return this.columnSchulart;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5678,7 +5718,11 @@ namespace diNo {
                         string Email, 
                         string Notfalltelefonnummer, 
                         decimal DNote, 
-                        int Status) {
+                        int Status, 
+                        int AndereFremdspr2Note, 
+                        string AndereFremdspr2Text, 
+                        decimal DNoteAllg, 
+                        string Schulart) {
                 vwNotenbogenRow rowvwNotenbogenRow = ((vwNotenbogenRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Bezeichnung,
@@ -5732,7 +5776,11 @@ namespace diNo {
                         Email,
                         Notfalltelefonnummer,
                         DNote,
-                        Status};
+                        Status,
+                        AndereFremdspr2Note,
+                        AndereFremdspr2Text,
+                        DNoteAllg,
+                        Schulart};
                 rowvwNotenbogenRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowvwNotenbogenRow);
                 return rowvwNotenbogenRow;
@@ -5814,6 +5862,10 @@ namespace diNo {
                 this.columnNotfalltelefonnummer = base.Columns["Notfalltelefonnummer"];
                 this.columnDNote = base.Columns["DNote"];
                 this.columnStatus = base.Columns["Status"];
+                this.columnAndereFremdspr2Note = base.Columns["AndereFremdspr2Note"];
+                this.columnAndereFremdspr2Text = base.Columns["AndereFremdspr2Text"];
+                this.columnDNoteAllg = base.Columns["DNoteAllg"];
+                this.columnSchulart = base.Columns["Schulart"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5923,6 +5975,14 @@ namespace diNo {
                 base.Columns.Add(this.columnDNote);
                 this.columnStatus = new global::System.Data.DataColumn("Status", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnStatus);
+                this.columnAndereFremdspr2Note = new global::System.Data.DataColumn("AndereFremdspr2Note", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAndereFremdspr2Note);
+                this.columnAndereFremdspr2Text = new global::System.Data.DataColumn("AndereFremdspr2Text", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAndereFremdspr2Text);
+                this.columnDNoteAllg = new global::System.Data.DataColumn("DNoteAllg", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDNoteAllg);
+                this.columnSchulart = new global::System.Data.DataColumn("Schulart", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSchulart);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnBezeichnung.AllowDBNull = false;
@@ -5966,11 +6026,12 @@ namespace diNo {
                 this.columnVerwandtschaftsbezeichnungEltern2.MaxLength = 10;
                 this.columnThemaLang.MaxLength = 1024;
                 this.columnThemaKurz.MaxLength = 117;
-                this.columnKlassenleiter.AllowDBNull = false;
                 this.columnKlassenleiter.MaxLength = 256;
                 this.columnEintrittJahrgangsstufe.MaxLength = 10;
                 this.columnEmail.MaxLength = 256;
                 this.columnNotfalltelefonnummer.MaxLength = 256;
+                this.columnAndereFremdspr2Text.MaxLength = 50;
+                this.columnSchulart.MaxLength = 10;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -11389,7 +11450,12 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public string Klassenleiter {
                 get {
-                    return ((string)(this[this.tablevwNotenbogen.KlassenleiterColumn]));
+                    try {
+                        return ((string)(this[this.tablevwNotenbogen.KlassenleiterColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Klassenleiter\' in table \'vwNotenbogen\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tablevwNotenbogen.KlassenleiterColumn] = value;
@@ -11505,6 +11571,70 @@ namespace diNo {
                 }
                 set {
                     this[this.tablevwNotenbogen.StatusColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int AndereFremdspr2Note {
+                get {
+                    try {
+                        return ((int)(this[this.tablevwNotenbogen.AndereFremdspr2NoteColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AndereFremdspr2Note\' in table \'vwNotenbogen\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevwNotenbogen.AndereFremdspr2NoteColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string AndereFremdspr2Text {
+                get {
+                    try {
+                        return ((string)(this[this.tablevwNotenbogen.AndereFremdspr2TextColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'AndereFremdspr2Text\' in table \'vwNotenbogen\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevwNotenbogen.AndereFremdspr2TextColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal DNoteAllg {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablevwNotenbogen.DNoteAllgColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'DNoteAllg\' in table \'vwNotenbogen\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevwNotenbogen.DNoteAllgColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Schulart {
+                get {
+                    try {
+                        return ((string)(this[this.tablevwNotenbogen.SchulartColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Schulart\' in table \'vwNotenbogen\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablevwNotenbogen.SchulartColumn] = value;
                 }
             }
             
@@ -11978,6 +12108,18 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsKlassenleiterNull() {
+                return this.IsNull(this.tablevwNotenbogen.KlassenleiterColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetKlassenleiterNull() {
+                this[this.tablevwNotenbogen.KlassenleiterColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsEintrittJahrgangsstufeNull() {
                 return this.IsNull(this.tablevwNotenbogen.EintrittJahrgangsstufeColumn);
             }
@@ -12058,6 +12200,54 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetStatusNull() {
                 this[this.tablevwNotenbogen.StatusColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAndereFremdspr2NoteNull() {
+                return this.IsNull(this.tablevwNotenbogen.AndereFremdspr2NoteColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAndereFremdspr2NoteNull() {
+                this[this.tablevwNotenbogen.AndereFremdspr2NoteColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsAndereFremdspr2TextNull() {
+                return this.IsNull(this.tablevwNotenbogen.AndereFremdspr2TextColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetAndereFremdspr2TextNull() {
+                this[this.tablevwNotenbogen.AndereFremdspr2TextColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsDNoteAllgNull() {
+                return this.IsNull(this.tablevwNotenbogen.DNoteAllgColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetDNoteAllgNull() {
+                this[this.tablevwNotenbogen.DNoteAllgColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsSchulartNull() {
+                return this.IsNull(this.tablevwNotenbogen.SchulartColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetSchulartNull() {
+                this[this.tablevwNotenbogen.SchulartColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -20384,6 +20574,10 @@ WHERE        (KursId = @KursId) AND (SchuelerId = @SchuelerId) AND (IstHistorisc
             tableMapping.ColumnMappings.Add("Notfalltelefonnummer", "Notfalltelefonnummer");
             tableMapping.ColumnMappings.Add("DNote", "DNote");
             tableMapping.ColumnMappings.Add("Status", "Status");
+            tableMapping.ColumnMappings.Add("AndereFremdspr2Note", "AndereFremdspr2Note");
+            tableMapping.ColumnMappings.Add("AndereFremdspr2Text", "AndereFremdspr2Text");
+            tableMapping.ColumnMappings.Add("DNoteAllg", "DNoteAllg");
+            tableMapping.ColumnMappings.Add("Schulart", "Schulart");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -20406,7 +20600,7 @@ WHERE        (KursId = @KursId) AND (SchuelerId = @SchuelerId) AND (IstHistorisc
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT *\r\nFROM vwNotenbogen \r\nWHERE (KlasseId = @KlasseId)\r\nand (Status=0)";
+            this._commandCollection[1].CommandText = @"SELECT AndereFremdspr2Note, AndereFremdspr2Text, AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, Bezeichnung, DNote, DNoteAllg, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Gesamtnote, Geschlecht, Id, KlasseId, Klassenleiter, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, Status, ThemaKurz, ThemaLang, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM vwNotenbogen WHERE (KlasseId = @KlasseId) AND (Status = 0)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }

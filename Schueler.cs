@@ -911,4 +911,20 @@ namespace diNo
     }
   }
   
+  public class SchuljahrSchulartDruck
+  {
+    public string Schuljahr  { get; private set; }
+    public string Schulart { get; private set; }
+    
+    public SchuljahrSchulartDruck(Schueler s)
+    {
+      if (s.Data.Schulart=="B")
+        Schulart = "0841 Staatl. Berufsoberschule Kempten (Allgäu)";
+      else
+        Schulart = "0871 Staatl. Fachoberschule Kempten (Allgäu)";
+
+      Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr+1);
+    }
+  }
+
 }

@@ -122,7 +122,7 @@ namespace diNo
 
     private void btnPrint_Click(object sender, EventArgs e)
     { 
-      new ReportNotenbogen(SelectedObjects()).Show();
+      new ReportNotendruck(SelectedObjects(),"diNo.rptNotenbogen.rdlc").Show();
     }
 
     // liefert den angeklickten Schüler, oder eine Liste von Klassen (nur für Admins)

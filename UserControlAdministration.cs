@@ -44,7 +44,7 @@ namespace diNo
     {
       // Elternreihenfolge: usercontrol -> Tabpage -> pageControl -> Form Klassenansicht
       var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
-      new ReportNotenbogen(obj,true).Show();
+      new ReportNotendruck(obj,"diNo.rptAbiergebnisse.rdlc").Show();
     }
 
     private void exportNoten_Click(object sender, EventArgs e)

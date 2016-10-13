@@ -31,7 +31,7 @@ namespace diNo
           rpt.reportViewer.ZoomMode = ZoomMode.Percent;
           rpt.reportViewer.ZoomPercent = 100;
           rpt.Show();                    
-        }
+        }            
     }
 
     public class ReportNotencheck : ReportController
@@ -47,18 +47,20 @@ namespace diNo
             rpt.BerichtBindingSource.DataSource = bindingDataSource.list;
             rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenCheck.rdlc";            
         }
-
     }
-
-    public class ReportNotenbogen : ReportController
-    {
-    private bool nurAbi,klassenweise;
+  
+  // kann diverse Notenberichte drucken, die Grunddaten liefert jeweils vwNotenbogen
+  // Datenquelle kann ein Schüler oder mehrere Klassen sein
+  public class ReportNotendruck : ReportController
+  {
+    private bool klassenweise;
     private Schueler DSschueler;
     private ArrayList DSklassen;
+    private string rptName;
 
-    public ReportNotenbogen(Object dataSource, bool nurAbiergebnisse=false) : base()
+    public ReportNotendruck(Object dataSource, string Berichtsname) : base()
     {
-      nurAbi = nurAbiergebnisse;
+      rptName = Berichtsname;
       klassenweise = dataSource is ArrayList;
       if (klassenweise)
         DSklassen = (ArrayList)dataSource;
@@ -84,18 +86,14 @@ namespace diNo
         }
       }
 
-      rpt.reportViewer.LocalReport.ReportEmbeddedResource = (nurAbi ? "diNo.rptAbiergebnisse.rdlc" : "diNo.rptNotenbogen.rdlc");
+      rpt.reportViewer.LocalReport.ReportEmbeddedResource = rptName;
 
       // Unterberichte einbinden
       rpt.reportViewer.LocalReport.SubreportProcessing +=
-              new SubreportProcessingEventHandler(subrptNotenbogenEventHandler);
-      /*rpt.reportViewer.LocalReport.SubreportProcessing +=
-              new SubreportProcessingEventHandler(subrptSchullaufbahnEventHandler);
-      rpt.reportViewer.LocalReport.SubreportProcessing +=
-              new SubreportProcessingEventHandler(subrptVorkommnisEventHandler); */
+         new SubreportProcessingEventHandler(subrptEventHandler);
     }
 
-    void subrptNotenbogenEventHandler(object sender, SubreportProcessingEventArgs e)
+    void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
     {
         // ACHTUNG: Der Parameter muss im Haupt- und im Unterbericht definiert werden (mit gleichem Namen)
         string subrpt = e.ReportPath; // jeder Unterbericht ruft diesen EventHandler auf; hier steht drin welcher es ist.
@@ -104,9 +102,14 @@ namespace diNo
         if (schuelerId>0)
         {
           Schueler schueler = new Schueler(schuelerId);
-          if (subrpt=="subrptFachSchuelerNoten" || subrpt=="subrptAbiergebnisseNoten")
+          if (subrpt=="subrptFachSchuelerNoten")
           {
-            IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(nurAbi);
+            IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(false);
+            e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
+          }
+          else if (subrpt=="subrptAbiergebnisseNoten")
+          {
+            IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(true);
             e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
           }
           else if (subrpt=="subrptSchullaufbahn")
@@ -120,7 +123,7 @@ namespace diNo
             diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
             vwVorkommnisTableAdapter BerichtTableAdapter;
             BerichtTableAdapter = new vwVorkommnisTableAdapter();
-            if (nurAbi)
+            if (subrpt=="subrptAbiVorkommnis")
               BerichtTableAdapter.FillBySchuelerIdForAbi(vorkommnisse, schuelerId);   //nur bestimmte Vorkommnisse selektieren              
             else 
               BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);
@@ -132,7 +135,13 @@ namespace diNo
             daten.Add(new BemerkungenDruck(schueler));          
             e.DataSources.Add(new ReportDataSource("DataSetBemerkungen",daten));
           }
-      }
+          else if (subrpt=="subrptSchuljahrSchulart")
+          {
+            IList<SchuljahrSchulartDruck> daten = new List<SchuljahrSchulartDruck>();
+            daten.Add(new SchuljahrSchulartDruck(schueler));
+            e.DataSources.Add(new ReportDataSource("DataSetSchuljahrSchulart",daten));
+          }
+      }     
     }
     /*
     void subrptSchullaufbahnEventHandler(object sender, SubreportProcessingEventArgs e)

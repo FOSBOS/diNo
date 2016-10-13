@@ -222,7 +222,9 @@
     <EmbeddedResource Include="Klassenansicht.resx">
       <DependentUpon>Klassenansicht.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="rptNotenmitteilungA5.rdlc" />
     <EmbeddedResource Include="rptAbiergebnisseA5.rdlc" />
+    <EmbeddedResource Include="subrptSchuljahrSchulart.rdlc" />
     <EmbeddedResource Include="UserControlAdministration.resx">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>
     </EmbeddedResource>
@@ -314,6 +316,7 @@
     <None Include="Properties\DataSources\FachSchuelerNotenDruck.datasource" />
     <None Include="Properties\DataSources\Klasse.datasource" />
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />
+    <None Include="Properties\DataSources\SchuljahrSchulartDruck.datasource" />
     <None Include="Properties\DataSources\SchullaufbahnDruck.datasource" />
     <None Include="Properties\DataSources\Schueler.datasource" />
     <None Include="Properties\Settings.settings">
