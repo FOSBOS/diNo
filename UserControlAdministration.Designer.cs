@@ -41,6 +41,7 @@
       this.importNoten = new System.Windows.Forms.Button();
       this.groupBoxBerechtigungen = new System.Windows.Forms.GroupBox();
       this.btnKurseLehrer = new System.Windows.Forms.Button();
+      this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
@@ -58,6 +59,7 @@
       // 
       // groupBoxDrucken
       // 
+      this.groupBoxDrucken.Controls.Add(this.btnNotenmitteilung);
       this.groupBoxDrucken.Controls.Add(this.btnAbiergebnisse);
       this.groupBoxDrucken.Location = new System.Drawing.Point(19, 28);
       this.groupBoxDrucken.Name = "groupBoxDrucken";
@@ -68,7 +70,7 @@
       // 
       // btnAbiergebnisse
       // 
-      this.btnAbiergebnisse.Location = new System.Drawing.Point(20, 28);
+      this.btnAbiergebnisse.Location = new System.Drawing.Point(21, 48);
       this.btnAbiergebnisse.Name = "btnAbiergebnisse";
       this.btnAbiergebnisse.Size = new System.Drawing.Size(102, 23);
       this.btnAbiergebnisse.TabIndex = 0;
@@ -180,6 +182,16 @@
       this.btnKurseLehrer.UseVisualStyleBackColor = true;
       this.btnKurseLehrer.Click += new System.EventHandler(this.btnKurseLehrer_Click);
       // 
+      // btnNotenmitteilung
+      // 
+      this.btnNotenmitteilung.Location = new System.Drawing.Point(21, 19);
+      this.btnNotenmitteilung.Name = "btnNotenmitteilung";
+      this.btnNotenmitteilung.Size = new System.Drawing.Size(102, 25);
+      this.btnNotenmitteilung.TabIndex = 1;
+      this.btnNotenmitteilung.Text = "Notenmitteilung";
+      this.btnNotenmitteilung.UseVisualStyleBackColor = true;
+      this.btnNotenmitteilung.Click += new System.EventHandler(this.btnNotenmitteilung_Click);
+      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -214,5 +226,6 @@
     private System.Windows.Forms.Button btnImportKlassenleiter;
     private System.Windows.Forms.GroupBox groupBoxBerechtigungen;
     private System.Windows.Forms.Button btnKurseLehrer;
+    private System.Windows.Forms.Button btnNotenmitteilung;
   }
 }

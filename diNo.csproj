@@ -233,6 +233,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="rptNotenmitteilungA5.rdlc" />
     <EmbeddedResource Include="rptAbiergebnisseA5.rdlc" />
+    <EmbeddedResource Include="subrptFachSchuelerNoten11Klasse.rdlc" />
     <EmbeddedResource Include="subrptSchuljahrSchulart.rdlc" />
     <EmbeddedResource Include="UserControlAdministration.resx">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>

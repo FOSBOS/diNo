@@ -96,5 +96,11 @@ namespace diNo
     {
       new AdminKursLehrerForm().ShowDialog();
     }
+
+    private void btnNotenmitteilung_Click(object sender, EventArgs e)
+    {
+      var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
+      new ReportNotendruck(obj,"diNo.rptNotenmitteilungA5.rdlc").Show();
+    }
   }
 }

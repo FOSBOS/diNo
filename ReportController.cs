@@ -102,7 +102,7 @@ namespace diNo
         if (schuelerId>0)
         {
           Schueler schueler = new Schueler(schuelerId);
-          if (subrpt=="subrptFachSchuelerNoten")
+          if (subrpt=="subrptFachSchuelerNoten" || subrpt=="subrptFachSchuelerNoten11Klasse")
           {
             IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(false);
             e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
