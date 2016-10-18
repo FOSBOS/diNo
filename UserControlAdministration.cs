@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace diNo
@@ -12,7 +6,6 @@ namespace diNo
   public partial class UserControlAdministration : UserControl
   {
     private Schueler schueler;
-
 
     public UserControlAdministration()
     {
@@ -101,6 +94,11 @@ namespace diNo
     {
       var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
       new ReportNotendruck(obj,"diNo.rptNotenmitteilungA5.rdlc").Show();
+    }
+
+    private void btnBerechtigungen_Click(object sender, EventArgs e)
+    {
+      new AdminBerechtigungenForm().ShowDialog();
     }
   }
 }

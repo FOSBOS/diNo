@@ -11454,7 +11454,7 @@ namespace diNo {
                         return ((string)(this[this.tablevwNotenbogen.KlassenleiterColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Klassenleiter\' in table \'vwNotenbogen\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Klassenleiter in Tabelle vwNotenbogen ist DBNull.", e);
                     }
                 }
                 set {
@@ -11582,7 +11582,7 @@ namespace diNo {
                         return ((int)(this[this.tablevwNotenbogen.AndereFremdspr2NoteColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'AndereFremdspr2Note\' in table \'vwNotenbogen\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AndereFremdspr2Note in Tabelle vwNotenbogen ist DBNull.", e);
                     }
                 }
                 set {
@@ -11598,7 +11598,7 @@ namespace diNo {
                         return ((string)(this[this.tablevwNotenbogen.AndereFremdspr2TextColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'AndereFremdspr2Text\' in table \'vwNotenbogen\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AndereFremdspr2Text in Tabelle vwNotenbogen ist DBNull.", e);
                     }
                 }
                 set {
@@ -11614,7 +11614,7 @@ namespace diNo {
                         return ((decimal)(this[this.tablevwNotenbogen.DNoteAllgColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'DNoteAllg\' in table \'vwNotenbogen\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte DNoteAllg in Tabelle vwNotenbogen ist DBNull.", e);
                     }
                 }
                 set {
@@ -11630,7 +11630,7 @@ namespace diNo {
                         return ((string)(this[this.tablevwNotenbogen.SchulartColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'Schulart\' in table \'vwNotenbogen\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Schulart in Tabelle vwNotenbogen ist DBNull.", e);
                     }
                 }
                 set {
@@ -23620,6 +23620,13 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             tableMapping.ColumnMappings.Add("LehrerId", "LehrerId");
             tableMapping.ColumnMappings.Add("RolleId", "RolleId");
             this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM LehrerRolle\r\nWHERE        (LehrerId = @LehrerId) AND (RolleId = @Roll" +
+                "eId)";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RolleId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "RolleId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [LehrerRolle] ([LehrerId], [RolleId]) VALUES (@LehrerId, @RolleId)";
@@ -23728,6 +23735,29 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual int Update(global::System.Data.DataRow[] dataRows) {
             return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(int LehrerId, int RolleId) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(LehrerId));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(RolleId));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -23925,7 +23955,7 @@ SELECT Id, Bezeichnung, KlassenString FROM Rolle WHERE (Id = @Id)";
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT     *\r\nFROM            Rolle";
+            this._commandCollection[0].CommandText = "SELECT        Id, Bezeichnung, KlassenString\r\nFROM            Rolle";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;

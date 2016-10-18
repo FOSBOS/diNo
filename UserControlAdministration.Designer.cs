@@ -30,6 +30,7 @@
     {
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
+      this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.btnAbiergebnisse = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
       this.exportNoten = new System.Windows.Forms.Button();
@@ -41,7 +42,7 @@
       this.importNoten = new System.Windows.Forms.Button();
       this.groupBoxBerechtigungen = new System.Windows.Forms.GroupBox();
       this.btnKurseLehrer = new System.Windows.Forms.Button();
-      this.btnNotenmitteilung = new System.Windows.Forms.Button();
+      this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
@@ -67,6 +68,16 @@
       this.groupBoxDrucken.TabIndex = 3;
       this.groupBoxDrucken.TabStop = false;
       this.groupBoxDrucken.Text = "Drucken";
+      // 
+      // btnNotenmitteilung
+      // 
+      this.btnNotenmitteilung.Location = new System.Drawing.Point(21, 19);
+      this.btnNotenmitteilung.Name = "btnNotenmitteilung";
+      this.btnNotenmitteilung.Size = new System.Drawing.Size(102, 25);
+      this.btnNotenmitteilung.TabIndex = 1;
+      this.btnNotenmitteilung.Text = "Notenmitteilung";
+      this.btnNotenmitteilung.UseVisualStyleBackColor = true;
+      this.btnNotenmitteilung.Click += new System.EventHandler(this.btnNotenmitteilung_Click);
       // 
       // btnAbiergebnisse
       // 
@@ -164,6 +175,7 @@
       // 
       // groupBoxBerechtigungen
       // 
+      this.groupBoxBerechtigungen.Controls.Add(this.btnBerechtigungen);
       this.groupBoxBerechtigungen.Controls.Add(this.btnKurseLehrer);
       this.groupBoxBerechtigungen.Location = new System.Drawing.Point(555, 28);
       this.groupBoxBerechtigungen.Name = "groupBoxBerechtigungen";
@@ -182,15 +194,15 @@
       this.btnKurseLehrer.UseVisualStyleBackColor = true;
       this.btnKurseLehrer.Click += new System.EventHandler(this.btnKurseLehrer_Click);
       // 
-      // btnNotenmitteilung
+      // btnBerechtigungen
       // 
-      this.btnNotenmitteilung.Location = new System.Drawing.Point(21, 19);
-      this.btnNotenmitteilung.Name = "btnNotenmitteilung";
-      this.btnNotenmitteilung.Size = new System.Drawing.Size(102, 25);
-      this.btnNotenmitteilung.TabIndex = 1;
-      this.btnNotenmitteilung.Text = "Notenmitteilung";
-      this.btnNotenmitteilung.UseVisualStyleBackColor = true;
-      this.btnNotenmitteilung.Click += new System.EventHandler(this.btnNotenmitteilung_Click);
+      this.btnBerechtigungen.Location = new System.Drawing.Point(6, 50);
+      this.btnBerechtigungen.Name = "btnBerechtigungen";
+      this.btnBerechtigungen.Size = new System.Drawing.Size(164, 23);
+      this.btnBerechtigungen.TabIndex = 1;
+      this.btnBerechtigungen.Text = "Berechtigungen verwalten";
+      this.btnBerechtigungen.UseVisualStyleBackColor = true;
+      this.btnBerechtigungen.Click += new System.EventHandler(this.btnBerechtigungen_Click);
       // 
       // UserControlAdministration
       // 
@@ -227,5 +239,6 @@
     private System.Windows.Forms.GroupBox groupBoxBerechtigungen;
     private System.Windows.Forms.Button btnKurseLehrer;
     private System.Windows.Forms.Button btnNotenmitteilung;
+    private System.Windows.Forms.Button btnBerechtigungen;
   }
 }

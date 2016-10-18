@@ -30,11 +30,36 @@ namespace diNo
       Init(r);
     }
 
+    public string Name
+    {
+      get { return this.data.Nachname + " " + this.Data.Vorname; }
+    }
+
     private void Init(diNoDataSet.LehrerRow row)
     {
       this.data = row;
       SetKlassenleiter();
       SetRollen();
+    }
+
+    public void AddRolle(Rolle aRolle)
+    {
+      LehrerRolleTableAdapter ada = new LehrerRolleTableAdapter();
+      if (!this.HatRolle(aRolle))
+      {
+        ada.Insert(this.Id, (int)aRolle);
+        this.rollen.Add(aRolle);
+      }
+    }
+
+    public void RemoveRolle(Rolle aRolle)
+    {
+      LehrerRolleTableAdapter ada = new LehrerRolleTableAdapter();
+      if (this.HatRolle(aRolle))
+      {
+        ada.Delete(this.Id, (int)aRolle);
+        this.rollen.Remove(aRolle);
+      }
     }
 
     private void SetRollen()

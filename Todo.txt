@@ -5,6 +5,4 @@
 - Vorkommnisarten AutoKey abstellen (und DB-Tabelle bereinigen)
 - Seminarfachnote in SchuelerNoten.alleFaecher integrieren, dann muss die nicht immer extra überprüft werden
 dazu den Dummykurs Seminarfach anlegen
-- Admin-Oberfläche Zuordnung Lehrer-Kurs
-- Admin-Oberfläche für Berechtigungen ?
 - Statistiken ?

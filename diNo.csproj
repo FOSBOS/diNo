@@ -83,6 +83,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminBerechtigungenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminBerechtigungenForm.Designer.cs">
+      <DependentUpon>AdminBerechtigungenForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AdminKursLehrerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,6 +225,9 @@
     <Compile Include="Vorkommnis.cs" />
     <Compile Include="WinSVSchuelerReader.cs" />
     <Compile Include="Zugriff.cs" />
+    <EmbeddedResource Include="AdminBerechtigungenForm.resx">
+      <DependentUpon>AdminBerechtigungenForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AdminKursLehrerForm.resx">
       <DependentUpon>AdminKursLehrerForm.cs</DependentUpon>
     </EmbeddedResource>
