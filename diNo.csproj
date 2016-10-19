@@ -264,7 +264,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Notenbogen.rdlc" />
     <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
     <EmbeddedResource Include="rptBrief.rdlc" />
     <EmbeddedResource Include="rptKlassenliste.rdlc" />

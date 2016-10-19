@@ -845,7 +845,7 @@ namespace diNo
       string tmp;
       Klasse = s.KlassenBezeichnung;
       Bekenntnis = "Bekenntnis: "+ s.Data.Bekenntnis;
-      Klassenleiter = s.getKlasse.Klassenleiter.Name;
+      Klassenleiter = s.getKlasse.Klassenleiter.Vorname.Substring(0,1)+ ". " + s.getKlasse.Klassenleiter.Nachname;
       Legasthenie = s.Data.LRSStoerung ? "\nLegasthenie" : "";
       Laufbahn = "Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm.ToString("dd.MM.yyyy");
       Laufbahn += " aus " + s.Data.SchulischeVorbildung + " von " + s.EintrittAusSchulname;//.Substring(0,25);
@@ -858,6 +858,7 @@ namespace diNo
     }
   }
 
+  // Zeugnisbemerkungen Datencontainer: muss im Bericht als HTML eingestellt sein (re. Maus auf Datenfeld)
   public class BemerkungenDruck
   {
     public string Ueberschrift  { get; private set; }
@@ -866,37 +867,58 @@ namespace diNo
     public BemerkungenDruck(Schueler s)
     {
       Inhalt="";
-      Ueberschrift="";
+      
       var jg=s.getKlasse.Jahrgangsstufe;
-
-      if (!s.Data.IsDNoteNull()) 
-        Ueberschrift = "\nDurchschnittsnote: " + s.Data.DNote + "\n";
 
       if (jg==Jahrgangsstufe.Elf)
       {        
         if (!s.FPANoten.IsErfolg1HjNull() && !s.FPANoten.IsPunkte1HjNull())
-          Inhalt = "Diese wurde im 1. Halbjahr " + ErfolgText(s.FPANoten.Erfolg1Hj) + " (" + s.FPANoten.Punkte1Hj + " Punkte) durchlaufen.";
+        {
+          Inhalt += "Diese wurde im 1. Halbjahr " + ErfolgText(s.FPANoten.Erfolg1Hj) + " (" + s.FPANoten.Punkte1Hj + " Punkte) durchlaufen";
+          if (!s.FPANoten.IsStelle1HjNull())
+            Inhalt += " (" + s.FPANoten.Stelle1Hj + ")";
+          Inhalt += ".<br>";
+        }
         if (!s.FPANoten.IsPunkte2HjNull())
-          Inhalt += "Im 2. Halbjahr wurden " + s.FPANoten.Punkte2Hj +" Punkte erzielt.";
+        {
+          Inhalt += "Im 2. Halbjahr wurden " + s.FPANoten.Punkte2Hj +" Punkte erzielt";
+          if (!s.FPANoten.IsStelle2HjNull())
+            Inhalt += " (" + s.FPANoten.Stelle2Hj + ")";
+          Inhalt += ".<br>";
+        }
 
         if (!s.FPANoten.IsErfolgNull() && !s.FPANoten.IsPunkteNull())
-          Inhalt += "\nInsgesamt wurde die FPA " + ErfolgText(s.FPANoten.Erfolg) + " (durchschnittliche Punktzahl " + s.FPANoten.Punkte + ") durchlaufen.";
+          Inhalt += "Insgesamt wurde die FPA <b>" + ErfolgText(s.FPANoten.Erfolg) + "</b> (durchschnittliche Punktzahl " + s.FPANoten.Punkte + ") durchlaufen.<br>";
 
         if (!s.FPANoten.IsBemerkungNull())
-          Inhalt += "\n" + s.FPANoten.Bemerkung;
-
-        if (Inhalt!="") Ueberschrift="\nFachpraktische Ausbildung";
+          Inhalt += s.FPANoten.Bemerkung + "<br>";
+        if (Inhalt!="")
+          Inhalt = "<b>Fachpraktische Ausbildung</b><br>" + Inhalt;
       }
-
+      else if (jg==Jahrgangsstufe.Zwoelf)
+      {
+        if (!s.FPANoten.IsErfolgNull())
+          Inhalt = "Die fachpraktische Ausbildung wurde in der 11. Klasse " + ErfolgText(s.FPANoten.Erfolg) +" durchlaufen.<br>";
+      }
       else if (jg==Jahrgangsstufe.Dreizehn)
       {
         if (!s.Seminarfachnote.IsThemaKurzNull())
         {
-          Ueberschrift+="\nThema der Seminararbeit:\n";
-          Inhalt = s.Seminarfachnote.ThemaKurz;
+          Inhalt="<b>Thema der Seminararbeit:</b><br>";
+          Inhalt += s.Seminarfachnote.ThemaKurz;
         }
       }
-      if (Inhalt!="") Inhalt += "\n";
+
+      if (!s.Data.IsDNoteNull())
+      {
+        if (Inhalt!="") Inhalt += "<br>";
+        Inhalt += "<b>Durchschnittsnote (" + (jg==Jahrgangsstufe.Zwoelf ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";
+      }
+      if (!s.Data.IsDNoteAllgNull())
+      {
+        
+        Inhalt += "<b>Durchschnittsnote (allgemeine Hochschulreife): " + s.Data.DNoteAllg + "</b><br>";
+      }
     }
 
     private string ErfolgText(int note)

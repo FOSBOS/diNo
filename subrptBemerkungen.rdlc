@@ -9,18 +9,8 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Fields!Ueberschrift.Value</Value>
-                <Style>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
                 <Value>=Fields!Inhalt.Value</Value>
+                <MarkupType>HTML</MarkupType>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -28,7 +18,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
-        <Height>0.92604cm</Height>
+        <Height>0.50271cm</Height>
         <Width>17.48897cm</Width>
         <Style>
           <Border>
@@ -41,7 +31,7 @@
         </Style>
       </Textbox>
     </ReportItems>
-    <Height>0.36458in</Height>
+    <Height>0.19792in</Height>
     <Style />
   </Body>
   <Width>6.88542in</Width>
