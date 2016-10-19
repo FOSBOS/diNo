@@ -26,8 +26,9 @@ namespace diNo
             foreach (var f in Zugriff.Instance.eigeneFaecher)
             {
               cbFach.Items.Add(f.Bezeichnung);
-            }
-            cbFach.SelectedIndex = 0;
+            }            
+            //cbFach.SelectedIndex = 0;
+            //opVerschVerweis.Enabled = Zugriff.Instance.HatRolle(Rolle.Schulleitung);
         }
 
         public void Anzeigen(Schueler schueler)
@@ -44,7 +45,7 @@ namespace diNo
         private void btnOK_Click(object sender, EventArgs e)
         {                        
             b = new BriefDaten(s);
-            if (opVerweis.Checked) VerweisText();
+            if (opVerweis.Checked || opVerschVerweis.Checked) VerweisText(opVerschVerweis.Checked);
             else if (opSA.Checked || opKA.Checked) NachterminText();
             else if (opSEP.Checked || opMEP.Checked) ErsatzprText();
             else NacharbeitText();
@@ -52,9 +53,15 @@ namespace diNo
             Hide();
             new ReportBrief(b).Show();
             
-            if (opVerweis.Checked && MessageBox.Show("Soll der Verweis auch in den Notenbogen eingetragen werden?","diNo",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
+            if (opVerweis.Checked || opVerschVerweis.Checked && MessageBox.Show("Soll der Verweis auch in den Notenbogen eingetragen werden?","diNo",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
             {             
-              s.AddVorkommnis(Vorkommnisart.Verweis, edInhalt.Text, true);
+              if (opVerschVerweis.Checked) s.AddVorkommnis(Vorkommnisart.verschaerfterVerweis, edInhalt.Text, true);
+              else s.AddVorkommnis(Vorkommnisart.Verweis, edInhalt.Text, true);
+              frmKlasse.RefreshVorkommnisse();
+            }
+            if (opNacharbeit.Checked && MessageBox.Show("Soll die Nacharbeit auch in den Notenbogen eingetragen werden?","diNo",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
+            {             
+              s.AddVorkommnis(Vorkommnisart.Nacharbeit, edInhalt.Text, true);
               frmKlasse.RefreshVorkommnisse();
             }
         }
@@ -63,8 +70,8 @@ namespace diNo
     private void radioButton_CheckedChanged(object sender, EventArgs e)
     {
         pnlVersaeumtAm.Enabled = opSA.Checked || opKA.Checked;
-        pnlNachterminAm.Enabled = !opVerweis.Checked;
-        pnlInhalt.Enabled = opVerweis.Checked || opNacharbeit.Checked || opSEP.Checked || opMEP.Checked;
+        pnlNachterminAm.Enabled = !(opVerweis.Checked || opVerschVerweis.Checked);
+        pnlInhalt.Enabled = opVerweis.Checked || opVerschVerweis.Checked || opNacharbeit.Checked || opSEP.Checked || opMEP.Checked;
         labelInhalt.Text = (opSEP.Checked || opMEP.Checked) ? "Prüfungsstoff" : "Grund";
     }
 
@@ -82,10 +89,16 @@ namespace diNo
       else return " in Raum " + edRaum.Text;
     }
 
-    public void VerweisText()
+    public void VerweisText(bool verschaerft)
     {
-        b.Betreff = "Verweis";
-        b.Inhalt = "Hiermit wird " + b.Anrede + " " + b.VornameName + " gemäß Art. 86 (2) BayEUG ein Verweis erteilt.\n\n";
+        if (verschaerft)
+        {
+          b.Betreff = "Verschärfter Verweis";
+          b.Unterschrift = "Helga Traut, OStDin\nSchulleiterin";
+        }
+        else b.Betreff = "Verweis";
+        b.Inhalt = "Hiermit wird " + b.Anrede + " " + b.VornameName + " gemäß Art. 86 (2) BayEUG ein ";
+        b.Inhalt += (verschaerft?"verschärfter Verweis durch die Schulleiterin":"Verweis") + " erteilt.\n\n";
         b.Inhalt += "Begründung der Ordnungsmaßnahme:\n" + edInhalt.Text + "\n\n";            
     }
 

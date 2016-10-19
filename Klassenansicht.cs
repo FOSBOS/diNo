@@ -28,9 +28,6 @@ namespace diNo
       else
       { 
         tabControl1.Controls.Remove(tabPageKurszuordnungen); // man kann die Seite nicht unsichtbar machen, nur entfernen
-      }
-      if (!Zugriff.Instance.HatRolle(Rolle.Admin))
-      {
         tabControl1.Controls.Remove(tabPageAdministration);
       }
 

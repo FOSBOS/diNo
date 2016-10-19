@@ -65,6 +65,7 @@ namespace diNo
     starkeGefaehrdungsmitteilung = 14,
     GefahrDerAbweisung = 15,
     RuecktrittVorklasse = 16,
+    ProbezeitVerlaengert = 17,
 
     // 1.-3. PA
     NichtZurPruefungZugelassen = 21,
@@ -94,11 +95,14 @@ namespace diNo
     // Ordnungsmaßnahmen
     Verweis = 51,
     verschaerfterVerweis = 52,
+    Nacharbeit = 53,
     SonstigeOrdnungsmaßnahme = 59,
 
     // Sonstiges
     Bemerkung = 61,
-    FranzNurBisSAP = 62
+    FranzNurBisSAP = 62,
+    Sportbefreiung = 63,
+    Attestpflicht = 64
   }
 
   public class Vorkommnisse

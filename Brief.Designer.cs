@@ -52,6 +52,7 @@
       this.pnlInhalt = new System.Windows.Forms.Panel();
       this.labelInhalt = new System.Windows.Forms.Label();
       this.edInhalt = new System.Windows.Forms.TextBox();
+      this.opVerschVerweis = new System.Windows.Forms.RadioButton();
       this.boxAuswahl.SuspendLayout();
       this.pnlNachterminAm.SuspendLayout();
       this.pnlVersaeumtAm.SuspendLayout();
@@ -80,6 +81,7 @@
       // 
       // boxAuswahl
       // 
+      this.boxAuswahl.Controls.Add(this.opVerschVerweis);
       this.boxAuswahl.Controls.Add(this.opNacharbeit);
       this.boxAuswahl.Controls.Add(this.opVerweis);
       this.boxAuswahl.Controls.Add(this.opMEP);
@@ -89,17 +91,17 @@
       this.boxAuswahl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.boxAuswahl.Location = new System.Drawing.Point(39, 36);
       this.boxAuswahl.Name = "boxAuswahl";
-      this.boxAuswahl.Size = new System.Drawing.Size(193, 175);
+      this.boxAuswahl.Size = new System.Drawing.Size(193, 187);
       this.boxAuswahl.TabIndex = 0;
       this.boxAuswahl.TabStop = false;
       // 
       // opNacharbeit
       // 
       this.opNacharbeit.AutoSize = true;
-      this.opNacharbeit.Location = new System.Drawing.Point(16, 137);
+      this.opNacharbeit.Location = new System.Drawing.Point(16, 154);
       this.opNacharbeit.Name = "opNacharbeit";
       this.opNacharbeit.Size = new System.Drawing.Size(95, 21);
-      this.opNacharbeit.TabIndex = 6;
+      this.opNacharbeit.TabIndex = 7;
       this.opNacharbeit.Text = "Nacharbeit";
       this.opNacharbeit.UseVisualStyleBackColor = true;
       this.opNacharbeit.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
@@ -107,7 +109,7 @@
       // opVerweis
       // 
       this.opVerweis.AutoSize = true;
-      this.opVerweis.Location = new System.Drawing.Point(16, 114);
+      this.opVerweis.Location = new System.Drawing.Point(16, 110);
       this.opVerweis.Name = "opVerweis";
       this.opVerweis.Size = new System.Drawing.Size(75, 21);
       this.opVerweis.TabIndex = 5;
@@ -118,7 +120,7 @@
       // opMEP
       // 
       this.opMEP.AutoSize = true;
-      this.opMEP.Location = new System.Drawing.Point(16, 91);
+      this.opMEP.Location = new System.Drawing.Point(16, 88);
       this.opMEP.Name = "opMEP";
       this.opMEP.Size = new System.Drawing.Size(145, 21);
       this.opMEP.TabIndex = 4;
@@ -129,7 +131,7 @@
       // opSEP
       // 
       this.opSEP.AutoSize = true;
-      this.opSEP.Location = new System.Drawing.Point(16, 68);
+      this.opSEP.Location = new System.Drawing.Point(16, 66);
       this.opSEP.Name = "opSEP";
       this.opSEP.Size = new System.Drawing.Size(164, 21);
       this.opSEP.TabIndex = 3;
@@ -140,7 +142,7 @@
       // opKA
       // 
       this.opKA.AutoSize = true;
-      this.opKA.Location = new System.Drawing.Point(16, 45);
+      this.opKA.Location = new System.Drawing.Point(16, 44);
       this.opKA.Name = "opKA";
       this.opKA.Size = new System.Drawing.Size(120, 21);
       this.opKA.TabIndex = 2;
@@ -310,6 +312,16 @@
       this.edInhalt.Size = new System.Drawing.Size(632, 104);
       this.edInhalt.TabIndex = 5;
       // 
+      // opVerschVerweis
+      // 
+      this.opVerschVerweis.AutoSize = true;
+      this.opVerschVerweis.Location = new System.Drawing.Point(16, 132);
+      this.opVerschVerweis.Name = "opVerschVerweis";
+      this.opVerschVerweis.Size = new System.Drawing.Size(155, 21);
+      this.opVerschVerweis.TabIndex = 6;
+      this.opVerschVerweis.Text = "verschärfter Verweis";
+      this.opVerschVerweis.UseVisualStyleBackColor = true;
+      // 
       // Brief
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -361,5 +373,6 @@
     private System.Windows.Forms.TextBox edInhalt;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TextBox edRaum;
+    private System.Windows.Forms.RadioButton opVerschVerweis;
   }
 }

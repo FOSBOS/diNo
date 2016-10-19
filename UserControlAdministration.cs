@@ -10,6 +10,12 @@ namespace diNo
     public UserControlAdministration()
     {
       InitializeComponent();
+      if (!Zugriff.Instance.HatRolle(Rolle.Admin))
+      {
+        groupBoxBerechtigungen.Visible = false;
+        groupBoxImport.Visible = false;
+        groupBoxExport.Visible = false;
+      }
     }
 
     public Schueler Schueler
@@ -27,6 +33,13 @@ namespace diNo
       }
     }
 
+    // liefert die fürs Drucken ausgewählten Objekte (einzelne Schüler oder ein Menge von Klassen)
+    private object getSelectedObjects()
+    {
+      // Elternreihenfolge: usercontrol -> Tabpage -> pageControl -> Form Klassenansicht
+      return  ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
+    }
+
     private void btnFrm1_Click(object sender, EventArgs e)
     {
       Form1 frm = new Form1();
@@ -35,9 +48,7 @@ namespace diNo
 
     private void btnAbiergebnisse_Click(object sender, EventArgs e)
     {
-      // Elternreihenfolge: usercontrol -> Tabpage -> pageControl -> Form Klassenansicht
-      var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
-      new ReportNotendruck(obj,"diNo.rptAbiergebnisse.rdlc").Show();
+      new ReportNotendruck(getSelectedObjects(),"diNo.rptAbiergebnisse.rdlc").Show();
     }
 
     private void exportNoten_Click(object sender, EventArgs e)
@@ -91,14 +102,30 @@ namespace diNo
     }
 
     private void btnNotenmitteilung_Click(object sender, EventArgs e)
-    {
-      var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
-      new ReportNotendruck(obj,"diNo.rptNotenmitteilungA5.rdlc").Show();
+    {      
+      new ReportNotendruck(getSelectedObjects(),"diNo.rptNotenmitteilungA5.rdlc").Show();
     }
 
     private void btnBerechtigungen_Click(object sender, EventArgs e)
     {
       new AdminBerechtigungenForm().ShowDialog();
+    }
+
+    private void btnAttestpflicht_Click(object sender, EventArgs e)
+    {
+      var obj = getSelectedObjects();
+      if (obj is Schueler)
+      {
+        Schueler s = (Schueler)obj;
+        var b = new BriefDaten(s);
+        b.Betreff = "Attestpflicht";
+        b.Inhalt = "da sich Ihre Versäumnisse häufen, müssen Sie ab sofort jeden Fehltag mit einem ärztlichen Attest belegen.";
+        var KL = s.getKlasse.Klassenleiter;
+        b.Unterschrift = KL.Vorname + " " + KL.Nachname + ", " + KL.Dienstbezeichnung;
+        new ReportBrief(b).Show();
+
+        s.AddVorkommnis(Vorkommnisart.Attestpflicht,"", false);
+      }
     }
   }
 }

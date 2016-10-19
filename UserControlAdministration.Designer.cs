@@ -41,8 +41,9 @@
       this.btnImportUnterricht = new System.Windows.Forms.Button();
       this.importNoten = new System.Windows.Forms.Button();
       this.groupBoxBerechtigungen = new System.Windows.Forms.GroupBox();
-      this.btnKurseLehrer = new System.Windows.Forms.Button();
       this.btnBerechtigungen = new System.Windows.Forms.Button();
+      this.btnKurseLehrer = new System.Windows.Forms.Button();
+      this.btnAttestpflicht = new System.Windows.Forms.Button();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
@@ -60,6 +61,7 @@
       // 
       // groupBoxDrucken
       // 
+      this.groupBoxDrucken.Controls.Add(this.btnAttestpflicht);
       this.groupBoxDrucken.Controls.Add(this.btnNotenmitteilung);
       this.groupBoxDrucken.Controls.Add(this.btnAbiergebnisse);
       this.groupBoxDrucken.Location = new System.Drawing.Point(19, 28);
@@ -71,9 +73,9 @@
       // 
       // btnNotenmitteilung
       // 
-      this.btnNotenmitteilung.Location = new System.Drawing.Point(21, 19);
+      this.btnNotenmitteilung.Location = new System.Drawing.Point(21, 21);
       this.btnNotenmitteilung.Name = "btnNotenmitteilung";
-      this.btnNotenmitteilung.Size = new System.Drawing.Size(102, 25);
+      this.btnNotenmitteilung.Size = new System.Drawing.Size(102, 23);
       this.btnNotenmitteilung.TabIndex = 1;
       this.btnNotenmitteilung.Text = "Notenmitteilung";
       this.btnNotenmitteilung.UseVisualStyleBackColor = true;
@@ -165,7 +167,7 @@
       // 
       // importNoten
       // 
-      this.importNoten.Location = new System.Drawing.Point(6, 19);
+      this.importNoten.Location = new System.Drawing.Point(6, 20);
       this.importNoten.Name = "importNoten";
       this.importNoten.Size = new System.Drawing.Size(182, 23);
       this.importNoten.TabIndex = 3;
@@ -184,6 +186,16 @@
       this.groupBoxBerechtigungen.TabStop = false;
       this.groupBoxBerechtigungen.Text = "Berechtigungen";
       // 
+      // btnBerechtigungen
+      // 
+      this.btnBerechtigungen.Location = new System.Drawing.Point(6, 50);
+      this.btnBerechtigungen.Name = "btnBerechtigungen";
+      this.btnBerechtigungen.Size = new System.Drawing.Size(164, 23);
+      this.btnBerechtigungen.TabIndex = 1;
+      this.btnBerechtigungen.Text = "Berechtigungen verwalten";
+      this.btnBerechtigungen.UseVisualStyleBackColor = true;
+      this.btnBerechtigungen.Click += new System.EventHandler(this.btnBerechtigungen_Click);
+      // 
       // btnKurseLehrer
       // 
       this.btnKurseLehrer.Location = new System.Drawing.Point(6, 21);
@@ -194,15 +206,15 @@
       this.btnKurseLehrer.UseVisualStyleBackColor = true;
       this.btnKurseLehrer.Click += new System.EventHandler(this.btnKurseLehrer_Click);
       // 
-      // btnBerechtigungen
+      // btnAttestpflicht
       // 
-      this.btnBerechtigungen.Location = new System.Drawing.Point(6, 50);
-      this.btnBerechtigungen.Name = "btnBerechtigungen";
-      this.btnBerechtigungen.Size = new System.Drawing.Size(164, 23);
-      this.btnBerechtigungen.TabIndex = 1;
-      this.btnBerechtigungen.Text = "Berechtigungen verwalten";
-      this.btnBerechtigungen.UseVisualStyleBackColor = true;
-      this.btnBerechtigungen.Click += new System.EventHandler(this.btnBerechtigungen_Click);
+      this.btnAttestpflicht.Location = new System.Drawing.Point(21, 106);
+      this.btnAttestpflicht.Name = "btnAttestpflicht";
+      this.btnAttestpflicht.Size = new System.Drawing.Size(102, 23);
+      this.btnAttestpflicht.TabIndex = 2;
+      this.btnAttestpflicht.Text = "Attestpflicht";
+      this.btnAttestpflicht.UseVisualStyleBackColor = true;
+      this.btnAttestpflicht.Click += new System.EventHandler(this.btnAttestpflicht_Click);
       // 
       // UserControlAdministration
       // 
@@ -240,5 +252,6 @@
     private System.Windows.Forms.Button btnKurseLehrer;
     private System.Windows.Forms.Button btnNotenmitteilung;
     private System.Windows.Forms.Button btnBerechtigungen;
+    private System.Windows.Forms.Button btnAttestpflicht;
   }
 }
