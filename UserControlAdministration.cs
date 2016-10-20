@@ -117,11 +117,15 @@ namespace diNo
       if (obj is Schueler)
       {
         Schueler s = (Schueler)obj;
-        var b = new BriefDaten(s);
+        var b = new BriefDaten(s, true);
         b.Betreff = "Attestpflicht";
-        b.Inhalt = "da sich Ihre Versäumnisse häufen, müssen Sie ab sofort jeden Fehltag mit einem ärztlichen Attest belegen.";
+        b.Inhalt += "da sich im laufenden Schuljahr bei Ihnen die krankheitsbedingten Schulversäumnisse häufen, ";
+        b.Inhalt += "werden Sie gemäß §35(3) FOBOSO dazu verpflichtet, künftig jede weitere krankheitsbedingte Abwesenheit ";
+        b.Inhalt += "durch ein aktuelles ärztliches Zeugnis (Schulunfähigkeitsbescheinigung) zu belegen.<br><br>";
+        b.Inhalt += "Wird das Zeugnis nicht unverzüglich vorgelegt, so gilt das Fernbleiben als unentschuldigt.";
         var KL = s.getKlasse.Klassenleiter;
         b.Unterschrift = KL.Vorname + " " + KL.Nachname + ", " + KL.Dienstbezeichnung;
+        b.Unterschrift2 = "Helga Traut, OStDin";
         new ReportBrief(b).Show();
 
         s.AddVorkommnis(Vorkommnisart.Attestpflicht,"", false);
