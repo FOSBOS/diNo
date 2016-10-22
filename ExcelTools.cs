@@ -205,7 +205,7 @@ namespace diNo
     /// Entfernt einen Schüler aus der Datei (Name und Id). Lässt seine Noten aber stehen.
     /// </summary>
     /// <param name="schuelerId">die Id des Schülers.</param>
-    public void RemoveSchueler(int schuelerId)
+    public bool RemoveSchueler(int schuelerId)
     {
       int zeileSId = GetSidZeileForSchueler(schuelerId);
       int zeileNachname = GetNotenbogenZeileForSidZeile(zeileSId);
@@ -213,12 +213,13 @@ namespace diNo
       if (string.IsNullOrEmpty(name.Trim()))
       {
         // Der Schüler ist bereits aus der Datei entfernt. Keine Aktion nötig.
-        return;
+        return false;
       }
 
       UnsavedChanges = true;
       WriteValue(notenbogen, CellConstant.Nachname + zeileNachname, "");
       WriteValue(notenbogen, CellConstant.Vorname + (zeileNachname + 1), "");
+      return true;
     }
 
     /// <summary>

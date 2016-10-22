@@ -18,6 +18,7 @@ namespace diNo
     private Kurs kurs; // der Kurs, den diese Datei abbildet
     public bool success = false;
     public StatusChanged StatusChanged;
+    private List<string>hinweise = new List<String>();
 
     public LeseNotenAusExcel(string afileName, StatusChanged StatusChangedMethod, string sicherungsverzeichnis)
     {
@@ -56,6 +57,9 @@ namespace diNo
       UebertrageNoten();
       success = true;
 
+      if (hinweise.Count > 0) // es sind Meldungen aufgetreten
+        HinweiseAusgeben();
+
       // TODO: Gefährlich, private Variablen zu disposen?
       xls.Dispose();
       xls = null;
@@ -77,12 +81,14 @@ namespace diNo
     private void Synchronize()
     {
       var klasse = kurs.getSchueler(true);
+      
       foreach (var schueler in klasse)
       {
         if (!sidList.Contains(schueler.Id))
         {
           xls.AppendSchueler(schueler, kurs.getFach.Kuerzel == "F" || kurs.getFach.Kuerzel == "E");
           sidList.Add(schueler.Id);
+          hinweise.Add(schueler.Name + ", " + schueler.Rufname + " wurde neu aufgenommen.");
         }
 
         CheckLegastheniker(schueler);
@@ -92,9 +98,12 @@ namespace diNo
       foreach (var schuelerId in sidList)
       {
         if (!klassenSIds.Contains(schuelerId))
-        {
-          
-          xls.RemoveSchueler(schuelerId);
+        {          
+          if (xls.RemoveSchueler(schuelerId))
+          {
+            Schueler schueler = new Schueler(schuelerId);
+            hinweise.Add(schueler.Name + ", " + schueler.Data.Rufname + " wurde gelöscht.");
+          }
         }
       }
     }
@@ -112,11 +121,8 @@ namespace diNo
       if ((sollteGesetztSein && !isVermerkGesetzt) || (!sollteGesetztSein && isVermerkGesetzt))
       {
         string textbaustein = sollteGesetztSein ? "neu gesetzt" : "gelöscht";
-        var result = MessageBox.Show("Bei " + schueler.Rufname + " " + schueler.Name + " wird der Legasthenievermerk "+ textbaustein + ". Sollte dies aus Ihrer Sicht nicht korrekt sein, wenden Sie sich bitte an einen Administrator.", "Information", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-        if (result != DialogResult.Cancel)
-        {
-          xls.SetLegasthenievermerk(schuelerObj.Id, sollteGesetztSein);
-        }
+        hinweise.Add("Bei " + schueler.Rufname + " " + schueler.Name + " wird der Legasthenievermerk "+ textbaustein + ". Sollte dies aus Ihrer Sicht nicht korrekt sein, wenden Sie sich bitte an das Sekretariat.");
+        xls.SetLegasthenievermerk(schuelerObj.Id, sollteGesetztSein);
       }
     }
 
@@ -197,6 +203,16 @@ namespace diNo
         i += 2;
         indexAP++;
       }
+    }
+
+    private void HinweiseAusgeben()
+    {
+      string s="";
+      foreach (var h in hinweise)
+      {
+        s += h + "\n";
+      }
+      MessageBox.Show(s + "\n\nKlicken Sie bei der nachfolgenden Frage auf Ja um obige Änderungen in Ihrer Notendatei zu übernehmen.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);    
     }
   }
 }

@@ -309,7 +309,7 @@ namespace diNo
       if (schnitt < 1)
           return 0;
       else 
-          return (byte) Math.Round(schnitt);
+          return (byte) Math.Round((double)schnitt,0,MidpointRounding.AwayFromZero);
     }
 
     public static byte BerechneZeugnisnote(decimal? jf,decimal? sap, decimal? map)

@@ -37,7 +37,10 @@ namespace diNo
     private object getSelectedObjects()
     {
       // Elternreihenfolge: usercontrol -> Tabpage -> pageControl -> Form Klassenansicht
-      return  ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
+      var obj =  ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
+      if (obj==null)
+        MessageBox.Show("Bitte zuerst einen Schüler oder eine/mehrere Klassen markieren.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
+      return obj;
     }
 
     private void btnFrm1_Click(object sender, EventArgs e)
@@ -48,7 +51,9 @@ namespace diNo
 
     private void btnAbiergebnisse_Click(object sender, EventArgs e)
     {
-      new ReportNotendruck(getSelectedObjects(),"diNo.rptAbiergebnisse.rdlc").Show();
+      var obj = getSelectedObjects();
+      if (obj!=null)
+        new ReportNotendruck(obj,"diNo.rptAbiergebnisse.rdlc").Show();
     }
 
     private void exportNoten_Click(object sender, EventArgs e)
@@ -103,7 +108,9 @@ namespace diNo
 
     private void btnNotenmitteilung_Click(object sender, EventArgs e)
     {      
-      new ReportNotendruck(getSelectedObjects(),"diNo.rptNotenmitteilungA5.rdlc").Show();
+      var obj = getSelectedObjects();
+      if (obj!=null)
+        new ReportNotendruck(obj,"diNo.rptNotenmitteilungA5.rdlc").Show();
     }
 
     private void btnBerechtigungen_Click(object sender, EventArgs e)
