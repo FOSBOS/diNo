@@ -212,7 +212,7 @@ namespace diNo
       {
         s += h + "\n";
       }
-      MessageBox.Show(s + "\n\nKlicken Sie bei der nachfolgenden Frage auf Ja um obige Änderungen in Ihrer Notendatei zu übernehmen.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);    
+      MessageBox.Show(s + "\n\nKlicken Sie bei der nachfolgenden Frage auf Ja um obige Änderungen in Ihrer Notendatei zu übernehmen.", Path.GetFileNameWithoutExtension(fileName), MessageBoxButtons.OK,MessageBoxIcon.Information);    
     }
   }
 }
