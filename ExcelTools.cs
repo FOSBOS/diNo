@@ -13,7 +13,7 @@ namespace diNo
   /// </summary>
   public class OpenExcel : IDisposable
   {
-
+    
     /// <summary>
     /// Konstruktor; öffnet die Exceldatei und verwaltet den Freigabemechanismus
     /// </summary>
@@ -32,7 +32,8 @@ namespace diNo
       catch (Exception exp)
       {
         log.Fatal("Fehler beim Öffnen der Excel-Datei " + fileName, exp);
-      }
+      }      
+      OpenExcel.excelApp.DisplayAlerts = false; // unterdrückt Meldungen, die von Excel kommen
     }
 
     /// <summary>
@@ -103,14 +104,15 @@ namespace diNo
         {
           try
           {
-            this.workbook.Close(this.UnsavedChanges, this.FileName, Type.Missing);
+            // wir speichern jetzt generell ohne Speichern, weil das jetzt von diNo direkt erzwungen wird.
+            this.workbook.Close(false /*this.UnsavedChanges*/, this.FileName, Type.Missing);
           }
           catch (COMException exp)
           {
             // dummerweise wird eine COMException ausgelöst, wenn jemand beim Speichern auf "Nein" klickt
             // schließe in diesem Fall ohne die Änderungen zu speichern
             log.Debug(exp);
-            this.workbook.Close(false, this.FileName, Type.Missing);
+            //this.workbook.Close(false, this.FileName, Type.Missing);
           }
 
           Marshal.ReleaseComObject(this.workbook);
@@ -202,7 +204,7 @@ namespace diNo
     }
 
     /// <summary>
-    /// Entfernt einen Schüler aus der Datei (Name und Id). Lässt seine Noten aber stehen.
+    /// Entfernt einen Schüler aus der Datei (nur Name). Lässt seine Noten aber stehen.
     /// </summary>
     /// <param name="schuelerId">die Id des Schülers.</param>
     public bool RemoveSchueler(int schuelerId)

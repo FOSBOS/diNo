@@ -404,7 +404,7 @@
       this.Controls.Add(this.tabControl1);
       this.Controls.Add(this.treeListView1);
       this.Name = "Klassenansicht";
-      this.Text = "Klassenansicht";
+      this.Text = "diNo";
       this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
       this.Load += new System.EventHandler(this.Klassenansicht_Load);
       this.tabControl1.ResumeLayout(false);

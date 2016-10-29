@@ -84,16 +84,19 @@ namespace diNo
       
       foreach (var schueler in klasse)
       {
+        // prüfen, ob neue Schüler dazugekommen sind
         if (!sidList.Contains(schueler.Id))
         {
           xls.AppendSchueler(schueler, kurs.getFach.Kuerzel == "F" || kurs.getFach.Kuerzel == "E");
           sidList.Add(schueler.Id);
           hinweise.Add(schueler.Name + ", " + schueler.Rufname + " wurde neu aufgenommen.");
         }
-
+        // prüfen, ob Schüler reaktiviert wurden (SID steht zwar drin, aber Name ist gelöscht)
+        else CheckAktiv(schueler);
         CheckLegastheniker(schueler);
       }
 
+      // prüfen, ob Schüler entfernt werden müssen
       var klassenSIds = klasse.Select(x => x.Id);
       foreach (var schuelerId in sidList)
       {
@@ -102,12 +105,16 @@ namespace diNo
           if (xls.RemoveSchueler(schuelerId))
           {
             Schueler schueler = new Schueler(schuelerId);
-            hinweise.Add(schueler.Name + ", " + schueler.Data.Rufname + " wurde gelöscht.");
+            hinweise.Add(schueler.Name + ", " + schueler.Data.Rufname + " hat die Klasse verlassen.");
           }
         }
       }
     }
 
+    private void CheckAktiv(diNoDataSet.SchuelerRow schueler)
+    {
+      // TODO: reaktivierte Schüler wieder mit Namen befüllen (kommt das oft vor?)
+    }
 
     /// <summary>
     /// Prüft, ob die Legasthenievermerke der Datenbank mit der Excel-Datei übereinstimmen.
@@ -212,7 +219,8 @@ namespace diNo
       {
         s += h + "\n";
       }
-      MessageBox.Show(s + "\n\nKlicken Sie bei der nachfolgenden Frage auf Ja um obige Änderungen in Ihrer Notendatei zu übernehmen.", Path.GetFileNameWithoutExtension(fileName), MessageBoxButtons.OK,MessageBoxIcon.Information);    
+      if (MessageBox.Show(s + "\n\nSollen obige Änderungen in Ihre Notendatei übernommen werden.", Path.GetFileNameWithoutExtension(fileName), MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) 
+        xls.workbook.Save();
     }
   }
 }
