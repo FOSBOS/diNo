@@ -6,10 +6,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>8.13563cm</Width>
+              <Width>8.9cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>9.58613cm</Width>
+              <Width>8.9cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -216,6 +216,7 @@
                         </Border>
                       </Style>
                     </Subreport>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -467,7 +468,7 @@
                   <GroupExpression>=Fields!Id.Value</GroupExpression>
                 </GroupExpressions>
                 <PageBreak>
-                  <BreakLocation>Between</BreakLocation>
+                  <BreakLocation>End</BreakLocation>
                 </PageBreak>
               </Group>
               <SortExpressions>
@@ -524,7 +525,7 @@
           <BreakLocation>End</BreakLocation>
         </PageBreak>
         <Height>8.13207cm</Height>
-        <Width>17.80114cm</Width>
+        <Width>17.87938cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -537,7 +538,7 @@
     <Height>3.21202in</Height>
     <Style />
   </Body>
-  <Width>7.00832in</Width>
+  <Width>7.03912in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

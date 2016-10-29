@@ -56,7 +56,7 @@
         </Paragraphs>
         <rd:DefaultName>Textbox7</rd:DefaultName>
         <Height>1.5875cm</Height>
-        <Width>9.23397cm</Width>
+        <Width>8.7cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -71,7 +71,7 @@
     <Height>0.64583in</Height>
     <Style />
   </Body>
-  <Width>3.63542in</Width>
+  <Width>8.7cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
