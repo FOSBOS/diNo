@@ -25,7 +25,7 @@ namespace diNo
     {
       foreach (int schuelerId in GetAlleGueltigenSchuelerIds())
       {
-        Schueler schueler = new Schueler(schuelerId);
+        Schueler schueler = Zugriff.Instance.SchuelerListe.Find(schuelerId);
 
         foreach (KeyValuePair<string, string> kvp in GetStringPropertyMapping())
         {

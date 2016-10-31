@@ -18,7 +18,7 @@ namespace diNo
     public int AnzahlSchueler { get; private set; }
 
     // folgende Nachschlagelisten dienen v.a. der Performance, damit die Objekte insgesamt nur 1x im Speicher angelegt werden müssen!
-    public Dictionary<int, Schueler> SchuelerListe = new Dictionary<int, Schueler>();
+    public Repository<Schueler> SchuelerListe = new Repository<Schueler>(Schueler.CreateSchueler);
     public Dictionary<int, Kurs> KursListe = new Dictionary<int, Kurs>();
     public Dictionary<int, string> LehrerListe = new Dictionary<int, string>(); // aktuell nicht verwendet
 
@@ -43,7 +43,7 @@ namespace diNo
       {
         Username = "FOSBOS\\msiegel";
       }
-      if (Username == "CLAUSPC\\Claus")
+      if (Username == "ClausPC\\Claus")
       {
         Username = "FOSBOS\\ckonrad";
       }
@@ -118,6 +118,7 @@ namespace diNo
         }        
         s.getKlasse = Klassen[index]; // dem Schüler die Klasseninstanz zuweisen, damit die nicht jedesmal neu erzeugt werden muss!
         Klassen[index].eigeneSchueler.Add(s); // und umgekehrt dieser Klasse den Schüler hinzufügen
+        SchuelerListe.Add(s); // Schüler ins Repository aufnehmen
       }
 
       // alles sortieren

@@ -11,7 +11,7 @@ namespace diNo
   /// <summary>
   /// Ein Schüler.
   /// </summary>
-  public class Schueler
+  public class Schueler : IRepositoryObject
   {
     private diNoDataSet.SchuelerRow data;   // nimmt SchülerRecordset auf
     private Klasse klasse;                  // Objektverweis zur Klasse dieses Schülers
@@ -33,6 +33,12 @@ namespace diNo
     {
       this.Id = s.Id;
       this.data = s;
+    }
+
+    // statische Methode für das Repository
+    public static Schueler CreateSchueler(int id)
+    {
+      return new Schueler(id);
     }
 
     /// <summary>
@@ -82,6 +88,11 @@ namespace diNo
     {
       get;
       internal set;
+    }
+
+    public int GetID()
+    {
+      return Id;
     }
 
     [OLVColumn(Title = "Rufname", Width = 100, DisplayIndex = 3)]

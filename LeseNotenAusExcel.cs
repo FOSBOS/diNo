@@ -104,7 +104,7 @@ namespace diNo
         {          
           if (xls.RemoveSchueler(schuelerId))
           {
-            Schueler schueler = new Schueler(schuelerId);
+            Schueler schueler = Zugriff.Instance.SchuelerListe.Find(schuelerId);
             hinweise.Add(schueler.Name + ", " + schueler.Data.Rufname + " hat die Klasse verlassen.");
           }
         }
@@ -219,7 +219,7 @@ namespace diNo
       {
         s += h + "\n";
       }
-      if (MessageBox.Show(s + "\n\nSollen obige Änderungen in Ihre Notendatei übernommen werden.", Path.GetFileNameWithoutExtension(fileName), MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) 
+      if (MessageBox.Show(s + "\nSollen obige Änderungen in Ihre Notendatei übernommen werden.", Path.GetFileNameWithoutExtension(fileName), MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) 
         xls.workbook.Save();
     }
   }

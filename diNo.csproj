@@ -107,6 +107,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Repository.cs" />
     <Compile Include="SchuelerverwaltungController.cs" />
     <Compile Include="UserControlAdministration.cs">
       <SubType>UserControl</SubType>

@@ -256,7 +256,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
 
       foreach (var s in alleSchueler)
       {
-        Schueler schueler = new Schueler(s.Id);
+        Schueler schueler = Zugriff.Instance.SchuelerListe.Find(s.Id);
 
         if (!klassen.Contains(schueler.getKlasse.Data.Bezeichnung))
         {
