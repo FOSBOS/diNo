@@ -32,35 +32,7 @@ namespace diNo
     ALLE = 15
   }
 
-  /// <summary>
-  /// FactoryClass, die eine Menge von Klassen je nach Auswahlkriterien liefert
-  /// </summary>
-  public static class KlassenController
-  {
-    private static IList<Klasse> Fill(diNoDataSet.KlasseDataTable klassen)
-    {
-      IList<Klasse> res = new List<Klasse>();
-      foreach (var klasse in klassen)
-      {
-        res.Add(new Klasse(klasse));
-      }
-      return res;
-    }
-
-    public static IList<Klasse> AlleKlassen()
-    {
-      return Fill(new KlasseTableAdapter().GetData());
-
-    }
-
-    public static IList<Klasse> KlassenProLehrer(int lehrerId)
-    {
-      return Fill(new KlasseTableAdapter().GetDataByLehrerId(lehrerId));
-    }
-
-  }
-
-  public class Klasse
+  public class Klasse :  IRepositoryObject
   {
     private diNoDataSet.KlasseRow data;
     private diNoDataSet.SchuelerDataTable schueler;
@@ -82,10 +54,20 @@ namespace diNo
       }
     }
 
+    public int GetId()
+    {
+      return data.Id;
+    }
+
     public Klasse(diNoDataSet.KlasseRow klasseR)
     {
       eigeneSchueler = new List<Schueler>();
       data = klasseR;
+    }
+
+    public static Klasse CreateKlasse(int id)
+    {
+      return new Klasse(id);
     }
 
     public diNoDataSet.KlasseRow Data
@@ -210,7 +192,10 @@ namespace diNo
           // TODO: Wie kann es sein, dass in der BVkST_S manche Kurse doppelt existieren? 
           //       Gibt es hier ein Problem beim Import, z. B. wegen der Lehrertandems?
           //       Und wieso lässt die Datenbank dies überhaupt zu?
-            kurse.Add(new Kurs(kursRow));
+            Kurs k = new Kurs(kursRow);
+            kurse.Add(k);
+            // Kurse werden normalerweise nur in einer Klasse angeboten, daher hier ins Rep aufnehmen
+            Zugriff.Instance.KursRep.Add(k); 
           }
         }
         return kurse;
@@ -235,12 +220,12 @@ namespace diNo
   /// <summary>
   /// Ein Kurs.
   /// </summary>
-  public class Kurs
+  public class Kurs : IRepositoryObject
   {
     private diNoDataSet.KursRow data;
     private diNoDataSet.SchuelerDataTable schueler;
     private Fach fach;
-    private diNoDataSet.LehrerRow lehrer;
+    private Lehrer lehrer;
     public bool schreibtKA;
 
 
@@ -266,6 +251,11 @@ namespace diNo
       setSchreibtKA();
     }
 
+    public static Kurs CreateKurs(int id)
+    {
+      return new Kurs(id);
+    }
+
     /// <summary>
     /// Id des Kurses in der Datenbank.
     /// </summary>
@@ -273,6 +263,11 @@ namespace diNo
     {
       get;
       private set;
+    }
+
+    public int GetId()
+    {
+      return Id;
     }
 
     public diNoDataSet.KursRow Data
@@ -329,23 +324,21 @@ namespace diNo
       {
         if (fach == null)
         {
-          fach = new Fach(data.FachId);
+          fach = Zugriff.Instance.FachRep.Find(data.FachId);
         }
         return fach;
       }
     }
 
-    public diNoDataSet.LehrerRow getLehrer
+    public Lehrer getLehrer
     {
       get
       {
         if (lehrer == null && !data.IsLehrerIdNull())
         {
-          lehrer = new LehrerTableAdapter().GetDataById(data.LehrerId)[0];
+          lehrer = Zugriff.Instance.LehrerRep.Find(data.LehrerId);
         }
-        return lehrer;
-
-        // return data.LehrerRow; so sollte es eigentlich gehen
+        return lehrer;        
       }
     }
 
@@ -367,9 +360,9 @@ namespace diNo
 
     public void SetzeNeuenLehrer(Lehrer lehrer)
     {
-      this.data.LehrerId = lehrer.Id;
+      data.LehrerId = lehrer.Id;
       (new KursTableAdapter()).Update(this.data);
-      this.lehrer = lehrer.Data;
+      lehrer = Zugriff.Instance.LehrerRep.Find(lehrer.Id);
     }
   }
 }

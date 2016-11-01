@@ -43,7 +43,7 @@ namespace diNo
 
             if (IsExportNecessary(fachKuerzel, schueler))
             {
-              var lehrer = new Kurs(fachNote.kursId).getLehrer;
+              var lehrer = Zugriff.Instance.KursRep.Find(fachNote.kursId).getLehrer;
               string lehrerKuerzel = lehrer == null ? "" : lehrer.Kuerzel;
               var noteImFach = schueler.getNoten.getFach(fachNote.kursId);
               var note = noteImFach.getRelevanteNote(Zeitpunkt.Jahresende);

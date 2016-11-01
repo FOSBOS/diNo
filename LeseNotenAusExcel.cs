@@ -47,7 +47,7 @@ namespace diNo
         sidList.Add(sid);
       }
 
-      kurs = new Kurs(Convert.ToInt32(xls.ReadValue(xls.sid, CellConstant.KursId)));
+      kurs = Zugriff.Instance.KursRep.Find(Convert.ToInt32(xls.ReadValue(xls.sid, CellConstant.KursId)));
 
       Status("Synchronisiere Datei " + afileName);
       Synchronize();
@@ -104,7 +104,7 @@ namespace diNo
         {          
           if (xls.RemoveSchueler(schuelerId))
           {
-            Schueler schueler = Zugriff.Instance.SchuelerListe.Find(schuelerId);
+            Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
             hinweise.Add(schueler.Name + ", " + schueler.Data.Rufname + " hat die Klasse verlassen.");
           }
         }

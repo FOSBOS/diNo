@@ -352,7 +352,7 @@ namespace diNo
     /// </summary>
     public byte? getRelevanteNote(Zeitpunkt z)
     {
-      if (new Kurs(kursId).getLehrer == null)
+      if (Zugriff.Instance.KursRep.Find(kursId).getLehrer == null)
       {
         // wenn der Kurs keinen Lehrer hat, handelt es sich vermutlich um eine Note aus der 11ten Klasse
         return getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
@@ -388,8 +388,8 @@ namespace diNo
             {
                 if (fach == null)
                 {
-                    Kurs k = new Kurs(kursId);
-                    fach = new Fach(k.Data.FachId);
+                    Kurs k = Zugriff.Instance.KursRep.Find(kursId);
+                    fach = Zugriff.Instance.FachRep.Find(k.Data.FachId);
                 }
                 return fach;
             }

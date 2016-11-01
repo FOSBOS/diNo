@@ -90,7 +90,7 @@ namespace diNo
       internal set;
     }
 
-    public int GetID()
+    public int GetId()
     {
       return Id;
     }
@@ -177,7 +177,7 @@ namespace diNo
       {
         if (klasse == null)
         {
-          klasse = new Klasse(this.data.KlasseId);
+          klasse = Zugriff.Instance.KlassenRep.Find(data.KlasseId);
         }
 
         return klasse;

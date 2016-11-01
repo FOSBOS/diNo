@@ -12,17 +12,18 @@ namespace diNo
 
     public string Username { get; private set; }
     public Lehrer lehrer = null; // angemeldeter Lehrer
-    public List<Klasse> Klassen { get; private set; }
+    public List<Klasse> Klassen { get; private set; } // Liste der angezeigten Klassen
     public List<Fach> eigeneFaecher { get; private set; }
     public Klasse eigeneKlasse { get; private set; } // Verweis auf die Klasse, in der der User Klassenleiter ist
     public int AnzahlSchueler { get; private set; }
 
     // folgende Nachschlagelisten dienen v.a. der Performance, damit die Objekte insgesamt nur 1x im Speicher angelegt werden müssen!
-    public Repository<Schueler> SchuelerListe = new Repository<Schueler>(Schueler.CreateSchueler);
-    public Dictionary<int, Kurs> KursListe = new Dictionary<int, Kurs>();
-    public Dictionary<int, string> LehrerListe = new Dictionary<int, string>(); // aktuell nicht verwendet
-
-
+    public Repository<Schueler> SchuelerRep = new Repository<Schueler>(Schueler.CreateSchueler);
+    public Repository<Kurs> KursRep = new Repository<Kurs>(Kurs.CreateKurs);
+    public Repository<Klasse> KlassenRep = new Repository<Klasse>(Klasse.CreateKlasse);
+    public Repository<Lehrer> LehrerRep = new Repository<Lehrer>(Lehrer.CreateLehrer); // aktuell nicht verwendet
+    public Repository<Fach> FachRep = new Repository<Fach>(Fach.CreateFach);
+    
     private diNoDataSet.GlobaleKonstantenRow globaleKonstanten;
     public int Schuljahr { get { return globaleKonstanten.Schuljahr; } }
     public Sperrtyp Sperre { get { return (Sperrtyp)globaleKonstanten.Sperre; } }
@@ -87,9 +88,6 @@ namespace diNo
       }
     }
    
-    
-
-
     public void LoadSchueler(bool nurAktive=true)
     {
       List<int> klassenIds = new List<int>(); // für schnelles Auffinden
@@ -118,7 +116,7 @@ namespace diNo
         }        
         s.getKlasse = Klassen[index]; // dem Schüler die Klasseninstanz zuweisen, damit die nicht jedesmal neu erzeugt werden muss!
         Klassen[index].eigeneSchueler.Add(s); // und umgekehrt dieser Klasse den Schüler hinzufügen
-        SchuelerListe.Add(s); // Schüler ins Repository aufnehmen
+        SchuelerRep.Add(s); // Schüler ins Repository aufnehmen
       }
 
       // alles sortieren
@@ -139,6 +137,7 @@ namespace diNo
       {
         Fach f = new Fach(fRow);
         eigeneFaecher.Add(f);
+        FachRep.Add(f);
       }
     }
 
@@ -150,7 +149,7 @@ namespace diNo
 
       foreach (var r in dt)
       {
-        LehrerListe.Add(r.Id, r.Name + " (" + r.Kuerzel + ")");
+        LehrerRep.Add(new Lehrer(r));        
       }
     }
 

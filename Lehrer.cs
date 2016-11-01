@@ -6,7 +6,7 @@ using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
-  public class Lehrer
+  public class Lehrer : IRepositoryObject
   {
     private diNoDataSet.LehrerRow data;
     public Klasse KlassenleiterVon=null;
@@ -29,6 +29,19 @@ namespace diNo
     {
       Init(r);
     }
+
+    public static Lehrer CreateLehrer(int id)
+    {
+      return new Lehrer(id);
+    }
+
+    public int GetId()
+    {
+      return data.Id;
+    }
+
+    public string Kuerzel
+    { get {return data.Kuerzel; } }
 
     public string Name
     {
@@ -93,7 +106,7 @@ namespace diNo
     private void SetKlassenleiter()
     {
       var rst = new KlasseTableAdapter().GetDataByKlassenleiterId(Id);
-      if (rst.Count>0) KlassenleiterVon = new Klasse(rst[0]);
+      if (rst.Count>0) KlassenleiterVon = Zugriff.Instance.KlassenRep.Find(rst[0].Id);
     }
 
     public string KompletterName

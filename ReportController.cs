@@ -101,7 +101,7 @@ namespace diNo
         int.TryParse(e.Parameters[0].Values[0],out schuelerId);
         if (schuelerId>0)
         {
-          Schueler schueler = Zugriff.Instance.SchuelerListe.Find(schuelerId);
+          Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
           if (subrpt=="subrptFachSchuelerNoten" || subrpt=="subrptFachSchuelerNoten11Klasse")
           {
             IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(false);

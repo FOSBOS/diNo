@@ -8,14 +8,14 @@ namespace diNo
   // alle Repository-Objekte müssen dieses Interface implementieren. Es liefert die ID des Objekts
   public interface IRepositoryObject
   {
-    int GetID();    
+    int GetId();    
   }
   
   // Schüler, Kurse, Klassen, ... sollen effizient verwaltet werden, 
   // indem sie nur einmal aus der DB geladen werden
   public class Repository<T> where T : IRepositoryObject
   {
-    public Dictionary<int, T> Liste;
+    private Dictionary<int, T> Liste;
     public delegate T CreateObj(int id); // Methode, die ein Objekt vom Typ T mit dieser ID erzeugt
     CreateObj konstruktorT;              // entspricht z.B.  new Schueler(id)
 
@@ -27,7 +27,14 @@ namespace diNo
     
     public void Add(T obj)
     {
-      Liste.Add(obj.GetID(),obj);
+      try
+      {
+        Liste.Add(obj.GetId(),obj);
+      }
+      catch
+      {
+        ; // wenn das Objekt schon drin ist, ist es auch egal
+      }
     }
 
     public T Find(int id)
@@ -43,8 +50,12 @@ namespace diNo
         res = konstruktorT(id);
         Add(res);
         return res;        
-      }
-        
+      }        
+    }
+
+    public void Clear()
+    {
+      Liste.Clear();
     }
   }
 }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace diNo
 {
-    public class Fach
+    public class Fach :IRepositoryObject
     {
         private diNoDataSet.FachRow data;
 
@@ -29,15 +29,24 @@ namespace diNo
           data = f;
         }
 
-        public int Id
-        {
-            get { return this.data.Id; }
-        }
+    public static Fach CreateFach(int id)
+    {
+      return new Fach(id);
+    }
 
-        public string Bezeichnung
-        {
-            get { return this.data.Bezeichnung; }
-        }
+    public int Id
+    {
+        get { return this.data.Id; }
+    }
+
+    public int GetId()
+    {
+      return Id;
+    }
+    public string Bezeichnung
+    {
+        get { return this.data.Bezeichnung; }
+    }
 
         public string Kuerzel
         {
@@ -57,6 +66,7 @@ namespace diNo
           else if (jg == Jahrgangsstufe.Elf || jg == Jahrgangsstufe.Vorkurs)
           {
             if (IstSAPFach(zweig)) z=2;
+
           }
           else // 12./13. Klasse
           {

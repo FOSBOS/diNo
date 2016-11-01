@@ -36,7 +36,7 @@ namespace diNo.OmnisDB
             continue;
           }
 
-          Schueler schueler = Zugriff.Instance.SchuelerListe.Find(schuelerId);
+          Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
           if (BrauchtZeugnis(schueler, zeitpunkt))
           {
             zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));

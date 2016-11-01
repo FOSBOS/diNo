@@ -238,7 +238,7 @@ namespace diNo
       //List<string> faecherOhneNoten = new List<string>(); 
       foreach (var fachNoten in noten.alleFaecher)
       {
-        Kurs kurs = new Kurs(fachNoten.kursId);
+        Kurs kurs = Zugriff.Instance.KursRep.Find(fachNoten.kursId);
         if (contr.modus == NotenCheckModus.EigeneNotenVollstaendigkeit && (kurs.getLehrer == null || Zugriff.Instance.lehrer.Id != kurs.getLehrer.Id))
           continue;
 
@@ -264,7 +264,7 @@ namespace diNo
         bool einstuendig = fachNoten.getFach.IstEinstuendig(schueler.getKlasse.Jahrgangsstufe,schueler.getKlasse.Schulart);
         int noetigeAnzahlEchteMdl = (einstuendig ? 1 : 2);
         bool meldungKA=false, meldungMdl=false, meldungSA=false;
-        Kurs derKurs = new Kurs(fachNoten.kursId);
+        Kurs derKurs = Zugriff.Instance.KursRep.Find(fachNoten.kursId);
         if (derKurs.getLehrer == null)
         {
           // vermutlich ein Dummy-Kurs, der aus der elften Klasse übernommen wurde. Prüfe nur Jahresfortgang und Zeugnisnote
