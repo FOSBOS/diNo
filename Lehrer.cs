@@ -9,7 +9,8 @@ namespace diNo
   public class Lehrer : IRepositoryObject
   {
     private diNoDataSet.LehrerRow data;
-    public Klasse KlassenleiterVon=null;
+    private bool KlassenleiterAbfragen=true;
+    private Klasse klassenleiterVon=null;
     public IList<Rolle> rollen;
 
     public Lehrer(int id)
@@ -51,7 +52,6 @@ namespace diNo
     private void Init(diNoDataSet.LehrerRow row)
     {
       this.data = row;
-      SetKlassenleiter();
       SetRollen();
     }
 
@@ -103,11 +103,16 @@ namespace diNo
     public int Id
     { get { return data.Id; } }
 
-    private void SetKlassenleiter()
-    {
-      var rst = new KlasseTableAdapter().GetDataByKlassenleiterId(Id);
-      if (rst.Count>0) KlassenleiterVon = Zugriff.Instance.KlassenRep.Find(rst[0].Id);
-    }
+    public Klasse KlassenleiterVon
+    { get { // übliche Technik funktioniert nicht ganz, weil KL auch null sein kann.
+        if (KlassenleiterAbfragen)          
+        {
+          var rst = new KlasseTableAdapter().GetDataByKlassenleiterId(Id);
+          if (rst.Count>0) klassenleiterVon = Zugriff.Instance.KlassenRep.Find(rst[0].Id);
+          KlassenleiterAbfragen = false;
+        }
+        return klassenleiterVon;
+    } }
 
     public string KompletterName
     {

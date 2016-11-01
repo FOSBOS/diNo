@@ -133,10 +133,9 @@ public static class Faecherkanon
         case "T": return Zweig.Technik;
         case "WVR":
         case "W":
-          return Zweig.Wirtschaft;
-        case "V": return Zweig.None; //Vorklasse FOS ohne Zweigzuordnung
+          return Zweig.Wirtschaft;        
         case "A": return Zweig.Agrar;
-        default: throw new InvalidOperationException("unbekannter Zweig " + zweig);
+        default: return Zweig.None; //Vorklasse FOS ohne Zweigzuordnung
       }
     }
 

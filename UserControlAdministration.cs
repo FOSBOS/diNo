@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
+using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
   public partial class UserControlAdministration : UserControl
   {
     private Schueler schueler;
+    private diNoDataSet.GlobaleKonstantenRow konstanten;
 
     public UserControlAdministration()
     {
@@ -15,6 +17,14 @@ namespace diNo
         groupBoxBerechtigungen.Visible = false;
         groupBoxImport.Visible = false;
         groupBoxExport.Visible = false;
+        groupBoxEinstellungen.Visible = false;
+      }
+      else
+      {        
+        konstanten = Zugriff.Instance.globaleKonstanten;
+        chkSperre.Checked = konstanten.Sperre == 1;
+        edSchuljahr.Text = konstanten.Schuljahr.ToString();
+        comboBoxZeitpunkt.SelectedIndex = konstanten.aktZeitpunkt-1;            
       }
     }
 
@@ -137,6 +147,14 @@ namespace diNo
 
         s.AddVorkommnis(Vorkommnisart.Attestpflicht,"", false);
       }
+    }
+
+    private void btnSave_Click(object sender, EventArgs e)
+    {
+      konstanten.Sperre = chkSperre.Checked ? 1 : 0;
+      konstanten.Schuljahr = int.Parse(edSchuljahr.Text);
+      konstanten.aktZeitpunkt = comboBoxZeitpunkt.SelectedIndex+1;
+      (new GlobaleKonstantenTableAdapter()).Update(konstanten);
     }
   }
 }

@@ -30,6 +30,7 @@
     {
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
+      this.btnAttestpflicht = new System.Windows.Forms.Button();
       this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.btnAbiergebnisse = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
@@ -43,11 +44,18 @@
       this.groupBoxBerechtigungen = new System.Windows.Forms.GroupBox();
       this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.btnKurseLehrer = new System.Windows.Forms.Button();
-      this.btnAttestpflicht = new System.Windows.Forms.Button();
+      this.groupBoxEinstellungen = new System.Windows.Forms.GroupBox();
+      this.label1 = new System.Windows.Forms.Label();
+      this.edSchuljahr = new System.Windows.Forms.TextBox();
+      this.btnSave = new System.Windows.Forms.Button();
+      this.chkSperre = new System.Windows.Forms.CheckBox();
+      this.comboBoxZeitpunkt = new System.Windows.Forms.ComboBox();
+      this.label2 = new System.Windows.Forms.Label();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
       this.groupBoxBerechtigungen.SuspendLayout();
+      this.groupBoxEinstellungen.SuspendLayout();
       this.SuspendLayout();
       // 
       // groupBoxAnalyse
@@ -70,6 +78,16 @@
       this.groupBoxDrucken.TabIndex = 3;
       this.groupBoxDrucken.TabStop = false;
       this.groupBoxDrucken.Text = "Drucken";
+      // 
+      // btnAttestpflicht
+      // 
+      this.btnAttestpflicht.Location = new System.Drawing.Point(21, 106);
+      this.btnAttestpflicht.Name = "btnAttestpflicht";
+      this.btnAttestpflicht.Size = new System.Drawing.Size(102, 23);
+      this.btnAttestpflicht.TabIndex = 2;
+      this.btnAttestpflicht.Text = "Attestpflicht";
+      this.btnAttestpflicht.UseVisualStyleBackColor = true;
+      this.btnAttestpflicht.Click += new System.EventHandler(this.btnAttestpflicht_Click);
       // 
       // btnNotenmitteilung
       // 
@@ -206,20 +224,88 @@
       this.btnKurseLehrer.UseVisualStyleBackColor = true;
       this.btnKurseLehrer.Click += new System.EventHandler(this.btnKurseLehrer_Click);
       // 
-      // btnAttestpflicht
+      // groupBoxEinstellungen
       // 
-      this.btnAttestpflicht.Location = new System.Drawing.Point(21, 106);
-      this.btnAttestpflicht.Name = "btnAttestpflicht";
-      this.btnAttestpflicht.Size = new System.Drawing.Size(102, 23);
-      this.btnAttestpflicht.TabIndex = 2;
-      this.btnAttestpflicht.Text = "Attestpflicht";
-      this.btnAttestpflicht.UseVisualStyleBackColor = true;
-      this.btnAttestpflicht.Click += new System.EventHandler(this.btnAttestpflicht_Click);
+      this.groupBoxEinstellungen.Controls.Add(this.label2);
+      this.groupBoxEinstellungen.Controls.Add(this.comboBoxZeitpunkt);
+      this.groupBoxEinstellungen.Controls.Add(this.label1);
+      this.groupBoxEinstellungen.Controls.Add(this.edSchuljahr);
+      this.groupBoxEinstellungen.Controls.Add(this.btnSave);
+      this.groupBoxEinstellungen.Controls.Add(this.chkSperre);
+      this.groupBoxEinstellungen.Location = new System.Drawing.Point(555, 268);
+      this.groupBoxEinstellungen.Name = "groupBoxEinstellungen";
+      this.groupBoxEinstellungen.Size = new System.Drawing.Size(250, 226);
+      this.groupBoxEinstellungen.TabIndex = 6;
+      this.groupBoxEinstellungen.TabStop = false;
+      this.groupBoxEinstellungen.Text = "Globale Einstellungen";
+      // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(13, 23);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(153, 13);
+      this.label1.TabIndex = 3;
+      this.label1.Text = "Schuljahresbeginn (Jahreszahl)";
+      // 
+      // edSchuljahr
+      // 
+      this.edSchuljahr.Location = new System.Drawing.Point(16, 39);
+      this.edSchuljahr.Name = "edSchuljahr";
+      this.edSchuljahr.Size = new System.Drawing.Size(100, 20);
+      this.edSchuljahr.TabIndex = 2;
+      // 
+      // btnSave
+      // 
+      this.btnSave.Location = new System.Drawing.Point(16, 187);
+      this.btnSave.Name = "btnSave";
+      this.btnSave.Size = new System.Drawing.Size(100, 23);
+      this.btnSave.TabIndex = 1;
+      this.btnSave.Text = "Übernehmen";
+      this.btnSave.UseVisualStyleBackColor = true;
+      this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+      // 
+      // chkSperre
+      // 
+      this.chkSperre.AutoSize = true;
+      this.chkSperre.Location = new System.Drawing.Point(16, 68);
+      this.chkSperre.Name = "chkSperre";
+      this.chkSperre.Size = new System.Drawing.Size(165, 17);
+      this.chkSperre.TabIndex = 0;
+      this.chkSperre.Text = "Notenschluss (Abgabesperre)";
+      this.chkSperre.UseVisualStyleBackColor = true;
+      // 
+      // comboBoxZeitpunkt
+      // 
+      this.comboBoxZeitpunkt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.comboBoxZeitpunkt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.comboBoxZeitpunkt.FormattingEnabled = true;
+      this.comboBoxZeitpunkt.Items.AddRange(new object[] {
+            "Probezeit BOS",
+            "Halbjahr",
+            "1. PA",
+            "2. PA",
+            "3. PA",
+            "Jahresende"});
+      this.comboBoxZeitpunkt.Location = new System.Drawing.Point(16, 108);
+      this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";
+      this.comboBoxZeitpunkt.Size = new System.Drawing.Size(182, 24);
+      this.comboBoxZeitpunkt.TabIndex = 13;
+      // 
+      // label2
+      // 
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(17, 92);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(95, 13);
+      this.label2.TabIndex = 14;
+      this.label2.Text = "aktueller Zeitpunkt";
       // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.groupBoxEinstellungen);
       this.Controls.Add(this.groupBoxBerechtigungen);
       this.Controls.Add(this.groupBoxExport);
       this.Controls.Add(this.groupBoxImport);
@@ -231,6 +317,8 @@
       this.groupBoxExport.ResumeLayout(false);
       this.groupBoxImport.ResumeLayout(false);
       this.groupBoxBerechtigungen.ResumeLayout(false);
+      this.groupBoxEinstellungen.ResumeLayout(false);
+      this.groupBoxEinstellungen.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -253,5 +341,12 @@
     private System.Windows.Forms.Button btnNotenmitteilung;
     private System.Windows.Forms.Button btnBerechtigungen;
     private System.Windows.Forms.Button btnAttestpflicht;
+    private System.Windows.Forms.GroupBox groupBoxEinstellungen;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.TextBox edSchuljahr;
+    private System.Windows.Forms.Button btnSave;
+    private System.Windows.Forms.CheckBox chkSperre;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.ComboBox comboBoxZeitpunkt;
   }
 }

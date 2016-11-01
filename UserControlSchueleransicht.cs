@@ -19,6 +19,11 @@ namespace diNo
       InitializeComponent();
       SchuelerverwaltungController.InitDateTimePicker(this.dateTimeProbezeit);
       SchuelerverwaltungController.InitDateTimePicker(this.dateTimeAustritt);
+      btnSave.Visible = Zugriff.Instance.HatVerwaltungsrechte;
+      panelSekretariat.Visible = btnSave.Visible;
+      btnResetProbezeit.Visible = btnSave.Visible;
+      labelAustrittHinweis.Visible = btnSave.Visible;
+      pnlAdmin.Visible = Zugriff.Instance.HatRolle(Rolle.Admin);
     }
 
     public Schueler Schueler
@@ -66,12 +71,7 @@ namespace diNo
           textBoxNachname.Text = schueler.Data.Name;
           textBoxVorname.Text = schueler.Data.Vorname;
           textBoxRufname.Text = schueler.Data.Rufname;
-
-          btnSave.Visible = Zugriff.Instance.HatVerwaltungsrechte;
-          panelSekretariat.Visible = btnSave.Visible;
-          btnResetProbezeit.Visible = btnSave.Visible;
-          labelAustrittHinweis.Visible = btnSave.Visible;
-
+          textBoxAR.Text = schueler.Data.Ausbildungsrichtung;
         }
         /*
         else
@@ -124,6 +124,7 @@ namespace diNo
       schueler.Data.Name = textBoxNachname.Text;
       schueler.Data.Vorname = textBoxVorname.Text;
       schueler.Data.Rufname = textBoxRufname.Text;
+      schueler.Data.Ausbildungsrichtung = textBoxAR.Text;
 
       schueler.Save();
     }

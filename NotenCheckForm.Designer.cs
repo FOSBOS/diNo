@@ -36,7 +36,6 @@
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.comboBoxCheckModus = new System.Windows.Forms.ComboBox();
-      this.btnSetVorbelegung = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // imageList1
@@ -127,24 +126,11 @@
       this.comboBoxCheckModus.Size = new System.Drawing.Size(218, 24);
       this.comboBoxCheckModus.TabIndex = 17;
       // 
-      // btnSetVorbelegung
-      // 
-      this.btnSetVorbelegung.ImageKey = "(Keine)";
-      this.btnSetVorbelegung.Location = new System.Drawing.Point(25, 110);
-      this.btnSetVorbelegung.Name = "btnSetVorbelegung";
-      this.btnSetVorbelegung.Size = new System.Drawing.Size(111, 23);
-      this.btnSetVorbelegung.TabIndex = 19;
-      this.btnSetVorbelegung.Text = "Vorbelegung setzen";
-      this.btnSetVorbelegung.UseVisualStyleBackColor = true;
-      this.btnSetVorbelegung.Visible = false;
-      this.btnSetVorbelegung.Click += new System.EventHandler(this.btnSetVorbelegung_Click);
-      // 
       // NotenCheckForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(329, 222);
-      this.Controls.Add(this.btnSetVorbelegung);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.comboBoxCheckModus);
       this.Controls.Add(this.label1);
@@ -167,6 +153,5 @@
         private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.ComboBox comboBoxCheckModus;
-    private System.Windows.Forms.Button btnSetVorbelegung;
   }
 }

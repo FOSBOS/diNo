@@ -31,7 +31,6 @@ namespace diNo
       {
         NotenCheckModusDict.Add(NotenCheckModus.VorkommnisseErzeugen,"Vorkommnisse erzeugen");
         NotenCheckModusDict.Add(NotenCheckModus.BerechnungenSpeichern,"Berechnungen speichern");
-        btnSetVorbelegung.Visible = true;
       }   
       comboBoxCheckModus.BeginUpdate();
       comboBoxCheckModus.DataSource = NotenCheckModusDict.ToList();
@@ -102,11 +101,6 @@ namespace diNo
     private Zeitpunkt GetZeitpunkt()
     {
       return (Zeitpunkt)(comboBoxZeitpunkt.SelectedIndex+1);
-    }
-
-    private void btnSetVorbelegung_Click(object sender, EventArgs e)
-    {
-      Zugriff.Instance.aktZeitpunkt = (int) GetZeitpunkt();   
     }
   }
 }

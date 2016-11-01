@@ -24,17 +24,12 @@ namespace diNo
     public Repository<Lehrer> LehrerRep = new Repository<Lehrer>(Lehrer.CreateLehrer); // aktuell nicht verwendet
     public Repository<Fach> FachRep = new Repository<Fach>(Fach.CreateFach);
     
-    private diNoDataSet.GlobaleKonstantenRow globaleKonstanten;
+    public diNoDataSet.GlobaleKonstantenRow globaleKonstanten;
     public int Schuljahr { get { return globaleKonstanten.Schuljahr; } }
     public Sperrtyp Sperre { get { return (Sperrtyp)globaleKonstanten.Sperre; } }
+    public int aktZeitpunkt { get { return globaleKonstanten.aktZeitpunkt; } }
     public bool SiehtAlles{ get; private set; }
     public bool HatVerwaltungsrechte{ get; private set; }
-
-    public int aktZeitpunkt
-    {
-      get { return globaleKonstanten.aktZeitpunkt; }
-      set { globaleKonstanten.aktZeitpunkt = value; SaveGlobaleKonstanten(); }
-    }
 
     private Zugriff()
     {
@@ -59,12 +54,10 @@ namespace diNo
       }
       SiehtAlles = (this.lehrer.HatRolle(Rolle.Admin) || this.lehrer.HatRolle(Rolle.Sekretariat) || this.lehrer.HatRolle(Rolle.Schulleitung));
       HatVerwaltungsrechte = lehrer.HatRolle(Rolle.Admin) || lehrer.HatRolle(Rolle.Sekretariat);      
-    
-   
 
       // LoadSchueler(); erst in Klassenansicht, wegen Parameter nurAktive
       LoadFaecher();
-      // LoadLehrer(); wird aktuell nicht benötigt
+      LoadLehrer();
       LoadGlobaleKonstanten();
     }
 
@@ -106,17 +99,22 @@ namespace diNo
       AnzahlSchueler = sListe.Count;
       foreach (var sRow in sListe)
       {
+        Klasse k;
         Schueler s = new Schueler(sRow);
-        int index = klassenIds.IndexOf(sRow.KlasseId);
-        if (index < 0) // Klasse kam bis jetzt nicht vor, also anlegen
-        {
-          klassenIds.Add(sRow.KlasseId);
-          Klassen.Add(s.getKlasse);
-          index = klassenIds.Count - 1;
-        }        
-        s.getKlasse = Klassen[index]; // dem Schüler die Klasseninstanz zuweisen, damit die nicht jedesmal neu erzeugt werden muss!
-        Klassen[index].eigeneSchueler.Add(s); // und umgekehrt dieser Klasse den Schüler hinzufügen
         SchuelerRep.Add(s); // Schüler ins Repository aufnehmen
+
+        if (KlassenRep.Contains(sRow.KlasseId))
+        {
+          k = KlassenRep.Find(sRow.KlasseId);
+        }
+        else
+        {
+          k = new Klasse(sRow.KlasseId);
+          Klassen.Add(k);
+          KlassenRep.Add(k);
+        }
+        s.getKlasse = k; // dem Schüler die Klasseninstanz zuweisen, damit die nicht jedesmal neu erzeugt werden muss!
+        k.eigeneSchueler.Add(s); // und umgekehrt dieser Klasse den Schüler hinzufügen        
       }
 
       // alles sortieren
@@ -156,11 +154,6 @@ namespace diNo
     private void LoadGlobaleKonstanten()
     {
       globaleKonstanten = new GlobaleKonstantenTableAdapter().GetData()[0];
-    }
-
-    private void SaveGlobaleKonstanten()
-    {
-      new GlobaleKonstantenTableAdapter().Update(globaleKonstanten);
     }
 
     // Lädt die Schüler in den Speicher

@@ -63,9 +63,12 @@ namespace diNo
               alleNotenchecks.Add(new MAPChecker(this));
         }
       
+        // Klassenweise Vorauswahl, damit weniger Schüler einzeln erst analysiert werden müssen.
         private void KlasseInNotenpruefungAufnehmen(Klasse k)
         {
-            if (k.Jahrgangsstufe>=Jahrgangsstufe.Zwoelf && zeitpunkt<=Zeitpunkt.DrittePA || 
+            if (zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS || 
+                zeitpunkt==Zeitpunkt.ProbezeitBOS && k.Jahrgangsstufe == Jahrgangsstufe.Vorklasse ||
+                k.Jahrgangsstufe>=Jahrgangsstufe.Zwoelf && zeitpunkt<=Zeitpunkt.DrittePA || 
                 k.Jahrgangsstufe<Jahrgangsstufe.Zwoelf && zeitpunkt==Zeitpunkt.Jahresende)
             {
               zuPruefendeKlassen.Add(k);

@@ -53,6 +53,11 @@ namespace diNo
       }        
     }
 
+    public bool Contains(int id)
+    {
+      return Liste.ContainsKey(id);
+    }
+
     public void Clear()
     {
       Liste.Clear();
