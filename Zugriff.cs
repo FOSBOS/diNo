@@ -33,6 +33,7 @@ namespace diNo
 
     private Zugriff()
     {
+      Klassen = new List<Klasse>();
       Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
       // TODO: Username ToUpper verwenden, dann muss aber die DB passen
       if (Username == "Markus-PC\\Markus")
@@ -73,6 +74,16 @@ namespace diNo
       }
     }
 
+    public void Refresh(bool nurAktive)
+    {
+      SchuelerRep.Clear();
+      KlassenRep.Clear();
+      KursRep.Clear();
+      Klassen.Clear();
+      eigeneKlasse = null;
+      LoadSchueler(nurAktive);
+    }
+
     public bool IstNurNormalerLehrer
     {
       get
@@ -82,9 +93,7 @@ namespace diNo
     }
    
     public void LoadSchueler(bool nurAktive=true)
-    {
-      List<int> klassenIds = new List<int>(); // für schnelles Auffinden
-      Klassen = new List<Klasse>();
+    {            
       diNoDataSet.SchuelerDataTable sListe;
       int NotStatus = nurAktive?1:255; // Status=1 bedeutet abgemeldet,
 
@@ -155,14 +164,7 @@ namespace diNo
     {
       globaleKonstanten = new GlobaleKonstantenTableAdapter().GetData()[0];
     }
-
-    // Lädt die Schüler in den Speicher
-    public static void Refresh()
-    {
-      Instance.Klassen = null; // Garbage-Collector 
-      Instance.LoadSchueler();
-    }
-    
+        
     public bool HatRolle(Rolle typ)
     {
       return lehrer.HatRolle(typ);

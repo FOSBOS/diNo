@@ -17,7 +17,7 @@ namespace diNo
       this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
 
       // Verwaltungsreiter
-      if (Zugriff.Instance.HatVerwaltungsrechte)
+      if (Zugriff.Instance.HatVerwaltungsrechte) // hier wird zum ersten Mal Zugriff instanziiert.
       {
         this.verwaltungController = new SchuelerverwaltungController(() => { RefreshTreeView(); });
         this.treeListView1.IsSimpleDragSource = true;
@@ -30,7 +30,6 @@ namespace diNo
         tabControl1.Controls.Remove(tabPageKurszuordnungen); // man kann die Seite nicht unsichtbar machen, nur entfernen
         tabControl1.Controls.Remove(tabPageAdministration);
       }
-
     }
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -73,7 +72,7 @@ namespace diNo
 
     private void RefreshTreeView()
     {
-      Zugriff.Instance.LoadSchueler(chkNurAktive.Checked);
+      Zugriff.Instance.Refresh(chkNurAktive.Checked);
       this.treeListView1.Roots = Zugriff.Instance.Klassen;
       this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
       this.treeListView1.ChildrenGetter = delegate (object x) { return ((Klasse)x).eigeneSchueler; };
