@@ -98,7 +98,6 @@ namespace diNo
           }
 
           // wenn der Schüler noch nicht vorhanden ist
-          // TODO: die Daten direkt in ein SchuelerRow schreiben, und dann den Insert auf dieses Objekt machen
           var table = tableAdapter.GetDataById(int.Parse(cleanArray[schuelerIdSpalte]));
           diNoDataSet.SchuelerRow row = (table.Count == 0) ? table.NewSchuelerRow() : table[0];
           FillRow(cleanArray, klasse, row);
@@ -150,17 +149,27 @@ namespace diNo
       row.Ausbildungsrichtung = ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]);
       row.Fremdsprache2 = cleanArray[fremdsprache2Spalte];
       row.ReligionOderEthik = cleanArray[reliOderEthikSpalte];
-      row.Wahlpflichtfach = cleanArray[wahlpflichtfachSpalte];
-      row.Wahlfach1 = cleanArray[wahlfach1Spalte];
-      row.Wahlfach2 = cleanArray[wahlfach2Spalte];
-      row.Wahlfach3 = cleanArray[wahlfach3Spalte];
-      row.Wahlfach4 = cleanArray[wahlfach4Spalte];
+
+      if (cleanArray[wahlpflichtfachSpalte] == "F")
+      {
+        // normales Französisch wird als Fremdsprache2 importiert, aber nicht als Wahlpflichtfach
+        row.Fremdsprache2 = "F";
+      }
+      else 
+      {
+        row.Wahlpflichtfach = ChangeFranz(cleanArray[wahlpflichtfachSpalte]);
+      }
+
+      row.Wahlfach1 = ChangeFranz(cleanArray[wahlfach1Spalte]);
+      row.Wahlfach2 = ChangeFranz(cleanArray[wahlfach2Spalte]);
+      row.Wahlfach3 = ChangeFranz(cleanArray[wahlfach3Spalte]);
+      row.Wahlfach4 = ChangeFranz(cleanArray[wahlfach4Spalte]);
       row.Wiederholung1Jahrgangsstufe = cleanArray[wdh1JahrgangsstufeSpalte];
       row.Wiederholung2Jahrgangsstufe = cleanArray[wdh2JahrgangsstufeSpalte];
       row.Wiederholung1Grund = cleanArray[wdh1GrundSpalte];
       row.Wiederholung2Grund = cleanArray[wdh2GrundSpalte];
       DateTime? probezeit = ParseDate(cleanArray[probezeitBisSpalte]);
-      if (probezeit == null)
+      if (probezeit == null || probezeit <= DateTime.Now)
       {
         row.SetProbezeitBisNull();
       }
@@ -181,7 +190,6 @@ namespace diNo
 
       row.SchulischeVorbildung = cleanArray[schulischeVorbildungSpalte];
       row.BeruflicheVorbildung = cleanArray[beruflicheVorbildungSpalte];
-      // TODO: Wie wird die Legasthenie neuerdings in der Schulverwaltung gehandhabt?
       row.LRSStoerung = cleanArray[lrsStoerungSpalte] == "1";
       row.LRSSchwaeche = cleanArray[lrsSchwaecheSpalte] == "1";
 
@@ -218,6 +226,16 @@ namespace diNo
       row.EintrittAusSchulnummer = !string.IsNullOrEmpty(cleanArray[eintrittVonSchulnummerSpalte]) ? int.Parse(cleanArray[eintrittVonSchulnummerSpalte]) : -1;
       row.Email = cleanArray[emailSpalte];
       row.Notfalltelefonnummer = cleanArray[notfallrufnummerSpalte];
+    }
+
+    /// <summary>
+    /// Ändert Fachbezeichnungen beim Import. Zur Zeit: F3 wird zu F-Wi.
+    /// </summary>
+    /// <param name="aFachString">Der alte Fachstring.</param>
+    /// <returns>Der neue Fachstring.</returns>
+    private static string ChangeFranz(string aFachString)
+    {
+      return aFachString == "F3" ? "F-Wi" : aFachString;
     }
 
     /// <summary>

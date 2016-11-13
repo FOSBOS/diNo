@@ -96,58 +96,55 @@ namespace diNo
         var fpaAdapter = new FpANotenTableAdapter();
         Dictionary<string, Kurs> kurse = GetKursverzeichnis();
         kurse.Add("G", GetGeschichteKurs());
-        
+
         while (!reader.EndOfStream)
         {
           string[] line = reader.ReadLine().Split(SeparatorChar);
-          if (line.Length == 5)
+          int schuelerId = int.Parse(line[0]);
+          var schuelerGefunden = schuelerAdapter.GetDataById(schuelerId);
+          if (schuelerGefunden == null || schuelerGefunden.Count == 0)
           {
-            //notenzeile
-            int schuelerId = int.Parse(line[0]);
-            string nachname = line[1];
-            string fachKuerzel = line[2];
-            string lehrerKuerzel = line[3];
-
-            if (string.IsNullOrEmpty(line[4])) // was das heißt ist aber auch fraglich. keine Note?
-            {
-              continue;
-            }
-
-            byte zeugnisnote = byte.Parse(line[4]);
-
-            var schuelerGefunden = schuelerAdapter.GetDataById(schuelerId);
-            if (schuelerGefunden == null || schuelerGefunden.Count == 0)
-            {
-              continue;
-            }
-
-            var schueler = new Schueler(schuelerGefunden[0]);
-            if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
-            {
-              schueler.MeldeAn(kurse[fachKuerzel.ToUpper()]);
-              BerechneteNote bnote = new BerechneteNote(kurse[fachKuerzel.ToUpper()].Id, schueler.Id);
-              bnote.ErstesHalbjahr = false;
-              bnote.JahresfortgangGanzzahlig = zeugnisnote;
-              bnote.Abschlusszeugnis = zeugnisnote;
-              bnote.writeToDB();
-            }
+            continue;
           }
-          else if (line.Length == 3)
+
+          var schueler = new Schueler(schuelerGefunden[0]);
+          if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
           {
-            //FpA-Zeile
-            int schuelerId = int.Parse(line[0]);
-            string nachname = line[1];
-            int gesamterfolg = int.Parse(line[2]);
-
-            var schuelerGefunden = schuelerAdapter.GetDataById(schuelerId);
-            if (schuelerGefunden == null || schuelerGefunden.Count == 0)
+            // nur bei Schülern in der zwölften Klasse wird irgendetwas importiert
+            if (line.Length == 5)
             {
-              continue;
+              //notenzeile
+              string nachname = line[1];
+              string fachKuerzel = line[2];
+              string lehrerKuerzel = line[3];
+
+              if (string.IsNullOrEmpty(line[4])) // was das heißt ist aber auch fraglich. keine Note?
+              {
+                continue;
+              }
+
+              byte zeugnisnote = byte.Parse(line[4]);
+
+              if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
+              {
+                schueler.MeldeAn(kurse[fachKuerzel.ToUpper()]);
+                BerechneteNote bnote = new BerechneteNote(kurse[fachKuerzel.ToUpper()].Id, schueler.Id);
+                bnote.ErstesHalbjahr = false;
+                bnote.JahresfortgangGanzzahlig = zeugnisnote;
+                bnote.Abschlusszeugnis = zeugnisnote;
+                bnote.writeToDB();
+              }
             }
-            fpaAdapter.Insert(schuelerId, "", null, null, null, null, gesamterfolg, null, null);
+            else if (line.Length == 3)
+            {
+              //FpA-Zeile
+              string nachname = line[1];
+              int gesamterfolg = int.Parse(line[2]);
+              fpaAdapter.Insert(schuelerId, "", null, null, null, null, gesamterfolg, null, null);
+            }
+            else
+              throw new InvalidOperationException("Diese Zeile hat " + line.Length + " Spalten. Das ist mir unbekannt");
           }
-          else
-            throw new InvalidOperationException("Diese Zeile hat " + line.Length + " Spalten. Das ist mir unbekannt");
         }
       }
 
