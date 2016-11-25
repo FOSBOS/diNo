@@ -140,9 +140,8 @@ namespace diNo
     {
       if (cbStatus.SelectedIndex==0)
         dateTimeAustritt.Value = dateTimeAustritt.MinDate;
-      else if (cbStatus.SelectedIndex==1)
+      else if (cbStatus.SelectedIndex==1 && dateTimeAustritt.Value == dateTimeAustritt.MinDate) // nur setzen wenn nicht eh schon ein Datum drinsteht
         dateTimeAustritt.Value = DateTime.Today;
-
     }
 
     private void buttonResetProbezeit_Click(object sender, EventArgs e)
