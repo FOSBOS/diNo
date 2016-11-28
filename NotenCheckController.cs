@@ -21,6 +21,7 @@ namespace diNo
         private Dictionary<string,NotenCheckCounter> chkCounter;
         private int aktKlassenId=0;
         private Schueler aktSchueler,vorigerSchueler;
+        private bool UnterpunktungGedruckt;
 
         public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus)
         {
@@ -94,7 +95,8 @@ namespace diNo
 
           Klasse klasse;
           klasse = s.getKlasse;          
-    
+          UnterpunktungGedruckt=false;
+        
           // muss dieser Schüler überhaupt geprüft werden?
               // S ohne Probezeit oder späterer Probezeit                             
           if (zeitpunkt == Zeitpunkt.ProbezeitBOS && s.HatProbezeitBis()==Zeitpunkt.ProbezeitBOS ||
@@ -117,12 +119,17 @@ namespace diNo
               chkContainer = new List<KeyValuePair<string, NotenCheckContainer>>();
               chkCounter = new Dictionary<string, NotenCheckCounter>();
             }
-                
+             
+               
             foreach (var ch in alleNotenchecks)
             {
                 if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart))
+                {
                     ch.Check(s);
+                }
             }
+            if (s.getNoten.Unterpunktungen!="" && !UnterpunktungGedruckt)
+              Add(null, "Unterpunktet in " + s.getNoten.Unterpunktungen); // Kontrollmöglichkeit
             vorigerSchueler = s; // CreateResults braucht noch den
           }
     }   
@@ -136,8 +143,9 @@ namespace diNo
     }
 
     // fügt eine Meldung/Vorkommnis hinzu, und erzeugt ggf. abhängige Vorkommnisse
-    public void Add(Vorkommnisart art, string meldung)
+    public void Add(Vorkommnisart art, string meldung,bool aUnterpunktungGedruckt=false)
     {     
+      if (aUnterpunktungGedruckt) UnterpunktungGedruckt=aUnterpunktungGedruckt;
       AddVorkommnis(art, meldung);
      
       // bei Wiederholungsschülern wird bei bestimmten Ereignissen automatisch Gefahr d. Abw. oder d.n.w erzeugt
@@ -164,8 +172,9 @@ namespace diNo
       }
     }
 
-    public void Add(Kurs k,string m)
+    public void Add(Kurs k,string m,bool aUnterpunktungGedruckt=false)
     {
+      if (aUnterpunktungGedruckt) UnterpunktungGedruckt=aUnterpunktungGedruckt;
       NotenCheckCounter c;      
       if (k!=null)
       {

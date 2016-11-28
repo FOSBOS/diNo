@@ -389,15 +389,6 @@ namespace diNo
         return true; // wenn min. 2 mündliche vorliegen, ist das ok.
       }
       
-      if (muendlicheCount == 1)
-      {
-        // wir akzeptieren eine Kurzarbeit als einzelne Note, wenn sie bei min. 6 Punkten liegt (somit kann der Schüler in diesem Fach nicht mehr unterpunkten)
-        var exen = noten.getNoten(Halbjahr.Erstes, Notentyp.Ex);
-        var echteMuendliche = noten.getNoten(Halbjahr.Erstes, Notentyp.EchteMuendliche);
-        var einzigeNote =  exen.Count > 0 ? exen[0] : echteMuendliche[0];
-        return (einzigeNote >= 6);
-      }
-
       //in allen anderen Fällen sind es zu wenig Noten
       return false;
     }
@@ -450,11 +441,11 @@ namespace diNo
         {
           if (n.HatNichtBestanden())
           {
-            contr.Add(Vorkommnisart.starkeGefaehrdungsmitteilung,n.Unterpunktungen);
+            contr.Add(Vorkommnisart.starkeGefaehrdungsmitteilung,n.Unterpunktungen,true);
           }
           else if (n.anz4P > 1 || n.AnzahlNoten(5) > 0)
           { 
-            contr.Add(Vorkommnisart.BeiWeiteremAbsinken,n.Unterpunktungen);
+            contr.Add(Vorkommnisart.BeiWeiteremAbsinken,n.Unterpunktungen,true);
           }
 
           if (schueler.Data.IsProbezeitBisNull() || !(schueler.Data.ProbezeitBis > DateTime.Parse("01.02." +  (DateTime.Today).Year)))
@@ -464,12 +455,10 @@ namespace diNo
         {
           if (n.AnzahlNoten(6) > 1 || (n.AnzahlNoten(6) + n.AnzahlNoten(5)) > 3)
           {
-            contr.Add(Vorkommnisart.NichtZurPruefungZugelassen,n.Unterpunktungen);
+            contr.Add(Vorkommnisart.NichtZurPruefungZugelassen,n.Unterpunktungen,true);
           }
           else if (n.AnzahlNoten(6,false) + n.AnzahlNoten(5,false) > 0)
-            contr.Add(null, "Unterpunktet in einem Nichtprüfungsfach " + n.Unterpunktungen);
-          else if (n.AnzahlNoten(6) + n.AnzahlNoten(5) > 0)
-            contr.Add(null, "Unterpunktet in " + n.Unterpunktungen); // sollen in der 1. PA nochmal angesprochen werden
+            contr.Add(null, "Unterpunktet in einem Nichtprüfungsfach " + n.Unterpunktungen,true);
           return;
         }
         else if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
@@ -477,9 +466,9 @@ namespace diNo
           if (n.HatNichtBestanden())
           {         
             if (n.MAPmoeglich())
-              contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich,n.Unterpunktungen);
+              contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich,n.Unterpunktungen,true);
             else 
-              contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen,n.Unterpunktungen);
+              contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen,n.Unterpunktungen,true);
             if (n.KannAusgleichen())
               contr.Add(null,"Notenausgleich möglich");
           }          
@@ -493,27 +482,27 @@ namespace diNo
           if (n.AnzahlNoten(6) > 0 || n.AnzahlNoten(5) > 0)
           {
             if (n.AnzahlNoten(5) == 1 && (n.AnzahlNoten(1) > 0 || n.AnzahlNoten(2) > 0 || n.AnzahlNoten(3) > 1))
-              contr.Add(null, "Nicht bestanden, aber mittlere Reife: " + n.Unterpunktungen);
+              contr.Add(null, "Nicht bestanden, aber mittlere Reife: " + n.Unterpunktungen,true);
             else
-              contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen);
+              contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen,true);
           }
           else if (n.Unterpunktungen!="")
-            contr.Add(null, "Unterpunktet in: " + n.Unterpunktungen);
+            contr.Add(null, "Unterpunktet in: " + n.Unterpunktungen,true);
 
           if (/*schueler.getKlasse.Schulart == Schulart.BOS &&*/ n.HatIn12KeinePZ())
             contr.Add(null, "Hat in der 12. Klasse keine Probezeit.");
         }
         else if (n.HatNichtBestanden())
         {
-          if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich möglich: " + n.Unterpunktungen);
+          if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich möglich: " + n.Unterpunktungen,true);
           else
           {
             if (contr.zeitpunkt == Zeitpunkt.DrittePA)
-              contr.Add(Vorkommnisart.NichtBestanden,n.Unterpunktungen);
+              contr.Add(Vorkommnisart.NichtBestanden,n.Unterpunktungen,true);
             else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
-              contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,n.Unterpunktungen);
+              contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,n.Unterpunktungen,true);
             else 
-              contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen); 
+              contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen,true); 
           }
         }
     }
