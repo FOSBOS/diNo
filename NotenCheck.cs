@@ -271,7 +271,7 @@ namespace diNo
           byte? relevanteNote = fachNoten.getRelevanteNote(contr.zeitpunkt);
           if (relevanteNote == null)
           {
-            contr.Add(kurs, "Es liegt keine Note aus der 11ten Klasse vor.");
+            contr.Add(kurs, "Es liegt keine Note aus der 11. Klasse vor.");
           }
 
           continue; // in diesen Kursen nicht weiter nach Notenanzahl prüfen
@@ -448,7 +448,7 @@ namespace diNo
             contr.Add(Vorkommnisart.BeiWeiteremAbsinken,n.Unterpunktungen,true);
           }
 
-          if (schueler.Data.IsProbezeitBisNull() || !(schueler.Data.ProbezeitBis > DateTime.Parse("01.02." +  (DateTime.Today).Year)))
+          if (schueler.Data.IsProbezeitBisNull() || !(schueler.Data.ProbezeitBis > DateTime.Parse("01.02." +  (Zugriff.Instance.Schuljahr+1))))
             return; // bei Schülern ohne PZ geht es zum Halbjahr nur um Gefährdungen
         }
         else if (contr.zeitpunkt == Zeitpunkt.ErstePA)

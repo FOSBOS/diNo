@@ -128,8 +128,10 @@ namespace diNo
                     ch.Check(s);
                 }
             }
-            if (s.getNoten.Unterpunktungen!="" && !UnterpunktungGedruckt)
-              Add(null, "Unterpunktet in " + s.getNoten.Unterpunktungen); // Kontrollmöglichkeit
+            // Kontrollmöglichkeit: alle weiteren Unterpunktungen werden gedruckt
+            if (s.getNoten.Unterpunktungen!="" && !UnterpunktungGedruckt && zeitpunkt!=Zeitpunkt.HalbjahrUndProbezeitFOS)
+              Add(null, "Unterpunktet in " + s.getNoten.Unterpunktungen);
+
             vorigerSchueler = s; // CreateResults braucht noch den
           }
     }   
