@@ -129,7 +129,8 @@ namespace diNo
                 }
             }
             // Kontrollmöglichkeit: alle weiteren Unterpunktungen werden gedruckt
-            if (s.getNoten.Unterpunktungen!="" && !UnterpunktungGedruckt && zeitpunkt!=Zeitpunkt.HalbjahrUndProbezeitFOS)
+            if (s.getNoten.Unterpunktungen!="" && !UnterpunktungGedruckt && zeitpunkt!=Zeitpunkt.HalbjahrUndProbezeitFOS
+              && (modus==NotenCheckModus.Gesamtpruefung || modus==NotenCheckModus.EigeneKlasse))
               Add(null, "Unterpunktet in " + s.getNoten.Unterpunktungen);
 
             vorigerSchueler = s; // CreateResults braucht noch den
