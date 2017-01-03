@@ -96,7 +96,18 @@ namespace diNo
         Cursor.Current = Cursors.WaitCursor;
         foreach (string fileName in fileDialog.FileNames)
         {
-          new LeseNotenAusExcel(fileName, notenReader_OnStatusChange, Properties.Settings.Default.sicherungsverzeichnis);
+          var xls = new OpenAlteNotendatei(fileName);
+          bool alt = xls.IsAlteSchulordnung();
+          xls.Dispose(); // dies schließt die Datei gleich wieder
+
+          if (alt)
+          {
+            new LeseNotenAusExcelAlt(fileName, notenReader_OnStatusChange, Properties.Settings.Default.sicherungsverzeichnis);
+          }
+          else
+          {
+            new LeseNotenAusExcel(fileName, notenReader_OnStatusChange, Properties.Settings.Default.sicherungsverzeichnis);
+          }
         }
 
         RefreshTreeView(); // Noten neu laden

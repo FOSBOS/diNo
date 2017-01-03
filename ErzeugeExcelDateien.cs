@@ -40,7 +40,7 @@ namespace diNo
             statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = "Erzeuge Datei" + count + " von " + kurse.Count });
           }
 
-          new ErzeugeExcelDatei(kurs);
+          new ErzeugeAlteExcelDatei(kurs);
           count++;
         }
       }
@@ -151,10 +151,10 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
   /// <summary>
   /// Legt eine neue Exceldatei zum übergebenen Kurs an.
   /// </summary>
-  public class ErzeugeExcelDatei
+  public class ErzeugeAlteExcelDatei
   {
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-    private OpenNotendatei xls;
+    private OpenAlteNotendatei xls;
     private Kurs kurs;
     private string fileName;
     private IList<diNoDataSet.SchuelerRow> alleSchueler;
@@ -162,7 +162,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
     /// <summary>
     /// Aus dem übergebenen Kurs wird eine Exceldatei mit allen Schülerdaten generiert
     /// </summary>
-    public ErzeugeExcelDatei(diNoDataSet.KursRow aKurs)
+    public ErzeugeAlteExcelDatei(diNoDataSet.KursRow aKurs)
     {
       kurs = new Kurs(aKurs);
 
@@ -179,7 +179,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
         return;
       }
 
-      if (alleSchueler.Count > OpenNotendatei.MaxAnzahlSchueler)
+      if (alleSchueler.Count > BasisNotendatei.MaxAnzahlSchueler)
       {
         throw new InvalidOperationException("zu viele Schüler " + alleSchueler.Count);
       }
@@ -193,7 +193,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
 
       CopyExcelFile();
 
-      xls = new OpenNotendatei(fileName);
+      xls = new OpenAlteNotendatei(fileName);
 
       FillExcelFile();
       SwitchNotenschluessel();

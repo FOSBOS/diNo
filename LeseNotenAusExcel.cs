@@ -8,23 +8,28 @@ using System.IO;
 namespace diNo
 {
   /// <summary>
-  /// Klasse zum Einlesen der Noten aus einer Excel-Datei und Eintragen der Noten in die Datenbank.
+  /// abstrakte Basisklasse für Notenleser.
   /// </summary>
-  public class LeseNotenAusExcel
+  public abstract class BasisLeseNotenAusExcel
   {
-    private OpenNotendatei xls;
-    private string fileName;
-    private List<int> sidList = new List<int>(); // enthält die SIDs der Schüler, in der Reihenfolge wie im Excel
-    private Kurs kurs; // der Kurs, den diese Datei abbildet
-    public bool success = false;
-    public StatusChanged StatusChanged;
-    private List<string>hinweise = new List<String>();
+    private StatusChanged StatusChanged;
+    private string sicherungsverzeichnis;
+    protected string fileName;
+    protected List<int> sidList = new List<int>(); // enthält die SIDs der Schüler, in der Reihenfolge wie im Excel
+    protected Kurs kurs;
+    protected List<string> hinweise = new List<String>();
 
-    public LeseNotenAusExcel(string afileName, StatusChanged StatusChangedMethod, string sicherungsverzeichnis)
+    public BasisLeseNotenAusExcel(string fileName, StatusChanged StatusChangedMethod, string sicherungsverzeichnis)
     {
-      fileName = afileName;
+      this.fileName = fileName;
       this.StatusChanged = StatusChangedMethod;
+      this.sicherungsverzeichnis = sicherungsverzeichnis;
 
+      Sichern(sicherungsverzeichnis);
+    }
+
+    private void Sichern(string fileName)
+    {
       // Datei sichern
       if (!string.IsNullOrEmpty(sicherungsverzeichnis))
       {
@@ -37,10 +42,16 @@ namespace diNo
           // wenn's nicht klappt, ist es halt so...
         }
       }
-      xls = new OpenNotendatei(fileName);
+    }
 
+    /// <summary>
+    /// Die SchuelerIDs sind immer an derselben Stelle.
+    /// </summary>
+    /// <param name="xls">Die Notendatei.</param>
+    protected void ReadBasisdaten(BasisNotendatei xls)
+    {
       // Liste der gespeicherten Sids bereitstellen (alte Sids sollen nicht aus Excel gelöscht werden)
-      for (int i = CellConstant.zeileSIdErsterSchueler; i < CellConstant.zeileSIdErsterSchueler + OpenNotendatei.MaxAnzahlSchueler; i++)
+      for (int i = CellConstant.zeileSIdErsterSchueler; i < CellConstant.zeileSIdErsterSchueler + BasisNotendatei.MaxAnzahlSchueler; i++)
       {
         int sid = Convert.ToInt32(xls.ReadValue(xls.sid, CellConstant.SId + i));
         if (sid == 0) break; // wir sind wohl am Ende der Datei
@@ -48,6 +59,49 @@ namespace diNo
       }
 
       kurs = Zugriff.Instance.KursRep.Find(Convert.ToInt32(xls.ReadValue(xls.sid, CellConstant.KursId)));
+    }
+
+    protected void Status(string meldung)
+    {
+      if (this.StatusChanged != null)
+      {
+        this.StatusChanged(this, new StatusChangedEventArgs() { Meldung = meldung });
+      }
+    }
+
+    protected void HinweiseAusgeben(BasisNotendatei xls)
+    {
+      string s = "";
+      foreach (var h in hinweise)
+      {
+        s += h + "\n";
+      }
+      if (MessageBox.Show(s + "\nSollen obige Änderungen in Ihre Notendatei übernommen werden.", Path.GetFileNameWithoutExtension(fileName), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+        xls.workbook.Save();
+    }
+
+    /// <summary>
+    /// Löscht die alten Noten dieses Kurses aus der Datenbank
+    /// </summary>
+    protected void DeleteAlteNoten()
+    {
+      NoteTableAdapter ta = new NoteTableAdapter();
+      ta.DeleteByKursId(kurs.Id);
+
+      BerechneteNoteTableAdapter bta = new BerechneteNoteTableAdapter();
+      bta.DeleteByKursId(kurs.Id);
+    }
+  }
+
+  public class LeseNotenAusExcel : BasisLeseNotenAusExcel
+  {
+    private OpenNotendatei xls;
+
+    public LeseNotenAusExcel(string afileName, StatusChanged StatusChangedMethod, string sicherungsverzeichnis)
+      : base(afileName, StatusChangedMethod, sicherungsverzeichnis)
+    {
+      xls = new OpenNotendatei(afileName);
+      ReadBasisdaten(xls);
 
       Status("Synchronisiere Datei " + afileName);
       Synchronize();
@@ -55,24 +109,150 @@ namespace diNo
       Status("Übertrage Noten aus Datei " + afileName);
       DeleteAlteNoten();
       UebertrageNoten();
-      success = true;
 
       if (hinweise.Count > 0) // es sind Meldungen aufgetreten
-        HinweiseAusgeben();
+        HinweiseAusgeben(xls);
 
-      // TODO: Gefährlich, private Variablen zu disposen?
       xls.Dispose();
       xls = null;
 
       Status("fertig mit Datei " + afileName);
     }
 
-    private void Status(string meldung)
+    /// <summary>
+    /// Gleicht die Schülerdaten zwischen DB und Excel ab. Prüft, ob neue Schüler hinzugekommen, oder ob Legasthenie neu vermerkt wurde.
+    /// </summary>        
+    private void Synchronize()
     {
-      if (this.StatusChanged != null)
+      var klasse = kurs.getSchueler(true);
+
+      foreach (var schueler in klasse)
       {
-        this.StatusChanged(this, new StatusChangedEventArgs() { Meldung = meldung });
+        // prüfen, ob neue Schüler dazugekommen sind
+        if (!sidList.Contains(schueler.Id))
+        {
+          xls.AppendSchueler(schueler, kurs.getFach.Kuerzel == "F" || kurs.getFach.Kuerzel == "E");
+          sidList.Add(schueler.Id);
+          hinweise.Add(schueler.Name + ", " + schueler.Rufname + " wurde neu aufgenommen.");
+        }
       }
+
+      // prüfen, ob Schüler entfernt werden müssen
+      var klassenSIds = klasse.Select(x => x.Id);
+      foreach (var schuelerId in sidList)
+      {
+        if (!klassenSIds.Contains(schuelerId))
+        {
+          if (xls.RemoveSchueler(schuelerId))
+          {
+            Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
+            hinweise.Add(schueler.Name + ", " + schueler.Data.Rufname + " hat die Klasse verlassen.");
+          }
+        }
+      }
+    }
+
+    /// <summary>
+    /// Trägt die Noten eines Schülers aus Excel in die Datenbank ein.
+    /// </summary>
+    private void UebertrageNoten()
+    {
+      int i = 4;
+      int indexAP = CellConstant.APZeileErsterSchueler;
+
+      foreach (int sid in sidList)
+      {
+        ErzeugeNoten(i, sid, new string[] { "C", "D", "E" }, Halbjahr.Erstes, Notentyp.Ex); // Exen bzw. Kurzarbeiten 1. HJ
+        ErzeugeNoten(i, sid, new string[] { "F", "G", "H" }, Halbjahr.Erstes, Notentyp.EchteMuendliche);
+        ErzeugeNoten(i, sid, new string[] { "J", "K" }, Halbjahr.Erstes, Notentyp.Schulaufgabe);
+        ErzeugeNoten(i, sid, new string[] { "N", "O", "P" }, Halbjahr.Zweites, Notentyp.Ex);
+        ErzeugeNoten(i, sid, new string[] { "Q", "R", "S" }, Halbjahr.Zweites, Notentyp.EchteMuendliche);
+        ErzeugeNoten(i, sid, new string[] { "U", "V" }, Halbjahr.Zweites, Notentyp.Schulaufgabe);
+
+        // Fachreferat fehlt noch !
+
+        //BerechneteNote bnote = new BerechneteNote(kurs.Id, sid);
+        //bnote.ErstesHalbjahr = (hj == Halbjahr.Erstes);
+        //bnote.SchnittSchulaufgaben = xls.ReadSchnitt(BerechneteNotentyp.SchnittSA, hj, i);
+        //bnote.SchnittMuendlich = xls.ReadSchnitt(BerechneteNotentyp.Schnittmuendlich, hj, i);
+        //bnote.JahresfortgangMitKomma = xls.ReadSchnitt(BerechneteNotentyp.JahresfortgangMitNKS, hj, i);
+        //bnote.JahresfortgangGanzzahlig = xls.ReadSchnittGanzzahlig(BerechneteNotentyp.Jahresfortgang, hj, i);
+        //bnote.PruefungGesamt = xls.ReadSchnitt(BerechneteNotentyp.APGesamt, hj, indexAP);
+        //bnote.SchnittFortgangUndPruefung = xls.ReadSchnitt(BerechneteNotentyp.EndnoteMitNKS, hj, indexAP);
+        //bnote.Abschlusszeugnis = xls.ReadSchnittGanzzahlig(BerechneteNotentyp.Abschlusszeugnis, hj, indexAP);
+
+        //// für die PZ im 1. Hj. reicht ggf. auch eine mündliche Note
+        //// im 2. Hj. kann das nicht so einfach übernommen werden, da Teilnoten aus dem 1. Hj. feststehen
+        //if (bnote.JahresfortgangGanzzahlig == null && bnote.ErstesHalbjahr)
+        //{
+        //  if (bnote.SchnittMuendlich != null) bnote.JahresfortgangMitKomma = bnote.SchnittMuendlich;
+        //  else if (bnote.SchnittSchulaufgaben != null) bnote.JahresfortgangMitKomma = bnote.SchnittSchulaufgaben;
+        //  bnote.RundeJFNote();
+        //}
+
+        //// Nur wenn einer der Schnitte feststeht, wird diese Schnittkonstellation gespeichert
+        //if (bnote.SchnittMuendlich != null || bnote.SchnittSchulaufgaben != null)
+        //  bnote.writeToDB();
+      }
+
+      i++;
+      indexAP++;
+    }
+
+    private void ErzeugeNoten(int i, int sid, string[] spalten, Halbjahr hj, Notentyp typ)
+    {
+      foreach (var zelle in spalten)
+      {
+        byte? p = xls.ReadNote(zelle + i, xls.notenbogen);
+        if (p != null)
+        {
+          Note note = new Note(kurs.Id, sid);
+          note.Halbjahr = hj;
+          if (typ == Notentyp.Ex)
+          {
+            // prüfe, ob es sich um eine Kurzarbeit handelt.
+            note.Typ = (xls.ReadValue(xls.notenbogen, Char.ToString(zelle[0]) + 39) == "2") ? Notentyp.Kurzarbeit : Notentyp.Ex;
+          }
+          else
+          {
+            note.Typ = typ;
+          }
+
+          note.Zelle = zelle;
+          note.Punktwert = (byte)p;
+          note.writeToDB();
+        }
+      }
+    }
+  }
+
+  /// <summary>
+  /// Klasse zum Einlesen der Noten aus einer Excel-Datei und Eintragen der Noten in die Datenbank.
+  /// </summary>
+  public class LeseNotenAusExcelAlt: BasisLeseNotenAusExcel
+  {
+    private OpenAlteNotendatei xls;
+
+    public LeseNotenAusExcelAlt(string afileName, StatusChanged StatusChangedMethod, string sicherungsverzeichnis)
+      : base(afileName, StatusChangedMethod, sicherungsverzeichnis)
+    {
+      xls = new OpenAlteNotendatei(fileName);
+      ReadBasisdaten(xls);
+
+      Status("Synchronisiere Datei " + afileName);
+      Synchronize();
+
+      Status("Übertrage Noten aus Datei " + afileName);
+      DeleteAlteNoten();
+      UebertrageNoten();
+
+      if (hinweise.Count > 0) // es sind Meldungen aufgetreten
+        HinweiseAusgeben(xls);
+
+      xls.Dispose();
+      xls = null;
+
+      Status("fertig mit Datei " + afileName);
     }
 
     /// <summary>
@@ -91,8 +271,7 @@ namespace diNo
           sidList.Add(schueler.Id);
           hinweise.Add(schueler.Name + ", " + schueler.Rufname + " wurde neu aufgenommen.");
         }
-        // prüfen, ob Schüler reaktiviert wurden (SID steht zwar drin, aber Name ist gelöscht)
-        else CheckAktiv(schueler);
+
         CheckLegastheniker(schueler);
       }
 
@@ -111,10 +290,6 @@ namespace diNo
       }
     }
 
-    private void CheckAktiv(diNoDataSet.SchuelerRow schueler)
-    {
-      // TODO: reaktivierte Schüler wieder mit Namen befüllen (kommt das oft vor?)
-    }
 
     /// <summary>
     /// Prüft, ob die Legasthenievermerke der Datenbank mit der Excel-Datei übereinstimmen.
@@ -131,18 +306,6 @@ namespace diNo
         hinweise.Add("Bei " + schueler.Rufname + " " + schueler.Name + " wird der Legasthenievermerk "+ textbaustein + ". Sollte dies aus Ihrer Sicht nicht korrekt sein, wenden Sie sich bitte an das Sekretariat.");
         xls.SetLegasthenievermerk(schuelerObj.Id, sollteGesetztSein);
       }
-    }
-
-    /// <summary>
-    /// Löscht die alten Noten dieses Kurses aus der Datenbank
-    /// </summary>
-    private void DeleteAlteNoten()
-    {
-      NoteTableAdapter ta = new NoteTableAdapter();
-      ta.DeleteByKursId(kurs.Id);
-
-      BerechneteNoteTableAdapter bta = new BerechneteNoteTableAdapter();
-      bta.DeleteByKursId(kurs.Id);
     }
 
 
@@ -212,15 +375,5 @@ namespace diNo
       }
     }
 
-    private void HinweiseAusgeben()
-    {
-      string s="";
-      foreach (var h in hinweise)
-      {
-        s += h + "\n";
-      }
-      if (MessageBox.Show(s + "\nSollen obige Änderungen in Ihre Notendatei übernommen werden.", Path.GetFileNameWithoutExtension(fileName), MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes) 
-        xls.workbook.Save();
-    }
   }
 }

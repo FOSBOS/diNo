@@ -48,12 +48,13 @@ namespace diNo
 
     private void btnReadExcelFile_Click(object sender, EventArgs e)
     {            
-      foreach (string file in Directory.GetFiles(Konstanten.ExcelPfad + "\\Abgabe"))
-      {
-            var reader = new LeseNotenAusExcel(file, notenReader_OnStatusChange, null);
-            if (reader.success)
-                Directory.Move(file, Konstanten.ExcelPfad + "\\Archiv");
-      }
+      //foreach (string file in Directory.GetFiles(Konstanten.ExcelPfad + "\\Abgabe"))
+      //{
+
+      //      var reader = new LeseNotenAusExcel(file, notenReader_OnStatusChange, null);
+      //      if (reader.success)
+      //          Directory.Move(file, Konstanten.ExcelPfad + "\\Archiv");
+      //}
      
     }
 

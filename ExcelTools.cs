@@ -127,11 +127,13 @@ namespace diNo
     #endregion
   }
 
-  /// <summary>
-  /// Klasse, die eine Notendatei öffnet und Verweise auf die wichtigsten Sheets liefert
-  /// </summary>
-  public class OpenNotendatei : OpenExcel
+  public abstract class BasisNotendatei: OpenExcel
   {
+    /// <summary>
+    /// Die Maximalanzahl von Schülern in einem ExcelSheet.
+    /// </summary>
+    public const int MaxAnzahlSchueler = 35;
+
     /// <summary>
     /// Das Sheet Notenbogen
     /// </summary>
@@ -147,8 +149,7 @@ namespace diNo
     /// </summary>
     public Worksheet sid;
 
-
-    public OpenNotendatei(string filename) : base(filename)
+    public BasisNotendatei(string filename): base(filename)
     {
       notenbogen = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("Notenbogen") select sh).FirstOrDefault();
       if (notenbogen == null)
@@ -169,11 +170,162 @@ namespace diNo
       }
     }
 
+    /// <summary>
+    /// Schreibt einen Wert in die Zelle des gegebenen Excel-Sheets
+    /// </summary>
+    /// <param name="sheet">Das Excel Sheet.</param>
+    /// <param name="zelle">Die Zelle, z. B. A2.</param>
+    /// <param name="value">Den Wert der Zelle als String.</param>
+    public void WriteValue(Excel.Worksheet sheet, string zelle, string value)
+    {
+      Excel.Range r = sheet.get_Range(zelle, missing);
+      r.Value2 = value;
+    }
 
     /// <summary>
-    /// Die Maximalanzahl von Schülern in einem ExcelSheet.
+    /// Schreibt einen Wert in die Zelle des gegebenen Excel-Sheets
     /// </summary>
-    public const int MaxAnzahlSchueler = 35;
+    /// <param name="sheet">Das Excel Sheet.</param>
+    /// <param name="zelle">Die Zelle, z. B. A2.</param>
+    /// <param name="value">Den Wert der Zelle als String.</param>
+    public void WriteValueProtectedCell(Excel.Worksheet sheet, string zelle, string value)
+    {
+      sheet.Unprotect("1111");
+      Excel.Range r = sheet.get_Range(zelle, missing);
+      r.Value2 = value;
+      sheet.Protect("1111", false, true);
+    }
+
+    /// <summary>
+    /// Liest einen Wert aus einer Zelle des gegebenen ExcelSheets.
+    /// </summary>
+    /// <param name="sheet">Das Excel Sheet.</param>
+    /// <param name="zelle">Die Zelle, z. B. A2.</param>
+    /// <returns>Den Wert der Zelle als String.</returns>
+    public string ReadValue(Excel.Worksheet sheet, string zelle)
+    {
+      Excel.Range r = sheet.get_Range(zelle, missing);
+      return r.Value2 == null ? null : Convert.ToString(r.Value2).Trim();
+    }
+
+    /// <summary>
+    /// Sucht einen Schüler und liefert die Zeile, in welcher seine SchülerId steht.
+    /// </summary>
+    /// <param name="schuelerId">Die Id des Schülers.</param>
+    /// <returns>Die Zeile der SchuelerId in der Excel-Datei.</returns>
+    public int GetSidZeileForSchueler(int schuelerId)
+    {
+      for (int i = CellConstant.zeileSIdErsterSchueler; i <= MaxAnzahlSchueler + CellConstant.zeileSIdErsterSchueler; i++)
+      {
+        string aValue = ReadValue(sid, CellConstant.SId + i);
+        if (aValue != null)
+        {
+          int intValue = int.Parse(aValue);
+          if (intValue.Equals(schuelerId))
+          {
+            return i;
+          }
+        }
+      }
+
+      throw new InvalidOperationException("Schüler nicht gefunden. Id " + schuelerId);
+    }
+
+    /// <summary>
+    /// Liest eine ganzzahlige Note aus der angegebenen Zelle des Sheets
+    /// </summary>
+    /// <param name="zelle">Die Zelle.</param>
+    /// <param name="sheet">Das Worksheet.</param>
+    /// <returns></returns>
+    public byte? ReadNote(string zelle, Worksheet sheet)
+    {
+      string v = ReadValue(sheet, zelle);
+      return !string.IsNullOrEmpty(v) ? Convert.ToByte(v, CultureInfo.CurrentUICulture) : (byte?)null;
+    }
+
+    /// <summary>
+    /// Prüft, ob die Datei nach der alten Schulordnung ausgelesen werden muss.
+    /// </summary>
+    /// <returns>true wenn für diese Datei die alte Schulordnung gelten muss.</returns>
+    public bool IsAlteSchulordnung()
+    {
+      return ReadValue(sid, "F1") != "Neue";
+    }
+  }
+
+  public class OpenNotendatei: BasisNotendatei
+  {
+    /// <summary>
+    /// Konstruktor
+    /// </summary>
+    /// <param name="filename"></param>
+    public OpenNotendatei(string filename) : base(filename)
+    {
+    }
+
+    /// <summary>
+    /// Hängt einen neuen Schüler unten an die Datei an.
+    /// </summary>
+    /// <param name="aSchueler">Der Schüler.</param>
+    /// <param name="setzeLegasthenie">Ob der Legasthenievermerk geprüft werden soll.</param>
+    public void AppendSchueler(diNoDataSet.SchuelerRow aSchueler, bool setzeLegasthenie)
+    {
+      UnsavedChanges = true;
+
+      int zeile = GetErsteFreieZeile(notenbogen); //gilt in Notenbogen und auf dem diNo-sid-Reiter
+      WriteValueProtectedCell(notenbogen, "B" + zeile, aSchueler.Name + ", "+aSchueler.Rufname);
+      WriteValueProtectedCell(sid, CellConstant.SId + zeile, aSchueler.Id.ToString());
+      if (setzeLegasthenie && (aSchueler.LRSStoerung || aSchueler.LRSSchwaeche))
+      {
+        // TODO: Legastenie: wie geht das neuerdings?
+        //WriteValue(notenbogen, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
+      }
+    }
+
+    /// <summary>
+    /// Entfernt einen Schüler aus der Datei (nur Name). Lässt seine Noten aber stehen.
+    /// </summary>
+    /// <param name="schuelerId">die Id des Schülers.</param>
+    public bool RemoveSchueler(int schuelerId)
+    {
+      int zeile = GetSidZeileForSchueler(schuelerId); //gilt für sId und Name
+      string name = ReadValue(notenbogen, CellConstant.Nachname + zeile);
+      if (string.IsNullOrEmpty(name.Trim()))
+      {
+        // Der Schüler ist bereits aus der Datei entfernt. Keine Aktion nötig.
+        return false;
+      }
+
+      UnsavedChanges = true;
+      WriteValue(notenbogen, CellConstant.Nachname + zeile, "");
+      return true;
+    }
+
+    private int GetErsteFreieZeile(Excel.Worksheet sheet)
+    {
+      int zeile = 38;
+      while (string.IsNullOrEmpty(ReadValue(sheet, CellConstant.Nachname + zeile)) && zeile >= 4)
+      {
+        zeile = zeile - 1;
+      }
+
+      return zeile + 1;
+    }
+  }
+
+  /// <summary>
+  /// Klasse, die eine Notendatei öffnet und Verweise auf die wichtigsten Sheets liefert
+  /// </summary>
+  public class OpenAlteNotendatei : BasisNotendatei
+  {
+    /// <summary>
+    /// Konstruktor
+    /// </summary>
+    /// <param name="filename"></param>
+    public OpenAlteNotendatei(string filename) : base(filename)
+    {
+    }
+
     /// <summary>
     /// Hängt einen neuen Schüler unten an die Datei an.
     /// </summary>
@@ -263,23 +415,7 @@ namespace diNo
     }
 
 
-    public int GetSidZeileForSchueler(int schuelerId)
-    {
-      for (int i = CellConstant.zeileSIdErsterSchueler; i <= MaxAnzahlSchueler + CellConstant.zeileSIdErsterSchueler ; i++)
-      {
-        string aValue = ReadValue(sid, CellConstant.SId + i);
-        if (aValue != null)
-        {
-          int intValue = int.Parse(aValue);
-          if (intValue.Equals(schuelerId))
-          {
-            return i;
-          }
-        }
-      }
 
-      throw new InvalidOperationException("Schüler nicht gefunden. Id "+schuelerId);
-    }
 
     private int GetNotenbogenZeileForSidZeile(int sidZeile)
     {
@@ -304,43 +440,7 @@ namespace diNo
       return zeile + 2;
     }
 
-    /// <summary>
-    /// Schreibt einen Wert in die Zelle des gegebenen Excel-Sheets
-    /// </summary>
-    /// <param name="sheet">Das Excel Sheet.</param>
-    /// <param name="zelle">Die Zelle, z. B. A2.</param>
-    /// <param name="value">Den Wert der Zelle als String.</param>
-    public void WriteValue(Excel.Worksheet sheet, string zelle, string value)
-    {
-      Excel.Range r = sheet.get_Range(zelle, missing);
-      r.Value2 = value;
-    }
 
-    /// <summary>
-    /// Schreibt einen Wert in die Zelle des gegebenen Excel-Sheets
-    /// </summary>
-    /// <param name="sheet">Das Excel Sheet.</param>
-    /// <param name="zelle">Die Zelle, z. B. A2.</param>
-    /// <param name="value">Den Wert der Zelle als String.</param>
-    public void WriteValueProtectedCell(Excel.Worksheet sheet, string zelle, string value)
-    {
-      sheet.Unprotect("1111");
-      Excel.Range r = sheet.get_Range(zelle, missing);
-      r.Value2 = value;
-      sheet.Protect("1111", false, true);
-    }
-
-    /// <summary>
-    /// Liest einen Wert aus einer Zelle des gegebenen ExcelSheets.
-    /// </summary>
-    /// <param name="sheet">Das Excel Sheet.</param>
-    /// <param name="zelle">Die Zelle, z. B. A2.</param>
-    /// <returns>Den Wert der Zelle als String.</returns>
-    public string ReadValue(Excel.Worksheet sheet, string zelle)
-    {
-      Excel.Range r = sheet.get_Range(zelle, missing);
-      return r.Value2 == null ? null : Convert.ToString(r.Value2).Trim();
-    }
 
     public byte? ReadNote(Notentyp typ, string zelle)
     {
