@@ -1,12 +1,22 @@
 USE [diNo]
 GO
-
-/****** Object:  View [dbo].[vwNotenbogen]    Script Date: 07.10.2016 19:41:14 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
+
+alter table Schueler add AlteSO bit null default 1;
+GO
+update Schueler set AlteSO=1;
+
+alter table Schueler add Punktesumme int null;
+alter table Schueler add Bestanden int null;
+GO
+
+drop view vwNotenbogen
+go
 
 CREATE VIEW [dbo].[vwNotenbogen]
 AS
@@ -21,17 +31,44 @@ SELECT        dbo.Klasse.Bezeichnung, dbo.Lehrer.Nachname AS Klassenleiter, dbo.
                          dbo.Schueler.VerwandtschaftsbezeichnungEltern1, dbo.Schueler.NachnameEltern2, dbo.Schueler.VornameEltern2, dbo.Schueler.AnredeEltern2, 
                          dbo.Schueler.VerwandtschaftsbezeichnungEltern2, dbo.Schueler.EintrittJahrgangsstufe, dbo.Schueler.EintrittAm, dbo.Schueler.EintrittAusSchulnummer, 
                          dbo.Schueler.Email, dbo.Schueler.Notfalltelefonnummer, dbo.Schueler.DNote, dbo.Schueler.Status, dbo.Schueler.AndereFremdspr2Note, 
-                         dbo.Schueler.AndereFremdspr2Text, dbo.Schueler.DNoteAllg, dbo.Schueler.Schulart
+                         dbo.Schueler.AndereFremdspr2Text, dbo.Schueler.DNoteAllg, dbo.Schueler.Schulart, dbo.Schueler.AlteSO, dbo.Schueler.Punktesumme, dbo.Schueler.Bestanden
 FROM            dbo.Seminarfachnote RIGHT OUTER JOIN
                          dbo.Lehrer RIGHT OUTER JOIN
                          dbo.Schueler INNER JOIN
-                         dbo.Klasse ON dbo.Schueler.KlasseId = dbo.Klasse.Id ON dbo.Lehrer.Id = dbo.Klasse.KlassenleiterId ON dbo.Seminarfachnote.SchuelerId = dbo.Schueler.Id
-
+                        dbo.Klasse ON dbo.Schueler.KlasseId = dbo.Klasse.Id ON dbo.Lehrer.Id = dbo.Klasse.KlassenleiterId ON dbo.Seminarfachnote.SchuelerId = dbo.Schueler.Id
 GO
 
 
+CREATE TABLE [dbo].[HjLeistung](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[SchuelerId] [int] NOT NULL,
+	[FachId] [int] NOT NULL,
+	[Art] [tinyint] NOT NULL,
+	[Punkte] [tinyint] NOT NULL,
+	[Einbringen] [bit] NOT NULL,
+	[Punkte2Dez] [decimal](5, 2) NULL,
+	[SchnittMdl] [decimal](5, 2) NULL,
+ CONSTRAINT [PK_HjLeistung] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 
-alter table FpaNoten add Stelle1Hj nvarchar(256) null;  
-alter table FpaNoten add Stelle2Hj nvarchar(256) null;
-alter table Klasse drop column Zweig;
-update Klasse set Bezeichnung='IntVk' where Id=28;
+GO
+
+ALTER TABLE [dbo].[HjLeistung] ADD  CONSTRAINT [DF_HjLeistung_Einbringen]  DEFAULT ((0)) FOR [Einbringen]
+GO
+
+ALTER TABLE [dbo].[HjLeistung]  WITH CHECK ADD  CONSTRAINT [FK_HjLeistung_FachId] FOREIGN KEY([FachId])
+REFERENCES [dbo].[Fach] ([Id])
+GO
+
+ALTER TABLE [dbo].[HjLeistung] CHECK CONSTRAINT [FK_HjLeistung_FachId]
+GO
+
+ALTER TABLE [dbo].[HjLeistung]  WITH CHECK ADD  CONSTRAINT [FK_HjLeistung_SchuelerId] FOREIGN KEY([SchuelerId])
+REFERENCES [dbo].[Schueler] ([Id])
+GO
+
+ALTER TABLE [dbo].[HjLeistung] CHECK CONSTRAINT [FK_HjLeistung_SchuelerId]
+GO

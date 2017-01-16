@@ -12,7 +12,6 @@ namespace diNo
     public class SchuelerNoten
     {
         private Schueler schueler;
-        private diNoDataSet.KursDataTable kurse;
         public List<FachSchuelerNoten> alleFaecher;
 
         // die folgendes Array verwaltet die Anzahl der Einser, Zweier, usw., getrennt nach SAP-Fach und Nebenfach
@@ -26,7 +25,7 @@ namespace diNo
         public SchuelerNoten(Schueler s)
         {
             schueler = s;
-            kurse = schueler.Kurse; // ermittle alle Kurse, die der S besucht
+            diNoDataSet.KursDataTable kurse = schueler.Kurse; // ermittle alle Kurse, die der S besucht
             alleFaecher = new List<FachSchuelerNoten>();
             foreach (var kurs in kurse)
             {
