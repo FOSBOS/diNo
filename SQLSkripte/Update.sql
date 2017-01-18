@@ -72,3 +72,7 @@ GO
 
 ALTER TABLE [dbo].[HjLeistung] CHECK CONSTRAINT [FK_HjLeistung_SchuelerId]
 GO
+
+ALTER TABLE HjLeistung
+ADD CONSTRAINT uc_HjLeistung UNIQUE (SchuelerId,FachId,Art)
+Go

@@ -101,6 +101,7 @@
     <Compile Include="BasisForm.Designer.cs">
       <DependentUpon>BasisForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="HjLeistung.cs" />
     <Compile Include="ImportKlassenleiter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

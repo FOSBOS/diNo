@@ -280,8 +280,8 @@ namespace diNo
         // jedes Arrayelement enthält eine Liste mit Noten dieses Typs.
         private IList<int>[,] noten = new List<int>[Enum.GetValues(typeof(Halbjahr)).Length,Enum.GetValues(typeof(Notentyp)).Length];
         private BerechneteNote[] schnitte = new BerechneteNote[Enum.GetValues(typeof(Halbjahr)).Length];
-
-
+        private HjLeistung[] hjLeistung = new HjLeistung[Enum.GetValues(typeof(HjArt)).Length];
+    
         public FachSchuelerNoten(int aschuelerid, int akursid)
         {
             kursId = akursid;
