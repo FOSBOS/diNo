@@ -60,7 +60,7 @@ namespace diNo
           {
              // in D,E,M je 3 SA, in 2 Fächern des Profilbereichs je 2 SA
              // (T-Zweig: Ph,C;  W: BwR,Te;  S/A: B,C)
-             if (Kuerzel == "D" || Kuerzel == "E" || Kuerzel == "M") z=3;
+             if (Kuerzel == "D" || Kuerzel == "DAZ" || Kuerzel == "E" || Kuerzel == "M") z=3;
              else if (Kuerzel == "Ph" || Kuerzel == "B" || Kuerzel == "C"|| Kuerzel == "Te"|| Kuerzel == "BwR") z=2;
           }
           else if (jg == Jahrgangsstufe.Elf || jg == Jahrgangsstufe.Vorkurs)
