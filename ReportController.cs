@@ -102,16 +102,12 @@ namespace diNo
         if (schuelerId>0)
         {
           Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-          if (subrpt=="subrptFachSchuelerNoten" || subrpt=="subrptFachSchuelerNoten11Klasse")
+          if (subrpt=="subrptFachSchuelerNoten" || subrpt=="subrptFachSchuelerNoten11Klasse" ||
+              subrpt=="subrptAbiergebnisseNoten")
           {
-            IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(false);
+            IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(rptName);
             e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
-          }
-          else if (subrpt=="subrptAbiergebnisseNoten")
-          {
-            IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(true);
-            e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
-          }
+          }          
           else if (subrpt=="subrptSchullaufbahn")
           {
             IList<SchullaufbahnDruck> daten = new List<SchullaufbahnDruck>();

@@ -66,12 +66,12 @@ namespace diNo
     /// <summary>
     /// Liefert eine Liste in der je Fach alle Noten in druckbarer Form vorliegen.
     /// </summary>
-    public IList<FachSchuelerNotenDruckKurz> SchuelerNotenDruck(bool nurAbiergebnisse=false)
+    public IList<FachSchuelerNotenDruckKurz> SchuelerNotenDruck(string rptName)
     {
       IList<FachSchuelerNotenDruckKurz> liste = new List<FachSchuelerNotenDruckKurz>();      
       foreach (FachSchuelerNoten f in alleFaecher)
       {               
-        liste.Add(new FachSchuelerNotenDruckKurz(f, f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe),nurAbiergebnisse));
+        liste.Add(new FachSchuelerNotenDruckKurz(f, f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe),rptName));
       }
       if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Dreizehn)
       {
@@ -83,6 +83,12 @@ namespace diNo
         }
 
         liste.Add(new FachSchuelerNotenDruckKurz(schueler.Seminarfachnote));
+      }
+
+      // FPA ausgeben für Notenmitteilung (im Notenbogen als Bemerkung)
+      if (rptName=="diNo.rptNotenmitteilungA5.rdlc" && schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
+      {
+        liste.Add(new FachSchuelerNotenDruckKurz(schueler.FPANoten));
       }
       return liste;
     }
@@ -465,10 +471,10 @@ namespace diNo
       public string MAP4P { get; private set; } // nötige Punktzahl in einer mündlichen Prüfung um auf 4 im Zeugnis zu kommen
       public string MAP1P { get; private set; }
 
-      public FachSchuelerNotenDruckKurz(FachSchuelerNoten s, bool evalSA,bool nurAbiergebnisse)
+      public FachSchuelerNotenDruckKurz(FachSchuelerNoten s, bool evalSA,string rptName)
       {
         fachBez = s.getFach.Bezeichnung;
-        if (!nurAbiergebnisse && fachBez.Contains("irtschafts")) // Fachbezeichnung sind zu lang für Notenbogen
+        if (rptName=="diNo.rptNotenbogen.rdlc" && fachBez.Contains("irtschafts")) // Fachbezeichnung sind zu lang für Notenbogen
         {
           string kuerzel = s.getFach.Kuerzel;
           if (kuerzel == "BwR") fachBez = "Betriebswirt-schaftslehre";
@@ -480,7 +486,7 @@ namespace diNo
         var d1 = s.getSchnitt(Halbjahr.Erstes);
         var d2 = s.getSchnitt(Halbjahr.Zweites);
        
-        if (!nurAbiergebnisse)
+        if (rptName!="diNo.rptAbiergebnisse.rdlc")
         {
           if (evalSA)
           {
@@ -507,7 +513,7 @@ namespace diNo
         GesZ = String.Format("{0:f2}",d2.SchnittFortgangUndPruefung);                
         Z = d2.Abschlusszeugnis.ToString();
 
-        if (nurAbiergebnisse && MAP=="")
+        if (rptName=="diNo.rptAbiergebnisse.rdlc" && MAP=="")
         {
           MAP4P = s.NotwendigeNoteInMAP(4);
           MAP1P = s.NotwendigeNoteInMAP(1);
@@ -521,6 +527,19 @@ namespace diNo
         {
           Z = s.Gesamtnote.ToString();
           JF2  =Z;
+        }
+      }
+
+      public FachSchuelerNotenDruckKurz(diNoDataSet.FpANotenRow f)
+      {
+        fachBez = "Fachpraktische Ausbildung";
+        if (!f.IsPunkte1HjNull())
+        {
+          N1 = f.Punkte1Hj.ToString() + " (" + ErfolgText(f.Erfolg1Hj) + ")";          
+        }
+        if (!f.IsPunkteNull())
+        {
+          N2 = f.Punkte2Hj.ToString() + "\nSchnitt: " + f.Punkte.ToString() + " ("+ ErfolgText(f.Erfolg) + ")";
         }
       }
 
@@ -539,6 +558,17 @@ namespace diNo
           return "";
       }
 
+      // ausnahmsweise kopiert, weil es nächstes Jahr eh rausfällt:
+      private string ErfolgText(int note)
+      {
+        switch (note)
+        {
+          case 1: return "mit sehr gutem Erfolg";
+          case 2: return "mit gutem Erfolg";
+          case 3: return "mit Erfolg";
+          default: return "ohne Erfolg";        
+        }
+      }
   }
   /*
     public class FachSchuelerNotenDruck
