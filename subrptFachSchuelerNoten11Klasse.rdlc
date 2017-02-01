@@ -9,7 +9,7 @@
               <Width>0.8cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.75cm</Width>
+              <Width>4.2cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.85cm</Width>
@@ -21,7 +21,7 @@
               <Width>0.8cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>4.75cm</Width>
+              <Width>4.2cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.85cm</Width>
@@ -704,7 +704,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>2.5cm</Size>
+                <Size>3.63634cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox10">
                     <CanGrow>true</CanGrow>
@@ -747,7 +747,7 @@
                 </GroupExpressions>
               </Group>
               <TablixHeader>
-                <Size>2.5cm</Size>
+                <Size>3.63634cm</Size>
                 <CellContents>
                   <Textbox Name="fachBez11">
                     <CanGrow>true</CanGrow>
@@ -795,7 +795,7 @@
         </TablixRowHierarchy>
         <DataSetName>DataSetFachSchuelerNoten</DataSetName>
         <Height>1.1cm</Height>
-        <Width>17.8cm</Width>
+        <Width>17.83634cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -843,7 +843,7 @@
       </Border>
     </Style>
   </Body>
-  <Width>7.02133in</Width>
+  <Width>7.02218in</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>

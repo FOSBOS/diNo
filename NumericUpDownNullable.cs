@@ -25,7 +25,7 @@ namespace diNo
         {
             get {
                 if (Text=="") return null;
-                else return base.Value;
+                else return Math.Round(base.Value);
             } 
             set
             {               
