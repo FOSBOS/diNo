@@ -160,9 +160,9 @@ namespace diNo
     {
       // ImportExportJahresnoten.ImportiereNotenAusWinSD("H:\\Sicherung SD 14_15\\NotenPerExcelAusWinSD.csv");
 
-      Zeitpunkt reason = GetZeitpunkt();
-      string fileName = "C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\winSVZeugnisExport.txt";
-      string fileNameNeu = "C:\\Projects\\diNo\\Grunddaten_Notenprogramm\\winSVZeugnisExportNEU.txt";
+      Zeitpunkt reason = (Zeitpunkt)Zugriff.Instance.aktZeitpunkt;
+      string fileName = "C:\\projects\\diNo\\OmnisDB\\dzeugnis.txt";
+      string fileNameNeu = "C:\\projects\\diNo\\OmnisDB\\dzeugnisNEU.txt";
       OmnisDB.DZeugnisFileController controller = new OmnisDB.DZeugnisFileController(fileName, fileNameNeu, reason);
     }
   }
