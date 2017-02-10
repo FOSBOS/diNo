@@ -35,11 +35,16 @@ namespace diNo.OmnisDB
           {
             continue;
           }
-
+          
           Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
           if (BrauchtZeugnis(schueler, zeitpunkt))
           {
-            zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
+            if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
+            {
+              // fpA darf nur bei Elftklässlern übertragen werden
+              zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
+            }
+
             KlassenzielOderGefaehrdung zielerreichung = GetZielerreichung(zeitpunkt, schueler);
             zeile[Konstanten.klassenzielOderGefaehrdungCol] = Konstanten.GetKlassenzielOderGefaehrdungString(zielerreichung);
             if (zeitpunkt == Zeitpunkt.ErstePA || zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)

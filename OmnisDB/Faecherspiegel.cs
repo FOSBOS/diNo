@@ -36,7 +36,7 @@ namespace diNo.OmnisDB
       }
 
       var dieRichtigeNote = FindeFachNoten(faecherKuerzel, schueler);
-      if (dieRichtigeNote == null)
+      if (dieRichtigeNote == null && !schueler.Data.IsAustrittsdatumNull())
       {
         if (FehlendeNoteWirdWohlOKSein(faecherKuerzel))
         {

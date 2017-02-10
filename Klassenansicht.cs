@@ -39,25 +39,30 @@ namespace diNo
       
       if (schueler != null)
       {
-        this.userControlSchueleransicht1.Schueler = schueler;
-        this.userControlVorkommnisse1.Schueler = schueler;
-        this.notenbogen1.Schueler = schueler;
-        this.userControlFPAundSeminar1.Schueler = schueler;
-        
-        nameLabel.Text = schueler.NameVorname;
-        klasseLabel.Text = schueler.KlassenBezeichnung;
-        Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
-        pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
-        btnBrief.Enabled = true;        
-        
-        labelHinweise.Text = (schueler.IsLegastheniker ? "Legasthenie" : "");
-        labelHinweise.ForeColor = Color.Red;
-
-        if (Zugriff.Instance.HatVerwaltungsrechte)
+        // aus irgendwelchen Gründen kommt das Ereignis beim Wechseln des Schülers zwei Mal,
+        // davon einmal mit dem alten Schüler (sinnloser Refresh, sollte verhindert werden?)
+        if (this.userControlSchueleransicht1.Schueler == null || this.userControlSchueleransicht1.Schueler.Id != schueler.Id)
         {
-          userControlKurszuordnungen1.Schueler = schueler;
-          if (Zugriff.Instance.HatRolle(Rolle.Admin))
-            userControlAdministration1.Schueler = schueler;
+          this.userControlSchueleransicht1.Schueler = schueler;
+          this.userControlVorkommnisse1.Schueler = schueler;
+          this.notenbogen1.Schueler = schueler;
+          this.userControlFPAundSeminar1.Schueler = schueler;
+
+          nameLabel.Text = schueler.NameVorname;
+          klasseLabel.Text = schueler.KlassenBezeichnung;
+          Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
+          pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
+          btnBrief.Enabled = true;
+
+          labelHinweise.Text = (schueler.IsLegastheniker ? "Legasthenie" : "");
+          labelHinweise.ForeColor = Color.Red;
+
+          if (Zugriff.Instance.HatVerwaltungsrechte)
+          {
+            userControlKurszuordnungen1.Schueler = schueler;
+            if (Zugriff.Instance.HatRolle(Rolle.Admin))
+              userControlAdministration1.Schueler = schueler;
+          }
         }
       }
 
