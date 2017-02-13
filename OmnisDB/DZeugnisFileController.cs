@@ -39,9 +39,9 @@ namespace diNo.OmnisDB
           Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
           if (BrauchtZeugnis(schueler, zeitpunkt))
           {
-            if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
+            if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf && (zeitpunkt == Zeitpunkt.DrittePA || zeitpunkt == Zeitpunkt.Jahresende)))
             {
-              // fpA darf nur bei Elftklässlern übertragen werden
+              // fpA darf nur bei Elftklässlern übertragen werden oder bei Zwölftklässlern ins Abschlusszeugnis
               zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
             }
 
@@ -52,8 +52,11 @@ namespace diNo.OmnisDB
               zeile[Konstanten.zeugnisartCol] = zielerreichung == KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg ? "J" : "A";
               zeile[Konstanten.APBestandenCol] = Konstanten.GetBestandenString(GetBestanden(zeitpunkt, schueler));
             }
-
-            zeile[Konstanten.abweisungCol] = Konstanten.GetAbweisungString(schueler.GefahrDerAbweisung);
+            if (zielerreichung == KlassenzielOderGefaehrdung.BeiWeiteremAbsinkenGefaehrdet || zielerreichung == KlassenzielOderGefaehrdung.Gefaehrdet || zielerreichung == KlassenzielOderGefaehrdung.SehrGefaehrdet)
+            {
+              // Gefahr der Abweisung soll nur angekreuzt werden, wenn der Schüler zum Halbjahr wirklich gefährdet ist
+              zeile[Konstanten.abweisungCol] = Konstanten.GetAbweisungString(schueler.GefahrDerAbweisung);
+            }
 
             var seminarfachNote = new SeminarfachnoteTableAdapter().GetDataBySchuelerId(schuelerId);
             if (seminarfachNote != null && seminarfachNote.Count == 1 && !seminarfachNote[0].IsGesamtnoteNull())
