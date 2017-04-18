@@ -116,6 +116,12 @@
     <Compile Include="UserControlAdministration.Designer.cs">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControlHjLeistung.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlHjLeistung.Designer.cs">
+      <DependentUpon>UserControlHjLeistung.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControlKurszuordnungen.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -194,12 +200,6 @@
     <Compile Include="SchuelerNoten.cs" />
     <Compile Include="TrueCryptHelper.cs" />
     <Compile Include="UnterrichtExcelReader.cs" />
-    <Compile Include="UserControlChecks.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControlChecks.Designer.cs">
-      <DependentUpon>UserControlChecks.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControlFPAundSeminar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -249,6 +249,9 @@
     <EmbeddedResource Include="UserControlAdministration.resx">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControlHjLeistung.resx">
+      <DependentUpon>UserControlHjLeistung.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControlKurszuordnungen.resx">
       <DependentUpon>UserControlKurszuordnungen.cs</DependentUpon>
     </EmbeddedResource>
@@ -284,9 +287,6 @@
     <EmbeddedResource Include="subrptSchullaufbahn.rdlc" />
     <EmbeddedResource Include="subrptAbiVorkommnis.rdlc" />
     <EmbeddedResource Include="subrptVorkommnis.rdlc" />
-    <EmbeddedResource Include="UserControlChecks.resx">
-      <DependentUpon>UserControlChecks.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserControlFPAundSeminar.resx">
       <DependentUpon>UserControlFPAundSeminar.cs</DependentUpon>
     </EmbeddedResource>

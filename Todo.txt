@@ -1,6 +1,7 @@
 ﻿todos für diNo
 --------------
+- Excelvorlage: JF/Zeugnis auch berechnen, wenn SA-Schnitt oder mdl-Schnitt noch nicht vorliegt.
+-    Berechnung Nachtermin (z.B. 19/38 BE=6 bei Haupttermin 39)
+- Soll HjLeistung der 11. Klasse gleich in 11/1 bzw. 11/2 also mit Schlüssel 5 und 6 gespeichert werden? Wie sieht es bei der Vorklasse aus (dort wird nichts übernommen)?
 
-- Seminarfachnote in SchuelerNoten.alleFaecher integrieren, dann muss die nicht immer extra überprüft werden
-dazu den Dummykurs Seminarfach anlegen
 - Statistiken ?
