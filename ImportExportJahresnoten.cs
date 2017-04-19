@@ -37,7 +37,7 @@ namespace diNo
         foreach (var dbSchueler in schuelerAdapter.GetData())
         {
           Schueler schueler = new Schueler(dbSchueler);
-          foreach (var fachNote in schueler.getNoten.alleFaecher)
+          foreach (var fachNote in schueler.getNoten.alleKurse)
           {
             var fachKuerzel = fachNote.getFach.Kuerzel;
 

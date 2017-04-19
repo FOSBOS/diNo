@@ -29,6 +29,10 @@
     private void InitializeComponent()
     {
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridHjLeistung = new System.Windows.Forms.DataGridView();
       this.cFach = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cVorHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,14 +73,17 @@
       // 
       // cFach
       // 
-      this.cFach.DividerWidth = 10;
+      this.cFach.DividerWidth = 5;
       this.cFach.Frozen = true;
       this.cFach.HeaderText = "Fach";
       this.cFach.Name = "cFach";
       this.cFach.ReadOnly = true;
+      this.cFach.Width = 200;
       // 
       // cVorHj1
       // 
+      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cVorHj1.DefaultCellStyle = dataGridViewCellStyle2;
       this.cVorHj1.Frozen = true;
       this.cVorHj1.HeaderText = "11/1";
       this.cVorHj1.Name = "cVorHj1";
@@ -85,15 +92,20 @@
       // 
       // cVorHj2
       // 
+      dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cVorHj2.DefaultCellStyle = dataGridViewCellStyle3;
       this.cVorHj2.DividerWidth = 5;
       this.cVorHj2.Frozen = true;
       this.cVorHj2.HeaderText = "11/2";
+      this.cVorHj2.MinimumWidth = 2;
       this.cVorHj2.Name = "cVorHj2";
       this.cVorHj2.ReadOnly = true;
-      this.cVorHj2.Width = 55;
+      this.cVorHj2.Width = 52;
       // 
       // cHj1
       // 
+      dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cHj1.DefaultCellStyle = dataGridViewCellStyle4;
       this.cHj1.Frozen = true;
       this.cHj1.HeaderText = "12/1";
       this.cHj1.Name = "cHj1";
@@ -102,12 +114,15 @@
       // 
       // cHj2
       // 
+      dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cHj2.DefaultCellStyle = dataGridViewCellStyle5;
       this.cHj2.DividerWidth = 5;
       this.cHj2.Frozen = true;
       this.cHj2.HeaderText = "12/2";
+      this.cHj2.MinimumWidth = 2;
       this.cHj2.Name = "cHj2";
       this.cHj2.ReadOnly = true;
-      this.cHj2.Width = 55;
+      this.cHj2.Width = 52;
       // 
       // UserControlHjLeistung
       // 

@@ -516,7 +516,7 @@ namespace diNo
     {
       int summe = 0, anz = 0;
       decimal erg;
-      var faecher = getNoten.alleFaecher;
+      var faecher = getNoten.alleKurse;
       bool FranzVorhanden = !Data.IsAndereFremdspr2NoteNull();
 
       // Französisch wird nur in der 13. Klasse gewertet, wenn der Kurs belegt ist und

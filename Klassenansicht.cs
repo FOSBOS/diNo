@@ -47,6 +47,7 @@ namespace diNo
           this.userControlVorkommnisse1.Schueler = schueler;
           this.notenbogen1.Schueler = schueler;
           this.userControlFPAundSeminar1.Schueler = schueler;
+          userControlHjLeistung1.Schueler = schueler;
 
           nameLabel.Text = schueler.NameVorname;
           klasseLabel.Text = schueler.KlassenBezeichnung;
