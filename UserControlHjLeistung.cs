@@ -64,6 +64,9 @@ namespace diNo
         FillCell(dataGridHjLeistung.Rows[lineCount].Cells[2], fach.getHjLeistung(HjArt.VorHj2));   
         FillCell(dataGridHjLeistung.Rows[lineCount].Cells[3], fach.getHjLeistung(HjArt.Hj1));   
         FillCell(dataGridHjLeistung.Rows[lineCount].Cells[4], fach.getHjLeistung(HjArt.Hj2));   
+        FillCell(dataGridHjLeistung.Rows[lineCount].Cells[5], fach.getHjLeistung(HjArt.AP));   
+        FillCell(dataGridHjLeistung.Rows[lineCount].Cells[6], fach.getHjLeistung(HjArt.FR));   
+        FillCell(dataGridHjLeistung.Rows[lineCount].Cells[7], fach.getHjLeistung(HjArt.Fachnote));   
 
         /*
         if (Zugriff.Instance.aktZeitpunkt > 3 && zeugnis.JahresfortgangGanzzahlig != null) // ab der 2.PA werden die Prüfungsnoten auch farblich hervorgehoben

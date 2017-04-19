@@ -33,12 +33,19 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridHjLeistung = new System.Windows.Forms.DataGridView();
       this.cFach = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cVorHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cVorHj2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cHj2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cAP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cFR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cFN = new System.Windows.Forms.DataGridViewTextBoxColumn();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridHjLeistung)).BeginInit();
       this.SuspendLayout();
       // 
@@ -61,7 +68,10 @@
             this.cVorHj1,
             this.cVorHj2,
             this.cHj1,
-            this.cHj2});
+            this.cHj2,
+            this.cAP,
+            this.cFR,
+            this.cFN});
       this.dataGridHjLeistung.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridHjLeistung.Location = new System.Drawing.Point(0, 0);
       this.dataGridHjLeistung.Name = "dataGridHjLeistung";
@@ -73,6 +83,8 @@
       // 
       // cFach
       // 
+      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.cFach.DefaultCellStyle = dataGridViewCellStyle2;
       this.cFach.DividerWidth = 5;
       this.cFach.Frozen = true;
       this.cFach.HeaderText = "Fach";
@@ -82,8 +94,8 @@
       // 
       // cVorHj1
       // 
-      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cVorHj1.DefaultCellStyle = dataGridViewCellStyle2;
+      dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cVorHj1.DefaultCellStyle = dataGridViewCellStyle3;
       this.cVorHj1.Frozen = true;
       this.cVorHj1.HeaderText = "11/1";
       this.cVorHj1.Name = "cVorHj1";
@@ -92,20 +104,19 @@
       // 
       // cVorHj2
       // 
-      dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cVorHj2.DefaultCellStyle = dataGridViewCellStyle3;
-      this.cVorHj2.DividerWidth = 5;
+      dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cVorHj2.DefaultCellStyle = dataGridViewCellStyle4;
+      this.cVorHj2.DividerWidth = 2;
       this.cVorHj2.Frozen = true;
       this.cVorHj2.HeaderText = "11/2";
-      this.cVorHj2.MinimumWidth = 2;
       this.cVorHj2.Name = "cVorHj2";
       this.cVorHj2.ReadOnly = true;
       this.cVorHj2.Width = 52;
       // 
       // cHj1
       // 
-      dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cHj1.DefaultCellStyle = dataGridViewCellStyle4;
+      dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cHj1.DefaultCellStyle = dataGridViewCellStyle5;
       this.cHj1.Frozen = true;
       this.cHj1.HeaderText = "12/1";
       this.cHj1.Name = "cHj1";
@@ -114,15 +125,50 @@
       // 
       // cHj2
       // 
-      dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cHj2.DefaultCellStyle = dataGridViewCellStyle5;
-      this.cHj2.DividerWidth = 5;
+      dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cHj2.DefaultCellStyle = dataGridViewCellStyle6;
+      this.cHj2.DividerWidth = 2;
       this.cHj2.Frozen = true;
       this.cHj2.HeaderText = "12/2";
-      this.cHj2.MinimumWidth = 2;
       this.cHj2.Name = "cHj2";
       this.cHj2.ReadOnly = true;
       this.cHj2.Width = 52;
+      // 
+      // cAP
+      // 
+      dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cAP.DefaultCellStyle = dataGridViewCellStyle7;
+      this.cAP.DividerWidth = 2;
+      this.cAP.Frozen = true;
+      this.cAP.HeaderText = "AP";
+      this.cAP.Name = "cAP";
+      this.cAP.ReadOnly = true;
+      this.cAP.ToolTipText = "Abschlussprüfung gesamt";
+      this.cAP.Width = 52;
+      // 
+      // cFR
+      // 
+      dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cFR.DefaultCellStyle = dataGridViewCellStyle8;
+      this.cFR.DividerWidth = 2;
+      this.cFR.Frozen = true;
+      this.cFR.HeaderText = "FR";
+      this.cFR.Name = "cFR";
+      this.cFR.ReadOnly = true;
+      this.cFR.ToolTipText = "Fachreferat";
+      this.cFR.Width = 52;
+      // 
+      // cFN
+      // 
+      dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cFN.DefaultCellStyle = dataGridViewCellStyle9;
+      this.cFN.DividerWidth = 2;
+      this.cFN.Frozen = true;
+      this.cFN.HeaderText = "FN";
+      this.cFN.Name = "cFN";
+      this.cFN.ReadOnly = true;
+      this.cFN.ToolTipText = "Fachnote";
+      this.cFN.Width = 52;
       // 
       // UserControlHjLeistung
       // 
@@ -144,5 +190,8 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn cVorHj2;
     private System.Windows.Forms.DataGridViewTextBoxColumn cHj1;
     private System.Windows.Forms.DataGridViewTextBoxColumn cHj2;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cAP;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cFR;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cFN;
   }
 }

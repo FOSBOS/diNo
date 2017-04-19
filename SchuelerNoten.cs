@@ -37,8 +37,8 @@ namespace diNo
           }
 
           // alle Fächer des Schülers ohne Kurs finden und diese HjLeistungen laden 
-          diNoDataSet.FachDataTable fachDT = (new FachTableAdapter()).GetDataById(6); // TODO SQL erstellen!!
-          foreach (var fachR in fachDT)
+          diNoDataSet.FachDataTable fDT = (new FachTableAdapter()).GetFaecherOhneKurseBySchuelerId(schueler.Id);
+          foreach (var fachR in fDT)
           {
             Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
             alleFaecher.Add(new FachSchuelerNoten(schueler.Id, fach));
