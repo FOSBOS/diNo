@@ -18,7 +18,7 @@ namespace diNo
       InitializeComponent();
     }
 
-       /// <summary>
+    /// <summary>
     /// Der anzuzeigende Schüler.
     /// </summary>
     public Schueler Schueler
@@ -56,8 +56,7 @@ namespace diNo
       foreach (var fach in schueler.getNoten.alleFaecher)
       {
         dataGridHjLeistung.Rows.Add();
-        dataGridHjLeistung.Rows[lineCount].Height += 2;
-        //dataGridHjLeistung.Rows[lineCount].DividerHeight = 2;
+        dataGridHjLeistung.Rows[lineCount].Height += 2;        
         dataGridHjLeistung.Rows[lineCount].Cells[0].Value = fach.getFach.Bezeichnung;
 
         FillCell(dataGridHjLeistung.Rows[lineCount].Cells[1], fach.getHjLeistung(HjArt.VorHj1));   
@@ -71,7 +70,7 @@ namespace diNo
         /*
         if (Zugriff.Instance.aktZeitpunkt > 3 && zeugnis.JahresfortgangGanzzahlig != null) // ab der 2.PA werden die Prüfungsnoten auch farblich hervorgehoben
             {
-              SetBackgroundColor((double)zeugnis.JahresfortgangGanzzahlig, dataGridHjLeistung.Rows[lineCount].Cells[23]);
+              SetBackgroundColor((double)zeugnis.JahresfortgangGanzzahlig, dataGridNoten.Rows[lineCount].Cells[23]);
             }
           }        
         */

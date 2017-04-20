@@ -206,6 +206,12 @@
     <Compile Include="UserControlFPAundSeminar.Designer.cs">
       <DependentUpon>UserControlFPAundSeminar.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControlNotenbogen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlNotenbogen.Designer.cs">
+      <DependentUpon>UserControlNotenbogen.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControlSchueleransicht.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -289,6 +295,9 @@
     <EmbeddedResource Include="subrptVorkommnis.rdlc" />
     <EmbeddedResource Include="UserControlFPAundSeminar.resx">
       <DependentUpon>UserControlFPAundSeminar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControlNotenbogen.resx">
+      <DependentUpon>UserControlNotenbogen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlSchueleransicht.resx">
       <DependentUpon>UserControlSchueleransicht.cs</DependentUpon>

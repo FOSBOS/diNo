@@ -43,7 +43,7 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-      this.dataGridHjLeistung = new System.Windows.Forms.DataGridView();
+      this.dataGridNoten = new System.Windows.Forms.DataGridView();
       this.Fachname = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.NotenHJ1_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.NotenHJ1_2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,17 +68,17 @@
       this.APGesamt = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.GesSchnitt = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.Endnote = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGridHjLeistung)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).BeginInit();
       this.SuspendLayout();
       // 
-      // dataGridHjLeistung
+      // dataGridNoten
       // 
-      this.dataGridHjLeistung.AllowUserToAddRows = false;
-      this.dataGridHjLeistung.AllowUserToDeleteRows = false;
-      this.dataGridHjLeistung.AllowUserToResizeColumns = false;
-      this.dataGridHjLeistung.AllowUserToResizeRows = false;
-      this.dataGridHjLeistung.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.dataGridHjLeistung.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+      this.dataGridNoten.AllowUserToAddRows = false;
+      this.dataGridNoten.AllowUserToDeleteRows = false;
+      this.dataGridNoten.AllowUserToResizeColumns = false;
+      this.dataGridNoten.AllowUserToResizeRows = false;
+      this.dataGridNoten.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGridNoten.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Fachname,
             this.NotenHJ1_1,
             this.NotenHJ1_2,
@@ -103,14 +103,14 @@
             this.APGesamt,
             this.GesSchnitt,
             this.Endnote});
-      this.dataGridHjLeistung.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dataGridHjLeistung.Location = new System.Drawing.Point(0, 0);
-      this.dataGridHjLeistung.Name = "dataGridHjLeistung";
-      this.dataGridHjLeistung.ReadOnly = true;
-      this.dataGridHjLeistung.RowHeadersWidth = 25;
-      this.dataGridHjLeistung.ShowEditingIcon = false;
-      this.dataGridHjLeistung.Size = new System.Drawing.Size(1299, 496);
-      this.dataGridHjLeistung.TabIndex = 0;
+      this.dataGridNoten.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataGridNoten.Location = new System.Drawing.Point(0, 0);
+      this.dataGridNoten.Name = "dataGridNoten";
+      this.dataGridNoten.ReadOnly = true;
+      this.dataGridNoten.RowHeadersWidth = 25;
+      this.dataGridNoten.ShowEditingIcon = false;
+      this.dataGridNoten.Size = new System.Drawing.Size(1299, 496);
+      this.dataGridNoten.TabIndex = 0;
       // 
       // Fachname
       // 
@@ -368,16 +368,16 @@
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
-      this.Controls.Add(this.dataGridHjLeistung);
+      this.Controls.Add(this.dataGridNoten);
       this.Name = "Notenbogen";
       this.Size = new System.Drawing.Size(1299, 496);
-      ((System.ComponentModel.ISupportInitialize)(this.dataGridHjLeistung)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).EndInit();
       this.ResumeLayout(false);
 
     }
 
     #endregion
-    private System.Windows.Forms.DataGridView dataGridHjLeistung;
+    private System.Windows.Forms.DataGridView dataGridNoten;
     private System.Windows.Forms.DataGridViewTextBoxColumn Fachname;
     private System.Windows.Forms.DataGridViewTextBoxColumn NotenHJ1_1;
     private System.Windows.Forms.DataGridViewTextBoxColumn NotenHJ1_2;

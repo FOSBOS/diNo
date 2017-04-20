@@ -14,8 +14,8 @@ namespace diNo
     public HjArt Art { get; private set; }
     public byte Punkte;
     public bool Einbringen=false;
-    decimal? Punkte2Dez=null;
-    decimal? SchnittMdl=null;
+    public decimal? Punkte2Dez=null;
+    public decimal? SchnittMdl=null;
 
     public HjLeistung(int SchuelerId,Fach afach,HjArt aart)
     {
@@ -30,8 +30,8 @@ namespace diNo
       Art = (HjArt)r.Art;
       Punkte = r.Punkte;
       Einbringen = r.Einbringen;
-      Punkte2Dez = r.Punkte2Dez;
-      SchnittMdl = r.SchnittMdl;
+      if (!r.IsPunkte2DezNull()) Punkte2Dez =  r.Punkte2Dez;
+      if (!r.IsSchnittMdlNull()) SchnittMdl =  r.SchnittMdl;      
     }
 
     public Fach getFach { get

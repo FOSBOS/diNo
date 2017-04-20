@@ -19,7 +19,7 @@ namespace diNo
     public Notenbogen()
     {
       InitializeComponent();
-      dataGridHjLeistung.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None; // sollte das Neuzeichnen schneller machen
+      dataGridNoten.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None; // sollte das Neuzeichnen schneller machen
     }
 
     /// <summary>
@@ -48,15 +48,15 @@ namespace diNo
         return;
       }
 
-      dataGridHjLeistung.Rows.Clear();
-      dataGridHjLeistung.RowsDefaultCellStyle.BackColor = Color.White;
+      dataGridNoten.Rows.Clear();
+      dataGridNoten.RowsDefaultCellStyle.BackColor = Color.White;
       log.Debug("Öffne Notenbogen SchülerId=" + this.schueler.Id);
 
       var dieNoten = schueler.getNoten.alleKurse;
       if (schueler.Status == Schuelerstatus.Abgemeldet)
       {
         //dieNoten = schueler.getNoten.SucheAlteNoten();
-        dataGridHjLeistung.RowsDefaultCellStyle.BackColor = Color.LightGray;
+        dataGridNoten.RowsDefaultCellStyle.BackColor = Color.LightGray;
       }
 
       SetzeSichtbarkeitDerSpalten(dieNoten);
@@ -65,10 +65,10 @@ namespace diNo
       int lineCount = 0;
       foreach (var kursNoten in dieNoten)
       {
-        dataGridHjLeistung.Rows.Add(2);
-        dataGridHjLeistung.Rows[lineCount + 1].Height += 2;
-        dataGridHjLeistung.Rows[lineCount + 1].DividerHeight = 2;
-        dataGridHjLeistung.Rows[lineCount].Cells[0].Value = kursNoten.getFach.Bezeichnung;
+        dataGridNoten.Rows.Add(2);
+        dataGridNoten.Rows[lineCount + 1].Height += 2;
+        dataGridNoten.Rows[lineCount + 1].DividerHeight = 2;
+        dataGridNoten.Rows[lineCount].Cells[0].Value = kursNoten.getFach.Bezeichnung;
 
         InsertNoten(1, lineCount, kursNoten.getNoten(Halbjahr.Erstes, Notentyp.Schulaufgabe), false);
         InsertNoten(1, lineCount + 1, kursNoten.sonstigeLeistungen(Halbjahr.Erstes));
@@ -87,22 +87,22 @@ namespace diNo
         {
           if (zeugnis.PruefungGesamt != null)
           {
-            dataGridHjLeistung.Rows[lineCount].Cells[21].Value = zeugnis.PruefungGesamt;
-            dataGridHjLeistung.Rows[lineCount].Cells[22].Value = zeugnis.SchnittFortgangUndPruefung;
-            dataGridHjLeistung.Rows[lineCount].Cells[23].Value = zeugnis.Abschlusszeugnis;
+            dataGridNoten.Rows[lineCount].Cells[21].Value = zeugnis.PruefungGesamt;
+            dataGridNoten.Rows[lineCount].Cells[22].Value = zeugnis.SchnittFortgangUndPruefung;
+            dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.Abschlusszeugnis;
             if (Zugriff.Instance.aktZeitpunkt > 3) // ab der 2.PA werden die Prüfungsnoten auch farblich hervorgehoben
             {
-              SetBackgroundColor((double)zeugnis.PruefungGesamt, dataGridHjLeistung.Rows[lineCount].Cells[21]);
-              SetBackgroundColor((double)zeugnis.SchnittFortgangUndPruefung, dataGridHjLeistung.Rows[lineCount].Cells[22]);
-              SetBackgroundColor((double)zeugnis.Abschlusszeugnis, dataGridHjLeistung.Rows[lineCount].Cells[23]);
+              SetBackgroundColor((double)zeugnis.PruefungGesamt, dataGridNoten.Rows[lineCount].Cells[21]);
+              SetBackgroundColor((double)zeugnis.SchnittFortgangUndPruefung, dataGridNoten.Rows[lineCount].Cells[22]);
+              SetBackgroundColor((double)zeugnis.Abschlusszeugnis, dataGridNoten.Rows[lineCount].Cells[23]);
             }
           }
           else
           {
-            dataGridHjLeistung.Rows[lineCount].Cells[23].Value = zeugnis.JahresfortgangGanzzahlig;
+            dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.JahresfortgangGanzzahlig;
             if (Zugriff.Instance.aktZeitpunkt > 3 && zeugnis.JahresfortgangGanzzahlig != null) // ab der 2.PA werden die Prüfungsnoten auch farblich hervorgehoben
             {
-              SetBackgroundColor((double)zeugnis.JahresfortgangGanzzahlig, dataGridHjLeistung.Rows[lineCount].Cells[23]);
+              SetBackgroundColor((double)zeugnis.JahresfortgangGanzzahlig, dataGridNoten.Rows[lineCount].Cells[23]);
             }
           }
         }
@@ -125,18 +125,18 @@ namespace diNo
 
       for (int i = 1; i < 8; i++)
       {
-        dataGridHjLeistung.Columns[i].Visible = i - 1 < maxAnzahlNotenHJ1;
-        dataGridHjLeistung.Columns[i].DividerWidth = (i == maxAnzahlNotenHJ1) ? 10 : 0;
-        dataGridHjLeistung.Columns[i].Width = (i == maxAnzahlNotenHJ1) ? 45 : 35;
+        dataGridNoten.Columns[i].Visible = i - 1 < maxAnzahlNotenHJ1;
+        dataGridNoten.Columns[i].DividerWidth = (i == maxAnzahlNotenHJ1) ? 10 : 0;
+        dataGridNoten.Columns[i].Width = (i == maxAnzahlNotenHJ1) ? 45 : 35;
       }
 
       // ab dem Vorlauf der 1. PA interessiert das Zwischenzeugnis nicht mehr
-      dataGridHjLeistung.Columns[8].Visible = (Zugriff.Instance.aktZeitpunkt <= 2);
-      dataGridHjLeistung.Columns[9].Visible = (Zugriff.Instance.aktZeitpunkt <= 2);
+      dataGridNoten.Columns[8].Visible = (Zugriff.Instance.aktZeitpunkt <= 2);
+      dataGridNoten.Columns[9].Visible = (Zugriff.Instance.aktZeitpunkt <= 2);
 
       for (int i = 10; i < 18; i++)
       {
-        dataGridHjLeistung.Columns[i].Visible = i - 10 < maxAnzahlNotenHJ2;
+        dataGridNoten.Columns[i].Visible = i - 10 < maxAnzahlNotenHJ2;
       }
 
     }
@@ -155,7 +155,7 @@ namespace diNo
     {
       foreach (var note in noten)
       {
-        var cell = dataGridHjLeistung.Rows[startRow].Cells[startCol];
+        var cell = dataGridNoten.Rows[startRow].Cells[startCol];
         cell.Value = note;
       //  SetBackgroundColor(note, cell);
         startCol++;
@@ -166,7 +166,7 @@ namespace diNo
     {
       foreach (var note in noten)
       {
-        var cell = dataGridHjLeistung.Rows[startRow].Cells[startCol];
+        var cell = dataGridNoten.Rows[startRow].Cells[startCol];
         cell.Value = note;
         if (setzeFarbe)
         {
@@ -183,30 +183,30 @@ namespace diNo
       {
         if (b.SchnittSchulaufgaben != null)
         {
-          var cell = dataGridHjLeistung.Rows[startRow].Cells[startCol];
+          var cell = dataGridNoten.Rows[startRow].Cells[startCol];
           cell.Value = b.SchnittSchulaufgaben;
         }
 
         if (b.SchnittMuendlich != null)
         {
-          dataGridHjLeistung.Rows[startRow + 1].Cells[startCol].Value = b.SchnittMuendlich;
+          dataGridNoten.Rows[startRow + 1].Cells[startCol].Value = b.SchnittMuendlich;
         }
 
         if (b.JahresfortgangMitKomma != null)
         {
-          dataGridHjLeistung.Rows[startRow + 1].Cells[startCol + 1].Value = b.JahresfortgangMitKomma;
+          dataGridNoten.Rows[startRow + 1].Cells[startCol + 1].Value = b.JahresfortgangMitKomma;
           if ((b.ErstesHalbjahr && Zugriff.Instance.aktZeitpunkt <= 2) || (!b.ErstesHalbjahr && Zugriff.Instance.aktZeitpunkt == 3))
           {
-            SetBackgroundColor((double)b.JahresfortgangMitKomma, dataGridHjLeistung.Rows[startRow + 1].Cells[startCol + 1]);
+            SetBackgroundColor((double)b.JahresfortgangMitKomma, dataGridNoten.Rows[startRow + 1].Cells[startCol + 1]);
           }
         }
 
         if (b.JahresfortgangGanzzahlig != null)
         {
-          dataGridHjLeistung.Rows[startRow].Cells[startCol + 1].Value = b.JahresfortgangGanzzahlig;
+          dataGridNoten.Rows[startRow].Cells[startCol + 1].Value = b.JahresfortgangGanzzahlig;
           if ((b.ErstesHalbjahr && Zugriff.Instance.aktZeitpunkt <= 2) || (!b.ErstesHalbjahr && Zugriff.Instance.aktZeitpunkt == 3))
           {
-            SetBackgroundColor((double)b.JahresfortgangGanzzahlig, dataGridHjLeistung.Rows[startRow].Cells[startCol + 1]);
+            SetBackgroundColor((double)b.JahresfortgangGanzzahlig, dataGridNoten.Rows[startRow].Cells[startCol + 1]);
           }
         }
       }
@@ -227,7 +227,7 @@ namespace diNo
     private void SetBackgroundColor(double notenwert, DataGridViewCell cell)
     {
       Color color = GetBackgroundColor(notenwert);
-      if (color == dataGridHjLeistung.BackgroundColor)
+      if (color == dataGridNoten.BackgroundColor)
       {
         return; // nothing to do
       }
@@ -254,7 +254,7 @@ namespace diNo
 
       if (notenwert > 13.5) return Color.LimeGreen;
       if (notenwert > 11.5) return Color.PaleGreen;
-      return dataGridHjLeistung.BackgroundColor;
+      return dataGridNoten.BackgroundColor;
     }
 
   }

@@ -441,37 +441,59 @@ namespace diNo
             }
         }
 
-        /// <summary>
-        /// Liefert eine druckbare Liste für die SA
-        /// </summary>
-        public IList<string> SA(Halbjahr hj)
-        {
-            IList<string> liste = new List<string>();            
-            InsertNoten(liste, getNoten(hj, Notentyp.Schulaufgabe), "");
-            return liste;           
-        }
+    private string NotenString(IList<int>noten, string bez="")
+    {
+      string s="";
+      foreach (var note in noten)
+      {        
+        s += note + bez + " ";
+      }
+      return s;
+    }
 
-        /// <summary>
-        /// Liefert eine druckbare Liste für alle sonstigen Leistungen
-        /// </summary>
-        public IList<string> sonstigeLeistungen(Halbjahr hj)
-        {
-            IList<string> liste = new List<string>();
-            InsertNoten(liste, getNoten(hj, Notentyp.Kurzarbeit), "K");
-            InsertNoten(liste, getNoten(hj, Notentyp.Ex), "");
-            InsertNoten(liste, getNoten(hj, Notentyp.EchteMuendliche), "");
-            InsertNoten(liste, getNoten(hj, Notentyp.Fachreferat), "F");
-            InsertNoten(liste, getNoten(hj, Notentyp.Ersatzprüfung), "E"); 
-            return liste;           
-        }
+    /// <summary>
+    /// Liefert alle SA eines Faches als Text
+    /// </summary>
+    public string SA(Halbjahr hj)
+    {
+      return (NotenString(getNoten(hj, Notentyp.Schulaufgabe), "")).TrimEnd();
+    }
 
-        private void InsertNoten(IList<string> liste, IList<int>noten, string bez="")
-        {
-            foreach (var note in noten)
-            {
-                    liste.Add(note + (bez=="" ? "" : /*" " + */ bez));                
-            }        
-        }
+    /// <summary>
+    /// Liefert alle sonstige Leistungen eines Faches als Text
+    /// </summary>
+    public string sL(Halbjahr hj)
+    {
+      string s;
+      s=NotenString(getNoten(hj, Notentyp.Kurzarbeit), "K");
+      s+=NotenString(getNoten(hj, Notentyp.Ex), "");
+      s+=NotenString(getNoten(hj, Notentyp.EchteMuendliche), "");
+      // NotenString(getNoten(hj, Notentyp.Fachreferat), "F"); // nun ein Hj-Leistung!
+      s+=NotenString(getNoten(hj, Notentyp.Ersatzprüfung), "E"); 
+      return s.TrimEnd();
+    }
+
+    /// <summary>
+    /// Liefert eine druckbare Liste für alle sonstigen Leistungen
+    /// </summary>
+    public IList<string> sonstigeLeistungen(Halbjahr hj)
+    {
+      IList<string> liste = new List<string>();
+      InsertNoten(liste, getNoten(hj, Notentyp.Kurzarbeit), "K");
+      InsertNoten(liste, getNoten(hj, Notentyp.Ex), "");
+      InsertNoten(liste, getNoten(hj, Notentyp.EchteMuendliche), "");
+      InsertNoten(liste, getNoten(hj, Notentyp.Fachreferat), "F");
+      InsertNoten(liste, getNoten(hj, Notentyp.Ersatzprüfung), "E"); 
+      return liste;           
+    }
+
+    private void InsertNoten(IList<string> liste, IList<int>noten, string bez="")
+    {
+      foreach (var note in noten)
+      {
+        liste.Add(note + (bez=="" ? "" : /*" " + */ bez));                
+      }        
+    }
 
     public string NotwendigeNoteInMAP(int Zielpunkte)
     {
@@ -532,14 +554,14 @@ namespace diNo
           if (evalSA)
           {
             Art = "SA\n";
-            N1 = String.Join("  ", s.SA(Halbjahr.Erstes)) + "\n";
-            N2 = String.Join("  ", s.SA(Halbjahr.Zweites)) + "\n";
+            N1 = s.SA(Halbjahr.Erstes) + "\n";
+            N2 = s.SA(Halbjahr.Zweites) + "\n";
             D1 = String.Format("{0:f2}", d1.SchnittSchulaufgaben) + "\n";
             D2 = String.Format("{0:f2}", d2.SchnittSchulaufgaben) + "\n";
           }        
           Art += "sL";
-          N1 += String.Join("  ", s.sonstigeLeistungen(Halbjahr.Erstes));
-          N2 += String.Join("  ", s.sonstigeLeistungen(Halbjahr.Zweites));
+          N1 += s.sL(Halbjahr.Erstes);
+          N2 += s.sL(Halbjahr.Zweites);
           D1 += String.Format("{0:f2}", d1.SchnittMuendlich);
           D2 += String.Format("{0:f2}", d2.SchnittMuendlich);
           DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
