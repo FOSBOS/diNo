@@ -90,6 +90,8 @@ namespace diNo
 
       BerechneteNoteTableAdapter bta = new BerechneteNoteTableAdapter();
       bta.DeleteByKursId(kurs.Id);
+
+      //TODO: auch Halbjahresleistungen löschen? Evtl. blöd weg. EINBRINGEN - Kennzeichen?
     }
   }
 
@@ -169,34 +171,48 @@ namespace diNo
         ErzeugeNoten(i, sid, new string[] { "Q", "R", "S" }, Halbjahr.Zweites, Notentyp.EchteMuendliche);
         ErzeugeNoten(i, sid, new string[] { "U", "V" }, Halbjahr.Zweites, Notentyp.Schulaufgabe);
 
-        // Fachreferat fehlt noch !
+        HjLeistungTableAdapter ada = new HjLeistungTableAdapter();
+        
+        byte? zeugnisnote = xls.ReadNote("M" + i, xls.notenbogen);
+        if (zeugnisnote != null)
+        {
+          HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj1);
+          l.Punkte = (byte)zeugnisnote;
+          l.Punkte2Dez = (byte)xls.ReadNote("L" + i, xls.notenbogen);
+          l.SchnittMdl = (byte)xls.ReadNote("I" + i, xls.notenbogen);
+          l.WriteToDB();
+        }
 
-        //BerechneteNote bnote = new BerechneteNote(kurs.Id, sid);
-        //bnote.ErstesHalbjahr = (hj == Halbjahr.Erstes);
-        //bnote.SchnittSchulaufgaben = xls.ReadSchnitt(BerechneteNotentyp.SchnittSA, hj, i);
-        //bnote.SchnittMuendlich = xls.ReadSchnitt(BerechneteNotentyp.Schnittmuendlich, hj, i);
-        //bnote.JahresfortgangMitKomma = xls.ReadSchnitt(BerechneteNotentyp.JahresfortgangMitNKS, hj, i);
-        //bnote.JahresfortgangGanzzahlig = xls.ReadSchnittGanzzahlig(BerechneteNotentyp.Jahresfortgang, hj, i);
-        //bnote.PruefungGesamt = xls.ReadSchnitt(BerechneteNotentyp.APGesamt, hj, indexAP);
-        //bnote.SchnittFortgangUndPruefung = xls.ReadSchnitt(BerechneteNotentyp.EndnoteMitNKS, hj, indexAP);
-        //bnote.Abschlusszeugnis = xls.ReadSchnittGanzzahlig(BerechneteNotentyp.Abschlusszeugnis, hj, indexAP);
+        byte? zeugnisnote2 = xls.ReadNote("X" + i, xls.notenbogen);
+        if (zeugnisnote2 != null)
+        {
+          HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj2);
+          l.Punkte = (byte)zeugnisnote2;
+          l.Punkte2Dez = (byte)xls.ReadNote("W" + i, xls.notenbogen);
+          l.SchnittMdl = (byte)xls.ReadNote("T" + i, xls.notenbogen);
+          l.WriteToDB();
+        }
 
-        //// für die PZ im 1. Hj. reicht ggf. auch eine mündliche Note
-        //// im 2. Hj. kann das nicht so einfach übernommen werden, da Teilnoten aus dem 1. Hj. feststehen
-        //if (bnote.JahresfortgangGanzzahlig == null && bnote.ErstesHalbjahr)
-        //{
-        //  if (bnote.SchnittMuendlich != null) bnote.JahresfortgangMitKomma = bnote.SchnittMuendlich;
-        //  else if (bnote.SchnittSchulaufgaben != null) bnote.JahresfortgangMitKomma = bnote.SchnittSchulaufgaben;
-        //  bnote.RundeJFNote();
-        //}
-
-        //// Nur wenn einer der Schnitte feststeht, wird diese Schnittkonstellation gespeichert
-        //if (bnote.SchnittMuendlich != null || bnote.SchnittSchulaufgaben != null)
-        //  bnote.writeToDB();
+        byte? fachreferat = xls.ReadNote("X" + i, xls.notenbogen);
+        if (fachreferat != null)
+        {
+          HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.FR);
+          l.Punkte = (byte)fachreferat;
+          l.Punkte2Dez = Convert.ToDecimal((byte)fachreferat);
+          l.SchnittMdl = Convert.ToDecimal((byte)fachreferat);
+          l.WriteToDB();
+        }
       }
 
-      i++;
+        i++;
       indexAP++;
+    }
+
+    private HjLeistung FindOrCreateHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art)
+    {
+      var vorhandeneNoten = ada.GetDataBySchuelerAndFach(sid, kurs.getFach.Id).Where(x => x.Art == (byte)art);
+      var vorhandeneNote = vorhandeneNoten != null && vorhandeneNoten.Count() == 1 ? vorhandeneNoten.First() : null;
+      return vorhandeneNote != null ? new HjLeistung(vorhandeneNote) : new HjLeistung(sid, kurs.getFach, art);
     }
 
     private void ErzeugeNoten(int i, int sid, string[] spalten, Halbjahr hj, Notentyp typ)
