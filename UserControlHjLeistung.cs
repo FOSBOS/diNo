@@ -47,6 +47,16 @@ namespace diNo
       dataGridHjLeistung.Rows.Clear();
       dataGridHjLeistung.RowsDefaultCellStyle.BackColor = Color.White;
 
+      // keine Abi-Klasse: HjLeistung werden nicht angezeigt
+      if (schueler.getKlasse.Jahrgangsstufe<Jahrgangsstufe.Zwoelf)
+        return; // TODO: Tab gar nicht anzeigen?!
+
+      // nur FOS 12. hat Leistungen aus der 11. Klasse:
+      bool hatVorHj = (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Zwoelf) && (schueler.Data.Schulart == "F");
+      dataGridHjLeistung.Columns[1].Visible = hatVorHj;
+      dataGridHjLeistung.Columns[2].Visible = hatVorHj;
+
+
       if (schueler.Status == Schuelerstatus.Abgemeldet)
       {        
         dataGridHjLeistung.RowsDefaultCellStyle.BackColor = Color.LightGray;

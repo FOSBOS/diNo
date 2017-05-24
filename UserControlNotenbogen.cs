@@ -82,5 +82,27 @@ namespace diNo
         c.Value = hjl.Punkte;
       }
     }
+
+    private void ShowCols(int vonCol,int bisCol, bool visible)
+    {
+      int i;
+      for (i=vonCol;i<=bisCol;i++)
+        dataGridNoten.Columns[i].Visible = visible;
+    }
+
+    private void chkShowHj1_CheckedChanged(object sender, EventArgs e)
+    {
+      ShowCols(1,5,chkShowHj1.Checked);
+    }
+
+    private void chkShowHj2_CheckedChanged(object sender, EventArgs e)
+    {
+      ShowCols(6,10,chkShowHj2.Checked);
+    }
+
+    private void chkShowAbi_CheckedChanged(object sender, EventArgs e)
+    {
+      ShowCols(11,14,chkShowAbi.Checked);
+    }
   }
 }

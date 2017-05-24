@@ -42,6 +42,9 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridNoten = new System.Windows.Forms.DataGridView();
+      this.chkShowHj1 = new System.Windows.Forms.CheckBox();
+      this.chkShowHj2 = new System.Windows.Forms.CheckBox();
+      this.chkShowAbi = new System.Windows.Forms.CheckBox();
       this.cFach = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cSAHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.csLHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,6 +56,9 @@
       this.cSchnittMdl2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cPunkte2DezHj2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cHj2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cSAP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.MAP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.APG = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cJN = new System.Windows.Forms.DataGridViewTextBoxColumn();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).BeginInit();
       this.SuspendLayout();
@@ -83,15 +89,56 @@
             this.cSchnittMdl2,
             this.cPunkte2DezHj2,
             this.cHj2,
+            this.cSAP,
+            this.MAP,
+            this.APG,
             this.cJN});
-      this.dataGridNoten.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dataGridNoten.Location = new System.Drawing.Point(0, 0);
+      this.dataGridNoten.Location = new System.Drawing.Point(0, 70);
       this.dataGridNoten.Name = "dataGridNoten";
       this.dataGridNoten.ReadOnly = true;
       this.dataGridNoten.RowHeadersVisible = false;
       this.dataGridNoten.RowHeadersWidth = 70;
-      this.dataGridNoten.Size = new System.Drawing.Size(1149, 418);
+      this.dataGridNoten.Size = new System.Drawing.Size(1149, 505);
       this.dataGridNoten.TabIndex = 1;
+      // 
+      // chkShowHj1
+      // 
+      this.chkShowHj1.AutoSize = true;
+      this.chkShowHj1.Checked = true;
+      this.chkShowHj1.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.chkShowHj1.Location = new System.Drawing.Point(3, 3);
+      this.chkShowHj1.Name = "chkShowHj1";
+      this.chkShowHj1.Size = new System.Drawing.Size(123, 17);
+      this.chkShowHj1.TabIndex = 2;
+      this.chkShowHj1.Text = "1. Halbjahr anzeigen";
+      this.chkShowHj1.UseVisualStyleBackColor = true;
+      this.chkShowHj1.CheckedChanged += new System.EventHandler(this.chkShowHj1_CheckedChanged);
+      // 
+      // chkShowHj2
+      // 
+      this.chkShowHj2.AutoSize = true;
+      this.chkShowHj2.Checked = true;
+      this.chkShowHj2.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.chkShowHj2.Location = new System.Drawing.Point(3, 25);
+      this.chkShowHj2.Name = "chkShowHj2";
+      this.chkShowHj2.Size = new System.Drawing.Size(123, 17);
+      this.chkShowHj2.TabIndex = 3;
+      this.chkShowHj2.Text = "2. Halbjahr anzeigen";
+      this.chkShowHj2.UseVisualStyleBackColor = true;
+      this.chkShowHj2.CheckedChanged += new System.EventHandler(this.chkShowHj2_CheckedChanged);
+      // 
+      // chkShowAbi
+      // 
+      this.chkShowAbi.AutoSize = true;
+      this.chkShowAbi.Checked = true;
+      this.chkShowAbi.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.chkShowAbi.Location = new System.Drawing.Point(3, 47);
+      this.chkShowAbi.Name = "chkShowAbi";
+      this.chkShowAbi.Size = new System.Drawing.Size(99, 17);
+      this.chkShowAbi.TabIndex = 4;
+      this.chkShowAbi.Text = "Abitur anzeigen";
+      this.chkShowAbi.UseVisualStyleBackColor = true;
+      this.chkShowAbi.CheckedChanged += new System.EventHandler(this.chkShowAbi_CheckedChanged);
       // 
       // cFach
       // 
@@ -220,6 +267,31 @@
       this.cHj2.ToolTipText = "Gesamtpunktzahl 2. Halbjahr";
       this.cHj2.Width = 55;
       // 
+      // cSAP
+      // 
+      this.cSAP.Frozen = true;
+      this.cSAP.HeaderText = "SAP";
+      this.cSAP.Name = "cSAP";
+      this.cSAP.ReadOnly = true;
+      this.cSAP.Width = 50;
+      // 
+      // MAP
+      // 
+      this.MAP.Frozen = true;
+      this.MAP.HeaderText = "MAP";
+      this.MAP.Name = "MAP";
+      this.MAP.ReadOnly = true;
+      this.MAP.Width = 50;
+      // 
+      // APG
+      // 
+      this.APG.DividerWidth = 5;
+      this.APG.Frozen = true;
+      this.APG.HeaderText = "APG";
+      this.APG.Name = "APG";
+      this.APG.ReadOnly = true;
+      this.APG.Width = 55;
+      // 
       // cJN
       // 
       dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -236,17 +308,24 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.chkShowAbi);
+      this.Controls.Add(this.chkShowHj2);
+      this.Controls.Add(this.chkShowHj1);
       this.Controls.Add(this.dataGridNoten);
       this.Name = "UserControlNotenbogen";
-      this.Size = new System.Drawing.Size(1149, 418);
+      this.Size = new System.Drawing.Size(1149, 578);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).EndInit();
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
     #endregion
 
     private System.Windows.Forms.DataGridView dataGridNoten;
+    private System.Windows.Forms.CheckBox chkShowHj1;
+    private System.Windows.Forms.CheckBox chkShowHj2;
+    private System.Windows.Forms.CheckBox chkShowAbi;
     private System.Windows.Forms.DataGridViewTextBoxColumn cFach;
     private System.Windows.Forms.DataGridViewTextBoxColumn cSAHj1;
     private System.Windows.Forms.DataGridViewTextBoxColumn csLHj1;
@@ -258,6 +337,9 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn cSchnittMdl2;
     private System.Windows.Forms.DataGridViewTextBoxColumn cPunkte2DezHj2;
     private System.Windows.Forms.DataGridViewTextBoxColumn cHj2;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cSAP;
+    private System.Windows.Forms.DataGridViewTextBoxColumn MAP;
+    private System.Windows.Forms.DataGridViewTextBoxColumn APG;
     private System.Windows.Forms.DataGridViewTextBoxColumn cJN;
   }
 }
