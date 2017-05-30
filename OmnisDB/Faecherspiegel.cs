@@ -68,7 +68,21 @@ namespace diNo.OmnisDB
         return "-";
       }
 
-      return string.Format(CultureInfo.CurrentCulture, "{0:00.00}", noten.getSchnitt(Halbjahr.Zweites).JahresfortgangMitKomma);
+      BerechneteNote note = noten.getSchnitt(Halbjahr.Zweites);
+      // wenn alle Noten leer sind => Note liegt nicht vor. Entwerte Fach in WinSV.
+      if (note.JahresfortgangMitKomma == null && note.JahresfortgangGanzzahlig == null)
+      {
+        return "-";
+      }
+      // wenn der Jahresfortgang(Komma) leer ist aber eine Gesamtnote existiert, dann nimm diese (vermutlich G, TZ usw.)
+      decimal? nimmNote = note.JahresfortgangMitKomma != null ? note.JahresfortgangMitKomma : note.JahresfortgangGanzzahlig;
+      if (nimmNote == null)
+      {
+        log.Warn("nicht vorliegende Note im Fach "+faecherKuerzel + " bei Schüler "+schueler.NameVorname);
+        return "-";
+      }
+
+      return string.Format(CultureInfo.CurrentCulture, "{0:00.00}", nimmNote);
     }
 
     public string FindeAPSchriftlichNoten(string faecherspiegel, int index, Schulart schulart, Schueler schueler, Zeitpunkt zeitpunkt)
