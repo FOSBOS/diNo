@@ -595,7 +595,14 @@ namespace diNo
       int sumSAP=0;
       int noteSAP;
       base.Check(schueler);
-      if (Math.Floor(10*schueler.Data.DNote) > 13 || !schueler.Data.IsDNoteAllgNull() && Math.Floor(10*schueler.Data.DNoteAllg) > 13) // Schnitt mindestens 1.3
+      decimal DNote;
+      if (!schueler.Data.IsDNoteAllgNull())
+        DNote = schueler.Data.DNoteAllg;
+      else if (!schueler.Data.IsDNoteNull())
+        DNote = schueler.Data.DNote;
+      else return;
+
+      if (Math.Floor(10*DNote) > 13) // Schnitt mindestens 1.3
         return;
 
       foreach (var fach in noten.alleFaecher)
@@ -607,8 +614,9 @@ namespace diNo
         sumSAP += noteSAP;
       } 
       if (sumSAP>=50) // Schnitt aller SAP muss mindestens 12,5 Punkte sein
-        contr.Add(null,"Vorschlag für Eliteförderung, Durchschnitt: " + schueler.Data.DNote);
-
+        contr.Add(null,"ggf. Vorschlag für Eliteförderung, Durchschnitt: " + DNote);
+      else
+        contr.Add(null, "Durchschnitt: " + DNote + ", aber Prüfung zu 'schlecht'.");
     }
   }
 
