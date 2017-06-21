@@ -30,6 +30,10 @@ namespace diNo
         tabControl1.Controls.Remove(tabPageKurszuordnungen); // man kann die Seite nicht unsichtbar machen, nur entfernen
         tabControl1.Controls.Remove(tabPageAdministration);
       }
+      //NEU:
+      tabControl1.Controls.Remove(tabPageHjLeistung);
+      tabControl1.Controls.Remove(tabPageNotenbogen);
+
     }
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -47,8 +51,9 @@ namespace diNo
           this.userControlVorkommnisse1.Schueler = schueler;
           this.notenbogen1.Schueler = schueler;
           this.userControlFPAundSeminar1.Schueler = schueler;
-          userControlNotenbogen1.Schueler = schueler;
-          userControlHjLeistung1.Schueler = schueler;
+      // NEU:
+      //userControlNotenbogen1.Schueler = schueler;
+      //userControlHjLeistung1.Schueler = schueler;
 
           nameLabel.Text = schueler.NameVorname;
           klasseLabel.Text = schueler.KlassenBezeichnung;

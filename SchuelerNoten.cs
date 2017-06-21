@@ -497,12 +497,24 @@ namespace diNo
 
     public string NotwendigeNoteInMAP(int Zielpunkte)
     {
-      if (getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich).Count==0) return "";
       int? zeugnis = getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;  
-      if (zeugnis>=Zielpunkte) return ""; // Ziel schon erreicht
+      if (!zeugnis.HasValue || zeugnis>=Zielpunkte) return ""; // Ziel schon erreicht
+
+      string kuerzel = getFach.Kuerzel;
       decimal? jf = getSchnitt(Halbjahr.Zweites).JahresfortgangMitKomma;
+      if (!jf.HasValue || kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Ku") return ""; // in Nebenfächern wie G,TZ,... gibt es keine MAP
+
+      int map;
+      if (!getFach.IstSAPFach()) // Nebenfächer
+      {
+        map = (int)Math.Ceiling((decimal)(6.99)-jf.GetValueOrDefault());
+        return map.ToString();
+      }
+
+      // Prüfungsfächer
+      if (getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich).Count==0) return "";
       int sap = getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich)[0];
-      int map=sap+1; // Mündliche muss größer als schriftliche sein, sonst bringt es nichts.
+       map=sap+1; // Mündliche muss größer als schriftliche sein, sonst bringt es nichts.
       while (map<=15 && Notentools.BerechneZeugnisnote(jf,sap,map)<Zielpunkte)
         map++;
 

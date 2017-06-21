@@ -538,7 +538,7 @@ namespace diNo
             anz6++;
             m+= fach.getFach.Kuerzel + "(" + apg + ") ";
           }
-          if (apg < (decimal)3.5)
+          else if (apg < (decimal)3.5)
           {
             anz5++;
             m+= fach.getFach.Kuerzel + "(" + apg + ") ";

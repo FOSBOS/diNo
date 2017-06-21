@@ -24404,7 +24404,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
             this._commandCollection[2].CommandText = "SELECT Art, Bemerkung, Bezeichnung, Datum, Id, SchuelerId \r\nFROM vwVorkommnis \r\nW" +
-                "HERE (SchuelerId = @SchuelerId)\r\nand Art in (7,8,15)";
+                "HERE (SchuelerId = @SchuelerId)\r\nand Art in (22,23,33)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
