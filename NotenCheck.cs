@@ -93,7 +93,7 @@ namespace diNo
     {
             base.Check(schueler);
             int sum=0;
-            foreach (var fach in noten.alleFaecher)
+            foreach (var fach in noten.alleKurse)
                 sum += fach.getNotenanzahl(Notentyp.Fachreferat);
             
             if (sum == 0)
@@ -236,7 +236,7 @@ namespace diNo
     {
       base.Check(schueler);
       //List<string> faecherOhneNoten = new List<string>(); 
-      foreach (var fachNoten in noten.alleFaecher)
+      foreach (var fachNoten in noten.alleKurse)
       {
         Kurs kurs = Zugriff.Instance.KursRep.Find(fachNoten.kursId);
         if (contr.modus == NotenCheckModus.EigeneNotenVollstaendigkeit && (kurs.getLehrer == null || Zugriff.Instance.lehrer.Id != kurs.getLehrer.Id))
@@ -527,7 +527,7 @@ namespace diNo
       string m="";
       decimal apg;
           
-      foreach (var fach in noten.alleFaecher)
+      foreach (var fach in noten.alleKurse)
       {
         
         if (fach.getSchnitt(Halbjahr.Zweites).PruefungGesamt.HasValue)
@@ -568,7 +568,7 @@ namespace diNo
     {
       base.Check(schueler);
           
-      foreach (var fach in noten.alleFaecher)
+      foreach (var fach in noten.alleKurse)
       {         
         if (fach.getFach.Kuerzel!="E" && fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APMuendlich)>0)
         {
@@ -605,7 +605,7 @@ namespace diNo
       if (Math.Floor(10*DNote) > 13) // Schnitt mindestens 1.3
         return;
 
-      foreach (var fach in noten.alleFaecher)
+      foreach (var fach in noten.alleKurse)
       {                       
         if (!fach.getFach.IstSAPFach()) continue;
         if (fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APSchriftlich)==0) return; // Note fehlt

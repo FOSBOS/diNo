@@ -16000,7 +16000,7 @@ SELECT Id, Bezeichnung, Kuerzel, IstSAP, Sortierung FROM Fach WHERE (Id = @Id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        Id, Bezeichnung, Kuerzel, IstSAP,Sortierung\r\nFROM            Fach\r\n" +
@@ -16024,6 +16024,22 @@ SELECT Id, Bezeichnung, Kuerzel, IstSAP, Sortierung FROM Fach WHERE (Id = @Id)";
                 "rId = @LehrerId\r\nORDER BY Sortierung";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[4].Connection = this.Connection;
+            this._commandCollection[4].CommandText = @"SELECT distinct 
+    Fach.Id,Bezeichnung,Kuerzel,IstSAP,Sortierung
+FROM Fach, HjLeistung
+Where HjLeistung.FachId = Fach.Id AND
+HjLeistung.SchuelerId = @SchuelerId AND
+Fach.Id not in (
+select distinct
+	kurs.FachId 
+	From Kurs, SchuelerKurs
+	Where SchuelerKurs.KursId = Kurs.Id AND SchuelerKurs.SchuelerId = @SchuelerId
+	)
+";
+            this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -16086,6 +16102,18 @@ SELECT Id, Bezeichnung, Kuerzel, IstSAP, Sortierung FROM Fach WHERE (Id = @Id)";
         public virtual diNoDataSet.FachDataTable GetDataByLehrerId(int LehrerId) {
             this.Adapter.SelectCommand = this.CommandCollection[3];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(LehrerId));
+            diNoDataSet.FachDataTable dataTable = new diNoDataSet.FachDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.FachDataTable GetFaecherOhneKurseBySchuelerId(int SchuelerId) {
+            this.Adapter.SelectCommand = this.CommandCollection[4];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(SchuelerId));
             diNoDataSet.FachDataTable dataTable = new diNoDataSet.FachDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -25297,7 +25325,7 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl F
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "Select *\r\nFrom HjLeistung\r\nWhere Id=@Id";
@@ -25305,9 +25333,15 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl F
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "Select *\r\nFrom HjLeistung\r\nWhere SchuelerId=@SchuelerId";
+            this._commandCollection[1].CommandText = "Select *\r\nFrom HjLeistung\r\nWhere SchuelerId=@SchuelerId and FachId=@FachId";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FachId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "FachId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = "Select *\r\nFrom HjLeistung\r\nWhere SchuelerId=@SchuelerId";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -25326,8 +25360,21 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl F
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.HjLeistungDataTable GetDataBySchuelerId(int SchuelerId) {
+        public virtual diNoDataSet.HjLeistungDataTable GetDataBySchuelerAndFach(int SchuelerId, int FachId) {
             this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(SchuelerId));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(FachId));
+            diNoDataSet.HjLeistungDataTable dataTable = new diNoDataSet.HjLeistungDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.HjLeistungDataTable GetDataBySchuelerId(int SchuelerId) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(SchuelerId));
             diNoDataSet.HjLeistungDataTable dataTable = new diNoDataSet.HjLeistungDataTable();
             this.Adapter.Fill(dataTable);

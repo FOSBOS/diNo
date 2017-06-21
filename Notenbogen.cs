@@ -52,7 +52,7 @@ namespace diNo
       dataGridNoten.RowsDefaultCellStyle.BackColor = Color.White;
       log.Debug("Öffne Notenbogen SchülerId=" + this.schueler.Id);
 
-      var dieNoten = schueler.getNoten.alleFaecher;
+      var dieNoten = schueler.getNoten.alleKurse;
       if (schueler.Status == Schuelerstatus.Abgemeldet)
       {
         //dieNoten = schueler.getNoten.SucheAlteNoten();

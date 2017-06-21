@@ -149,11 +149,61 @@ namespace diNo
 
         private void button4_Click(object sender, EventArgs e)
         {
-            var s = new Schueler(8861);
-            s.Data.AnschriftStrasse = "Jürgen-Hinterhuber-Str. 30f";          
-            s.Data.AnschriftOrt="Betzigau";
-            s.Save();
-            s.Refresh();
+      int aktuelleSchO = 0;
+      int davonNachNeuerBestanden = 0;
+      int neueSchO = 0;
+      int davonNachAlterBestanden = 0;
+      foreach (Klasse k in Zugriff.Instance.Klassen)
+      {
+        if (k.Jahrgangsstufe == Jahrgangsstufe.Elf)
+        {
+          foreach (diNoDataSet.SchuelerRow row in k.getSchueler)
+          {
+            Schueler schueler = Zugriff.Instance.SchuelerRep.Find(row.Id);
+
+            bool schonVorherAusgetreten = !schueler.Data.IsAustrittsdatumNull() && schueler.Data.Austrittsdatum < new DateTime(2017, 02, 01);
+            if (schonVorherAusgetreten)
+              continue;
+
+            int anzahlFaecher = 0;
+            int summePunkte = 0;
+            foreach (var fachnote in schueler.getNoten.alleFaecher)
+            {
+              byte? note = fachnote.getRelevanteNote((Zeitpunkt)Zugriff.Instance.aktZeitpunkt);
+              summePunkte += note != null ? (int)note : 0;
+              anzahlFaecher++;
+            }
+
+            int fuenfer = schueler.getNoten.AnzahlNoten(5);
+            int sechser = schueler.getNoten.AnzahlNoten(6);
+            bool nachNeuerRegelungDurchgefallen = ((fuenfer == 1 && sechser == 0 && summePunkte < 5 * anzahlFaecher)
+              || (((fuenfer == 2 && sechser == 0) || (fuenfer == 0 && sechser == 1)) && summePunkte < 6 * anzahlFaecher)
+              || fuenfer > 2 || sechser > 1 || (sechser == 1 && fuenfer > 0));
+
+            if (schueler.getNoten.HatNichtBestanden())
+            {
+              aktuelleSchO++;
+              if (!nachNeuerRegelungDurchgefallen)
+              {
+                davonNachNeuerBestanden++;
+              }
+            }
+
+            if (nachNeuerRegelungDurchgefallen)
+            {
+              neueSchO++;
+              if (!schueler.getNoten.HatNichtBestanden())
+                davonNachAlterBestanden++;
+            }
+          }
+        }
+      }
+
+      string text = "Nach alter Regelung haben " + aktuelleSchO + " Schüler nicht bestanden.";
+      text += "\n    davon werden künftig bestehen: " + davonNachNeuerBestanden;
+      text += "\nNach neuer Regelung haben " + neueSchO + "Schüler nicht bestanden.";
+      text += "\n    davon hatten nach alter Schulordnung " + davonNachAlterBestanden + " kein Problem";
+      MessageBox.Show(text);
         }
 
     private void btnNotenWinSV_Click(object sender, EventArgs e)

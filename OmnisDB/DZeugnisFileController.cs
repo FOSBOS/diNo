@@ -35,11 +35,20 @@ namespace diNo.OmnisDB
           {
             continue;
           }
-
+          
           Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
           if (BrauchtZeugnis(schueler, zeitpunkt))
           {
-            zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
+            if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf && (zeitpunkt == Zeitpunkt.DrittePA || zeitpunkt == Zeitpunkt.Jahresende)))
+            {
+              // fpA darf nur bei Elftklässlern übertragen werden oder bei Zwölftklässlern ins Abschlusszeugnis
+              if (zeile[Konstanten.fpaCol] != "" && zeile[Konstanten.fpaCol] != Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler)))
+              {
+                log.WarnFormat("überschreibe fpA-Note für Schüler {0} mit {1} statt {2}", schueler.Name, Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler)), zeile[Konstanten.fpaCol]);
+              }
+              zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
+            }
+
             KlassenzielOderGefaehrdung zielerreichung = GetZielerreichung(zeitpunkt, schueler);
             zeile[Konstanten.klassenzielOderGefaehrdungCol] = Konstanten.GetKlassenzielOderGefaehrdungString(zielerreichung);
             if (zeitpunkt == Zeitpunkt.ErstePA || zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
@@ -47,15 +56,13 @@ namespace diNo.OmnisDB
               zeile[Konstanten.zeugnisartCol] = zielerreichung == KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg ? "J" : "A";
               zeile[Konstanten.APBestandenCol] = Konstanten.GetBestandenString(GetBestanden(zeitpunkt, schueler));
             }
-
-            zeile[Konstanten.abweisungCol] = Konstanten.GetAbweisungString(schueler.GefahrDerAbweisung);
-
-            var seminarfachNote = new SeminarfachnoteTableAdapter().GetDataBySchuelerId(schuelerId);
-            if (seminarfachNote != null && seminarfachNote.Count == 1 && !seminarfachNote[0].IsGesamtnoteNull())
+            if (zielerreichung == KlassenzielOderGefaehrdung.BeiWeiteremAbsinkenGefaehrdet || zielerreichung == KlassenzielOderGefaehrdung.Gefaehrdet || zielerreichung == KlassenzielOderGefaehrdung.SehrGefaehrdet)
             {
-              zeile[Konstanten.seminarfachGesamtnote] = string.Format(CultureInfo.CurrentCulture, "{0:00}", seminarfachNote[0].Gesamtnote);
-              zeile[Konstanten.seminarfachThema] = !string.IsNullOrEmpty(seminarfachNote[0].ThemaKurz) ? seminarfachNote[0].ThemaKurz : seminarfachNote[0].ThemaLang.Substring(0, 128);
+              // Gefahr der Abweisung soll nur angekreuzt werden, wenn der Schüler zum Halbjahr wirklich gefährdet ist
+              zeile[Konstanten.abweisungCol] = Konstanten.GetAbweisungString(schueler.GefahrDerAbweisung);
             }
+
+            HandleSeminarfach(zeile, schueler);
 
             string faecherspiegel = zeile[Konstanten.faecherspiegelCol];
             if (string.IsNullOrEmpty(faecherspiegel))
@@ -72,7 +79,17 @@ namespace diNo.OmnisDB
             {
               for (int i = 0; i < 20; i++)
               {
-                zeile[Konstanten.jahresfortgangPflichtfach1Col + i] = faecher.FindeJahresfortgangsNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+                // Wenn schon Jahresfortgangsnoten drinstehen, nicht anfassen!!!
+                string jahresfortgang = faecher.FindeJahresfortgangsNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+                if (zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != "" && zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != jahresfortgang)
+                {
+                  log.Warn("Der Jahresfortgang in einem Fach steht schon in der Schulverwaltung und stimmt nicht mit diNo überein: WinSV:" + zeile[Konstanten.jahresfortgangPflichtfach1Col + i] + "; diNo :" + jahresfortgang);
+                }
+                if (zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != "" && zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != jahresfortgang)
+                {
+                  zeile[Konstanten.jahresfortgangPflichtfach1Col + i] = jahresfortgang;
+                }
+
                 zeile[Konstanten.APschriftlichPflichtfach1Col + i] = faecher.FindeAPSchriftlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
                 zeile[Konstanten.APmuendlichPflichtfach1Col + i] = faecher.FindeAPMuendlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
                 zeile[Konstanten.gesamtNoteMitAPGanzzahlig1Col + i] = faecher.GetFachNoteString(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
@@ -86,6 +103,43 @@ namespace diNo.OmnisDB
 
           // rausgeschrieben werden immer alle Zeugnisse, da im Import "ersetzen" angehakt werden muss
           writer.WriteLine(zeile.ToString());
+        }
+      }
+    }
+
+    private static void HandleSeminarfach(VerwalteZeile zeile, Schueler schueler)
+    {
+      var seminarfachNote = new SeminarfachnoteTableAdapter().GetDataBySchuelerId(schueler.Id);
+      if (seminarfachNote != null && seminarfachNote.Count == 1 && !seminarfachNote[0].IsGesamtnoteNull())
+      {
+        string seminarfachnote = string.Format(CultureInfo.CurrentCulture, "{0:00}", seminarfachNote[0].Gesamtnote);
+        if (zeile[Konstanten.seminarfachGesamtnote] != "" && zeile[Konstanten.seminarfachGesamtnote] != seminarfachnote)
+        {
+          log.Warn(schueler.NameVorname + ": da steht schon eine Seminarfachnote drin und die passt nicht zur diNo-Note. Alt: " + zeile[Konstanten.seminarfachGesamtnote] + " diNo: " + seminarfachnote);
+        }
+        if (zeile[Konstanten.seminarfachGesamtnote] == "")
+        {
+          zeile[Konstanten.seminarfachGesamtnote] = seminarfachnote;
+        }
+
+        string seminarfachThema = !string.IsNullOrEmpty(seminarfachNote[0].ThemaKurz) ? seminarfachNote[0].ThemaKurz : seminarfachNote[0].ThemaLang.Substring(0, 128);
+        if (!seminarfachThema.StartsWith("\""))
+        {
+          seminarfachThema = "\"" + seminarfachThema;
+        }
+        if (!seminarfachThema.EndsWith("\""))
+        {
+          seminarfachThema = seminarfachThema + "\"";
+        }
+
+        if (zeile[Konstanten.seminarfachThema] != "" && zeile[Konstanten.seminarfachThema] != seminarfachThema)
+        {
+          log.Warn(schueler.NameVorname + ": da steht schon ein Seminarfachthema drin und die passt nicht zur diNo-Note. Alt: " + zeile[Konstanten.seminarfachThema] + " diNo: " + seminarfachThema);
+        }
+
+        if (zeile[Konstanten.seminarfachThema] == "")
+        {
+          zeile[Konstanten.seminarfachThema] = seminarfachThema;
         }
       }
     }
@@ -127,7 +181,11 @@ namespace diNo.OmnisDB
       var wahlpflichtfach = schueler.getNoten.FindeFach(fach, false);
       if (wahlpflichtfach != null)
       {
-        zeile[noteCol] = faecher.GetNotenString(wahlpflichtfach, zeitpunkt);
+        // falls in der WinSV schon eine Note eingetragen wurde, z. B. für Latein o. Ä. darf diese nicht überschrieben werden!
+        if (zeile[noteCol] != "")
+        {
+          zeile[noteCol] = faecher.GetNotenString(wahlpflichtfach, zeitpunkt);
+        }
       }
       else
       {

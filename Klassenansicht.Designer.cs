@@ -35,6 +35,9 @@
       this.userControlSchueleransicht1 = new diNo.UserControlSchueleransicht();
       this.tabPageNoten = new System.Windows.Forms.TabPage();
       this.notenbogen1 = new diNo.Notenbogen();
+      this.tabPageNotenbogen = new System.Windows.Forms.TabPage();
+      this.tabPageHjLeistung = new System.Windows.Forms.TabPage();
+      this.userControlHjLeistung1 = new diNo.UserControlHjLeistung();
       this.tabPageFPASeminar = new System.Windows.Forms.TabPage();
       this.userControlFPAundSeminar1 = new diNo.UserControlFPAundSeminar();
       this.tabPageVorkommnisse = new System.Windows.Forms.TabPage();
@@ -58,9 +61,12 @@
       this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
       this.multiImageRenderer1 = new BrightIdeasSoftware.MultiImageRenderer();
       this.chkNurAktive = new System.Windows.Forms.CheckBox();
+      this.userControlNotenbogen1 = new diNo.UserControlNotenbogen();
       this.tabControl1.SuspendLayout();
       this.tabPageStammdaten.SuspendLayout();
       this.tabPageNoten.SuspendLayout();
+      this.tabPageNotenbogen.SuspendLayout();
+      this.tabPageHjLeistung.SuspendLayout();
       this.tabPageFPASeminar.SuspendLayout();
       this.tabPageVorkommnisse.SuspendLayout();
       this.tabPageKurszuordnungen.SuspendLayout();
@@ -88,6 +94,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
       this.tabControl1.Controls.Add(this.tabPageStammdaten);
       this.tabControl1.Controls.Add(this.tabPageNoten);
+      this.tabControl1.Controls.Add(this.tabPageNotenbogen);
+      this.tabControl1.Controls.Add(this.tabPageHjLeistung);
       this.tabControl1.Controls.Add(this.tabPageFPASeminar);
       this.tabControl1.Controls.Add(this.tabPageVorkommnisse);
       this.tabControl1.Controls.Add(this.tabPageKurszuordnungen);
@@ -143,6 +151,38 @@
       this.notenbogen1.Schueler = null;
       this.notenbogen1.Size = new System.Drawing.Size(884, 444);
       this.notenbogen1.TabIndex = 0;
+      // 
+      // tabPageNotenbogen
+      // 
+      this.tabPageNotenbogen.Controls.Add(this.userControlNotenbogen1);
+      this.tabPageNotenbogen.Location = new System.Drawing.Point(4, 33);
+      this.tabPageNotenbogen.Name = "tabPageNotenbogen";
+      this.tabPageNotenbogen.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageNotenbogen.Size = new System.Drawing.Size(890, 450);
+      this.tabPageNotenbogen.TabIndex = 7;
+      this.tabPageNotenbogen.Text = "Notenbogen";
+      this.tabPageNotenbogen.UseVisualStyleBackColor = true;
+      // 
+      // tabPageHjLeistung
+      // 
+      this.tabPageHjLeistung.Controls.Add(this.userControlHjLeistung1);
+      this.tabPageHjLeistung.Location = new System.Drawing.Point(4, 33);
+      this.tabPageHjLeistung.Name = "tabPageHjLeistung";
+      this.tabPageHjLeistung.Padding = new System.Windows.Forms.Padding(3);
+      this.tabPageHjLeistung.Size = new System.Drawing.Size(890, 450);
+      this.tabPageHjLeistung.TabIndex = 6;
+      this.tabPageHjLeistung.Text = "Hj-Leistungen";
+      this.tabPageHjLeistung.UseVisualStyleBackColor = true;
+      // 
+      // userControlHjLeistung1
+      // 
+      this.userControlHjLeistung1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.userControlHjLeistung1.Location = new System.Drawing.Point(3, 3);
+      this.userControlHjLeistung1.Margin = new System.Windows.Forms.Padding(4);
+      this.userControlHjLeistung1.Name = "userControlHjLeistung1";
+      this.userControlHjLeistung1.Schueler = null;
+      this.userControlHjLeistung1.Size = new System.Drawing.Size(884, 444);
+      this.userControlHjLeistung1.TabIndex = 0;
       // 
       // tabPageFPASeminar
       // 
@@ -385,6 +425,16 @@
       this.chkNurAktive.UseVisualStyleBackColor = true;
       this.chkNurAktive.Click += new System.EventHandler(this.chkNurAktive_Click);
       // 
+      // userControlNotenbogen1
+      // 
+      this.userControlNotenbogen1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.userControlNotenbogen1.Location = new System.Drawing.Point(3, 3);
+      this.userControlNotenbogen1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+      this.userControlNotenbogen1.Name = "userControlNotenbogen1";
+      this.userControlNotenbogen1.Schueler = null;
+      this.userControlNotenbogen1.Size = new System.Drawing.Size(884, 444);
+      this.userControlNotenbogen1.TabIndex = 0;
+      // 
       // Klassenansicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -410,6 +460,8 @@
       this.tabControl1.ResumeLayout(false);
       this.tabPageStammdaten.ResumeLayout(false);
       this.tabPageNoten.ResumeLayout(false);
+      this.tabPageNotenbogen.ResumeLayout(false);
+      this.tabPageHjLeistung.ResumeLayout(false);
       this.tabPageFPASeminar.ResumeLayout(false);
       this.tabPageVorkommnisse.ResumeLayout(false);
       this.tabPageKurszuordnungen.ResumeLayout(false);
@@ -453,5 +505,9 @@
     private System.Windows.Forms.CheckBox chkNurAktive;
     private System.Windows.Forms.TabPage tabPageAdministration;
     private UserControlAdministration userControlAdministration1;
+    private System.Windows.Forms.TabPage tabPageHjLeistung;
+    private UserControlHjLeistung userControlHjLeistung1;
+    private System.Windows.Forms.TabPage tabPageNotenbogen;
+    private UserControlNotenbogen userControlNotenbogen1;
   }
 }

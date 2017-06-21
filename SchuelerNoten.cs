@@ -12,8 +12,9 @@ namespace diNo
     public class SchuelerNoten
     {
         private Schueler schueler;
-        public List<FachSchuelerNoten> alleFaecher;
-
+        public List<FachSchuelerNoten> alleKurse; // enthält nur die aktuell besuchten Kurse
+        public List<FachSchuelerNoten> alleFaecher; // enthält alle Fächer, die der S jemals belegt hat
+ 
         // die folgendes Array verwaltet die Anzahl der Einser, Zweier, usw., getrennt nach SAP-Fach und Nebenfach
         // anzahlNoten[6,1] ergibt z.B. die Anzahl der Sechser in SAP-Fächern, anzahlNoten[5,0] die Anzahl der Fünfer in Nebenfächern
         private int[,] anzahlNoten;
@@ -24,14 +25,27 @@ namespace diNo
 
         public SchuelerNoten(Schueler s)
         {
-            schueler = s;
-            diNoDataSet.KursDataTable kurse = schueler.Kurse; // ermittle alle Kurse, die der S besucht
-            alleFaecher = new List<FachSchuelerNoten>();
-            foreach (var kurs in kurse)
-            {
-              alleFaecher.Add(new FachSchuelerNoten(schueler.Id, kurs.Id));
-            }
-            alleFaecher.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));       
+          schueler = s;
+          diNoDataSet.KursDataTable kurse = schueler.Kurse; // ermittle alle Kurse, die der S besucht
+          alleFaecher = new List<FachSchuelerNoten>();
+          alleKurse = new List<FachSchuelerNoten>();
+          foreach (var kurs in kurse)
+          {
+            var fsn = new FachSchuelerNoten(schueler.Id, kurs.Id);
+            alleFaecher.Add(fsn);
+            alleKurse.Add(fsn);
+          }
+
+          // alle Fächer des Schülers ohne Kurs finden und diese HjLeistungen laden 
+          diNoDataSet.FachDataTable fDT = (new FachTableAdapter()).GetFaecherOhneKurseBySchuelerId(schueler.Id);
+          foreach (var fachR in fDT)
+          {
+            Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
+            alleFaecher.Add(new FachSchuelerNoten(schueler.Id, fach));
+          }
+
+          alleFaecher.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));       
+          alleKurse.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));       
         }
 
         public FachSchuelerNoten getFach(int kursid)
@@ -69,7 +83,7 @@ namespace diNo
     public IList<FachSchuelerNotenDruckKurz> SchuelerNotenDruck(string rptName)
     {
       IList<FachSchuelerNotenDruckKurz> liste = new List<FachSchuelerNotenDruckKurz>();      
-      foreach (FachSchuelerNoten f in alleFaecher)
+      foreach (FachSchuelerNoten f in alleKurse)
       {               
         liste.Add(new FachSchuelerNotenDruckKurz(f, f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe),rptName));
       }
@@ -97,7 +111,7 @@ namespace diNo
     public string GetUnterpunktungenString(Zeitpunkt z)
     {
       string result = "";
-      foreach (var fach in alleFaecher)
+      foreach (var fach in alleKurse)
       {
         byte? note = fach.getRelevanteNote(z);
         if (note != null && note < 4)
@@ -143,7 +157,7 @@ namespace diNo
     {      
       string kuerzel;
       Unterpunktungen="";
-      foreach (var fachNoten in alleFaecher)
+      foreach (var fachNoten in alleKurse)
       {
         kuerzel = fachNoten.getFach.Kuerzel;
         if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
@@ -224,7 +238,7 @@ namespace diNo
       // Seminarfachnote ist gesetzt
       if (!schueler.Seminarfachnote.IsGesamtnoteNull() && schueler.Seminarfachnote.Gesamtnote<4) anz5++;
 
-      foreach (var f in alleFaecher)
+      foreach (var f in alleKurse)
       {
         string kuerzel = f.getFach.Kuerzel;
         if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
@@ -273,7 +287,7 @@ namespace diNo
     /// </summary>
     public class FachSchuelerNoten
     {
-        public int schuelerId;
+        public int schuelerId;        
         private Fach fach=null;
         public int kursId
         {
@@ -290,11 +304,11 @@ namespace diNo
     
         public FachSchuelerNoten(int aschuelerid, int akursid)
         {
-            kursId = akursid;
+            kursId = akursid;        
             schuelerId = aschuelerid;
+            
             foreach (Halbjahr hj in Enum.GetValues(typeof(Halbjahr)))
             {
-
                 // erstmal leere Notenlisten anlegen
                 foreach (Notentyp typ in Enum.GetValues(typeof(Notentyp)))
                     noten[(int)hj,(int)typ] = new List<int>();
@@ -304,14 +318,25 @@ namespace diNo
             LeseNotenAusDB();
         }
 
+        // Kursunabhängige HjLeistungen (z.B. abgelegte Fächer oder Seminararbeit) können hier erzeugt werden
+        public FachSchuelerNoten(int aschuelerid, Fach aFach)
+        {
+          fach = aFach;
+          kursId = 0;
+          schuelerId = aschuelerid;
+                            
+          LeseNotenAusDB();
+        }
+
         private void LeseNotenAusDB()
         {
+          if (kursId>0)
+          { 
             diNoDataSet.NoteDataTable notenDT;
             notenDT = new NoteTableAdapter().GetDataBySchuelerAndKurs(schuelerId, kursId);
             foreach (var noteR in notenDT)
             {
-                // Note note = new Note(noteR);
-                noten[noteR.Halbjahr,noteR.Notenart].Add(noteR.Punktwert);
+              noten[noteR.Halbjahr,noteR.Notenart].Add(noteR.Punktwert);
             }
 
             // Schnitte werden direkt gelesen
@@ -320,9 +345,17 @@ namespace diNo
             bnotenDT = new BerechneteNoteTableAdapter().GetDataBySchuelerAndKurs(kursId, schuelerId);
             foreach (var bnoteR in bnotenDT)
             {                
-                schnitte[(int)(bnoteR.ErstesHalbjahr ? Halbjahr.Erstes : Halbjahr.Zweites)] = 
+              schnitte[(int)(bnoteR.ErstesHalbjahr ? Halbjahr.Erstes : Halbjahr.Zweites)] = 
                         new BerechneteNote(kursId, schuelerId, bnoteR);
             }
+          }
+            // HjLeistungen
+          diNoDataSet.HjLeistungDataTable hjDT;            
+          hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schuelerId,getFach.Id);
+          foreach (var hjR in hjDT)
+          {                
+            hjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
+          }
         }
 
         /// <summary>
@@ -341,6 +374,14 @@ namespace diNo
             var s = schnitte[(int)hj];
             if (s==null) return new BerechneteNote(kursId,schuelerId); // gibt leere Berechnungstabelle zurück
             return s;
+        }
+
+        /// <summary>
+        /// Liefert die Halbjahresleistungen
+        /// </summary>
+        public HjLeistung getHjLeistung(HjArt art)
+        {
+          return hjLeistung[(int)art];
         }
 
     /*
@@ -400,37 +441,59 @@ namespace diNo
             }
         }
 
-        /// <summary>
-        /// Liefert eine druckbare Liste für die SA
-        /// </summary>
-        public IList<string> SA(Halbjahr hj)
-        {
-            IList<string> liste = new List<string>();            
-            InsertNoten(liste, getNoten(hj, Notentyp.Schulaufgabe), "");
-            return liste;           
-        }
+    private string NotenString(IList<int>noten, string bez="")
+    {
+      string s="";
+      foreach (var note in noten)
+      {        
+        s += note + bez + " ";
+      }
+      return s;
+    }
 
-        /// <summary>
-        /// Liefert eine druckbare Liste für alle sonstigen Leistungen
-        /// </summary>
-        public IList<string> sonstigeLeistungen(Halbjahr hj)
-        {
-            IList<string> liste = new List<string>();
-            InsertNoten(liste, getNoten(hj, Notentyp.Kurzarbeit), "K");
-            InsertNoten(liste, getNoten(hj, Notentyp.Ex), "");
-            InsertNoten(liste, getNoten(hj, Notentyp.EchteMuendliche), "");
-            InsertNoten(liste, getNoten(hj, Notentyp.Fachreferat), "F");
-            InsertNoten(liste, getNoten(hj, Notentyp.Ersatzprüfung), "E"); 
-            return liste;           
-        }
+    /// <summary>
+    /// Liefert alle SA eines Faches als Text
+    /// </summary>
+    public string SA(Halbjahr hj)
+    {
+      return (NotenString(getNoten(hj, Notentyp.Schulaufgabe), "")).TrimEnd();
+    }
 
-        private void InsertNoten(IList<string> liste, IList<int>noten, string bez="")
-        {
-            foreach (var note in noten)
-            {
-                    liste.Add(note + (bez=="" ? "" : /*" " + */ bez));                
-            }        
-        }
+    /// <summary>
+    /// Liefert alle sonstige Leistungen eines Faches als Text
+    /// </summary>
+    public string sL(Halbjahr hj)
+    {
+      string s;
+      s=NotenString(getNoten(hj, Notentyp.Kurzarbeit), "K");
+      s+=NotenString(getNoten(hj, Notentyp.Ex), "");
+      s+=NotenString(getNoten(hj, Notentyp.EchteMuendliche), "");
+      // NotenString(getNoten(hj, Notentyp.Fachreferat), "F"); // nun ein Hj-Leistung!
+      s+=NotenString(getNoten(hj, Notentyp.Ersatzprüfung), "E"); 
+      return s.TrimEnd();
+    }
+
+    /// <summary>
+    /// Liefert eine druckbare Liste für alle sonstigen Leistungen
+    /// </summary>
+    public IList<string> sonstigeLeistungen(Halbjahr hj)
+    {
+      IList<string> liste = new List<string>();
+      InsertNoten(liste, getNoten(hj, Notentyp.Kurzarbeit), "K");
+      InsertNoten(liste, getNoten(hj, Notentyp.Ex), "");
+      InsertNoten(liste, getNoten(hj, Notentyp.EchteMuendliche), "");
+      InsertNoten(liste, getNoten(hj, Notentyp.Fachreferat), "F");
+      InsertNoten(liste, getNoten(hj, Notentyp.Ersatzprüfung), "E"); 
+      return liste;           
+    }
+
+    private void InsertNoten(IList<string> liste, IList<int>noten, string bez="")
+    {
+      foreach (var note in noten)
+      {
+        liste.Add(note + (bez=="" ? "" : /*" " + */ bez));                
+      }        
+    }
 
     public string NotwendigeNoteInMAP(int Zielpunkte)
     {
@@ -491,14 +554,14 @@ namespace diNo
           if (evalSA)
           {
             Art = "SA\n";
-            N1 = String.Join("  ", s.SA(Halbjahr.Erstes)) + "\n";
-            N2 = String.Join("  ", s.SA(Halbjahr.Zweites)) + "\n";
+            N1 = s.SA(Halbjahr.Erstes) + "\n";
+            N2 = s.SA(Halbjahr.Zweites) + "\n";
             D1 = String.Format("{0:f2}", d1.SchnittSchulaufgaben) + "\n";
             D2 = String.Format("{0:f2}", d2.SchnittSchulaufgaben) + "\n";
           }        
           Art += "sL";
-          N1 += String.Join("  ", s.sonstigeLeistungen(Halbjahr.Erstes));
-          N2 += String.Join("  ", s.sonstigeLeistungen(Halbjahr.Zweites));
+          N1 += s.sL(Halbjahr.Erstes);
+          N2 += s.sL(Halbjahr.Zweites);
           D1 += String.Format("{0:f2}", d1.SchnittMuendlich);
           D2 += String.Format("{0:f2}", d2.SchnittMuendlich);
           DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
