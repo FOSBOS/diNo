@@ -548,7 +548,7 @@ namespace diNo
            
       if (anz6 > 0 || anz5>2)
       {        
-        contr.Add(null,"Abiturprüfung nicht bestanden: " + m);
+        contr.Add(Vorkommnisart.PruefungNichtBestanden, m);
       }
     }
   }

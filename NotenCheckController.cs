@@ -55,13 +55,22 @@ namespace diNo
             }
             if (azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
               alleNotenchecks.Add(new FpABestandenChecker(this));
-            if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA)  && (modus==NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse))
+            if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA)  && 
+              (modus==NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse || modus == NotenCheckModus.VorkommnisseErzeugen))
             {
               alleNotenchecks.Add(new AbiergebnisChecker(this));
               alleNotenchecks.Add(new EliteChecker(this));
             } 
             if (azeitpunkt == Zeitpunkt.DrittePA  && (modus==NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse))
               alleNotenchecks.Add(new MAPChecker(this));
+
+            // Folgende Vorkommnisse ggf. löschen, bzw. neu erzeugen bei 2./3.PA
+            if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA)  && (modus==NotenCheckModus.VorkommnisseErzeugen))
+            {
+              VorkommnisTableAdapter ta = new VorkommnisTableAdapter();
+              ta.DeleteVorkommnis((int)Vorkommnisart.bisherNichtBestandenMAPmoeglich);
+              ta.DeleteVorkommnis((int)Vorkommnisart.PruefungNichtBestanden);
+            }
         }
       
         // Klassenweise Vorauswahl, damit weniger Schüler einzeln erst analysiert werden müssen.

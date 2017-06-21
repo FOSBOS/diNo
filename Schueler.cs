@@ -596,7 +596,7 @@ namespace diNo
 
       else if (zeitpunkt==Zeitpunkt.DrittePA && getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
       {
-        if (getNoten.HatNichtBestanden())
+        if (getNoten.HatNichtBestanden() || hatVorkommnis(Vorkommnisart.PruefungNichtBestanden))
           return Vorkommnisart.Jahreszeugnis;
         else if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
           return Vorkommnisart.Fachabiturzeugnis;

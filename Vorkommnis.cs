@@ -73,6 +73,7 @@ namespace diNo
     nichtBestandenMAPnichtZugelassen = 23,
     nichtZurMAPangetreten = 24,
     VorrueckenBOS13moeglich = 25,
+    PruefungNichtBestanden = 26,
 
     // Jahresende
     NichtBestanden = 31,
