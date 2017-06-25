@@ -51,6 +51,7 @@ namespace diNo.OmnisDB
 
             KlassenzielOderGefaehrdung zielerreichung = GetZielerreichung(zeitpunkt, schueler);
             zeile[Konstanten.klassenzielOderGefaehrdungCol] = Konstanten.GetKlassenzielOderGefaehrdungString(zielerreichung);
+          
             if (zeitpunkt == Zeitpunkt.ErstePA || zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
             {
               zeile[Konstanten.zeugnisartCol] = zielerreichung == KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg ? "J" : "A";
@@ -134,7 +135,7 @@ namespace diNo.OmnisDB
 
         if (zeile[Konstanten.seminarfachThema] != "" && zeile[Konstanten.seminarfachThema] != seminarfachThema)
         {
-          log.Warn(schueler.NameVorname + ": da steht schon ein Seminarfachthema drin und die passt nicht zur diNo-Note. Alt: " + zeile[Konstanten.seminarfachThema] + " diNo: " + seminarfachThema);
+          log.Warn(schueler.NameVorname + ": da steht schon ein Seminarfachthema drin und das passt nicht zum diNo-Thema. Alt: " + zeile[Konstanten.seminarfachThema] + " diNo: " + seminarfachThema);
         }
 
         if (zeile[Konstanten.seminarfachThema] == "")
@@ -195,19 +196,36 @@ namespace diNo.OmnisDB
 
     private static KlassenzielOderGefaehrdung GetZielerreichung(Zeitpunkt zeitpunkt, Schueler schueler)
     {
-      KlassenzielOderGefaehrdung ziel = zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS ? KlassenzielOderGefaehrdung.NichtGefaehrdet : KlassenzielOderGefaehrdung.VorrueckenOK;
-      foreach (var vorkommnis in schueler.Vorkommnisse)
+      KlassenzielOderGefaehrdung ziel = KlassenzielOderGefaehrdung.VorrueckenOK;
+      if (zeitpunkt == Zeitpunkt.ProbezeitBOS || zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
       {
-        switch (vorkommnis.Art)
+        ziel = KlassenzielOderGefaehrdung.NichtGefaehrdet;
+        foreach (var vorkommnis in schueler.Vorkommnisse)
         {
-          case Vorkommnisart.starkeGefaehrdungsmitteilung: ziel = KlassenzielOderGefaehrdung.SehrGefaehrdet; break;
-          case Vorkommnisart.Gefaehrdungsmitteilung: ziel = KlassenzielOderGefaehrdung.Gefaehrdet; break;
-          case Vorkommnisart.BeiWeiteremAbsinken: ziel = KlassenzielOderGefaehrdung.BeiWeiteremAbsinkenGefaehrdet; break;
-          case Vorkommnisart.NichtZurPruefungZugelassen: return KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg;
-          case Vorkommnisart.Notenausgleich: return KlassenzielOderGefaehrdung.NotenausgleichGewaehrt;
-          case Vorkommnisart.NichtBestanden: return KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg;
+          switch (vorkommnis.Art)
+          {
+            case Vorkommnisart.starkeGefaehrdungsmitteilung: ziel = KlassenzielOderGefaehrdung.SehrGefaehrdet; break;
+            case Vorkommnisart.Gefaehrdungsmitteilung: ziel = KlassenzielOderGefaehrdung.Gefaehrdet; break;
+            case Vorkommnisart.BeiWeiteremAbsinken: ziel = KlassenzielOderGefaehrdung.BeiWeiteremAbsinkenGefaehrdet; break;
+            case Vorkommnisart.NichtZurPruefungZugelassen: return KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg;
+            case Vorkommnisart.Notenausgleich: return KlassenzielOderGefaehrdung.NotenausgleichGewaehrt;
+            case Vorkommnisart.NichtBestanden: return KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg;
+          }
         }
       }
+      else
+      {
+        ziel = KlassenzielOderGefaehrdung.VorrueckenOK;
+        foreach (var vorkommnis in schueler.Vorkommnisse)
+        {
+          switch (vorkommnis.Art)
+          {
+            case Vorkommnisart.NichtZurPruefungZugelassen: return KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg;
+            case Vorkommnisart.Notenausgleich: return KlassenzielOderGefaehrdung.NotenausgleichGewaehrt;
+            case Vorkommnisart.NichtBestanden: return KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg;
+          }
+        }
+      }      
 
       return ziel;
     }
