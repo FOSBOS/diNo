@@ -36,9 +36,9 @@ namespace diNo.OmnisDB
       }
 
       var dieRichtigeNote = FindeFachNoten(faecherKuerzel, schueler);
-      if (dieRichtigeNote == null && !schueler.Data.IsAustrittsdatumNull())
+      if (dieRichtigeNote == null)
       {
-        if (FehlendeNoteWirdWohlOKSein(faecherKuerzel))
+        if (FehlendeNoteWirdWohlOKSein(faecherKuerzel) || !schueler.Data.IsAustrittsdatumNull())
         {
           log.Debug(schueler.NameVorname + " sollte in " + faecherKuerzel + " gehen, aber diese Zuordnung findet diNo nicht!");
         }
@@ -54,9 +54,14 @@ namespace diNo.OmnisDB
       }
     }
 
+    public string SucheFach(string faecherspiegel, int index, Schulart schulart)
+    {
+      return omnis.SucheFach(faecherspiegel, index, schulart);
+    }
+
     public string FindeJahresfortgangsNoten(string faecherspiegel, int index, Schulart schulart, Schueler schueler, Zeitpunkt zeitpunkt)
     {
-      string faecherKuerzel = omnis.SucheFach(faecherspiegel, index, schulart); // hier nur zur Anzeige etwaiger Fehlermeldungen benötigt
+      string faecherKuerzel = SucheFach(faecherspiegel, index, schulart); // hier nur zur Anzeige etwaiger Fehlermeldungen benötigt
       if (string.IsNullOrEmpty(faecherKuerzel))
       {
         return "";
@@ -163,6 +168,7 @@ namespace diNo.OmnisDB
 
     public string GetNotenString(FachSchuelerNoten note, Zeitpunkt zeitpunkt)
     {
+
       byte? relevanteNote = note.getRelevanteNote(zeitpunkt); 
       return relevanteNote == null ? "-" : string.Format("{0:00}", (byte)relevanteNote); //wichtig: Im Feld muss 08 stehen, nicht 8 (d.h. 2 Ziffern)
     }

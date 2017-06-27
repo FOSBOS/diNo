@@ -42,11 +42,15 @@ namespace diNo.OmnisDB
             if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf && (zeitpunkt == Zeitpunkt.DrittePA || zeitpunkt == Zeitpunkt.Jahresende)))
             {
               // fpA darf nur bei Elftklässlern übertragen werden oder bei Zwölftklässlern ins Abschlusszeugnis
+
               if (zeile[Konstanten.fpaCol] != "" && zeile[Konstanten.fpaCol] != Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler)))
               {
-                log.WarnFormat("überschreibe fpA-Note für Schüler {0} mit {1} statt {2}", schueler.Name, Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler)), zeile[Konstanten.fpaCol]);
+                log.WarnFormat("fpA-Note für Schüler {0} ist (diNo) {1} statt (WinSV) {2}", schueler.Name, Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler)), zeile[Konstanten.fpaCol]);
               }
-              zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
+              else
+              {
+                zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
+              }
             }
 
             KlassenzielOderGefaehrdung zielerreichung = GetZielerreichung(zeitpunkt, schueler);
@@ -84,9 +88,10 @@ namespace diNo.OmnisDB
                 string jahresfortgang = faecher.FindeJahresfortgangsNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
                 if (zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != "" && zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != jahresfortgang)
                 {
-                  log.Warn("Der Jahresfortgang in einem Fach steht schon in der Schulverwaltung und stimmt nicht mit diNo überein: WinSV:" + zeile[Konstanten.jahresfortgangPflichtfach1Col + i] + "; diNo :" + jahresfortgang);
+                  string faecherKuerzel = faecher.SucheFach(faecherspiegel, i, schueler.getKlasse.Schulart); // nur zur Anzeige der Warnung
+                  log.Warn("Der Jahresfortgang in einem Fach steht schon in der Schulverwaltung und stimmt nicht mit diNo überein: WinSV:" + zeile[Konstanten.jahresfortgangPflichtfach1Col + i] + "; diNo :" + jahresfortgang + " Fach: "+ faecherKuerzel + " Schüler: "+schueler.NameVorname);
                 }
-                if (zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != "" && zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != jahresfortgang)
+                else
                 {
                   zeile[Konstanten.jahresfortgangPflichtfach1Col + i] = jahresfortgang;
                 }
