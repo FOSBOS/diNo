@@ -28,6 +28,7 @@ namespace diNo
     public int Schuljahr { get { return globaleKonstanten.Schuljahr; } }
     public Sperrtyp Sperre { get { return (Sperrtyp)globaleKonstanten.Sperre; } }
     public int aktZeitpunkt { get { return globaleKonstanten.aktZeitpunkt; } }
+    public string BackupPfad { get { return globaleKonstanten.BackupPfad; } }
     public bool SiehtAlles{ get; private set; }
     public bool HatVerwaltungsrechte{ get; private set; }
 

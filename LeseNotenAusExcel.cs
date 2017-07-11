@@ -12,34 +12,34 @@ namespace diNo
   /// </summary>
   public abstract class BasisLeseNotenAusExcel
   {
-    private StatusChanged StatusChanged;
-    private string sicherungsverzeichnis;
+    private StatusChanged StatusChanged;    
     protected string fileName;
     protected List<int> sidList = new List<int>(); // enthält die SIDs der Schüler, in der Reihenfolge wie im Excel
     protected Kurs kurs;
     protected List<string> hinweise = new List<String>();
 
-    public BasisLeseNotenAusExcel(string fileName, StatusChanged StatusChangedMethod, string sicherungsverzeichnis)
+    public BasisLeseNotenAusExcel(string fileName, StatusChanged StatusChangedMethod)
     {
       this.fileName = fileName;
-      this.StatusChanged = StatusChangedMethod;
-      this.sicherungsverzeichnis = sicherungsverzeichnis;
+      this.StatusChanged = StatusChangedMethod;     
 
-      Sichern(sicherungsverzeichnis);
+      Sichern();
     }
 
-    private void Sichern(string fileName)
+    private void Sichern()
     {
       // Datei sichern
+      string sicherungsverzeichnis = Zugriff.Instance.globaleKonstanten.BackupPfad;
       if (!string.IsNullOrEmpty(sicherungsverzeichnis))
       {
         try
         {
-          File.Copy(fileName, sicherungsverzeichnis + Path.GetFileNameWithoutExtension(fileName) + DateTime.Now.ToString("_yyMMdd_hhmmss") + Path.GetExtension(fileName));
+          File.Copy(fileName, sicherungsverzeichnis +"\\" + Path.GetFileNameWithoutExtension(fileName) + DateTime.Now.ToString("_yyMMdd_hhmmss") + Path.GetExtension(fileName));
         }
         catch
         {
-          // wenn's nicht klappt, ist es halt so...
+          if (Zugriff.Instance.HatRolle(Rolle.Admin))
+            MessageBox.Show("Es konnte keine Sicherungskopie der Exceldatei angelegt werden.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Warning);
         }
       }
     }
@@ -99,8 +99,8 @@ namespace diNo
   {
     private OpenNotendatei xls;
 
-    public LeseNotenAusExcel(string afileName, StatusChanged StatusChangedMethod, string sicherungsverzeichnis)
-      : base(afileName, StatusChangedMethod, sicherungsverzeichnis)
+    public LeseNotenAusExcel(string afileName, StatusChanged StatusChangedMethod)
+      : base(afileName, StatusChangedMethod)
     {
       xls = new OpenNotendatei(afileName);
       ReadBasisdaten(xls);
@@ -249,8 +249,8 @@ namespace diNo
   {
     private OpenAlteNotendatei xls;
 
-    public LeseNotenAusExcelAlt(string afileName, StatusChanged StatusChangedMethod, string sicherungsverzeichnis)
-      : base(afileName, StatusChangedMethod, sicherungsverzeichnis)
+    public LeseNotenAusExcelAlt(string afileName, StatusChanged StatusChangedMethod)
+      : base(afileName, StatusChangedMethod)
     {
       xls = new OpenAlteNotendatei(fileName);
       ReadBasisdaten(xls);

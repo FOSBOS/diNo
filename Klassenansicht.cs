@@ -114,11 +114,11 @@ namespace diNo
 
           if (alt)
           {
-            new LeseNotenAusExcelAlt(fileName, notenReader_OnStatusChange, Properties.Settings.Default.sicherungsverzeichnis);
+            new LeseNotenAusExcelAlt(fileName, notenReader_OnStatusChange);
           }
           else
           {
-            new LeseNotenAusExcel(fileName, notenReader_OnStatusChange, Properties.Settings.Default.sicherungsverzeichnis);
+            new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
           }
         }
 

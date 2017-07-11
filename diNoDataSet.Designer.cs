@@ -7987,6 +7987,8 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnSperre;
             
+            private global::System.Data.DataColumn columnBackupPfad;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public GlobaleKonstantenDataTable() {
@@ -8054,6 +8056,14 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn BackupPfadColumn {
+                get {
+                    return this.columnBackupPfad;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -8089,13 +8099,14 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public GlobaleKonstantenRow AddGlobaleKonstantenRow(int Schuljahr, int aktZeitpunkt, int Id, int Sperre) {
+            public GlobaleKonstantenRow AddGlobaleKonstantenRow(int Schuljahr, int aktZeitpunkt, int Id, int Sperre, string BackupPfad) {
                 GlobaleKonstantenRow rowGlobaleKonstantenRow = ((GlobaleKonstantenRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Schuljahr,
                         aktZeitpunkt,
                         Id,
-                        Sperre};
+                        Sperre,
+                        BackupPfad};
                 rowGlobaleKonstantenRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowGlobaleKonstantenRow);
                 return rowGlobaleKonstantenRow;
@@ -8129,6 +8140,7 @@ namespace diNo {
                 this.columnaktZeitpunkt = base.Columns["aktZeitpunkt"];
                 this.columnId = base.Columns["Id"];
                 this.columnSperre = base.Columns["Sperre"];
+                this.columnBackupPfad = base.Columns["BackupPfad"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8142,10 +8154,13 @@ namespace diNo {
                 base.Columns.Add(this.columnId);
                 this.columnSperre = new global::System.Data.DataColumn("Sperre", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSperre);
+                this.columnBackupPfad = new global::System.Data.DataColumn("BackupPfad", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBackupPfad);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AllowDBNull = false;
                 this.columnId.Unique = true;
+                this.columnBackupPfad.MaxLength = 2048;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14678,6 +14693,22 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string BackupPfad {
+                get {
+                    try {
+                        return ((string)(this[this.tableGlobaleKonstanten.BackupPfadColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'BackupPfad\' in table \'GlobaleKonstanten\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableGlobaleKonstanten.BackupPfadColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsSchuljahrNull() {
                 return this.IsNull(this.tableGlobaleKonstanten.SchuljahrColumn);
             }
@@ -14710,6 +14741,18 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetSperreNull() {
                 this[this.tableGlobaleKonstanten.SperreColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsBackupPfadNull() {
+                return this.IsNull(this.tableGlobaleKonstanten.BackupPfadColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetBackupPfadNull() {
+                this[this.tableGlobaleKonstanten.BackupPfadColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -24024,10 +24067,11 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             tableMapping.ColumnMappings.Add("aktZeitpunkt", "aktZeitpunkt");
             tableMapping.ColumnMappings.Add("Id", "Id");
             tableMapping.ColumnMappings.Add("Sperre", "Sperre");
+            tableMapping.ColumnMappings.Add("BackupPfad", "BackupPfad");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [GlobaleKonstanten] WHERE (([Id] = @Original_Id) AND ((@IsNull_Schuljahr = 1 AND [Schuljahr] IS NULL) OR ([Schuljahr] = @Original_Schuljahr)) AND ((@IsNull_aktZeitpunkt = 1 AND [aktZeitpunkt] IS NULL) OR ([aktZeitpunkt] = @Original_aktZeitpunkt)) AND ((@IsNull_Sperre = 1 AND [Sperre] IS NULL) OR ([Sperre] = @Original_Sperre)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [GlobaleKonstanten] WHERE (([Id] = @Original_Id) AND ((@IsNull_Schuljahr = 1 AND [Schuljahr] IS NULL) OR ([Schuljahr] = @Original_Schuljahr)) AND ((@IsNull_aktZeitpunkt = 1 AND [aktZeitpunkt] IS NULL) OR ([aktZeitpunkt] = @Original_aktZeitpunkt)) AND ((@IsNull_Sperre = 1 AND [Sperre] IS NULL) OR ([Sperre] = @Original_Sperre)) AND ((@IsNull_BackupPfad = 1 AND [BackupPfad] IS NULL) OR ([BackupPfad] = @Original_BackupPfad)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Schuljahr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Schuljahr", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -24036,23 +24080,27 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_aktZeitpunkt", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "aktZeitpunkt", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Sperre", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sperre", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Sperre", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sperre", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_BackupPfad", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BackupPfad", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_BackupPfad", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BackupPfad", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [GlobaleKonstanten] ([Id], [Schuljahr], [aktZeitpunkt], [Sperre]) VAL" +
-                "UES (@Id, @Schuljahr, @aktZeitpunkt, @Sperre)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [GlobaleKonstanten] ([Id], [Schuljahr], [aktZeitpunkt], [Sperre], [Ba" +
+                "ckupPfad]) VALUES (@Id, @Schuljahr, @aktZeitpunkt, @Sperre, @BackupPfad)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Schuljahr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Schuljahr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@aktZeitpunkt", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "aktZeitpunkt", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Sperre", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sperre", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BackupPfad", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BackupPfad", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [GlobaleKonstanten] SET [Id] = @Id, [Schuljahr] = @Schuljahr, [aktZeitpunkt] = @aktZeitpunkt, [Sperre] = @Sperre WHERE (([Id] = @Original_Id) AND ((@IsNull_Schuljahr = 1 AND [Schuljahr] IS NULL) OR ([Schuljahr] = @Original_Schuljahr)) AND ((@IsNull_aktZeitpunkt = 1 AND [aktZeitpunkt] IS NULL) OR ([aktZeitpunkt] = @Original_aktZeitpunkt)) AND ((@IsNull_Sperre = 1 AND [Sperre] IS NULL) OR ([Sperre] = @Original_Sperre)))";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [GlobaleKonstanten] SET [Id] = @Id, [Schuljahr] = @Schuljahr, [aktZeitpunkt] = @aktZeitpunkt, [Sperre] = @Sperre, [BackupPfad] = @BackupPfad WHERE (([Id] = @Original_Id) AND ((@IsNull_Schuljahr = 1 AND [Schuljahr] IS NULL) OR ([Schuljahr] = @Original_Schuljahr)) AND ((@IsNull_aktZeitpunkt = 1 AND [aktZeitpunkt] IS NULL) OR ([aktZeitpunkt] = @Original_aktZeitpunkt)) AND ((@IsNull_Sperre = 1 AND [Sperre] IS NULL) OR ([Sperre] = @Original_Sperre)) AND ((@IsNull_BackupPfad = 1 AND [BackupPfad] IS NULL) OR ([BackupPfad] = @Original_BackupPfad)))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Schuljahr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Schuljahr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@aktZeitpunkt", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "aktZeitpunkt", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Sperre", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sperre", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BackupPfad", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BackupPfad", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Schuljahr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Schuljahr", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Schuljahr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Schuljahr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -24060,6 +24108,8 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_aktZeitpunkt", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "aktZeitpunkt", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Sperre", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sperre", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Sperre", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sperre", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_BackupPfad", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BackupPfad", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_BackupPfad", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BackupPfad", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -24123,7 +24173,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, global::System.Nullable<int> Original_Schuljahr, global::System.Nullable<int> Original_aktZeitpunkt, global::System.Nullable<int> Original_Sperre) {
+        public virtual int Delete(int Original_Id, global::System.Nullable<int> Original_Schuljahr, global::System.Nullable<int> Original_aktZeitpunkt, global::System.Nullable<int> Original_Sperre, string Original_BackupPfad) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             if ((Original_Schuljahr.HasValue == true)) {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
@@ -24149,6 +24199,14 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
+            if ((Original_BackupPfad == null)) {
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[8].Value = ((string)(Original_BackupPfad));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -24169,7 +24227,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int Id, global::System.Nullable<int> Schuljahr, global::System.Nullable<int> aktZeitpunkt, global::System.Nullable<int> Sperre) {
+        public virtual int Insert(int Id, global::System.Nullable<int> Schuljahr, global::System.Nullable<int> aktZeitpunkt, global::System.Nullable<int> Sperre, string BackupPfad) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(Id));
             if ((Schuljahr.HasValue == true)) {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((int)(Schuljahr.Value));
@@ -24188,6 +24246,12 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             }
             else {
                 this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            if ((BackupPfad == null)) {
+                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(BackupPfad));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -24209,7 +24273,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int Id, global::System.Nullable<int> Schuljahr, global::System.Nullable<int> aktZeitpunkt, global::System.Nullable<int> Sperre, int Original_Id, global::System.Nullable<int> Original_Schuljahr, global::System.Nullable<int> Original_aktZeitpunkt, global::System.Nullable<int> Original_Sperre) {
+        public virtual int Update(int Id, global::System.Nullable<int> Schuljahr, global::System.Nullable<int> aktZeitpunkt, global::System.Nullable<int> Sperre, string BackupPfad, int Original_Id, global::System.Nullable<int> Original_Schuljahr, global::System.Nullable<int> Original_aktZeitpunkt, global::System.Nullable<int> Original_Sperre, string Original_BackupPfad) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(Id));
             if ((Schuljahr.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(Schuljahr.Value));
@@ -24229,30 +24293,44 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             else {
                 this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_Id));
-            if ((Original_Schuljahr.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_Schuljahr.Value));
+            if ((BackupPfad == null)) {
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(BackupPfad));
+            }
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_Id));
+            if ((Original_Schuljahr.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_Schuljahr.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
             if ((Original_aktZeitpunkt.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(Original_aktZeitpunkt.Value));
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_aktZeitpunkt.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
             if ((Original_Sperre.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Original_Sperre.Value));
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(Original_Sperre.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
+            }
+            if ((Original_BackupPfad == null)) {
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Original_BackupPfad));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -24274,8 +24352,8 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(global::System.Nullable<int> Schuljahr, global::System.Nullable<int> aktZeitpunkt, global::System.Nullable<int> Sperre, int Original_Id, global::System.Nullable<int> Original_Schuljahr, global::System.Nullable<int> Original_aktZeitpunkt, global::System.Nullable<int> Original_Sperre) {
-            return this.Update(Original_Id, Schuljahr, aktZeitpunkt, Sperre, Original_Id, Original_Schuljahr, Original_aktZeitpunkt, Original_Sperre);
+        public virtual int Update(global::System.Nullable<int> Schuljahr, global::System.Nullable<int> aktZeitpunkt, global::System.Nullable<int> Sperre, string BackupPfad, int Original_Id, global::System.Nullable<int> Original_Schuljahr, global::System.Nullable<int> Original_aktZeitpunkt, global::System.Nullable<int> Original_Sperre, string Original_BackupPfad) {
+            return this.Update(Original_Id, Schuljahr, aktZeitpunkt, Sperre, BackupPfad, Original_Id, Original_Schuljahr, Original_aktZeitpunkt, Original_Sperre, Original_BackupPfad);
         }
     }
     

@@ -45,12 +45,14 @@
       this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.btnKurseLehrer = new System.Windows.Forms.Button();
       this.groupBoxEinstellungen = new System.Windows.Forms.GroupBox();
+      this.label2 = new System.Windows.Forms.Label();
+      this.comboBoxZeitpunkt = new System.Windows.Forms.ComboBox();
       this.label1 = new System.Windows.Forms.Label();
       this.edSchuljahr = new System.Windows.Forms.TextBox();
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
-      this.comboBoxZeitpunkt = new System.Windows.Forms.ComboBox();
-      this.label2 = new System.Windows.Forms.Label();
+      this.btnSelectBackupPfad = new System.Windows.Forms.Button();
+      this.lbBackupPfad = new System.Windows.Forms.Label();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
@@ -226,6 +228,8 @@
       // 
       // groupBoxEinstellungen
       // 
+      this.groupBoxEinstellungen.Controls.Add(this.lbBackupPfad);
+      this.groupBoxEinstellungen.Controls.Add(this.btnSelectBackupPfad);
       this.groupBoxEinstellungen.Controls.Add(this.label2);
       this.groupBoxEinstellungen.Controls.Add(this.comboBoxZeitpunkt);
       this.groupBoxEinstellungen.Controls.Add(this.label1);
@@ -238,6 +242,32 @@
       this.groupBoxEinstellungen.TabIndex = 6;
       this.groupBoxEinstellungen.TabStop = false;
       this.groupBoxEinstellungen.Text = "Globale Einstellungen";
+      // 
+      // label2
+      // 
+      this.label2.AutoSize = true;
+      this.label2.Location = new System.Drawing.Point(17, 92);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(95, 13);
+      this.label2.TabIndex = 14;
+      this.label2.Text = "aktueller Zeitpunkt";
+      // 
+      // comboBoxZeitpunkt
+      // 
+      this.comboBoxZeitpunkt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.comboBoxZeitpunkt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.comboBoxZeitpunkt.FormattingEnabled = true;
+      this.comboBoxZeitpunkt.Items.AddRange(new object[] {
+            "Probezeit BOS",
+            "Halbjahr",
+            "1. PA",
+            "2. PA",
+            "3. PA",
+            "Jahresende"});
+      this.comboBoxZeitpunkt.Location = new System.Drawing.Point(16, 108);
+      this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";
+      this.comboBoxZeitpunkt.Size = new System.Drawing.Size(182, 24);
+      this.comboBoxZeitpunkt.TabIndex = 13;
       // 
       // label1
       // 
@@ -275,31 +305,24 @@
       this.chkSperre.Text = "Notenschluss (Abgabesperre)";
       this.chkSperre.UseVisualStyleBackColor = true;
       // 
-      // comboBoxZeitpunkt
+      // btnSelectBackupPfad
       // 
-      this.comboBoxZeitpunkt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.comboBoxZeitpunkt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.comboBoxZeitpunkt.FormattingEnabled = true;
-      this.comboBoxZeitpunkt.Items.AddRange(new object[] {
-            "Probezeit BOS",
-            "Halbjahr",
-            "1. PA",
-            "2. PA",
-            "3. PA",
-            "Jahresende"});
-      this.comboBoxZeitpunkt.Location = new System.Drawing.Point(16, 108);
-      this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";
-      this.comboBoxZeitpunkt.Size = new System.Drawing.Size(182, 24);
-      this.comboBoxZeitpunkt.TabIndex = 13;
+      this.btnSelectBackupPfad.Location = new System.Drawing.Point(16, 158);
+      this.btnSelectBackupPfad.Name = "btnSelectBackupPfad";
+      this.btnSelectBackupPfad.Size = new System.Drawing.Size(120, 23);
+      this.btnSelectBackupPfad.TabIndex = 15;
+      this.btnSelectBackupPfad.Text = "Verzeichnis wählen";
+      this.btnSelectBackupPfad.UseVisualStyleBackColor = true;
+      this.btnSelectBackupPfad.Click += new System.EventHandler(this.btnSelectBackupPfad_Click);
       // 
-      // label2
+      // lbBackupPfad
       // 
-      this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(17, 92);
-      this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(95, 13);
-      this.label2.TabIndex = 14;
-      this.label2.Text = "aktueller Zeitpunkt";
+      this.lbBackupPfad.AutoSize = true;
+      this.lbBackupPfad.Location = new System.Drawing.Point(13, 142);
+      this.lbBackupPfad.Name = "lbBackupPfad";
+      this.lbBackupPfad.Size = new System.Drawing.Size(65, 13);
+      this.lbBackupPfad.TabIndex = 16;
+      this.lbBackupPfad.Text = "Backuppfad";
       // 
       // UserControlAdministration
       // 
@@ -348,5 +371,7 @@
     private System.Windows.Forms.CheckBox chkSperre;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.ComboBox comboBoxZeitpunkt;
+    private System.Windows.Forms.Button btnSelectBackupPfad;
+    private System.Windows.Forms.Label lbBackupPfad;
   }
 }
