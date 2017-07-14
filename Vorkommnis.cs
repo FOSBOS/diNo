@@ -66,6 +66,7 @@ namespace diNo
     GefahrDerAbweisung = 15,
     RuecktrittVorklasse = 16,
     ProbezeitVerlaengert = 17,
+    KeineProbezeitNaechstesSJ = 18,
 
     // 1.-3. PA
     NichtZurPruefungZugelassen = 21,

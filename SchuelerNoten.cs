@@ -224,6 +224,17 @@ namespace diNo
       return AnzahlNoten(6) == 0 && AnzahlNoten(5) == 0 && AnzahlNoten(4) == 0;
     }
     
+    // Mittlere Reife, falls nur 4er oder 1x5,1x2 oder 1x5,2x3, vgl. §58(5)
+    public bool ErhaeltMittlereReife()
+    {
+      if (schueler.getKlasse.Jahrgangsstufe!=Jahrgangsstufe.Vorklasse 
+        || schueler.getKlasse.Bezeichnung=="IV") return false;
+
+      return (AnzahlNoten(6) == 0) && 
+        (AnzahlNoten(5) == 0 ||
+        (AnzahlNoten(5) == 1 && (AnzahlNoten(1) > 0 || AnzahlNoten(2) > 0 || AnzahlNoten(3) > 1)));
+    }
+
     public bool MAPmoeglich()
     {
       // Anzahl 5er und 6er nach einen MAP mit "bestmöglichem" Ergebnis

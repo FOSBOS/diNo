@@ -188,7 +188,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Durchschnittsnote: </Value>
+                              <Value>Durchschnittsnote*: </Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
                               </Style>

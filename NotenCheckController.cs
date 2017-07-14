@@ -152,6 +152,9 @@ namespace diNo
       
       if (v!=Vorkommnisart.NotSet && (v==Vorkommnisart.allgemeineHochschulreife || modus==NotenCheckModus.VorkommnisseErzeugen))
         Add(v,"");
+
+      if (modus==NotenCheckModus.VorkommnisseErzeugen && s.getNoten.ErhaeltMittlereReife())
+        Add(Vorkommnisart.MittlereReife,"");
     }
 
     // fügt eine Meldung/Vorkommnis hinzu, und erzeugt ggf. abhängige Vorkommnisse

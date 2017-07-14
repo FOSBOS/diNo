@@ -421,7 +421,7 @@ namespace diNo
     /// <param name="contr.zeitpunkt">Die Art der Prüfung.</param>
     /// <returns>true wenn check nötig.</returns>
     public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
-    {
+    {      
       return true;
     }
 
@@ -434,9 +434,16 @@ namespace diNo
     public override void Check(Schueler schueler)
     {
         base.Check(schueler);
-      
         SchuelerNoten n = schueler.getNoten;
         n.SetZeitpunkt(contr.zeitpunkt);
+
+        // Integrationsklasse: dort gibt es kein Bestehen...
+        if (schueler.getKlasse.Bezeichnung=="IntVk")
+        {
+          n.AnzahlNoten(6); // nur zur Initialisierung
+          return;
+        }
+
         if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {
           if (n.HatNichtBestanden())
@@ -478,19 +485,18 @@ namespace diNo
         // Jahresende, 3. PA, Probezeit (BOS und Hj.)
         if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse && contr.zeitpunkt == Zeitpunkt.Jahresende)
         {
-        // nur bestanden ohne 5er/6er §28(4); Mittlere Reife, falls nur 4er oder 1x5,1x2 oder 1x5,2x3, vgl. §58(5)
+        // nur bestanden ohne 5er/6er §28(4)
           if (n.AnzahlNoten(6) > 0 || n.AnzahlNoten(5) > 0)
           {
-            if (n.AnzahlNoten(5) == 1 && (n.AnzahlNoten(1) > 0 || n.AnzahlNoten(2) > 0 || n.AnzahlNoten(3) > 1))
-              contr.Add(null, "Nicht bestanden, aber mittlere Reife: " + n.Unterpunktungen,true);
-            else
-              contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen,true);
+            contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen,true);
+            if (n.ErhaeltMittlereReife())
+              contr.Add(null, "Trotzdem Zeugnis über mittlere Reife",true);                          
           }
-          else if (n.Unterpunktungen!="")
-            contr.Add(null, "Unterpunktet in: " + n.Unterpunktungen,true);
-
-          if (/*schueler.getKlasse.Schulart == Schulart.BOS &&*/ n.HatIn12KeinePZ())
-            contr.Add(null, "Hat in der 12. Klasse keine Probezeit.");
+          /*else if (n.Unterpunktungen!="")
+            contr.Add(null, "Unterpunktet in: " + n.Unterpunktungen,true);*/
+            
+          if (n.HatIn12KeinePZ())
+            contr.Add(Vorkommnisart.KeineProbezeitNaechstesSJ , "");
         }
         else if (n.HatNichtBestanden())
         {

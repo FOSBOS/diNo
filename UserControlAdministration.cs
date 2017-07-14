@@ -25,7 +25,7 @@ namespace diNo
         chkSperre.Checked = konstanten.Sperre == 1;
         edSchuljahr.Text = konstanten.Schuljahr.ToString();
         comboBoxZeitpunkt.SelectedIndex = konstanten.aktZeitpunkt-1;
-        lbBackupPfad.Text = konstanten.BackupPfad;
+        edBackupPfad.Text = konstanten.BackupPfad;
       }
     }
 
@@ -155,18 +155,8 @@ namespace diNo
       konstanten.Sperre = chkSperre.Checked ? 1 : 0;
       konstanten.Schuljahr = int.Parse(edSchuljahr.Text);
       konstanten.aktZeitpunkt = comboBoxZeitpunkt.SelectedIndex+1;
-      konstanten.BackupPfad = lbBackupPfad.Text;
+      konstanten.BackupPfad = edBackupPfad.Text;
       (new GlobaleKonstantenTableAdapter()).Update(konstanten);
-    }
-
-    private void btnSelectBackupPfad_Click(object sender, EventArgs e)
-    {
-      var fileDialog = new FolderBrowserDialog();                  
-      if (fileDialog.ShowDialog() == DialogResult.OK)
-      {
-        lbBackupPfad.Text = fileDialog.SelectedPath;         
-      }
-
-    }
+    }    
   }
 }

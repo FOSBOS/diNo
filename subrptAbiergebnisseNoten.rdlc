@@ -201,7 +201,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>4P</Value>
+                              <Value>4P*</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -235,7 +235,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>1P</Value>
+                              <Value>1P*</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -667,7 +667,20 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Berechnung der Durchschnittsnote und der Werte in den Spalten 4P/1P ohne Gewähr!</Value>
+                <Value>*Berechnung der Durchschnittsnote und der Werte in den Spalten 4P/1P </Value>
+                <Style>
+                  <FontSize>9pt</FontSize>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>ohne Gewähr</Value>
+                <Style>
+                  <FontSize>9pt</FontSize>
+                  <TextDecoration>Underline</TextDecoration>
+                </Style>
+              </TextRun>
+              <TextRun>
+                <Value>!</Value>
                 <Style>
                   <FontSize>9pt</FontSize>
                 </Style>
