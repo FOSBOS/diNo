@@ -22,11 +22,14 @@ namespace diNo
         private int aktKlassenId=0;
         private Schueler aktSchueler,vorigerSchueler;
         private bool UnterpunktungGedruckt;
+        private DateTime Zeugnisdatum;
 
-        public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus)
+        public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus, DateTime aZeugnisdatum)
         {
             zeitpunkt = azeitpunkt;            
             modus = amodus; 
+            Zeugnisdatum = aZeugnisdatum;
+
             // je nach Modus und Zeitpunkt werden nur bestimmte Klassen ausgewählt
             if (modus == NotenCheckModus.EigeneKlasse)
             {
@@ -149,12 +152,19 @@ namespace diNo
     public void ZeugnisVorkommnisAnlegen(Schueler s)
     {
       Vorkommnisart v = s.Zeugnisart(zeitpunkt);
-      
-      if (v!=Vorkommnisart.NotSet && (v==Vorkommnisart.allgemeineHochschulreife || modus==NotenCheckModus.VorkommnisseErzeugen))
-        Add(v,"");
+      if (v==Vorkommnisart.NotSet) return;
 
-      if (modus==NotenCheckModus.VorkommnisseErzeugen && s.getNoten.ErhaeltMittlereReife())
-        Add(Vorkommnisart.MittlereReife,"");
+      if (modus==NotenCheckModus.VorkommnisseErzeugen)        
+      {
+        s.AddVorkommnis(v,Zeugnisdatum,""); // Zeugnis als Vorkommnis anlegen
+        if (s.getNoten.ErhaeltMittlereReife())
+          s.AddVorkommnis(Vorkommnisart.MittlereReife,Zeugnisdatum,"");
+      }
+      else
+      {
+        if (v==Vorkommnisart.allgemeineHochschulreife)
+          Add(v,""); // zusätzliche Ausgabe für die Meldungsliste        
+      }
     }
 
     // fügt eine Meldung/Vorkommnis hinzu, und erzeugt ggf. abhängige Vorkommnisse
