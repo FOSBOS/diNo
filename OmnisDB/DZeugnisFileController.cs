@@ -42,15 +42,7 @@ namespace diNo.OmnisDB
             if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf && (zeitpunkt == Zeitpunkt.DrittePA || zeitpunkt == Zeitpunkt.Jahresende)))
             {
               // fpA darf nur bei Elftklässlern übertragen werden oder bei Zwölftklässlern ins Abschlusszeugnis
-
-              if (zeile[Konstanten.fpaCol] != "" && zeile[Konstanten.fpaCol] != Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler)))
-              {
-                log.WarnFormat("fpA-Note für Schüler {0} ist (diNo) {1} statt (WinSV) {2}", schueler.Name, Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler)), zeile[Konstanten.fpaCol]);
-              }
-              else
-              {
                 zeile[Konstanten.fpaCol] = Konstanten.GetFpaString(GetFpaNote(zeitpunkt, schueler));
-              }
             }
 
             KlassenzielOderGefaehrdung zielerreichung = GetZielerreichung(zeitpunkt, schueler);
@@ -105,10 +97,10 @@ namespace diNo.OmnisDB
             SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach1BezeichnungCol, Konstanten.weiteresFach1NoteCol);
             SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach2BezeichnungCol, Konstanten.weiteresFach2NoteCol);
             SucheWahlpflichtfach(zeitpunkt, faecher, zeile, schueler, Konstanten.weiteresFach3BezeichnungCol, Konstanten.weiteresFach3NoteCol);
-          }
 
-          // rausgeschrieben werden immer alle Zeugnisse, da im Import "ersetzen" angehakt werden muss
-          writer.WriteLine(zeile.ToString());
+            writer.WriteLine(zeile.ToString());
+          }
+          
         }
       }
     }
@@ -227,7 +219,18 @@ namespace diNo.OmnisDB
           {
             case Vorkommnisart.NichtZurPruefungZugelassen: return KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg;
             case Vorkommnisart.Notenausgleich: return KlassenzielOderGefaehrdung.NotenausgleichGewaehrt;
-            case Vorkommnisart.NichtBestanden: return KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg;
+            case Vorkommnisart.NichtBestanden:
+              {
+                if (schueler.getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
+                {
+                  return KlassenzielOderGefaehrdung.VorrueckenNichtErhalten;
+                }
+                else
+                {
+                  return KlassenzielOderGefaehrdung.AbschlusspruefungOhneErfolg;
+                }
+              } 
+            case Vorkommnisart.KeineVorrueckungserlaubnis: return KlassenzielOderGefaehrdung.VorrueckenNichtErhalten;
           }
         }
       }      
