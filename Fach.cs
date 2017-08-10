@@ -72,7 +72,7 @@ namespace diNo
           {
             if (IstSAPFach(zweig) || Kuerzel=="F" /*|| Kuerzel=="F-Wi"*/) z = (jg == Jahrgangsstufe.Zwoelf) ? 3 : 2;
             else if (Kuerzel == "TeIn" || Kuerzel == "B" || Kuerzel == "VWL" ||
-              (Kuerzel == "C" && zweig==Zweig.Agrar)) z=2;
+              (Kuerzel == "C" && zweig==Zweig.Umwelt)) z=2;
           }
           return z;
         }
@@ -86,7 +86,7 @@ namespace diNo
             get { return this.data.Sortierung; }
         }
 
-        // solange Agrar nicht ist, tut es auch aus Performancegründen das:
+        // solange Umwelt nicht ist, tut es auch aus Performancegründen das:
         public bool IstSAPFach()
         {
           return data.IstSAP;
@@ -94,8 +94,8 @@ namespace diNo
 
         public bool IstSAPFach(Zweig zweig)
         {
-          // TODO: für Agrarzweig brauchen wir Bio als SAP-Fach, für den Sozialzweig als SA-Fach; vorläufige Lösung:
-          if (zweig==Zweig.Agrar && Kuerzel == "B") return true;
+          // TODO: für Umweltzweig brauchen wir Bio als SAP-Fach, für den Sozialzweig als SA-Fach; vorläufige Lösung:
+          if (zweig==Zweig.Umwelt && Kuerzel == "B") return true;
           else return this.data.IstSAP;
         }
 
@@ -134,7 +134,7 @@ public static class Faecherkanon
         case "WVR":
         case "W":
           return Zweig.Wirtschaft;        
-        case "A": return Zweig.Agrar;
+        case "U": return Zweig.Umwelt;
         default: return Zweig.None; //Vorklasse FOS ohne Zweigzuordnung
       }
     }
@@ -206,7 +206,7 @@ public static class Faecherkanon
         case Zweig.Sozial: return "S";
         case Zweig.Wirtschaft: return "W";
         case Zweig.Technik: return "T";
-        case Zweig.Agrar: return "A";
+        case Zweig.Umwelt: return "U";
         case Zweig.ALLE: return "ALLE";
         default: throw new InvalidOperationException("Unbekannter Zweig : " + zweig);
       }

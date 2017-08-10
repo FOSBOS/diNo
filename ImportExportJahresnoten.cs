@@ -53,12 +53,12 @@ namespace diNo
           }
 
           if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.getKlasse.Schulart == Schulart.FOS)
-          {
+          {/*
             var fpa = schueler.FPANoten;
             if (!fpa.IsErfolgNull())
             {
               writer.WriteLine(schueler.Id + Separator + schueler.Name + Separator + fpa.Erfolg);
-            }
+            }*/
           }
         }
       }
@@ -93,7 +93,7 @@ namespace diNo
       using (StreamReader reader = new StreamReader(stream))
       {
         var schuelerAdapter = new SchuelerTableAdapter();
-        var fpaAdapter = new FpANotenTableAdapter();
+        //var fpaAdapter = new FpANotenTableAdapter();
         Dictionary<string, Kurs> kurse = GetKursverzeichnis();
         kurse.Add("G", GetGeschichteKurs());
 
@@ -140,7 +140,7 @@ namespace diNo
               //FpA-Zeile
               string nachname = line[1];
               int gesamterfolg = int.Parse(line[2]);
-              fpaAdapter.Insert(schuelerId, "", null, null, null, null, gesamterfolg, null, null);
+              //fpaAdapter.Insert(schuelerId, "", null, null, null, null, gesamterfolg, null, null);
             }
             else
               throw new InvalidOperationException("Diese Zeile hat " + line.Length + " Spalten. Das ist mir unbekannt");
@@ -166,7 +166,7 @@ namespace diNo
       kurse.Add("RL", FindOrCreateDummyKurs("Rechtslehre aus elfter Jahrgangsstufe", "Rl"));
       kurse.Add("C", FindOrCreateDummyKurs("Chemie aus elfter Jahrgangsstufe", "C"));
       kurse.Add("TZ", FindOrCreateDummyKurs("TZ aus elfter Jahrgangsstufe", "TZ"));
-      // laut Stundentafel legt der Agrarzweig außer Geschichte nichts ab.
+      // laut Stundentafel legt der Umweltzweig außer Geschichte nichts ab.
       return kurse;
     }
 
@@ -181,7 +181,7 @@ namespace diNo
           schueler.MeldeAn(GetGeschichteKurs());
           switch (schueler.Zweig)
           {
-            case Zweig.Agrar: break;
+            case Zweig.Umwelt: break;
             case Zweig.Sozial: schueler.MeldeAn(kurse["C"]); break;
             case Zweig.Technik: schueler.MeldeAn(kurse["TZ"]); break;
             case Zweig.Wirtschaft: schueler.MeldeAn(kurse["RL"]); break;
@@ -200,13 +200,13 @@ namespace diNo
       using (StreamReader reader = new StreamReader(stream))
       {
         var schuelerAdapter = new SchuelerTableAdapter();
-        var fpaAdapter = new FpANotenTableAdapter();
+        //var fpaAdapter = new FpANotenTableAdapter();
         Kurs geschichte = GetGeschichteKurs();
         Dictionary<string, Kurs> kurse = new Dictionary<string, Kurs>();
         kurse.Add("W11", FindOrCreateDummyKurs("Rechtslehre aus elfter Jahrgangsstufe", "Rl"));
         kurse.Add("S11", FindOrCreateDummyKurs("Chemie aus elfter Jahrgangsstufe", "C"));
         kurse.Add("T11", FindOrCreateDummyKurs("TZ aus elfter Jahrgangsstufe", "TZ"));
-        kurse.Add("A11", null); // laut Stundentafel legt der Agrarzweig außer Geschichte nichts ab.
+        kurse.Add("A11", null); // laut Stundentafel legt der Umweltzweig außer Geschichte nichts ab.
 
         while (!reader.EndOfStream)
         {
@@ -239,7 +239,7 @@ namespace diNo
             }
 
 
-            fpaAdapter.Insert(schuelerId, "", null, null, null, null, (int)fpaNote,null,null);
+            //fpaAdapter.Insert(schuelerId, "", null, null, null, null, (int)fpaNote,null,null);
           }
           else
             throw new InvalidOperationException("Diese Zeile hat " + line.Length + " Spalten. Das ist mir unbekannt");

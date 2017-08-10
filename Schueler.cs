@@ -17,9 +17,8 @@ namespace diNo
     private Klasse klasse;                  // Objektverweis zur Klasse dieses Schülers
     private diNoDataSet.KursDataTable kurse; // Recordset-Menge aller Kurse dieses Schülers
     private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
-    private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler
-    private diNoDataSet.FpANotenRow fpa; // Recordset der FPA-Noten
-    private diNoDataSet.FpANotenDataTable fpaDT; // wird zum Speichern benötigt
+    private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler    
+    private diNoDataSet.FpaDataTable fpaDT; // wird zum Speichern benötigt: FPA-Halbjahr 1 und 2
     private diNoDataSet.SeminarfachnoteRow seminar;
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
 
@@ -70,7 +69,7 @@ namespace diNo
           (new SchuelerTableAdapter()).Update(data);
           if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && fpaDT != null)
             {
-                (new FpANotenTableAdapter()).Update(fpaDT);
+                (new FpaTableAdapter()).Update(fpaDT);
             }
           if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && seminarDT != null)
             {
@@ -196,22 +195,22 @@ namespace diNo
     /// <summary>
     /// FPA-Noten
     /// </summary>
-    public diNoDataSet.FpANotenRow FPANoten
+    public diNoDataSet.FpaDataTable FPANoten
     {
       get
       {
-        if (fpa == null)
+        if (fpaDT == null)
         {
-            fpaDT = (new FpANotenTableAdapter()).GetDataBySchuelerId(Id);
-            if (fpaDT.Count == 0)
+            fpaDT = (new FpaTableAdapter()).GetDataBySchuelerId(Id);
+            while (fpaDT.Count < 2) // es werden intern 2 Halbjahre angelegt
             {
-                fpa = fpaDT.NewFpANotenRow();
-                fpa.SchuelerId = Id;
-                fpaDT.AddFpANotenRow(fpa);
-            }
-            else fpa = fpaDT[0];
+              var fpa = fpaDT.NewFpaRow();
+              fpa.SchuelerId = Id;
+              fpa.Halbjahr = (byte)fpaDT.Count;
+              fpaDT.AddFpaRow(fpa);
+          }            
         }
-        return fpa;
+        return fpaDT;
       }
     }
 
@@ -806,6 +805,10 @@ namespace diNo
       return Zeitpunkt.None;
     }
 
+    public bool AlteFOBOSO()
+    {
+      return getKlasse.AlteFOBOSO();
+    }
   }
 
   public static class SchulnummernHolder
@@ -883,7 +886,7 @@ namespace diNo
       var jg=s.getKlasse.Jahrgangsstufe;
 
       if (jg==Jahrgangsstufe.Elf)
-      {        
+      { /*       
         if (!s.FPANoten.IsErfolg1HjNull() && !s.FPANoten.IsPunkte1HjNull())
         {
           Inhalt += "Diese wurde im 1. Halbjahr " + ErfolgText(s.FPANoten.Erfolg1Hj) + " (" + s.FPANoten.Punkte1Hj + " Punkte) durchlaufen";
@@ -905,12 +908,12 @@ namespace diNo
         if (!s.FPANoten.IsBemerkungNull())
           Inhalt += s.FPANoten.Bemerkung + "<br>";
         if (Inhalt!="")
-          Inhalt = "<b>Fachpraktische Ausbildung</b><br>" + Inhalt;
+          Inhalt = "<b>Fachpraktische Ausbildung</b><br>" + Inhalt;*/
       }
       else if (jg==Jahrgangsstufe.Zwoelf)
       {
-        if (!s.FPANoten.IsErfolgNull())
-          Inhalt = "Die fachpraktische Ausbildung wurde in der 11. Klasse " + ErfolgText(s.FPANoten.Erfolg) +" durchlaufen.<br>";
+  //        if (!s.FPANoten.IsErfolgNull())
+  //        Inhalt = "Die fachpraktische Ausbildung wurde in der 11. Klasse " + ErfolgText(s.FPANoten.Erfolg) +" durchlaufen.<br>";
       }
       else if (jg==Jahrgangsstufe.Dreizehn)
       {

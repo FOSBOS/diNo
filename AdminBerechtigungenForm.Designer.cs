@@ -32,13 +32,13 @@
       this.lblLehrer = new System.Windows.Forms.Label();
       this.checkBoxIsAdmin = new System.Windows.Forms.CheckBox();
       this.groupBoxBerechtigungen = new System.Windows.Forms.GroupBox();
-      this.checkBoxIsSchulleitung = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsSekretariat = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsSeminarfach = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsFpAWirtschaft = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsFpASozial = new System.Windows.Forms.CheckBox();
+      this.checkBoxIsFpAUmwelt = new System.Windows.Forms.CheckBox();
       this.checkBoxIsFpATechnik = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsFpAAgrar = new System.Windows.Forms.CheckBox();
+      this.checkBoxIsFpASozial = new System.Windows.Forms.CheckBox();
+      this.checkBoxIsFpAWirtschaft = new System.Windows.Forms.CheckBox();
+      this.checkBoxIsSeminarfach = new System.Windows.Forms.CheckBox();
+      this.checkBoxIsSekretariat = new System.Windows.Forms.CheckBox();
+      this.checkBoxIsSchulleitung = new System.Windows.Forms.CheckBox();
       this.comboBoxBerechtigungen = new System.Windows.Forms.ComboBox();
       this.labelBerechtigungsstufe = new System.Windows.Forms.Label();
       this.textBoxLehrerNamen = new System.Windows.Forms.TextBox();
@@ -77,7 +77,7 @@
       // 
       // groupBoxBerechtigungen
       // 
-      this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsFpAAgrar);
+      this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsFpAUmwelt);
       this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsFpATechnik);
       this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsFpASozial);
       this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsFpAWirtschaft);
@@ -92,60 +92,16 @@
       this.groupBoxBerechtigungen.TabStop = false;
       this.groupBoxBerechtigungen.Text = "Berechtigungen";
       // 
-      // checkBoxIsSchulleitung
+      // checkBoxIsFpAUmwelt
       // 
-      this.checkBoxIsSchulleitung.AutoSize = true;
-      this.checkBoxIsSchulleitung.Location = new System.Drawing.Point(6, 42);
-      this.checkBoxIsSchulleitung.Name = "checkBoxIsSchulleitung";
-      this.checkBoxIsSchulleitung.Size = new System.Drawing.Size(84, 17);
-      this.checkBoxIsSchulleitung.TabIndex = 3;
-      this.checkBoxIsSchulleitung.Text = "Schulleitung";
-      this.checkBoxIsSchulleitung.UseVisualStyleBackColor = true;
-      this.checkBoxIsSchulleitung.CheckedChanged += new System.EventHandler(this.checkBoxIsSchulleitung_CheckedChanged);
-      // 
-      // checkBoxIsSekretariat
-      // 
-      this.checkBoxIsSekretariat.AutoSize = true;
-      this.checkBoxIsSekretariat.Location = new System.Drawing.Point(6, 65);
-      this.checkBoxIsSekretariat.Name = "checkBoxIsSekretariat";
-      this.checkBoxIsSekretariat.Size = new System.Drawing.Size(77, 17);
-      this.checkBoxIsSekretariat.TabIndex = 4;
-      this.checkBoxIsSekretariat.Text = "Sekretariat";
-      this.checkBoxIsSekretariat.UseVisualStyleBackColor = true;
-      this.checkBoxIsSekretariat.CheckedChanged += new System.EventHandler(this.checkBoxIsSekretariat_CheckedChanged);
-      // 
-      // checkBoxIsSeminarfach
-      // 
-      this.checkBoxIsSeminarfach.AutoSize = true;
-      this.checkBoxIsSeminarfach.Location = new System.Drawing.Point(6, 88);
-      this.checkBoxIsSeminarfach.Name = "checkBoxIsSeminarfach";
-      this.checkBoxIsSeminarfach.Size = new System.Drawing.Size(85, 17);
-      this.checkBoxIsSeminarfach.TabIndex = 5;
-      this.checkBoxIsSeminarfach.Text = "Seminarfach";
-      this.checkBoxIsSeminarfach.UseVisualStyleBackColor = true;
-      this.checkBoxIsSeminarfach.CheckedChanged += new System.EventHandler(this.checkBoxIsSeminarfach_CheckedChanged);
-      // 
-      // checkBoxIsFpAWirtschaft
-      // 
-      this.checkBoxIsFpAWirtschaft.AutoSize = true;
-      this.checkBoxIsFpAWirtschaft.Location = new System.Drawing.Point(178, 19);
-      this.checkBoxIsFpAWirtschaft.Name = "checkBoxIsFpAWirtschaft";
-      this.checkBoxIsFpAWirtschaft.Size = new System.Drawing.Size(96, 17);
-      this.checkBoxIsFpAWirtschaft.TabIndex = 6;
-      this.checkBoxIsFpAWirtschaft.Text = "FpA Wirtschaft";
-      this.checkBoxIsFpAWirtschaft.UseVisualStyleBackColor = true;
-      this.checkBoxIsFpAWirtschaft.CheckedChanged += new System.EventHandler(this.checkBoxIsFpAWirtschaft_CheckedChanged);
-      // 
-      // checkBoxIsFpASozial
-      // 
-      this.checkBoxIsFpASozial.AutoSize = true;
-      this.checkBoxIsFpASozial.Location = new System.Drawing.Point(178, 42);
-      this.checkBoxIsFpASozial.Name = "checkBoxIsFpASozial";
-      this.checkBoxIsFpASozial.Size = new System.Drawing.Size(76, 17);
-      this.checkBoxIsFpASozial.TabIndex = 7;
-      this.checkBoxIsFpASozial.Text = "FpA Sozial";
-      this.checkBoxIsFpASozial.UseVisualStyleBackColor = true;
-      this.checkBoxIsFpASozial.CheckedChanged += new System.EventHandler(this.checkBoxIsFpASozial_CheckedChanged);
+      this.checkBoxIsFpAUmwelt.AutoSize = true;
+      this.checkBoxIsFpAUmwelt.Location = new System.Drawing.Point(178, 88);
+      this.checkBoxIsFpAUmwelt.Name = "checkBoxIsFpAUmwelt";
+      this.checkBoxIsFpAUmwelt.Size = new System.Drawing.Size(83, 17);
+      this.checkBoxIsFpAUmwelt.TabIndex = 9;
+      this.checkBoxIsFpAUmwelt.Text = "FpA Umwelt";
+      this.checkBoxIsFpAUmwelt.UseVisualStyleBackColor = true;
+      this.checkBoxIsFpAUmwelt.CheckedChanged += new System.EventHandler(this.checkBoxIsFpAUmwelt_CheckedChanged);
       // 
       // checkBoxIsFpATechnik
       // 
@@ -158,16 +114,60 @@
       this.checkBoxIsFpATechnik.UseVisualStyleBackColor = true;
       this.checkBoxIsFpATechnik.CheckedChanged += new System.EventHandler(this.checkBoxIsFpATechnik_CheckedChanged);
       // 
-      // checkBoxIsFpAAgrar
+      // checkBoxIsFpASozial
       // 
-      this.checkBoxIsFpAAgrar.AutoSize = true;
-      this.checkBoxIsFpAAgrar.Location = new System.Drawing.Point(178, 88);
-      this.checkBoxIsFpAAgrar.Name = "checkBoxIsFpAAgrar";
-      this.checkBoxIsFpAAgrar.Size = new System.Drawing.Size(73, 17);
-      this.checkBoxIsFpAAgrar.TabIndex = 9;
-      this.checkBoxIsFpAAgrar.Text = "FpA Agrar";
-      this.checkBoxIsFpAAgrar.UseVisualStyleBackColor = true;
-      this.checkBoxIsFpAAgrar.CheckedChanged += new System.EventHandler(this.checkBoxIsFpAAgrar_CheckedChanged);
+      this.checkBoxIsFpASozial.AutoSize = true;
+      this.checkBoxIsFpASozial.Location = new System.Drawing.Point(178, 42);
+      this.checkBoxIsFpASozial.Name = "checkBoxIsFpASozial";
+      this.checkBoxIsFpASozial.Size = new System.Drawing.Size(76, 17);
+      this.checkBoxIsFpASozial.TabIndex = 7;
+      this.checkBoxIsFpASozial.Text = "FpA Sozial";
+      this.checkBoxIsFpASozial.UseVisualStyleBackColor = true;
+      this.checkBoxIsFpASozial.CheckedChanged += new System.EventHandler(this.checkBoxIsFpASozial_CheckedChanged);
+      // 
+      // checkBoxIsFpAWirtschaft
+      // 
+      this.checkBoxIsFpAWirtschaft.AutoSize = true;
+      this.checkBoxIsFpAWirtschaft.Location = new System.Drawing.Point(178, 19);
+      this.checkBoxIsFpAWirtschaft.Name = "checkBoxIsFpAWirtschaft";
+      this.checkBoxIsFpAWirtschaft.Size = new System.Drawing.Size(96, 17);
+      this.checkBoxIsFpAWirtschaft.TabIndex = 6;
+      this.checkBoxIsFpAWirtschaft.Text = "FpA Wirtschaft";
+      this.checkBoxIsFpAWirtschaft.UseVisualStyleBackColor = true;
+      this.checkBoxIsFpAWirtschaft.CheckedChanged += new System.EventHandler(this.checkBoxIsFpAWirtschaft_CheckedChanged);
+      // 
+      // checkBoxIsSeminarfach
+      // 
+      this.checkBoxIsSeminarfach.AutoSize = true;
+      this.checkBoxIsSeminarfach.Location = new System.Drawing.Point(6, 88);
+      this.checkBoxIsSeminarfach.Name = "checkBoxIsSeminarfach";
+      this.checkBoxIsSeminarfach.Size = new System.Drawing.Size(85, 17);
+      this.checkBoxIsSeminarfach.TabIndex = 5;
+      this.checkBoxIsSeminarfach.Text = "Seminarfach";
+      this.checkBoxIsSeminarfach.UseVisualStyleBackColor = true;
+      this.checkBoxIsSeminarfach.CheckedChanged += new System.EventHandler(this.checkBoxIsSeminarfach_CheckedChanged);
+      // 
+      // checkBoxIsSekretariat
+      // 
+      this.checkBoxIsSekretariat.AutoSize = true;
+      this.checkBoxIsSekretariat.Location = new System.Drawing.Point(6, 65);
+      this.checkBoxIsSekretariat.Name = "checkBoxIsSekretariat";
+      this.checkBoxIsSekretariat.Size = new System.Drawing.Size(77, 17);
+      this.checkBoxIsSekretariat.TabIndex = 4;
+      this.checkBoxIsSekretariat.Text = "Sekretariat";
+      this.checkBoxIsSekretariat.UseVisualStyleBackColor = true;
+      this.checkBoxIsSekretariat.CheckedChanged += new System.EventHandler(this.checkBoxIsSekretariat_CheckedChanged);
+      // 
+      // checkBoxIsSchulleitung
+      // 
+      this.checkBoxIsSchulleitung.AutoSize = true;
+      this.checkBoxIsSchulleitung.Location = new System.Drawing.Point(6, 42);
+      this.checkBoxIsSchulleitung.Name = "checkBoxIsSchulleitung";
+      this.checkBoxIsSchulleitung.Size = new System.Drawing.Size(84, 17);
+      this.checkBoxIsSchulleitung.TabIndex = 3;
+      this.checkBoxIsSchulleitung.Text = "Schulleitung";
+      this.checkBoxIsSchulleitung.UseVisualStyleBackColor = true;
+      this.checkBoxIsSchulleitung.CheckedChanged += new System.EventHandler(this.checkBoxIsSchulleitung_CheckedChanged);
       // 
       // comboBoxBerechtigungen
       // 
@@ -225,7 +225,7 @@
     private System.Windows.Forms.Label lblLehrer;
     private System.Windows.Forms.CheckBox checkBoxIsAdmin;
     private System.Windows.Forms.GroupBox groupBoxBerechtigungen;
-    private System.Windows.Forms.CheckBox checkBoxIsFpAAgrar;
+    private System.Windows.Forms.CheckBox checkBoxIsFpAUmwelt;
     private System.Windows.Forms.CheckBox checkBoxIsFpATechnik;
     private System.Windows.Forms.CheckBox checkBoxIsFpASozial;
     private System.Windows.Forms.CheckBox checkBoxIsFpAWirtschaft;

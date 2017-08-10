@@ -188,7 +188,7 @@ namespace diNo
     FpAWirtschaft = 5,
     FpASozial = 6,
     FpATechnik = 7,
-    FpAAgrar = 8
+    FpAUmwelt = 8
   }
 
 

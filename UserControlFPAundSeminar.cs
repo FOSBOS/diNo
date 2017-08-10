@@ -40,7 +40,7 @@ namespace diNo
         return true;
       }
 
-      return (Zugriff.Instance.lehrer.HatRolle(Rolle.FpAAgrar) && schueler.Zweig == Zweig.Agrar) ||
+      return (Zugriff.Instance.lehrer.HatRolle(Rolle.FpAUmwelt) && schueler.Zweig == Zweig.Umwelt) ||
         (Zugriff.Instance.lehrer.HatRolle(Rolle.FpASozial) && schueler.Zweig == Zweig.Sozial) ||
         (Zugriff.Instance.lehrer.HatRolle(Rolle.FpATechnik) && schueler.Zweig == Zweig.Technik) ||
         (Zugriff.Instance.lehrer.HatRolle(Rolle.FpAWirtschaft) && schueler.Zweig == Zweig.Wirtschaft);
@@ -49,29 +49,12 @@ namespace diNo
     public void Init()
     {
       pnlFPA.Enabled = IstFpaAenderbar();
-      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
+//      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf) immer füllen, ggf. leer
       {        
         var fpANoten = schueler.FPANoten;
-        textBoxFpABemerkung.Text = fpANoten.IsBemerkungNull() ? "" : fpANoten.Bemerkung;
-        cbFPAErfolg1Hj.SelectedIndex = fpANoten.IsErfolg1HjNull() ? 0 : fpANoten.Erfolg1Hj;
-        cbFPAErfolg.SelectedIndex = fpANoten.IsErfolgNull() ? 0 : fpANoten.Erfolg;
-        numPunkte.Value = fpANoten.IsPunkteNull() ? null : (decimal?)fpANoten.Punkte;
-        numPunkte1Hj.Value = fpANoten.IsPunkte1HjNull() ? null : (decimal?)fpANoten.Punkte1Hj;
-        numPunkte2Hj.Value = fpANoten.IsPunkte2HjNull() ? null : (decimal?)fpANoten.Punkte2Hj;
-        edStelle1Hj.Text = fpANoten.IsStelle1HjNull() ? "" : fpANoten.Stelle1Hj;
-        edStelle2Hj.Text = fpANoten.IsStelle2HjNull() ? "" : fpANoten.Stelle2Hj;
-      }
-      else
-      {
-        pnlFPA.Enabled = false;
-        textBoxFpABemerkung.Text = "";
-        cbFPAErfolg1Hj.SelectedIndex = 0;
-        cbFPAErfolg.SelectedIndex = 0;
-        numPunkte.Value = null;
-        numPunkte1Hj.Value = null;
-        numPunkte2Hj.Value = null;
-        edStelle1Hj.Text = "";
-        edStelle2Hj.Text = "";
+        FillFPAHj(fpANoten[0], numBetrieb1, numAnleitung1, numVertiefung11, numVertiefung21, numVertiefung1, numGesamt1, edStelle1, edBemerkung1);
+        FillFPAHj(fpANoten[1], numBetrieb2, numAnleitung2, numVertiefung12, numVertiefung22, numVertiefung2, numGesamt2, edStelle2, edBemerkung2);
+
       }
 
       pnlSeminar.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && 
@@ -82,7 +65,6 @@ namespace diNo
         numSeminarpunkte.Value = sem.IsGesamtnoteNull() ? null : (decimal?)sem.Gesamtnote;
         textBoxSeminarfachthemaKurz.Text = sem.IsThemaKurzNull() ? "" : sem.ThemaKurz;
         textBoxSeminarfachthemaLang.Text = sem.IsThemaLangNull() ? "" : sem.ThemaLang;
-
       }
       else
       {
@@ -92,21 +74,26 @@ namespace diNo
       }
     }
    
-    // gibt zu den FAP-Rohpunkten die zugehörige Erfolgsnote aus
-    private int FPAErfolgErmitteln(decimal? Punkte)
+    private void FillFPAHj(diNoDataSet.FpaRow r,NumericUpDownNullable betrieb, NumericUpDownNullable anleitung,
+      NumericUpDownNullable vertiefung1, NumericUpDownNullable vertiefung2, NumericUpDownNullable vertiefung, NumericUpDownNullable gesamt,
+      TextBox stelle, TextBox bemerkung)
     {
-      if (Punkte== null) return 0;
-      else if (Punkte>=28) return 1; // sehr gutem Erfolg
-      else if (Punkte>=23) return 2;
-      else if (Punkte>=14) return 3;
-      else return 4; // ohne Erfolg
+      betrieb.Value = r.IsBetriebNull() ? null : (byte?)r.Betrieb;
+      anleitung.Value = r.IsAnleitungNull() ? null : (byte?)r.Anleitung;
+      vertiefung.Value = r.IsVertiefungNull() ? null : (byte?)r.Vertiefung;
+      vertiefung1.Value = r.IsVertiefung1Null() ? null : (byte?)r.Vertiefung1;
+      vertiefung2.Value = r.IsVertiefung2Null() ? null : (byte?)r.Vertiefung2;
+      gesamt.Value = r.IsGesamtNull() ? null : (byte?)r.Gesamt;
+      stelle.Text = r.IsStelleNull() ? "" : r.Stelle;
+      bemerkung.Text = r.IsBemerkungNull() ? "" : r.Bemerkung;
     }
 
+    /*
     private void FPAGesamtnoteErmitteln()
     {
-      if (numPunkte1Hj.Value!=null && numPunkte2Hj.Value!=null)
+      if (numBetrieb1.Value!=null && numPunkte2Hj.Value!=null)
       {
-        numPunkte.Value = (decimal)System.Math.Ceiling(((double)(numPunkte1Hj.Value + numPunkte2Hj.Value))/2);
+        numPunkte.Value = (decimal)System.Math.Ceiling(((double)(numBetrieb1.Value + numPunkte2Hj.Value))/2);
         cbFPAErfolg.SelectedIndex = FPAErfolgErmitteln(numPunkte.Value);
       }
       else
@@ -118,7 +105,7 @@ namespace diNo
 
     private void numPunkte1Hj_Leave(object sender, System.EventArgs e)
     {
-      cbFPAErfolg1Hj.SelectedIndex = FPAErfolgErmitteln(numPunkte1Hj.Value);
+      cbFPAErfolg1Hj.SelectedIndex = FPAErfolgErmitteln(numBetrieb1.Value);
       FPAGesamtnoteErmitteln();
     }
 
@@ -126,18 +113,27 @@ namespace diNo
     {
       FPAGesamtnoteErmitteln();
     }
+    */
+
+    private void SaveFPAHj(diNoDataSet.FpaRow r, NumericUpDownNullable betrieb, NumericUpDownNullable anleitung,
+      NumericUpDownNullable vertiefung1, NumericUpDownNullable vertiefung2, NumericUpDownNullable vertiefung, NumericUpDownNullable gesamt,
+      TextBox stelle, TextBox bemerkung)
+    {
+      if (betrieb.Value == null) r.SetBetriebNull(); else r.Betrieb = (byte)betrieb.Value;
+      if (anleitung.Value == null) r.SetAnleitungNull(); else r.Anleitung = (byte)anleitung.Value;
+      if (vertiefung.Value == null) r.SetVertiefungNull(); else r.Vertiefung = (byte)vertiefung.Value;
+      if (vertiefung1.Value == null) r.SetVertiefung1Null(); else r.Vertiefung1 = (byte)vertiefung1.Value;
+      if (vertiefung2.Value == null) r.SetVertiefung2Null(); else r.Vertiefung2 = (byte)vertiefung2.Value;
+      if (gesamt.Value == null) r.SetGesamtNull(); else r.Gesamt = (byte)gesamt.Value;
+      if (stelle.Text == "") r.SetStelleNull(); else r.Stelle = stelle.Text;
+      if (bemerkung.Text == "") r.SetBemerkungNull(); else r.Bemerkung = bemerkung.Text;      
+    }
 
     private void btnSaveFPA_Click(object sender, System.EventArgs e)
     {
       var fpANoten = schueler.FPANoten;
-      if (textBoxFpABemerkung.Text == "") fpANoten.SetBemerkungNull(); else fpANoten.Bemerkung = textBoxFpABemerkung.Text;
-      if (cbFPAErfolg1Hj.SelectedIndex == 0) fpANoten.SetErfolg1HjNull(); else fpANoten.Erfolg1Hj = cbFPAErfolg1Hj.SelectedIndex;
-      if (cbFPAErfolg.SelectedIndex == 0) fpANoten.SetErfolgNull(); else fpANoten.Erfolg = cbFPAErfolg.SelectedIndex;
-      if (numPunkte.Value == null) fpANoten.SetPunkteNull(); else fpANoten.Punkte = (int)numPunkte.Value;
-      if (numPunkte1Hj.Value == null) fpANoten.SetPunkte1HjNull(); else fpANoten.Punkte1Hj = (int)numPunkte1Hj.Value;
-      if (numPunkte2Hj.Value == null) fpANoten.SetPunkte2HjNull(); else fpANoten.Punkte2Hj = (int)numPunkte2Hj.Value;
-      if (edStelle1Hj.Text == "") fpANoten.SetStelle1HjNull(); else fpANoten.Stelle1Hj = edStelle1Hj.Text;
-      if (edStelle2Hj.Text == "") fpANoten.SetStelle2HjNull(); else fpANoten.Stelle2Hj = edStelle2Hj.Text;
+      SaveFPAHj(fpANoten[0], numBetrieb1, numAnleitung1, numVertiefung11, numVertiefung21, numVertiefung1, numGesamt1, edStelle1, edBemerkung1);
+      SaveFPAHj(fpANoten[1], numBetrieb2, numAnleitung2, numVertiefung12, numVertiefung22, numVertiefung2, numGesamt2, edStelle2, edBemerkung2);
       schueler.Save();
     }
 

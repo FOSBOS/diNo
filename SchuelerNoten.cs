@@ -616,9 +616,10 @@ namespace diNo
         }
       }
 
-      public FachSchuelerNotenDruckKurz(diNoDataSet.FpANotenRow f)
+      public FachSchuelerNotenDruckKurz(diNoDataSet.FpaDataTable f)
       {
         fachBez = "Fachpraktische Ausbildung";
+/*
         if (!f.IsPunkte1HjNull())
         {
           N1 = f.Punkte1Hj.ToString() + " (" + ErfolgText(f.Erfolg1Hj) + ")";          
@@ -627,6 +628,7 @@ namespace diNo
         {
           N2 = f.Punkte2Hj.ToString() + "\nSchnitt: " + f.Punkte.ToString() + " ("+ ErfolgText(f.Erfolg) + ")";
         }
+*/
       }
 
       public FachSchuelerNotenDruckKurz(string fach, int note)

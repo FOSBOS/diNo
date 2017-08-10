@@ -28,7 +28,7 @@ namespace diNo
     Sozial = 1,
     Technik = 2,
     Wirtschaft = 3,
-    Agrar = 4,
+    Umwelt = 4,
     ALLE = 15
   }
 
@@ -115,29 +115,25 @@ namespace diNo
         string letztesZeichen = bez.Substring(bez.Length-1,1);
         if (bez.Contains("_")) return CharToZweig(letztesZeichen); // Teilklasse
 
-        // Problem: Nach Zweig A kann man nicht so einfach suchen, weil das A auch hinten in der Klassenbezeichnung vorkommt!
-        // Unterschied zwischen B12Ta und B12TA als Mischklasse?
-        if (letztesZeichen=="a") bez = bez.Substring(0,bez.Length-1);
-
         // TODO: eleganter über Regex lösen...
-        if ((bez.Contains("W") && !bez.Contains("S") && !bez.Contains("A") && !bez.Contains("T")) || bez.EndsWith("_W"))
+        if ((bez.Contains("W") && !bez.Contains("S") && !bez.Contains("U") && !bez.Contains("T")) || bez.EndsWith("_W"))
         {
           return Zweig.Wirtschaft;
         }
 
-        if ((bez.Contains("S") && !bez.Contains("W") && !bez.Contains("A") && !bez.Contains("T")) || bez.EndsWith("_S"))
+        if ((bez.Contains("S") && !bez.Contains("W") && !bez.Contains("U") && !bez.Contains("T")) || bez.EndsWith("_S"))
         {
           return Zweig.Sozial;
         }
 
-        if ((bez.Contains("T") && !bez.Contains("S") && !bez.Contains("A") && !bez.Contains("W")) || bez.EndsWith("_T"))
+        if ((bez.Contains("T") && !bez.Contains("S") && !bez.Contains("U") && !bez.Contains("W")) || bez.EndsWith("_T"))
         {
           return Zweig.Technik;
         }
 
-        if ((bez.Contains("A") && !bez.Contains("S") && !bez.Contains("T") && !bez.Contains("W")) || bez.EndsWith("_A"))
+        if ((bez.Contains("U") && !bez.Contains("S") && !bez.Contains("T") && !bez.Contains("W")) || bez.EndsWith("_U"))
         {
-          return Zweig.Agrar;
+          return Zweig.Umwelt;
         }
 
         //hier stehen nur noch die Klassen, deren Zweig nicht eindeutig ist, z. B. Vorkurs BOS oder Mischklassen
@@ -152,11 +148,16 @@ namespace diNo
         case "S" : return Zweig.Sozial;
         case "T" : return Zweig.Technik;
         case "W" : return Zweig.Wirtschaft;
-        case "A" : return Zweig.Agrar;
+        case "A" : return Zweig.Umwelt;
         default: return Zweig.None; 
       }
     }
-
+           
+    public bool AlteFOBOSO()
+    {
+        return (Jahrgangsstufe >= Jahrgangsstufe.Zwoelf);
+    }
+   
     public int KlassenleiterId
     {
       get { return Data.IsKlassenleiterIdNull() ? 0 : Data.KlassenleiterId;  }

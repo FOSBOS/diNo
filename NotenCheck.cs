@@ -132,22 +132,24 @@ namespace diNo
           return;
 
         var fpANoten = schueler.FPANoten;
-        if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
-        {
-            if (fpANoten.IsErfolg1HjNull() || fpANoten.IsPunkte1HjNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
-            else if (fpANoten.Erfolg1Hj == 4)
-            {
-                contr.Add(null, "Die fachpraktische Ausbildung wurde bisher ohne Erfolg durchlaufen.");
-            }
-        }            
-        else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
-        {
-            if (fpANoten.IsPunkte2HjNull() || fpANoten.IsErfolgNull() || fpANoten.IsPunkteNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
-            else if (fpANoten.Erfolg == 4)
-            {
-                contr.Add(null, "Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.");
-            }
-        }           
+      /*
+              if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+              {
+                  if (fpANoten.IsErfolg1HjNull() || fpANoten.IsPunkte1HjNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
+                  else if (fpANoten.Erfolg1Hj == 4)
+                  {
+                      contr.Add(null, "Die fachpraktische Ausbildung wurde bisher ohne Erfolg durchlaufen.");
+                  }
+              }            
+              else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
+              {
+                  if (fpANoten.IsPunkte2HjNull() || fpANoten.IsErfolgNull() || fpANoten.IsPunkteNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
+                  else if (fpANoten.Erfolg == 4)
+                  {
+                      contr.Add(null, "Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.");
+                  }
+              }           
+      */
     }
   }
 

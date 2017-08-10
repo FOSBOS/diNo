@@ -256,7 +256,7 @@ namespace diNo.OmnisDB
 
 
     private static fpaNote GetFpaNote(Zeitpunkt zeitpunkt, Schueler schueler)
-    {
+    {/*
       if (zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS && !schueler.FPANoten.IsErfolg1HjNull())
       {
         //das ist dieselbe Zahlencodierung ist wie in der DB (0=nicht gesetzt, 1 = sehr gut, ... 4 = ohne Erfolg)
@@ -266,7 +266,7 @@ namespace diNo.OmnisDB
       {
         return (fpaNote)schueler.FPANoten.Erfolg;
       }
-
+*/
       return fpaNote.Entfaellt;
     }
 

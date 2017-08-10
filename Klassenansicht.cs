@@ -10,11 +10,14 @@ namespace diNo
     private Schueler schueler=null;
     private SchuelerverwaltungController verwaltungController;
     private Brief frmBrief=null;
+    private bool zeigeAlteFOSBOSO = false;
 
     public Klassenansicht()
     {
       InitializeComponent();
       this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
+
+      tabControl1.Controls.Remove(tabPageNoten); // Start mit neuer FOBOSO
 
       // Verwaltungsreiter
       if (Zugriff.Instance.HatVerwaltungsrechte) // hier wird zum ersten Mal Zugriff instanziiert.
@@ -30,10 +33,6 @@ namespace diNo
         tabControl1.Controls.Remove(tabPageKurszuordnungen); // man kann die Seite nicht unsichtbar machen, nur entfernen
         tabControl1.Controls.Remove(tabPageAdministration);
       }
-      //NEU:
-      tabControl1.Controls.Remove(tabPageHjLeistung);
-      tabControl1.Controls.Remove(tabPageNotenbogen);
-
     }
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -49,11 +48,31 @@ namespace diNo
         {
           this.userControlSchueleransicht1.Schueler = schueler;
           this.userControlVorkommnisse1.Schueler = schueler;
-          this.notenbogen1.Schueler = schueler;
           this.userControlFPAundSeminar1.Schueler = schueler;
-      // NEU:
-      //userControlNotenbogen1.Schueler = schueler;
-      //userControlHjLeistung1.Schueler = schueler;
+          
+          if (schueler.AlteFOBOSO())
+          {
+            if (!zeigeAlteFOSBOSO)
+            {
+              tabControl1.Controls.Remove(tabPageHjLeistung);
+              tabControl1.Controls.Remove(tabPageNotenbogen);
+              tabControl1.TabPages.Insert(1,tabPageNoten);
+              zeigeAlteFOSBOSO = true;
+            }
+            notenbogen1.Schueler = schueler;
+          }
+          else
+          {
+            if (zeigeAlteFOSBOSO)
+            {
+              tabControl1.Controls.Remove(tabPageNoten);
+              tabControl1.TabPages.Insert(1, tabPageNotenbogen);
+              tabControl1.TabPages.Insert(2, tabPageHjLeistung);
+              zeigeAlteFOSBOSO = false;
+            }
+            userControlNotenbogen1.Schueler = schueler;
+            userControlHjLeistung1.Schueler = schueler;
+          }
 
           nameLabel.Text = schueler.NameVorname;
           klasseLabel.Text = schueler.KlassenBezeichnung;

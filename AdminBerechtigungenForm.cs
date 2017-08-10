@@ -50,7 +50,7 @@ namespace diNo
         checkBoxIsFpAWirtschaft.Checked = selectedLehrer.HatRolle(Rolle.FpAWirtschaft);
         checkBoxIsFpASozial.Checked = selectedLehrer.HatRolle(Rolle.FpASozial);
         checkBoxIsFpATechnik.Checked = selectedLehrer.HatRolle(Rolle.FpATechnik);
-        checkBoxIsFpAAgrar.Checked = selectedLehrer.HatRolle(Rolle.FpAAgrar);
+        checkBoxIsFpAUmwelt.Checked = selectedLehrer.HatRolle(Rolle.FpAUmwelt);
       }
       else
       {
@@ -61,7 +61,7 @@ namespace diNo
         checkBoxIsFpAWirtschaft.Checked = false;
         checkBoxIsFpASozial.Checked = false;
         checkBoxIsFpATechnik.Checked = false;
-        checkBoxIsFpAAgrar.Checked = false;
+        checkBoxIsFpAUmwelt.Checked = false;
       }
     }
 
@@ -117,9 +117,9 @@ namespace diNo
       SetBerechtigung(Rolle.FpATechnik, checkBoxIsFpATechnik.Checked);
     }
 
-    private void checkBoxIsFpAAgrar_CheckedChanged(object sender, EventArgs e)
+    private void checkBoxIsFpAUmwelt_CheckedChanged(object sender, EventArgs e)
     {
-      SetBerechtigung(Rolle.FpAAgrar, checkBoxIsFpAAgrar.Checked);
+      SetBerechtigung(Rolle.FpAUmwelt, checkBoxIsFpAUmwelt.Checked);
     }
 
     private void comboBoxBerechtigungen_SelectedValueChanged(object sender, EventArgs e)
