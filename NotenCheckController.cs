@@ -56,7 +56,8 @@ namespace diNo
               alleNotenchecks.Add(new FachreferatChecker(this));
               alleNotenchecks.Add(new SeminarfachChecker(this));
             }
-            if (azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
+            if ((azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
+              && (modus == NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse))
               alleNotenchecks.Add(new FpABestandenChecker(this));
             if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA)  && 
               (modus==NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse || modus == NotenCheckModus.VorkommnisseErzeugen))

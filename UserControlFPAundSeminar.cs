@@ -49,13 +49,8 @@ namespace diNo
     public void Init()
     {
       pnlFPA.Enabled = IstFpaAenderbar();
-//      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf) immer füllen, ggf. leer
-      {        
-        var fpANoten = schueler.FPANoten;
-        FillFPAHj(fpANoten[0], numBetrieb1, numAnleitung1, numVertiefung11, numVertiefung21, numVertiefung1, numGesamt1, edStelle1, edBemerkung1);
-        FillFPAHj(fpANoten[1], numBetrieb2, numAnleitung2, numVertiefung12, numVertiefung22, numVertiefung2, numGesamt2, edStelle2, edBemerkung2);
-
-      }
+      EnableFPA();
+      FillFPA();
 
       pnlSeminar.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && 
         (Zugriff.Instance.lehrer.HatRolle(Rolle.Seminarfach) || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin));        
@@ -73,7 +68,15 @@ namespace diNo
         textBoxSeminarfachthemaLang.Text = "";
       }
     }
-   
+
+
+    private void FillFPA()
+    {
+      var fpANoten = schueler.FPANoten;
+      FillFPAHj(fpANoten[0], numBetrieb1, numAnleitung1, numVertiefung11, numVertiefung21, numVertiefung1, numGesamt1, edStelle1, edBemerkung1);
+      FillFPAHj(fpANoten[1], numBetrieb2, numAnleitung2, numVertiefung12, numVertiefung22, numVertiefung2, numGesamt2, edStelle2, edBemerkung2);
+    }
+
     private void FillFPAHj(diNoDataSet.FpaRow r,NumericUpDownNullable betrieb, NumericUpDownNullable anleitung,
       NumericUpDownNullable vertiefung1, NumericUpDownNullable vertiefung2, NumericUpDownNullable vertiefung, NumericUpDownNullable gesamt,
       TextBox stelle, TextBox bemerkung)
@@ -86,6 +89,47 @@ namespace diNo
       gesamt.Value = r.IsGesamtNull() ? null : (byte?)r.Gesamt;
       stelle.Text = r.IsStelleNull() ? "" : r.Stelle;
       bemerkung.Text = r.IsBemerkungNull() ? "" : r.Bemerkung;
+    }
+
+    private void EnableFPA()
+    {
+      if (pnlFPA.Enabled)
+      {
+        EnableFPAHj(numVertiefung11, numVertiefung21, numVertiefung1, lbVertiefung11, lbVertiefung21, lbVertiefung1);
+        EnableFPAHj(numVertiefung12, numVertiefung22, numVertiefung2, lbVertiefung12, lbVertiefung22, lbVertiefung2);
+      }
+    }
+
+    private void EnableFPAHj(NumericUpDownNullable vertiefung1, NumericUpDownNullable vertiefung2, 
+          NumericUpDownNullable vertiefung, Label lbV1, Label lbV2, Label lbV)
+    {
+      // S, U mit 2 Vertiefungsfächern
+      bool v12 = schueler.Zweig == Zweig.Sozial || schueler.Zweig == Zweig.Umwelt;
+
+      vertiefung1.Enabled = v12;
+      vertiefung2.Enabled = v12;
+      vertiefung.Enabled = !v12;
+      if (schueler.Zweig == Zweig.Sozial)
+      {
+        lbV1.Text = "Kunst (2/3)";
+        lbV2.Text = "Methoden (1/3)";
+        lbV.Text = "Vertiefung gesamt (25%)";
+      }
+      else if (schueler.Zweig == Zweig.Umwelt)
+      {
+        lbV1.Text = "Boden (1/2)";
+        lbV2.Text = "Ernährung (1/2)";
+        lbV.Text = "Vertiefung gesamt (25%)";
+      }
+      else       
+      {
+        lbV1.Text = "Vertiefung 1";
+        lbV2.Text = "Vertiefung 2";
+        if (schueler.Zweig == Zweig.Technik)
+          lbV.Text = "Technisches Zeichnen (25%)";
+        else
+          lbV.Text = "Wirtschaftsinformatik (25%)";
+      }
     }
 
     /*
@@ -134,7 +178,9 @@ namespace diNo
       var fpANoten = schueler.FPANoten;
       SaveFPAHj(fpANoten[0], numBetrieb1, numAnleitung1, numVertiefung11, numVertiefung21, numVertiefung1, numGesamt1, edStelle1, edBemerkung1);
       SaveFPAHj(fpANoten[1], numBetrieb2, numAnleitung2, numVertiefung12, numVertiefung22, numVertiefung2, numGesamt2, edStelle2, edBemerkung2);
+      schueler.calcFPA();
       schueler.Save();
+      FillFPA();
     }
 
     private void btnSaveSeminar_Click(object sender, System.EventArgs e)

@@ -128,28 +128,26 @@ namespace diNo
     /// <param name="schueler">Der Schüler.</param>
     public override void Check(Schueler schueler)
     {                
-        if (contr.modus == NotenCheckModus.EigeneNotenVollstaendigkeit && schueler.BetreuerId != Zugriff.Instance.lehrer.Id)
-          return;
+      var fpANoten = schueler.FPANoten;
+      var fpa1 = fpANoten[0];
+      var fpa2 = fpANoten[1];
 
-        var fpANoten = schueler.FPANoten;
-      /*
-              if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
-              {
-                  if (fpANoten.IsErfolg1HjNull() || fpANoten.IsPunkte1HjNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
-                  else if (fpANoten.Erfolg1Hj == 4)
-                  {
-                      contr.Add(null, "Die fachpraktische Ausbildung wurde bisher ohne Erfolg durchlaufen.");
-                  }
-              }            
-              else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
-              {
-                  if (fpANoten.IsPunkte2HjNull() || fpANoten.IsErfolgNull() || fpANoten.IsPunkteNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
-                  else if (fpANoten.Erfolg == 4)
-                  {
-                      contr.Add(null, "Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.");
-                  }
-              }           
-      */
+      if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+      {
+          if (fpa1.IsGesamtNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
+          else if (fpa1.Gesamt < 4)
+          {
+              contr.Add(null, "Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.");
+          }
+      }            
+      else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
+      {
+          if (fpa1.IsGesamtNull() || fpa2.IsGesamtNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
+          else if (fpa1.Gesamt < 4 || fpa2.Gesamt < 4 || fpa1.Gesamt+fpa2.Gesamt < 10)
+          {
+              contr.Add(null, "Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.");
+          }
+      }           
     }
   }
 

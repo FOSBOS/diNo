@@ -214,6 +214,43 @@ namespace diNo
       }
     }
 
+    // Berechnet die FPA-Gesamtpunktzahl aus den Teilnoten
+    public void calcFPA()
+    {
+      foreach (diNoDataSet.FpaRow fpa in FPANoten)
+      {
+        // Vertiefungsnote berechnen
+        if (!fpa.IsVertiefung1Null() && !fpa.IsVertiefung2Null())
+        {
+          if (Zweig == Zweig.Sozial)
+          {
+            fpa.Vertiefung = (byte)Math.Round((2 * fpa.Vertiefung1 + fpa.Vertiefung2) / 3.0);
+          }
+          else if (Zweig == Zweig.Umwelt)
+          {
+            fpa.Vertiefung = (byte)Math.Round((fpa.Vertiefung1 + fpa.Vertiefung2) / 2.0);
+          }
+        }
+
+        // beim Betrieb werden nur mittlere Punktwerte vergeben:
+        
+        if (!fpa.IsBetriebNull() && fpa.Betrieb>0 && (fpa.Betrieb + 1) % 3 != 0)
+        {
+          if ((fpa.Betrieb + 1) % 3 == 1)
+            fpa.Betrieb--;
+          else
+            fpa.Betrieb++;
+        }
+        if (!fpa.IsBetriebNull() && !fpa.IsAnleitungNull() && !fpa.IsVertiefungNull())
+        {
+          if (fpa.Betrieb == 0 || fpa.Anleitung == 0 || fpa.Vertiefung == 0)
+            fpa.Gesamt = 0;
+          else
+            fpa.Gesamt = (byte)Math.Round((2*fpa.Betrieb + fpa.Anleitung + fpa.Vertiefung) / 4.0);
+        }
+      }
+    }
+
     public diNoDataSet.SeminarfachnoteRow Seminarfachnote
     {
       get
