@@ -1,7 +1,21 @@
 ﻿todos für diNo
 --------------
-- Excelvorlage: JF/Zeugnis auch berechnen, wenn SA-Schnitt oder mdl-Schnitt noch nicht vorliegt.
+
 -    Berechnung Nachtermin (z.B. 19/38 BE=6 bei Haupttermin 39)
 - Soll HjLeistung der 11. Klasse gleich in 11/1 bzw. 11/2 also mit Schlüssel 5 und 6 gespeichert werden? Wie sieht es bei der Vorklasse aus (dort wird nichts übernommen)?
-
+- Import/Export neuer FPA-Noten fehlt. Noch zu klären: Brauchen wir da die Teilnoten auch oder reicht Gesamtbewertung?
+- Beim Import von Noten darf nur das aktuelle Halbjahr von Löschungen betroffen sein. Ändern sich "alte" Noten sollte eine Warnung erscheinen...
+- Erzeugen der Excel-Files für 11te Klassen und Vorklassen neue Version, für 12te und 13te Klassen alte Version verwenden
+- neue Notendatei testen
+- Import der neuen Notendatei testen
+- WinSV:
+  * Felder, die nicht mit Noten gefüllt werden sollten entwertet werden "-" statt ""
+  * Abschlussprüfung ohne Erfolg sollte mit O vermerkt werden
+  * Bei Durchgefallenen dürfen die Prüfungsschnitte usw. nicht berechnet werden -> leer lassen
+  * Beim "Vorrücken" gibt es die Kürzel "B" oder "S" - am Jahresende gibt es das aber nicht mehr
+  * BOS Vorrücken von 12 in 13 wird nicht gefüllt. "N" nicht erhalten, "-" darf vorrücken. Fraglich: welches Feld ist das überhaupt?
+  * Reverse Engineering: Vielleicht findet man ja doch noch raus in welche Spalte die Franz-Noten müssen. Oder besser auf neue Version der WinSV warten?
+  * Bei G/Sk usw. muss auch ein Jahresfortgang gefüllt werden, es reicht aber ein plausibler x,00 Wert
+- ganz großes Todo: neue WinSV mit Halbjahresnoten irgendwie anbinden?
+- Testen: Wird eine Note mit Gewichtung 0,5 von diNo korrekt eingelesen und irgendwie im Notenbogen gekennzeichnet?
 - Statistiken ?
