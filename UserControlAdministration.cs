@@ -54,12 +54,6 @@ namespace diNo
       return obj;
     }
 
-    private void btnFrm1_Click(object sender, EventArgs e)
-    {
-      Form1 frm = new Form1();
-      frm.Show();
-    }
-
     private void btnAbiergebnisse_Click(object sender, EventArgs e)
     {
       var obj = getSelectedObjects();
@@ -157,6 +151,29 @@ namespace diNo
       konstanten.aktZeitpunkt = comboBoxZeitpunkt.SelectedIndex+1;
       konstanten.BackupPfad = edBackupPfad.Text;
       (new GlobaleKonstantenTableAdapter()).Update(konstanten);
-    }    
+    }
+
+    private void btnCreateExcelsClick(object sender, EventArgs e)
+    {
+      new ErzeugeAlleExcelDateien(this.onStatusChange);
+    }
+
+    private void btnSendMail_Click(object sender, EventArgs e)
+    {
+      new SendExcelMails(this.onStatusChange);
+    }
+
+    private void btnNotenWinSV_Click(object sender, EventArgs e)
+    {
+      Zeitpunkt reason = (Zeitpunkt)Zugriff.Instance.aktZeitpunkt;
+      string fileName = "C:\\projects\\diNo\\OmnisDB\\dzeugnis.txt";
+      string fileNameNeu = "C:\\projects\\diNo\\OmnisDB\\dzeugnisNEU.txt";
+      OmnisDB.DZeugnisFileController controller = new OmnisDB.DZeugnisFileController(fileName, fileNameNeu, reason);
+    }
+
+    void onStatusChange(Object sender, StatusChangedEventArgs e)
+    {
+      this.lblStatus.Text = e.Meldung;
+    }
   }
 }

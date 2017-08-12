@@ -34,8 +34,8 @@
       this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.btnAbiergebnisse = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
+      this.btnCreateExcels = new System.Windows.Forms.Button();
       this.exportNoten = new System.Windows.Forms.Button();
-      this.btnFrm1 = new System.Windows.Forms.Button();
       this.groupBoxImport = new System.Windows.Forms.GroupBox();
       this.btnImportKlassenleiter = new System.Windows.Forms.Button();
       this.btnImportSchueler = new System.Windows.Forms.Button();
@@ -45,6 +45,7 @@
       this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.btnKurseLehrer = new System.Windows.Forms.Button();
       this.groupBoxEinstellungen = new System.Windows.Forms.GroupBox();
+      this.edBackupPfad = new System.Windows.Forms.TextBox();
       this.lbBackupPfad = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.comboBoxZeitpunkt = new System.Windows.Forms.ComboBox();
@@ -52,7 +53,9 @@
       this.edSchuljahr = new System.Windows.Forms.TextBox();
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
-      this.edBackupPfad = new System.Windows.Forms.TextBox();
+      this.lblStatus = new System.Windows.Forms.Label();
+      this.btnSendExcelFiles = new System.Windows.Forms.Button();
+      this.btnNotenNachWinSV = new System.Windows.Forms.Button();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
@@ -113,14 +116,26 @@
       // 
       // groupBoxExport
       // 
+      this.groupBoxExport.Controls.Add(this.btnNotenNachWinSV);
+      this.groupBoxExport.Controls.Add(this.btnSendExcelFiles);
+      this.groupBoxExport.Controls.Add(this.btnCreateExcels);
       this.groupBoxExport.Controls.Add(this.exportNoten);
-      this.groupBoxExport.Controls.Add(this.btnFrm1);
       this.groupBoxExport.Location = new System.Drawing.Point(287, 267);
       this.groupBoxExport.Name = "groupBoxExport";
       this.groupBoxExport.Size = new System.Drawing.Size(250, 226);
       this.groupBoxExport.TabIndex = 4;
       this.groupBoxExport.TabStop = false;
       this.groupBoxExport.Text = "Export";
+      // 
+      // btnCreateExcels
+      // 
+      this.btnCreateExcels.Location = new System.Drawing.Point(6, 48);
+      this.btnCreateExcels.Name = "btnCreateExcels";
+      this.btnCreateExcels.Size = new System.Drawing.Size(182, 23);
+      this.btnCreateExcels.TabIndex = 3;
+      this.btnCreateExcels.Text = "Excel-Dateien erstellen";
+      this.btnCreateExcels.UseVisualStyleBackColor = true;
+      this.btnCreateExcels.Click += new System.EventHandler(this.btnCreateExcelsClick);
       // 
       // exportNoten
       // 
@@ -131,16 +146,6 @@
       this.exportNoten.Text = "Noten und FpA nach csv";
       this.exportNoten.UseVisualStyleBackColor = true;
       this.exportNoten.Click += new System.EventHandler(this.exportNoten_Click);
-      // 
-      // btnFrm1
-      // 
-      this.btnFrm1.Location = new System.Drawing.Point(139, 69);
-      this.btnFrm1.Name = "btnFrm1";
-      this.btnFrm1.Size = new System.Drawing.Size(105, 42);
-      this.btnFrm1.TabIndex = 1;
-      this.btnFrm1.Text = "Die berühmte Form1 aufrufen";
-      this.btnFrm1.UseVisualStyleBackColor = true;
-      this.btnFrm1.Click += new System.EventHandler(this.btnFrm1_Click);
       // 
       // groupBoxImport
       // 
@@ -243,6 +248,13 @@
       this.groupBoxEinstellungen.TabStop = false;
       this.groupBoxEinstellungen.Text = "Globale Einstellungen";
       // 
+      // edBackupPfad
+      // 
+      this.edBackupPfad.Location = new System.Drawing.Point(16, 158);
+      this.edBackupPfad.Name = "edBackupPfad";
+      this.edBackupPfad.Size = new System.Drawing.Size(217, 20);
+      this.edBackupPfad.TabIndex = 17;
+      // 
       // lbBackupPfad
       // 
       this.lbBackupPfad.AutoSize = true;
@@ -314,17 +326,40 @@
       this.chkSperre.Text = "Notenschluss (Abgabesperre)";
       this.chkSperre.UseVisualStyleBackColor = true;
       // 
-      // edBackupPfad
+      // lblStatus
       // 
-      this.edBackupPfad.Location = new System.Drawing.Point(16, 158);
-      this.edBackupPfad.Name = "edBackupPfad";
-      this.edBackupPfad.Size = new System.Drawing.Size(217, 20);
-      this.edBackupPfad.TabIndex = 17;
+      this.lblStatus.AutoSize = true;
+      this.lblStatus.Location = new System.Drawing.Point(16, 497);
+      this.lblStatus.Name = "lblStatus";
+      this.lblStatus.Size = new System.Drawing.Size(77, 13);
+      this.lblStatus.TabIndex = 7;
+      this.lblStatus.Text = "Statusmeldung";
+      // 
+      // btnSendExcelFiles
+      // 
+      this.btnSendExcelFiles.Location = new System.Drawing.Point(6, 77);
+      this.btnSendExcelFiles.Name = "btnSendExcelFiles";
+      this.btnSendExcelFiles.Size = new System.Drawing.Size(182, 23);
+      this.btnSendExcelFiles.TabIndex = 4;
+      this.btnSendExcelFiles.Text = "Excel-Dateien versenden";
+      this.btnSendExcelFiles.UseVisualStyleBackColor = true;
+      this.btnSendExcelFiles.Click += new System.EventHandler(this.btnSendMail_Click);
+      // 
+      // btnNotenNachWinSV
+      // 
+      this.btnNotenNachWinSV.Location = new System.Drawing.Point(6, 106);
+      this.btnNotenNachWinSV.Name = "btnNotenNachWinSV";
+      this.btnNotenNachWinSV.Size = new System.Drawing.Size(182, 23);
+      this.btnNotenNachWinSV.TabIndex = 5;
+      this.btnNotenNachWinSV.Text = "Noten an WinSV";
+      this.btnNotenNachWinSV.UseVisualStyleBackColor = true;
+      this.btnNotenNachWinSV.Click += new System.EventHandler(this.btnNotenWinSV_Click);
       // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.lblStatus);
       this.Controls.Add(this.groupBoxEinstellungen);
       this.Controls.Add(this.groupBoxBerechtigungen);
       this.Controls.Add(this.groupBoxExport);
@@ -340,6 +375,7 @@
       this.groupBoxEinstellungen.ResumeLayout(false);
       this.groupBoxEinstellungen.PerformLayout();
       this.ResumeLayout(false);
+      this.PerformLayout();
 
     }
 
@@ -348,7 +384,6 @@
     private System.Windows.Forms.GroupBox groupBoxAnalyse;
     private System.Windows.Forms.GroupBox groupBoxDrucken;
     private System.Windows.Forms.GroupBox groupBoxExport;
-    private System.Windows.Forms.Button btnFrm1;
     private System.Windows.Forms.GroupBox groupBoxImport;
     private System.Windows.Forms.Button btnAbiergebnisse;
     private System.Windows.Forms.Button exportNoten;
@@ -370,5 +405,9 @@
     private System.Windows.Forms.ComboBox comboBoxZeitpunkt;
     private System.Windows.Forms.Label lbBackupPfad;
     private System.Windows.Forms.TextBox edBackupPfad;
+    private System.Windows.Forms.Button btnCreateExcels;
+    private System.Windows.Forms.Label lblStatus;
+    private System.Windows.Forms.Button btnSendExcelFiles;
+    private System.Windows.Forms.Button btnNotenNachWinSV;
   }
 }

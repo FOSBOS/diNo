@@ -81,16 +81,20 @@ namespace diNo.OmnisDB
                 if (zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != "" && zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != jahresfortgang)
                 {
                   string faecherKuerzel = faecher.SucheFach(faecherspiegel, i, schueler.getKlasse.Schulart); // nur zur Anzeige der Warnung
-                  log.Warn("Der Jahresfortgang in einem Fach steht schon in der Schulverwaltung und stimmt nicht mit diNo überein: WinSV:" + zeile[Konstanten.jahresfortgangPflichtfach1Col + i] + "; diNo :" + jahresfortgang + " Fach: "+ faecherKuerzel + " Schüler: "+schueler.NameVorname);
+                  log.Warn("Der Jahresfortgang in einem Fach steht schon in der Schulverwaltung und stimmt nicht mit diNo überein: WinSV:" + zeile[Konstanten.jahresfortgangPflichtfach1Col + i] + "; diNo :" + jahresfortgang + " Fach: " + faecherKuerzel + " Schüler: " + schueler.NameVorname);
                 }
                 else
                 {
                   zeile[Konstanten.jahresfortgangPflichtfach1Col + i] = jahresfortgang;
                 }
 
-                zeile[Konstanten.APschriftlichPflichtfach1Col + i] = faecher.FindeAPSchriftlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
-                zeile[Konstanten.APmuendlichPflichtfach1Col + i] = faecher.FindeAPMuendlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
-                zeile[Konstanten.gesamtNoteMitAPGanzzahlig1Col + i] = faecher.GetFachNoteString(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+                if (GetBestanden(zeitpunkt, schueler) != AbschlusspruefungBestanden.NichtBestanden)
+                {
+                  // Fülle die Prüfungsnoten nur aus, wenn der Schüler auch bestanden hat (ansonsten nur Jahreszeugnis, keine AP-Noten)
+                  zeile[Konstanten.APschriftlichPflichtfach1Col + i] = faecher.FindeAPSchriftlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+                  zeile[Konstanten.APmuendlichPflichtfach1Col + i] = faecher.FindeAPMuendlichNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+                  zeile[Konstanten.gesamtNoteMitAPGanzzahlig1Col + i] = faecher.GetFachNoteString(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+                }
               }
             }
 
@@ -176,18 +180,19 @@ namespace diNo.OmnisDB
         fach = "F-Wi";
       }
 
-      var wahlpflichtfach = schueler.getNoten.FindeFach(fach, false);
-      if (wahlpflichtfach != null)
+      // falls in der WinSV schon eine Note eingetragen wurde oder das Fach entwertet wurde, z. B. für Latein o. Ä. darf diese nicht überschrieben werden!
+      if (zeile[noteCol] != "" && zeile[noteCol] != "-")
       {
-        // falls in der WinSV schon eine Note eingetragen wurde, z. B. für Latein o. Ä. darf diese nicht überschrieben werden!
-        if (zeile[noteCol] != "")
+        var wahlpflichtfach = schueler.getNoten.FindeFach(fach, false);
+        if (wahlpflichtfach != null)
         {
           zeile[noteCol] = faecher.GetNotenString(wahlpflichtfach, zeitpunkt);
         }
-      }
-      else
-      {
-        log.Warn("Für den Schüler "+schueler.NameVorname+" konnte das Wahlpflichtfach "+fach+" nicht gefunden werden.");
+        else
+        {
+          log.Warn("Für den Schüler " + schueler.NameVorname + " konnte das Wahlpflichtfach " + fach + " nicht gefunden werden.");
+          zeile[noteCol] = "-"; // laut Sekratariat lieber entwerten als leer lassen
+        }
       }
     }
 

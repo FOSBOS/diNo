@@ -91,7 +91,19 @@ namespace diNo
       BerechneteNoteTableAdapter bta = new BerechneteNoteTableAdapter();
       bta.DeleteByKursId(kurs.Id);
 
-      //TODO: auch Halbjahresleistungen löschen? Evtl. blöd weg. EINBRINGEN - Kennzeichen?
+      HjLeistungTableAdapter hja = new HjLeistungTableAdapter();
+      hja.DeleteByFachAndHalbjahr(kurs.getFach.Id, (byte)GetAktuellesHalbjahr());
+    }
+
+    protected HjArt GetAktuellesHalbjahr()
+    {
+      switch ((Zeitpunkt)Zugriff.Instance.aktZeitpunkt)
+      {
+        case Zeitpunkt.HalbjahrUndProbezeitFOS: return HjArt.Hj1;
+        case Zeitpunkt.ProbezeitBOS: return HjArt.Hj1;
+      }
+      // alle anderen Zeitpunkte gehören zum zweiten Halbjahr
+      return HjArt.Hj2;
     }
   }
 
@@ -161,36 +173,51 @@ namespace diNo
     {
       int i = 4;
       int indexAP = CellConstant.APZeileErsterSchueler;
+      HjLeistungTableAdapter ada = new HjLeistungTableAdapter();
 
       foreach (int sid in sidList)
       {
-        ErzeugeNoten(i, sid, new string[] { "C", "D", "E" }, Halbjahr.Erstes, Notentyp.Ex); // Exen bzw. Kurzarbeiten 1. HJ
-        ErzeugeNoten(i, sid, new string[] { "F", "G", "H" }, Halbjahr.Erstes, Notentyp.EchteMuendliche);
-        ErzeugeNoten(i, sid, new string[] { "J", "K" }, Halbjahr.Erstes, Notentyp.Schulaufgabe);
-        ErzeugeNoten(i, sid, new string[] { "N", "O", "P" }, Halbjahr.Zweites, Notentyp.Ex);
-        ErzeugeNoten(i, sid, new string[] { "Q", "R", "S" }, Halbjahr.Zweites, Notentyp.EchteMuendliche);
-        ErzeugeNoten(i, sid, new string[] { "U", "V" }, Halbjahr.Zweites, Notentyp.Schulaufgabe);
-
-        HjLeistungTableAdapter ada = new HjLeistungTableAdapter();
-        
-        byte? zeugnisnote = xls.ReadNote("M" + i, xls.notenbogen);
-        if (zeugnisnote != null)
+        HjArt art = GetAktuellesHalbjahr();
+        if (art == HjArt.Hj1)
         {
-          HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj1);
-          l.Punkte = (byte)zeugnisnote;
-          l.Punkte2Dez = (byte)xls.ReadNote("L" + i, xls.notenbogen);
-          l.SchnittMdl = (byte)xls.ReadNote("I" + i, xls.notenbogen);
-          l.WriteToDB();
+          ErzeugeNoten(i, sid, new string[] { "C", "D", "E" }, Halbjahr.Erstes, Notentyp.Ex); // Exen bzw. Kurzarbeiten 1. HJ
+          ErzeugeNoten(i, sid, new string[] { "F", "G", "H" }, Halbjahr.Erstes, Notentyp.EchteMuendliche);
+          ErzeugeNoten(i, sid, new string[] { "J", "K" }, Halbjahr.Erstes, Notentyp.Schulaufgabe);
+          byte? zeugnisnote = xls.ReadNote("M" + i, xls.notenbogen);
+          if (zeugnisnote != null)
+          {
+            HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj1);
+            l.Punkte = (byte)zeugnisnote;
+            l.Punkte2Dez = (byte)xls.ReadNote("L" + i, xls.notenbogen);
+            l.SchnittMdl = (byte)xls.ReadNote("I" + i, xls.notenbogen);
+            l.WriteToDB();
+          }
         }
-
-        byte? zeugnisnote2 = xls.ReadNote("X" + i, xls.notenbogen);
-        if (zeugnisnote2 != null)
+        else
         {
-          HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj2);
-          l.Punkte = (byte)zeugnisnote2;
-          l.Punkte2Dez = (byte)xls.ReadNote("W" + i, xls.notenbogen);
-          l.SchnittMdl = (byte)xls.ReadNote("T" + i, xls.notenbogen);
-          l.WriteToDB();
+          ErzeugeNoten(i, sid, new string[] { "N", "O", "P" }, Halbjahr.Zweites, Notentyp.Ex);
+          ErzeugeNoten(i, sid, new string[] { "Q", "R", "S" }, Halbjahr.Zweites, Notentyp.EchteMuendliche);
+          ErzeugeNoten(i, sid, new string[] { "U", "V" }, Halbjahr.Zweites, Notentyp.Schulaufgabe);
+          byte? zeugnisnote2 = xls.ReadNote("X" + i, xls.notenbogen);
+          if (zeugnisnote2 != null)
+          {
+            HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj2);
+            l.Punkte = (byte)zeugnisnote2;
+            l.Punkte2Dez = (byte)xls.ReadNote("W" + i, xls.notenbogen);
+            l.SchnittMdl = (byte)xls.ReadNote("T" + i, xls.notenbogen);
+            l.WriteToDB();
+          }
+
+          // Prüfe, ob die Gesamtnote aus dem ersten Halbjahr unverändert ist
+          byte? zeugnisnoteHJ1 = xls.ReadNote("M" + i, xls.notenbogen);
+          if (zeugnisnoteHJ1 != null)
+          {
+            HjLeistung hjNote1 = FindHjLeistung(sid, ada, HjArt.Hj1);
+            if (hjNote1 != null && hjNote1.Punkte != zeugnisnoteHJ1)
+            {
+              hinweise.Add("Die Note aus dem ersten Halbjahr (" + zeugnisnoteHJ1 + ") stimmt nicht mit der Datenbank (" + hjNote1 + ") überein. Prüfen Sie Ihre Noten bzw. wenden Sie sich an den Administrator!");
+            }
+          }
         }
 
         byte? fachreferat = xls.ReadNote("X" + i, xls.notenbogen);
@@ -202,17 +229,22 @@ namespace diNo
           l.SchnittMdl = Convert.ToDecimal((byte)fachreferat);
           l.WriteToDB();
         }
-      }
 
         i++;
-      indexAP++;
+        indexAP++;
+      }
     }
 
     private HjLeistung FindOrCreateHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art)
     {
+      var vorhandeneNote = FindHjLeistung(sid, ada, art);
+      return vorhandeneNote != null ? vorhandeneNote : new HjLeistung(sid, kurs.getFach, art);
+    }
+
+    private HjLeistung FindHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art)
+    {
       var vorhandeneNoten = ada.GetDataBySchuelerAndFach(sid, kurs.getFach.Id).Where(x => x.Art == (byte)art);
-      var vorhandeneNote = vorhandeneNoten != null && vorhandeneNoten.Count() == 1 ? vorhandeneNoten.First() : null;
-      return vorhandeneNote != null ? new HjLeistung(vorhandeneNote) : new HjLeistung(sid, kurs.getFach, art);
+      return vorhandeneNoten != null && vorhandeneNoten.Count() == 1 ? new HjLeistung(vorhandeneNoten.First()) : null;
     }
 
     private void ErzeugeNoten(int i, int sid, string[] spalten, Halbjahr hj, Notentyp typ)

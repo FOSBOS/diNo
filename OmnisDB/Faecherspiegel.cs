@@ -64,7 +64,7 @@ namespace diNo.OmnisDB
       string faecherKuerzel = SucheFach(faecherspiegel, index, schulart); // hier nur zur Anzeige etwaiger Fehlermeldungen benötigt
       if (string.IsNullOrEmpty(faecherKuerzel))
       {
-        return "";
+        return "-";
       }
 
       var noten = FindeFachNoten(faecherKuerzel, schueler);
