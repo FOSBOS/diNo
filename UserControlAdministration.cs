@@ -57,8 +57,8 @@ namespace diNo
     private void btnAbiergebnisse_Click(object sender, EventArgs e)
     {
       var obj = getSelectedObjects();
-      if (obj!=null)
-        new ReportNotendruck(obj,"diNo.rptAbiergebnisse.rdlc").Show();
+//      if (obj!=null)
+//        new ReportNotendruck(obj,"diNo.rptAbiergebnisse.rdlc").Show();
     }
 
     private void exportNoten_Click(object sender, EventArgs e)
@@ -114,8 +114,8 @@ namespace diNo
     private void btnNotenmitteilung_Click(object sender, EventArgs e)
     {      
       var obj = getSelectedObjects();
-      if (obj!=null)
-        new ReportNotendruck(obj,"diNo.rptNotenmitteilungA5.rdlc").Show();
+//      if (obj!=null)
+//        new ReportNotendruck(obj,"diNo.rptNotenmitteilungA5.rdlc").Show();
     }
 
     private void btnBerechtigungen_Click(object sender, EventArgs e)

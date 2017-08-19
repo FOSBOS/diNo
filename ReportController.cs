@@ -53,39 +53,18 @@ namespace diNo
   // Datenquelle kann ein Schüler oder mehrere Klassen sein
   public class ReportNotendruck : ReportController
   {
-    private bool klassenweise;
-    private Schueler DSschueler;
-    private ArrayList DSklassen;
+    private List<SchuelerDruck> bindingDataSource;
     private string rptName;
 
-    public ReportNotendruck(Object dataSource, string Berichtsname) : base()
+    public ReportNotendruck(List<SchuelerDruck> dataSource, string Berichtsname) : base()
     {
       rptName = Berichtsname;
-      klassenweise = dataSource is ArrayList;
-      if (klassenweise)
-        DSklassen = (ArrayList)dataSource;
-      else 
-        DSschueler = (Schueler)dataSource;
+      bindingDataSource = dataSource;
     }
         
     public override void Init()
     {    
-      vwNotenbogenTableAdapter BerichtTableAdapter;
-      rpt.BerichtBindingSource.DataMember = "vwNotenbogen";
-      BerichtTableAdapter =  new vwNotenbogenTableAdapter();            
-      BerichtTableAdapter.ClearBeforeFill = true;
-
-      if (!klassenweise)      
-        BerichtTableAdapter.FillBySchuelerId(rpt.diNoDataSet.vwNotenbogen,DSschueler.Id);                                 
-      else
-      { // Klassenweise (auch mehrere) drucken
-        foreach (var klasse in DSklassen)
-        {
-          BerichtTableAdapter.FillByKlasseId(rpt.diNoDataSet.vwNotenbogen,((Klasse)klasse).Data.Id);
-          BerichtTableAdapter.ClearBeforeFill = false;
-        }
-      }
-
+      rpt.BerichtBindingSource.DataSource = bindingDataSource;
       rpt.reportViewer.LocalReport.ReportEmbeddedResource = rptName;
 
       // Unterberichte einbinden
@@ -107,13 +86,7 @@ namespace diNo
           {
             IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(rptName);
             e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
-          }          
-          else if (subrpt=="subrptSchullaufbahn")
-          {
-            IList<SchullaufbahnDruck> daten = new List<SchullaufbahnDruck>();
-            daten.Add(new SchullaufbahnDruck(schueler));          
-            e.DataSources.Add(new ReportDataSource("DataSetSchullaufbahn",daten));
-          }
+          }                    
           else if (subrpt=="subrptVorkommnis" || subrpt=="subrptAbiVorkommnis" )
           {
             diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
@@ -124,50 +97,9 @@ namespace diNo
             else 
               BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);
             e.DataSources.Add(new ReportDataSource("DataSetVorkommnis",(DataTable) vorkommnisse));
-          }
-          else if (subrpt=="subrptBemerkungen")
-          {
-            IList<BemerkungenDruck> daten = new List<BemerkungenDruck>();
-            daten.Add(new BemerkungenDruck(schueler));          
-            e.DataSources.Add(new ReportDataSource("DataSetBemerkungen",daten));
-          }
-          else if (subrpt=="subrptSchuljahrSchulart")
-          {
-            IList<SchuljahrSchulartDruck> daten = new List<SchuljahrSchulartDruck>();
-            daten.Add(new SchuljahrSchulartDruck(schueler));
-            e.DataSources.Add(new ReportDataSource("DataSetSchuljahrSchulart",daten));
-          }
+          }          
       }     
-    }
-    /*
-    void subrptSchullaufbahnEventHandler(object sender, SubreportProcessingEventArgs e)
-    {        
-        int schuelerId;
-        int.TryParse(e.Parameters[0].Values[0],out schuelerId);
-        if (schuelerId>0)
-        {
-          Schueler schueler = new Schueler(schuelerId);
-          var daten = new List<SchullaufbahnDruck>();
-          daten.Add(new SchullaufbahnDruck(schueler));          
-          e.DataSources.Add(new ReportDataSource("DataSetSchullaufbahn",daten));
-        }
-    }
-    void subrptVorkommnisEventHandler(object sender, SubreportProcessingEventArgs e)
-    {
-        diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
-        vwVorkommnisTableAdapter BerichtTableAdapter;
-        BerichtTableAdapter = new vwVorkommnisTableAdapter();
-        BerichtTableAdapter.ClearBeforeFill = true;
-
-        int schuelerId;
-        int.TryParse(e.Parameters[0].Values[0],out schuelerId);
-        if (schuelerId>0)
-        {     
-          BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);                 
-          e.DataSources.Add(new ReportDataSource("DataSetVorkommnis",(DataTable) vorkommnisse));
-        }
-    }
-    */
+    }    
   }
   
     public class ReportFachliste : ReportController

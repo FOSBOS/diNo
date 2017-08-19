@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -164,17 +165,24 @@ namespace diNo
     }
 
     // liefert den angeklickten Schüler, oder eine Liste von Klassen (nur für Admins)
-    public Object SelectedObjects()
+    public List<SchuelerDruck> SelectedObjects()
     {
-      if (Zugriff.Instance.HatVerwaltungsrechte)
+      var res = new List<SchuelerDruck>();
+      var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
+      if (Zugriff.Instance.HatVerwaltungsrechte && obj.Count>0 && obj[0] is Klasse)
       {
-        var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
-        if (obj.Count>0 && obj[0] is Klasse)
+        foreach (Klasse k in obj)
         {
-          return (ArrayList)obj;          
+          foreach (Schueler s in k.eigeneSchueler)
+          {               
+            res.Add(new SchuelerDruck(s));
+          }
         }
       }
-      return schueler;
+      else
+        res.Add(new SchuelerDruck(schueler)); // nur aktuell ausgewählter Schüler
+
+      return res;
     } 
 
     private void btnBrief_Click(object sender, EventArgs e)

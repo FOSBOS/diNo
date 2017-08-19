@@ -46,8 +46,6 @@ namespace diNo {
         
         private BerechneteNoteDataTable tableBerechneteNote;
         
-        private vwNotenbogenDataTable tablevwNotenbogen;
-        
         private VorkommnisDataTable tableVorkommnis;
         
         private SchuelerDataTable tableSchueler;
@@ -65,6 +63,8 @@ namespace diNo {
         private HjLeistungDataTable tableHjLeistung;
         
         private FpaDataTable tableFpa;
+        
+        private Fpa12altDataTable tableFpa12alt;
         
         private global::System.Data.DataRelation relationFK_Lehrer_Klasse;
         
@@ -111,6 +111,8 @@ namespace diNo {
         private global::System.Data.DataRelation relationFK_HjLeistung_SchuelerId;
         
         private global::System.Data.DataRelation relationFK_Fpa_Schueler;
+        
+        private global::System.Data.DataRelation relationFK_FpANoten_Schueler;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -173,9 +175,6 @@ namespace diNo {
                 if ((ds.Tables["BerechneteNote"] != null)) {
                     base.Tables.Add(new BerechneteNoteDataTable(ds.Tables["BerechneteNote"]));
                 }
-                if ((ds.Tables["vwNotenbogen"] != null)) {
-                    base.Tables.Add(new vwNotenbogenDataTable(ds.Tables["vwNotenbogen"]));
-                }
                 if ((ds.Tables["Vorkommnis"] != null)) {
                     base.Tables.Add(new VorkommnisDataTable(ds.Tables["Vorkommnis"]));
                 }
@@ -202,6 +201,9 @@ namespace diNo {
                 }
                 if ((ds.Tables["Fpa"] != null)) {
                     base.Tables.Add(new FpaDataTable(ds.Tables["Fpa"]));
+                }
+                if ((ds.Tables["Fpa12alt"] != null)) {
+                    base.Tables.Add(new Fpa12altDataTable(ds.Tables["Fpa12alt"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -335,16 +337,6 @@ namespace diNo {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public vwNotenbogenDataTable vwNotenbogen {
-            get {
-                return this.tablevwNotenbogen;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
         public VorkommnisDataTable Vorkommnis {
             get {
                 return this.tableVorkommnis;
@@ -428,6 +420,16 @@ namespace diNo {
         public FpaDataTable Fpa {
             get {
                 return this.tableFpa;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Browsable(false)]
+        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
+        public Fpa12altDataTable Fpa12alt {
+            get {
+                return this.tableFpa12alt;
             }
         }
         
@@ -531,9 +533,6 @@ namespace diNo {
                 if ((ds.Tables["BerechneteNote"] != null)) {
                     base.Tables.Add(new BerechneteNoteDataTable(ds.Tables["BerechneteNote"]));
                 }
-                if ((ds.Tables["vwNotenbogen"] != null)) {
-                    base.Tables.Add(new vwNotenbogenDataTable(ds.Tables["vwNotenbogen"]));
-                }
                 if ((ds.Tables["Vorkommnis"] != null)) {
                     base.Tables.Add(new VorkommnisDataTable(ds.Tables["Vorkommnis"]));
                 }
@@ -560,6 +559,9 @@ namespace diNo {
                 }
                 if ((ds.Tables["Fpa"] != null)) {
                     base.Tables.Add(new FpaDataTable(ds.Tables["Fpa"]));
+                }
+                if ((ds.Tables["Fpa12alt"] != null)) {
+                    base.Tables.Add(new Fpa12altDataTable(ds.Tables["Fpa12alt"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -660,12 +662,6 @@ namespace diNo {
                     this.tableBerechneteNote.InitVars();
                 }
             }
-            this.tablevwNotenbogen = ((vwNotenbogenDataTable)(base.Tables["vwNotenbogen"]));
-            if ((initTable == true)) {
-                if ((this.tablevwNotenbogen != null)) {
-                    this.tablevwNotenbogen.InitVars();
-                }
-            }
             this.tableVorkommnis = ((VorkommnisDataTable)(base.Tables["Vorkommnis"]));
             if ((initTable == true)) {
                 if ((this.tableVorkommnis != null)) {
@@ -720,6 +716,12 @@ namespace diNo {
                     this.tableFpa.InitVars();
                 }
             }
+            this.tableFpa12alt = ((Fpa12altDataTable)(base.Tables["Fpa12alt"]));
+            if ((initTable == true)) {
+                if ((this.tableFpa12alt != null)) {
+                    this.tableFpa12alt.InitVars();
+                }
+            }
             this.relationFK_Lehrer_Klasse = this.Relations["FK_Lehrer_Klasse"];
             this.relationFK_Kurs_Lehrer = this.Relations["FK_Kurs_Lehrer"];
             this.relationFK_Kurs_Fach = this.Relations["FK_Kurs_Fach"];
@@ -743,6 +745,7 @@ namespace diNo {
             this.relationFK_HjLeistung_FachId = this.Relations["FK_HjLeistung_FachId"];
             this.relationFK_HjLeistung_SchuelerId = this.Relations["FK_HjLeistung_SchuelerId"];
             this.relationFK_Fpa_Schueler = this.Relations["FK_Fpa_Schueler"];
+            this.relationFK_FpANoten_Schueler = this.Relations["FK_FpANoten_Schueler"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -775,8 +778,6 @@ namespace diNo {
             base.Tables.Add(this.tableSchulaufgabenfach);
             this.tableBerechneteNote = new BerechneteNoteDataTable();
             base.Tables.Add(this.tableBerechneteNote);
-            this.tablevwNotenbogen = new vwNotenbogenDataTable();
-            base.Tables.Add(this.tablevwNotenbogen);
             this.tableVorkommnis = new VorkommnisDataTable();
             base.Tables.Add(this.tableVorkommnis);
             this.tableSchueler = new SchuelerDataTable();
@@ -795,6 +796,8 @@ namespace diNo {
             base.Tables.Add(this.tableHjLeistung);
             this.tableFpa = new FpaDataTable();
             base.Tables.Add(this.tableFpa);
+            this.tableFpa12alt = new Fpa12altDataTable();
+            base.Tables.Add(this.tableFpa12alt);
             global::System.Data.ForeignKeyConstraint fkc;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_Lehrer_Klasse", new global::System.Data.DataColumn[] {
                         this.tableLehrer.IdColumn}, new global::System.Data.DataColumn[] {
@@ -895,6 +898,10 @@ namespace diNo {
                         this.tableSchueler.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableFpa.SchuelerIdColumn}, false);
             this.Relations.Add(this.relationFK_Fpa_Schueler);
+            this.relationFK_FpANoten_Schueler = new global::System.Data.DataRelation("FK_FpANoten_Schueler", new global::System.Data.DataColumn[] {
+                        this.tableSchueler.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableFpa12alt.SchuelerIdColumn}, false);
+            this.Relations.Add(this.relationFK_FpANoten_Schueler);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -965,12 +972,6 @@ namespace diNo {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializevwNotenbogen() {
-            return false;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private bool ShouldSerializeVorkommnis() {
             return false;
         }
@@ -1020,6 +1021,12 @@ namespace diNo {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private bool ShouldSerializeFpa() {
+            return false;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private bool ShouldSerializeFpa12alt() {
             return false;
         }
         
@@ -1112,9 +1119,6 @@ namespace diNo {
         public delegate void BerechneteNoteRowChangeEventHandler(object sender, BerechneteNoteRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void vwNotenbogenRowChangeEventHandler(object sender, vwNotenbogenRowChangeEvent e);
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void VorkommnisRowChangeEventHandler(object sender, VorkommnisRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -1140,6 +1144,9 @@ namespace diNo {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public delegate void FpaRowChangeEventHandler(object sender, FpaRowChangeEvent e);
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public delegate void Fpa12altRowChangeEventHandler(object sender, Fpa12altRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -4662,1180 +4669,6 @@ namespace diNo {
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "BerechneteNoteDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class vwNotenbogenDataTable : global::System.Data.TypedTableBase<vwNotenbogenRow> {
-            
-            private global::System.Data.DataColumn columnBezeichnung;
-            
-            private global::System.Data.DataColumn columnId;
-            
-            private global::System.Data.DataColumn columnName;
-            
-            private global::System.Data.DataColumn columnVorname;
-            
-            private global::System.Data.DataColumn columnKlasseId;
-            
-            private global::System.Data.DataColumn columnRufname;
-            
-            private global::System.Data.DataColumn columnGeschlecht;
-            
-            private global::System.Data.DataColumn columnGeburtsdatum;
-            
-            private global::System.Data.DataColumn columnGeburtsort;
-            
-            private global::System.Data.DataColumn columnBekenntnis;
-            
-            private global::System.Data.DataColumn columnAnschriftPLZ;
-            
-            private global::System.Data.DataColumn columnAnschriftOrt;
-            
-            private global::System.Data.DataColumn columnAnschriftStrasse;
-            
-            private global::System.Data.DataColumn columnAnschriftTelefonnummer;
-            
-            private global::System.Data.DataColumn columnAusbildungsrichtung;
-            
-            private global::System.Data.DataColumn columnFremdsprache2;
-            
-            private global::System.Data.DataColumn columnReligionOderEthik;
-            
-            private global::System.Data.DataColumn columnWahlpflichtfach;
-            
-            private global::System.Data.DataColumn columnWahlfach1;
-            
-            private global::System.Data.DataColumn columnWahlfach2;
-            
-            private global::System.Data.DataColumn columnWahlfach3;
-            
-            private global::System.Data.DataColumn columnWahlfach4;
-            
-            private global::System.Data.DataColumn columnWiederholung1Jahrgangsstufe;
-            
-            private global::System.Data.DataColumn columnWiederholung2Jahrgangsstufe;
-            
-            private global::System.Data.DataColumn columnWiederholung1Grund;
-            
-            private global::System.Data.DataColumn columnWiederholung2Grund;
-            
-            private global::System.Data.DataColumn columnProbezeitBis;
-            
-            private global::System.Data.DataColumn columnAustrittsdatum;
-            
-            private global::System.Data.DataColumn columnSchulischeVorbildung;
-            
-            private global::System.Data.DataColumn columnBeruflicheVorbildung;
-            
-            private global::System.Data.DataColumn columnLRSStoerung;
-            
-            private global::System.Data.DataColumn columnLRSSchwaeche;
-            
-            private global::System.Data.DataColumn columnLRSBisDatum;
-            
-            private global::System.Data.DataColumn columnNachnameEltern1;
-            
-            private global::System.Data.DataColumn columnVornameEltern1;
-            
-            private global::System.Data.DataColumn columnAnredeEltern1;
-            
-            private global::System.Data.DataColumn columnVerwandtschaftsbezeichnungEltern1;
-            
-            private global::System.Data.DataColumn columnNachnameEltern2;
-            
-            private global::System.Data.DataColumn columnVornameEltern2;
-            
-            private global::System.Data.DataColumn columnAnredeEltern2;
-            
-            private global::System.Data.DataColumn columnVerwandtschaftsbezeichnungEltern2;
-            
-            private global::System.Data.DataColumn columnGesamtnote;
-            
-            private global::System.Data.DataColumn columnThemaLang;
-            
-            private global::System.Data.DataColumn columnThemaKurz;
-            
-            private global::System.Data.DataColumn columnKlassenleiter;
-            
-            private global::System.Data.DataColumn columnEintrittJahrgangsstufe;
-            
-            private global::System.Data.DataColumn columnEintrittAm;
-            
-            private global::System.Data.DataColumn columnEintrittAusSchulnummer;
-            
-            private global::System.Data.DataColumn columnEmail;
-            
-            private global::System.Data.DataColumn columnNotfalltelefonnummer;
-            
-            private global::System.Data.DataColumn columnDNote;
-            
-            private global::System.Data.DataColumn columnStatus;
-            
-            private global::System.Data.DataColumn columnAndereFremdspr2Note;
-            
-            private global::System.Data.DataColumn columnAndereFremdspr2Text;
-            
-            private global::System.Data.DataColumn columnDNoteAllg;
-            
-            private global::System.Data.DataColumn columnSchulart;
-            
-            private global::System.Data.DataColumn columnAlteSO;
-            
-            private global::System.Data.DataColumn columnPunktesumme;
-            
-            private global::System.Data.DataColumn columnBestanden;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public vwNotenbogenDataTable() {
-                this.TableName = "vwNotenbogen";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal vwNotenbogenDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected vwNotenbogenDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn BezeichnungColumn {
-                get {
-                    return this.columnBezeichnung;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn IdColumn {
-                get {
-                    return this.columnId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NameColumn {
-                get {
-                    return this.columnName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VornameColumn {
-                get {
-                    return this.columnVorname;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn KlasseIdColumn {
-                get {
-                    return this.columnKlasseId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn RufnameColumn {
-                get {
-                    return this.columnRufname;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn GeschlechtColumn {
-                get {
-                    return this.columnGeschlecht;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn GeburtsdatumColumn {
-                get {
-                    return this.columnGeburtsdatum;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn GeburtsortColumn {
-                get {
-                    return this.columnGeburtsort;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn BekenntnisColumn {
-                get {
-                    return this.columnBekenntnis;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnschriftPLZColumn {
-                get {
-                    return this.columnAnschriftPLZ;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnschriftOrtColumn {
-                get {
-                    return this.columnAnschriftOrt;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnschriftStrasseColumn {
-                get {
-                    return this.columnAnschriftStrasse;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnschriftTelefonnummerColumn {
-                get {
-                    return this.columnAnschriftTelefonnummer;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AusbildungsrichtungColumn {
-                get {
-                    return this.columnAusbildungsrichtung;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Fremdsprache2Column {
-                get {
-                    return this.columnFremdsprache2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ReligionOderEthikColumn {
-                get {
-                    return this.columnReligionOderEthik;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn WahlpflichtfachColumn {
-                get {
-                    return this.columnWahlpflichtfach;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach1Column {
-                get {
-                    return this.columnWahlfach1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach2Column {
-                get {
-                    return this.columnWahlfach2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach3Column {
-                get {
-                    return this.columnWahlfach3;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach4Column {
-                get {
-                    return this.columnWahlfach4;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wiederholung1JahrgangsstufeColumn {
-                get {
-                    return this.columnWiederholung1Jahrgangsstufe;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wiederholung2JahrgangsstufeColumn {
-                get {
-                    return this.columnWiederholung2Jahrgangsstufe;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wiederholung1GrundColumn {
-                get {
-                    return this.columnWiederholung1Grund;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn Wiederholung2GrundColumn {
-                get {
-                    return this.columnWiederholung2Grund;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ProbezeitBisColumn {
-                get {
-                    return this.columnProbezeitBis;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AustrittsdatumColumn {
-                get {
-                    return this.columnAustrittsdatum;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn SchulischeVorbildungColumn {
-                get {
-                    return this.columnSchulischeVorbildung;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn BeruflicheVorbildungColumn {
-                get {
-                    return this.columnBeruflicheVorbildung;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn LRSStoerungColumn {
-                get {
-                    return this.columnLRSStoerung;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn LRSSchwaecheColumn {
-                get {
-                    return this.columnLRSSchwaeche;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn LRSBisDatumColumn {
-                get {
-                    return this.columnLRSBisDatum;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NachnameEltern1Column {
-                get {
-                    return this.columnNachnameEltern1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VornameEltern1Column {
-                get {
-                    return this.columnVornameEltern1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnredeEltern1Column {
-                get {
-                    return this.columnAnredeEltern1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VerwandtschaftsbezeichnungEltern1Column {
-                get {
-                    return this.columnVerwandtschaftsbezeichnungEltern1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NachnameEltern2Column {
-                get {
-                    return this.columnNachnameEltern2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VornameEltern2Column {
-                get {
-                    return this.columnVornameEltern2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AnredeEltern2Column {
-                get {
-                    return this.columnAnredeEltern2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn VerwandtschaftsbezeichnungEltern2Column {
-                get {
-                    return this.columnVerwandtschaftsbezeichnungEltern2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn GesamtnoteColumn {
-                get {
-                    return this.columnGesamtnote;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ThemaLangColumn {
-                get {
-                    return this.columnThemaLang;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ThemaKurzColumn {
-                get {
-                    return this.columnThemaKurz;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn KlassenleiterColumn {
-                get {
-                    return this.columnKlassenleiter;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EintrittJahrgangsstufeColumn {
-                get {
-                    return this.columnEintrittJahrgangsstufe;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EintrittAmColumn {
-                get {
-                    return this.columnEintrittAm;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EintrittAusSchulnummerColumn {
-                get {
-                    return this.columnEintrittAusSchulnummer;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EmailColumn {
-                get {
-                    return this.columnEmail;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn NotfalltelefonnummerColumn {
-                get {
-                    return this.columnNotfalltelefonnummer;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn DNoteColumn {
-                get {
-                    return this.columnDNote;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn StatusColumn {
-                get {
-                    return this.columnStatus;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AndereFremdspr2NoteColumn {
-                get {
-                    return this.columnAndereFremdspr2Note;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AndereFremdspr2TextColumn {
-                get {
-                    return this.columnAndereFremdspr2Text;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn DNoteAllgColumn {
-                get {
-                    return this.columnDNoteAllg;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn SchulartColumn {
-                get {
-                    return this.columnSchulart;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn AlteSOColumn {
-                get {
-                    return this.columnAlteSO;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn PunktesummeColumn {
-                get {
-                    return this.columnPunktesumme;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn BestandenColumn {
-                get {
-                    return this.columnBestanden;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public vwNotenbogenRow this[int index] {
-                get {
-                    return ((vwNotenbogenRow)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event vwNotenbogenRowChangeEventHandler vwNotenbogenRowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event vwNotenbogenRowChangeEventHandler vwNotenbogenRowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event vwNotenbogenRowChangeEventHandler vwNotenbogenRowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event vwNotenbogenRowChangeEventHandler vwNotenbogenRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddvwNotenbogenRow(vwNotenbogenRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public vwNotenbogenRow AddvwNotenbogenRow(
-                        string Bezeichnung, 
-                        int Id, 
-                        string Name, 
-                        string Vorname, 
-                        int KlasseId, 
-                        string Rufname, 
-                        string Geschlecht, 
-                        System.DateTime Geburtsdatum, 
-                        string Geburtsort, 
-                        string Bekenntnis, 
-                        string AnschriftPLZ, 
-                        string AnschriftOrt, 
-                        string AnschriftStrasse, 
-                        string AnschriftTelefonnummer, 
-                        string Ausbildungsrichtung, 
-                        string Fremdsprache2, 
-                        string ReligionOderEthik, 
-                        string Wahlpflichtfach, 
-                        string Wahlfach1, 
-                        string Wahlfach2, 
-                        string Wahlfach3, 
-                        string Wahlfach4, 
-                        string Wiederholung1Jahrgangsstufe, 
-                        string Wiederholung2Jahrgangsstufe, 
-                        string Wiederholung1Grund, 
-                        string Wiederholung2Grund, 
-                        System.DateTime ProbezeitBis, 
-                        System.DateTime Austrittsdatum, 
-                        string SchulischeVorbildung, 
-                        string BeruflicheVorbildung, 
-                        bool LRSStoerung, 
-                        bool LRSSchwaeche, 
-                        System.DateTime LRSBisDatum, 
-                        string NachnameEltern1, 
-                        string VornameEltern1, 
-                        string AnredeEltern1, 
-                        string VerwandtschaftsbezeichnungEltern1, 
-                        string NachnameEltern2, 
-                        string VornameEltern2, 
-                        string AnredeEltern2, 
-                        string VerwandtschaftsbezeichnungEltern2, 
-                        int Gesamtnote, 
-                        string ThemaLang, 
-                        string ThemaKurz, 
-                        string Klassenleiter, 
-                        string EintrittJahrgangsstufe, 
-                        System.DateTime EintrittAm, 
-                        int EintrittAusSchulnummer, 
-                        string Email, 
-                        string Notfalltelefonnummer, 
-                        decimal DNote, 
-                        int Status, 
-                        int AndereFremdspr2Note, 
-                        string AndereFremdspr2Text, 
-                        decimal DNoteAllg, 
-                        string Schulart, 
-                        bool AlteSO, 
-                        int Punktesumme, 
-                        int Bestanden) {
-                vwNotenbogenRow rowvwNotenbogenRow = ((vwNotenbogenRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        Bezeichnung,
-                        Id,
-                        Name,
-                        Vorname,
-                        KlasseId,
-                        Rufname,
-                        Geschlecht,
-                        Geburtsdatum,
-                        Geburtsort,
-                        Bekenntnis,
-                        AnschriftPLZ,
-                        AnschriftOrt,
-                        AnschriftStrasse,
-                        AnschriftTelefonnummer,
-                        Ausbildungsrichtung,
-                        Fremdsprache2,
-                        ReligionOderEthik,
-                        Wahlpflichtfach,
-                        Wahlfach1,
-                        Wahlfach2,
-                        Wahlfach3,
-                        Wahlfach4,
-                        Wiederholung1Jahrgangsstufe,
-                        Wiederholung2Jahrgangsstufe,
-                        Wiederholung1Grund,
-                        Wiederholung2Grund,
-                        ProbezeitBis,
-                        Austrittsdatum,
-                        SchulischeVorbildung,
-                        BeruflicheVorbildung,
-                        LRSStoerung,
-                        LRSSchwaeche,
-                        LRSBisDatum,
-                        NachnameEltern1,
-                        VornameEltern1,
-                        AnredeEltern1,
-                        VerwandtschaftsbezeichnungEltern1,
-                        NachnameEltern2,
-                        VornameEltern2,
-                        AnredeEltern2,
-                        VerwandtschaftsbezeichnungEltern2,
-                        Gesamtnote,
-                        ThemaLang,
-                        ThemaKurz,
-                        Klassenleiter,
-                        EintrittJahrgangsstufe,
-                        EintrittAm,
-                        EintrittAusSchulnummer,
-                        Email,
-                        Notfalltelefonnummer,
-                        DNote,
-                        Status,
-                        AndereFremdspr2Note,
-                        AndereFremdspr2Text,
-                        DNoteAllg,
-                        Schulart,
-                        AlteSO,
-                        Punktesumme,
-                        Bestanden};
-                rowvwNotenbogenRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowvwNotenbogenRow);
-                return rowvwNotenbogenRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public vwNotenbogenRow FindById(int Id) {
-                return ((vwNotenbogenRow)(this.Rows.Find(new object[] {
-                            Id})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                vwNotenbogenDataTable cln = ((vwNotenbogenDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new vwNotenbogenDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal void InitVars() {
-                this.columnBezeichnung = base.Columns["Bezeichnung"];
-                this.columnId = base.Columns["Id"];
-                this.columnName = base.Columns["Name"];
-                this.columnVorname = base.Columns["Vorname"];
-                this.columnKlasseId = base.Columns["KlasseId"];
-                this.columnRufname = base.Columns["Rufname"];
-                this.columnGeschlecht = base.Columns["Geschlecht"];
-                this.columnGeburtsdatum = base.Columns["Geburtsdatum"];
-                this.columnGeburtsort = base.Columns["Geburtsort"];
-                this.columnBekenntnis = base.Columns["Bekenntnis"];
-                this.columnAnschriftPLZ = base.Columns["AnschriftPLZ"];
-                this.columnAnschriftOrt = base.Columns["AnschriftOrt"];
-                this.columnAnschriftStrasse = base.Columns["AnschriftStrasse"];
-                this.columnAnschriftTelefonnummer = base.Columns["AnschriftTelefonnummer"];
-                this.columnAusbildungsrichtung = base.Columns["Ausbildungsrichtung"];
-                this.columnFremdsprache2 = base.Columns["Fremdsprache2"];
-                this.columnReligionOderEthik = base.Columns["ReligionOderEthik"];
-                this.columnWahlpflichtfach = base.Columns["Wahlpflichtfach"];
-                this.columnWahlfach1 = base.Columns["Wahlfach1"];
-                this.columnWahlfach2 = base.Columns["Wahlfach2"];
-                this.columnWahlfach3 = base.Columns["Wahlfach3"];
-                this.columnWahlfach4 = base.Columns["Wahlfach4"];
-                this.columnWiederholung1Jahrgangsstufe = base.Columns["Wiederholung1Jahrgangsstufe"];
-                this.columnWiederholung2Jahrgangsstufe = base.Columns["Wiederholung2Jahrgangsstufe"];
-                this.columnWiederholung1Grund = base.Columns["Wiederholung1Grund"];
-                this.columnWiederholung2Grund = base.Columns["Wiederholung2Grund"];
-                this.columnProbezeitBis = base.Columns["ProbezeitBis"];
-                this.columnAustrittsdatum = base.Columns["Austrittsdatum"];
-                this.columnSchulischeVorbildung = base.Columns["SchulischeVorbildung"];
-                this.columnBeruflicheVorbildung = base.Columns["BeruflicheVorbildung"];
-                this.columnLRSStoerung = base.Columns["LRSStoerung"];
-                this.columnLRSSchwaeche = base.Columns["LRSSchwaeche"];
-                this.columnLRSBisDatum = base.Columns["LRSBisDatum"];
-                this.columnNachnameEltern1 = base.Columns["NachnameEltern1"];
-                this.columnVornameEltern1 = base.Columns["VornameEltern1"];
-                this.columnAnredeEltern1 = base.Columns["AnredeEltern1"];
-                this.columnVerwandtschaftsbezeichnungEltern1 = base.Columns["VerwandtschaftsbezeichnungEltern1"];
-                this.columnNachnameEltern2 = base.Columns["NachnameEltern2"];
-                this.columnVornameEltern2 = base.Columns["VornameEltern2"];
-                this.columnAnredeEltern2 = base.Columns["AnredeEltern2"];
-                this.columnVerwandtschaftsbezeichnungEltern2 = base.Columns["VerwandtschaftsbezeichnungEltern2"];
-                this.columnGesamtnote = base.Columns["Gesamtnote"];
-                this.columnThemaLang = base.Columns["ThemaLang"];
-                this.columnThemaKurz = base.Columns["ThemaKurz"];
-                this.columnKlassenleiter = base.Columns["Klassenleiter"];
-                this.columnEintrittJahrgangsstufe = base.Columns["EintrittJahrgangsstufe"];
-                this.columnEintrittAm = base.Columns["EintrittAm"];
-                this.columnEintrittAusSchulnummer = base.Columns["EintrittAusSchulnummer"];
-                this.columnEmail = base.Columns["Email"];
-                this.columnNotfalltelefonnummer = base.Columns["Notfalltelefonnummer"];
-                this.columnDNote = base.Columns["DNote"];
-                this.columnStatus = base.Columns["Status"];
-                this.columnAndereFremdspr2Note = base.Columns["AndereFremdspr2Note"];
-                this.columnAndereFremdspr2Text = base.Columns["AndereFremdspr2Text"];
-                this.columnDNoteAllg = base.Columns["DNoteAllg"];
-                this.columnSchulart = base.Columns["Schulart"];
-                this.columnAlteSO = base.Columns["AlteSO"];
-                this.columnPunktesumme = base.Columns["Punktesumme"];
-                this.columnBestanden = base.Columns["Bestanden"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            private void InitClass() {
-                this.columnBezeichnung = new global::System.Data.DataColumn("Bezeichnung", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBezeichnung);
-                this.columnId = new global::System.Data.DataColumn("Id", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnId);
-                this.columnName = new global::System.Data.DataColumn("Name", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnName);
-                this.columnVorname = new global::System.Data.DataColumn("Vorname", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVorname);
-                this.columnKlasseId = new global::System.Data.DataColumn("KlasseId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnKlasseId);
-                this.columnRufname = new global::System.Data.DataColumn("Rufname", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnRufname);
-                this.columnGeschlecht = new global::System.Data.DataColumn("Geschlecht", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnGeschlecht);
-                this.columnGeburtsdatum = new global::System.Data.DataColumn("Geburtsdatum", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnGeburtsdatum);
-                this.columnGeburtsort = new global::System.Data.DataColumn("Geburtsort", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnGeburtsort);
-                this.columnBekenntnis = new global::System.Data.DataColumn("Bekenntnis", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBekenntnis);
-                this.columnAnschriftPLZ = new global::System.Data.DataColumn("AnschriftPLZ", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnschriftPLZ);
-                this.columnAnschriftOrt = new global::System.Data.DataColumn("AnschriftOrt", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnschriftOrt);
-                this.columnAnschriftStrasse = new global::System.Data.DataColumn("AnschriftStrasse", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnschriftStrasse);
-                this.columnAnschriftTelefonnummer = new global::System.Data.DataColumn("AnschriftTelefonnummer", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnschriftTelefonnummer);
-                this.columnAusbildungsrichtung = new global::System.Data.DataColumn("Ausbildungsrichtung", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAusbildungsrichtung);
-                this.columnFremdsprache2 = new global::System.Data.DataColumn("Fremdsprache2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFremdsprache2);
-                this.columnReligionOderEthik = new global::System.Data.DataColumn("ReligionOderEthik", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnReligionOderEthik);
-                this.columnWahlpflichtfach = new global::System.Data.DataColumn("Wahlpflichtfach", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlpflichtfach);
-                this.columnWahlfach1 = new global::System.Data.DataColumn("Wahlfach1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach1);
-                this.columnWahlfach2 = new global::System.Data.DataColumn("Wahlfach2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach2);
-                this.columnWahlfach3 = new global::System.Data.DataColumn("Wahlfach3", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach3);
-                this.columnWahlfach4 = new global::System.Data.DataColumn("Wahlfach4", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach4);
-                this.columnWiederholung1Jahrgangsstufe = new global::System.Data.DataColumn("Wiederholung1Jahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWiederholung1Jahrgangsstufe);
-                this.columnWiederholung2Jahrgangsstufe = new global::System.Data.DataColumn("Wiederholung2Jahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWiederholung2Jahrgangsstufe);
-                this.columnWiederholung1Grund = new global::System.Data.DataColumn("Wiederholung1Grund", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWiederholung1Grund);
-                this.columnWiederholung2Grund = new global::System.Data.DataColumn("Wiederholung2Grund", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWiederholung2Grund);
-                this.columnProbezeitBis = new global::System.Data.DataColumn("ProbezeitBis", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnProbezeitBis);
-                this.columnAustrittsdatum = new global::System.Data.DataColumn("Austrittsdatum", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAustrittsdatum);
-                this.columnSchulischeVorbildung = new global::System.Data.DataColumn("SchulischeVorbildung", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSchulischeVorbildung);
-                this.columnBeruflicheVorbildung = new global::System.Data.DataColumn("BeruflicheVorbildung", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBeruflicheVorbildung);
-                this.columnLRSStoerung = new global::System.Data.DataColumn("LRSStoerung", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLRSStoerung);
-                this.columnLRSSchwaeche = new global::System.Data.DataColumn("LRSSchwaeche", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLRSSchwaeche);
-                this.columnLRSBisDatum = new global::System.Data.DataColumn("LRSBisDatum", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLRSBisDatum);
-                this.columnNachnameEltern1 = new global::System.Data.DataColumn("NachnameEltern1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNachnameEltern1);
-                this.columnVornameEltern1 = new global::System.Data.DataColumn("VornameEltern1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVornameEltern1);
-                this.columnAnredeEltern1 = new global::System.Data.DataColumn("AnredeEltern1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnredeEltern1);
-                this.columnVerwandtschaftsbezeichnungEltern1 = new global::System.Data.DataColumn("VerwandtschaftsbezeichnungEltern1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVerwandtschaftsbezeichnungEltern1);
-                this.columnNachnameEltern2 = new global::System.Data.DataColumn("NachnameEltern2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNachnameEltern2);
-                this.columnVornameEltern2 = new global::System.Data.DataColumn("VornameEltern2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVornameEltern2);
-                this.columnAnredeEltern2 = new global::System.Data.DataColumn("AnredeEltern2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAnredeEltern2);
-                this.columnVerwandtschaftsbezeichnungEltern2 = new global::System.Data.DataColumn("VerwandtschaftsbezeichnungEltern2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnVerwandtschaftsbezeichnungEltern2);
-                this.columnGesamtnote = new global::System.Data.DataColumn("Gesamtnote", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnGesamtnote);
-                this.columnThemaLang = new global::System.Data.DataColumn("ThemaLang", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnThemaLang);
-                this.columnThemaKurz = new global::System.Data.DataColumn("ThemaKurz", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnThemaKurz);
-                this.columnKlassenleiter = new global::System.Data.DataColumn("Klassenleiter", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnKlassenleiter);
-                this.columnEintrittJahrgangsstufe = new global::System.Data.DataColumn("EintrittJahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEintrittJahrgangsstufe);
-                this.columnEintrittAm = new global::System.Data.DataColumn("EintrittAm", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEintrittAm);
-                this.columnEintrittAusSchulnummer = new global::System.Data.DataColumn("EintrittAusSchulnummer", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEintrittAusSchulnummer);
-                this.columnEmail = new global::System.Data.DataColumn("Email", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEmail);
-                this.columnNotfalltelefonnummer = new global::System.Data.DataColumn("Notfalltelefonnummer", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNotfalltelefonnummer);
-                this.columnDNote = new global::System.Data.DataColumn("DNote", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDNote);
-                this.columnStatus = new global::System.Data.DataColumn("Status", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnStatus);
-                this.columnAndereFremdspr2Note = new global::System.Data.DataColumn("AndereFremdspr2Note", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAndereFremdspr2Note);
-                this.columnAndereFremdspr2Text = new global::System.Data.DataColumn("AndereFremdspr2Text", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAndereFremdspr2Text);
-                this.columnDNoteAllg = new global::System.Data.DataColumn("DNoteAllg", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDNoteAllg);
-                this.columnSchulart = new global::System.Data.DataColumn("Schulart", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSchulart);
-                this.columnAlteSO = new global::System.Data.DataColumn("AlteSO", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnAlteSO);
-                this.columnPunktesumme = new global::System.Data.DataColumn("Punktesumme", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPunktesumme);
-                this.columnBestanden = new global::System.Data.DataColumn("Bestanden", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnBestanden);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnId}, true));
-                this.columnBezeichnung.AllowDBNull = false;
-                this.columnBezeichnung.MaxLength = 50;
-                this.columnId.AllowDBNull = false;
-                this.columnId.Unique = true;
-                this.columnName.AllowDBNull = false;
-                this.columnName.MaxLength = 256;
-                this.columnVorname.AllowDBNull = false;
-                this.columnVorname.MaxLength = 256;
-                this.columnKlasseId.AllowDBNull = false;
-                this.columnRufname.MaxLength = 256;
-                this.columnGeschlecht.MaxLength = 50;
-                this.columnGeburtsort.MaxLength = 256;
-                this.columnBekenntnis.MaxLength = 50;
-                this.columnAnschriftPLZ.MaxLength = 256;
-                this.columnAnschriftOrt.MaxLength = 256;
-                this.columnAnschriftStrasse.MaxLength = 256;
-                this.columnAnschriftTelefonnummer.MaxLength = 256;
-                this.columnAusbildungsrichtung.MaxLength = 50;
-                this.columnFremdsprache2.MaxLength = 50;
-                this.columnReligionOderEthik.MaxLength = 50;
-                this.columnWahlpflichtfach.MaxLength = 50;
-                this.columnWahlfach1.MaxLength = 50;
-                this.columnWahlfach2.MaxLength = 50;
-                this.columnWahlfach3.MaxLength = 50;
-                this.columnWahlfach4.MaxLength = 50;
-                this.columnWiederholung1Jahrgangsstufe.MaxLength = 50;
-                this.columnWiederholung2Jahrgangsstufe.MaxLength = 50;
-                this.columnWiederholung1Grund.MaxLength = 256;
-                this.columnWiederholung2Grund.MaxLength = 256;
-                this.columnSchulischeVorbildung.MaxLength = 50;
-                this.columnBeruflicheVorbildung.MaxLength = 50;
-                this.columnNachnameEltern1.MaxLength = 50;
-                this.columnVornameEltern1.MaxLength = 50;
-                this.columnAnredeEltern1.MaxLength = 10;
-                this.columnVerwandtschaftsbezeichnungEltern1.MaxLength = 10;
-                this.columnNachnameEltern2.MaxLength = 50;
-                this.columnVornameEltern2.MaxLength = 50;
-                this.columnAnredeEltern2.MaxLength = 10;
-                this.columnVerwandtschaftsbezeichnungEltern2.MaxLength = 10;
-                this.columnThemaLang.MaxLength = 1024;
-                this.columnThemaKurz.MaxLength = 117;
-                this.columnKlassenleiter.MaxLength = 256;
-                this.columnEintrittJahrgangsstufe.MaxLength = 10;
-                this.columnEmail.MaxLength = 256;
-                this.columnNotfalltelefonnummer.MaxLength = 256;
-                this.columnAndereFremdspr2Text.MaxLength = 50;
-                this.columnSchulart.MaxLength = 10;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public vwNotenbogenRow NewvwNotenbogenRow() {
-                return ((vwNotenbogenRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new vwNotenbogenRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(vwNotenbogenRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.vwNotenbogenRowChanged != null)) {
-                    this.vwNotenbogenRowChanged(this, new vwNotenbogenRowChangeEvent(((vwNotenbogenRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.vwNotenbogenRowChanging != null)) {
-                    this.vwNotenbogenRowChanging(this, new vwNotenbogenRowChangeEvent(((vwNotenbogenRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.vwNotenbogenRowDeleted != null)) {
-                    this.vwNotenbogenRowDeleted(this, new vwNotenbogenRowChangeEvent(((vwNotenbogenRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.vwNotenbogenRowDeleting != null)) {
-                    this.vwNotenbogenRowDeleting(this, new vwNotenbogenRowChangeEvent(((vwNotenbogenRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemovevwNotenbogenRow(vwNotenbogenRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                diNoDataSet ds = new diNoDataSet();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "vwNotenbogenDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -9584,6 +8417,281 @@ namespace diNo {
         }
         
         /// <summary>
+        ///Represents the strongly named DataTable class.
+        ///</summary>
+        [global::System.Serializable()]
+        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
+        public partial class Fpa12altDataTable : global::System.Data.TypedTableBase<Fpa12altRow> {
+            
+            private global::System.Data.DataColumn columnSchuelerId;
+            
+            private global::System.Data.DataColumn columnErfolg;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public Fpa12altDataTable() {
+                this.TableName = "Fpa12alt";
+                this.BeginInit();
+                this.InitClass();
+                this.EndInit();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal Fpa12altDataTable(global::System.Data.DataTable table) {
+                this.TableName = table.TableName;
+                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
+                    this.CaseSensitive = table.CaseSensitive;
+                }
+                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
+                    this.Locale = table.Locale;
+                }
+                if ((table.Namespace != table.DataSet.Namespace)) {
+                    this.Namespace = table.Namespace;
+                }
+                this.Prefix = table.Prefix;
+                this.MinimumCapacity = table.MinimumCapacity;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected Fpa12altDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+                    base(info, context) {
+                this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn SchuelerIdColumn {
+                get {
+                    return this.columnSchuelerId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ErfolgColumn {
+                get {
+                    return this.columnErfolg;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            [global::System.ComponentModel.Browsable(false)]
+            public int Count {
+                get {
+                    return this.Rows.Count;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public Fpa12altRow this[int index] {
+                get {
+                    return ((Fpa12altRow)(this.Rows[index]));
+                }
+            }
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event Fpa12altRowChangeEventHandler Fpa12altRowChanging;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event Fpa12altRowChangeEventHandler Fpa12altRowChanged;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event Fpa12altRowChangeEventHandler Fpa12altRowDeleting;
+            
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public event Fpa12altRowChangeEventHandler Fpa12altRowDeleted;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void AddFpa12altRow(Fpa12altRow row) {
+                this.Rows.Add(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public Fpa12altRow AddFpa12altRow(SchuelerRow parentSchuelerRowByFK_FpANoten_Schueler, int Erfolg) {
+                Fpa12altRow rowFpa12altRow = ((Fpa12altRow)(this.NewRow()));
+                object[] columnValuesArray = new object[] {
+                        null,
+                        Erfolg};
+                if ((parentSchuelerRowByFK_FpANoten_Schueler != null)) {
+                    columnValuesArray[0] = parentSchuelerRowByFK_FpANoten_Schueler[0];
+                }
+                rowFpa12altRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowFpa12altRow);
+                return rowFpa12altRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public Fpa12altRow FindBySchuelerId(int SchuelerId) {
+                return ((Fpa12altRow)(this.Rows.Find(new object[] {
+                            SchuelerId})));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public override global::System.Data.DataTable Clone() {
+                Fpa12altDataTable cln = ((Fpa12altDataTable)(base.Clone()));
+                cln.InitVars();
+                return cln;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataTable CreateInstance() {
+                return new Fpa12altDataTable();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal void InitVars() {
+                this.columnSchuelerId = base.Columns["SchuelerId"];
+                this.columnErfolg = base.Columns["Erfolg"];
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            private void InitClass() {
+                this.columnSchuelerId = new global::System.Data.DataColumn("SchuelerId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSchuelerId);
+                this.columnErfolg = new global::System.Data.DataColumn("Erfolg", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnErfolg);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnSchuelerId}, true));
+                this.columnSchuelerId.AllowDBNull = false;
+                this.columnSchuelerId.Unique = true;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public Fpa12altRow NewFpa12altRow() {
+                return ((Fpa12altRow)(this.NewRow()));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
+                return new Fpa12altRow(builder);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override global::System.Type GetRowType() {
+                return typeof(Fpa12altRow);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanged(e);
+                if ((this.Fpa12altRowChanged != null)) {
+                    this.Fpa12altRowChanged(this, new Fpa12altRowChangeEvent(((Fpa12altRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowChanging(e);
+                if ((this.Fpa12altRowChanging != null)) {
+                    this.Fpa12altRowChanging(this, new Fpa12altRowChangeEvent(((Fpa12altRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleted(e);
+                if ((this.Fpa12altRowDeleted != null)) {
+                    this.Fpa12altRowDeleted(this, new Fpa12altRowChangeEvent(((Fpa12altRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
+                base.OnRowDeleting(e);
+                if ((this.Fpa12altRowDeleting != null)) {
+                    this.Fpa12altRowDeleting(this, new Fpa12altRowChangeEvent(((Fpa12altRow)(e.Row)), e.Action));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void RemoveFpa12altRow(Fpa12altRow row) {
+                this.Rows.Remove(row);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
+                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                diNoDataSet ds = new diNoDataSet();
+                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
+                any1.MinOccurs = new decimal(0);
+                any1.MaxOccurs = decimal.MaxValue;
+                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any1);
+                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
+                any2.MinOccurs = new decimal(1);
+                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
+                sequence.Items.Add(any2);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute1.Name = "namespace";
+                attribute1.FixedValue = ds.Namespace;
+                type.Attributes.Add(attribute1);
+                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                attribute2.Name = "tableTypeName";
+                attribute2.FixedValue = "Fpa12altDataTable";
+                type.Attributes.Add(attribute2);
+                type.Particle = sequence;
+                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                if (xs.Contains(dsSchema.TargetNamespace)) {
+                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
+                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    try {
+                        global::System.Xml.Schema.XmlSchema schema = null;
+                        dsSchema.Write(s1);
+                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
+                            s2.SetLength(0);
+                            schema.Write(s2);
+                            if ((s1.Length == s2.Length)) {
+                                s1.Position = 0;
+                                s2.Position = 0;
+                                for (; ((s1.Position != s1.Length) 
+                                            && (s1.ReadByte() == s2.ReadByte())); ) {
+                                    ;
+                                }
+                                if ((s1.Position == s1.Length)) {
+                                    return type;
+                                }
+                            }
+                        }
+                    }
+                    finally {
+                        if ((s1 != null)) {
+                            s1.Close();
+                        }
+                        if ((s2 != null)) {
+                            s2.Close();
+                        }
+                    }
+                }
+                xs.Add(dsSchema);
+                return type;
+            }
+        }
+        
+        /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
         public partial class FachRow : global::System.Data.DataRow {
@@ -11054,1592 +10162,6 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetAbschlusszeugnisNull() {
                 this[this.tableBerechneteNote.AbschlusszeugnisColumn] = global::System.Convert.DBNull;
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class vwNotenbogenRow : global::System.Data.DataRow {
-            
-            private vwNotenbogenDataTable tablevwNotenbogen;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal vwNotenbogenRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tablevwNotenbogen = ((vwNotenbogenDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Bezeichnung {
-                get {
-                    return ((string)(this[this.tablevwNotenbogen.BezeichnungColumn]));
-                }
-                set {
-                    this[this.tablevwNotenbogen.BezeichnungColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Id {
-                get {
-                    return ((int)(this[this.tablevwNotenbogen.IdColumn]));
-                }
-                set {
-                    this[this.tablevwNotenbogen.IdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Name {
-                get {
-                    return ((string)(this[this.tablevwNotenbogen.NameColumn]));
-                }
-                set {
-                    this[this.tablevwNotenbogen.NameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Vorname {
-                get {
-                    return ((string)(this[this.tablevwNotenbogen.VornameColumn]));
-                }
-                set {
-                    this[this.tablevwNotenbogen.VornameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int KlasseId {
-                get {
-                    return ((int)(this[this.tablevwNotenbogen.KlasseIdColumn]));
-                }
-                set {
-                    this[this.tablevwNotenbogen.KlasseIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Rufname {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.RufnameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Rufname in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.RufnameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Geschlecht {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.GeschlechtColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Geschlecht in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.GeschlechtColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime Geburtsdatum {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tablevwNotenbogen.GeburtsdatumColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Geburtsdatum in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.GeburtsdatumColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Geburtsort {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.GeburtsortColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Geburtsort in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.GeburtsortColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Bekenntnis {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.BekenntnisColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Bekenntnis in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.BekenntnisColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnschriftPLZ {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.AnschriftPLZColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftPLZ in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.AnschriftPLZColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnschriftOrt {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.AnschriftOrtColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftOrt in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.AnschriftOrtColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnschriftStrasse {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.AnschriftStrasseColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftStrasse in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.AnschriftStrasseColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnschriftTelefonnummer {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.AnschriftTelefonnummerColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnschriftTelefonnummer in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.AnschriftTelefonnummerColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Ausbildungsrichtung {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.AusbildungsrichtungColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Ausbildungsrichtung in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.AusbildungsrichtungColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Fremdsprache2 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.Fremdsprache2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Fremdsprache2 in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.Fremdsprache2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ReligionOderEthik {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.ReligionOderEthikColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte ReligionOderEthik in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.ReligionOderEthikColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wahlpflichtfach {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.WahlpflichtfachColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlpflichtfach in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.WahlpflichtfachColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wahlfach1 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.Wahlfach1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach1 in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.Wahlfach1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wahlfach2 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.Wahlfach2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach2 in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.Wahlfach2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wahlfach3 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.Wahlfach3Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach3 in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.Wahlfach3Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wahlfach4 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.Wahlfach4Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach4 in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.Wahlfach4Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wiederholung1Jahrgangsstufe {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.Wiederholung1JahrgangsstufeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung1Jahrgangsstufe in Tabelle vwNotenbogen ist DBNul" +
-                                "l.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.Wiederholung1JahrgangsstufeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wiederholung2Jahrgangsstufe {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.Wiederholung2JahrgangsstufeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung2Jahrgangsstufe in Tabelle vwNotenbogen ist DBNul" +
-                                "l.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.Wiederholung2JahrgangsstufeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wiederholung1Grund {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.Wiederholung1GrundColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung1Grund in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.Wiederholung1GrundColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Wiederholung2Grund {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.Wiederholung2GrundColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wiederholung2Grund in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.Wiederholung2GrundColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime ProbezeitBis {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tablevwNotenbogen.ProbezeitBisColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte ProbezeitBis in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.ProbezeitBisColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime Austrittsdatum {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tablevwNotenbogen.AustrittsdatumColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Austrittsdatum in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.AustrittsdatumColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string SchulischeVorbildung {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.SchulischeVorbildungColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte SchulischeVorbildung in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.SchulischeVorbildungColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string BeruflicheVorbildung {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.BeruflicheVorbildungColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte BeruflicheVorbildung in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.BeruflicheVorbildungColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool LRSStoerung {
-                get {
-                    try {
-                        return ((bool)(this[this.tablevwNotenbogen.LRSStoerungColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte LRSStoerung in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.LRSStoerungColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool LRSSchwaeche {
-                get {
-                    try {
-                        return ((bool)(this[this.tablevwNotenbogen.LRSSchwaecheColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte LRSSchwaeche in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.LRSSchwaecheColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime LRSBisDatum {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tablevwNotenbogen.LRSBisDatumColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte LRSBisDatum in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.LRSBisDatumColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string NachnameEltern1 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.NachnameEltern1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte NachnameEltern1 in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.NachnameEltern1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string VornameEltern1 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.VornameEltern1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VornameEltern1 in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.VornameEltern1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnredeEltern1 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.AnredeEltern1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnredeEltern1 in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.AnredeEltern1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string VerwandtschaftsbezeichnungEltern1 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.VerwandtschaftsbezeichnungEltern1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VerwandtschaftsbezeichnungEltern1 in Tabelle vwNotenbogen ist" +
-                                " DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.VerwandtschaftsbezeichnungEltern1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string NachnameEltern2 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.NachnameEltern2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte NachnameEltern2 in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.NachnameEltern2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string VornameEltern2 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.VornameEltern2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VornameEltern2 in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.VornameEltern2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AnredeEltern2 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.AnredeEltern2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AnredeEltern2 in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.AnredeEltern2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string VerwandtschaftsbezeichnungEltern2 {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.VerwandtschaftsbezeichnungEltern2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte VerwandtschaftsbezeichnungEltern2 in Tabelle vwNotenbogen ist" +
-                                " DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.VerwandtschaftsbezeichnungEltern2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Gesamtnote {
-                get {
-                    try {
-                        return ((int)(this[this.tablevwNotenbogen.GesamtnoteColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Gesamtnote in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.GesamtnoteColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ThemaLang {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.ThemaLangColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte ThemaLang in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.ThemaLangColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ThemaKurz {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.ThemaKurzColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte ThemaKurz in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.ThemaKurzColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Klassenleiter {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.KlassenleiterColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Klassenleiter in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.KlassenleiterColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string EintrittJahrgangsstufe {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.EintrittJahrgangsstufeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittJahrgangsstufe in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.EintrittJahrgangsstufeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public System.DateTime EintrittAm {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tablevwNotenbogen.EintrittAmColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittAm in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.EintrittAmColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int EintrittAusSchulnummer {
-                get {
-                    try {
-                        return ((int)(this[this.tablevwNotenbogen.EintrittAusSchulnummerColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte EintrittAusSchulnummer in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.EintrittAusSchulnummerColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Email {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.EmailColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Email in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.EmailColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Notfalltelefonnummer {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.NotfalltelefonnummerColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Notfalltelefonnummer in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.NotfalltelefonnummerColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal DNote {
-                get {
-                    try {
-                        return ((decimal)(this[this.tablevwNotenbogen.DNoteColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte DNote in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.DNoteColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Status {
-                get {
-                    try {
-                        return ((int)(this[this.tablevwNotenbogen.StatusColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Status in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.StatusColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int AndereFremdspr2Note {
-                get {
-                    try {
-                        return ((int)(this[this.tablevwNotenbogen.AndereFremdspr2NoteColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AndereFremdspr2Note in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.AndereFremdspr2NoteColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string AndereFremdspr2Text {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.AndereFremdspr2TextColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AndereFremdspr2Text in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.AndereFremdspr2TextColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal DNoteAllg {
-                get {
-                    try {
-                        return ((decimal)(this[this.tablevwNotenbogen.DNoteAllgColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte DNoteAllg in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.DNoteAllgColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Schulart {
-                get {
-                    try {
-                        return ((string)(this[this.tablevwNotenbogen.SchulartColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Schulart in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.SchulartColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool AlteSO {
-                get {
-                    try {
-                        return ((bool)(this[this.tablevwNotenbogen.AlteSOColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte AlteSO in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.AlteSOColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Punktesumme {
-                get {
-                    try {
-                        return ((int)(this[this.tablevwNotenbogen.PunktesummeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Punktesumme in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.PunktesummeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int Bestanden {
-                get {
-                    try {
-                        return ((int)(this[this.tablevwNotenbogen.BestandenColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Bestanden in Tabelle vwNotenbogen ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablevwNotenbogen.BestandenColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsRufnameNull() {
-                return this.IsNull(this.tablevwNotenbogen.RufnameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetRufnameNull() {
-                this[this.tablevwNotenbogen.RufnameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsGeschlechtNull() {
-                return this.IsNull(this.tablevwNotenbogen.GeschlechtColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetGeschlechtNull() {
-                this[this.tablevwNotenbogen.GeschlechtColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsGeburtsdatumNull() {
-                return this.IsNull(this.tablevwNotenbogen.GeburtsdatumColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetGeburtsdatumNull() {
-                this[this.tablevwNotenbogen.GeburtsdatumColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsGeburtsortNull() {
-                return this.IsNull(this.tablevwNotenbogen.GeburtsortColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetGeburtsortNull() {
-                this[this.tablevwNotenbogen.GeburtsortColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsBekenntnisNull() {
-                return this.IsNull(this.tablevwNotenbogen.BekenntnisColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetBekenntnisNull() {
-                this[this.tablevwNotenbogen.BekenntnisColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnschriftPLZNull() {
-                return this.IsNull(this.tablevwNotenbogen.AnschriftPLZColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnschriftPLZNull() {
-                this[this.tablevwNotenbogen.AnschriftPLZColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnschriftOrtNull() {
-                return this.IsNull(this.tablevwNotenbogen.AnschriftOrtColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnschriftOrtNull() {
-                this[this.tablevwNotenbogen.AnschriftOrtColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnschriftStrasseNull() {
-                return this.IsNull(this.tablevwNotenbogen.AnschriftStrasseColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnschriftStrasseNull() {
-                this[this.tablevwNotenbogen.AnschriftStrasseColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnschriftTelefonnummerNull() {
-                return this.IsNull(this.tablevwNotenbogen.AnschriftTelefonnummerColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnschriftTelefonnummerNull() {
-                this[this.tablevwNotenbogen.AnschriftTelefonnummerColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAusbildungsrichtungNull() {
-                return this.IsNull(this.tablevwNotenbogen.AusbildungsrichtungColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAusbildungsrichtungNull() {
-                this[this.tablevwNotenbogen.AusbildungsrichtungColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsFremdsprache2Null() {
-                return this.IsNull(this.tablevwNotenbogen.Fremdsprache2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetFremdsprache2Null() {
-                this[this.tablevwNotenbogen.Fremdsprache2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsReligionOderEthikNull() {
-                return this.IsNull(this.tablevwNotenbogen.ReligionOderEthikColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetReligionOderEthikNull() {
-                this[this.tablevwNotenbogen.ReligionOderEthikColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWahlpflichtfachNull() {
-                return this.IsNull(this.tablevwNotenbogen.WahlpflichtfachColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWahlpflichtfachNull() {
-                this[this.tablevwNotenbogen.WahlpflichtfachColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWahlfach1Null() {
-                return this.IsNull(this.tablevwNotenbogen.Wahlfach1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWahlfach1Null() {
-                this[this.tablevwNotenbogen.Wahlfach1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWahlfach2Null() {
-                return this.IsNull(this.tablevwNotenbogen.Wahlfach2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWahlfach2Null() {
-                this[this.tablevwNotenbogen.Wahlfach2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWahlfach3Null() {
-                return this.IsNull(this.tablevwNotenbogen.Wahlfach3Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWahlfach3Null() {
-                this[this.tablevwNotenbogen.Wahlfach3Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWahlfach4Null() {
-                return this.IsNull(this.tablevwNotenbogen.Wahlfach4Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWahlfach4Null() {
-                this[this.tablevwNotenbogen.Wahlfach4Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWiederholung1JahrgangsstufeNull() {
-                return this.IsNull(this.tablevwNotenbogen.Wiederholung1JahrgangsstufeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWiederholung1JahrgangsstufeNull() {
-                this[this.tablevwNotenbogen.Wiederholung1JahrgangsstufeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWiederholung2JahrgangsstufeNull() {
-                return this.IsNull(this.tablevwNotenbogen.Wiederholung2JahrgangsstufeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWiederholung2JahrgangsstufeNull() {
-                this[this.tablevwNotenbogen.Wiederholung2JahrgangsstufeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWiederholung1GrundNull() {
-                return this.IsNull(this.tablevwNotenbogen.Wiederholung1GrundColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWiederholung1GrundNull() {
-                this[this.tablevwNotenbogen.Wiederholung1GrundColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsWiederholung2GrundNull() {
-                return this.IsNull(this.tablevwNotenbogen.Wiederholung2GrundColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetWiederholung2GrundNull() {
-                this[this.tablevwNotenbogen.Wiederholung2GrundColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsProbezeitBisNull() {
-                return this.IsNull(this.tablevwNotenbogen.ProbezeitBisColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetProbezeitBisNull() {
-                this[this.tablevwNotenbogen.ProbezeitBisColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAustrittsdatumNull() {
-                return this.IsNull(this.tablevwNotenbogen.AustrittsdatumColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAustrittsdatumNull() {
-                this[this.tablevwNotenbogen.AustrittsdatumColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsSchulischeVorbildungNull() {
-                return this.IsNull(this.tablevwNotenbogen.SchulischeVorbildungColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetSchulischeVorbildungNull() {
-                this[this.tablevwNotenbogen.SchulischeVorbildungColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsBeruflicheVorbildungNull() {
-                return this.IsNull(this.tablevwNotenbogen.BeruflicheVorbildungColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetBeruflicheVorbildungNull() {
-                this[this.tablevwNotenbogen.BeruflicheVorbildungColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsLRSStoerungNull() {
-                return this.IsNull(this.tablevwNotenbogen.LRSStoerungColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetLRSStoerungNull() {
-                this[this.tablevwNotenbogen.LRSStoerungColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsLRSSchwaecheNull() {
-                return this.IsNull(this.tablevwNotenbogen.LRSSchwaecheColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetLRSSchwaecheNull() {
-                this[this.tablevwNotenbogen.LRSSchwaecheColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsLRSBisDatumNull() {
-                return this.IsNull(this.tablevwNotenbogen.LRSBisDatumColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetLRSBisDatumNull() {
-                this[this.tablevwNotenbogen.LRSBisDatumColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsNachnameEltern1Null() {
-                return this.IsNull(this.tablevwNotenbogen.NachnameEltern1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetNachnameEltern1Null() {
-                this[this.tablevwNotenbogen.NachnameEltern1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVornameEltern1Null() {
-                return this.IsNull(this.tablevwNotenbogen.VornameEltern1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVornameEltern1Null() {
-                this[this.tablevwNotenbogen.VornameEltern1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnredeEltern1Null() {
-                return this.IsNull(this.tablevwNotenbogen.AnredeEltern1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnredeEltern1Null() {
-                this[this.tablevwNotenbogen.AnredeEltern1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVerwandtschaftsbezeichnungEltern1Null() {
-                return this.IsNull(this.tablevwNotenbogen.VerwandtschaftsbezeichnungEltern1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVerwandtschaftsbezeichnungEltern1Null() {
-                this[this.tablevwNotenbogen.VerwandtschaftsbezeichnungEltern1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsNachnameEltern2Null() {
-                return this.IsNull(this.tablevwNotenbogen.NachnameEltern2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetNachnameEltern2Null() {
-                this[this.tablevwNotenbogen.NachnameEltern2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVornameEltern2Null() {
-                return this.IsNull(this.tablevwNotenbogen.VornameEltern2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVornameEltern2Null() {
-                this[this.tablevwNotenbogen.VornameEltern2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAnredeEltern2Null() {
-                return this.IsNull(this.tablevwNotenbogen.AnredeEltern2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAnredeEltern2Null() {
-                this[this.tablevwNotenbogen.AnredeEltern2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsVerwandtschaftsbezeichnungEltern2Null() {
-                return this.IsNull(this.tablevwNotenbogen.VerwandtschaftsbezeichnungEltern2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetVerwandtschaftsbezeichnungEltern2Null() {
-                this[this.tablevwNotenbogen.VerwandtschaftsbezeichnungEltern2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsGesamtnoteNull() {
-                return this.IsNull(this.tablevwNotenbogen.GesamtnoteColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetGesamtnoteNull() {
-                this[this.tablevwNotenbogen.GesamtnoteColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsThemaLangNull() {
-                return this.IsNull(this.tablevwNotenbogen.ThemaLangColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetThemaLangNull() {
-                this[this.tablevwNotenbogen.ThemaLangColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsThemaKurzNull() {
-                return this.IsNull(this.tablevwNotenbogen.ThemaKurzColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetThemaKurzNull() {
-                this[this.tablevwNotenbogen.ThemaKurzColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsKlassenleiterNull() {
-                return this.IsNull(this.tablevwNotenbogen.KlassenleiterColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetKlassenleiterNull() {
-                this[this.tablevwNotenbogen.KlassenleiterColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEintrittJahrgangsstufeNull() {
-                return this.IsNull(this.tablevwNotenbogen.EintrittJahrgangsstufeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEintrittJahrgangsstufeNull() {
-                this[this.tablevwNotenbogen.EintrittJahrgangsstufeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEintrittAmNull() {
-                return this.IsNull(this.tablevwNotenbogen.EintrittAmColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEintrittAmNull() {
-                this[this.tablevwNotenbogen.EintrittAmColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEintrittAusSchulnummerNull() {
-                return this.IsNull(this.tablevwNotenbogen.EintrittAusSchulnummerColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEintrittAusSchulnummerNull() {
-                this[this.tablevwNotenbogen.EintrittAusSchulnummerColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsEmailNull() {
-                return this.IsNull(this.tablevwNotenbogen.EmailColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetEmailNull() {
-                this[this.tablevwNotenbogen.EmailColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsNotfalltelefonnummerNull() {
-                return this.IsNull(this.tablevwNotenbogen.NotfalltelefonnummerColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetNotfalltelefonnummerNull() {
-                this[this.tablevwNotenbogen.NotfalltelefonnummerColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsDNoteNull() {
-                return this.IsNull(this.tablevwNotenbogen.DNoteColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetDNoteNull() {
-                this[this.tablevwNotenbogen.DNoteColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsStatusNull() {
-                return this.IsNull(this.tablevwNotenbogen.StatusColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetStatusNull() {
-                this[this.tablevwNotenbogen.StatusColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAndereFremdspr2NoteNull() {
-                return this.IsNull(this.tablevwNotenbogen.AndereFremdspr2NoteColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAndereFremdspr2NoteNull() {
-                this[this.tablevwNotenbogen.AndereFremdspr2NoteColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAndereFremdspr2TextNull() {
-                return this.IsNull(this.tablevwNotenbogen.AndereFremdspr2TextColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAndereFremdspr2TextNull() {
-                this[this.tablevwNotenbogen.AndereFremdspr2TextColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsDNoteAllgNull() {
-                return this.IsNull(this.tablevwNotenbogen.DNoteAllgColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetDNoteAllgNull() {
-                this[this.tablevwNotenbogen.DNoteAllgColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsSchulartNull() {
-                return this.IsNull(this.tablevwNotenbogen.SchulartColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetSchulartNull() {
-                this[this.tablevwNotenbogen.SchulartColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsAlteSONull() {
-                return this.IsNull(this.tablevwNotenbogen.AlteSOColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetAlteSONull() {
-                this[this.tablevwNotenbogen.AlteSOColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsPunktesummeNull() {
-                return this.IsNull(this.tablevwNotenbogen.PunktesummeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetPunktesummeNull() {
-                this[this.tablevwNotenbogen.PunktesummeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsBestandenNull() {
-                return this.IsNull(this.tablevwNotenbogen.BestandenColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetBestandenNull() {
-                this[this.tablevwNotenbogen.BestandenColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -14321,6 +11843,17 @@ namespace diNo {
                     return ((FpaRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Fpa_Schueler"])));
                 }
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public Fpa12altRow[] GetFpa12altRows() {
+                if ((this.Table.ChildRelations["FK_FpANoten_Schueler"] == null)) {
+                    return new Fpa12altRow[0];
+                }
+                else {
+                    return ((Fpa12altRow[])(base.GetChildRows(this.Table.ChildRelations["FK_FpANoten_Schueler"])));
+                }
+            }
         }
         
         /// <summary>
@@ -15202,6 +12735,71 @@ namespace diNo {
         }
         
         /// <summary>
+        ///Represents strongly named DataRow class.
+        ///</summary>
+        public partial class Fpa12altRow : global::System.Data.DataRow {
+            
+            private Fpa12altDataTable tableFpa12alt;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            internal Fpa12altRow(global::System.Data.DataRowBuilder rb) : 
+                    base(rb) {
+                this.tableFpa12alt = ((Fpa12altDataTable)(this.Table));
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int SchuelerId {
+                get {
+                    return ((int)(this[this.tableFpa12alt.SchuelerIdColumn]));
+                }
+                set {
+                    this[this.tableFpa12alt.SchuelerIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int Erfolg {
+                get {
+                    try {
+                        return ((int)(this[this.tableFpa12alt.ErfolgColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Erfolg in Tabelle Fpa12alt ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFpa12alt.ErfolgColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SchuelerRow SchuelerRow {
+                get {
+                    return ((SchuelerRow)(this.GetParentRow(this.Table.ParentRelations["FK_FpANoten_Schueler"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_FpANoten_Schueler"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsErfolgNull() {
+                return this.IsNull(this.tableFpa12alt.ErfolgColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetErfolgNull() {
+                this[this.tableFpa12alt.ErfolgColumn] = global::System.Convert.DBNull;
+            }
+        }
+        
+        /// <summary>
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
@@ -15579,40 +13177,6 @@ namespace diNo {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class vwNotenbogenRowChangeEvent : global::System.EventArgs {
-            
-            private vwNotenbogenRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public vwNotenbogenRowChangeEvent(vwNotenbogenRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public vwNotenbogenRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public class VorkommnisRowChangeEvent : global::System.EventArgs {
             
             private VorkommnisRow eventRow;
@@ -15901,6 +13465,40 @@ namespace diNo {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public FpaRow Row {
+                get {
+                    return this.eventRow;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataRowAction Action {
+                get {
+                    return this.eventAction;
+                }
+            }
+        }
+        
+        /// <summary>
+        ///Row event argument class
+        ///</summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public class Fpa12altRowChangeEvent : global::System.EventArgs {
+            
+            private Fpa12altRow eventRow;
+            
+            private global::System.Data.DataRowAction eventAction;
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public Fpa12altRowChangeEvent(Fpa12altRow row, global::System.Data.DataRowAction action) {
+                this.eventRow = row;
+                this.eventAction = action;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public Fpa12altRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -20868,266 +18466,6 @@ WHERE        (KursId = @KursId) AND (SchuelerId = @SchuelerId) AND (IstHistorisc
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class vwNotenbogenTableAdapter : global::System.ComponentModel.Component {
-        
-        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
-        
-        private global::System.Data.SqlClient.SqlConnection _connection;
-        
-        private global::System.Data.SqlClient.SqlTransaction _transaction;
-        
-        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
-        
-        private bool _clearBeforeFill;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public vwNotenbogenTableAdapter() {
-            this.ClearBeforeFill = true;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
-            get {
-                if ((this._adapter == null)) {
-                    this.InitAdapter();
-                }
-                return this._adapter;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        internal global::System.Data.SqlClient.SqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
-            }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        internal global::System.Data.SqlClient.SqlTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public bool ClearBeforeFill {
-            get {
-                return this._clearBeforeFill;
-            }
-            set {
-                this._clearBeforeFill = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitAdapter() {
-            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
-            tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "vwNotenbogen";
-            tableMapping.ColumnMappings.Add("Bezeichnung", "Bezeichnung");
-            tableMapping.ColumnMappings.Add("Id", "Id");
-            tableMapping.ColumnMappings.Add("Name", "Name");
-            tableMapping.ColumnMappings.Add("Vorname", "Vorname");
-            tableMapping.ColumnMappings.Add("KlasseId", "KlasseId");
-            tableMapping.ColumnMappings.Add("Rufname", "Rufname");
-            tableMapping.ColumnMappings.Add("Geschlecht", "Geschlecht");
-            tableMapping.ColumnMappings.Add("Geburtsdatum", "Geburtsdatum");
-            tableMapping.ColumnMappings.Add("Geburtsort", "Geburtsort");
-            tableMapping.ColumnMappings.Add("Bekenntnis", "Bekenntnis");
-            tableMapping.ColumnMappings.Add("AnschriftPLZ", "AnschriftPLZ");
-            tableMapping.ColumnMappings.Add("AnschriftOrt", "AnschriftOrt");
-            tableMapping.ColumnMappings.Add("AnschriftStrasse", "AnschriftStrasse");
-            tableMapping.ColumnMappings.Add("AnschriftTelefonnummer", "AnschriftTelefonnummer");
-            tableMapping.ColumnMappings.Add("Ausbildungsrichtung", "Ausbildungsrichtung");
-            tableMapping.ColumnMappings.Add("Fremdsprache2", "Fremdsprache2");
-            tableMapping.ColumnMappings.Add("ReligionOderEthik", "ReligionOderEthik");
-            tableMapping.ColumnMappings.Add("Wahlpflichtfach", "Wahlpflichtfach");
-            tableMapping.ColumnMappings.Add("Wahlfach1", "Wahlfach1");
-            tableMapping.ColumnMappings.Add("Wahlfach2", "Wahlfach2");
-            tableMapping.ColumnMappings.Add("Wahlfach3", "Wahlfach3");
-            tableMapping.ColumnMappings.Add("Wahlfach4", "Wahlfach4");
-            tableMapping.ColumnMappings.Add("Wiederholung1Jahrgangsstufe", "Wiederholung1Jahrgangsstufe");
-            tableMapping.ColumnMappings.Add("Wiederholung2Jahrgangsstufe", "Wiederholung2Jahrgangsstufe");
-            tableMapping.ColumnMappings.Add("Wiederholung1Grund", "Wiederholung1Grund");
-            tableMapping.ColumnMappings.Add("Wiederholung2Grund", "Wiederholung2Grund");
-            tableMapping.ColumnMappings.Add("ProbezeitBis", "ProbezeitBis");
-            tableMapping.ColumnMappings.Add("Austrittsdatum", "Austrittsdatum");
-            tableMapping.ColumnMappings.Add("SchulischeVorbildung", "SchulischeVorbildung");
-            tableMapping.ColumnMappings.Add("BeruflicheVorbildung", "BeruflicheVorbildung");
-            tableMapping.ColumnMappings.Add("LRSStoerung", "LRSStoerung");
-            tableMapping.ColumnMappings.Add("LRSSchwaeche", "LRSSchwaeche");
-            tableMapping.ColumnMappings.Add("LRSBisDatum", "LRSBisDatum");
-            tableMapping.ColumnMappings.Add("NachnameEltern1", "NachnameEltern1");
-            tableMapping.ColumnMappings.Add("VornameEltern1", "VornameEltern1");
-            tableMapping.ColumnMappings.Add("AnredeEltern1", "AnredeEltern1");
-            tableMapping.ColumnMappings.Add("VerwandtschaftsbezeichnungEltern1", "VerwandtschaftsbezeichnungEltern1");
-            tableMapping.ColumnMappings.Add("NachnameEltern2", "NachnameEltern2");
-            tableMapping.ColumnMappings.Add("VornameEltern2", "VornameEltern2");
-            tableMapping.ColumnMappings.Add("AnredeEltern2", "AnredeEltern2");
-            tableMapping.ColumnMappings.Add("VerwandtschaftsbezeichnungEltern2", "VerwandtschaftsbezeichnungEltern2");
-            tableMapping.ColumnMappings.Add("Gesamtnote", "Gesamtnote");
-            tableMapping.ColumnMappings.Add("ThemaLang", "ThemaLang");
-            tableMapping.ColumnMappings.Add("ThemaKurz", "ThemaKurz");
-            tableMapping.ColumnMappings.Add("Klassenleiter", "Klassenleiter");
-            tableMapping.ColumnMappings.Add("EintrittJahrgangsstufe", "EintrittJahrgangsstufe");
-            tableMapping.ColumnMappings.Add("EintrittAm", "EintrittAm");
-            tableMapping.ColumnMappings.Add("EintrittAusSchulnummer", "EintrittAusSchulnummer");
-            tableMapping.ColumnMappings.Add("Email", "Email");
-            tableMapping.ColumnMappings.Add("Notfalltelefonnummer", "Notfalltelefonnummer");
-            tableMapping.ColumnMappings.Add("DNote", "DNote");
-            tableMapping.ColumnMappings.Add("Status", "Status");
-            tableMapping.ColumnMappings.Add("AndereFremdspr2Note", "AndereFremdspr2Note");
-            tableMapping.ColumnMappings.Add("AndereFremdspr2Text", "AndereFremdspr2Text");
-            tableMapping.ColumnMappings.Add("DNoteAllg", "DNoteAllg");
-            tableMapping.ColumnMappings.Add("Schulart", "Schulart");
-            tableMapping.ColumnMappings.Add("AlteSO", "AlteSO");
-            tableMapping.ColumnMappings.Add("Punktesumme", "Punktesumme");
-            tableMapping.ColumnMappings.Add("Bestanden", "Bestanden");
-            this._adapter.TableMappings.Add(tableMapping);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitConnection() {
-            this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::diNo.Properties.Settings.Default.diNoConnectionString;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
-            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        vwNotenbogen.*\r\nFROM            vwNotenbogen\r\nWHERE [Id]=@SchuelerI" +
-                "d";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT AlteSO, AndereFremdspr2Note, AndereFremdspr2Text, AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, BeruflicheVorbildung, Bestanden, Bezeichnung, DNote, DNoteAllg, EintrittAm, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Fremdsprache2, Geburtsdatum, Geburtsort, Gesamtnote, Geschlecht, Id, KlasseId, Klassenleiter, LRSBisDatum, LRSSchwaeche, LRSStoerung, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, Punktesumme, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, Status, ThemaKurz, ThemaLang, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wahlpflichtfach, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe FROM vwNotenbogen WHERE (KlasseId = @KlasseId) AND (Status = 0)";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int FillBySchuelerId(diNoDataSet.vwNotenbogenDataTable dataTable, int SchuelerId) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(SchuelerId));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual diNoDataSet.vwNotenbogenDataTable GetDataBySchuelerId(int SchuelerId) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(SchuelerId));
-            diNoDataSet.vwNotenbogenDataTable dataTable = new diNoDataSet.vwNotenbogenDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillByKlasseId(diNoDataSet.vwNotenbogenDataTable dataTable, int KlasseId) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.vwNotenbogenDataTable GetDataByKlasseId(int KlasseId) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
-            diNoDataSet.vwNotenbogenDataTable dataTable = new diNoDataSet.vwNotenbogenDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-    }
-    
-    /// <summary>
-    ///Represents the connection and commands used to retrieve and save data.
-    ///</summary>
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DataObjectAttribute(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
-        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
     public partial class VorkommnisTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
@@ -25801,6 +23139,336 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
     }
     
     /// <summary>
+    ///Represents the connection and commands used to retrieve and save data.
+    ///</summary>
+    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
+    [global::System.ComponentModel.ToolboxItem(true)]
+    [global::System.ComponentModel.DataObjectAttribute(true)]
+    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
+        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
+    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+    public partial class Fpa12altTableAdapter : global::System.ComponentModel.Component {
+        
+        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
+        
+        private global::System.Data.SqlClient.SqlConnection _connection;
+        
+        private global::System.Data.SqlClient.SqlTransaction _transaction;
+        
+        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
+        
+        private bool _clearBeforeFill;
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public Fpa12altTableAdapter() {
+            this.ClearBeforeFill = true;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
+            get {
+                if ((this._adapter == null)) {
+                    this.InitAdapter();
+                }
+                return this._adapter;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.SqlClient.SqlConnection Connection {
+            get {
+                if ((this._connection == null)) {
+                    this.InitConnection();
+                }
+                return this._connection;
+            }
+            set {
+                this._connection = value;
+                if ((this.Adapter.InsertCommand != null)) {
+                    this.Adapter.InsertCommand.Connection = value;
+                }
+                if ((this.Adapter.DeleteCommand != null)) {
+                    this.Adapter.DeleteCommand.Connection = value;
+                }
+                if ((this.Adapter.UpdateCommand != null)) {
+                    this.Adapter.UpdateCommand.Connection = value;
+                }
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    if ((this.CommandCollection[i] != null)) {
+                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
+                    }
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        internal global::System.Data.SqlClient.SqlTransaction Transaction {
+            get {
+                return this._transaction;
+            }
+            set {
+                this._transaction = value;
+                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                    this.CommandCollection[i].Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.DeleteCommand != null))) {
+                    this.Adapter.DeleteCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.InsertCommand != null))) {
+                    this.Adapter.InsertCommand.Transaction = this._transaction;
+                }
+                if (((this.Adapter != null) 
+                            && (this.Adapter.UpdateCommand != null))) {
+                    this.Adapter.UpdateCommand.Transaction = this._transaction;
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
+            get {
+                if ((this._commandCollection == null)) {
+                    this.InitCommandCollection();
+                }
+                return this._commandCollection;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        public bool ClearBeforeFill {
+            get {
+                return this._clearBeforeFill;
+            }
+            set {
+                this._clearBeforeFill = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitAdapter() {
+            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
+            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            tableMapping.SourceTable = "Table";
+            tableMapping.DataSetTable = "Fpa12alt";
+            tableMapping.ColumnMappings.Add("SchuelerId", "SchuelerId");
+            tableMapping.ColumnMappings.Add("Erfolg", "Erfolg");
+            this._adapter.TableMappings.Add(tableMapping);
+            this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.DeleteCommand.Connection = this.Connection;
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Fpa12alt] WHERE (([SchuelerId] = @Original_SchuelerId) AND ((@IsNull" +
+                "_Erfolg = 1 AND [Erfolg] IS NULL) OR ([Erfolg] = @Original_Erfolg)))";
+            this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.InsertCommand.Connection = this.Connection;
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [Fpa12alt] ([SchuelerId], [Erfolg]) VALUES (@SchuelerId, @Erfolg);\r\nS" +
+                "ELECT SchuelerId, Erfolg FROM Fpa12alt WHERE (SchuelerId = @SchuelerId)";
+            this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Fpa12alt] SET [SchuelerId] = @SchuelerId, [Erfolg] = @Erfolg WHERE (([SchuelerId] = @Original_SchuelerId) AND ((@IsNull_Erfolg = 1 AND [Erfolg] IS NULL) OR ([Erfolg] = @Original_Erfolg)));
+SELECT SchuelerId, Erfolg FROM Fpa12alt WHERE (SchuelerId = @SchuelerId)";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Erfolg", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Erfolg", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitConnection() {
+            this._connection = new global::System.Data.SqlClient.SqlConnection();
+            this._connection.ConnectionString = global::diNo.Properties.Settings.Default.diNoConnectionString;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        private void InitCommandCollection() {
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
+            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[0].Connection = this.Connection;
+            this._commandCollection[0].CommandText = "SELECT        Fpa12alt.*\r\nFROM            Fpa12alt";
+            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT        Fpa12alt.*\r\nFROM            Fpa12alt\r\nWHERE SchuelerId = @SchuelerI" +
+                "d";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
+        public virtual diNoDataSet.Fpa12altDataTable GetData() {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            diNoDataSet.Fpa12altDataTable dataTable = new diNoDataSet.Fpa12altDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.Fpa12altDataTable GetDataBySchuelerId(int SchuelerId) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(SchuelerId));
+            diNoDataSet.Fpa12altDataTable dataTable = new diNoDataSet.Fpa12altDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(diNoDataSet.Fpa12altDataTable dataTable) {
+            return this.Adapter.Update(dataTable);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(diNoDataSet dataSet) {
+            return this.Adapter.Update(dataSet, "Fpa12alt");
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow dataRow) {
+            return this.Adapter.Update(new global::System.Data.DataRow[] {
+                        dataRow});
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual int Update(global::System.Data.DataRow[] dataRows) {
+            return this.Adapter.Update(dataRows);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
+        public virtual int Delete(int Original_SchuelerId, global::System.Nullable<int> Original_Erfolg) {
+            this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_SchuelerId));
+            if ((Original_Erfolg.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_Erfolg.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.DeleteCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.DeleteCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
+        public virtual int Insert(int SchuelerId, global::System.Nullable<int> Erfolg) {
+            this.Adapter.InsertCommand.Parameters[0].Value = ((int)(SchuelerId));
+            if ((Erfolg.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[1].Value = ((int)(Erfolg.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.InsertCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.InsertCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(int SchuelerId, global::System.Nullable<int> Erfolg, int Original_SchuelerId, global::System.Nullable<int> Original_Erfolg) {
+            this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(SchuelerId));
+            if ((Erfolg.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(Erfolg.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Original_SchuelerId));
+            if ((Original_Erfolg.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_Erfolg.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(global::System.Nullable<int> Erfolg, int Original_SchuelerId, global::System.Nullable<int> Original_Erfolg) {
+            return this.Update(Original_SchuelerId, Erfolg, Original_SchuelerId, Original_Erfolg);
+        }
+    }
+    
+    /// <summary>
     ///TableAdapterManager is used to coordinate TableAdapters in the dataset to enable Hierarchical Update scenarios
     ///</summary>
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -25849,6 +23517,8 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
         private HjLeistungTableAdapter _hjLeistungTableAdapter;
         
         private FpaTableAdapter _fpaTableAdapter;
+        
+        private Fpa12altTableAdapter _fpa12altTableAdapter;
         
         private bool _backupDataSetBeforeUpdate;
         
@@ -26133,6 +23803,20 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.EditorAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterManagerPropertyEditor, Microso" +
+            "ft.VSDesigner, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3" +
+            "a", "System.Drawing.Design.UITypeEditor")]
+        public Fpa12altTableAdapter Fpa12altTableAdapter {
+            get {
+                return this._fpa12altTableAdapter;
+            }
+            set {
+                this._fpa12altTableAdapter = value;
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public bool BackupDataSetBeforeUpdate {
             get {
                 return this._backupDataSetBeforeUpdate;
@@ -26226,6 +23910,10 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                             && (this._fpaTableAdapter.Connection != null))) {
                     return this._fpaTableAdapter.Connection;
                 }
+                if (((this._fpa12altTableAdapter != null) 
+                            && (this._fpa12altTableAdapter.Connection != null))) {
+                    return this._fpa12altTableAdapter.Connection;
+                }
                 return null;
             }
             set {
@@ -26294,6 +23982,9 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     count = (count + 1);
                 }
                 if ((this._fpaTableAdapter != null)) {
+                    count = (count + 1);
+                }
+                if ((this._fpa12altTableAdapter != null)) {
                     count = (count + 1);
                 }
                 return count;
@@ -26379,6 +24070,15 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     allChangedRows.AddRange(updatedRows);
                 }
             }
+            if ((this._hjLeistungTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.HjLeistung.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._hjLeistungTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._lehrerRolleTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.LehrerRolle.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -26397,15 +24097,6 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._vorkommnisTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Vorkommnis.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._vorkommnisTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._berechneteNoteTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.BerechneteNote.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -26415,12 +24106,12 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._hjLeistungTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.HjLeistung.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._fpaTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Fpa.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._hjLeistungTableAdapter.Update(updatedRows));
+                    result = (result + this._fpaTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -26469,12 +24160,21 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._fpaTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Fpa.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._vorkommnisTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Vorkommnis.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._fpaTableAdapter.Update(updatedRows));
+                    result = (result + this._vorkommnisTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._fpa12altTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Fpa12alt.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._fpa12altTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -26552,6 +24252,14 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     allAddedRows.AddRange(addedRows);
                 }
             }
+            if ((this._hjLeistungTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.HjLeistung.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._hjLeistungTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             if ((this._lehrerRolleTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.LehrerRolle.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -26568,14 +24276,6 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._vorkommnisTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Vorkommnis.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._vorkommnisTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._berechneteNoteTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.BerechneteNote.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -26584,11 +24284,11 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._hjLeistungTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.HjLeistung.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._fpaTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Fpa.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._hjLeistungTableAdapter.Update(addedRows));
+                    result = (result + this._fpaTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -26632,11 +24332,19 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._fpaTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Fpa.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._vorkommnisTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Vorkommnis.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._fpaTableAdapter.Update(addedRows));
+                    result = (result + this._vorkommnisTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._fpa12altTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Fpa12alt.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._fpa12altTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -26650,11 +24358,19 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateDeletedRows(diNoDataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
             int result = 0;
-            if ((this._fpaTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Fpa.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._fpa12altTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Fpa12alt.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._fpaTableAdapter.Update(deletedRows));
+                    result = (result + this._fpa12altTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._vorkommnisTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Vorkommnis.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._vorkommnisTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -26698,11 +24414,11 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._hjLeistungTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.HjLeistung.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._fpaTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Fpa.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._hjLeistungTableAdapter.Update(deletedRows));
+                    result = (result + this._fpaTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -26711,14 +24427,6 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._berechneteNoteTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._vorkommnisTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Vorkommnis.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._vorkommnisTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -26735,6 +24443,14 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._lehrerRolleTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._hjLeistungTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.HjLeistung.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._hjLeistungTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -26933,6 +24649,11 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
             }
             if (((this._fpaTableAdapter != null) 
                         && (this.MatchTableAdapterConnection(this._fpaTableAdapter.Connection) == false))) {
+                throw new global::System.ArgumentException("Für alle von einem TableAdapterManager verwalteten Instanzen von TableAdapter mus" +
+                        "s die gleiche Verbindungszeichenfolge verwendet werden.");
+            }
+            if (((this._fpa12altTableAdapter != null) 
+                        && (this.MatchTableAdapterConnection(this._fpa12altTableAdapter.Connection) == false))) {
                 throw new global::System.ArgumentException("Für alle von einem TableAdapterManager verwalteten Instanzen von TableAdapter mus" +
                         "s die gleiche Verbindungszeichenfolge verwendet werden.");
             }
@@ -27141,6 +24862,15 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                         adaptersWithAcceptChangesDuringUpdate.Add(this._fpaTableAdapter.Adapter);
                     }
                 }
+                if ((this._fpa12altTableAdapter != null)) {
+                    revertConnections.Add(this._fpa12altTableAdapter, this._fpa12altTableAdapter.Connection);
+                    this._fpa12altTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(workConnection));
+                    this._fpa12altTableAdapter.Transaction = ((global::System.Data.SqlClient.SqlTransaction)(workTransaction));
+                    if (this._fpa12altTableAdapter.Adapter.AcceptChangesDuringUpdate) {
+                        this._fpa12altTableAdapter.Adapter.AcceptChangesDuringUpdate = false;
+                        adaptersWithAcceptChangesDuringUpdate.Add(this._fpa12altTableAdapter.Adapter);
+                    }
+                }
                 // 
                 //---- Perform updates -----------
                 //
@@ -27274,6 +25004,10 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                 if ((this._fpaTableAdapter != null)) {
                     this._fpaTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._fpaTableAdapter]));
                     this._fpaTableAdapter.Transaction = null;
+                }
+                if ((this._fpa12altTableAdapter != null)) {
+                    this._fpa12altTableAdapter.Connection = ((global::System.Data.SqlClient.SqlConnection)(revertConnections[this._fpa12altTableAdapter]));
+                    this._fpa12altTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
                     global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];

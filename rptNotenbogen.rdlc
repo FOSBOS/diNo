@@ -53,20 +53,48 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Subreport Name="subrptSchuljahrSchulart">
-                      <ReportName>subrptSchuljahrSchulart</ReportName>
-                      <Parameters>
-                        <Parameter Name="SId">
-                          <Value>=Fields!Id.Value</Value>
-                        </Parameter>
-                      </Parameters>
+                    <Textbox Name="Textbox1">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Schulart.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Schuljahr.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Right</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox1</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
                         </Border>
-                        <TextAlign>Right</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
                       </Style>
-                    </Subreport>
+                    </Textbox>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -83,7 +111,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Name.Value</Value>
+                              <Value>=Fields!Nachname.Value</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -106,24 +134,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!AnschriftStrasse.Value</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!AnschriftPLZ.Value</Value>
-                              <Style />
-                            </TextRun>
-                            <TextRun>
-                              <Value xml:space="preserve"> </Value>
-                              <Style />
-                            </TextRun>
-                            <TextRun>
-                              <Value>=Fields!AnschriftOrt.Value</Value>
+                              <Value>=Fields!Anschrift.Value</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -147,7 +158,11 @@
                               <Style />
                             </TextRun>
                             <TextRun>
-                              <Value>=Fields!AnschriftTelefonnummer.Value</Value>
+                              <Value>=Fields!Telefon.Value</Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
+                              <Value xml:space="preserve"> </Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -167,22 +182,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>geboren am </Value>
-                              <Style />
-                            </TextRun>
-                            <TextRun>
-                              <Value>=Fields!Geburtsdatum.Value</Value>
+                              <Value>=Fields!GeborenInAm.Value</Value>
                               <Style>
                                 <Format>d</Format>
                               </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value> in </Value>
-                              <Style />
-                            </TextRun>
-                            <TextRun>
-                              <Value>=Fields!Geburtsort.Value</Value>
-                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -203,19 +206,69 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Subreport Name="subrptSchullaufbahn">
-                      <ReportName>subrptSchullaufbahn</ReportName>
-                      <Parameters>
-                        <Parameter Name="SId">
-                          <Value>=Fields!Id.Value</Value>
-                        </Parameter>
-                      </Parameters>
+                    <Textbox Name="Textbox4">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Klasse.Value</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>  (KL: </Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!Klassenleiter.Value</Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
+                              <Value>)</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bekenntnis.Value</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Laufbahn.Value</Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!Legasthenie.Value</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox4</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
                         </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
                       </Style>
-                    </Subreport>
+                    </Textbox>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -245,23 +298,36 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>0.25604cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Subreport Name="subrptBemerkungen">
-                      <ReportName>subrptBemerkungen</ReportName>
-                      <Parameters>
-                        <Parameter Name="SId">
-                          <Value>=Fields!Id.Value</Value>
-                        </Parameter>
-                      </Parameters>
+                    <Textbox Name="Textbox22">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!Bemerkung.Value</Value>
+                              <MarkupType>HTML</MarkupType>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox22</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
                       </Style>
-                    </Subreport>
+                    </Textbox>
                     <ColSpan>2</ColSpan>
                   </CellContents>
                 </TablixCell>
@@ -269,7 +335,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>0.44125cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -287,6 +353,7 @@
                       </Style>
                     </Subreport>
                     <ColSpan>2</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -472,10 +539,10 @@
               </Group>
               <SortExpressions>
                 <SortExpression>
-                  <Value>=Fields!Bezeichnung.Value</Value>
+                  <Value>=Fields!Klasse.Value</Value>
                 </SortExpression>
                 <SortExpression>
-                  <Value>=Fields!Name.Value</Value>
+                  <Value>=Fields!Nachname.Value</Value>
                 </SortExpression>
                 <SortExpression>
                   <Value>=Fields!Vorname.Value</Value>
@@ -523,7 +590,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>8.13207cm</Height>
+        <Height>7.62936cm</Height>
         <Width>17.87938cm</Width>
         <Style>
           <Border>
@@ -534,7 +601,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.21202in</Height>
+    <Height>3.00369in</Height>
     <Style />
   </Body>
   <Width>7.03913in</Width>
@@ -557,222 +624,86 @@
       </ConnectionProperties>
       <rd:DataSourceID>bcc0f75d-95e1-442b-a11a-b6d547dcd08f</rd:DataSourceID>
     </DataSource>
+    <DataSource Name="diNo">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>fa4bdd8c-4770-4b34-98d8-297af14dc3c9</rd:DataSourceID>
+    </DataSource>
   </DataSources>
   <DataSets>
     <DataSet Name="DataSet1">
       <Query>
-        <DataSourceName>diNoDataSet</DataSourceName>
+        <DataSourceName>diNo</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="Bezeichnung">
-          <DataField>Bezeichnung</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Id">
-          <DataField>Id</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Name">
-          <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Vorname">
-          <DataField>Vorname</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="KlasseId">
-          <DataField>KlasseId</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Rufname">
-          <DataField>Rufname</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Geschlecht">
-          <DataField>Geschlecht</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Geburtsdatum">
-          <DataField>Geburtsdatum</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Geburtsort">
-          <DataField>Geburtsort</DataField>
+        <Field Name="Anschrift">
+          <DataField>Anschrift</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Bekenntnis">
           <DataField>Bekenntnis</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="AnschriftPLZ">
-          <DataField>AnschriftPLZ</DataField>
+        <Field Name="Bemerkung">
+          <DataField>Bemerkung</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="AnschriftOrt">
-          <DataField>AnschriftOrt</DataField>
+        <Field Name="GeborenInAm">
+          <DataField>GeborenInAm</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="AnschriftStrasse">
-          <DataField>AnschriftStrasse</DataField>
+        <Field Name="Id">
+          <DataField>Id</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="AnschriftTelefonnummer">
-          <DataField>AnschriftTelefonnummer</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Ausbildungsrichtung">
-          <DataField>Ausbildungsrichtung</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Fremdsprache2">
-          <DataField>Fremdsprache2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ReligionOderEthik">
-          <DataField>ReligionOderEthik</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wahlpflichtfach">
-          <DataField>Wahlpflichtfach</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wahlfach1">
-          <DataField>Wahlfach1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wahlfach2">
-          <DataField>Wahlfach2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wahlfach3">
-          <DataField>Wahlfach3</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wahlfach4">
-          <DataField>Wahlfach4</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wiederholung1Jahrgangsstufe">
-          <DataField>Wiederholung1Jahrgangsstufe</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wiederholung2Jahrgangsstufe">
-          <DataField>Wiederholung2Jahrgangsstufe</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wiederholung1Grund">
-          <DataField>Wiederholung1Grund</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Wiederholung2Grund">
-          <DataField>Wiederholung2Grund</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ProbezeitBis">
-          <DataField>ProbezeitBis</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="Austrittsdatum">
-          <DataField>Austrittsdatum</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="SchulischeVorbildung">
-          <DataField>SchulischeVorbildung</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="BeruflicheVorbildung">
-          <DataField>BeruflicheVorbildung</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="LRSStoerung">
-          <DataField>LRSStoerung</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="LRSSchwaeche">
-          <DataField>LRSSchwaeche</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
-        </Field>
-        <Field Name="LRSBisDatum">
-          <DataField>LRSBisDatum</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="NachnameEltern1">
-          <DataField>NachnameEltern1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="VornameEltern1">
-          <DataField>VornameEltern1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="AnredeEltern1">
-          <DataField>AnredeEltern1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="VerwandtschaftsbezeichnungEltern1">
-          <DataField>VerwandtschaftsbezeichnungEltern1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="NachnameEltern2">
-          <DataField>NachnameEltern2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="VornameEltern2">
-          <DataField>VornameEltern2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="AnredeEltern2">
-          <DataField>AnredeEltern2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="VerwandtschaftsbezeichnungEltern2">
-          <DataField>VerwandtschaftsbezeichnungEltern2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Gesamtnote">
-          <DataField>Gesamtnote</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="ThemaLang">
-          <DataField>ThemaLang</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ThemaKurz">
-          <DataField>ThemaKurz</DataField>
+        <Field Name="Klasse">
+          <DataField>Klasse</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Klassenleiter">
           <DataField>Klassenleiter</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="EintrittJahrgangsstufe">
-          <DataField>EintrittJahrgangsstufe</DataField>
+        <Field Name="Laufbahn">
+          <DataField>Laufbahn</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="EintrittAm">
-          <DataField>EintrittAm</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="EintrittAusSchulnummer">
-          <DataField>EintrittAusSchulnummer</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Email">
-          <DataField>Email</DataField>
+        <Field Name="Legasthenie">
+          <DataField>Legasthenie</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Notfalltelefonnummer">
-          <DataField>Notfalltelefonnummer</DataField>
+        <Field Name="Nachname">
+          <DataField>Nachname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rufname">
+          <DataField>Rufname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Schulart">
+          <DataField>Schulart</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Schuljahr">
+          <DataField>Schuljahr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Telefon">
+          <DataField>Telefon</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Vorname">
+          <DataField>Vorname</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
-        <rd:DataSetName>diNoDataSet</rd:DataSetName>
-        <rd:SchemaPath>D:\diNo\diNoDataSet.xsd</rd:SchemaPath>
-        <rd:TableName>vwNotenbogen</rd:TableName>
-        <rd:TableAdapterFillMethod>FillBySchuelerId</rd:TableAdapterFillMethod>
-        <rd:TableAdapterGetDataMethod>GetDataBySchuelerId</rd:TableAdapterGetDataMethod>
-        <rd:TableAdapterName>vwNotenbogenTableAdapter</rd:TableAdapterName>
+        <rd:DataSetName>diNo</rd:DataSetName>
+        <rd:TableName>SchuelerDruck</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.SchuelerDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

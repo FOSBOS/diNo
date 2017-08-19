@@ -884,17 +884,38 @@ namespace diNo
     SAPabgebrochen = 3         
   }
 
-  public class SchullaufbahnDruck
+  public class SchuelerDruck
   {
+    public string Id { get; private set; }
+    public string Nachname { get; private set; }
+    public string Vorname { get; private set; }
+    public string Rufname { get; private set; }
+    public string Anschrift { get; private set; }
+    public string Telefon { get; private set; }
+    public string GeborenInAm { get; private set; }  
     public string Klasse  { get; private set; }
     public string Bekenntnis { get; private set; }
     public string Klassenleiter { get; private set; }
     public string Legasthenie { get; private set; }
     public string Laufbahn { get; private set; }
-    
-    public SchullaufbahnDruck(Schueler s)
+    public string Schuljahr { get; private set; }
+    public string Schulart { get; private set; }
+
+    // Zeugnisbemerkung muss im Bericht als HTML eingestellt sein (re. Maus auf Datenfeld)
+    public string Bemerkung { get; private set; }
+
+    public SchuelerDruck(Schueler s)
     {
+      var jg = s.getKlasse.Jahrgangsstufe;
       string tmp;
+      Id = s.Id.ToString();
+      Nachname = s.Name;
+      Vorname = s.Vorname;
+      Rufname = s.Data.Rufname;
+      Anschrift = s.Data.AnschriftStrasse + "\n" + s.Data.AnschriftPLZ + " " + s.Data.AnschriftOrt;
+      Telefon = s.Data.AnschriftTelefonnummer;
+      GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
+
       Klasse = s.KlassenBezeichnung;
       Bekenntnis = "Bekenntnis: "+ s.Data.Bekenntnis;
       Klassenleiter = s.getKlasse.Klassenleiter.Vorname.Substring(0,1)+ ". " + s.getKlasse.Klassenleiter.Nachname;
@@ -907,69 +928,74 @@ namespace diNo
       // Wiederholungen
       tmp = s.getWiederholungen();
       if (tmp!="") Laufbahn += "\nWiederholungen: " + tmp;
-    }
-  }
 
-  // Zeugnisbemerkungen Datencontainer: muss im Bericht als HTML eingestellt sein (re. Maus auf Datenfeld)
-  public class BemerkungenDruck
-  {
-    public string Ueberschrift  { get; private set; }
-    public string Inhalt { get; private set; }
-    
-    public BemerkungenDruck(Schueler s)
-    {
-      Inhalt="";
-      
-      var jg=s.getKlasse.Jahrgangsstufe;
+      if (s.Data.Schulart == "B")
+        Schulart = "0841 Staatl. Berufsoberschule Kempten (Allgäu)";
+      else
+        Schulart = "0871 Staatl. Fachoberschule Kempten (Allgäu)";
+
+      Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
+  
+      // allgemeine Zeugnisbemerkungen (als HTML-Text!)
+      Bemerkung = "";           
 
       if (jg==Jahrgangsstufe.Elf)
-      { /*       
+      { /*  TODO: neuer FPA-Bericht     
         if (!s.FPANoten.IsErfolg1HjNull() && !s.FPANoten.IsPunkte1HjNull())
         {
-          Inhalt += "Diese wurde im 1. Halbjahr " + ErfolgText(s.FPANoten.Erfolg1Hj) + " (" + s.FPANoten.Punkte1Hj + " Punkte) durchlaufen";
+          Bemerkung += "Diese wurde im 1. Halbjahr " + ErfolgText(s.FPANoten.Erfolg1Hj) + " (" + s.FPANoten.Punkte1Hj + " Punkte) durchlaufen";
           if (!s.FPANoten.IsStelle1HjNull())
-            Inhalt += " (" + s.FPANoten.Stelle1Hj + ")";
-          Inhalt += ".<br>";
+            Bemerkung += " (" + s.FPANoten.Stelle1Hj + ")";
+          Bemerkung += ".<br>";
         }
         if (!s.FPANoten.IsPunkte2HjNull())
         {
-          Inhalt += "Im 2. Halbjahr wurden " + s.FPANoten.Punkte2Hj +" Punkte erzielt";
+          Bemerkung += "Im 2. Halbjahr wurden " + s.FPANoten.Punkte2Hj +" Punkte erzielt";
           if (!s.FPANoten.IsStelle2HjNull())
-            Inhalt += " (" + s.FPANoten.Stelle2Hj + ")";
-          Inhalt += ".<br>";
+            Bemerkung += " (" + s.FPANoten.Stelle2Hj + ")";
+          Bemerkung += ".<br>";
         }
 
         if (!s.FPANoten.IsErfolgNull() && !s.FPANoten.IsPunkteNull())
-          Inhalt += "Insgesamt wurde die FPA <b>" + ErfolgText(s.FPANoten.Erfolg) + "</b> (durchschnittliche Punktzahl " + s.FPANoten.Punkte + ") durchlaufen.<br>";
+          Bemerkung += "Insgesamt wurde die FPA <b>" + ErfolgText(s.FPANoten.Erfolg) + "</b> (durchschnittliche Punktzahl " + s.FPANoten.Punkte + ") durchlaufen.<br>";
 
         if (!s.FPANoten.IsBemerkungNull())
-          Inhalt += s.FPANoten.Bemerkung + "<br>";
-        if (Inhalt!="")
-          Inhalt = "<b>Fachpraktische Ausbildung</b><br>" + Inhalt;*/
+          Bemerkung += s.FPANoten.Bemerkung + "<br>";
+        if (Bemerkung!="")
+          Bemerkung = "<b>Fachpraktische Ausbildung</b><br>" + Bemerkung;*/
       }
       else if (jg==Jahrgangsstufe.Zwoelf)
       {
-  //        if (!s.FPANoten.IsErfolgNull())
-  //        Inhalt = "Die fachpraktische Ausbildung wurde in der 11. Klasse " + ErfolgText(s.FPANoten.Erfolg) +" durchlaufen.<br>";
+        var ta = new Fpa12altTableAdapter();
+        var dt = ta.GetDataBySchuelerId(s.Id);
+        if (dt.Count > 0)
+        {
+          var fpa12 = dt[0];
+          if (!fpa12.IsErfolgNull())
+            Bemerkung = "Die <b>fachpraktische Ausbildung</b> wurde in der 11. Klasse " + ErfolgText(fpa12.Erfolg) + " durchlaufen.<br>";
+        }
       }
       else if (jg==Jahrgangsstufe.Dreizehn)
       {
         if (!s.Seminarfachnote.IsThemaKurzNull())
         {
-          Inhalt="<b>Thema der Seminararbeit:</b><br>";
-          Inhalt += s.Seminarfachnote.ThemaKurz;
+          Bemerkung="<b>Thema der Seminararbeit:</b><br>";
+          Bemerkung += s.Seminarfachnote.ThemaKurz;
         }
       }
 
-      if (!s.Data.IsDNoteNull())
+      if (!s.hatVorkommnis(Vorkommnisart.NichtBestanden))
       {
-        if (Inhalt!="") Inhalt += "<br>";
-        Inhalt += "<b>Durchschnittsnote (" + (jg==Jahrgangsstufe.Zwoelf ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";
-      }
-      if (!s.Data.IsDNoteAllgNull())
-      {
-        
-        Inhalt += "<b>Durchschnittsnote (allgemeine Hochschulreife): " + s.Data.DNoteAllg + "</b><br>";
+        if (!s.Data.IsDNoteNull())
+        {
+          if (Bemerkung != "") Bemerkung += "<br>";
+          Bemerkung += "<b>Durchschnittsnote (" + (jg == Jahrgangsstufe.Zwoelf ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";
+        }
+        if (!s.Data.IsDNoteAllgNull())
+        {
+
+          Bemerkung += "<b>Durchschnittsnote (allgemeine Hochschulreife): " + s.Data.DNoteAllg + "</b><br>";
+        }
       }
     }
 
@@ -985,20 +1011,4 @@ namespace diNo
     }
   }
   
-  public class SchuljahrSchulartDruck
-  {
-    public string Schuljahr  { get; private set; }
-    public string Schulart { get; private set; }
-    
-    public SchuljahrSchulartDruck(Schueler s)
-    {
-      if (s.Data.Schulart=="B")
-        Schulart = "0841 Staatl. Berufsoberschule Kempten (Allgäu)";
-      else
-        Schulart = "0871 Staatl. Fachoberschule Kempten (Allgäu)";
-
-      Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr+1);
-    }
-  }
-
 }

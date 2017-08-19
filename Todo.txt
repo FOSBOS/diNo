@@ -1,9 +1,13 @@
 ﻿todos für diNo
 --------------
 
--    Berechnung Nachtermin (z.B. 19/38 BE=6 bei Haupttermin 39)
+- Berechnung Nachtermin (z.B. 19/38 BE=6 bei Haupttermin 39)
 - Soll HjLeistung der 11. Klasse gleich in 11/1 bzw. 11/2 also mit Schlüssel 5 und 6 gespeichert werden? Wie sieht es bei der Vorklasse aus (dort wird nichts übernommen)?
+  --> aktuelles Jahr ist immer 0 bzw. 1, erst beim Import ins nächste Jahr wird der Schlüssel geändert.
 - Import/Export neuer FPA-Noten fehlt. Noch zu klären: Brauchen wir da die Teilnoten auch oder reicht Gesamtbewertung?
+  --> alte SO (nur Sj. 17/18 die 12. Klassen): verwende Tabelle Fpa12alt
+  --> neue SO: wir verwalten diese ganz normal als Hj-Leistung
+- Import der Probezeit nur, wenn sie das aktuelle Schuljahr betrifft (nervt sonst), manchmal steht noch die alte aus der 11. Klasse drin
 - Umgang mit Legasthenikern in neuer SchO nachlesen und ggf. programmieren
 - neue Notendatei testen
 - Import der neuen Notendatei testen
@@ -13,3 +17,4 @@
 - ganz großes Todo: neue WinSV mit Halbjahresnoten irgendwie anbinden?
 - Testen: Wird eine Note mit Gewichtung 0,5 von diNo korrekt eingelesen und irgendwie im Notenbogen gekennzeichnet?
 - Statistiken ?
+   --> die letzten zwei Punkte sind N2H, die wir programmieren, wenn sonst alles läuft und uns nix besseres einfällt. ;-)
