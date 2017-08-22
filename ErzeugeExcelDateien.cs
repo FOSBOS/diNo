@@ -33,7 +33,7 @@ namespace diNo
       foreach (var kurs in kurse)
       {
         //if (kurs.Id > 824 && kurs.Id < 840)
-        //if (kurs.Id==851)
+        if (!kurs.IsLehrerIdNull() && (new Lehrer(kurs.LehrerId).Kuerzel=="Si" || new Lehrer(kurs.LehrerId).Kuerzel == "Kon"))
         {
           if (statusChangedHandler != null)
           {
@@ -172,7 +172,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
   public class ErzeugeNeueExcelDatei
   {
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-    private OpenAlteNotendatei xls;
+    private OpenNotendatei xls;
     private Kurs kurs;
     private string fileName;
     private IList<diNoDataSet.SchuelerRow> alleSchueler;
@@ -211,7 +211,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
 
       CopyExcelFile();
 
-      xls = new OpenAlteNotendatei(fileName);
+      xls = new OpenNotendatei(fileName);
 
       FillExcelFile();
       SwitchNotenschluessel();
@@ -264,11 +264,12 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
 
       // schreibe Notenbogen - Kopf
       xls.WriteValue(xls.notenbogen, "E1", kurs.getFach.Bezeichnung);
+      xls.WriteValueProtectedCell(xls.notenbogen, "K1", GetLehrerOderLehrerin(kurs));
       xls.WriteValue(xls.notenbogen, "M1", kurs.getLehrer.Name);
       xls.WriteValue(xls.notenbogen, "U1", Konstanten.Schuljahr);
       xls.WriteValueProtectedCell(xls.sid, CellConstant.KursId, kurs.Id.ToString());
 
-      int zeile = 5;
+      int zeile = 4;
       int zeileFuerSId = CellConstant.zeileSIdErsterSchueler;
 
       foreach (var s in alleSchueler)
@@ -281,8 +282,7 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
         }
 
         // Schüler in die Exceldatei schreiben
-        xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name);
-        xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Vorname + (zeile + 1), "   " + schueler.benutzterVorname);
+        xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name+", "+ schueler.benutzterVorname);
         xls.WriteValueProtectedCell(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
 
         //TODO: Umgang mit Legasthenikern (Neu)?
@@ -291,12 +291,27 @@ PS: Antworten bitte nicht an meine private Mail-Adresse sondern an markus.siegel
         //  xls.SetLegasthenievermerkByZeile(zeile, true);
         //}
 
-        zeile += 2;
+        zeile ++;
         zeileFuerSId++;
       }
 
       // Klassenbezeichnung wird aus allen Schülern gesammelt
       xls.WriteValue(xls.notenbogen, "B1", klassen.Aggregate((x, y) => x + ", " + y));
+    }
+
+    /// <summary>
+    /// Methode dient zur Zufriedenstellung der Frauenbauftragten :-)
+    /// </summary>
+    /// <param name="kurs">Der Kurs.</param>
+    /// <returns>Den Text Lehrer oder Lehrerin.</returns>
+    private string GetLehrerOderLehrerin(Kurs kurs)
+    {
+      if (kurs.getLehrer != null)
+      {
+        if (kurs.getLehrer.Data.Dienstbezeichnung.ToLower().Contains("in"))
+           return "Lehrerin";
+      }
+      return "Lehrer";
     }
 
     /// <summary>

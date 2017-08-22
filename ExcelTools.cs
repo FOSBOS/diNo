@@ -244,6 +244,18 @@ namespace diNo
     }
 
     /// <summary>
+    /// Liest eine Kommanote aus der angegebenen Zelle des Sheets
+    /// </summary>
+    /// <param name="zelle">Die Zelle.</param>
+    /// <param name="sheet">Das Worksheet.</param>
+    /// <returns></returns>
+    public decimal? ReadKommanote(string zelle, Worksheet sheet)
+    {
+      string v = ReadValue(sheet, zelle);
+      return !string.IsNullOrEmpty(v) ? Convert.ToDecimal(v, CultureInfo.CurrentUICulture) : (decimal?)null;
+    }
+
+    /// <summary>
     /// Prüft, ob die Datei nach der alten Schulordnung ausgelesen werden muss.
     /// </summary>
     /// <returns>true wenn für diese Datei die alte Schulordnung gelten muss.</returns>

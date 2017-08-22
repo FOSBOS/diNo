@@ -11,6 +11,8 @@
 - Umgang mit Legasthenikern in neuer SchO nachlesen und ggf. programmieren
 - neue Notendatei testen
 - Import der neuen Notendatei testen
+  * Löschen der alten Noten je nach Halbjahr schülerweise
+  * Einlesen der Abschlussprüfung fehlt noch völlig
 - WinSV:
   * BOS Vorrücken von 12 in 13 wird nicht gefüllt. "N" nicht erhalten, "-" darf vorrücken. Fraglich: welches Feld ist das überhaupt?
   * Reverse Engineering: Vielleicht findet man ja doch noch raus in welche Spalte die Franz-Noten müssen. Oder besser auf neue Version der WinSV warten?
