@@ -49,8 +49,7 @@ namespace diNo
         }
     }
   
-  // kann diverse Notenberichte drucken, die Grunddaten liefert jeweils vwNotenbogen
-  // Datenquelle kann ein Schüler oder mehrere Klassen sein
+  // kann diverse Notenberichte drucken, die Grunddaten sind jeweils eine Schülerliste  
   public class ReportNotendruck : ReportController
   {
     private List<SchuelerDruck> bindingDataSource;
@@ -102,33 +101,6 @@ namespace diNo
     }    
   }
   
-    public class ReportFachliste : ReportController
-    {
-        public override void Init()
-        {
-            FachTableAdapter BerichtTableAdapter;
-            rpt.BerichtBindingSource.DataMember = "Fach";
-            BerichtTableAdapter = new FachTableAdapter();
-            BerichtTableAdapter.ClearBeforeFill = true;
-            BerichtTableAdapter.Fill(rpt.diNoDataSet.Fach);
-            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptFachliste.rdlc";     
-        }
-    }
-    
-    public class ReportSchuelerliste : ReportController
-    {
-        public override void Init()
-        {
-            SchuelerTableAdapter BerichtTableAdapter;
-            rpt.BerichtBindingSource.DataMember = "Schueler";
-            BerichtTableAdapter = new SchuelerTableAdapter();
-            BerichtTableAdapter.ClearBeforeFill = true;
-            BerichtTableAdapter.FillByKlasse(rpt.diNoDataSet.Schueler, 89); // 12Wf 
-            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptSchuelerliste.rdlc";
-        }
-
-    }
-
     public class ReportBrief : ReportController
     {
       private BriefDaten bindingDataSource;
@@ -170,4 +142,16 @@ namespace diNo
             e.DataSources.Add(new ReportDataSource("DataSetKurs",(DataTable) kurse));
         }
     }
+
+  public class ReportKlassenliste : ReportController
+  {
+    private BriefDaten bindingDataSource;
+    public ReportKlassenliste(BriefDaten dataSource) : base() { bindingDataSource = dataSource; }
+
+    public override void Init()
+    {
+      rpt.BerichtBindingSource.DataSource = bindingDataSource;
+      rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptKlassenliste.rdlc";
+    }
+  }
 }

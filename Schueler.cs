@@ -886,14 +886,15 @@ namespace diNo
 
   public class SchuelerDruck
   {
-    public string Id { get; private set; }
+    public int Id { get; private set; }
     public string Nachname { get; private set; }
     public string Vorname { get; private set; }
     public string Rufname { get; private set; }
     public string Anschrift { get; private set; }
     public string Telefon { get; private set; }
     public string GeborenInAm { get; private set; }  
-    public string Klasse  { get; private set; }
+    public string Klasse { get; private set; }
+    public string KlasseMitZweig { get; private set; }
     public string Bekenntnis { get; private set; }
     public string Klassenleiter { get; private set; }
     public string Legasthenie { get; private set; }
@@ -903,12 +904,13 @@ namespace diNo
 
     // Zeugnisbemerkung muss im Bericht als HTML eingestellt sein (re. Maus auf Datenfeld)
     public string Bemerkung { get; private set; }
+    public string DNote { get; private set; }
 
     public SchuelerDruck(Schueler s)
     {
       var jg = s.getKlasse.Jahrgangsstufe;
       string tmp;
-      Id = s.Id.ToString();
+      Id = s.Id;//.ToString();
       Nachname = s.Name;
       Vorname = s.Vorname;
       Rufname = s.Data.Rufname;
@@ -916,7 +918,8 @@ namespace diNo
       Telefon = s.Data.AnschriftTelefonnummer;
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
 
-      Klasse = s.KlassenBezeichnung;
+      Klasse = s.getKlasse.Bezeichnung;
+      KlasseMitZweig = s.KlassenBezeichnung;
       Bekenntnis = "Bekenntnis: "+ s.Data.Bekenntnis;
       Klassenleiter = s.getKlasse.Klassenleiter.Vorname.Substring(0,1)+ ". " + s.getKlasse.Klassenleiter.Nachname;
       Legasthenie = s.Data.LRSStoerung ? "\nLegasthenie" : "";
@@ -990,11 +993,12 @@ namespace diNo
         {
           if (Bemerkung != "") Bemerkung += "<br>";
           Bemerkung += "<b>Durchschnittsnote (" + (jg == Jahrgangsstufe.Zwoelf ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";
+          DNote = "Durchschnittsnote*: " + s.Data.DNote;
         }
         if (!s.Data.IsDNoteAllgNull())
         {
-
           Bemerkung += "<b>Durchschnittsnote (allgemeine Hochschulreife): " + s.Data.DNoteAllg + "</b><br>";
+          DNote += " (allg. HSR: " + s.Data.DNoteAllg + ")";
         }
       }
     }

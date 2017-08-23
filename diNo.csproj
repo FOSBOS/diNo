@@ -239,10 +239,9 @@
     <EmbeddedResource Include="Klassenansicht.resx">
       <DependentUpon>Klassenansicht.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="rptKlassenliste.rdlc" />
     <EmbeddedResource Include="rptNotenmitteilungA5.rdlc" />
-    <EmbeddedResource Include="rptAbiergebnisseA5.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11Klasse.rdlc" />
-    <EmbeddedResource Include="subrptSchuljahrSchulart.rdlc" />
     <EmbeddedResource Include="UserControlAdministration.resx">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>
     </EmbeddedResource>
@@ -268,20 +267,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
     <EmbeddedResource Include="rptBrief.rdlc" />
-    <EmbeddedResource Include="rptKlassenliste.rdlc" />
-    <EmbeddedResource Include="rptFachliste.rdlc" />
     <EmbeddedResource Include="ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rptLehrerliste.rdlc" />
     <EmbeddedResource Include="rptNotenbogen.rdlc" />
     <EmbeddedResource Include="rptNotenCheck.rdlc" />
-    <EmbeddedResource Include="rptSchuelerliste.rdlc" />
     <EmbeddedResource Include="subrptAbiergebnisseNoten.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptKurs.rdlc" />
-    <EmbeddedResource Include="subrptBemerkungen.rdlc" />
-    <EmbeddedResource Include="subrptSchullaufbahn.rdlc" />
     <EmbeddedResource Include="subrptAbiVorkommnis.rdlc" />
     <EmbeddedResource Include="subrptVorkommnis.rdlc" />
     <EmbeddedResource Include="UserControlFPAundSeminar.resx">
@@ -336,6 +330,7 @@
     <None Include="Properties\DataSources\FachSchuelerNotenDruck.datasource" />
     <None Include="Properties\DataSources\Klasse.datasource" />
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />
+    <None Include="Properties\DataSources\SchuelerDruck.datasource" />
     <None Include="Properties\DataSources\SchuljahrSchulartDruck.datasource" />
     <None Include="Properties\DataSources\SchullaufbahnDruck.datasource" />
     <None Include="Properties\DataSources\Schueler.datasource" />

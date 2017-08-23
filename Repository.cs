@@ -15,7 +15,7 @@ namespace diNo
   // indem sie nur einmal aus der DB geladen werden
   public class Repository<T> where T : IRepositoryObject
   {
-    private Dictionary<int, T> Liste;
+    public Dictionary<int, T> Liste;
     public delegate T CreateObj(int id); // Methode, die ein Objekt vom Typ T mit dieser ID erzeugt
     CreateObj konstruktorT;              // entspricht z.B.  new Schueler(id)
 
@@ -61,6 +61,6 @@ namespace diNo
     public void Clear()
     {
       Liste.Clear();
-    }
+    }    
   }
 }

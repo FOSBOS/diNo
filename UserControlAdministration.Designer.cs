@@ -34,6 +34,8 @@
       this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.btnAbiergebnisse = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
+      this.btnNotenNachWinSV = new System.Windows.Forms.Button();
+      this.btnSendExcelFiles = new System.Windows.Forms.Button();
       this.btnCreateExcels = new System.Windows.Forms.Button();
       this.exportNoten = new System.Windows.Forms.Button();
       this.groupBoxImport = new System.Windows.Forms.GroupBox();
@@ -54,8 +56,7 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
-      this.btnSendExcelFiles = new System.Windows.Forms.Button();
-      this.btnNotenNachWinSV = new System.Windows.Forms.Button();
+      this.btnKlassenliste = new System.Windows.Forms.Button();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
@@ -74,6 +75,7 @@
       // 
       // groupBoxDrucken
       // 
+      this.groupBoxDrucken.Controls.Add(this.btnKlassenliste);
       this.groupBoxDrucken.Controls.Add(this.btnAttestpflicht);
       this.groupBoxDrucken.Controls.Add(this.btnNotenmitteilung);
       this.groupBoxDrucken.Controls.Add(this.btnAbiergebnisse);
@@ -126,6 +128,26 @@
       this.groupBoxExport.TabIndex = 4;
       this.groupBoxExport.TabStop = false;
       this.groupBoxExport.Text = "Export";
+      // 
+      // btnNotenNachWinSV
+      // 
+      this.btnNotenNachWinSV.Location = new System.Drawing.Point(6, 106);
+      this.btnNotenNachWinSV.Name = "btnNotenNachWinSV";
+      this.btnNotenNachWinSV.Size = new System.Drawing.Size(182, 23);
+      this.btnNotenNachWinSV.TabIndex = 5;
+      this.btnNotenNachWinSV.Text = "Noten an WinSV";
+      this.btnNotenNachWinSV.UseVisualStyleBackColor = true;
+      this.btnNotenNachWinSV.Click += new System.EventHandler(this.btnNotenWinSV_Click);
+      // 
+      // btnSendExcelFiles
+      // 
+      this.btnSendExcelFiles.Location = new System.Drawing.Point(6, 77);
+      this.btnSendExcelFiles.Name = "btnSendExcelFiles";
+      this.btnSendExcelFiles.Size = new System.Drawing.Size(182, 23);
+      this.btnSendExcelFiles.TabIndex = 4;
+      this.btnSendExcelFiles.Text = "Excel-Dateien versenden";
+      this.btnSendExcelFiles.UseVisualStyleBackColor = true;
+      this.btnSendExcelFiles.Click += new System.EventHandler(this.btnSendMail_Click);
       // 
       // btnCreateExcels
       // 
@@ -335,25 +357,15 @@
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
       // 
-      // btnSendExcelFiles
+      // btnKlassenliste
       // 
-      this.btnSendExcelFiles.Location = new System.Drawing.Point(6, 77);
-      this.btnSendExcelFiles.Name = "btnSendExcelFiles";
-      this.btnSendExcelFiles.Size = new System.Drawing.Size(182, 23);
-      this.btnSendExcelFiles.TabIndex = 4;
-      this.btnSendExcelFiles.Text = "Excel-Dateien versenden";
-      this.btnSendExcelFiles.UseVisualStyleBackColor = true;
-      this.btnSendExcelFiles.Click += new System.EventHandler(this.btnSendMail_Click);
-      // 
-      // btnNotenNachWinSV
-      // 
-      this.btnNotenNachWinSV.Location = new System.Drawing.Point(6, 106);
-      this.btnNotenNachWinSV.Name = "btnNotenNachWinSV";
-      this.btnNotenNachWinSV.Size = new System.Drawing.Size(182, 23);
-      this.btnNotenNachWinSV.TabIndex = 5;
-      this.btnNotenNachWinSV.Text = "Noten an WinSV";
-      this.btnNotenNachWinSV.UseVisualStyleBackColor = true;
-      this.btnNotenNachWinSV.Click += new System.EventHandler(this.btnNotenWinSV_Click);
+      this.btnKlassenliste.Location = new System.Drawing.Point(21, 192);
+      this.btnKlassenliste.Name = "btnKlassenliste";
+      this.btnKlassenliste.Size = new System.Drawing.Size(102, 23);
+      this.btnKlassenliste.TabIndex = 3;
+      this.btnKlassenliste.Text = "Klassenliste";
+      this.btnKlassenliste.UseVisualStyleBackColor = true;
+      this.btnKlassenliste.Click += new System.EventHandler(this.btnKlassenliste_Click);
       // 
       // UserControlAdministration
       // 
@@ -409,5 +421,6 @@
     private System.Windows.Forms.Label lblStatus;
     private System.Windows.Forms.Button btnSendExcelFiles;
     private System.Windows.Forms.Button btnNotenNachWinSV;
+    private System.Windows.Forms.Button btnKlassenliste;
   }
 }

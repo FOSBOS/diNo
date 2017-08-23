@@ -38,6 +38,7 @@ namespace diNo
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
     {
+      Zugriff.Instance.markierteSchueler.Clear();
       if (treeListView1.SelectedObject is Schueler)
         schueler = treeListView1.SelectedObject as Schueler;      
       
@@ -89,7 +90,7 @@ namespace diNo
             userControlKurszuordnungen1.Schueler = schueler;
             if (Zugriff.Instance.HatRolle(Rolle.Admin))
               userControlAdministration1.Schueler = schueler;
-          }
+          }          
         }
       }
 
@@ -169,7 +170,16 @@ namespace diNo
     {
       var res = new List<SchuelerDruck>();
       var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
-      if (Zugriff.Instance.HatVerwaltungsrechte && obj.Count>0 && obj[0] is Klasse)
+
+      // Schüler, die über NotenCheck gewählt wurden
+      if (Zugriff.Instance.HatVerwaltungsrechte && Zugriff.Instance.markierteSchueler.Liste.Count > 0) 
+      {
+        foreach (Schueler s in Zugriff.Instance.markierteSchueler.Liste.Values)
+        {
+          res.Add(new SchuelerDruck(s));
+        }
+      }
+      else if (Zugriff.Instance.HatVerwaltungsrechte && obj.Count>0 && obj[0] is Klasse)
       {
         foreach (Klasse k in obj)
         {
@@ -195,6 +205,7 @@ namespace diNo
     {
       var c = new NotenCheckForm();
       c.Show();
+      btnPrint.Enabled = btnPrint.Enabled || Zugriff.Instance.HatVerwaltungsrechte;
     }
 
     public void RefreshVorkommnisse()
@@ -203,6 +214,11 @@ namespace diNo
     }
 
     private void chkNurAktive_Click(object sender, EventArgs e)
+    {
+      RefreshTreeView();
+    }
+
+    private void btnRefresh_Click(object sender, EventArgs e)
     {
       RefreshTreeView();
     }

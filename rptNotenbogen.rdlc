@@ -213,7 +213,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Klasse.Value</Value>
+                              <Value>=Fields!KlasseMitZweig.Value</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -353,7 +353,6 @@
                       </Style>
                     </Subreport>
                     <ColSpan>2</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -651,16 +650,24 @@
           <DataField>Bemerkung</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="DNote">
+          <DataField>DNote</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="GeborenInAm">
           <DataField>GeborenInAm</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Id">
           <DataField>Id</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Klasse">
           <DataField>Klasse</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KlasseMitZweig">
+          <DataField>KlasseMitZweig</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Klassenleiter">

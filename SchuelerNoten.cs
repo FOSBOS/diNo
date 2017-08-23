@@ -91,8 +91,8 @@ namespace diNo
       {
         if (!schueler.Data.IsAndereFremdspr2NoteNull())
         {
-          liste.Add(new FachSchuelerNotenDruckKurz("Andere 2. Fremdsprache" + 
-            (schueler.Data.IsAndereFremdspr2TextNull() ? "" : " (" + schueler.Data.AndereFremdspr2Text + ")"),
+          liste.Add(new FachSchuelerNotenDruckKurz(
+            (schueler.Data.IsAndereFremdspr2TextNull() ? "Andere 2. Fremdsprache" :  schueler.Data.AndereFremdspr2Text ),
             schueler.Data.AndereFremdspr2Note));
         }
 

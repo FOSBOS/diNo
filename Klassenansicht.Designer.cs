@@ -36,6 +36,7 @@
       this.tabPageNoten = new System.Windows.Forms.TabPage();
       this.notenbogen1 = new diNo.Notenbogen();
       this.tabPageNotenbogen = new System.Windows.Forms.TabPage();
+      this.userControlNotenbogen1 = new diNo.UserControlNotenbogen();
       this.tabPageHjLeistung = new System.Windows.Forms.TabPage();
       this.userControlHjLeistung1 = new diNo.UserControlHjLeistung();
       this.tabPageFPASeminar = new System.Windows.Forms.TabPage();
@@ -61,7 +62,7 @@
       this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
       this.multiImageRenderer1 = new BrightIdeasSoftware.MultiImageRenderer();
       this.chkNurAktive = new System.Windows.Forms.CheckBox();
-      this.userControlNotenbogen1 = new diNo.UserControlNotenbogen();
+      this.btnRefresh = new System.Windows.Forms.Button();
       this.tabControl1.SuspendLayout();
       this.tabPageStammdaten.SuspendLayout();
       this.tabPageNoten.SuspendLayout();
@@ -86,6 +87,7 @@
       this.imageList1.Images.SetKeyName(4, "Save.png");
       this.imageList1.Images.SetKeyName(5, "Excel.png");
       this.imageList1.Images.SetKeyName(6, "424px-User-admin.png");
+      this.imageList1.Images.SetKeyName(7, "Refresh.png");
       // 
       // tabControl1
       // 
@@ -162,6 +164,16 @@
       this.tabPageNotenbogen.TabIndex = 7;
       this.tabPageNotenbogen.Text = "Notenbogen";
       this.tabPageNotenbogen.UseVisualStyleBackColor = true;
+      // 
+      // userControlNotenbogen1
+      // 
+      this.userControlNotenbogen1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.userControlNotenbogen1.Location = new System.Drawing.Point(3, 3);
+      this.userControlNotenbogen1.Margin = new System.Windows.Forms.Padding(4);
+      this.userControlNotenbogen1.Name = "userControlNotenbogen1";
+      this.userControlNotenbogen1.Schueler = null;
+      this.userControlNotenbogen1.Size = new System.Drawing.Size(884, 444);
+      this.userControlNotenbogen1.TabIndex = 0;
       // 
       // tabPageHjLeistung
       // 
@@ -329,7 +341,7 @@
       // 
       this.btnCheck.ImageIndex = 1;
       this.btnCheck.ImageList = this.imageList1;
-      this.btnCheck.Location = new System.Drawing.Point(420, 87);
+      this.btnCheck.Location = new System.Drawing.Point(466, 88);
       this.btnCheck.Name = "btnCheck";
       this.btnCheck.Size = new System.Drawing.Size(40, 40);
       this.btnCheck.TabIndex = 5;
@@ -342,7 +354,7 @@
       this.btnBrief.Enabled = false;
       this.btnBrief.ImageIndex = 2;
       this.btnBrief.ImageList = this.imageList1;
-      this.btnBrief.Location = new System.Drawing.Point(374, 88);
+      this.btnBrief.Location = new System.Drawing.Point(420, 89);
       this.btnBrief.Name = "btnBrief";
       this.btnBrief.Size = new System.Drawing.Size(40, 40);
       this.btnBrief.TabIndex = 4;
@@ -355,7 +367,7 @@
       this.btnPrint.Enabled = false;
       this.btnPrint.ImageIndex = 3;
       this.btnPrint.ImageList = this.imageList1;
-      this.btnPrint.Location = new System.Drawing.Point(328, 88);
+      this.btnPrint.Location = new System.Drawing.Point(374, 89);
       this.btnPrint.Name = "btnPrint";
       this.btnPrint.Size = new System.Drawing.Size(40, 40);
       this.btnPrint.TabIndex = 3;
@@ -425,15 +437,17 @@
       this.chkNurAktive.UseVisualStyleBackColor = true;
       this.chkNurAktive.Click += new System.EventHandler(this.chkNurAktive_Click);
       // 
-      // userControlNotenbogen1
+      // btnRefresh
       // 
-      this.userControlNotenbogen1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.userControlNotenbogen1.Location = new System.Drawing.Point(3, 3);
-      this.userControlNotenbogen1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-      this.userControlNotenbogen1.Name = "userControlNotenbogen1";
-      this.userControlNotenbogen1.Schueler = null;
-      this.userControlNotenbogen1.Size = new System.Drawing.Size(884, 444);
-      this.userControlNotenbogen1.TabIndex = 0;
+      this.btnRefresh.ImageIndex = 7;
+      this.btnRefresh.ImageList = this.imageList1;
+      this.btnRefresh.Location = new System.Drawing.Point(328, 89);
+      this.btnRefresh.Name = "btnRefresh";
+      this.btnRefresh.Size = new System.Drawing.Size(40, 40);
+      this.btnRefresh.TabIndex = 41;
+      this.toolTipButtons.SetToolTip(this.btnRefresh, "Daten neu laden");
+      this.btnRefresh.UseVisualStyleBackColor = true;
+      this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
       // 
       // Klassenansicht
       // 
@@ -441,6 +455,7 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
       this.ClientSize = new System.Drawing.Size(1185, 645);
+      this.Controls.Add(this.btnRefresh);
       this.Controls.Add(this.chkNurAktive);
       this.Controls.Add(this.statusStrip1);
       this.Controls.Add(this.btnCheck);
@@ -509,5 +524,6 @@
     private UserControlHjLeistung userControlHjLeistung1;
     private System.Windows.Forms.TabPage tabPageNotenbogen;
     private UserControlNotenbogen userControlNotenbogen1;
+    private System.Windows.Forms.Button btnRefresh;
   }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using diNo.diNoDataSetTableAdapters;
+using System.Collections.Generic;
 
 namespace diNo
 {
@@ -45,7 +46,7 @@ namespace diNo
     }
 
     // liefert die fürs Drucken ausgewählten Objekte (einzelne Schüler oder ein Menge von Klassen)
-    private object getSelectedObjects()
+    private List<SchuelerDruck> getSelectedObjects()
     {
       // Elternreihenfolge: usercontrol -> Tabpage -> pageControl -> Form Klassenansicht
       var obj =  ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
@@ -57,8 +58,8 @@ namespace diNo
     private void btnAbiergebnisse_Click(object sender, EventArgs e)
     {
       var obj = getSelectedObjects();
-//      if (obj!=null)
-//        new ReportNotendruck(obj,"diNo.rptAbiergebnisse.rdlc").Show();
+      if (obj!=null)
+        new ReportNotendruck(obj,"diNo.rptAbiergebnisse.rdlc").Show();
     }
 
     private void exportNoten_Click(object sender, EventArgs e)
@@ -114,8 +115,8 @@ namespace diNo
     private void btnNotenmitteilung_Click(object sender, EventArgs e)
     {      
       var obj = getSelectedObjects();
-//      if (obj!=null)
-//        new ReportNotendruck(obj,"diNo.rptNotenmitteilungA5.rdlc").Show();
+      if (obj!=null)
+        new ReportNotendruck(obj,"diNo.rptNotenmitteilungA5.rdlc").Show();
     }
 
     private void btnBerechtigungen_Click(object sender, EventArgs e)
@@ -124,23 +125,21 @@ namespace diNo
     }
 
     private void btnAttestpflicht_Click(object sender, EventArgs e)
-    {
-      var obj = getSelectedObjects();
-      if (obj is Schueler)
-      {
-        Schueler s = (Schueler)obj;
-        var b = new BriefDaten(s, true);
+    {      
+      if (schueler != null)
+      {        
+        var b = new BriefDaten(schueler, true);
         b.Betreff = "Attestpflicht";
         b.Inhalt += "da sich im laufenden Schuljahr bei Ihnen die krankheitsbedingten Schulversäumnisse häufen, ";
         b.Inhalt += "werden Sie gemäß §35(3) FOBOSO dazu verpflichtet, künftig jede weitere krankheitsbedingte Abwesenheit ";
         b.Inhalt += "durch ein aktuelles ärztliches Zeugnis (Schulunfähigkeitsbescheinigung) zu belegen.<br><br>";
         b.Inhalt += "Wird das Zeugnis nicht unverzüglich vorgelegt, so gilt das Fernbleiben als unentschuldigt.";
-        var KL = s.getKlasse.Klassenleiter;
+        var KL = schueler.getKlasse.Klassenleiter;
         b.Unterschrift = KL.Vorname + " " + KL.Nachname + ", " + KL.Dienstbezeichnung;
         b.Unterschrift2 = "Helga Traut, OStDin";
         new ReportBrief(b).Show();
 
-        s.AddVorkommnis(Vorkommnisart.Attestpflicht,"", false);
+        schueler.AddVorkommnis(Vorkommnisart.Attestpflicht,"", false);
       }
     }
 
@@ -174,6 +173,11 @@ namespace diNo
     void onStatusChange(Object sender, StatusChangedEventArgs e)
     {
       this.lblStatus.Text = e.Meldung;
+    }
+
+    private void btnKlassenliste_Click(object sender, EventArgs e)
+    {
+      new ReportNotendruck(getSelectedObjects(), "diNo.rptKlassenliste.rdlc").Show();
     }
   }
 }
