@@ -15,7 +15,7 @@ namespace diNo
     public List<Klasse> Klassen { get; private set; } // Liste der angezeigten Klassen
     public List<Fach> eigeneFaecher { get; private set; }
     public Klasse eigeneKlasse { get; private set; } // Verweis auf die Klasse, in der der User Klassenleiter ist
-    public Repository<Schueler> markierteSchueler { get; private set; } // Schüler, die z.B. beim NotenCheck eine Meldung erzeugt haben
+    public Dictionary<int, Schueler> markierteSchueler { get; private set; } // Schüler, die z.B. beim NotenCheck eine Meldung erzeugt haben
     public int AnzahlSchueler { get; private set; }
 
     // folgende Nachschlagelisten dienen v.a. der Performance, damit die Objekte insgesamt nur 1x im Speicher angelegt werden müssen!
@@ -36,7 +36,7 @@ namespace diNo
     private Zugriff()
     {
       Klassen = new List<Klasse>();
-      markierteSchueler = new Repository<Schueler>(Schueler.CreateSchueler);
+      markierteSchueler = new Dictionary<int, Schueler>();
       Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
       // TODO: Username ToUpper verwenden, dann muss aber die DB passen
       if (Username == "Markus-PC\\Markus")

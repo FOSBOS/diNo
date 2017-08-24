@@ -142,16 +142,4 @@ namespace diNo
             e.DataSources.Add(new ReportDataSource("DataSetKurs",(DataTable) kurse));
         }
     }
-
-  public class ReportKlassenliste : ReportController
-  {
-    private BriefDaten bindingDataSource;
-    public ReportKlassenliste(BriefDaten dataSource) : base() { bindingDataSource = dataSource; }
-
-    public override void Init()
-    {
-      rpt.BerichtBindingSource.DataSource = bindingDataSource;
-      rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptKlassenliste.rdlc";
-    }
-  }
 }

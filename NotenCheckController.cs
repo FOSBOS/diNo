@@ -220,9 +220,8 @@ namespace diNo
         chkContainer.Add(new KeyValuePair<string, NotenCheckContainer>("",new NotenCheckContainer(k,aktSchueler,m)));
       }
 
-      if (!Zugriff.Instance.markierteSchueler.Contains(aktSchueler.Id))
-        Zugriff.Instance.markierteSchueler.Add(aktSchueler);
-
+      if (!Zugriff.Instance.markierteSchueler.ContainsKey(aktSchueler.Id))
+        Zugriff.Instance.markierteSchueler.Add(aktSchueler.Id,aktSchueler);
     }
 
     // am Ende einer Klasse muss die Druckliste erneuert werden, das merkt man erst, wenn einer neuer Schüler aus einer anderen Klasse kommt

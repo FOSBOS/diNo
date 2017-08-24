@@ -94,7 +94,7 @@ namespace diNo
         }
       }
 
-      btnPrint.Enabled = Zugriff.Instance.HatVerwaltungsrechte || schueler != null;
+      btnPrint.Enabled = true;
     }
     
     private void Klassenansicht_Load(object sender, EventArgs e)
@@ -160,9 +160,17 @@ namespace diNo
           toolStripStatusLabel1.Text = e.Meldung;
     }
 
+    // normale Lehrer können über den Druckbutton einen Notenbogen ausdrucken, oder bei Wahl
+    // einer Klasse die Klassenliste
     private void btnPrint_Click(object sender, EventArgs e)
-    { 
-      new ReportNotendruck(SelectedObjects(),"diNo.rptNotenbogen.rdlc").Show();
+    {
+      string rpt;
+      var obj = SelectedObjects();
+      if (Zugriff.Instance.HatVerwaltungsrechte || obj.Count == 1)
+        rpt = "diNo.rptNotenbogen.rdlc";
+      else
+        rpt = "diNo.rptKlassenliste.rdlc";       
+      new ReportNotendruck(obj, rpt).Show();
     }
 
     // liefert den angeklickten Schüler, oder eine Liste von Klassen (nur für Admins)
@@ -172,14 +180,14 @@ namespace diNo
       var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
 
       // Schüler, die über NotenCheck gewählt wurden
-      if (Zugriff.Instance.HatVerwaltungsrechte && Zugriff.Instance.markierteSchueler.Liste.Count > 0) 
+      if (Zugriff.Instance.HatVerwaltungsrechte && Zugriff.Instance.markierteSchueler.Count > 0) 
       {
-        foreach (Schueler s in Zugriff.Instance.markierteSchueler.Liste.Values)
+        foreach (Schueler s in Zugriff.Instance.markierteSchueler.Values)
         {
           res.Add(new SchuelerDruck(s));
         }
       }
-      else if (Zugriff.Instance.HatVerwaltungsrechte && obj.Count>0 && obj[0] is Klasse)
+      else if (obj.Count>0 && obj[0] is Klasse)
       {
         foreach (Klasse k in obj)
         {

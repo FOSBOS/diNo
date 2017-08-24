@@ -30,6 +30,7 @@
     {
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
+      this.btnKlassenliste = new System.Windows.Forms.Button();
       this.btnAttestpflicht = new System.Windows.Forms.Button();
       this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.btnAbiergebnisse = new System.Windows.Forms.Button();
@@ -56,7 +57,6 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
-      this.btnKlassenliste = new System.Windows.Forms.Button();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
@@ -85,6 +85,16 @@
       this.groupBoxDrucken.TabIndex = 3;
       this.groupBoxDrucken.TabStop = false;
       this.groupBoxDrucken.Text = "Drucken";
+      // 
+      // btnKlassenliste
+      // 
+      this.btnKlassenliste.Location = new System.Drawing.Point(21, 77);
+      this.btnKlassenliste.Name = "btnKlassenliste";
+      this.btnKlassenliste.Size = new System.Drawing.Size(102, 23);
+      this.btnKlassenliste.TabIndex = 3;
+      this.btnKlassenliste.Text = "Klassenliste";
+      this.btnKlassenliste.UseVisualStyleBackColor = true;
+      this.btnKlassenliste.Click += new System.EventHandler(this.btnKlassenliste_Click);
       // 
       // btnAttestpflicht
       // 
@@ -356,16 +366,6 @@
       this.lblStatus.Size = new System.Drawing.Size(77, 13);
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
-      // 
-      // btnKlassenliste
-      // 
-      this.btnKlassenliste.Location = new System.Drawing.Point(21, 192);
-      this.btnKlassenliste.Name = "btnKlassenliste";
-      this.btnKlassenliste.Size = new System.Drawing.Size(102, 23);
-      this.btnKlassenliste.TabIndex = 3;
-      this.btnKlassenliste.Text = "Klassenliste";
-      this.btnKlassenliste.UseVisualStyleBackColor = true;
-      this.btnKlassenliste.Click += new System.EventHandler(this.btnKlassenliste_Click);
       // 
       // UserControlAdministration
       // 
