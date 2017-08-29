@@ -46,7 +46,7 @@ namespace diNo
     }
 
     // liefert die fürs Drucken ausgewählten Objekte (einzelne Schüler oder ein Menge von Klassen)
-    private List<SchuelerDruck> getSelectedObjects()
+    private List<Schueler> getSelectedObjects()
     {
       // Elternreihenfolge: usercontrol -> Tabpage -> pageControl -> Form Klassenansicht
       var obj =  ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
@@ -59,7 +59,7 @@ namespace diNo
     {
       var obj = getSelectedObjects();
       if (obj!=null)
-        new ReportNotendruck(obj,"diNo.rptAbiergebnisse.rdlc").Show();
+        new ReportSchuelerdruck(obj,"diNo.rptAbiergebnisse.rdlc");
     }
 
     private void exportNoten_Click(object sender, EventArgs e)
@@ -116,7 +116,7 @@ namespace diNo
     {      
       var obj = getSelectedObjects();
       if (obj!=null)
-        new ReportNotendruck(obj,"diNo.rptNotenmitteilungA5.rdlc").Show();
+        new ReportSchuelerdruck(obj,"diNo.rptNotenmitteilungA5.rdlc");
     }
 
     private void btnBerechtigungen_Click(object sender, EventArgs e)
@@ -177,7 +177,7 @@ namespace diNo
 
     private void btnKlassenliste_Click(object sender, EventArgs e)
     {
-      new ReportNotendruck(getSelectedObjects(), "diNo.rptKlassenliste.rdlc").Show();
+      new ReportSchuelerdruck(getSelectedObjects(), "diNo.rptKlassenliste.rdlc");
     }
   }
 }

@@ -19,6 +19,7 @@ namespace diNo
       this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
 
       tabControl1.Controls.Remove(tabPageNoten); // Start mit neuer FOBOSO
+      tabControl1.Controls.Remove(tabPageHjLeistung); // derzeit uninteressant
 
       // Verwaltungsreiter
       if (Zugriff.Instance.HatVerwaltungsrechte) // hier wird zum ersten Mal Zugriff instanziiert.
@@ -56,7 +57,7 @@ namespace diNo
           {
             if (!zeigeAlteFOSBOSO)
             {
-              tabControl1.Controls.Remove(tabPageHjLeistung);
+              //tabControl1.Controls.Remove(tabPageHjLeistung); // derzeit noch irrelevant
               tabControl1.Controls.Remove(tabPageNotenbogen);
               tabControl1.TabPages.Insert(1,tabPageNoten);
               zeigeAlteFOSBOSO = true;
@@ -69,11 +70,11 @@ namespace diNo
             {
               tabControl1.Controls.Remove(tabPageNoten);
               tabControl1.TabPages.Insert(1, tabPageNotenbogen);
-              tabControl1.TabPages.Insert(2, tabPageHjLeistung);
+              //tabControl1.TabPages.Insert(2, tabPageHjLeistung);
               zeigeAlteFOSBOSO = false;
             }
             userControlNotenbogen1.Schueler = schueler;
-            userControlHjLeistung1.Schueler = schueler;
+            //userControlHjLeistung1.Schueler = schueler;
           }
 
           nameLabel.Text = schueler.NameVorname;
@@ -170,13 +171,13 @@ namespace diNo
         rpt = "diNo.rptNotenbogen.rdlc";
       else
         rpt = "diNo.rptKlassenliste.rdlc";       
-      new ReportNotendruck(obj, rpt).Show();
+      new ReportSchuelerdruck(obj, rpt);
     }
 
     // liefert den angeklickten Schüler, oder eine Liste von Klassen (nur für Admins)
-    public List<SchuelerDruck> SelectedObjects()
+    public List<Schueler> SelectedObjects()
     {
-      var res = new List<SchuelerDruck>();
+      var res = new List<Schueler>();
       var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
 
       // Schüler, die über NotenCheck gewählt wurden
@@ -184,7 +185,7 @@ namespace diNo
       {
         foreach (Schueler s in Zugriff.Instance.markierteSchueler.Values)
         {
-          res.Add(new SchuelerDruck(s));
+          res.Add(s);
         }
       }
       else if (obj.Count>0 && obj[0] is Klasse)
@@ -193,12 +194,12 @@ namespace diNo
         {
           foreach (Schueler s in k.eigeneSchueler)
           {               
-            res.Add(new SchuelerDruck(s));
+            res.Add(s);
           }
         }
       }
       else
-        res.Add(new SchuelerDruck(schueler)); // nur aktuell ausgewählter Schüler
+        res.Add(schueler); // nur aktuell ausgewählter Schüler
 
       return res;
     } 

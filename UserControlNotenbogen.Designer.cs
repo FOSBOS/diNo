@@ -59,7 +59,7 @@
       this.cSAP = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.MAP = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.APG = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.cJN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cFN = new System.Windows.Forms.DataGridViewTextBoxColumn();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).BeginInit();
       this.SuspendLayout();
       // 
@@ -92,7 +92,7 @@
             this.cSAP,
             this.MAP,
             this.APG,
-            this.cJN});
+            this.cFN});
       this.dataGridNoten.Location = new System.Drawing.Point(0, 70);
       this.dataGridNoten.Name = "dataGridNoten";
       this.dataGridNoten.ReadOnly = true;
@@ -292,17 +292,17 @@
       this.APG.ReadOnly = true;
       this.APG.Width = 55;
       // 
-      // cJN
+      // cFN
       // 
       dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cJN.DefaultCellStyle = dataGridViewCellStyle13;
-      this.cJN.DividerWidth = 2;
-      this.cJN.Frozen = true;
-      this.cJN.HeaderText = "JN";
-      this.cJN.Name = "cJN";
-      this.cJN.ReadOnly = true;
-      this.cJN.ToolTipText = "Jahresnote";
-      this.cJN.Width = 52;
+      this.cFN.DefaultCellStyle = dataGridViewCellStyle13;
+      this.cFN.DividerWidth = 2;
+      this.cFN.Frozen = true;
+      this.cFN.HeaderText = "FN";
+      this.cFN.Name = "cFN";
+      this.cFN.ReadOnly = true;
+      this.cFN.ToolTipText = "Fachnote";
+      this.cFN.Width = 52;
       // 
       // UserControlNotenbogen
       // 
@@ -340,6 +340,6 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn cSAP;
     private System.Windows.Forms.DataGridViewTextBoxColumn MAP;
     private System.Windows.Forms.DataGridViewTextBoxColumn APG;
-    private System.Windows.Forms.DataGridViewTextBoxColumn cJN;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cFN;
   }
 }

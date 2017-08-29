@@ -49,20 +49,43 @@ namespace diNo
         }
     }
   
-  // kann diverse Notenberichte drucken, die Grunddaten sind jeweils eine Schülerliste  
-  public class ReportNotendruck : ReportController
+  // teilt zu druckende Schülerdaten auf die verschiedenen Berichte auf (11./12. Klasse getrennt)
+  public class ReportSchuelerdruck
+  {
+    public ReportSchuelerdruck(List<Schueler> dataSource, string Berichtsname)
+    {
+      List<SchuelerDruck> s11 = new List<SchuelerDruck>(); // Schüler aus der 11. Klasse
+      List<SchuelerDruck> s12 = new List<SchuelerDruck>(); // und 12. müssen getrennt gedruckt werden (andere Berichtsgrundlage)
+      foreach (Schueler s in dataSource)
+      {
+        if ((Berichtsname== "diNo.rptNotenbogen.rdlc" || (Berichtsname == "diNo.rptNotenmitteilungA5.rdlc")) 
+            && s.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Elf)
+          s11.Add(new SchuelerDruck(s));
+        else
+          s12.Add(new SchuelerDruck(s));
+      }
+      if (s11.Count>0)
+        new rptSchuelerdruck(s11, "diNo.rptNotenbogen11.rdlc").Show();
+      if (s12.Count > 0)
+        new rptSchuelerdruck(s12, Berichtsname).Show();
+    }
+  }
+
+
+  // kann diverse Schüler-/Notenberichte drucken, die Grunddaten sind jeweils eine Schülerliste  
+  public class rptSchuelerdruck : ReportController
   {
     private List<SchuelerDruck> bindingDataSource;
     private string rptName;
 
-    public ReportNotendruck(List<SchuelerDruck> dataSource, string Berichtsname) : base()
+    public rptSchuelerdruck(List<SchuelerDruck> dataSource, string Berichtsname) : base()
     {
       rptName = Berichtsname;
       bindingDataSource = dataSource;
     }
         
     public override void Init()
-    {    
+    {
       rpt.BerichtBindingSource.DataSource = bindingDataSource;
       rpt.reportViewer.LocalReport.ReportEmbeddedResource = rptName;
 
@@ -80,12 +103,21 @@ namespace diNo
         if (schuelerId>0)
         {
           Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-          if (subrpt=="subrptFachSchuelerNoten" || subrpt=="subrptFachSchuelerNoten11Klasse" ||
-              subrpt=="subrptAbiergebnisseNoten")
+          if (subrpt=="subrptFachSchuelerNoten" || subrpt=="subrptFachSchuelerNoten11Klasse"
+           || subrpt =="subrptAbiergebnisseNoten")
           {
             IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(rptName);
             e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
-          }                    
+          }
+          else if (subrpt == "subrptFachSchuelerNoten11")
+          {
+            IList<FachSchuelerNotenDruck11> noten = schueler.getNoten.SchuelerNotenDruck11(rptName);
+            e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten", noten));
+          }
+          else if (subrpt == "subrptFPANoten")
+          {            
+            e.DataSources.Add(new ReportDataSource("DataSetFPANoten", schueler.FPANotenDruck()));
+          }
           else if (subrpt=="subrptVorkommnis" || subrpt=="subrptAbiVorkommnis" )
           {
             diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();

@@ -106,7 +106,17 @@ namespace diNo
       }
       return liste;
     }
-    
+
+    public IList<FachSchuelerNotenDruck11> SchuelerNotenDruck11(string rptName)
+    {
+      IList<FachSchuelerNotenDruck11> liste = new List<FachSchuelerNotenDruck11>();
+      foreach (FachSchuelerNoten f in alleKurse)
+      {
+        liste.Add(new FachSchuelerNotenDruck11(f,rptName));
+      }
+      return liste;
+
+    }
     // TODO: Überflüssig, wegen lokaler Variable
     public string GetUnterpunktungenString(Zeitpunkt z)
     {
@@ -457,7 +467,7 @@ namespace diNo
       string s="";
       foreach (var note in noten)
       {        
-        s += note + bez + " ";
+        s += note + bez + "  ";
       }
       return s;
     }
@@ -479,7 +489,7 @@ namespace diNo
       s=NotenString(getNoten(hj, Notentyp.Kurzarbeit), "K");
       s+=NotenString(getNoten(hj, Notentyp.Ex), "");
       s+=NotenString(getNoten(hj, Notentyp.EchteMuendliche), "");
-      // NotenString(getNoten(hj, Notentyp.Fachreferat), "F"); // nun ein Hj-Leistung!
+      s+=NotenString(getNoten(hj, Notentyp.Fachreferat), "F"); // TODO: bald eine Hj-Leistung!
       s+=NotenString(getNoten(hj, Notentyp.Ersatzprüfung), "E"); 
       return s.TrimEnd();
     }
@@ -658,116 +668,50 @@ namespace diNo
         }
       }
   }
-  /*
-    public class FachSchuelerNotenDruck
+
+  public class FachSchuelerNotenDruck11
+  {
+    public string fachBez { get; private set; }
+    public string SA1 { get; private set; }  // SA-Noten 1. Hj.
+    public string sL1 { get; private set; }  // mdl. 1. Hj.
+    public string D1 { get; private set; }   // Schnitt 1. Hj.
+    public string Hj1 { get; private set; }  // Halbjahrespunktzahl 1.Hj
+    public string SA2 { get; private set; }
+    public string sL2 { get; private set; }
+    public string D2 { get; private set; }
+    public string Hj2 { get; private set; }
+    public string FN { get; private set; } // Fachnote
+
+    public FachSchuelerNotenDruck11(FachSchuelerNoten s, string rptName)
     {
-        FachSchuelerNoten schueler;
-        
-        // Arrays können in Bericht leider nicht gedruckt werden, daher einzeln:
-        // für SA / sL wird je ein Datensatz erzeugt
-        // JF und DGes wird nur bei sL mitgeschickt
-        public string fachBez { get; private set; }
-        public string Art { get; private set; } // gibt den Text SA oder sL aus
-        public string N11 { get; private set; } 
-        public string N12 { get; private set; } // 2. Note im 1. Hj.
-        public string N13 { get; private set; }
-        public string N14 { get; private set; }
-        public string N15 { get; private set; }
-        public string N16 { get; private set; }
-        public string N21 { get; private set; }
-        public string N22 { get; private set; }
-        public string N23 { get; private set; }
-        public string N24 { get; private set; }
-        public string N25 { get; private set; }
-        public string N26 { get; private set; }
-        public string D1 { get; private set; } // Durchschnitt 1. Hj.
-        public string DGes1 { get; private set; } // Schnitt Gesamt im 1. Hj.
-        public string JF1 { get; private set; }
-        public string D2 { get; private set; }
-        public string DGes2 { get; private set; }
-        public string JF2 { get; private set; }
-        public string SAP { get; private set; }
-        public string MAP { get; private set; }
-        public string APG { get; private set; }
-        public string GesZ { get; private set; }
-        public string Z { get; private set; }
-        
-        public FachSchuelerNotenDruck(FachSchuelerNoten s, bool evalSA)
-        {
-            schueler = s;
-            fachBez = s.getFach.Bezeichnung;
-
-            var d1 = s.getSchnitt(Halbjahr.Erstes);
-            var d2 = s.getSchnitt(Halbjahr.Zweites);
-
-            IList<string> n1,n2;
-            if (evalSA)
-            {
-                Art = "SA";
-                n1 = s.SA(Halbjahr.Erstes);
-                n2 = s.SA(Halbjahr.Zweites);
-                D1 = String.Format("{0:f2}", d1.SchnittSchulaufgaben);
-                D2 = String.Format("{0:f2}", d2.SchnittSchulaufgaben);
-                DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
-            }
-            else
-            {
-                Art = "sL";
-                n1 = s.sonstigeLeistungen(Halbjahr.Erstes);
-                n2 = s.sonstigeLeistungen(Halbjahr.Zweites);
-                D1 = String.Format("{0:f2}", d1.SchnittMuendlich);
-                D2 = String.Format("{0:f2}", d2.SchnittMuendlich);
-                DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
-                JF1 = d1.JahresfortgangGanzzahlig.ToString();
-                DGes2 = String.Format("{0:f2}", d2.JahresfortgangMitKomma);
-                JF2 = d2.JahresfortgangGanzzahlig.ToString();
-
-                SAP = put(s.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich),0);
-                MAP = put(s.getNoten(Halbjahr.Zweites,Notentyp.APMuendlich),0);
-                APG = String.Format("{0:f2}",d2.PruefungGesamt);
-                GesZ = String.Format("{0:f2}",d2.SchnittFortgangUndPruefung);                
-                Z = d2.Abschlusszeugnis.ToString();
-            }                      
-            checkLen(n1,6);
-            N11 = put(n1,0);
-            N12 = put(n1,1);
-            N13 = put(n1,2);
-            N14 = put(n1,3);
-            N15 = put(n1,4);
-            N16 = put(n1,5);
-
-            checkLen(n2,6);
-            N21 = put(n2,0);
-            N22 = put(n2,1);
-            N23 = put(n2,2);
-            N24 = put(n2,3);
-            N25 = put(n2,4);
-            N26 = put(n2,5);
-
-        }
-
-        private string put(IList<string> n, int index)
-        {
-            if (index < n.Count)
-                return n[index];
-            else
-                return "";
-        }
-
-        private string put(IList<int> n, int index)
-        {
-            if (index < n.Count)
-                return n[index].ToString();
-            else
-                return "";
-        }
-        private void checkLen(IList<string> n, int maxindex)
-        {
-            if (n.Count>=maxindex)
-            {
-                throw new IndexOutOfRangeException("Notenbogendruck: Zuviele Noten im Fach " + schueler.getFach.Bezeichnung + " bei Schüler " + schueler.schuelerId);            
-            }
-        }
+      fachBez = s.getFach.Bezeichnung;
+      if (rptName == "diNo.rptNotenbogen.rdlc" && fachBez.Contains("irtschafts")) // Fachbezeichnung sind zu lang für Notenbogen
+      {
+        string kuerzel = s.getFach.Kuerzel;
+        if (kuerzel == "BwR") fachBez = "Betriebswirt-schaftslehre";
+        else if (kuerzel == "VWL") fachBez = "Volkswirt-schaftslehre";
+        else if (kuerzel == "WIn") fachBez = "Wirtschafts-informatik";
+      }
+      
+      var hj1 = s.getHjLeistung(HjArt.Hj1);
+      var hj2 = s.getHjLeistung(HjArt.Hj2);
+          
+      SA1 = s.SA(Halbjahr.Erstes);
+      SA2 = s.SA(Halbjahr.Zweites);
+      sL1 = s.sL(Halbjahr.Erstes);
+      sL2 = s.sL(Halbjahr.Zweites);
+      if (hj1 != null)
+      {
+        D1 = hj1.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj1.Punkte2Dez);       
+        Hj1 = hj1.Punkte.ToString();
+      }
+      if (hj2 != null)
+      {
+        Hj2 = hj2.Punkte.ToString();
+        D2 = hj2.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj2.Punkte2Dez);        
+      }
+      hj2 = s.getHjLeistung(HjArt.Fachnote);
+      if (hj2 != null) FN = hj2.Punkte.ToString();
     }
-    */
+  }
 }

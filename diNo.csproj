@@ -238,9 +238,13 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Klassenansicht.resx">
       <DependentUpon>Klassenansicht.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="rptKlassenliste.rdlc" />
+    <EmbeddedResource Include="rptNotenbogen11.rdlc" />
     <EmbeddedResource Include="rptNotenmitteilungA5.rdlc" />
+    <EmbeddedResource Include="subrptFPANoten.rdlc" />
+    <EmbeddedResource Include="subrptFachSchuelerNoten11.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11Klasse.rdlc" />
     <EmbeddedResource Include="UserControlAdministration.resx">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>
@@ -327,7 +331,10 @@
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.vwNotenbogenTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\diNo.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\FachSchuelerNoten.datasource" />
     <None Include="Properties\DataSources\FachSchuelerNotenDruck.datasource" />
+    <None Include="Properties\DataSources\FachSchuelerNotenDruck11.datasource" />
+    <None Include="Properties\DataSources\FPADruck.datasource" />
     <None Include="Properties\DataSources\Klasse.datasource" />
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />
     <None Include="Properties\DataSources\SchuelerDruck.datasource" />

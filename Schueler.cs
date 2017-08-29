@@ -66,15 +66,15 @@ namespace diNo
     /// </summary>
     public void Save()
     {
-          (new SchuelerTableAdapter()).Update(data);
-          if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && fpaDT != null)
-            {
-                (new FpaTableAdapter()).Update(fpaDT);
-            }
-          if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && seminarDT != null)
-            {
-                (new SeminarfachnoteTableAdapter()).Update(seminarDT);
-            }
+      (new SchuelerTableAdapter()).Update(data);
+      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && fpaDT != null)
+      {
+        (new FpaTableAdapter()).Update(fpaDT);
+      }
+      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && seminarDT != null)
+      {
+        (new SeminarfachnoteTableAdapter()).Update(seminarDT);
+      }
 
     }
 
@@ -82,7 +82,7 @@ namespace diNo
     /// <summary>
     /// Die Id des Schülers in der Datenbank.
     /// </summary>
-    [OLVColumn(Title="Id", Width = 50, DisplayIndex = 4, TextAlign = HorizontalAlignment.Right)]
+    [OLVColumn(Title = "Id", Width = 50, DisplayIndex = 4, TextAlign = HorizontalAlignment.Right)]
     public int Id
     {
       get;
@@ -124,13 +124,15 @@ namespace diNo
 
     // Klassenbezeichnung des Schülers, ggf. bei Mischklassen um den Zweig ergänzt.
     public string KlassenBezeichnung
-    { get
-      {var k = getKlasse;    
-       if (k.Bezeichnung.Substring(0,2)=="FB")
+    {
+      get
+      {
+        var k = getKlasse;
+        if (k.Bezeichnung.Substring(0, 2) == "FB")
           return k.Bezeichnung + "_" + Data.Schulart;
         else
-          return k.Bezeichnung + (k.Zweig==Zweig.None ? "_" + data.Ausbildungsrichtung : "");            
-      }    
+          return k.Bezeichnung + (k.Zweig == Zweig.None ? "_" + data.Ausbildungsrichtung : "");
+      }
     }
 
 
@@ -156,14 +158,14 @@ namespace diNo
     /// <summary>
     /// Ob der Schüler Legastheniker ist (so dass in Englisch und Französisch 1:1 gewertet werden muss).
     /// </summary>
-    [OLVColumn(Title="Legasthenie", Width = 80)]
+    [OLVColumn(Title = "Legasthenie", Width = 80)]
     public bool IsLegastheniker
     {
       get { return this.data.LRSStoerung; }
       set
       {
         this.data.LRSStoerung = value;
-        this.data.LRSSchwaeche = value;        
+        this.data.LRSSchwaeche = value;
       }
     }
 
@@ -190,7 +192,7 @@ namespace diNo
     }
 
     public int BetreuerId
-    { get { return  data.IsBetreuerIdNull() ? 0 : data.BetreuerId; } }
+    { get { return data.IsBetreuerIdNull() ? 0 : data.BetreuerId; } }
 
     /// <summary>
     /// FPA-Noten
@@ -201,17 +203,25 @@ namespace diNo
       {
         if (fpaDT == null)
         {
-            fpaDT = (new FpaTableAdapter()).GetDataBySchuelerId(Id);
-            while (fpaDT.Count < 2) // es werden intern 2 Halbjahre angelegt
-            {
-              var fpa = fpaDT.NewFpaRow();
-              fpa.SchuelerId = Id;
-              fpa.Halbjahr = (byte)fpaDT.Count;
-              fpaDT.AddFpaRow(fpa);
-          }            
+          fpaDT = (new FpaTableAdapter()).GetDataBySchuelerId(Id);
+          while (fpaDT.Count < 2) // es werden intern 2 Halbjahre angelegt
+          {
+            var fpa = fpaDT.NewFpaRow();
+            fpa.SchuelerId = Id;
+            fpa.Halbjahr = (byte)fpaDT.Count;
+            fpaDT.AddFpaRow(fpa);
+          }
         }
         return fpaDT;
       }
+    }
+
+    public List<FPADruck> FPANotenDruck()
+    {
+      List<FPADruck> res = new List<FPADruck>();
+      res.Add(new FPADruck(FPANoten[0], "1"));
+      res.Add(new FPADruck(FPANoten[1], "2"));
+      return res;
     }
 
     // Berechnet die FPA-Gesamtpunktzahl aus den Teilnoten
@@ -233,8 +243,8 @@ namespace diNo
         }
 
         // beim Betrieb werden nur mittlere Punktwerte vergeben:
-        
-        if (!fpa.IsBetriebNull() && fpa.Betrieb>0 && (fpa.Betrieb + 1) % 3 != 0)
+
+        if (!fpa.IsBetriebNull() && fpa.Betrieb > 0 && (fpa.Betrieb + 1) % 3 != 0)
         {
           if ((fpa.Betrieb + 1) % 3 == 1)
             fpa.Betrieb--;
@@ -246,7 +256,7 @@ namespace diNo
           if (fpa.Betrieb == 0 || fpa.Anleitung == 0 || fpa.Vertiefung == 0)
             fpa.Gesamt = 0;
           else
-            fpa.Gesamt = (byte)Math.Round((2*fpa.Betrieb + fpa.Anleitung + fpa.Vertiefung) / 4.0);
+            fpa.Gesamt = (byte)Math.Round((2 * fpa.Betrieb + fpa.Anleitung + fpa.Vertiefung) / 4.0);
         }
       }
     }
@@ -257,14 +267,14 @@ namespace diNo
       {
         if (seminar == null)
         {
-            seminarDT = (new SeminarfachnoteTableAdapter()).GetDataBySchuelerId(Id);
-            if (seminarDT.Count == 0)
-            {
-                seminar = seminarDT.NewSeminarfachnoteRow();
-                seminar.SchuelerId = Id;
-                seminarDT.AddSeminarfachnoteRow(seminar);
-            }
-            else seminar = seminarDT[0];
+          seminarDT = (new SeminarfachnoteTableAdapter()).GetDataBySchuelerId(Id);
+          if (seminarDT.Count == 0)
+          {
+            seminar = seminarDT.NewSeminarfachnoteRow();
+            seminar.SchuelerId = Id;
+            seminarDT.AddSeminarfachnoteRow(seminar);
+          }
+          else seminar = seminarDT[0];
         }
         return seminar;
       }
@@ -272,7 +282,7 @@ namespace diNo
 
     public bool Wiederholt()
     {
-      bool wh=false;
+      bool wh = false;
       if (!Data.IsWiederholung1JahrgangsstufeNull())
       {
         wh = getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung1Jahrgangsstufe);
@@ -312,7 +322,7 @@ namespace diNo
     {
       get
       {
-        return this.Data.IsWahlpflichtfachNull() ? "": this.Data.Wahlpflichtfach;
+        return this.Data.IsWahlpflichtfachNull() ? "" : this.Data.Wahlpflichtfach;
       }
       set
       {
@@ -320,7 +330,7 @@ namespace diNo
           MeldeAb(this.Data.Wahlpflichtfach);
         MeldeAn(value);
         this.Data.Wahlpflichtfach = value;
-        Save();                
+        Save();
       }
     }
 
@@ -334,7 +344,7 @@ namespace diNo
     {
       get
       {
-        return this.Data.IsFremdsprache2Null() ? "": this.Data.Fremdsprache2;
+        return this.Data.IsFremdsprache2Null() ? "" : this.Data.Fremdsprache2;
       }
       set
       {
@@ -342,7 +352,7 @@ namespace diNo
           MeldeAb(this.Data.Fremdsprache2);
         MeldeAn(value);
         this.Data.Fremdsprache2 = value;
-        Save();                
+        Save();
       }
     }
 
@@ -358,7 +368,7 @@ namespace diNo
     {
       get
       {
-        return this.Data.IsReligionOderEthikNull()? "" : this.Data.ReligionOderEthik;
+        return this.Data.IsReligionOderEthikNull() ? "" : this.Data.ReligionOderEthik;
       }
 
       set
@@ -371,7 +381,7 @@ namespace diNo
         }
 
         this.Data.ReligionOderEthik = value;
-        Save();                
+        Save();
       }
     }
 
@@ -442,14 +452,15 @@ namespace diNo
     }
 
     public Schuelerstatus Status
-    { get { return (Schuelerstatus) data.Status; }
-      set { data.Status = (int) value; }
+    {
+      get { return (Schuelerstatus)data.Status; }
+      set { data.Status = (int)value; }
     }
 
     public string getWiederholungen()
     {
       string result = string.Empty;
-                  
+
       if (!this.Data.IsWiederholung1JahrgangsstufeNull() && isAWiederholung(this.Data.Wiederholung1Jahrgangsstufe))
       {
         result += Data.Wiederholung1Jahrgangsstufe;
@@ -496,15 +507,15 @@ namespace diNo
     public void RemoveVorkommnis(int vorkommnisId)
     {
       (new VorkommnisTableAdapter()).Delete(vorkommnisId);
-        this.vorkommnisse = null; // damit er die neu lädt
+      this.vorkommnisse = null; // damit er die neu lädt
     }
 
-    public void AddVorkommnis(Vorkommnisart art, string bemerkung, bool DuplikateErlaubt=false)
+    public void AddVorkommnis(Vorkommnisart art, string bemerkung, bool DuplikateErlaubt = false)
     {
-      AddVorkommnis(art, DateTime.Today, bemerkung,DuplikateErlaubt);
+      AddVorkommnis(art, DateTime.Today, bemerkung, DuplikateErlaubt);
     }
 
-    public void AddVorkommnis(Vorkommnisart art, DateTime datum, string bemerkung,bool DuplikateErlaubt=false)
+    public void AddVorkommnis(Vorkommnisart art, DateTime datum, string bemerkung, bool DuplikateErlaubt = false)
     {
       if (DuplikateErlaubt || !hatVorkommnis(art))
       {
@@ -512,11 +523,11 @@ namespace diNo
 
         if (art == Vorkommnisart.ProbezeitNichtBestanden)
         {
-          if (MessageBox.Show("Soll der Schüler aus allen Kursen abgemeldet werden?","diNo",MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
+          if (MessageBox.Show("Soll der Schüler aus allen Kursen abgemeldet werden?", "diNo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             Austritt(Data.ProbezeitBis);
         }
 
-        
+
         this.vorkommnisse = null; // damit er die neu lädt
       }
     }
@@ -526,7 +537,7 @@ namespace diNo
       get
       {
         if (this.vorkommnisse == null)
-        {          
+        {
           this.vorkommnisse = new List<Vorkommnis>();
           foreach (var vorkommnis in new VorkommnisTableAdapter().GetDataBySchuelerId(this.Id))
           {
@@ -537,7 +548,7 @@ namespace diNo
         return this.vorkommnisse;
       }
     }
-   
+
     // gibt an, ob der Schüler das übergebene Vorkommnis bereits gespeichert hat (z.B. um Duplikate zu vermeiden)
     public bool hatVorkommnis(Vorkommnisart art)
     {
@@ -560,18 +571,18 @@ namespace diNo
       // F-Wi zählt immer (auch 12. Klasse), weil es WIn ersetzt
       // eine andere eingetragene 2. Fremdsprache zählt auch immer (in der 13.); dies kann eine RS-Note, Ergänzungspr.,
       // aber auch bei fortgeführtem Franz. die Note der 11./12. oder 13. Klasse sein. Dadurch kann F-Wi sogar doppelt zählen!
-      
+
       foreach (var fach in faecher)
       {
         // alle Fächer außer Sport und Kunst, Franz. nur in der 13. 
         var fk = fach.getFach.Kuerzel;
         byte? note = fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
-        
-        if (note==null || fk == "Ku" || fk == "Smw" || (fk=="F" && !allgHSR))
+
+        if (note == null || fk == "Ku" || fk == "Smw" || (fk == "F" && !allgHSR))
           continue;
 
         // liegen die Voraussetzungen für allg. HSR vor?
-        if (allgHSR && (fk=="F-Wi" ||  fk=="F" && note.GetValueOrDefault()>3))
+        if (allgHSR && (fk == "F-Wi" || fk == "F" && note.GetValueOrDefault() > 3))
           FranzVorhanden = true;
 
         if (note == 0)
@@ -600,8 +611,8 @@ namespace diNo
           anz++;
         }
       }
-       
-      if (allgHSR && !FranzVorhanden)           
+
+      if (allgHSR && !FranzVorhanden)
         Data.SetDNoteAllgNull();
       else if (anz > 0)
       {
@@ -622,15 +633,15 @@ namespace diNo
       else
       {
         data.SetDNoteNull();
-      }      
+      }
     }
 
     public Vorkommnisart Zeugnisart(Zeitpunkt zeitpunkt)
-    {    
-      if (zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS)
+    {
+      if (zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
         return Vorkommnisart.Zwischenzeugnis;
 
-      else if (zeitpunkt==Zeitpunkt.DrittePA && getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
+      else if (zeitpunkt == Zeitpunkt.DrittePA && getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
       {
         if (getNoten.HatNichtBestanden() || hatVorkommnis(Vorkommnisart.PruefungNichtBestanden))
           return Vorkommnisart.Jahreszeugnis;
@@ -639,7 +650,7 @@ namespace diNo
         else if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
           return (Data.IsDNoteAllgNull() ? Vorkommnisart.fachgebundeneHochschulreife : Vorkommnisart.allgemeineHochschulreife);
       }
-      else if (zeitpunkt==Zeitpunkt.Jahresende && getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
+      else if (zeitpunkt == Zeitpunkt.Jahresende && getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
         return Vorkommnisart.Jahreszeugnis;
 
       return Vorkommnisart.NotSet;
@@ -780,8 +791,8 @@ namespace diNo
       // manche belegen einen anderen Reliunterricht als das zugehörige Bekenntnis:
       string unt = Data.IsReligionOderEthikNull() ? Data.Bekenntnis : Data.ReligionOderEthik;
 
-      if (unt=="RK") return "K";
-      else if (unt=="EV") return "Ev";
+      if (unt == "RK") return "K";
+      else if (unt == "EV") return "Ev";
       else return "Eth";
     }
 
@@ -789,7 +800,7 @@ namespace diNo
     {
       var result = new List<Kurs>();
       foreach (Kurs k in getKlasse.Kurse)
-        if (KursPasstZumZweig(k)) 
+        if (KursPasstZumZweig(k))
           result.Add(k);
 
       return result;
@@ -800,7 +811,7 @@ namespace diNo
     {
       var result = new List<Kurs>();
       foreach (Kurs k in getKlasse.Kurse)
-        if (KursPasstZumSchueler(k)) 
+        if (KursPasstZumSchueler(k))
           result.Add(k);
 
       return result;
@@ -811,32 +822,32 @@ namespace diNo
     public void PasseWahlfachschluesselAn(Kurs k)
     {
       string kuerzel = k.getFach.Kuerzel;
-      if (kuerzel=="K") Data.ReligionOderEthik="RK";      
-      else if (kuerzel=="Ev") Data.ReligionOderEthik="EV";
-      else if (kuerzel=="Eth") Data.ReligionOderEthik="Eth";
-      else if (kuerzel=="F") Data.Fremdsprache2="F";
-      else if (kuerzel=="F-Wi" || kuerzel=="WIn" || kuerzel=="Ku" || kuerzel=="F3" )
-        Data.Wahlpflichtfach=kuerzel;      
+      if (kuerzel == "K") Data.ReligionOderEthik = "RK";
+      else if (kuerzel == "Ev") Data.ReligionOderEthik = "EV";
+      else if (kuerzel == "Eth") Data.ReligionOderEthik = "Eth";
+      else if (kuerzel == "F") Data.Fremdsprache2 = "F";
+      else if (kuerzel == "F-Wi" || kuerzel == "WIn" || kuerzel == "Ku" || kuerzel == "F3")
+        Data.Wahlpflichtfach = kuerzel;
     }
 
 
     // Liefert den Zeitpunkt des PZ-Endes (bezogen auf das laufende Schuljahr)
     public Zeitpunkt HatProbezeitBis()
-    {      
+    {
       if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
       {
         ;
-      }       
+      }
       if (!data.IsProbezeitBisNull())
       {
         // PZ im Dezember = BOS
-        if (data.ProbezeitBis > DateTime.Parse("1.12." +  Zugriff.Instance.Schuljahr)
-            && data.ProbezeitBis < DateTime.Parse("20.12." +  Zugriff.Instance.Schuljahr))
+        if (data.ProbezeitBis > DateTime.Parse("1.12." + Zugriff.Instance.Schuljahr)
+            && data.ProbezeitBis < DateTime.Parse("20.12." + Zugriff.Instance.Schuljahr))
           return Zeitpunkt.ProbezeitBOS;
-        
+
         // PZ im Februar = FOS
-        if (data.ProbezeitBis > DateTime.Parse("1.2." +  (Zugriff.Instance.Schuljahr + 1))
-            && data.ProbezeitBis < DateTime.Parse("1.3." +  (Zugriff.Instance.Schuljahr + 1)))
+        if (data.ProbezeitBis > DateTime.Parse("1.2." + (Zugriff.Instance.Schuljahr + 1))
+            && data.ProbezeitBis < DateTime.Parse("1.3." + (Zugriff.Instance.Schuljahr + 1)))
           return Zeitpunkt.HalbjahrUndProbezeitFOS;
       }
       return Zeitpunkt.None;
@@ -876,12 +887,12 @@ namespace diNo
     }
   }
 
-  public enum Schuelerstatus 
+  public enum Schuelerstatus
   {
     Aktiv = 0,
     Abgemeldet = 1,
     NichtZurSAPZugelassen = 2,
-    SAPabgebrochen = 3         
+    SAPabgebrochen = 3
   }
 
   public class SchuelerDruck
@@ -892,7 +903,7 @@ namespace diNo
     public string Rufname { get; private set; }
     public string Anschrift { get; private set; }
     public string Telefon { get; private set; }
-    public string GeborenInAm { get; private set; }  
+    public string GeborenInAm { get; private set; }
     public string Klasse { get; private set; }
     public string KlasseMitZweig { get; private set; }
     public string Bekenntnis { get; private set; }
@@ -920,8 +931,8 @@ namespace diNo
 
       Klasse = s.getKlasse.Bezeichnung;
       KlasseMitZweig = s.KlassenBezeichnung;
-      Bekenntnis = "Bekenntnis: "+ s.Data.Bekenntnis;
-      Klassenleiter = s.getKlasse.Klassenleiter.Vorname.Substring(0,1)+ ". " + s.getKlasse.Klassenleiter.Nachname;
+      Bekenntnis = "Bekenntnis: " + s.Data.Bekenntnis;
+      Klassenleiter = s.getKlasse.Klassenleiter.Vorname.Substring(0, 1) + ". " + s.getKlasse.Klassenleiter.Nachname;
       Legasthenie = s.Data.LRSStoerung ? "\nLegasthenie" : "";
       Laufbahn = "Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm.ToString("dd.MM.yyyy");
       Laufbahn += " aus " + s.Data.SchulischeVorbildung + " von " + s.EintrittAusSchulname;//.Substring(0,25);
@@ -930,7 +941,7 @@ namespace diNo
       if (!s.Data.IsAustrittsdatumNull()) Laufbahn += "\nAustritt am " + s.Data.Austrittsdatum.ToString("dd.MM.yyyy");
       // Wiederholungen
       tmp = s.getWiederholungen();
-      if (tmp!="") Laufbahn += "\nWiederholungen: " + tmp;
+      if (tmp != "") Laufbahn += "\nWiederholungen: " + tmp;
 
       if (s.Data.Schulart == "B")
         Schulart = "0841 Staatl. Berufsoberschule Kempten (Allgäu)";
@@ -938,11 +949,11 @@ namespace diNo
         Schulart = "0871 Staatl. Fachoberschule Kempten (Allgäu)";
 
       Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
-  
-      // allgemeine Zeugnisbemerkungen (als HTML-Text!)
-      Bemerkung = "";           
 
-      if (jg==Jahrgangsstufe.Elf)
+      // allgemeine Zeugnisbemerkungen (als HTML-Text!)
+      Bemerkung = "";
+
+      if (jg == Jahrgangsstufe.Elf)
       { /*  TODO: neuer FPA-Bericht     
         if (!s.FPANoten.IsErfolg1HjNull() && !s.FPANoten.IsPunkte1HjNull())
         {
@@ -967,7 +978,7 @@ namespace diNo
         if (Bemerkung!="")
           Bemerkung = "<b>Fachpraktische Ausbildung</b><br>" + Bemerkung;*/
       }
-      else if (jg==Jahrgangsstufe.Zwoelf)
+      else if (jg == Jahrgangsstufe.Zwoelf)
       {
         var ta = new Fpa12altTableAdapter();
         var dt = ta.GetDataBySchuelerId(s.Id);
@@ -978,11 +989,11 @@ namespace diNo
             Bemerkung = "Die <b>fachpraktische Ausbildung</b> wurde in der 11. Klasse " + ErfolgText(fpa12.Erfolg) + " durchlaufen.<br>";
         }
       }
-      else if (jg==Jahrgangsstufe.Dreizehn)
+      else if (jg == Jahrgangsstufe.Dreizehn)
       {
         if (!s.Seminarfachnote.IsThemaKurzNull())
         {
-          Bemerkung="<b>Thema der Seminararbeit:</b><br>";
+          Bemerkung = "<b>Thema der Seminararbeit:</b><br>";
           Bemerkung += s.Seminarfachnote.ThemaKurz;
         }
       }
@@ -1010,9 +1021,31 @@ namespace diNo
         case 1: return "mit sehr gutem Erfolg";
         case 2: return "mit gutem Erfolg";
         case 3: return "mit Erfolg";
-        default: return "ohne Erfolg";        
+        default: return "ohne Erfolg";
       }
     }
   }
-  
+
+  // erzeugt die Druckdaten für die FPA, halbjahresweise
+  public class FPADruck
+  {
+    public string Betrieb { get; private set; }
+    public string Anleitung { get; private set; }
+    public string Vertiefung12 { get; private set; }
+    public string Vertiefung { get; private set; }
+    public string Gesamt { get; private set; }
+    public string Stelle { get; private set; }
+
+    public FPADruck(diNoDataSet.FpaRow f, string hj)
+    {
+      Betrieb = f.IsBetriebNull() ? "" : f.Betrieb.ToString();
+      Anleitung = f.IsAnleitungNull() ? "" : f.Anleitung.ToString();
+      Vertiefung12 = f.IsVertiefung1Null() ? "" : f.Vertiefung1.ToString() + "  ";
+      Vertiefung12 += f.IsVertiefung2Null() ? "" : f.Vertiefung2.ToString();
+      Vertiefung = f.IsVertiefungNull() ? "" : f.Vertiefung.ToString();
+      Gesamt = f.IsGesamtNull() ? "" : f.Gesamt.ToString();
+      Stelle = hj + ". Halbjahr: " + (f.IsStelleNull() ? "" : f.Stelle);
+      if (!f.IsBemerkungNull()) Stelle += "\n" + f.Bemerkung;
+    }
+  }
 }
