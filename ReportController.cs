@@ -58,16 +58,16 @@ namespace diNo
       List<SchuelerDruck> s12 = new List<SchuelerDruck>(); // und 12. müssen getrennt gedruckt werden (andere Berichtsgrundlage)
       foreach (Schueler s in dataSource)
       {
-        if ((Berichtsname== "diNo.rptNotenbogen.rdlc" || (Berichtsname == "diNo.rptNotenmitteilungA5.rdlc")) 
+        if ((Berichtsname== "rptNotenbogen" || (Berichtsname == "rptNotenmitteilungA5")) 
             && s.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Elf)
           s11.Add(new SchuelerDruck(s));
         else
           s12.Add(new SchuelerDruck(s));
       }
       if (s11.Count>0)
-        new rptSchuelerdruck(s11, "diNo.rptNotenbogen11.rdlc").Show();
+        new rptSchuelerdruck(s11, "diNo." + Berichtsname + "11.rdlc").Show();
       if (s12.Count > 0)
-        new rptSchuelerdruck(s12, Berichtsname).Show();
+        new rptSchuelerdruck(s12, "diNo." + Berichtsname + ".rdlc").Show();
     }
   }
 

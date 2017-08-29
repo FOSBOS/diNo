@@ -168,9 +168,9 @@ namespace diNo
       string rpt;
       var obj = SelectedObjects();
       if (Zugriff.Instance.HatVerwaltungsrechte || obj.Count == 1)
-        rpt = "diNo.rptNotenbogen.rdlc";
+        rpt = "rptNotenbogen";
       else
-        rpt = "diNo.rptKlassenliste.rdlc";       
+        rpt = "rptKlassenliste";       
       new ReportSchuelerdruck(obj, rpt);
     }
 

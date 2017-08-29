@@ -219,8 +219,11 @@ namespace diNo
     public List<FPADruck> FPANotenDruck()
     {
       List<FPADruck> res = new List<FPADruck>();
-      res.Add(new FPADruck(FPANoten[0], "1"));
-      res.Add(new FPADruck(FPANoten[1], "2"));
+      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
+      {
+        res.Add(new FPADruck(FPANoten[0], "1"));
+        res.Add(new FPADruck(FPANoten[1], "2"));
+      }
       return res;
     }
 

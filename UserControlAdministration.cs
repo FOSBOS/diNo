@@ -59,7 +59,7 @@ namespace diNo
     {
       var obj = getSelectedObjects();
       if (obj!=null)
-        new ReportSchuelerdruck(obj,"diNo.rptAbiergebnisse.rdlc");
+        new ReportSchuelerdruck(obj,"rptAbiergebnisse");
     }
 
     private void exportNoten_Click(object sender, EventArgs e)
@@ -116,7 +116,7 @@ namespace diNo
     {      
       var obj = getSelectedObjects();
       if (obj!=null)
-        new ReportSchuelerdruck(obj,"diNo.rptNotenmitteilungA5.rdlc");
+        new ReportSchuelerdruck(obj,"rptNotenmitteilungA5");
     }
 
     private void btnBerechtigungen_Click(object sender, EventArgs e)
@@ -177,7 +177,12 @@ namespace diNo
 
     private void btnKlassenliste_Click(object sender, EventArgs e)
     {
-      new ReportSchuelerdruck(getSelectedObjects(), "diNo.rptKlassenliste.rdlc");
+      new ReportSchuelerdruck(getSelectedObjects(), "rptKlassenliste");
+    }
+
+    private void btnSelect_Click(object sender, EventArgs e)
+    {
+      new Datenauswahl().ShowDialog();
     }
   }
 }

@@ -57,6 +57,8 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
+      this.btnSelect = new System.Windows.Forms.Button();
+      this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
@@ -66,6 +68,7 @@
       // 
       // groupBoxAnalyse
       // 
+      this.groupBoxAnalyse.Controls.Add(this.btnSelect);
       this.groupBoxAnalyse.Location = new System.Drawing.Point(19, 268);
       this.groupBoxAnalyse.Name = "groupBoxAnalyse";
       this.groupBoxAnalyse.Size = new System.Drawing.Size(250, 226);
@@ -90,7 +93,7 @@
       // 
       this.btnKlassenliste.Location = new System.Drawing.Point(21, 77);
       this.btnKlassenliste.Name = "btnKlassenliste";
-      this.btnKlassenliste.Size = new System.Drawing.Size(102, 23);
+      this.btnKlassenliste.Size = new System.Drawing.Size(132, 23);
       this.btnKlassenliste.TabIndex = 3;
       this.btnKlassenliste.Text = "Klassenliste";
       this.btnKlassenliste.UseVisualStyleBackColor = true;
@@ -100,7 +103,7 @@
       // 
       this.btnAttestpflicht.Location = new System.Drawing.Point(21, 106);
       this.btnAttestpflicht.Name = "btnAttestpflicht";
-      this.btnAttestpflicht.Size = new System.Drawing.Size(102, 23);
+      this.btnAttestpflicht.Size = new System.Drawing.Size(132, 23);
       this.btnAttestpflicht.TabIndex = 2;
       this.btnAttestpflicht.Text = "Attestpflicht";
       this.btnAttestpflicht.UseVisualStyleBackColor = true;
@@ -110,7 +113,7 @@
       // 
       this.btnNotenmitteilung.Location = new System.Drawing.Point(21, 21);
       this.btnNotenmitteilung.Name = "btnNotenmitteilung";
-      this.btnNotenmitteilung.Size = new System.Drawing.Size(102, 23);
+      this.btnNotenmitteilung.Size = new System.Drawing.Size(132, 23);
       this.btnNotenmitteilung.TabIndex = 1;
       this.btnNotenmitteilung.Text = "Notenmitteilung";
       this.btnNotenmitteilung.UseVisualStyleBackColor = true;
@@ -120,7 +123,7 @@
       // 
       this.btnAbiergebnisse.Location = new System.Drawing.Point(21, 48);
       this.btnAbiergebnisse.Name = "btnAbiergebnisse";
-      this.btnAbiergebnisse.Size = new System.Drawing.Size(102, 23);
+      this.btnAbiergebnisse.Size = new System.Drawing.Size(132, 23);
       this.btnAbiergebnisse.TabIndex = 0;
       this.btnAbiergebnisse.Text = "Abiergebnisse";
       this.btnAbiergebnisse.UseVisualStyleBackColor = true;
@@ -367,6 +370,16 @@
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
       // 
+      // btnSelect
+      // 
+      this.btnSelect.Location = new System.Drawing.Point(21, 23);
+      this.btnSelect.Name = "btnSelect";
+      this.btnSelect.Size = new System.Drawing.Size(132, 23);
+      this.btnSelect.TabIndex = 2;
+      this.btnSelect.Text = "Schüler auswählen";
+      this.btnSelect.UseVisualStyleBackColor = true;
+      this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
+      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -380,6 +393,7 @@
       this.Controls.Add(this.groupBoxDrucken);
       this.Name = "UserControlAdministration";
       this.Size = new System.Drawing.Size(907, 530);
+      this.groupBoxAnalyse.ResumeLayout(false);
       this.groupBoxDrucken.ResumeLayout(false);
       this.groupBoxExport.ResumeLayout(false);
       this.groupBoxImport.ResumeLayout(false);
@@ -422,5 +436,6 @@
     private System.Windows.Forms.Button btnSendExcelFiles;
     private System.Windows.Forms.Button btnNotenNachWinSV;
     private System.Windows.Forms.Button btnKlassenliste;
+    private System.Windows.Forms.Button btnSelect;
   }
 }
