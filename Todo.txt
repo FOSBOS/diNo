@@ -7,11 +7,9 @@
 - Import/Export neuer FPA-Noten fehlt. Noch zu klären: Brauchen wir da die Teilnoten auch oder reicht Gesamtbewertung?
   --> alte SO (nur Sj. 17/18 die 12. Klassen): verwende Tabelle Fpa12alt
   --> neue SO: wir verwalten diese ganz normal als Hj-Leistung
-- Import der Probezeit nur, wenn sie das aktuelle Schuljahr betrifft (nervt sonst), manchmal steht noch die alte aus der 11. Klasse drin
 - Umgang mit Legasthenikern in neuer SchO nachlesen und ggf. programmieren
 - neue Notendatei testen
 - Import der neuen Notendatei testen
-  * Löschen der alten Noten je nach Halbjahr schülerweise
   * Einlesen der Abschlussprüfung fehlt noch völlig
 - WinSV:
   * BOS Vorrücken von 12 in 13 wird nicht gefüllt. "N" nicht erhalten, "-" darf vorrücken. Fraglich: welches Feld ist das überhaupt?

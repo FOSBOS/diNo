@@ -83,17 +83,7 @@ namespace diNo
     /// <summary>
     /// Löscht die alten Noten dieses Kurses aus der Datenbank
     /// </summary>
-    protected void DeleteAlteNoten()
-    {
-      NoteTableAdapter ta = new NoteTableAdapter();
-      ta.DeleteByKursId(kurs.Id);
-
-      BerechneteNoteTableAdapter bta = new BerechneteNoteTableAdapter();
-      bta.DeleteByKursId(kurs.Id);
-
-      HjLeistungTableAdapter hja = new HjLeistungTableAdapter();
-      hja.DeleteByFachAndHalbjahr(kurs.getFach.Id, (byte)GetAktuellesHalbjahr());
-    }
+    protected abstract void DeleteAlteNoten();
 
     protected HjArt GetAktuellesHalbjahr()
     {
@@ -134,9 +124,23 @@ namespace diNo
     }
 
     /// <summary>
-    /// Gleicht die Schülerdaten zwischen DB und Excel ab. Prüft, ob neue Schüler hinzugekommen, oder ob Legasthenie neu vermerkt wurde.
-    /// </summary>        
-    private void Synchronize()
+    /// Löscht die alten Noten dieses Kurses aus der Datenbank
+    /// </summary>
+    protected override void DeleteAlteNoten()
+    {
+      NoteTableAdapter ta = new NoteTableAdapter();
+      Halbjahr halbjahr = GetAktuellesHalbjahr() == HjArt.Hj1 ? Halbjahr.Erstes : Halbjahr.Zweites;
+      ta.DeleteByKursAndHalbjahr(kurs.Id, (byte)halbjahr);
+
+      // Halbjahresleistungen werden nicht gelöscht. Entweder arbeiten wir im aktuellen Halbjahr
+      // dann findet die Methode unten den entsprechenden Eintrag und ändert ihn ab
+      // oder ein Halbjahr ist bereits vergangen, dann wird die HJLeistung nicht mehr angefasst
+    }
+
+  /// <summary>
+  /// Gleicht die Schülerdaten zwischen DB und Excel ab. Prüft, ob neue Schüler hinzugekommen, oder ob Legasthenie neu vermerkt wurde.
+  /// </summary>        
+  private void Synchronize()
     {
       var klasse = kurs.getSchueler(true);
 
@@ -304,9 +308,21 @@ namespace diNo
     }
 
     /// <summary>
-    /// Gleicht die Schülerdaten zwischen DB und Excel ab. Prüft, ob neue Schüler hinzugekommen, oder ob Legasthenie neu vermerkt wurde.
-    /// </summary>        
-    private void Synchronize()
+    /// Löscht die alten Noten dieses Kurses aus der Datenbank
+    /// </summary>
+    protected override void DeleteAlteNoten()
+    {
+      NoteTableAdapter ta = new NoteTableAdapter();
+      ta.DeleteByKursId(kurs.Id);
+
+      BerechneteNoteTableAdapter bta = new BerechneteNoteTableAdapter();
+      bta.DeleteByKursId(kurs.Id);
+    }
+
+  /// <summary>
+  /// Gleicht die Schülerdaten zwischen DB und Excel ab. Prüft, ob neue Schüler hinzugekommen, oder ob Legasthenie neu vermerkt wurde.
+  /// </summary>        
+  private void Synchronize()
     {
       var klasse = kurs.getSchueler(true);
       
