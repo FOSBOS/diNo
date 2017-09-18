@@ -674,13 +674,15 @@ namespace diNo
     public string fachBez { get; private set; }
     public string SA1 { get; private set; }  // SA-Noten 1. Hj.
     public string sL1 { get; private set; }  // mdl. 1. Hj.
-    public string D1 { get; private set; }   // Schnitt 1. Hj.
+    public string SsL1 { get; private set; }  // Schnitt mdl. 1. Hj.
+    public string S1 { get; private set; }   // Schnitt 1. Hj.
     public string Hj1 { get; private set; }  // Halbjahrespunktzahl 1.Hj
     public string SA2 { get; private set; }
     public string sL2 { get; private set; }
-    public string D2 { get; private set; }
+    public string SsL2 { get; private set; }
+    public string S2 { get; private set; }
     public string Hj2 { get; private set; }
-    public string FN { get; private set; } // Fachnote
+    public string GE { get; private set; } // Gesamtergebnis
 
     public FachSchuelerNotenDruck11(FachSchuelerNoten s, string rptName)
     {
@@ -702,16 +704,18 @@ namespace diNo
       sL2 = s.sL(Halbjahr.Zweites);
       if (hj1 != null)
       {
-        D1 = hj1.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj1.Punkte2Dez);       
+        SsL1 = hj1.SchnittMdl == null ? "" : String.Format("{0:f2}", hj1.SchnittMdl);
+        S1 = hj1.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj1.Punkte2Dez);       
         Hj1 = hj1.Punkte.ToString();
       }
       if (hj2 != null)
       {
+        SsL2 = hj2.SchnittMdl == null ? "" : String.Format("{0:f2}", hj2.SchnittMdl);
+        S2 = hj2.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj2.Punkte2Dez);
         Hj2 = hj2.Punkte.ToString();
-        D2 = hj2.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj2.Punkte2Dez);        
       }
       hj2 = s.getHjLeistung(HjArt.Fachnote);
-      if (hj2 != null) FN = hj2.Punkte.ToString();
+      if (hj2 != null) GE = hj2.Punkte.ToString();
     }
   }
 }

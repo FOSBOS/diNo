@@ -46,20 +46,20 @@
       this.chkShowHj2 = new System.Windows.Forms.CheckBox();
       this.chkShowAbi = new System.Windows.Forms.CheckBox();
       this.cFach = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.cSAHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.csLHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cSchnittMdl1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cSAHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cPunkte2DezHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.cSAHj2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.csLHj2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cSchnittMdl2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cSAHj2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cPunkte2DezHj2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cHj2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cSAP = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.MAP = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.APG = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.cFN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cGE = new System.Windows.Forms.DataGridViewTextBoxColumn();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).BeginInit();
       this.SuspendLayout();
       // 
@@ -79,20 +79,20 @@
       this.dataGridNoten.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
       this.dataGridNoten.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cFach,
-            this.cSAHj1,
             this.csLHj1,
             this.cSchnittMdl1,
+            this.cSAHj1,
             this.cPunkte2DezHj1,
             this.cHj1,
-            this.cSAHj2,
             this.csLHj2,
             this.cSchnittMdl2,
+            this.cSAHj2,
             this.cPunkte2DezHj2,
             this.cHj2,
             this.cSAP,
             this.MAP,
             this.APG,
-            this.cFN});
+            this.cGE});
       this.dataGridNoten.Location = new System.Drawing.Point(0, 70);
       this.dataGridNoten.Name = "dataGridNoten";
       this.dataGridNoten.ReadOnly = true;
@@ -151,22 +151,10 @@
       this.cFach.ReadOnly = true;
       this.cFach.Width = 200;
       // 
-      // cSAHj1
-      // 
-      dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      this.cSAHj1.DefaultCellStyle = dataGridViewCellStyle3;
-      this.cSAHj1.Frozen = true;
-      this.cSAHj1.HeaderText = "SA";
-      this.cSAHj1.Name = "cSAHj1";
-      this.cSAHj1.ReadOnly = true;
-      this.cSAHj1.ToolTipText = "Schulaufgaben im 1. Halbjahr";
-      this.cSAHj1.Width = 50;
-      // 
       // csLHj1
       // 
-      dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      this.csLHj1.DefaultCellStyle = dataGridViewCellStyle4;
-      this.csLHj1.DividerWidth = 2;
+      dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.csLHj1.DefaultCellStyle = dataGridViewCellStyle3;
       this.csLHj1.Frozen = true;
       this.csLHj1.HeaderText = "sL";
       this.csLHj1.Name = "csLHj1";
@@ -176,14 +164,25 @@
       // 
       // cSchnittMdl1
       // 
-      dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cSchnittMdl1.DefaultCellStyle = dataGridViewCellStyle5;
+      dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cSchnittMdl1.DefaultCellStyle = dataGridViewCellStyle4;
       this.cSchnittMdl1.Frozen = true;
       this.cSchnittMdl1.HeaderText = "Ø sL";
       this.cSchnittMdl1.Name = "cSchnittMdl1";
       this.cSchnittMdl1.ReadOnly = true;
       this.cSchnittMdl1.ToolTipText = "Durchschnitt aller sonstigen Leistungen";
       this.cSchnittMdl1.Width = 50;
+      // 
+      // cSAHj1
+      // 
+      dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.cSAHj1.DefaultCellStyle = dataGridViewCellStyle5;
+      this.cSAHj1.Frozen = true;
+      this.cSAHj1.HeaderText = "SA";
+      this.cSAHj1.Name = "cSAHj1";
+      this.cSAHj1.ReadOnly = true;
+      this.cSAHj1.ToolTipText = "Schulaufgaben im 1. Halbjahr";
+      this.cSAHj1.Width = 50;
       // 
       // cPunkte2DezHj1
       // 
@@ -209,22 +208,10 @@
       this.cHj1.ToolTipText = "Gesamtpunktzahl 1. Halbjahr";
       this.cHj1.Width = 55;
       // 
-      // cSAHj2
-      // 
-      dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      this.cSAHj2.DefaultCellStyle = dataGridViewCellStyle8;
-      this.cSAHj2.Frozen = true;
-      this.cSAHj2.HeaderText = "SA";
-      this.cSAHj2.Name = "cSAHj2";
-      this.cSAHj2.ReadOnly = true;
-      this.cSAHj2.ToolTipText = "Schulaufgaben im 2. Halbjahr";
-      this.cSAHj2.Width = 50;
-      // 
       // csLHj2
       // 
-      dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      this.csLHj2.DefaultCellStyle = dataGridViewCellStyle9;
-      this.csLHj2.DividerWidth = 2;
+      dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.csLHj2.DefaultCellStyle = dataGridViewCellStyle8;
       this.csLHj2.Frozen = true;
       this.csLHj2.HeaderText = "sL";
       this.csLHj2.Name = "csLHj2";
@@ -234,14 +221,25 @@
       // 
       // cSchnittMdl2
       // 
-      dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      this.cSchnittMdl2.DefaultCellStyle = dataGridViewCellStyle10;
+      dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.cSchnittMdl2.DefaultCellStyle = dataGridViewCellStyle9;
       this.cSchnittMdl2.Frozen = true;
       this.cSchnittMdl2.HeaderText = "Ø sL";
       this.cSchnittMdl2.Name = "cSchnittMdl2";
       this.cSchnittMdl2.ReadOnly = true;
       this.cSchnittMdl2.ToolTipText = "Durchschnitt aller sonstigen Leistungen";
       this.cSchnittMdl2.Width = 50;
+      // 
+      // cSAHj2
+      // 
+      dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.cSAHj2.DefaultCellStyle = dataGridViewCellStyle10;
+      this.cSAHj2.Frozen = true;
+      this.cSAHj2.HeaderText = "SA";
+      this.cSAHj2.Name = "cSAHj2";
+      this.cSAHj2.ReadOnly = true;
+      this.cSAHj2.ToolTipText = "Schulaufgaben im 2. Halbjahr";
+      this.cSAHj2.Width = 50;
       // 
       // cPunkte2DezHj2
       // 
@@ -292,17 +290,17 @@
       this.APG.ReadOnly = true;
       this.APG.Width = 55;
       // 
-      // cFN
+      // cGE
       // 
       dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cFN.DefaultCellStyle = dataGridViewCellStyle13;
-      this.cFN.DividerWidth = 2;
-      this.cFN.Frozen = true;
-      this.cFN.HeaderText = "FN";
-      this.cFN.Name = "cFN";
-      this.cFN.ReadOnly = true;
-      this.cFN.ToolTipText = "Fachnote";
-      this.cFN.Width = 52;
+      this.cGE.DefaultCellStyle = dataGridViewCellStyle13;
+      this.cGE.DividerWidth = 2;
+      this.cGE.Frozen = true;
+      this.cGE.HeaderText = "GE";
+      this.cGE.Name = "cGE";
+      this.cGE.ReadOnly = true;
+      this.cGE.ToolTipText = "Gesamtergebnis";
+      this.cGE.Width = 52;
       // 
       // UserControlNotenbogen
       // 
@@ -327,19 +325,19 @@
     private System.Windows.Forms.CheckBox chkShowHj2;
     private System.Windows.Forms.CheckBox chkShowAbi;
     private System.Windows.Forms.DataGridViewTextBoxColumn cFach;
-    private System.Windows.Forms.DataGridViewTextBoxColumn cSAHj1;
     private System.Windows.Forms.DataGridViewTextBoxColumn csLHj1;
     private System.Windows.Forms.DataGridViewTextBoxColumn cSchnittMdl1;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cSAHj1;
     private System.Windows.Forms.DataGridViewTextBoxColumn cPunkte2DezHj1;
     private System.Windows.Forms.DataGridViewTextBoxColumn cHj1;
-    private System.Windows.Forms.DataGridViewTextBoxColumn cSAHj2;
     private System.Windows.Forms.DataGridViewTextBoxColumn csLHj2;
     private System.Windows.Forms.DataGridViewTextBoxColumn cSchnittMdl2;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cSAHj2;
     private System.Windows.Forms.DataGridViewTextBoxColumn cPunkte2DezHj2;
     private System.Windows.Forms.DataGridViewTextBoxColumn cHj2;
     private System.Windows.Forms.DataGridViewTextBoxColumn cSAP;
     private System.Windows.Forms.DataGridViewTextBoxColumn MAP;
     private System.Windows.Forms.DataGridViewTextBoxColumn APG;
-    private System.Windows.Forms.DataGridViewTextBoxColumn cFN;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cGE;
   }
 }

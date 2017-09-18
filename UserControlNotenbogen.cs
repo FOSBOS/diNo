@@ -53,21 +53,21 @@ namespace diNo
         dataGridNoten.Rows[lineCount].Height += 2;
         dataGridNoten.Rows[lineCount].Cells[0].Value = fach.getFach.Bezeichnung;
 
-        dataGridNoten.Rows[lineCount].Cells[1].Value = fach.SA(Halbjahr.Erstes);
-        dataGridNoten.Rows[lineCount].Cells[2].Value = fach.sL(Halbjahr.Erstes);
+        dataGridNoten.Rows[lineCount].Cells[3].Value = fach.SA(Halbjahr.Erstes);
+        dataGridNoten.Rows[lineCount].Cells[1].Value = fach.sL(Halbjahr.Erstes);
         HjLeistung hjl = fach.getHjLeistung(HjArt.Hj1);
         if (hjl!=null)
         {
-          dataGridNoten.Rows[lineCount].Cells[3].Value = hjl.SchnittMdl.GetValueOrDefault(); 
+          dataGridNoten.Rows[lineCount].Cells[2].Value = hjl.SchnittMdl.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[4].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[5].Value = hjl.Punkte;
         }
-        dataGridNoten.Rows[lineCount].Cells[6].Value = fach.SA(Halbjahr.Zweites);
-        dataGridNoten.Rows[lineCount].Cells[7].Value = fach.sL(Halbjahr.Zweites);
+        dataGridNoten.Rows[lineCount].Cells[8].Value = fach.SA(Halbjahr.Zweites);
+        dataGridNoten.Rows[lineCount].Cells[6].Value = fach.sL(Halbjahr.Zweites);
         hjl = fach.getHjLeistung(HjArt.Hj2);
         if (hjl!=null)
         {
-          dataGridNoten.Rows[lineCount].Cells[8].Value = hjl.SchnittMdl.GetValueOrDefault(); 
+          dataGridNoten.Rows[lineCount].Cells[7].Value = hjl.SchnittMdl.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[9].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[10].Value = hjl.Punkte;
         }

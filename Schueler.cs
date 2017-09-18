@@ -919,6 +919,7 @@ namespace diNo
     // Zeugnisbemerkung muss im Bericht als HTML eingestellt sein (re. Maus auf Datenfeld)
     public string Bemerkung { get; private set; }
     public string DNote { get; private set; }
+    public string FPAText { get; private set; } // nur für Notenmitteilung
 
     public SchuelerDruck(Schueler s)
     {
@@ -957,29 +958,18 @@ namespace diNo
       Bemerkung = "";
 
       if (jg == Jahrgangsstufe.Elf)
-      { /*  TODO: neuer FPA-Bericht     
-        if (!s.FPANoten.IsErfolg1HjNull() && !s.FPANoten.IsPunkte1HjNull())
+      {
+        diNoDataSet.FpaRow fpa;
+        if (Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.HalbjahrUndProbezeitFOS)
+          fpa = s.FPANoten[0];
+        else
+          fpa = s.FPANoten[1];
+        if (!fpa.IsGesamtNull())
         {
-          Bemerkung += "Diese wurde im 1. Halbjahr " + ErfolgText(s.FPANoten.Erfolg1Hj) + " (" + s.FPANoten.Punkte1Hj + " Punkte) durchlaufen";
-          if (!s.FPANoten.IsStelle1HjNull())
-            Bemerkung += " (" + s.FPANoten.Stelle1Hj + ")";
-          Bemerkung += ".<br>";
+          FPAText = "<b>FPA (" + (fpa.Halbjahr+1) + ". Halbjahr):  " + fpa.Gesamt + " Punkte</b><br>";
+          FPAText += "Betrieb " + fpa.Betrieb + ", Anleitung " + fpa.Anleitung;// + "<br>";
+          FPAText += ", Vertiefung " + fpa.Vertiefung + (fpa.IsVertiefung1Null() ? "" : " (Teilnoten " + fpa.Vertiefung1 + " " + fpa.Vertiefung2 + ") ");          
         }
-        if (!s.FPANoten.IsPunkte2HjNull())
-        {
-          Bemerkung += "Im 2. Halbjahr wurden " + s.FPANoten.Punkte2Hj +" Punkte erzielt";
-          if (!s.FPANoten.IsStelle2HjNull())
-            Bemerkung += " (" + s.FPANoten.Stelle2Hj + ")";
-          Bemerkung += ".<br>";
-        }
-
-        if (!s.FPANoten.IsErfolgNull() && !s.FPANoten.IsPunkteNull())
-          Bemerkung += "Insgesamt wurde die FPA <b>" + ErfolgText(s.FPANoten.Erfolg) + "</b> (durchschnittliche Punktzahl " + s.FPANoten.Punkte + ") durchlaufen.<br>";
-
-        if (!s.FPANoten.IsBemerkungNull())
-          Bemerkung += s.FPANoten.Bemerkung + "<br>";
-        if (Bemerkung!="")
-          Bemerkung = "<b>Fachpraktische Ausbildung</b><br>" + Bemerkung;*/
       }
       else if (jg == Jahrgangsstufe.Zwoelf)
       {

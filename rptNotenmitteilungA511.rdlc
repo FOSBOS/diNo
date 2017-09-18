@@ -229,23 +229,22 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox8">
+                    <Textbox Name="FPAText">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>12pt</FontSize>
-                              </Style>
+                              <Value>=Fields!FPAText.Value</Value>
+                              <MarkupType>HTML</MarkupType>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox8</rd:DefaultName>
+                      <rd:DefaultName>FPAText</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -279,7 +278,6 @@
                       </Style>
                     </Subreport>
                     <ColSpan>2</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -398,6 +396,10 @@
           <DataField>DNote</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="FPAText">
+          <DataField>FPAText</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="GeborenInAm">
           <DataField>GeborenInAm</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -408,6 +410,10 @@
         </Field>
         <Field Name="Klasse">
           <DataField>Klasse</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KlasseMitZweig">
+          <DataField>KlasseMitZweig</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Klassenleiter">
