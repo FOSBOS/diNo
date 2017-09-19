@@ -7,10 +7,14 @@ update GlobaleKonstanten set Schuljahr=2106, aktZeitpunkt=1, Sperre=0
 delete from BerechneteNote
 DBCC CHECKIDENT (BerechneteNote, RESEED, 0); -- AutoIncrement zurücksetzen
 
-delete from FpANoten
+delete from Fpa
+delete from Fpa12alt
 
 delete from Note
 DBCC CHECKIDENT (Note, RESEED, 0);
+
+delete from HjLeistung;
+DBCC CHECKIDENT (HJLeistung, RESEED, 0);
 
 delete from KlasseKurs
 delete from SchuelerKurs
