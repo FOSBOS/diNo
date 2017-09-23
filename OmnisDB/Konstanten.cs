@@ -20,7 +20,7 @@ namespace diNo.OmnisDB
     public static int faecherspiegelAPCol = 66;
     public static int viertesPruefungsfachCol = 68;
     public static int APBestandenCol = 75;
-    public static int weiteresFach1BezeichnungCol = 79; //Für Wahlpflichtfächer, z. B. F, F3
+    public static int weiteresFach1BezeichnungCol = 79; //Für Wahlpflichtfächer, z. B. F, F-Wi
     public static int weiteresFach2BezeichnungCol = 80;
     public static int weiteresFach3BezeichnungCol = 81;
     public static int weiteresFach1NoteCol = 82;

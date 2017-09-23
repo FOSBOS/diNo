@@ -61,6 +61,13 @@ namespace diNo
           log.Debug("Ignoriere Förderunterricht, Ergänzungsunterricht, Seminarfach und diversen anderen Unfug - kein selbstständiger Unterricht");
           continue;
         }
+
+        if (fach.ToUpper().Contains("FPV"))
+        {
+          // ignoriere Fachpraktische Vertiefung, die läuft anders
+          continue;
+        }
+
         if (string.IsNullOrEmpty(klassenString))
         {
           log.Debug("Unterricht Ohne Klassen wird ignoriert in Zeile " + zeile);
@@ -191,7 +198,10 @@ namespace diNo
         {
           // suche Fach in der Datenbank
           var fach = FindOrCreateFach(aFach);
-          kursAdapter.Insert(aKursBezeichung, aLehrerId, fach.Id, aZweig);
+          string geschlecht = null;
+          if (fach.Kuerzel == "Sw") geschlecht = "W";
+          if (fach.Kuerzel == "Sm") geschlecht = "M";
+          kursAdapter.Insert(aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht);
         }
 
         kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);

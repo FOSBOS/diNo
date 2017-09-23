@@ -93,7 +93,7 @@ namespace diNo
       using (StreamReader reader = new StreamReader(stream))
       {
         var schuelerAdapter = new SchuelerTableAdapter();
-        //var fpaAdapter = new FpANotenTableAdapter();
+        var fpaAdapter = new Fpa12altTableAdapter();
         Dictionary<string, Kurs> kurse = GetKursverzeichnis();
         kurse.Add("G", GetGeschichteKurs());
 
@@ -140,7 +140,7 @@ namespace diNo
               //FpA-Zeile
               string nachname = line[1];
               int gesamterfolg = int.Parse(line[2]);
-              //fpaAdapter.Insert(schuelerId, "", null, null, null, null, gesamterfolg, null, null);
+              fpaAdapter.Insert(schuelerId, gesamterfolg);
             }
             else
               throw new InvalidOperationException("Diese Zeile hat " + line.Length + " Spalten. Das ist mir unbekannt");
@@ -267,7 +267,7 @@ namespace diNo
       var kurse = kursAdapter.GetDataByBezeichnung(bezeichnung);
       if (kurse == null || kurse.Count == 0)
       {
-        kursAdapter.Insert(bezeichnung, null, fachAdapter.GetDataByKuerzel(fachKuerzel)[0].Id, null);
+        kursAdapter.Insert(bezeichnung, null, fachAdapter.GetDataByKuerzel(fachKuerzel)[0].Id, null, null);
         kurse = kursAdapter.GetDataByBezeichnung(bezeichnung);
       }
       if (kurse == null || kurse.Count == 0)

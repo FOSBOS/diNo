@@ -106,7 +106,6 @@ namespace diNo
             table.AddSchuelerRow(row);
           }
 
-          row.AcceptChanges();
           tableAdapter.Update(row);
 
           // Diese Zeile meldet den Schüler bei allen notwendigen Kursen seiner Klasse an
@@ -127,9 +126,13 @@ namespace diNo
       row.Name = cleanArray[nachnameSpalte];
       row.Vorname = cleanArray[vornameSpalte];
       row.KlasseId = klasse.Id;
+      row.AlteSO = new Klasse(klasse).AlteFOBOSO();
       row.Schulart = klasse.Bezeichnung.StartsWith("B") ? "B" : "F";
       row.Rufname = cleanArray[rufnameSpalte];
       row.Geschlecht = cleanArray[geschlechtSpalte];
+      if (row.Geschlecht != "M" && row.Geschlecht != "W")
+        throw new InvalidDataException("Geschlecht unbekannt");
+
       DateTime? geburtsdatum = ParseDate(cleanArray[geburtsdatumSpalte]);
       if (geburtsdatum == null)
       {
@@ -154,6 +157,7 @@ namespace diNo
       {
         // normales Französisch wird als Fremdsprache2 importiert, aber nicht als Wahlpflichtfach
         row.Fremdsprache2 = "F";
+        row.Wahlpflichtfach = "";
       }
       else 
       {
@@ -182,10 +186,12 @@ namespace diNo
       if (austrittsdatum == null)
       {
         row.SetAustrittsdatumNull();
+        row.Status = 0;
       }
       else
       {
         row.Austrittsdatum = (DateTime)austrittsdatum;
+        row.Status = austrittsdatum < DateTime.Now ? 1 : 0;
       }
 
       row.SchulischeVorbildung = cleanArray[schulischeVorbildungSpalte];
@@ -226,6 +232,7 @@ namespace diNo
       row.EintrittAusSchulnummer = !string.IsNullOrEmpty(cleanArray[eintrittVonSchulnummerSpalte]) ? int.Parse(cleanArray[eintrittVonSchulnummerSpalte]) : -1;
       row.Email = cleanArray[emailSpalte];
       row.Notfalltelefonnummer = cleanArray[notfallrufnummerSpalte];
+
     }
 
     /// <summary>
@@ -298,7 +305,10 @@ namespace diNo
         case "WVR": return "W";
         case "W": return "W"; // manchmal steht W auch schon drin
         case "V": return "V"; // Vorklasse FOS hat noch keine Ausbildungsrichtung
-        default: throw new InvalidOperationException("Unbekannte Ausbildungsrichtung " + ausbildungsrichtung);
+        case "": return "V"; // Integrationsvorklasse hat auch noch keine Richtung
+        case "A": return "A"; // Agrar- und Umwelt. Evtl. auch "U" denkbar?
+        default:
+          throw new InvalidOperationException("Unbekannte Ausbildungsrichtung " + ausbildungsrichtung);
       }
     }
   }

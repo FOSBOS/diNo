@@ -170,7 +170,7 @@ namespace diNo
       foreach (var fachNoten in alleKurse)
       {
         kuerzel = fachNoten.getFach.Kuerzel;
-        if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
+        if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Sw" || kuerzel == "Sm" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
         byte? relevanteNote = fachNoten.getRelevanteNote(zeitpunkt);
         int istSAP = fachNoten.getFach.IstSAPFach() ? 1:0;
         if (relevanteNote != null)
@@ -262,7 +262,7 @@ namespace diNo
       foreach (var f in alleKurse)
       {
         string kuerzel = f.getFach.Kuerzel;
-        if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
+        if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Sw" || kuerzel == "Sm" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
 
         byte? note = f.getRelevanteNote(Zeitpunkt.ZweitePA);
         if (note<4)
@@ -523,7 +523,7 @@ namespace diNo
 
       string kuerzel = getFach.Kuerzel;
       decimal? jf = getSchnitt(Halbjahr.Zweites).JahresfortgangMitKomma;
-      if (!jf.HasValue || kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Ku") return ""; // in Nebenfächern wie G,TZ,... gibt es keine MAP
+      if (!jf.HasValue || kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Sw" || kuerzel == "Sm" || kuerzel == "Ku") return ""; // in Nebenfächern wie G,TZ,... gibt es keine MAP
 
       int map;
       if (!getFach.IstSAPFach()) // Nebenfächer

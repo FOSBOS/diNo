@@ -315,7 +315,7 @@ namespace diNo
     /// <summary>
     /// Liefert entweder
     /// F für Wahlfach Französisch
-    /// F3 für fortgeführtes Französisch
+    /// F-Wi für fortgeführtes Französisch
     /// einen Leerstring für Schüler die gar kein Französisch haben
     /// 
     /// Achtung: Beim Setzen wird auch gleich der Kurs umgemeldet!
@@ -581,7 +581,7 @@ namespace diNo
         var fk = fach.getFach.Kuerzel;
         byte? note = fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
 
-        if (note == null || fk == "Ku" || fk == "Smw" || (fk == "F" && !allgHSR))
+        if (note == null || fk == "Ku" || fk == "Smw" || fk == "Sw" || fk == "Sm" || (fk == "F" && !allgHSR))
           continue;
 
         // liegen die Voraussetzungen für allg. HSR vor?
@@ -774,19 +774,36 @@ namespace diNo
     // eignet sich für die Vorbelegung von Kursen beim Schülerimport
     public bool KursPasstZumSchueler(Kurs k)
     {
+      bool result = this.KursPasstOhneGeschlechtspruefung(k);
+      if (result)
+      {
+        // entweder ist der Kurs für alle Geschlechter oder das Geschlecht passt
+        return k.Geschlecht == null || k.Geschlecht == this.Data.Geschlecht;
+      }
+      else
+      {
+        return false;
+      }
+    }
+
+    private bool KursPasstOhneGeschlechtspruefung (Kurs k)
+    {
       string kuerzel = k.getFach.Kuerzel;
       string reli = getReliKuerzel();
 
       // Ku ist bei uns immer Pflichtfach
       if (kuerzel == "K" || kuerzel == "Ev" || kuerzel == "Eth") return (kuerzel == reli);
       else if (kuerzel == "F") return (kuerzel == Data.Fremdsprache2);
-      else if (kuerzel == "F-Wi" && Data.Wahlpflichtfach == "F3") return true;
+      else if (kuerzel == "F-Wi" && Data.Wahlpflichtfach == "F-Wi") return true;
       // die Wirtschaftler gehen in Wirtschaftsinformatik, sofern sie nicht franz. fortgeführt als wahlpflichtfach haben
-      else if (kuerzel == "WIn" && Zweig == Zweig.Wirtschaft && (Data.IsWahlpflichtfachNull() || Data.Wahlpflichtfach != "F3")) return true; // Standardfall (oft unbelegt)
+      else if (kuerzel == "WIn" && Zweig == Zweig.Wirtschaft && (Data.IsWahlpflichtfachNull() || Data.Wahlpflichtfach != "F-Wi")) return true; // Standardfall (oft unbelegt)
       // alle anderen Zweige müssen den Franz. oder WInf Kurs schon wählen, damit sie reingehen
       else if (kuerzel == "F-Wi" || kuerzel == "WIn") return (kuerzel == Data.Wahlpflichtfach);
       else return KursPasstZumZweig(k);
-    }
+  }
+
+
+
 
     // wandelt das beim Schüler gespeicherte Bekenntnis in das Fachkürzel um
     public string getReliKuerzel()
@@ -829,7 +846,7 @@ namespace diNo
       else if (kuerzel == "Ev") Data.ReligionOderEthik = "EV";
       else if (kuerzel == "Eth") Data.ReligionOderEthik = "Eth";
       else if (kuerzel == "F") Data.Fremdsprache2 = "F";
-      else if (kuerzel == "F-Wi" || kuerzel == "WIn" || kuerzel == "Ku" || kuerzel == "F3")
+      else if (kuerzel == "F-Wi" || kuerzel == "WIn" || kuerzel == "Ku")
         Data.Wahlpflichtfach = kuerzel;
     }
 

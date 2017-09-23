@@ -345,12 +345,21 @@ namespace diNo
 
     public string Kursbezeichnung
     {
-      get { return this.Data.Bezeichnung; }
+      get { return Data.Bezeichnung; }
     }
 
     public string FachBezeichnung
     {
-      get { return this.getFach.Bezeichnung; }
+      get { return getFach.Bezeichnung; }
+    }
+
+    public string Geschlecht
+    {
+      get
+      {
+        if (Data.IsGeschlechtNull()) return null;
+        else return Data.Geschlecht;
+      }
     }
 
     private void setSchreibtKA()
