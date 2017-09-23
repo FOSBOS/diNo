@@ -158,7 +158,7 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
         mailServer.EnableSsl = false;
         mailServer.UseDefaultCredentials = false;
 
-        mailServer.Credentials = new System.Net.NetworkCredential(from, "KOms3169");
+        mailServer.Credentials = new System.Net.NetworkCredential(from, "passwort");
         MailMessage msg = new MailMessage(from, to);
         msg.Subject = subject;
         msg.Body = body;
