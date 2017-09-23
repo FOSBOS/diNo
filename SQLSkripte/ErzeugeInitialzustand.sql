@@ -2,7 +2,7 @@ use [diNo]
 
 -- Lehrer manuell korrigieren
 
-update GlobaleKonstanten set Schuljahr=2106, aktZeitpunkt=1, Sperre=0
+update GlobaleKonstanten set Schuljahr=YEAR(CURRENT_TIMESTAMP), aktZeitpunkt=1, Sperre=0
 
 delete from BerechneteNote
 DBCC CHECKIDENT (BerechneteNote, RESEED, 0); -- AutoIncrement zurücksetzen
