@@ -17,7 +17,8 @@ namespace diNo
     private Dictionary<string, int> LehrerListe = new Dictionary<string, int>(); // verwaltet Kürzel, LehrerId
 
     public ImportKlassenleiter()
-    {      
+    {
+      MessageBox.Show("Benötigt wird eine Excelliste, bei der in Spalte 3 das Kürzel und in Spalte 4 die Klasse steht.\nAb Zeile 2 müssen Daten enthalten sein.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
       var fileDialog = new OpenFileDialog();
       fileDialog.Filter = "Excel Files|*.xls*";
             
@@ -27,6 +28,7 @@ namespace diNo
         LoadLehrer();
         LeseKlassenleiter();
         MessageBox.Show("Bitte in der Datenbank prüfen, ob alle Klassen richtig angelegt wurden.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+        xls.Dispose();
       }
     }
 
@@ -68,8 +70,8 @@ namespace diNo
           }
         }
         zeile++;
-      kuerzel = (string)(s.Cells[zeile,3].Value);
-      klasse = (string)(s.Cells[zeile,4].Value);
+        kuerzel = (string)(s.Cells[zeile,3].Value);
+        klasse = (string)(s.Cells[zeile,4].Value);
       }
     }
   }  
