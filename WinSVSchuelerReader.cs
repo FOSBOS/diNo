@@ -306,7 +306,8 @@ namespace diNo
         case "W": return "W"; // manchmal steht W auch schon drin
         case "V": return "V"; // Vorklasse FOS hat noch keine Ausbildungsrichtung
         case "": return "V"; // Integrationsvorklasse hat auch noch keine Richtung
-        case "A": return "A"; // Agrar- und Umwelt. Evtl. auch "U" denkbar?
+        case "A": return "U"; // Agrar- Bio und Umwelttechnologie.
+        case "U": return "U"; // Agrar- Bio und Umwelttechnologie.
         default:
           throw new InvalidOperationException("Unbekannte Ausbildungsrichtung " + ausbildungsrichtung);
       }
