@@ -309,7 +309,7 @@ namespace diNo
       }
 
       UnsavedChanges = true;
-      WriteValue(notenbogen, CellConstant.Nachname + zeile, "");
+      WriteValueProtectedCell(notenbogen, CellConstant.Nachname + zeile, "");
       return true;
     }
 
