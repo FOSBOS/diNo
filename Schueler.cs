@@ -793,7 +793,7 @@ namespace diNo
 
       // Ku ist bei uns immer Pflichtfach
       if (kuerzel == "K" || kuerzel == "Ev" || kuerzel == "Eth") return (kuerzel == reli);
-      else if (kuerzel == "F") return (kuerzel == Data.Fremdsprache2);
+      else if (kuerzel == "F") return !Data.IsFremdsprache2Null() && (kuerzel == Data.Fremdsprache2);
       else if (kuerzel == "F-Wi" && Data.Wahlpflichtfach == "F-Wi") return true;
       // die Wirtschaftler gehen in Wirtschaftsinformatik, sofern sie nicht franz. fortgeführt als wahlpflichtfach haben
       else if (kuerzel == "WIn" && Zweig == Zweig.Wirtschaft && (Data.IsWahlpflichtfachNull() || Data.Wahlpflichtfach != "F-Wi")) return true; // Standardfall (oft unbelegt)
