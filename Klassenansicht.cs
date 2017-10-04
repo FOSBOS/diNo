@@ -89,8 +89,7 @@ namespace diNo
           if (Zugriff.Instance.HatVerwaltungsrechte)
           {
             userControlKurszuordnungen1.Schueler = schueler;
-            if (Zugriff.Instance.HatRolle(Rolle.Admin))
-              userControlAdministration1.Schueler = schueler;
+            userControlAdministration1.Schueler = schueler;
           }          
         }
       }
