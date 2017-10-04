@@ -31,6 +31,7 @@
       this.btnOK = new System.Windows.Forms.Button();
       this.btnEsc = new System.Windows.Forms.Button();
       this.boxAuswahl = new System.Windows.Forms.GroupBox();
+      this.opVerschVerweis = new System.Windows.Forms.RadioButton();
       this.opNacharbeit = new System.Windows.Forms.RadioButton();
       this.opVerweis = new System.Windows.Forms.RadioButton();
       this.opMEP = new System.Windows.Forms.RadioButton();
@@ -52,7 +53,6 @@
       this.pnlInhalt = new System.Windows.Forms.Panel();
       this.labelInhalt = new System.Windows.Forms.Label();
       this.edInhalt = new System.Windows.Forms.TextBox();
-      this.opVerschVerweis = new System.Windows.Forms.RadioButton();
       this.boxAuswahl.SuspendLayout();
       this.pnlNachterminAm.SuspendLayout();
       this.pnlVersaeumtAm.SuspendLayout();
@@ -71,6 +71,7 @@
       // 
       // btnEsc
       // 
+      this.btnEsc.DialogResult = System.Windows.Forms.DialogResult.Cancel;
       this.btnEsc.Location = new System.Drawing.Point(548, 395);
       this.btnEsc.Name = "btnEsc";
       this.btnEsc.Size = new System.Drawing.Size(123, 38);
@@ -94,6 +95,16 @@
       this.boxAuswahl.Size = new System.Drawing.Size(193, 187);
       this.boxAuswahl.TabIndex = 0;
       this.boxAuswahl.TabStop = false;
+      // 
+      // opVerschVerweis
+      // 
+      this.opVerschVerweis.AutoSize = true;
+      this.opVerschVerweis.Location = new System.Drawing.Point(16, 132);
+      this.opVerschVerweis.Name = "opVerschVerweis";
+      this.opVerschVerweis.Size = new System.Drawing.Size(155, 21);
+      this.opVerschVerweis.TabIndex = 6;
+      this.opVerschVerweis.Text = "verschärfter Verweis";
+      this.opVerschVerweis.UseVisualStyleBackColor = true;
       // 
       // opNacharbeit
       // 
@@ -312,20 +323,12 @@
       this.edInhalt.Size = new System.Drawing.Size(632, 104);
       this.edInhalt.TabIndex = 5;
       // 
-      // opVerschVerweis
-      // 
-      this.opVerschVerweis.AutoSize = true;
-      this.opVerschVerweis.Location = new System.Drawing.Point(16, 132);
-      this.opVerschVerweis.Name = "opVerschVerweis";
-      this.opVerschVerweis.Size = new System.Drawing.Size(155, 21);
-      this.opVerschVerweis.TabIndex = 6;
-      this.opVerschVerweis.Text = "verschärfter Verweis";
-      this.opVerschVerweis.UseVisualStyleBackColor = true;
-      // 
       // Brief
       // 
+      this.AcceptButton = this.btnOK;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.CancelButton = this.btnEsc;
       this.ClientSize = new System.Drawing.Size(697, 445);
       this.Controls.Add(this.pnlInhalt);
       this.Controls.Add(this.pnlVersaeumtAm);

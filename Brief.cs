@@ -18,8 +18,7 @@ namespace diNo
         {            
             frmKlasse = aufrufendesFormular;
             InitializeComponent();
-            this.AcceptButton = btnOK;
-            this.CancelButton = btnEsc;
+            ControlBox = false;
             radioButton_CheckedChanged(this,null);
             datVersaeumtAm.Value = DateTime.Today;
             datTermin.Value = DateTime.Today;
@@ -39,7 +38,7 @@ namespace diNo
         
         private void btnEsc_Click(object sender, EventArgs e)
         {
-            Close();
+            Hide();
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -104,7 +103,7 @@ namespace diNo
         b.Betreff = "Versäumnis einer "+lnwart;        
         b.Inhalt += "Sie haben die " + lnwart + " im Fach " + cbFach.Text + " am " + datVersaeumtAm.Text + " versäumt.<br>";
         
-        b.Inhalt += "Nach § 50 (1) FOBOSO wird Ihnen ein Nachtermin eingeräumt.<br><br>";           
+        b.Inhalt += "Nach § 20 (1) FOBOSO wird Ihnen ein Nachtermin eingeräumt.<br><br>";           
         b.Inhalt += "Der Nachtermin findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr" + erzeugeRaum() + ".<br><br>";
         b.Inhalt += "Wird dieser Termin ohne ausreichende Entschuldigung versäumt, wird die Note 6 (0 Punkte) erteilt.<br><br>";
         b.Inhalt += "Freundliche Grüße";
@@ -114,7 +113,7 @@ namespace diNo
         string lnwart = opSEP.Checked ? "schriftliche" : "mündliche";
         b.Betreff = "Nachholung von Leistungsnachweisen";      
         b.Inhalt += "Sie konnten in diesem Schuljahr im Fach " + cbFach.Text + " wegen Ihrer Versäumnisse nicht hinreichend geprüft werden.<br><br>"; 
-        b.Inhalt += "Gemäß § 50 (2) FOBOSO wird hiermit eine " +lnwart+" Ersatzprüfung angesetzt.<br><br>";
+        b.Inhalt += "Gemäß § 20 (2) FOBOSO wird hiermit eine " +lnwart+" Ersatzprüfung angesetzt.<br><br>";
         b.Inhalt += "Prüfungsstoff wird sein: <br>" + edInhalt.Text + "<br><br>";
         b.Inhalt += "Die " +lnwart+" Ersatzprüfung findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr" + erzeugeRaum() + ".<br><br>";
         b.Inhalt += "Wird an der Ersatzprüfung wegen Erkrankung nicht teilgenommen, so muss die Erkrankung durch amtsärztliches Attest nachgewiesen werden; ohne ausreichende Entschuldigung wird die Note 6 (0 Punkte) erteilt.<br><br>";
@@ -124,7 +123,7 @@ namespace diNo
     public void NacharbeitText()
     {
       b.Betreff = "Nacharbeit";
-      b.Inhalt += "hiermit werden Sie gemäß § 35 (4) FOBOSO zur Nacharbeit verpflichtet.<br><br>";
+      b.Inhalt += "hiermit werden Sie gemäß Art. 86 (1) BayEUG zur Nacharbeit verpflichtet.<br><br>";
       b.Inhalt += "Begründung:<br>" + edInhalt.Text;
       b.Inhalt += "<br><br>Die Nacharbeit findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr" + erzeugeRaum() + ".<br><br>";           
       b.Inhalt += "Wird die Nacharbeit wegen Erkrankung nicht ausgeführt, so muss die Erkrankung durch ärztliches Attest nachgewiesen werden.<br><br>";
