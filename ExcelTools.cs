@@ -302,7 +302,7 @@ namespace diNo
     {
       int zeile = GetSidZeileForSchueler(schuelerId); //gilt für sId und Name
       string name = ReadValue(notenbogen, CellConstant.Nachname + zeile);
-      if (string.IsNullOrEmpty(name.Trim()))
+      if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(name.Trim()))
       {
         // Der Schüler ist bereits aus der Datei entfernt. Keine Aktion nötig.
         return false;
@@ -383,8 +383,8 @@ namespace diNo
       }
 
       UnsavedChanges = true;
-      WriteValue(notenbogen, CellConstant.Nachname + zeileNachname, "");
-      WriteValue(notenbogen, CellConstant.Vorname + (zeileNachname + 1), "");
+      WriteValueProtectedCell(notenbogen, CellConstant.Nachname + zeileNachname, "");
+      WriteValueProtectedCell(notenbogen, CellConstant.Vorname + (zeileNachname + 1), "");
       return true;
     }
 
