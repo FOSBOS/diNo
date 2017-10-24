@@ -145,7 +145,8 @@ namespace diNo
             // Kontrollmöglichkeit: alle weiteren Unterpunktungen werden gedruckt
             if (s.getNoten.Unterpunktungen!="" && !UnterpunktungGedruckt && zeitpunkt!=Zeitpunkt.HalbjahrUndProbezeitFOS
               && (modus==NotenCheckModus.Gesamtpruefung || modus==NotenCheckModus.EigeneKlasse))
-              Add(null, "Unterpunktet in " + s.getNoten.Unterpunktungen);
+              Add(null, "Unterpunktet in " + s.getNoten.Unterpunktungen 
+                + (zeitpunkt != Zeitpunkt.ProbezeitBOS && s.AlteFOBOSO() ? "" : " Schnitt: " + String.Format("{0:0.00}", s.getNoten.Punkteschnitt)));
 
             vorigerSchueler = s; // CreateResults braucht noch den
           }

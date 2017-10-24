@@ -500,7 +500,11 @@ namespace diNo
         }
         else if (n.HatNichtBestanden())
         {
-          if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich möglich: " + n.Unterpunktungen,true);
+          if (!schueler.AlteFOBOSO() || contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
+          {
+            contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen + " Schnitt: " + String.Format("{0:0.00}", n.Punkteschnitt), true);
+          }
+          else if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich möglich: " + n.Unterpunktungen,true);
           else
           {
             if (contr.zeitpunkt == Zeitpunkt.DrittePA)
