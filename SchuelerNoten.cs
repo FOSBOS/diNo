@@ -430,11 +430,11 @@ namespace diNo
     /// </summary>
     public byte? getRelevanteNote(Zeitpunkt z)
     {
-      if (!schueler.AlteFOBOSO())
+      if (!schueler.AlteFOBOSO()) // neue FOBOSO:
       {
         HjLeistung hj;
         if (z <= Zeitpunkt.HalbjahrUndProbezeitFOS) hj = getHjLeistung(HjArt.Hj1);
-        else hj = getHjLeistung(HjArt.Hj2);
+        else hj = getHjLeistung(HjArt.GesErg);
         if (hj == null) return null;
         else return hj.Punkte;
       }
@@ -735,7 +735,7 @@ namespace diNo
         S2 = hj2.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj2.Punkte2Dez);
         Hj2 = hj2.Punkte.ToString();
       }
-      hj2 = s.getHjLeistung(HjArt.Fachnote);
+      hj2 = s.getHjLeistung(HjArt.GesErg);
       if (hj2 != null) GE = hj2.Punkte.ToString();
     }
   }

@@ -98,11 +98,13 @@ namespace diNo
     private void chkShowHj2_CheckedChanged(object sender, EventArgs e)
     {
       ShowCols(6,10,chkShowHj2.Checked);
+      ShowCols(14, 14, chkShowHj2.Checked|| chkShowAbi.Checked);
     }
 
     private void chkShowAbi_CheckedChanged(object sender, EventArgs e)
     {
-      ShowCols(11,14,chkShowAbi.Checked);
+      ShowCols(11,13,chkShowAbi.Checked);
+      ShowCols(14, 14, chkShowHj2.Checked || chkShowAbi.Checked);
     }
   }
 }

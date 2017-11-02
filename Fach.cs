@@ -53,19 +53,18 @@ namespace diNo
             get { return this.data.Kuerzel; }
         }
 
+        // ab neuer FOBOSO: SA pro Halbjahr
         public int AnzahlSA(Zweig zweig, Jahrgangsstufe jg)
         {
           int z=0;
           if (jg == Jahrgangsstufe.Vorklasse)
           {
-             // in D,E,M je 3 SA, in 2 Fächern des Profilbereichs je 2 SA
-             // (T-Zweig: Ph,C;  W: BwR,Te;  S/A: B,C)
-             if (Kuerzel == "D" || Kuerzel == "DAZ" || Kuerzel == "E" || Kuerzel == "M") z=3;
-             else if (Kuerzel == "Ph" || Kuerzel == "B" || Kuerzel == "C"|| Kuerzel == "Te"|| Kuerzel == "BwR") z=2;
+             // in D,E,M je 2 SA
+             if (Kuerzel == "D" || Kuerzel == "DAZ" || Kuerzel == "E" || Kuerzel == "M") z=2;             
           }
-          else if (jg == Jahrgangsstufe.Elf || jg == Jahrgangsstufe.Vorkurs)
+          else if (jg == Jahrgangsstufe.Elf)
           {
-            if (IstSAPFach(zweig)) z=2;
+            if (IstSAPFach(zweig)) z=1;
 
           }
           else // 12./13. Klasse
@@ -94,7 +93,7 @@ namespace diNo
 
         public bool IstSAPFach(Zweig zweig)
         {
-          // TODO: für Umweltzweig brauchen wir Bio als SAP-Fach, für den Sozialzweig als SA-Fach; vorläufige Lösung:
+          // TODO: nur für Umweltzweig brauchen wir Bio als SAP-Fach, für den Sozialzweig als SA-Fach; vorläufige Lösung:
           if (zweig==Zweig.Umwelt && Kuerzel == "B") return true;
           else return this.data.IstSAP;
         }

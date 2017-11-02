@@ -232,9 +232,111 @@ namespace diNo
     /// </summary>
     /// <param name="schueler">Der Schüler.</param>    
     public override void Check(Schueler schueler)
-
     {
       base.Check(schueler);
+      if (schueler.AlteFOBOSO())
+      {
+        CheckAlt(schueler);
+        return;
+      }
+      
+      foreach (var fachNoten in noten.alleKurse)
+      {
+        Kurs kurs = Zugriff.Instance.KursRep.Find(fachNoten.kursId);
+        if (contr.modus == NotenCheckModus.EigeneNotenVollstaendigkeit && (kurs.getLehrer == null || Zugriff.Instance.lehrer.Id != kurs.getLehrer.Id))
+          continue;
+
+        // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
+        if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
+        {
+          if (fachNoten.getFach.IstSAPFach() && fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
+          {
+            contr.Add(kurs, "Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
+            if (fachNoten.getFach.Kuerzel == "E" && fachNoten.getNotenanzahl(Notentyp.APMuendlich) == 0)
+            {
+              contr.Add(kurs, "Es liegt keine Note in der Gruppenprüfung vor.");
+            }
+          }
+          continue;
+        }
+
+        // Grunddaten dieses Fachs
+        // -----------------------
+        int noetigeAnzahlSchulaufgaben = fachNoten.getFach.AnzahlSA(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe);
+        bool istSAFach = noetigeAnzahlSchulaufgaben > 0;               
+
+        // Halbjahresprüfung
+        // -----------------
+        Halbjahr hj;
+        if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS || contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+          hj = Halbjahr.Erstes;
+        else
+          hj = Halbjahr.Zweites;
+
+        // die Prüfung unterscheidet wie der bisherige Notenbogen nicht, ob die Note aus einer Ex oder echt mündlich ist - das verantwortet der Lehrer
+        int kurzarbeitenCount = fachNoten.getNotenanzahl(hj, Notentyp.Kurzarbeit);
+        int muendlicheCount = fachNoten.getNotenanzahl(hj, Notentyp.Ex) + fachNoten.getNotenanzahl(hj, Notentyp.EchteMuendliche) + fachNoten.getNotenanzahl(hj, Notentyp.Fachreferat);
+        int schulaufgabenCount = fachNoten.getNotenanzahl(hj, Notentyp.Schulaufgabe);
+        bool hatErsatzpruefung = fachNoten.getNotenanzahl(hj, Notentyp.Ersatzprüfung) > 0;
+
+        // wenn gar nichts da ist...
+        if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0 && !hatErsatzpruefung)
+        {
+          contr.Add(kurs, toText(0, "", "Note", hj));
+          continue;
+        }
+
+        if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
+        {
+          // zur Probezeit BOS muss noch keine SA vorliegen, wenn nur pro HJ eine geschrieben wird        
+          if (istSAFach && schulaufgabenCount == 0 && noetigeAnzahlSchulaufgaben>1)
+          {
+            contr.Add(kurs, toText(schulaufgabenCount, "", "Schulaufgabe", hj));
+          }
+
+          if (hatErsatzpruefung) continue;
+
+          if (kurs.schreibtKA && kurzarbeitenCount==0)
+          {
+            contr.Add(kurs, toText(kurzarbeitenCount, "", "Kurzarbeite", hj));
+          }
+          if (kurs.schreibtKA && muendlicheCount == 0)
+          {
+            byte punktePZ = fachNoten.getHjLeistung(HjArt.Hj1).Punkte;
+            if (!istSAFach || punktePZ < 4)
+              contr.Add(kurs, toText(muendlicheCount, "mündliche", "Note", hj));
+          }
+          else if (!kurs.schreibtKA && muendlicheCount < 2)
+          {
+            contr.Add(kurs, toText(muendlicheCount, "mündliche", "Note", hj));
+          }
+        }
+        else         
+        {
+          if (schulaufgabenCount < noetigeAnzahlSchulaufgaben)
+          {
+            contr.Add(kurs, toText(schulaufgabenCount, "", "Schulaufgabe"));
+          }
+          
+          if (hatErsatzpruefung) continue;
+
+          if (kurs.schreibtKA && kurzarbeitenCount ==0)
+          {
+            contr.Add(kurs, toText(kurzarbeitenCount, "", "Kurzarbeit"));
+          }
+
+          if ((!kurs.schreibtKA && muendlicheCount < 3) || muendlicheCount == 0)
+          {
+            contr.Add(kurs, toText(muendlicheCount, "mündliche", "Note"));
+          }
+        }
+      }
+    }
+
+
+
+  private void CheckAlt(Schueler schueler)
+    { 
       //List<string> faecherOhneNoten = new List<string>(); 
       foreach (var fachNoten in noten.alleKurse)
       {

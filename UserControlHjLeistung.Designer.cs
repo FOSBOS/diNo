@@ -36,7 +36,6 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridHjLeistung = new System.Windows.Forms.DataGridView();
       this.cFach = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cVorHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,7 +43,6 @@
       this.cHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cHj2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cAP = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.cFR = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cFN = new System.Windows.Forms.DataGridViewTextBoxColumn();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridHjLeistung)).BeginInit();
       this.SuspendLayout();
@@ -70,7 +68,6 @@
             this.cHj1,
             this.cHj2,
             this.cAP,
-            this.cFR,
             this.cFN});
       this.dataGridHjLeistung.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridHjLeistung.Location = new System.Drawing.Point(0, 0);
@@ -146,28 +143,16 @@
       this.cAP.ToolTipText = "Abschlussprüfung gesamt";
       this.cAP.Width = 52;
       // 
-      // cFR
-      // 
-      dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cFR.DefaultCellStyle = dataGridViewCellStyle8;
-      this.cFR.DividerWidth = 2;
-      this.cFR.Frozen = true;
-      this.cFR.HeaderText = "FR";
-      this.cFR.Name = "cFR";
-      this.cFR.ReadOnly = true;
-      this.cFR.ToolTipText = "Fachreferat";
-      this.cFR.Width = 52;
-      // 
       // cFN
       // 
-      dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cFN.DefaultCellStyle = dataGridViewCellStyle9;
+      dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cFN.DefaultCellStyle = dataGridViewCellStyle8;
       this.cFN.DividerWidth = 2;
       this.cFN.Frozen = true;
-      this.cFN.HeaderText = "FN";
+      this.cFN.HeaderText = "Ges";
       this.cFN.Name = "cFN";
       this.cFN.ReadOnly = true;
-      this.cFN.ToolTipText = "Fachnote";
+      this.cFN.ToolTipText = "Gesamtergebnis";
       this.cFN.Width = 52;
       // 
       // UserControlHjLeistung
@@ -191,7 +176,6 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn cHj1;
     private System.Windows.Forms.DataGridViewTextBoxColumn cHj2;
     private System.Windows.Forms.DataGridViewTextBoxColumn cAP;
-    private System.Windows.Forms.DataGridViewTextBoxColumn cFR;
     private System.Windows.Forms.DataGridViewTextBoxColumn cFN;
   }
 }

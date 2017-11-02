@@ -64,8 +64,8 @@ namespace diNo
     Hj1 = 0, // aktuelles Sj./1
     Hj2 = 1, // aktuelles Sj./2
     FR = 2, // Fachreferat
-    AP = 3,  // Abschlussprüfung-Schnitt
-    Fachnote = 4,
+    AP = 3,  // Abschlussprüfung-Gesamt
+    GesErg = 4, // Gesamtergebnis
     VorHj1 = 5, // ggf. für 11/1
     VorHj2 = 6 // ggf. für 11/2
   }
