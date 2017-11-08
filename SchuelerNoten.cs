@@ -22,6 +22,7 @@ namespace diNo
         public string Unterpunktungen;
         public bool hatDeutsch6 = false; // kann nicht ausgeglichen werden
         public int anz4P=0;
+        public double Punkteschnitt = 0;
 
         public SchuelerNoten(Schueler s)
         {
@@ -31,7 +32,7 @@ namespace diNo
           alleKurse = new List<FachSchuelerNoten>();
           foreach (var kurs in kurse)
           {
-            var fsn = new FachSchuelerNoten(schueler.Id, kurs.Id);
+            var fsn = new FachSchuelerNoten(schueler, kurs.Id);
             alleFaecher.Add(fsn);
             alleKurse.Add(fsn);
           }
@@ -41,7 +42,7 @@ namespace diNo
           foreach (var fachR in fDT)
           {
             Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
-            alleFaecher.Add(new FachSchuelerNoten(schueler.Id, fach));
+            alleFaecher.Add(new FachSchuelerNoten(schueler, fach));
           }
 
           alleFaecher.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));       
@@ -166,6 +167,8 @@ namespace diNo
     private void InitAnzahlNoten()
     {      
       string kuerzel;
+      int Punktesumme = 0;
+      int AnzahlFaecher = 0;
       Unterpunktungen="";
       foreach (var fachNoten in alleKurse)
       {
@@ -174,7 +177,9 @@ namespace diNo
         byte? relevanteNote = fachNoten.getRelevanteNote(zeitpunkt);
         int istSAP = fachNoten.getFach.IstSAPFach() ? 1:0;
         if (relevanteNote != null)
-        {                         
+        {
+          Punktesumme += relevanteNote.GetValueOrDefault();
+          AnzahlFaecher++;                       
           if (relevanteNote == 0)
           {
             anzahlNoten[6,istSAP]++;
@@ -191,6 +196,7 @@ namespace diNo
           if (relevanteNote <4 || relevanteNote == 4 && zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
             Unterpunktungen += fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
         }
+        Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher,2);
       }
 
       // TODO: in alleFaecher integrieren
@@ -209,8 +215,13 @@ namespace diNo
 
     public bool HatNichtBestanden()
     {
-      // Achtung: Vorklasse hat am Jahresende eine besondere Bestanden-Regelung
-      return AnzahlNoten(6) > 0 || AnzahlNoten(5) > 1;
+      if (schueler.AlteFOBOSO() && zeitpunkt!=Zeitpunkt.ProbezeitBOS)
+        // Achtung: Vorklasse hat am Jahresende eine besondere Bestanden-Regelung
+        return AnzahlNoten(6) > 0 || AnzahlNoten(5) > 1;
+      else
+        return !(AnzahlNoten(6) == 0 && AnzahlNoten(5) == 0 ||
+          AnzahlNoten(6) == 0 && AnzahlNoten(5) == 1 && Punkteschnitt >= 5 ||
+          (AnzahlNoten(6) * 2 + AnzahlNoten(5)) == 2 && Punkteschnitt >= 6);
     }
 
     public bool KannAusgleichen()
@@ -308,7 +319,7 @@ namespace diNo
     /// </summary>
     public class FachSchuelerNoten
     {
-        public int schuelerId;        
+        public Schueler schueler;        
         private Fach fach=null;
         public int kursId
         {
@@ -323,10 +334,10 @@ namespace diNo
         private BerechneteNote[] schnitte = new BerechneteNote[Enum.GetValues(typeof(Halbjahr)).Length];
         private HjLeistung[] hjLeistung = new HjLeistung[Enum.GetValues(typeof(HjArt)).Length];
     
-        public FachSchuelerNoten(int aschuelerid, int akursid)
+        public FachSchuelerNoten(Schueler aschueler, int akursid)
         {
             kursId = akursid;        
-            schuelerId = aschuelerid;
+            schueler = aschueler;
             
             foreach (Halbjahr hj in Enum.GetValues(typeof(Halbjahr)))
             {
@@ -340,11 +351,11 @@ namespace diNo
         }
 
         // Kursunabhängige HjLeistungen (z.B. abgelegte Fächer oder Seminararbeit) können hier erzeugt werden
-        public FachSchuelerNoten(int aschuelerid, Fach aFach)
+        public FachSchuelerNoten(Schueler aschueler, Fach aFach)
         {
           fach = aFach;
           kursId = 0;
-          schuelerId = aschuelerid;
+          schueler = aschueler;
                             
           LeseNotenAusDB();
         }
@@ -354,7 +365,7 @@ namespace diNo
           if (kursId>0)
           { 
             diNoDataSet.NoteDataTable notenDT;
-            notenDT = new NoteTableAdapter().GetDataBySchuelerAndKurs(schuelerId, kursId);
+            notenDT = new NoteTableAdapter().GetDataBySchuelerAndKurs(schueler.Id, kursId);
             foreach (var noteR in notenDT)
             {
               noten[noteR.Halbjahr,noteR.Notenart].Add(noteR.Punktwert);
@@ -363,16 +374,16 @@ namespace diNo
             // Schnitte werden direkt gelesen
             diNoDataSet.BerechneteNoteDataTable bnotenDT;
             // liefert max. 2 Datensätze (einen für 1. und 2. Hj.), historische Stände werden nicht geliefert
-            bnotenDT = new BerechneteNoteTableAdapter().GetDataBySchuelerAndKurs(kursId, schuelerId);
+            bnotenDT = new BerechneteNoteTableAdapter().GetDataBySchuelerAndKurs(kursId, schueler.Id);
             foreach (var bnoteR in bnotenDT)
             {                
               schnitte[(int)(bnoteR.ErstesHalbjahr ? Halbjahr.Erstes : Halbjahr.Zweites)] = 
-                        new BerechneteNote(kursId, schuelerId, bnoteR);
+                        new BerechneteNote(kursId, schueler.Id, bnoteR);
             }
           }
             // HjLeistungen
           diNoDataSet.HjLeistungDataTable hjDT;            
-          hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schuelerId,getFach.Id);
+          hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id,getFach.Id);
           foreach (var hjR in hjDT)
           {                
             hjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
@@ -393,7 +404,7 @@ namespace diNo
         public BerechneteNote getSchnitt(Halbjahr hj)
         {
             var s = schnitte[(int)hj];
-            if (s==null) return new BerechneteNote(kursId,schuelerId); // gibt leere Berechnungstabelle zurück
+            if (s==null) return new BerechneteNote(kursId,schueler.Id); // gibt leere Berechnungstabelle zurück
             return s;
         }
 
@@ -419,6 +430,16 @@ namespace diNo
     /// </summary>
     public byte? getRelevanteNote(Zeitpunkt z)
     {
+      if (!schueler.AlteFOBOSO()) // neue FOBOSO:
+      {
+        HjLeistung hj;
+        if (z <= Zeitpunkt.HalbjahrUndProbezeitFOS) hj = getHjLeistung(HjArt.Hj1);
+        else hj = getHjLeistung(HjArt.GesErg);
+        if (hj == null) return null;
+        else return hj.Punkte;
+      }
+
+      // Alte FOBOSO:
       if (Zugriff.Instance.KursRep.Find(kursId).getLehrer == null)
       {
         // wenn der Kurs keinen Lehrer hat, handelt es sich vermutlich um eine Note aus der 11ten Klasse
@@ -714,7 +735,7 @@ namespace diNo
         S2 = hj2.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj2.Punkte2Dez);
         Hj2 = hj2.Punkte.ToString();
       }
-      hj2 = s.getHjLeistung(HjArt.Fachnote);
+      hj2 = s.getHjLeistung(HjArt.GesErg);
       if (hj2 != null) GE = hj2.Punkte.ToString();
     }
   }
