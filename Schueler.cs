@@ -52,7 +52,7 @@ namespace diNo
       }
       else
       {
-        throw new InvalidOperationException("Konstruktor Schueler: Ungültige ID.");
+        throw new InvalidOperationException("Konstruktor Schueler: Ungültige ID="+Id);
       }
 
       this.klasse = null;
