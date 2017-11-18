@@ -61,6 +61,7 @@ namespace diNo
           dataGridNoten.Rows[lineCount].Cells[2].Value = hjl.SchnittMdl.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[4].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[5].Value = hjl.Punkte;
+          SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[5]);
         }
         dataGridNoten.Rows[lineCount].Cells[8].Value = fach.SA(Halbjahr.Zweites);
         dataGridNoten.Rows[lineCount].Cells[6].Value = fach.sL(Halbjahr.Zweites);
@@ -70,9 +71,43 @@ namespace diNo
           dataGridNoten.Rows[lineCount].Cells[7].Value = hjl.SchnittMdl.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[9].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[10].Value = hjl.Punkte;
+          SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[10]);
         }
         lineCount++;
       }
+    }
+
+    private void SetBackgroundColor(double notenwert, DataGridViewCell cell)
+    {
+      Color color = GetBackgroundColor(notenwert);
+      if (color == dataGridNoten.BackgroundColor)
+      {
+        return; // nothing to do
+      }
+      else
+      {
+        cell.Style.BackColor = color;
+      }
+    }
+
+    private Color GetBackgroundColor(double notenwert)
+    {
+      int aktuellerZeitpunkt = Zugriff.Instance.aktZeitpunkt;
+
+      if (notenwert < 1) return Color.Crimson;
+      if (notenwert < 1.5) return Color.Coral;
+      if (notenwert < 2.5) return Color.Orange;
+      if (notenwert < 3.5) return Color.Gold;
+      // Ab der zweiten PA interessieren Vierer niemanden mehr
+      if (aktuellerZeitpunkt < (int)Zeitpunkt.ZweitePA)
+      {
+        if (notenwert < 4.5) return Color.Yellow;
+        if (notenwert < 5.5) return Color.LightYellow;
+      }
+
+      if (notenwert > 13.5) return Color.LimeGreen;
+      if (notenwert > 11.5) return Color.PaleGreen;
+      return dataGridNoten.BackgroundColor;
     }
 
     private void FillCell(DataGridViewCell c, HjLeistung hjl)

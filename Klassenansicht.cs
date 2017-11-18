@@ -19,7 +19,7 @@ namespace diNo
       this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
 
       tabControl1.Controls.Remove(tabPageNoten); // Start mit neuer FOBOSO
-      tabControl1.Controls.Remove(tabPageHjLeistung); // derzeit uninteressant
+      tabControl1.Controls.Remove(tabPageHjLeistung); // neue FOBOSO
 
       // Verwaltungsreiter
       if (Zugriff.Instance.HatVerwaltungsrechte) // hier wird zum ersten Mal Zugriff instanziiert.
@@ -57,7 +57,7 @@ namespace diNo
           {
             if (!zeigeAlteFOSBOSO)
             {
-              //tabControl1.Controls.Remove(tabPageHjLeistung); // derzeit noch irrelevant
+              tabControl1.Controls.Remove(tabPageHjLeistung);
               tabControl1.Controls.Remove(tabPageNotenbogen);
               tabControl1.TabPages.Insert(1,tabPageNoten);
               zeigeAlteFOSBOSO = true;
@@ -70,11 +70,15 @@ namespace diNo
             {
               tabControl1.Controls.Remove(tabPageNoten);
               tabControl1.TabPages.Insert(1, tabPageNotenbogen);
-              //tabControl1.TabPages.Insert(2, tabPageHjLeistung);
+              if (schueler != null && schueler.getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
+              {
+                // nur ab der zwölften Klasse anzeigen
+                tabControl1.TabPages.Insert(2, tabPageHjLeistung);
+              }
               zeigeAlteFOSBOSO = false;
             }
             userControlNotenbogen1.Schueler = schueler;
-            //userControlHjLeistung1.Schueler = schueler;
+            userControlHjLeistung1.Schueler = schueler;
           }
 
           nameLabel.Text = schueler.NameVorname;

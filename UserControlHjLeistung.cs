@@ -47,9 +47,9 @@ namespace diNo
       dataGridHjLeistung.Rows.Clear();
       dataGridHjLeistung.RowsDefaultCellStyle.BackColor = Color.White;
 
-      // keine Abi-Klasse: HjLeistung werden nicht angezeigt
+      // keine Abi-Klasse: HjLeistung werden nicht angezeigt (wird normalerweise gar nicht erst aufgerufen, steht hier nur zur Sicherheit)
       if (schueler.getKlasse.Jahrgangsstufe<Jahrgangsstufe.Zwoelf)
-        return; // TODO: Tab gar nicht anzeigen?!
+        return;
 
       // nur FOS 12. hat Leistungen aus der 11. Klasse:
       bool hatVorHj = (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Zwoelf) && (schueler.Data.Schulart == "F");
@@ -69,8 +69,12 @@ namespace diNo
         dataGridHjLeistung.Rows[lineCount].Height += 2;        
         dataGridHjLeistung.Rows[lineCount].Cells[0].Value = fach.getFach.Bezeichnung;
 
-        FillCell(dataGridHjLeistung.Rows[lineCount].Cells[1], fach.getHjLeistung(HjArt.VorHj1));   
-        FillCell(dataGridHjLeistung.Rows[lineCount].Cells[2], fach.getHjLeistung(HjArt.VorHj2));   
+        if (hatVorHj)
+        {
+          FillCell(dataGridHjLeistung.Rows[lineCount].Cells[1], fach.getHjLeistung(HjArt.VorHj1));
+          FillCell(dataGridHjLeistung.Rows[lineCount].Cells[2], fach.getHjLeistung(HjArt.VorHj2));
+        }
+
         FillCell(dataGridHjLeistung.Rows[lineCount].Cells[3], fach.getHjLeistung(HjArt.Hj1));   
         FillCell(dataGridHjLeistung.Rows[lineCount].Cells[4], fach.getHjLeistung(HjArt.Hj2));   
         FillCell(dataGridHjLeistung.Rows[lineCount].Cells[5], fach.getHjLeistung(HjArt.AP));           
@@ -96,10 +100,16 @@ namespace diNo
       {
         c.Value = hjl.Punkte;
 
-        //if (!hjl.Einbringen)
-        //  c.DataGridView.BackgroundColor = Color.LightGray;
+        // Farbgebug: Grau => wird nicht eingebracht
+        //            Rot  => 0 Punkte (nur wenn eingebracht werden muss)
+        //            Gelb => 1-3 Punkt (nur wenn eingebracht werden muss)
+        if (!hjl.Einbringen)
+          c.DataGridView.BackgroundColor = Color.LightGray;
+        else if (hjl.Punkte == 0)
+          c.DataGridView.BackgroundColor = Color.Crimson;
+        else if (hjl.Punkte == 1 || hjl.Punkte == 2 || hjl.Punkte == 3)
+          c.DataGridView.BackgroundColor = Color.Gold;
       }
     }
-
   }
 }

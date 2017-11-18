@@ -107,7 +107,6 @@ namespace diNo
             continue;
           }
 
-          //ToDo: Es gibt hier Einträge ohne Lehrer: Was bedeuten diese und was machen wir damit?
           string[] array = line.Split(new string[] { "\",\"" }, StringSplitOptions.None);
 
           //säubere die Einzeleinträge (Anführungsstriche, Leerzeichen etc. entfernen)

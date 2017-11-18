@@ -190,9 +190,6 @@ namespace diNo
           var dt = ta.GetDataByKlasseId(Data.Id);
           foreach (var kursRow in dt)
           {
-          // TODO: Wie kann es sein, dass in der BVkST_S manche Kurse doppelt existieren? 
-          //       Gibt es hier ein Problem beim Import, z. B. wegen der Lehrertandems?
-          //       Und wieso lässt die Datenbank dies überhaupt zu?
             Kurs k = new Kurs(kursRow);
             kurse.Add(k);
             // Kurse werden normalerweise nur in einer Klasse angeboten, daher hier ins Rep aufnehmen

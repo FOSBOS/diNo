@@ -89,7 +89,6 @@ namespace diNo
           string[] array = line.Split(new string[] { "\t" }, StringSplitOptions.None);
           string[] cleanArray = array.Select(aString => aString.Trim(new char[] { '\"', ' ', '\n' })).ToArray();
 
-          //TODO: Schueler nicht in Teilklassen stecken (bei Mischklassen, vor allem FOS/BOS-Mischung problematisch)
           var klasse = GetKlasseId(klasseTableAdapter, cleanArray[klasseSpalte].Trim());
           if (klasse == null)
           {
