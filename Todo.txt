@@ -1,6 +1,8 @@
 ﻿todos für diNo
 --------------
 
+- Kurzarbeit als eigenen Reiter und im Notenbogen im Excel vorsehen (automatisch doppelt gewichtet) zur Fehlervermeidung
+- Tabelle Lehrer aufräumen: Name raus, weil Vor- und Nachname schon drin, Geschlecht speichern (wegen Lehrer/in)
 - Berechnung Nachtermin (z.B. 19/38 BE=6 bei Haupttermin 39)
 - Soll HjLeistung der 11. Klasse gleich in 11/1 bzw. 11/2 also mit Schlüssel 5 und 6 gespeichert werden? Wie sieht es bei der Vorklasse aus (dort wird nichts übernommen)?
   --> aktuelles Jahr ist immer 0 bzw. 1, erst beim Import ins nächste Jahr wird der Schlüssel geändert.

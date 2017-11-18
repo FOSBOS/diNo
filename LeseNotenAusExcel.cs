@@ -192,8 +192,8 @@ namespace diNo
           {
             HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj1);
             l.Punkte = (byte)zeugnisnote;
-            l.Punkte2Dez = (byte)xls.ReadKommanote("L" + i, xls.notenbogen);
-            l.SchnittMdl = (byte)xls.ReadKommanote("I" + i, xls.notenbogen);
+            l.Punkte2Dez = xls.ReadKommanote("L" + i, xls.notenbogen);
+            l.SchnittMdl = xls.ReadKommanote("I" + i, xls.notenbogen);
             l.WriteToDB();
           }
         }
@@ -207,8 +207,8 @@ namespace diNo
           {
             HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj2);
             l.Punkte = (byte)zeugnisnote2;
-            l.Punkte2Dez = (byte)xls.ReadKommanote("W" + i, xls.notenbogen);
-            l.SchnittMdl = (byte)xls.ReadKommanote("T" + i, xls.notenbogen);
+            l.Punkte2Dez = xls.ReadKommanote("W" + i, xls.notenbogen);
+            l.SchnittMdl = xls.ReadKommanote("T" + i, xls.notenbogen);
             l.WriteToDB();
           }
 
@@ -230,7 +230,7 @@ namespace diNo
           HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.FR);
           l.Punkte = (byte)fachreferat;
           l.Punkte2Dez = Convert.ToDecimal((byte)fachreferat);
-          l.SchnittMdl = Convert.ToDecimal((byte)fachreferat);
+          //l.SchnittMdl = Convert.ToDecimal((byte)fachreferat);
           l.WriteToDB();
         }
 

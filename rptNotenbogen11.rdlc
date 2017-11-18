@@ -218,18 +218,6 @@
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
-                            <TextRun>
-                              <Value>  (KL: </Value>
-                              <Style />
-                            </TextRun>
-                            <TextRun>
-                              <Value>=Fields!Klassenleiter.Value</Value>
-                              <Style />
-                            </TextRun>
-                            <TextRun>
-                              <Value>)</Value>
-                              <Style />
-                            </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
@@ -370,19 +358,6 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
-                              <Style>
-                                <FontFamily>Tahoma</FontFamily>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Left</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
                               <Value>="Kempten, den " + Today()</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
@@ -398,25 +373,45 @@
                             <TextRun>
                               <Value />
                               <Style>
+                                <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Left</TextAlign>
                           </Style>
                         </Paragraph>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Klassenleiter/in        </Value>
+                              <Value xml:space="preserve">                                                                         </Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!Klassenleiter.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style>
-                            <TextAlign>Right</TextAlign>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>                                                                         Klassenleiter/in</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
                           </Style>
                         </Paragraph>
                       </Paragraphs>
@@ -461,15 +456,6 @@
                           <TextRuns>
                             <TextRun>
                               <Value />
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -480,7 +466,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>                           Schulleiter/in</Value>
+                              <Value>                           H. Traut</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>                           Schulleiterin</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -573,7 +570,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.30577in</Height>
+    <Height>3.11827in</Height>
     <Style />
   </Body>
   <Width>7.00787in</Width>
