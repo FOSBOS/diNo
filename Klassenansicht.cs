@@ -22,7 +22,7 @@ namespace diNo
       tabControl1.Controls.Remove(tabPageHjLeistung); // neue FOBOSO
 
       // Verwaltungsreiter
-      if (Zugriff.Instance.HatVerwaltungsrechte) // hier wird zum ersten Mal Zugriff instanziiert.
+      if (Zugriff.Instance.HatVerwaltungsrechte)
       {
         this.verwaltungController = new SchuelerverwaltungController(() => { RefreshTreeView(); });
         this.treeListView1.IsSimpleDragSource = true;

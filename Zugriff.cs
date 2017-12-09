@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using diNo.diNoDataSetTableAdapters;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -54,7 +55,9 @@ namespace diNo
       if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
       else
       {
-        throw new InvalidOperationException("Keine Zugriffsberechtigung!");
+        MessageBox.Show("Keine Zugriffsberechtigung!\nBitte wenden Sie sich an einen Administrator.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Application.ExitThread();
+        Environment.Exit(1);
       }
       SiehtAlles = (this.lehrer.HatRolle(Rolle.Admin) || this.lehrer.HatRolle(Rolle.Sekretariat) || this.lehrer.HatRolle(Rolle.Schulleitung));
       HatVerwaltungsrechte = lehrer.HatRolle(Rolle.Admin) || lehrer.HatRolle(Rolle.Sekretariat);      
