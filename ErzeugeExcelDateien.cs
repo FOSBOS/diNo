@@ -339,6 +339,7 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
           ug = "34";
           og = "49";
           break;
+        case "SWR": //Sozialwirtschaft und Recht
         case "BwR":
         case "WIn":
         case "VWL":
