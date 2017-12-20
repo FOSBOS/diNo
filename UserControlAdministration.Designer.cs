@@ -29,6 +29,7 @@
     private void InitializeComponent()
     {
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
+      this.btnSelect = new System.Windows.Forms.Button();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
       this.btnKlassenliste = new System.Windows.Forms.Button();
       this.btnAttestpflicht = new System.Windows.Forms.Button();
@@ -57,7 +58,7 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
-      this.btnSelect = new System.Windows.Forms.Button();
+      this.btnExportSchuelerZeugnisprogramm = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
@@ -75,6 +76,16 @@
       this.groupBoxAnalyse.TabIndex = 4;
       this.groupBoxAnalyse.TabStop = false;
       this.groupBoxAnalyse.Text = "Datenanalyse";
+      // 
+      // btnSelect
+      // 
+      this.btnSelect.Location = new System.Drawing.Point(21, 23);
+      this.btnSelect.Name = "btnSelect";
+      this.btnSelect.Size = new System.Drawing.Size(132, 23);
+      this.btnSelect.TabIndex = 2;
+      this.btnSelect.Text = "Schüler auswählen";
+      this.btnSelect.UseVisualStyleBackColor = true;
+      this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
       // 
       // groupBoxDrucken
       // 
@@ -131,6 +142,7 @@
       // 
       // groupBoxExport
       // 
+      this.groupBoxExport.Controls.Add(this.btnExportSchuelerZeugnisprogramm);
       this.groupBoxExport.Controls.Add(this.btnNotenNachWinSV);
       this.groupBoxExport.Controls.Add(this.btnSendExcelFiles);
       this.groupBoxExport.Controls.Add(this.btnCreateExcels);
@@ -370,15 +382,15 @@
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
       // 
-      // btnSelect
+      // btnExportSchuelerZeugnisprogramm
       // 
-      this.btnSelect.Location = new System.Drawing.Point(21, 23);
-      this.btnSelect.Name = "btnSelect";
-      this.btnSelect.Size = new System.Drawing.Size(132, 23);
-      this.btnSelect.TabIndex = 2;
-      this.btnSelect.Text = "Schüler auswählen";
-      this.btnSelect.UseVisualStyleBackColor = true;
-      this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
+      this.btnExportSchuelerZeugnisprogramm.Location = new System.Drawing.Point(6, 134);
+      this.btnExportSchuelerZeugnisprogramm.Name = "btnExportSchuelerZeugnisprogramm";
+      this.btnExportSchuelerZeugnisprogramm.Size = new System.Drawing.Size(182, 23);
+      this.btnExportSchuelerZeugnisprogramm.TabIndex = 6;
+      this.btnExportSchuelerZeugnisprogramm.Text = "Schüler an Zeugnisprogramm";
+      this.btnExportSchuelerZeugnisprogramm.UseVisualStyleBackColor = true;
+      this.btnExportSchuelerZeugnisprogramm.Click += new System.EventHandler(this.btnExportSchuelerZeugnisprogramm_Click);
       // 
       // UserControlAdministration
       // 
@@ -437,5 +449,6 @@
     private System.Windows.Forms.Button btnNotenNachWinSV;
     private System.Windows.Forms.Button btnKlassenliste;
     private System.Windows.Forms.Button btnSelect;
+    private System.Windows.Forms.Button btnExportSchuelerZeugnisprogramm;
   }
 }

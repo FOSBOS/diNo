@@ -232,6 +232,7 @@
     </Compile>
     <Compile Include="Vorkommnis.cs" />
     <Compile Include="WinSVSchuelerReader.cs" />
+    <Compile Include="Zeugnisprogramm\ExportSchueler.cs" />
     <Compile Include="Zugriff.cs" />
     <EmbeddedResource Include="AdminBerechtigungenForm.resx">
       <DependentUpon>AdminBerechtigungenForm.cs</DependentUpon>

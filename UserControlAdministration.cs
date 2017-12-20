@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using diNo.diNoDataSetTableAdapters;
 using System.Collections.Generic;
+using diNo.Zeugnisprogramm;
 
 namespace diNo
 {
@@ -184,6 +185,17 @@ namespace diNo
     private void btnSelect_Click(object sender, EventArgs e)
     {
       new Datenauswahl().ShowDialog();
+    }
+
+    private void btnExportSchuelerZeugnisprogramm_Click(object sender, EventArgs e)
+    {
+      SaveFileDialog dia = new SaveFileDialog();
+      dia.Title = "Dateiname wählen";
+      if (dia.ShowDialog() == DialogResult.OK)
+      {
+        ExportSchueler.Write(dia.FileName);
+        ExportLehrer.Write(dia.FileName + "_Lehrer.csv");
+      }
     }
   }
 }
