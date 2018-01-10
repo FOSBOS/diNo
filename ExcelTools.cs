@@ -284,7 +284,7 @@ namespace diNo
     {
       UnsavedChanges = true;
 
-      int zeile = GetErsteFreieZeile(notenbogen); //gilt in Notenbogen und auf dem diNo-sid-Reiter
+      int zeile = GetErsteFreieZeile(sid); //gilt in Notenbogen und auf dem diNo-sid-Reiter
       WriteValueProtectedCell(notenbogen, "B" + zeile, aSchueler.Name + ", "+aSchueler.Rufname);
       WriteValueProtectedCell(sid, CellConstant.SId + zeile, aSchueler.Id.ToString());
       if (setzeLegasthenie && (aSchueler.LRSStoerung || aSchueler.LRSSchwaeche))
@@ -316,7 +316,7 @@ namespace diNo
     private int GetErsteFreieZeile(Excel.Worksheet sheet)
     {
       int zeile = 38;
-      while (string.IsNullOrEmpty(ReadValue(sheet, CellConstant.Nachname + zeile)) && zeile >= 4)
+      while (string.IsNullOrEmpty(ReadValue(sheet, CellConstant.SId + zeile)) && zeile >= 4)
       {
         zeile = zeile - 1;
       }
