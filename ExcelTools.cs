@@ -263,6 +263,17 @@ namespace diNo
     {
       return ReadValue(sid, "F1") != "Neue";
     }
+
+    protected int GetErsteFreieZeile(Excel.Worksheet sheet)
+    {
+      int zeile = 38;
+      while (string.IsNullOrEmpty(ReadValue(sheet, CellConstant.SId + zeile)) && zeile >= 4)
+      {
+        zeile = zeile - 1;
+      }
+
+      return zeile + 1;
+    }
   }
 
   public class OpenNotendatei: BasisNotendatei
@@ -287,7 +298,7 @@ namespace diNo
       int zeile = GetErsteFreieZeile(sid); //gilt in Notenbogen und auf dem diNo-sid-Reiter
       WriteValueProtectedCell(notenbogen, "B" + zeile, aSchueler.Name + ", "+aSchueler.Rufname);
       WriteValueProtectedCell(sid, CellConstant.SId + zeile, aSchueler.Id.ToString());
-      if (setzeLegasthenie && (aSchueler.LRSStoerung || aSchueler.LRSSchwaeche))
+      if (setzeLegasthenie && aSchueler.LRSStoerung)
       {
         // TODO: Legastenie: wie geht das neuerdings?
         //WriteValue(notenbogen, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
@@ -311,17 +322,6 @@ namespace diNo
       UnsavedChanges = true;
       WriteValueProtectedCell(notenbogen, CellConstant.Nachname + zeile, "");
       return true;
-    }
-
-    private int GetErsteFreieZeile(Excel.Worksheet sheet)
-    {
-      int zeile = 38;
-      while (string.IsNullOrEmpty(ReadValue(sheet, CellConstant.SId + zeile)) && zeile >= 4)
-      {
-        zeile = zeile - 1;
-      }
-
-      return zeile + 1;
     }
   }
 
@@ -347,8 +347,9 @@ namespace diNo
     {
       UnsavedChanges = true;
 
-      int zeile = GetErsteFreieZeile(notenbogen);
-      int zeileFuerSId = GetSidZeileForNotenbogenZeile(zeile);
+      int zeileFuerSId = GetErsteFreieZeile(sid);
+      int zeile = GetNotenbogenZeileForSidZeile(zeileFuerSId);
+      
       WriteValueProtectedCell(notenbogen, CellConstant.Nachname + zeile, aSchueler.Name);
       WriteValueProtectedCell(notenbogen, CellConstant.Vorname + (zeile + 1), "   " + aSchueler.Rufname);
       WriteValueProtectedCell(sid, CellConstant.SId + zeileFuerSId, aSchueler.Id.ToString());
@@ -426,34 +427,12 @@ namespace diNo
       WriteValue(notenbogen, CellConstant.LegasthenieVermerk + zeile, value);
     }
 
-
-
-
     private int GetNotenbogenZeileForSidZeile(int sidZeile)
     {
       int indexSchueler = sidZeile - 4; // Beginnend mit dem Nullten
       return 2 * indexSchueler + 5;
     }
-
-    private int GetSidZeileForNotenbogenZeile(int notenbogenZeile)
-    {
-      int indexSchueler = (notenbogenZeile - 5) / 2; // Beginnend mit dem Nullten
-      return indexSchueler + 4;
-    }
-
-    private int GetErsteFreieZeile(Excel.Worksheet sheet)
-    {
-      int zeile = 73;
-      while (string.IsNullOrEmpty(ReadValue(sheet, "B"+zeile)) && zeile >= 5)
-      {
-        zeile = zeile - 2;
-      }
-
-      return zeile + 2;
-    }
-
-
-
+    
     public byte? ReadNote(Notentyp typ, string zelle)
     {
       string v;
