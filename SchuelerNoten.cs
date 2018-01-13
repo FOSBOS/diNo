@@ -196,13 +196,15 @@ namespace diNo
           if (relevanteNote <4 || relevanteNote == 4 && zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
             Unterpunktungen += fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
         }
-        Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher,2);
       }
 
       // TODO: in alleFaecher integrieren
       if (!schueler.Seminarfachnote.IsGesamtnoteNull())
       {
         int relevanteNote = schueler.Seminarfachnote.Gesamtnote;
+        Punktesumme += relevanteNote;
+        AnzahlFaecher++;
+
         if (relevanteNote == 0) anzahlNoten[6,0]++;          
         else if (relevanteNote < 4) anzahlNoten[5,0]++;
         else if (relevanteNote >=13) anzahlNoten[1,0]++;
@@ -211,6 +213,8 @@ namespace diNo
         if (relevanteNote <4)
           Unterpunktungen += "Sem (" + relevanteNote +") ";
       }
+      Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2);
+      if (Unterpunktungen != "" && !schueler.AlteFOBOSO()) Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
     }
 
     public bool HatNichtBestanden()

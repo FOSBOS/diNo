@@ -129,15 +129,12 @@ namespace diNo
     {      
       if (schueler != null)
       {        
-        var b = new BriefDaten(schueler, true);
+        var b = new BriefDaten(schueler, true, true);
         b.Betreff = "Attestpflicht";
         b.Inhalt += "da sich im laufenden Schuljahr bei Ihnen die krankheitsbedingten Schulversäumnisse häufen, ";
         b.Inhalt += "werden Sie gemäß § 20 (2) BaySchO dazu verpflichtet, künftig jede weitere krankheitsbedingte Abwesenheit ";
         b.Inhalt += "durch ein aktuelles ärztliches Zeugnis (Schulunfähigkeitsbescheinigung) zu belegen.<br><br>";
-        b.Inhalt += "Wird das Zeugnis nicht unverzüglich vorgelegt, so gilt das Fernbleiben als unentschuldigt.";
-        var KL = schueler.getKlasse.Klassenleiter;
-        if (KL!=null)
-          b.Unterschrift = KL.Vorname + " " + KL.Nachname + ", " + KL.Dienstbezeichnung;
+        b.Inhalt += "Wird das Zeugnis nicht unverzüglich vorgelegt, so gilt das Fernbleiben als unentschuldigt.";                        
         b.Unterschrift2 = "Helga Traut, OStDin";
         new ReportBrief(b).Show();
 
@@ -196,6 +193,11 @@ namespace diNo
         ExportSchueler.Write(dia.FileName);
         ExportLehrer.Write(dia.FileName + "_Lehrer.csv");
       }
+    }
+
+    private void btnGefaehrdungen_Click(object sender, EventArgs e)
+    {
+       new ReportGefaehrdungen().Show();
     }
   }
 }

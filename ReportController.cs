@@ -144,7 +144,37 @@ namespace diNo
         }
     }
 
-    public class ReportLehrerliste : ReportController
+  public class ReportGefaehrdungen : ReportController
+  {
+    private List<BriefDaten> bindingDataSource;
+    public ReportGefaehrdungen() : base() { }
+    public override void Init()
+    {
+      // suche alle Schüler mit Gefährdungen
+      bindingDataSource = new List<BriefDaten>();
+      foreach (var k in Zugriff.Instance.Klassen)
+        foreach (var s in k.eigeneSchueler)
+        {
+          if (s.hatVorkommnis(Vorkommnisart.BeiWeiteremAbsinken) || s.hatVorkommnis(Vorkommnisart.starkeGefaehrdungsmitteilung))
+          {
+            var b = new BriefDaten(s, false, true);
+            if (s.hatVorkommnis(Vorkommnisart.BeiWeiteremAbsinken))
+              b.Inhalt = "Bei weiterem Absinken der Leistungen ist das Erreichen des Klassenziels gefährdet.";
+            else
+              b.Inhalt = "Das Erreichen des Klassenziels ist sehr gefährdet.";
+
+            bindingDataSource.Add(b);
+          }
+            
+        }
+
+      rpt.BerichtBindingSource.DataSource = bindingDataSource;
+      rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptGefaehrdungen.rdlc";
+    }
+  }
+
+
+  public class ReportLehrerliste : ReportController
     {
         public override void Init()
         {

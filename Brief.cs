@@ -43,7 +43,7 @@ namespace diNo
 
         private void btnOK_Click(object sender, EventArgs e)
         {                        
-            b = new BriefDaten(s,!(opVerweis.Checked || opVerschVerweis.Checked));
+            b = new BriefDaten(s,!(opVerweis.Checked || opVerschVerweis.Checked),false);
             if (opVerweis.Checked || opVerschVerweis.Checked) VerweisText(opVerschVerweis.Checked);
             else if (opSA.Checked || opKA.Checked) NachterminText();
             else if (opSEP.Checked || opMEP.Checked) ErsatzprText();
@@ -133,6 +133,7 @@ namespace diNo
 
   public class BriefDaten
     {
+        public int Id { get; private set; }
         public string Anrede{ get; set; }
         public string Name { get; set; }
         public string VornameName { get; set; }
@@ -144,18 +145,22 @@ namespace diNo
         public string Unterschrift { get; set; }
         public string Unterschrift2 { get; set; }
 
-        public BriefDaten(Schueler s, bool erzeugeAnrede)
+        public BriefDaten(Schueler s, bool erzeugeAnrede, bool UnterschriftKL)
         {
+          Id = s.Id;
           Anrede = s.Data.Geschlecht == "M" ? "Herrn" : "Frau";
           VornameName = s.Data.Rufname + " " + s.Data.Name;
           Name = s.Name;
           Strasse = s.Data.AnschriftStrasse;
           Ort = s.Data.AnschriftPLZ + " " +  s.Data.AnschriftOrt;
           Klasse = s.getKlasse.Bezeichnung;
-          //if (Zugriff.Instance.lehrer==null) // ist jetzt immer belegt!
-          //  Unterschrift = "(Systemadministration FOS/BOS Kempten)";
-          //else
-          Unterschrift = Zugriff.Instance.lehrer.Data.Name + ", "+ Zugriff.Instance.lehrer.Data.Dienstbezeichnung;
+          if (UnterschriftKL)
+          {
+            var KL = s.getKlasse.Klassenleiter;
+            Unterschrift = KL.Vorname + " " + KL.Nachname + ", " + KL.Dienstbezeichnung + "\nKlassenleitung";
+          }
+          else
+            Unterschrift = Zugriff.Instance.lehrer.Data.Name + ", " + Zugriff.Instance.lehrer.Data.Dienstbezeichnung;
           if (erzeugeAnrede)
           {
             if (s.Data.Geschlecht == "M")
