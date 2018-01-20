@@ -46,7 +46,27 @@ namespace diNo
 
     public string Name
     {
-      get { return this.data.Nachname + " " + this.Data.Vorname; }
+      get { return this.data.Nachname + ", " + this.Data.Vorname; }
+    }
+
+    public string NameMitAbkVorname
+    {
+      get { return Data.Vorname.Substring(0, 1) + ". " + Data.Nachname; }
+    }
+
+    public string VornameName
+    {
+      get { return Data.Vorname + " " + Data.Nachname; }
+    }
+
+    public string NameDienstbezeichnung
+    {
+      get { return Data.Vorname + " " + Data.Nachname + ", " + Data.Dienstbezeichnung; }
+    }
+
+    public string KLString
+    {
+      get { return "Klassenleiter" + (Data.Geschlecht == "W" ? "in" : ""); }
     }
 
     private void Init(diNoDataSet.LehrerRow row)

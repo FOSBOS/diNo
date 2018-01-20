@@ -111,17 +111,13 @@ namespace diNo
       }
     }
 
-    /// <summary>
-    /// Name und Adresse des Schülers in drei Zeilen
-    /// </summary>
-    public string NameUndAdresse
+    public string VornameName
     {
       get
       {
-        return this.benutzterVorname + " " + this.Data.Name + "\n" + this.Data.AnschriftStrasse + "\n" + this.Data.AnschriftPLZ + " " + this.Data.AnschriftOrt;
+        return benutzterVorname + " " + Data.Name;
       }
     }
-
     // Klassenbezeichnung des Schülers, ggf. bei Mischklassen um den Zweig ergänzt.
     public string KlassenBezeichnung
     {
@@ -877,6 +873,60 @@ namespace diNo
     {
       return getKlasse.AlteFOBOSO();
     }
+
+    public int Alter()
+    {
+      int jahre = DateTime.Now.Year - data.Geburtsdatum.Year;
+      var dieserGebTag = data.Geburtsdatum.AddYears(jahre);
+      if (DateTime.Now.CompareTo(dieserGebTag) < 0) { jahre--; }
+      return jahre;
+    }
+
+    public string getHerrnFrau()
+    {
+      return getHerrnFrau(Data.Geschlecht);
+    }
+
+    private string getHerrnFrau(string k)
+    {
+      switch (k)
+      {
+        case "M":
+        case "H": return "Herrn ";
+        case "W":
+        case "F": return "Frau ";
+        case "U": return "Herrn und Frau ";
+        default: return "";
+      }
+    }
+
+    public string ErzeugeAnrede()
+    {
+      if (Data.Geschlecht == "M")
+        return "Sehr geehrter Herr " + Data.Name +",<br><br>";
+      else
+        return "Sehr geehrte Frau " + Data.Name +",<br><br>";
+    }
+
+    // Adresse von Minderjährigen mit den Eltern
+    public string ErzeugeAdresse(bool ElternadresseVerwenden)
+    {
+      string s="";
+      if (ElternadresseVerwenden && Alter() < 18)
+      {
+        // wenn beide Eltern getrennt gespeichert sind, muss die Anrede in dieselbe Zeile, sonst extra:
+        s = getHerrnFrau(Data.AnredeEltern1) + (Data.AnredeEltern2 == "" ? "\n" :"") + Data.VornameEltern1 + " " + Data.NachnameEltern1 + "\n";
+        if (Data.AnredeEltern2 != "")
+          s += getHerrnFrau(Data.AnredeEltern2) + Data.VornameEltern2 + " " + Data.NachnameEltern2 + "\n";
+      }
+      else
+        s = getHerrnFrau(Data.Geschlecht) + "\n" + VornameName + "\n";
+
+      s += Data.AnschriftStrasse + "\n";
+      s += Data.AnschriftPLZ + " " + Data.AnschriftOrt;
+      return s;
+    }
+
   }
 
   public static class SchulnummernHolder
@@ -953,7 +1003,7 @@ namespace diNo
       Klasse = s.getKlasse.Bezeichnung;
       KlasseMitZweig = s.KlassenBezeichnung;
       Bekenntnis = "Bekenntnis: " + s.Data.Bekenntnis;
-      Klassenleiter = s.getKlasse.Klassenleiter.Vorname.Substring(0, 1) + ". " + s.getKlasse.Klassenleiter.Nachname;
+      Klassenleiter = s.getKlasse.Klassenleiter.NameMitAbkVorname;
       Legasthenie = s.Data.LRSStoerung ? "\nLegasthenie" : "";
       Laufbahn = "Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm.ToString("dd.MM.yyyy");
       Laufbahn += " aus " + s.Data.SchulischeVorbildung + " von " + s.EintrittAusSchulname;//.Substring(0,25);

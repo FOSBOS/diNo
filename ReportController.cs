@@ -157,22 +157,41 @@ namespace diNo
         {
           if (s.hatVorkommnis(Vorkommnisart.BeiWeiteremAbsinken) || s.hatVorkommnis(Vorkommnisart.starkeGefaehrdungsmitteilung))
           {
-            var b = new BriefDaten(s, false, true);
+            var b = new BriefDaten(s, false, true, true);
             if (s.hatVorkommnis(Vorkommnisart.BeiWeiteremAbsinken))
               b.Inhalt = "Bei weiterem Absinken der Leistungen ist das Erreichen des Klassenziels gefährdet.";
             else
               b.Inhalt = "Das Erreichen des Klassenziels ist sehr gefährdet.";
+            if (s.Wiederholt())
+              b.Inhalt += "\nDie Jahrgangstufe darf nicht mehr wiederholt werden.";
 
+            b.Inhalt2 = s.VornameName + " hat ";
+            if (!s.AlteFOBOSO()) b.Inhalt2 += "bei einem Punktedurchschnitt von " + String.Format("{0:0.00}", s.getNoten.Punkteschnitt) + " ";
+            b.Inhalt2 += "nur die angeführten Leistungen erzielt:";
             bindingDataSource.Add(b);
           }
-            
+
         }
 
       rpt.BerichtBindingSource.DataSource = bindingDataSource;
       rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptGefaehrdungen.rdlc";
+      // Unterberichte einbinden
+      rpt.reportViewer.LocalReport.SubreportProcessing +=
+         new SubreportProcessingEventHandler(subrptEventHandler);
+    }
+
+    void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
+    {
+      int schuelerId;
+      int.TryParse(e.Parameters[0].Values[0], out schuelerId);
+      if (schuelerId > 0)
+      {
+        Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
+        IList<FachSchuelerNotenZeugnisDruck> noten = schueler.getNoten.SchuelerNotenZeugnisDruck("rptGefaehrdungen");
+        e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten", noten));
+      }
     }
   }
-
 
   public class ReportLehrerliste : ReportController
     {

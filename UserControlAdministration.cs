@@ -129,7 +129,7 @@ namespace diNo
     {      
       if (schueler != null)
       {        
-        var b = new BriefDaten(schueler, true, true);
+        var b = new BriefDaten(schueler, true, true, false);
         b.Betreff = "Attestpflicht";
         b.Inhalt += "da sich im laufenden Schuljahr bei Ihnen die krankheitsbedingten Schulversäumnisse häufen, ";
         b.Inhalt += "werden Sie gemäß § 20 (2) BaySchO dazu verpflichtet, künftig jede weitere krankheitsbedingte Abwesenheit ";

@@ -62,43 +62,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=Fields!Anrede.Value</Value>
-                <Style>
-                  <FontFamily>Tahoma</FontFamily>
-                  <FontSize>11pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Fields!VornameName.Value</Value>
-                <Style>
-                  <FontFamily>Tahoma</FontFamily>
-                  <FontSize>11pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Fields!Strasse.Value</Value>
-                <Style>
-                  <FontFamily>Tahoma</FontFamily>
-                  <FontSize>11pt</FontSize>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>=Fields!Ort.Value</Value>
+                <Value>=Fields!Adressfeld.Value</Value>
                 <Style>
                   <FontFamily>Tahoma</FontFamily>
                   <FontSize>11pt</FontSize>
@@ -627,13 +591,17 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="Anrede">
-          <DataField>Anrede</DataField>
+        <Field Name="Adressfeld">
+          <DataField>Adressfeld</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Betreff">
           <DataField>Betreff</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Id">
+          <DataField>Id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="Inhalt">
           <DataField>Inhalt</DataField>
@@ -645,14 +613,6 @@
         </Field>
         <Field Name="Name">
           <DataField>Name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Ort">
-          <DataField>Ort</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Strasse">
-          <DataField>Strasse</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Unterschrift">

@@ -92,7 +92,7 @@ namespace diNo
         string directoryName = Konstanten.ExcelPfad + row.Kuerzel;
         if (!Directory.Exists(directoryName) || Directory.GetFiles(directoryName).Count() == 0)
         {
-          log.Warn("Unterrichtet der Lehrer " + row.Name + " nix ?");
+          log.Warn("Unterrichtet der Lehrer " + row.Kuerzel + " nix ?");
           count++;
           continue;
         }

@@ -258,6 +258,7 @@
     <EmbeddedResource Include="subrptFPANoten.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11Klasse.rdlc" />
+    <EmbeddedResource Include="subrptZeugnis1spaltig.rdlc" />
     <EmbeddedResource Include="UserControlAdministration.resx">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>
     </EmbeddedResource>
@@ -346,6 +347,7 @@
     <None Include="Properties\DataSources\FachSchuelerNoten.datasource" />
     <None Include="Properties\DataSources\FachSchuelerNotenDruck.datasource" />
     <None Include="Properties\DataSources\FachSchuelerNotenDruck11.datasource" />
+    <None Include="Properties\DataSources\FachSchuelerNotenZeugnisDruck.datasource" />
     <None Include="Properties\DataSources\FPADruck.datasource" />
     <None Include="Properties\DataSources\Klasse.datasource" />
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />

@@ -6,15 +6,15 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>9.08938cm</Width>
+              <Width>8.5073cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>7.87104cm</Width>
+              <Width>8.45312cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>6.76421cm</Height>
+              <Height>5.52067cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -41,43 +41,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Anrede.Value</Value>
-                              <Style>
-                                <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!VornameName.Value</Value>
-                              <Style>
-                                <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!Strasse.Value</Value>
-                              <Style>
-                                <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!Ort.Value</Value>
+                              <Value>=Fields!Adressfeld.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -161,7 +125,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>(Benachrichtigung gemäß § 58 (7) FOBOSO)</Value>
+                              <Value>(Benachrichtigung gemäß § 26 (6) FOBOSO)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -187,14 +151,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!VornameName.Value</Value>
-                              <Style>
-                                <FontFamily>Tahoma</FontFamily>
-                                <FontSize>11pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value> hat in den folgenden Fächern nur die angeführten Leistungen erzielt:</Value>
+                              <Value>=Fields!Inhalt2.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -222,36 +179,24 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>6.14771cm</Height>
+              <Height>5.77729cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox3">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox3</rd:DefaultName>
+                    <Subreport Name="subrptZeugnis1spaltig">
+                      <ReportName>subrptZeugnis1spaltig</ReportName>
+                      <Parameters>
+                        <Parameter Name="SId">
+                          <Value>=Fields!Id.Value</Value>
+                        </Parameter>
+                      </Parameters>
                       <Style>
                         <Border>
-                          <Color>LightGrey</Color>
                           <Style>None</Style>
                         </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
+                        <TextAlign>Center</TextAlign>
                       </Style>
-                    </Textbox>
+                    </Subreport>
                     <ColSpan>2</ColSpan>
                   </CellContents>
                 </TablixCell>
@@ -481,7 +426,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>5.94458cm</Height>
+              <Height>5.045cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -550,7 +495,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>(Benachrichtigung gemäß § 58 (7) FOBOSO)</Value>
+                              <Value>(Benachrichtigung gemäß § 26 (6) FOBOSO)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -650,7 +595,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>___________________ , ___________          ________________________________________</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -662,14 +607,16 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Ort, Datum                                                                                                        Unterschrift eines Erziehungsberechtigten</Value>
+                              <Value xml:space="preserve">                                                                                                       </Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox33</rd:DefaultName>
@@ -687,6 +634,101 @@
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>1.235cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox7">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>___________________ , ___________ </Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>11pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Ort, Datum</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox7</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox8">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value> ___________________________________</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>11pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!UnterschriftsText.Value</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
+                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox8</rd:DefaultName>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
               </TablixCells>
             </TablixRow>
           </TablixRows>
@@ -725,6 +767,7 @@
                     <TablixMember />
                     <TablixMember />
                     <TablixMember />
+                    <TablixMember />
                   </TablixMembers>
                 </TablixMember>
               </TablixMembers>
@@ -735,7 +778,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>22.78171cm</Height>
+        <Height>21.50318cm</Height>
         <Width>16.96042cm</Width>
         <Style>
           <Border>
@@ -746,7 +789,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>22.78171cm</Height>
+    <Height>23.11714cm</Height>
     <Style />
   </Body>
   <Width>16.96042cm</Width>
@@ -784,8 +827,8 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="Anrede">
-          <DataField>Anrede</DataField>
+        <Field Name="Adressfeld">
+          <DataField>Adressfeld</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Betreff">
@@ -800,6 +843,10 @@
           <DataField>Inhalt</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Inhalt2">
+          <DataField>Inhalt2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Klasse">
           <DataField>Klasse</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -808,20 +855,16 @@
           <DataField>Name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Ort">
-          <DataField>Ort</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Strasse">
-          <DataField>Strasse</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="Unterschrift">
           <DataField>Unterschrift</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Unterschrift2">
           <DataField>Unterschrift2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="UnterschriftsText">
+          <DataField>UnterschriftsText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="VornameName">

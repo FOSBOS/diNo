@@ -18,7 +18,7 @@ namespace diNo
         // die folgendes Array verwaltet die Anzahl der Einser, Zweier, usw., getrennt nach SAP-Fach und Nebenfach
         // anzahlNoten[6,1] ergibt z.B. die Anzahl der Sechser in SAP-Fächern, anzahlNoten[5,0] die Anzahl der Fünfer in Nebenfächern
         private int[,] anzahlNoten;
-        private Zeitpunkt zeitpunkt=Zeitpunkt.None;
+        private Zeitpunkt zeitpunkt= (Zeitpunkt)Zugriff.Instance.aktZeitpunkt;
         public string Unterpunktungen;
         public bool hatDeutsch6 = false; // kann nicht ausgeglichen werden
         public int anz4P=0;
@@ -45,8 +45,12 @@ namespace diNo
             alleFaecher.Add(new FachSchuelerNoten(schueler, fach));
           }
 
-          alleFaecher.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));       
-          alleKurse.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));       
+          alleFaecher.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));
+          alleKurse.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));
+
+          // Schnitt, Unterpunktungen etc. berechnen
+          anzahlNoten = new int[7, 2];
+          InitAnzahlNoten();
         }
 
         public FachSchuelerNoten getFach(int kursid)
@@ -118,6 +122,19 @@ namespace diNo
       return liste;
 
     }
+
+    public IList<FachSchuelerNotenZeugnisDruck> SchuelerNotenZeugnisDruck(string rptName)
+    {
+      IList<FachSchuelerNotenZeugnisDruck> liste = new List<FachSchuelerNotenZeugnisDruck>();
+      foreach (FachSchuelerNoten f in alleKurse)
+      {
+        if (rptName!="rptGefaehrdungen" || f.getRelevanteNote(zeitpunkt)<=4)
+          liste.Add(new FachSchuelerNotenZeugnisDruck(f, rptName));
+      }
+      return liste;
+
+    }
+
     // TODO: Überflüssig, wegen lokaler Variable
     public string GetUnterpunktungenString(Zeitpunkt z)
     {
@@ -141,6 +158,8 @@ namespace diNo
       if (zeitpunkt!=z)
       {
         anzahlNoten = null;
+        anzahlNoten = new int[7, 2];
+        InitAnzahlNoten();
         zeitpunkt = z;
       }
     }
@@ -154,12 +173,6 @@ namespace diNo
     // Doku s. private Variable
     public int AnzahlNoten(int note, bool SAP)
     {
-      if (anzahlNoten == null)
-      {
-        if (zeitpunkt==Zeitpunkt.None) zeitpunkt = (Zeitpunkt)Zugriff.Instance.aktZeitpunkt;
-        anzahlNoten = new int[7,2];
-        InitAnzahlNoten();
-      }
       if (SAP) return anzahlNoten[note,1];
       else return anzahlNoten[note,0];
     }
@@ -398,7 +411,7 @@ namespace diNo
         /// Liefert alle Noten eines Schülers in einem Fach von diesem Typ
         /// </summary>
         public IList<int> getNoten(Halbjahr hj,Notentyp typ)
-        {
+        {          
             return noten[(int)hj,(int)typ]; // klappt der Cast immer???
         }
 
@@ -737,6 +750,39 @@ namespace diNo
       {
         SsL2 = hj2.SchnittMdl == null ? "" : String.Format("{0:f2}", hj2.SchnittMdl);
         S2 = hj2.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj2.Punkte2Dez);
+        Hj2 = hj2.Punkte.ToString();
+      }
+      hj2 = s.getHjLeistung(HjArt.GesErg);
+      if (hj2 != null) GE = hj2.Punkte.ToString();
+    }
+  }
+
+
+  public class FachSchuelerNotenZeugnisDruck
+  {
+    public string fachBez { get; private set; }
+    public string Hj1 { get; private set; }  // Halbjahrespunktzahl 1.Hj
+    public string Hj2 { get; private set; }
+    public string GE { get; private set; } // Gesamtergebnis
+
+    public FachSchuelerNotenZeugnisDruck(FachSchuelerNoten s, string rptName)
+    {
+      fachBez = s.getFach.Bezeichnung;
+      if (s.schueler.AlteFOBOSO())
+      {
+        Hj1 = s.getRelevanteNote(Zeitpunkt.HalbjahrUndProbezeitFOS).ToString();
+        Hj2 = s.getRelevanteNote(Zeitpunkt.Jahresende).ToString();
+        return;
+      }        
+
+      var hj1 = s.getHjLeistung(HjArt.Hj1);
+      var hj2 = s.getHjLeistung(HjArt.Hj2);
+      if (hj1 != null)
+      {
+        Hj1 = hj1.Punkte.ToString();
+      }
+      if (hj2 != null)
+      {
         Hj2 = hj2.Punkte.ToString();
       }
       hj2 = s.getHjLeistung(HjArt.GesErg);

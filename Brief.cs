@@ -43,7 +43,7 @@ namespace diNo
 
         private void btnOK_Click(object sender, EventArgs e)
         {                        
-            b = new BriefDaten(s,!(opVerweis.Checked || opVerschVerweis.Checked),false);
+            b = new BriefDaten(s,!(opVerweis.Checked || opVerschVerweis.Checked),false,false);
             if (opVerweis.Checked || opVerschVerweis.Checked) VerweisText(opVerschVerweis.Checked);
             else if (opSA.Checked || opKA.Checked) NachterminText();
             else if (opSEP.Checked || opMEP.Checked) ErsatzprText();
@@ -92,7 +92,7 @@ namespace diNo
           b.Betreff = "Verweis";
           b.Unterschrift2 = "Helga Traut, OStDin\nSchulleiterin";
         }
-        b.Inhalt = "Hiermit wird " + b.Anrede + " " + b.VornameName + " gemäß Art. 86 (2) BayEUG ein ";
+        b.Inhalt = "Hiermit wird " + s.getHerrnFrau() + s.Data.Rufname + s.Name + " gemäß Art. 86 (2) BayEUG ein ";
         b.Inhalt += (verschaerft?"verschärfter Verweis durch die Schulleiterin":"Verweis") + " erteilt.<br><br>";
         b.Inhalt += "Begründung der Ordnungsmaßnahme:<br>" + edInhalt.Text + "<br><br>";            
     }
@@ -132,36 +132,43 @@ namespace diNo
   }
 
   public class BriefDaten
-    {
-        public int Id { get; private set; }
-        public string Anrede{ get; set; }
-        public string Name { get; set; }
-        public string VornameName { get; set; }
-        public string Strasse { get; set; }
-        public string Ort { get; set; }
-        public string Klasse { get; set; }
-        public string Betreff { get; set; }
-        public string Inhalt { get; set; }
-        public string Unterschrift { get; set; }
-        public string Unterschrift2 { get; set; }
+  {
+    public int Id { get; private set; }
+    public string Adressfeld{ get; set; }
+    public string Name { get; set; }
+    public string VornameName { get; set; }
+    public string Klasse { get; set; }
+    public string Betreff { get; set; }
+    public string Inhalt { get; set; }
+    public string Inhalt2 { get; set; }
+    public string Unterschrift { get; set; }
+    public string Unterschrift2 { get; set; }
+    public string UnterschriftsText { get; set; }
 
-        public BriefDaten(Schueler s, bool erzeugeAnrede, bool UnterschriftKL)
-        {
-          Id = s.Id;
-          Anrede = s.Data.Geschlecht == "M" ? "Herrn" : "Frau";
-          VornameName = s.Data.Rufname + " " + s.Data.Name;
-          Name = s.Name;
-          Strasse = s.Data.AnschriftStrasse;
-          Ort = s.Data.AnschriftPLZ + " " +  s.Data.AnschriftOrt;
-          Klasse = s.getKlasse.Bezeichnung;
-          if (UnterschriftKL)
-          {
-            var KL = s.getKlasse.Klassenleiter;
-            Unterschrift = KL.Vorname + " " + KL.Nachname + ", " + KL.Dienstbezeichnung + "\nKlassenleitung";
-          }
-          else
-            Unterschrift = Zugriff.Instance.lehrer.Data.Name + ", " + Zugriff.Instance.lehrer.Data.Dienstbezeichnung;
-          if (erzeugeAnrede)
+    public BriefDaten(Schueler s, bool erzeugeAnrede, bool UnterschriftKL, bool ElternadresseVerwenden)
+    {
+      Lehrer lehrer;
+      Id = s.Id;
+      Adressfeld = s.ErzeugeAdresse(ElternadresseVerwenden);
+      Name = s.Name;
+      VornameName = s.VornameName;
+      Klasse = s.getKlasse.Bezeichnung;
+
+      if (UnterschriftKL)
+        lehrer = s.getKlasse.Klassenleiter;
+      else
+        lehrer = Zugriff.Instance.lehrer;
+
+      Unterschrift = lehrer.NameDienstbezeichnung;
+      if (UnterschriftKL)
+        Unterschrift += "\n" + lehrer.KLString;
+
+      if (ElternadresseVerwenden && s.Alter() < 18)
+        UnterschriftsText = "Unterschrift eines Erziehungsberechtigten";
+      else
+        UnterschriftsText = "Unterschrift";
+
+      if (erzeugeAnrede)
           {
             if (s.Data.Geschlecht == "M")
               Inhalt = "Sehr geehrter Herr " + s.Data.Name +",<br><br>";
@@ -169,7 +176,7 @@ namespace diNo
               Inhalt = "Sehr geehrte Frau " + s.Data.Name +",<br><br>";
           }
         }
-   }
+      }
 
 
 

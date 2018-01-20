@@ -36,7 +36,7 @@ namespace diNo
   {
     private diNoDataSet.KlasseRow data;
     private diNoDataSet.SchuelerDataTable schueler;
-    private diNoDataSet.LehrerRow klassenleiter;
+    private Lehrer klassenleiter;
     public List<Schueler> eigeneSchueler;
     private List<Kurs> kurse = null;
 
@@ -164,17 +164,16 @@ namespace diNo
     }
 
 
-    public diNoDataSet.LehrerRow Klassenleiter
+    public Lehrer Klassenleiter
     {
       get
       {
-        if (this.klassenleiter == null)
+        if (klassenleiter == null)
         {
-          var lehrer = new LehrerTableAdapter().GetDataById(this.Data.KlassenleiterId);
-          this.klassenleiter = lehrer.Count == 1 ? lehrer[0] : null;
+          klassenleiter = Zugriff.Instance.LehrerRep.Find(Data.KlassenleiterId);          
         }
 
-        return this.klassenleiter;
+        return klassenleiter;
       }
     }
 
