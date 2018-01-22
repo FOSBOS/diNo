@@ -104,7 +104,7 @@ namespace diNo
           NumericUpDownNullable vertiefung, Label lbV1, Label lbV2, Label lbV)
     {
       // S, U mit 2 Vertiefungsfächern
-      bool v12 = schueler.Zweig == Zweig.Sozial || schueler.Zweig == Zweig.Umwelt;
+      bool v12 = schueler.Zweig == Zweig.Sozial; ; // || schueler.Zweig == Zweig.Umwelt; Anforderung Go/Hä: ABU kann auch nicht immer 50/50 gewertet werden. Deshalb eingeben der Gesamtnote (Gewichtung uns dann egal)
 
       vertiefung1.Enabled = v12;
       vertiefung2.Enabled = v12;
