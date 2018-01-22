@@ -192,35 +192,4 @@ namespace diNo
       }
     }
   }
-
-  public class ReportLehrerliste : ReportController
-    {
-        public override void Init()
-        {
-            LehrerTableAdapter BerichtTableAdapter;
-
-            rpt.BerichtBindingSource.DataMember = "Lehrer";
-            BerichtTableAdapter = new LehrerTableAdapter();
-            BerichtTableAdapter.ClearBeforeFill = true;
-            BerichtTableAdapter.Fill(rpt.diNoDataSet.Lehrer);
-            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptLehrerliste.rdlc";
-            // Unterbericht einbinden
-            rpt.reportViewer.LocalReport.SubreportProcessing +=
-                    new SubreportProcessingEventHandler(subrptKursEventHandler);
-        }
-
-        void subrptKursEventHandler(object sender, SubreportProcessingEventArgs e)
-        {
-            diNoDataSet.KursDataTable kurse = new diNoDataSet.KursDataTable();
-            KursTableAdapter BerichtTableAdapter;
-            BerichtTableAdapter = new KursTableAdapter();
-            BerichtTableAdapter.ClearBeforeFill = true;
-
-            //e.Parameters verwenden, um Fremdschlüssel abzugreifen
-            int LehrerId=0;
-            int.TryParse(e.Parameters[0].Values[0],out LehrerId);
-            BerichtTableAdapter.FillByLehrerId(kurse, LehrerId);                 
-            e.DataSources.Add(new ReportDataSource("DataSetKurs",(DataTable) kurse));
-        }
-    }
 }

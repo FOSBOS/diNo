@@ -258,7 +258,7 @@
     <EmbeddedResource Include="subrptFPANoten.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11Klasse.rdlc" />
-    <EmbeddedResource Include="subrptZeugnis1spaltig.rdlc" />
+    <EmbeddedResource Include="subrptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="UserControlAdministration.resx">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>
     </EmbeddedResource>
@@ -287,7 +287,6 @@
     <EmbeddedResource Include="ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="rptLehrerliste.rdlc" />
     <EmbeddedResource Include="rptNotenbogen.rdlc" />
     <EmbeddedResource Include="rptNotenCheck.rdlc" />
     <EmbeddedResource Include="subrptAbiergebnisseNoten.rdlc" />

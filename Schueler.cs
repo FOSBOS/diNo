@@ -235,10 +235,15 @@ namespace diNo
           {
             fpa.Vertiefung = (byte)Math.Round((2 * fpa.Vertiefung1 + fpa.Vertiefung2) / 3.0);
           }
+          /*
           else if (Zweig == Zweig.Umwelt)
           {
             fpa.Vertiefung = (byte)Math.Round((fpa.Vertiefung1 + fpa.Vertiefung2) / 2.0);
-          }
+          }*/
+        }
+        else if (Zweig == Zweig.Sozial /*||Zweig == Zweig.Umwelt*/)
+        {
+          fpa.SetVertiefungNull();
         }
 
         // beim Betrieb werden nur mittlere Punktwerte vergeben:
@@ -256,6 +261,10 @@ namespace diNo
             fpa.Gesamt = 0;
           else
             fpa.Gesamt = (byte)Math.Round((2 * fpa.Betrieb + fpa.Anleitung + fpa.Vertiefung) / 4.0);
+        }
+        else
+        {
+          fpa.SetGesamtNull();
         }
       }
     }
@@ -992,6 +1001,7 @@ namespace diNo
     {
       var jg = s.getKlasse.Jahrgangsstufe;
       string tmp;
+      
       Id = s.Id;//.ToString();
       Nachname = s.Name;
       Vorname = s.Vorname;
@@ -1003,7 +1013,8 @@ namespace diNo
       Klasse = s.getKlasse.Bezeichnung;
       KlasseMitZweig = s.KlassenBezeichnung;
       Bekenntnis = "Bekenntnis: " + s.Data.Bekenntnis;
-      Klassenleiter = s.getKlasse.Klassenleiter.NameMitAbkVorname;
+      var KL = s.getKlasse.Klassenleiter;
+      Klassenleiter = KL.NameMitAbkVornameDienstbezeichnung + "\n" + KL.KLString;
       Legasthenie = s.Data.LRSStoerung ? "\nLegasthenie" : "";
       Laufbahn = "Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm.ToString("dd.MM.yyyy");
       Laufbahn += " aus " + s.Data.SchulischeVorbildung + " von " + s.EintrittAusSchulname;//.Substring(0,25);

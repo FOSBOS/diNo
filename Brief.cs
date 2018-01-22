@@ -92,7 +92,7 @@ namespace diNo
           b.Betreff = "Verweis";
           b.Unterschrift2 = "Helga Traut, OStDin\nSchulleiterin";
         }
-        b.Inhalt = "Hiermit wird " + s.getHerrnFrau() + s.Data.Rufname + s.Name + " gemäß Art. 86 (2) BayEUG ein ";
+        b.Inhalt = "Hiermit wird " + s.getHerrnFrau() + s.VornameName + " gemäß Art. 86 (2) BayEUG ein ";
         b.Inhalt += (verschaerft?"verschärfter Verweis durch die Schulleiterin":"Verweis") + " erteilt.<br><br>";
         b.Inhalt += "Begründung der Ordnungsmaßnahme:<br>" + edInhalt.Text + "<br><br>";            
     }

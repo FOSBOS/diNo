@@ -64,6 +64,11 @@ namespace diNo
       get { return Data.Vorname + " " + Data.Nachname + ", " + Data.Dienstbezeichnung; }
     }
 
+    public string NameMitAbkVornameDienstbezeichnung
+    {
+      get { return Data.Vorname.Substring(0, 1) + ". " + Data.Nachname + ", " + Data.Dienstbezeichnung; }
+    }
+
     public string KLString
     {
       get { return "Klassenleiter" + (Data.Geschlecht == "W" ? "in" : ""); }

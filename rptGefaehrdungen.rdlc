@@ -179,12 +179,12 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>5.77729cm</Height>
+              <Height>4.90416cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Subreport Name="subrptZeugnis1spaltig">
-                      <ReportName>subrptZeugnis1spaltig</ReportName>
+                    <Subreport Name="subrptGefaehrdungen">
+                      <ReportName>subrptGefaehrdungen</ReportName>
                       <Parameters>
                         <Parameter Name="SId">
                           <Value>=Fields!Id.Value</Value>
@@ -299,7 +299,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>        Helga Traut, OStDin</Value>
+                              <Value>                   Helga Traut, OStDin</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -311,7 +311,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>        Schulleiterin</Value>
+                              <Value>                   Schulleiterin</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -778,7 +778,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>21.50318cm</Height>
+        <Height>20.63006cm</Height>
         <Width>16.96042cm</Width>
         <Style>
           <Border>
@@ -789,7 +789,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>23.11714cm</Height>
+    <Height>20.63006cm</Height>
     <Style />
   </Body>
   <Width>16.96042cm</Width>
