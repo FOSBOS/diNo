@@ -891,6 +891,11 @@ namespace diNo
       return jahre;
     }
 
+    public string getHerrFrau()
+    {
+      return (Data.Geschlecht == "M" ? "Herr" : "Frau");
+    }
+
     public string getHerrnFrau()
     {
       return getHerrnFrau(Data.Geschlecht);
@@ -980,17 +985,20 @@ namespace diNo
     public string Nachname { get; private set; }
     public string Vorname { get; private set; }
     public string Rufname { get; private set; }
+    public string Anrede { get; private set; }
     public string Anschrift { get; private set; }
     public string Telefon { get; private set; }
     public string GeborenInAm { get; private set; }
     public string Klasse { get; private set; }
     public string KlasseMitZweig { get; private set; }
+    public string KlasseARZeugnis { get; private set; }
     public string Bekenntnis { get; private set; }
     public string Klassenleiter { get; private set; }
     public string Legasthenie { get; private set; }
     public string Laufbahn { get; private set; }
     public string Schuljahr { get; private set; }
     public string Schulart { get; private set; }
+    public string DatumZeugnis { get; private set; }
 
     // Zeugnisbemerkung muss im Bericht als HTML eingestellt sein (re. Maus auf Datenfeld)
     public string Bemerkung { get; private set; }
@@ -1006,15 +1014,19 @@ namespace diNo
       Nachname = s.Name;
       Vorname = s.Vorname;
       Rufname = s.Data.Rufname;
+      Anrede = s.getHerrFrau();
       Anschrift = s.Data.AnschriftStrasse + "\n" + s.Data.AnschriftPLZ + " " + s.Data.AnschriftOrt;
       Telefon = s.Data.AnschriftTelefonnummer;
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
 
       Klasse = s.getKlasse.Bezeichnung;
       KlasseMitZweig = s.KlassenBezeichnung;
+      KlasseARZeugnis = (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse ? "Vorklasse" : "Jahrgangstufe " + ((int)s.getKlasse.Jahrgangsstufe))
+          + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule")
+          + ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s) + " in der Klasse " + s.getKlasse.Bezeichnung+".";
       Bekenntnis = "Bekenntnis: " + s.Data.Bekenntnis;
       var KL = s.getKlasse.Klassenleiter;
-      Klassenleiter = KL.NameMitAbkVornameDienstbezeichnung + "\n" + KL.KLString;
+      Klassenleiter = KL.NameDienstbezeichnung + "\n" + KL.KLString;
       Legasthenie = s.Data.LRSStoerung ? "\nLegasthenie" : "";
       Laufbahn = "Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm.ToString("dd.MM.yyyy");
       Laufbahn += " aus " + s.Data.SchulischeVorbildung + " von " + s.EintrittAusSchulname;//.Substring(0,25);
@@ -1026,14 +1038,15 @@ namespace diNo
       if (tmp != "") Laufbahn += "\nWiederholungen: " + tmp;
 
       if (s.Data.Schulart == "B")
-        Schulart = "0841 Staatl. Berufsoberschule Kempten (Allgäu)";
+        Schulart = "Staatliche Berufsoberschule Kempten (Allgäu)";
       else
-        Schulart = "0871 Staatl. Fachoberschule Kempten (Allgäu)";
+        Schulart = "Staatliche Fachoberschule Kempten (Allgäu)";
 
       Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
+      DatumZeugnis = "23.02.2018";
 
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
-      Bemerkung = "";
+      Bemerkung = "---";
 
       if (jg == Jahrgangsstufe.Elf)
       {

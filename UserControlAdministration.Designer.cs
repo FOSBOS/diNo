@@ -31,6 +31,7 @@
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
       this.btnSelect = new System.Windows.Forms.Button();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
+      this.btnGefaehrdungen = new System.Windows.Forms.Button();
       this.btnKlassenliste = new System.Windows.Forms.Button();
       this.btnAttestpflicht = new System.Windows.Forms.Button();
       this.btnNotenmitteilung = new System.Windows.Forms.Button();
@@ -59,7 +60,7 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
-      this.btnGefaehrdungen = new System.Windows.Forms.Button();
+      this.btnZwischenzeugnis = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
@@ -90,6 +91,7 @@
       // 
       // groupBoxDrucken
       // 
+      this.groupBoxDrucken.Controls.Add(this.btnZwischenzeugnis);
       this.groupBoxDrucken.Controls.Add(this.btnGefaehrdungen);
       this.groupBoxDrucken.Controls.Add(this.btnKlassenliste);
       this.groupBoxDrucken.Controls.Add(this.btnAttestpflicht);
@@ -101,6 +103,16 @@
       this.groupBoxDrucken.TabIndex = 3;
       this.groupBoxDrucken.TabStop = false;
       this.groupBoxDrucken.Text = "Drucken";
+      // 
+      // btnGefaehrdungen
+      // 
+      this.btnGefaehrdungen.Location = new System.Drawing.Point(21, 135);
+      this.btnGefaehrdungen.Name = "btnGefaehrdungen";
+      this.btnGefaehrdungen.Size = new System.Drawing.Size(132, 23);
+      this.btnGefaehrdungen.TabIndex = 4;
+      this.btnGefaehrdungen.Text = "Gefährdungen";
+      this.btnGefaehrdungen.UseVisualStyleBackColor = true;
+      this.btnGefaehrdungen.Click += new System.EventHandler(this.btnGefaehrdungen_Click);
       // 
       // btnKlassenliste
       // 
@@ -394,15 +406,15 @@
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
       // 
-      // btnGefaehrdungen
+      // btnZwischenzeugnis
       // 
-      this.btnGefaehrdungen.Location = new System.Drawing.Point(21, 135);
-      this.btnGefaehrdungen.Name = "btnGefaehrdungen";
-      this.btnGefaehrdungen.Size = new System.Drawing.Size(132, 23);
-      this.btnGefaehrdungen.TabIndex = 4;
-      this.btnGefaehrdungen.Text = "Gefährdungen";
-      this.btnGefaehrdungen.UseVisualStyleBackColor = true;
-      this.btnGefaehrdungen.Click += new System.EventHandler(this.btnGefaehrdungen_Click);
+      this.btnZwischenzeugnis.Location = new System.Drawing.Point(21, 164);
+      this.btnZwischenzeugnis.Name = "btnZwischenzeugnis";
+      this.btnZwischenzeugnis.Size = new System.Drawing.Size(132, 23);
+      this.btnZwischenzeugnis.TabIndex = 5;
+      this.btnZwischenzeugnis.Text = "Zwischenzeugnis";
+      this.btnZwischenzeugnis.UseVisualStyleBackColor = true;
+      this.btnZwischenzeugnis.Click += new System.EventHandler(this.btnZwischenzeugnis_Click);
       // 
       // UserControlAdministration
       // 
@@ -463,5 +475,6 @@
     private System.Windows.Forms.Button btnSelect;
     private System.Windows.Forms.Button btnExportSchuelerZeugnisprogramm;
     private System.Windows.Forms.Button btnGefaehrdungen;
+    private System.Windows.Forms.Button btnZwischenzeugnis;
   }
 }

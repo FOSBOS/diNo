@@ -199,5 +199,10 @@ namespace diNo
     {
        new ReportGefaehrdungen().Show();
     }
+
+    private void btnZwischenzeugnis_Click(object sender, EventArgs e)
+    {
+      new ReportSchuelerdruck(getSelectedObjects(), "rptZwischenzeugnis");
+    }
   }
 }

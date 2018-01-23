@@ -138,6 +138,20 @@ public static class Faecherkanon
       }
     }
 
+    public static string GetZweigText(Schueler s)
+    {
+      switch (s.Data.Ausbildungsrichtung)
+      {
+        case "S": return "Sozialwesen";
+        case "T": return "Technik";
+        case "WVR":
+        case "W":
+          return "Wirtschaft und Verwaltung";
+        case "U": return "Agrarwirtschaft, Bio- und Umwelttechnologie";
+        default: return "";
+      }
+    }
+
     public static Jahrgangsstufe GetJahrgangsstufe(string jahrgangsstufe)
     {
       if (jahrgangsstufe.ToUpper().Contains("VS"))

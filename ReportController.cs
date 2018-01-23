@@ -118,6 +118,12 @@ namespace diNo
           {            
             e.DataSources.Add(new ReportDataSource("DataSetFPANoten", schueler.FPANotenDruck()));
           }
+          else if (subrpt == "subrptNotenstufen")
+          {
+            var d = new List<Dummy>();
+            d.Add(new Dummy());
+            e.DataSources.Add(new ReportDataSource("DataSet1",d));
+          }
           else if (subrpt=="subrptVorkommnis" || subrpt=="subrptAbiVorkommnis" )
           {
             diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
@@ -192,4 +198,14 @@ namespace diNo
       }
     }
   }
+
+  public class Dummy
+  {
+    public int Id { get; private set; }
+    public Dummy()
+    {
+      Id=0;
+    }
+  }
+
 }
