@@ -103,38 +103,43 @@ namespace diNo
         if (schuelerId>0)
         {
           Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-          if (subrpt=="subrptFachSchuelerNoten" || subrpt=="subrptFachSchuelerNoten11Klasse"
-           || subrpt =="subrptAbiergebnisseNoten")
-          {
-            IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(rptName);
-            e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten",noten));
-          }
-          else if (subrpt == "subrptFachSchuelerNoten11")
-          {
-            IList<FachSchuelerNotenDruck11> noten = schueler.getNoten.SchuelerNotenDruck11(rptName);
-            e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten", noten));
-          }
-          else if (subrpt == "subrptFPANoten")
-          {            
-            e.DataSources.Add(new ReportDataSource("DataSetFPANoten", schueler.FPANotenDruck()));
-          }
-          else if (subrpt == "subrptNotenstufen")
-          {
-            var d = new List<Dummy>();
-            d.Add(new Dummy());
-            e.DataSources.Add(new ReportDataSource("DataSet1",d));
-          }
-          else if (subrpt=="subrptVorkommnis" || subrpt=="subrptAbiVorkommnis" )
-          {
-            diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
-            vwVorkommnisTableAdapter BerichtTableAdapter;
-            BerichtTableAdapter = new vwVorkommnisTableAdapter();
-            if (subrpt=="subrptAbiVorkommnis")
-              BerichtTableAdapter.FillBySchuelerIdForAbi(vorkommnisse, schuelerId);   //nur bestimmte Vorkommnisse selektieren              
-            else 
-              BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);
-            e.DataSources.Add(new ReportDataSource("DataSetVorkommnis",(DataTable) vorkommnisse));
-          }          
+        if (subrpt == "subrptFachSchuelerNoten" || subrpt == "subrptFachSchuelerNoten11Klasse"
+         || subrpt == "subrptAbiergebnisseNoten")
+        {
+          IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(rptName);
+          e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten", noten));
+        }
+        else if (subrpt == "subrptFachSchuelerNoten11")
+        {
+          IList<FachSchuelerNotenDruck11> noten = schueler.getNoten.SchuelerNotenDruck11(rptName);
+          e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten", noten));
+        }
+        else if (subrpt == "subrptZwischenzeugnis")
+        {          
+          IList<FachSchuelerNotenZeugnisDruck> noten = schueler.getNoten.SchuelerNotenZeugnisDruck("rptZwischenzeugnis");
+          e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten", noten));
+        }
+        else if (subrpt == "subrptFPANoten")
+        {
+          e.DataSources.Add(new ReportDataSource("DataSetFPANoten", schueler.FPANotenDruck()));
+        }
+        else if (subrpt == "subrptNotenstufen")
+        {
+          var d = new List<Dummy>();
+          d.Add(new Dummy());
+          e.DataSources.Add(new ReportDataSource("DataSet1", d));
+        }
+        else if (subrpt == "subrptVorkommnis" || subrpt == "subrptAbiVorkommnis")
+        {
+          diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
+          vwVorkommnisTableAdapter BerichtTableAdapter;
+          BerichtTableAdapter = new vwVorkommnisTableAdapter();
+          if (subrpt == "subrptAbiVorkommnis")
+            BerichtTableAdapter.FillBySchuelerIdForAbi(vorkommnisse, schuelerId);   //nur bestimmte Vorkommnisse selektieren              
+          else
+            BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);
+          e.DataSources.Add(new ReportDataSource("DataSetVorkommnis", (DataTable)vorkommnisse));
+        }          
       }     
     }    
   }

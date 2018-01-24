@@ -126,11 +126,22 @@ namespace diNo
     public IList<FachSchuelerNotenZeugnisDruck> SchuelerNotenZeugnisDruck(string rptName)
     {
       IList<FachSchuelerNotenZeugnisDruck> liste = new List<FachSchuelerNotenZeugnisDruck>();
+      if (rptName != "rptGefaehrdungen") liste.Add(new FachSchuelerNotenZeugnisDruck("Allgemeinbildende Fächer"));
       foreach (FachSchuelerNoten f in alleKurse)
       {
         if (rptName!="rptGefaehrdungen" || f.getRelevanteNote(zeitpunkt)<=4)
           liste.Add(new FachSchuelerNotenZeugnisDruck(f, rptName));
       }
+      if (rptName != "rptGefaehrdungen" && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
+      {
+        if (!schueler.FPANoten[0].IsGesamtNull())
+        {
+          FachSchuelerNotenZeugnisDruck f = new FachSchuelerNotenZeugnisDruck("Fachpraktische Ausbildung");
+          f.Hj1 = schueler.FPANoten[0].Gesamt.ToString("D2");
+          liste.Add(f);
+        }
+      }
+
       return liste;
 
     }
@@ -761,9 +772,14 @@ namespace diNo
   public class FachSchuelerNotenZeugnisDruck
   {
     public string fachBez { get; private set; }
-    public string Hj1 { get; private set; }  // Halbjahrespunktzahl 1.Hj
-    public string Hj2 { get; private set; }
-    public string GE { get; private set; } // Gesamtergebnis
+    public string Hj1 { get; set; }  // Halbjahrespunktzahl 1.Hj
+    public string Hj2 { get; set; }
+    public string GE { get; set; } // Gesamtergebnis
+
+    public FachSchuelerNotenZeugnisDruck(string Ueberschrift)
+    {
+      fachBez = "<b>" + Ueberschrift + "</b>";
+    }
 
     public FachSchuelerNotenZeugnisDruck(FachSchuelerNoten s, string rptName)
     {
@@ -779,7 +795,7 @@ namespace diNo
       var hj2 = s.getHjLeistung(HjArt.Hj2);
       if (hj1 != null)
       {
-        Hj1 = hj1.Punkte.ToString();
+        Hj1 = hj1.Punkte.ToString("D2");
       }
       if (hj2 != null)
       {

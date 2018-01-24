@@ -992,6 +992,7 @@ namespace diNo
     public string Klasse { get; private set; }
     public string KlasseMitZweig { get; private set; }
     public string KlasseARZeugnis { get; private set; }
+    public string JgKurz { get; private set; }
     public string Bekenntnis { get; private set; }
     public string Klassenleiter { get; private set; }
     public string Legasthenie { get; private set; }
@@ -1024,6 +1025,7 @@ namespace diNo
       KlasseARZeugnis = (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse ? "Vorklasse" : "Jahrgangstufe " + ((int)s.getKlasse.Jahrgangsstufe))
           + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule")
           + ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s) + " in der Klasse " + s.getKlasse.Bezeichnung+".";
+      JgKurz = s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse ? "VKL" : ((int)s.getKlasse.Jahrgangsstufe).ToString();
       Bekenntnis = "Bekenntnis: " + s.Data.Bekenntnis;
       var KL = s.getKlasse.Klassenleiter;
       Klassenleiter = KL.NameDienstbezeichnung + "\n" + KL.KLString;

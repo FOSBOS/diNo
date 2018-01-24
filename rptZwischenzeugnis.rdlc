@@ -227,32 +227,24 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox12">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox12</rd:DefaultName>
+                    <Subreport Name="subrptZwischenzeugnis">
+                      <ReportName>subrptZwischenzeugnis</ReportName>
+                      <Parameters>
+                        <Parameter Name="SId">
+                          <Value>=Fields!Id.Value</Value>
+                        </Parameter>
+                        <Parameter Name="JgKurz">
+                          <Value>=Fields!JgKurz.Value</Value>
+                        </Parameter>
+                      </Parameters>
                       <Style>
                         <Border>
                           <Style>None</Style>
                         </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
                       </Style>
-                    </Textbox>
+                    </Subreport>
                     <ColSpan>2</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -584,7 +576,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>25.42838cm</Height>
+        <Height>25.42839cm</Height>
         <Width>16.5cm</Width>
         <Style>
           <Border>
@@ -595,7 +587,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>25.42838cm</Height>
+    <Height>25.42839cm</Height>
     <Style />
   </Body>
   <Width>16.5cm</Width>
@@ -668,6 +660,10 @@
         <Field Name="Id">
           <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="JgKurz">
+          <DataField>JgKurz</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Klasse">
           <DataField>Klasse</DataField>

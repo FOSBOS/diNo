@@ -259,6 +259,7 @@
     <EmbeddedResource Include="subrptFPANoten.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11Klasse.rdlc" />
+    <EmbeddedResource Include="subrptZwischenzeugnis.rdlc" />
     <EmbeddedResource Include="subrptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="subrptNotenstufen.rdlc" />
     <EmbeddedResource Include="UserControlAdministration.resx">
