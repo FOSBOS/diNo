@@ -1006,7 +1006,7 @@ namespace diNo
     public string DNote { get; private set; }
     public string FPAText { get; private set; } // nur für Notenmitteilung
 
-    public SchuelerDruck(Schueler s)
+    public SchuelerDruck(Schueler s, string Berichtsname)
     {
       var jg = s.getKlasse.Jahrgangsstufe;
       string tmp;
@@ -1048,7 +1048,7 @@ namespace diNo
       DatumZeugnis = "23.02.2018";
 
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
-      Bemerkung = "---";
+      Bemerkung = "Bemerkungen: ---";
 
       if (jg == Jahrgangsstufe.Elf)
       {

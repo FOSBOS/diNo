@@ -11,7 +11,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.67939cm</Height>
+              <Height>1.12918cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -39,6 +39,7 @@
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <VerticalAlign>Bottom</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -274,7 +275,7 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSetFachSchuelerNoten</DataSetName>
-        <Height>1.3906cm</Height>
+        <Height>1.84039cm</Height>
         <Width>11.17646cm</Width>
         <Style>
           <Border>
@@ -283,7 +284,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>0.54748in</Height>
+    <Height>0.72456in</Height>
     <Style>
       <Border>
         <Color>White</Color>

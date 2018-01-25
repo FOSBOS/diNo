@@ -60,9 +60,9 @@ namespace diNo
       {
         if ((Berichtsname== "rptNotenbogen" || (Berichtsname == "rptNotenmitteilungA5")) 
             && s.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Elf)
-          s11.Add(new SchuelerDruck(s));
+          s11.Add(new SchuelerDruck(s,Berichtsname));
         else
-          s12.Add(new SchuelerDruck(s));
+          s12.Add(new SchuelerDruck(s,Berichtsname));
       }
       if (s11.Count>0)
         new rptSchuelerdruck(s11, "diNo." + Berichtsname + "11.rdlc").Show();
