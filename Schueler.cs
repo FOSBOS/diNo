@@ -891,6 +891,11 @@ namespace diNo
       return jahre;
     }
 
+    public string getErSie()
+    {
+      return (Data.Geschlecht == "M" ? "er" : "sie");
+    }
+
     public string getHerrFrau()
     {
       return (Data.Geschlecht == "M" ? "Herr" : "Frau");
@@ -999,6 +1004,7 @@ namespace diNo
     public string Laufbahn { get; private set; }
     public string Schuljahr { get; private set; }
     public string Schulart { get; private set; }
+    public string ZeugnisArt { get; private set; }
     public string DatumZeugnis { get; private set; }
 
     // Zeugnisbemerkung muss im Bericht als HTML eingestellt sein (re. Maus auf Datenfeld)
@@ -1022,9 +1028,6 @@ namespace diNo
 
       Klasse = s.getKlasse.Bezeichnung;
       KlasseMitZweig = s.KlassenBezeichnung;
-      KlasseARZeugnis = (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse ? "Vorklasse" : "Jahrgangstufe " + ((int)s.getKlasse.Jahrgangsstufe))
-          + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule")
-          + ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s) + " in der Klasse " + s.getKlasse.Bezeichnung+".";
       JgKurz = s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse ? "VKL" : ((int)s.getKlasse.Jahrgangsstufe).ToString();
       Bekenntnis = "Bekenntnis: " + s.Data.Bekenntnis;
       var KL = s.getKlasse.Klassenleiter;
@@ -1045,6 +1048,17 @@ namespace diNo
         Schulart = "Staatliche Fachoberschule Kempten (Allgäu)";
 
       Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
+      ZeugnisArt = Berichtsname.Substring(3).ToUpper();
+
+      KlasseARZeugnis = (Berichtsname=="rptZwischenzeugnis" ? "besucht" : "besuchte") + " im Schuljahr " + Schuljahr;
+      KlasseARZeugnis += " die " + (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse ? "Vorklasse" : "Jahrgangstufe " + ((int)s.getKlasse.Jahrgangsstufe))
+        + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
+      KlasseARZeugnis += ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s) + " in der Klasse " + s.getKlasse.Bezeichnung;
+      if (Berichtsname == "rptBescheinigung")
+        KlasseARZeugnis += "\nund ist heute aus der Schule ausgetreten. \n\nIm laufenden Schulhalbjahr erzielte " + s.getErSie() + " bis zum Austritt folgende Leistungen:";
+      else
+        KlasseARZeugnis += ".";
+
       DatumZeugnis = "23.02.2018";
 
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)

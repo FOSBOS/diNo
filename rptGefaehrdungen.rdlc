@@ -125,7 +125,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>(Benachrichtigung gemäß § 26 (6) FOBOSO)</Value>
+                              <Value>(Benachrichtigung gemäß § 26 (5) FOBOSO)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -495,7 +495,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>(Benachrichtigung gemäß § 26 (6) FOBOSO)</Value>
+                              <Value>(Benachrichtigung gemäß § 26 (5) FOBOSO)</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -778,7 +778,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>20.63006cm</Height>
+        <Height>20.63005cm</Height>
         <Width>16.96042cm</Width>
         <Style>
           <Border>

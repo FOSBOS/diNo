@@ -105,7 +105,7 @@ namespace diNo
       }
 
       // FPA ausgeben für Notenmitteilung (im Notenbogen als Bemerkung)
-      if (rptName=="diNo.rptNotenmitteilungA5.rdlc" && schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
+      if (rptName=="diNo.rptNotenmitteilung.rdlc" && schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
       {
         liste.Add(new FachSchuelerNotenDruckKurz(schueler.FPANoten));
       }
@@ -125,8 +125,7 @@ namespace diNo
 
     public IList<FachSchuelerNotenZeugnisDruck> SchuelerNotenZeugnisDruck(string rptName)
     {
-      IList<FachSchuelerNotenZeugnisDruck> liste = new List<FachSchuelerNotenZeugnisDruck>();
-      if (rptName != "rptGefaehrdungen") liste.Add(new FachSchuelerNotenZeugnisDruck("Allgemeinbildende Fächer"));
+      IList<FachSchuelerNotenZeugnisDruck> liste = new List<FachSchuelerNotenZeugnisDruck>();      
       foreach (FachSchuelerNoten f in alleKurse)
       {
         if (rptName!="rptGefaehrdungen" || f.getRelevanteNote(zeitpunkt)<=4)
@@ -136,8 +135,7 @@ namespace diNo
       {
         if (!schueler.FPANoten[0].IsGesamtNull())
         {
-          FachSchuelerNotenZeugnisDruck f = new FachSchuelerNotenZeugnisDruck("Fachpraktische Ausbildung");
-          f.Hj1 = schueler.FPANoten[0].Gesamt.ToString("D2");
+          FachSchuelerNotenZeugnisDruck f = new FachSchuelerNotenZeugnisDruck(schueler.FPANoten);          
           liste.Add(f);
         }
       }
@@ -771,38 +769,57 @@ namespace diNo
 
   public class FachSchuelerNotenZeugnisDruck
   {
+    public string fachGruppe { get; private set; }
     public string fachBez { get; private set; }
     public string Hj1 { get; set; }  // Halbjahrespunktzahl 1.Hj
     public string Hj2 { get; set; }
     public string GE { get; set; } // Gesamtergebnis
 
-    public FachSchuelerNotenZeugnisDruck(string Ueberschrift)
-    {
-      fachBez = "<b>" + Ueberschrift + "</b>";
+    public FachSchuelerNotenZeugnisDruck(diNoDataSet.FpaDataTable f) 
+    {       
+      fachGruppe = "Profilfächer"; // Workaround: läuft unter dieser Gruppe, weil Gruppe gleich das Fach ist.
+      fachBez = "<b>Fachpraktische Ausbildung</b>";
+      Hj1 = FpaToZeugnis(f[0]);
+      Hj2 = FpaToZeugnis(f[1]);
     }
 
     public FachSchuelerNotenZeugnisDruck(FachSchuelerNoten s, string rptName)
     {
-      fachBez = s.getFach.Bezeichnung;
+      switch (s.getFach.Typ)
+      {
+        case FachTyp.Allgemein: fachGruppe = "Allgemeinbildende Fächer"; break;
+        case FachTyp.Profilfach: fachGruppe = "Profilfächer"; break;
+        default: fachGruppe = "Wahlpflichtfächer"; break;
+      }
+      fachBez = s.getFach.BezZeugnis;
       if (s.schueler.AlteFOBOSO())
       {
-        Hj1 = s.getRelevanteNote(Zeitpunkt.HalbjahrUndProbezeitFOS).ToString();
-        Hj2 = s.getRelevanteNote(Zeitpunkt.Jahresende).ToString();
+        Hj1 = relNoteToZeugnis(s.getRelevanteNote(Zeitpunkt.HalbjahrUndProbezeitFOS));
+        Hj2 = relNoteToZeugnis(s.getRelevanteNote(Zeitpunkt.Jahresende));
         return;
       }        
 
-      var hj1 = s.getHjLeistung(HjArt.Hj1);
-      var hj2 = s.getHjLeistung(HjArt.Hj2);
-      if (hj1 != null)
-      {
-        Hj1 = hj1.Punkte.ToString("D2");
-      }
-      if (hj2 != null)
-      {
-        Hj2 = hj2.Punkte.ToString();
-      }
-      hj2 = s.getHjLeistung(HjArt.GesErg);
-      if (hj2 != null) GE = hj2.Punkte.ToString();
+      Hj1 = HjToZeugnis(s.getHjLeistung(HjArt.Hj1));
+      Hj2 = HjToZeugnis(s.getHjLeistung(HjArt.Hj2));      
+      GE = HjToZeugnis(s.getHjLeistung(HjArt.GesErg));
+    }
+
+    private string relNoteToZeugnis(byte? t) // für AlteFOBOSO
+    {
+      if (t == null) return "--";
+      else return t.GetValueOrDefault().ToString("D2");
+    }
+
+    private string HjToZeugnis(HjLeistung t) // für NeueFOBOSO
+    {
+      if (t == null) return "--";
+      else return t.Punkte.ToString("D2");
+    }
+
+    private string FpaToZeugnis(diNoDataSet.FpaRow t)
+    {
+      if (t == null ||t.IsGesamtNull()) return "--";
+      else return t.Gesamt.ToString("D2");
     }
   }
 }

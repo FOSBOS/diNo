@@ -29,6 +29,7 @@ namespace diNo
         comboBoxZeitpunkt.SelectedIndex = konstanten.aktZeitpunkt-1;
         edBackupPfad.Text = konstanten.BackupPfad;
       }
+      cbNotendruck.SelectedIndex = 0;
     }
 
     public Schueler Schueler
@@ -51,16 +52,9 @@ namespace diNo
     {
       // Elternreihenfolge: usercontrol -> Tabpage -> pageControl -> Form Klassenansicht
       var obj =  ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
-      if (obj==null)
+      if (obj.Count==0)
         MessageBox.Show("Bitte zuerst einen Schüler oder eine/mehrere Klassen markieren.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
       return obj;
-    }
-
-    private void btnAbiergebnisse_Click(object sender, EventArgs e)
-    {
-      var obj = getSelectedObjects();
-      if (obj!=null)
-        new ReportSchuelerdruck(obj,"rptAbiergebnisse");
     }
 
     private void exportNoten_Click(object sender, EventArgs e)
@@ -111,13 +105,6 @@ namespace diNo
     private void btnKurseLehrer_Click(object sender, EventArgs e)
     {
       new AdminKursLehrerForm().ShowDialog();
-    }
-
-    private void btnNotenmitteilung_Click(object sender, EventArgs e)
-    {      
-      var obj = getSelectedObjects();
-      if (obj!=null)
-        new ReportSchuelerdruck(obj,"rptNotenmitteilungA5");
     }
 
     private void btnBerechtigungen_Click(object sender, EventArgs e)
@@ -194,15 +181,22 @@ namespace diNo
         ExportLehrer.Write(dia.FileName + "_Lehrer.csv");
       }
     }
-
-    private void btnGefaehrdungen_Click(object sender, EventArgs e)
+    
+    private void btnNotendruck_Click(object sender, EventArgs e)
     {
-       new ReportGefaehrdungen().Show();
-    }
-
-    private void btnZwischenzeugnis_Click(object sender, EventArgs e)
-    {
-      new ReportSchuelerdruck(getSelectedObjects(), "rptZwischenzeugnis");
+      if (cbNotendruck.SelectedIndex == 1)
+      {
+        new ReportGefaehrdungen().Show(); // Gefährdungen werden anders selektiert
+      }
+      else
+      {
+        var obj = getSelectedObjects();
+        if (obj.Count>0)
+        {         
+          new ReportSchuelerdruck(obj, "rpt" + cbNotendruck.Text);          
+        }
+          
+      }
     }
   }
 }

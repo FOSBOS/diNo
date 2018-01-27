@@ -201,7 +201,7 @@ namespace diNo
           }
         }
       }
-      else
+      else if (schueler!=null)
         res.Add(schueler); // nur aktuell ausgewählter Schüler
 
       return res;

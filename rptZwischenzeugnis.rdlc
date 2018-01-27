@@ -54,7 +54,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>ZWISCHENZEUGNIS</Value>
+                              <Value>=Fields!ZeugnisArt.Value</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
                                 <FontSize>20pt</FontSize>
@@ -171,27 +171,6 @@
                         </Paragraph>
                         <Paragraph>
                           <TextRuns>
-                            <TextRun>
-                              <Value>besucht im </Value>
-                              <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>=Fields!Schuljahr.Value</Value>
-                              <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value> die </Value>
-                              <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
-                              </Style>
-                            </TextRun>
                             <TextRun>
                               <Value>=Fields!KlasseARZeugnis.Value</Value>
                               <Style>
@@ -1630,6 +1609,10 @@
         </Field>
         <Field Name="Vorname">
           <DataField>Vorname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ZeugnisArt">
+          <DataField>ZeugnisArt</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

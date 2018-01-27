@@ -85,8 +85,19 @@ namespace diNo
             get { return this.data.Sortierung; }
         }
 
-        // solange Umwelt nicht ist, tut es auch aus Performancegründen das:
-        public bool IstSAPFach()
+        public FachTyp Typ
+        {
+          get { return (FachTyp)data.Typ; }
+        }
+
+        public string BezZeugnis
+        {
+          get { return (data.IsBezZeugnisNull() ? data.Bezeichnung : data.BezZeugnis); }
+        }
+
+
+    // solange Umwelt nicht ist, tut es auch aus Performancegründen das:
+    public bool IstSAPFach()
         {
           return data.IstSAP;
         }
@@ -226,4 +237,12 @@ public static class Faecherkanon
     }
 
 	}
+
+  public enum FachTyp
+  {
+    Allgemein = 0,
+    Profilfach = 1,
+    WPF = 2,
+    WPFohneNC = 3
+  }
 }

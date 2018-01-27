@@ -254,11 +254,12 @@
     <EmbeddedResource Include="rptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="rptKlassenliste.rdlc" />
     <EmbeddedResource Include="rptNotenbogen11.rdlc" />
-    <EmbeddedResource Include="rptNotenmitteilungA511.rdlc" />
-    <EmbeddedResource Include="rptNotenmitteilungA5.rdlc" />
+    <EmbeddedResource Include="rptNotenmitteilung11.rdlc" />
+    <EmbeddedResource Include="rptNotenmitteilung.rdlc" />
     <EmbeddedResource Include="subrptFPANoten.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11Klasse.rdlc" />
+    <EmbeddedResource Include="subrptZwischenzeugnisAlt.rdlc" />
     <EmbeddedResource Include="subrptZwischenzeugnis.rdlc" />
     <EmbeddedResource Include="subrptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="subrptNotenstufen.rdlc" />

@@ -31,11 +31,8 @@
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
       this.btnSelect = new System.Windows.Forms.Button();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
-      this.btnGefaehrdungen = new System.Windows.Forms.Button();
       this.btnKlassenliste = new System.Windows.Forms.Button();
       this.btnAttestpflicht = new System.Windows.Forms.Button();
-      this.btnNotenmitteilung = new System.Windows.Forms.Button();
-      this.btnAbiergebnisse = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
       this.btnExportSchuelerZeugnisprogramm = new System.Windows.Forms.Button();
       this.btnNotenNachWinSV = new System.Windows.Forms.Button();
@@ -60,7 +57,8 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
-      this.btnZwischenzeugnis = new System.Windows.Forms.Button();
+      this.btnNotendruck = new System.Windows.Forms.Button();
+      this.cbNotendruck = new System.Windows.Forms.ComboBox();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
@@ -91,12 +89,10 @@
       // 
       // groupBoxDrucken
       // 
-      this.groupBoxDrucken.Controls.Add(this.btnZwischenzeugnis);
-      this.groupBoxDrucken.Controls.Add(this.btnGefaehrdungen);
+      this.groupBoxDrucken.Controls.Add(this.cbNotendruck);
       this.groupBoxDrucken.Controls.Add(this.btnKlassenliste);
       this.groupBoxDrucken.Controls.Add(this.btnAttestpflicht);
-      this.groupBoxDrucken.Controls.Add(this.btnNotenmitteilung);
-      this.groupBoxDrucken.Controls.Add(this.btnAbiergebnisse);
+      this.groupBoxDrucken.Controls.Add(this.btnNotendruck);
       this.groupBoxDrucken.Location = new System.Drawing.Point(19, 28);
       this.groupBoxDrucken.Name = "groupBoxDrucken";
       this.groupBoxDrucken.Size = new System.Drawing.Size(250, 233);
@@ -104,19 +100,9 @@
       this.groupBoxDrucken.TabStop = false;
       this.groupBoxDrucken.Text = "Drucken";
       // 
-      // btnGefaehrdungen
-      // 
-      this.btnGefaehrdungen.Location = new System.Drawing.Point(21, 135);
-      this.btnGefaehrdungen.Name = "btnGefaehrdungen";
-      this.btnGefaehrdungen.Size = new System.Drawing.Size(132, 23);
-      this.btnGefaehrdungen.TabIndex = 4;
-      this.btnGefaehrdungen.Text = "Gefährdungen";
-      this.btnGefaehrdungen.UseVisualStyleBackColor = true;
-      this.btnGefaehrdungen.Click += new System.EventHandler(this.btnGefaehrdungen_Click);
-      // 
       // btnKlassenliste
       // 
-      this.btnKlassenliste.Location = new System.Drawing.Point(21, 77);
+      this.btnKlassenliste.Location = new System.Drawing.Point(21, 63);
       this.btnKlassenliste.Name = "btnKlassenliste";
       this.btnKlassenliste.Size = new System.Drawing.Size(132, 23);
       this.btnKlassenliste.TabIndex = 3;
@@ -133,26 +119,6 @@
       this.btnAttestpflicht.Text = "Attestpflicht";
       this.btnAttestpflicht.UseVisualStyleBackColor = true;
       this.btnAttestpflicht.Click += new System.EventHandler(this.btnAttestpflicht_Click);
-      // 
-      // btnNotenmitteilung
-      // 
-      this.btnNotenmitteilung.Location = new System.Drawing.Point(21, 21);
-      this.btnNotenmitteilung.Name = "btnNotenmitteilung";
-      this.btnNotenmitteilung.Size = new System.Drawing.Size(132, 23);
-      this.btnNotenmitteilung.TabIndex = 1;
-      this.btnNotenmitteilung.Text = "Notenmitteilung";
-      this.btnNotenmitteilung.UseVisualStyleBackColor = true;
-      this.btnNotenmitteilung.Click += new System.EventHandler(this.btnNotenmitteilung_Click);
-      // 
-      // btnAbiergebnisse
-      // 
-      this.btnAbiergebnisse.Location = new System.Drawing.Point(21, 48);
-      this.btnAbiergebnisse.Name = "btnAbiergebnisse";
-      this.btnAbiergebnisse.Size = new System.Drawing.Size(132, 23);
-      this.btnAbiergebnisse.TabIndex = 0;
-      this.btnAbiergebnisse.Text = "Abiergebnisse";
-      this.btnAbiergebnisse.UseVisualStyleBackColor = true;
-      this.btnAbiergebnisse.Click += new System.EventHandler(this.btnAbiergebnisse_Click);
       // 
       // groupBoxExport
       // 
@@ -406,15 +372,32 @@
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
       // 
-      // btnZwischenzeugnis
+      // btnNotendruck
       // 
-      this.btnZwischenzeugnis.Location = new System.Drawing.Point(21, 164);
-      this.btnZwischenzeugnis.Name = "btnZwischenzeugnis";
-      this.btnZwischenzeugnis.Size = new System.Drawing.Size(132, 23);
-      this.btnZwischenzeugnis.TabIndex = 5;
-      this.btnZwischenzeugnis.Text = "Zwischenzeugnis";
-      this.btnZwischenzeugnis.UseVisualStyleBackColor = true;
-      this.btnZwischenzeugnis.Click += new System.EventHandler(this.btnZwischenzeugnis_Click);
+      this.btnNotendruck.Location = new System.Drawing.Point(159, 17);
+      this.btnNotendruck.Name = "btnNotendruck";
+      this.btnNotendruck.Size = new System.Drawing.Size(69, 23);
+      this.btnNotendruck.TabIndex = 1;
+      this.btnNotendruck.Text = "drucken";
+      this.btnNotendruck.UseVisualStyleBackColor = true;
+      this.btnNotendruck.Click += new System.EventHandler(this.btnNotendruck_Click);
+      // 
+      // cbNotendruck
+      // 
+      this.cbNotendruck.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cbNotendruck.FormattingEnabled = true;
+      this.cbNotendruck.Items.AddRange(new object[] {
+            "Notenmitteilung",
+            "Gefährdungen",
+            "Abiergebnisse",
+            "Bescheinigung",
+            "Zwischenzeugnis",
+            "Jahreszeugnis",
+            "Abiturzeugnis"});
+      this.cbNotendruck.Location = new System.Drawing.Point(21, 19);
+      this.cbNotendruck.Name = "cbNotendruck";
+      this.cbNotendruck.Size = new System.Drawing.Size(132, 21);
+      this.cbNotendruck.TabIndex = 7;
       // 
       // UserControlAdministration
       // 
@@ -447,7 +430,6 @@
     private System.Windows.Forms.GroupBox groupBoxDrucken;
     private System.Windows.Forms.GroupBox groupBoxExport;
     private System.Windows.Forms.GroupBox groupBoxImport;
-    private System.Windows.Forms.Button btnAbiergebnisse;
     private System.Windows.Forms.Button exportNoten;
     private System.Windows.Forms.Button importNoten;
     private System.Windows.Forms.Button btnImportUnterricht;
@@ -455,7 +437,6 @@
     private System.Windows.Forms.Button btnImportKlassenleiter;
     private System.Windows.Forms.GroupBox groupBoxBerechtigungen;
     private System.Windows.Forms.Button btnKurseLehrer;
-    private System.Windows.Forms.Button btnNotenmitteilung;
     private System.Windows.Forms.Button btnBerechtigungen;
     private System.Windows.Forms.Button btnAttestpflicht;
     private System.Windows.Forms.GroupBox groupBoxEinstellungen;
@@ -474,7 +455,7 @@
     private System.Windows.Forms.Button btnKlassenliste;
     private System.Windows.Forms.Button btnSelect;
     private System.Windows.Forms.Button btnExportSchuelerZeugnisprogramm;
-    private System.Windows.Forms.Button btnGefaehrdungen;
-    private System.Windows.Forms.Button btnZwischenzeugnis;
+    private System.Windows.Forms.ComboBox cbNotendruck;
+    private System.Windows.Forms.Button btnNotendruck;
   }
 }
