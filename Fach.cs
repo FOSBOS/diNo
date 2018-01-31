@@ -82,7 +82,16 @@ namespace diNo
 
         public int Sortierung
         {
-            get { return this.data.Sortierung; }
+          get {
+            if (Typ == FachTyp.Profilfach)
+            {
+              return 1;//Zweig
+            }
+            else
+            {
+              return this.data.Sortierung;
+            }
+          }
         }
 
         public FachTyp Typ
