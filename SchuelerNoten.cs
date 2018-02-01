@@ -235,7 +235,7 @@ namespace diNo
         if (relevanteNote <4)
           Unterpunktungen += "Sem (" + relevanteNote +") ";
       }
-      Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2);
+      Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2, MidpointRounding.AwayFromZero);
       if (Unterpunktungen != "" && !schueler.AlteFOBOSO()) Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
     }
 

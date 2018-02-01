@@ -233,12 +233,12 @@ namespace diNo
         {
           if (Zweig == Zweig.Sozial)
           {
-            fpa.Vertiefung = (byte)Math.Round((2 * fpa.Vertiefung1 + fpa.Vertiefung2) / 3.0);
+            fpa.Vertiefung = (byte)Math.Round((2 * fpa.Vertiefung1 + fpa.Vertiefung2) / 3.0, MidpointRounding.AwayFromZero);
           }
           /*
           else if (Zweig == Zweig.Umwelt)
           {
-            fpa.Vertiefung = (byte)Math.Round((fpa.Vertiefung1 + fpa.Vertiefung2) / 2.0);
+            fpa.Vertiefung = (byte)Math.Round((fpa.Vertiefung1 + fpa.Vertiefung2) / 2.0, MidpointRounding.AwayFromZero);
           }*/
         }
         else if (Zweig == Zweig.Sozial /*||Zweig == Zweig.Umwelt*/)
@@ -260,7 +260,7 @@ namespace diNo
           if (fpa.Betrieb == 0 || fpa.Anleitung == 0 || fpa.Vertiefung == 0)
             fpa.Gesamt = 0;
           else
-            fpa.Gesamt = (byte)Math.Round((2 * fpa.Betrieb + fpa.Anleitung + fpa.Vertiefung) / 4.0);
+            fpa.Gesamt = (byte)Math.Round((2 * fpa.Betrieb + fpa.Anleitung + fpa.Vertiefung) / 4.0, MidpointRounding.AwayFromZero);
         }
         else
         {
