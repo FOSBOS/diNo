@@ -31,6 +31,7 @@ namespace diNo
     public Sperrtyp Sperre { get { return (Sperrtyp)globaleKonstanten.Sperre; } }
     public int aktZeitpunkt { get { return globaleKonstanten.aktZeitpunkt; } }
     public string BackupPfad { get { return globaleKonstanten.BackupPfad; } }
+    public DateTime Zeugnisdatum { get { return globaleKonstanten.Zeugnisdatum; } }
     public bool SiehtAlles{ get; private set; }
     public bool HatVerwaltungsrechte{ get; private set; }
 

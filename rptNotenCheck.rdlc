@@ -250,6 +250,7 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!meldung.Value</Value>
+                                  <MarkupType>HTML</MarkupType>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>

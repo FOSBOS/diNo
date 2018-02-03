@@ -44,9 +44,9 @@ namespace diNo
             Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
             alleFaecher.Add(new FachSchuelerNoten(schueler, fach));
           }
-
-          alleFaecher.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));
-          alleKurse.Sort((x,y) => x.getFach.Sortierung.CompareTo(y.getFach.Sortierung));
+          Zweig z = (schueler.AlteFOBOSO() ? Zweig.None : schueler.Zweig); // Profilfächer haben neue Sortierung
+          alleFaecher.Sort((x,y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
+          alleKurse.Sort((x,y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
 
           // Schnitt, Unterpunktungen etc. berechnen
           anzahlNoten = new int[7, 2];

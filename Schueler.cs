@@ -700,6 +700,8 @@ namespace diNo
       Status = Schuelerstatus.Abgemeldet;
       data.Austrittsdatum = when;
       Save();
+      if (Wiederholt())
+        AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen,"");
     }
 
     /// <summary>
@@ -884,10 +886,15 @@ namespace diNo
     }
 
     public int Alter()
+    {      
+      return Alter(DateTime.Now);
+    }
+    
+    public int Alter(DateTime datum)
     {
-      int jahre = DateTime.Now.Year - data.Geburtsdatum.Year;
+      int jahre = datum.Year - data.Geburtsdatum.Year;
       var dieserGebTag = data.Geburtsdatum.AddYears(jahre);
-      if (DateTime.Now.CompareTo(dieserGebTag) < 0) { jahre--; }
+      if (datum.CompareTo(dieserGebTag) < 0) { jahre--; }
       return jahre;
     }
 
@@ -919,19 +926,35 @@ namespace diNo
       }
     }
 
-    public string ErzeugeAnrede()
+    private string erzAnr(string anrede, string nachname)
     {
-      if (Data.Geschlecht == "M")
-        return "Sehr geehrter Herr " + Data.Name +",<br><br>";
+      if (anrede == "M" || anrede =="H")
+        return "Sehr geehrter Herr " + nachname + ",<br>";
       else
-        return "Sehr geehrte Frau " + Data.Name +",<br><br>";
+        return "Sehr geehrte Frau " + nachname + ",<br>";
+    }
+
+    public string ErzeugeAnrede(bool ElternadresseVerwenden)
+    {
+      if (ElternadresseVerwenden)
+      {
+        string s="";        
+        if (Data.AnredeEltern1 != "") s = erzAnr(Data.AnredeEltern1, data.NachnameEltern1);
+        if (Data.AnredeEltern2 != "") s += erzAnr(Data.AnredeEltern2, data.NachnameEltern2);
+        s += "<br>";
+        return s;
+      }
+      else
+      {
+        return erzAnr(Data.Geschlecht, Data.Name) + "<br>";
+      }
     }
 
     // Adresse von Minderjährigen mit den Eltern
     public string ErzeugeAdresse(bool ElternadresseVerwenden)
     {
       string s="";
-      if (ElternadresseVerwenden && Alter() < 18)
+      if (ElternadresseVerwenden)
       {
         // wenn beide Eltern getrennt gespeichert sind, muss die Anrede in dieselbe Zeile, sonst extra:
         s = getHerrnFrau(Data.AnredeEltern1) + (Data.AnredeEltern2 == "" ? "\n" :"") + Data.VornameEltern1 + " " + Data.NachnameEltern1 + "\n";
@@ -1010,7 +1033,8 @@ namespace diNo
     // Zeugnisbemerkung muss im Bericht als HTML eingestellt sein (re. Maus auf Datenfeld)
     public string Bemerkung { get; private set; }
     public string DNote { get; private set; }
-    public string FPAText { get; private set; } // nur für Notenmitteilung
+    public string FPAText { get; private set; } // nur für Notenmitteilung    
+    public bool IstVolljaehrig { get; private set; }
 
     public SchuelerDruck(Schueler s, string Berichtsname)
     {
@@ -1050,19 +1074,31 @@ namespace diNo
       Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
       ZeugnisArt = Berichtsname.Substring(3).ToUpper();
 
-      KlasseARZeugnis = (Berichtsname=="rptZwischenzeugnis" ? "besucht" : "besuchte") + " im Schuljahr " + Schuljahr;
-      KlasseARZeugnis += " die " + (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse ? "Vorklasse" : "Jahrgangstufe " + ((int)s.getKlasse.Jahrgangsstufe))
-        + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
-      KlasseARZeugnis += ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s) + " in der Klasse " + s.getKlasse.Bezeichnung;
+      KlasseARZeugnis = (Berichtsname=="rptZwischenzeugnis" ? "besucht" : "besuchte") + " im " + Schuljahr;
+      KlasseARZeugnis += " die " + s.getKlasse.JahrgangsstufeZeugnis + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
+      if (s.Data.Ausbildungsrichtung!="V") // IV idR. ohne AR
+        KlasseARZeugnis += ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s);
+      KlasseARZeugnis += " in der Klasse " + s.getKlasse.Bezeichnung;
       if (Berichtsname == "rptBescheinigung")
         KlasseARZeugnis += "\nund ist heute aus der Schule ausgetreten. \n\nIm laufenden Schulhalbjahr erzielte " + s.getErSie() + " bis zum Austritt folgende Leistungen:";
       else
         KlasseARZeugnis += ".";
 
-      DatumZeugnis = "23.02.2018";
+      DatumZeugnis = Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy");
 
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
-      Bemerkung = "Bemerkungen: ---";
+      Bemerkung = "Bemerkungen:";
+      if (!s.Data.IsZeugnisbemerkungNull())
+        Bemerkung += "<br>" + s.Data.Zeugnisbemerkung;
+      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse)
+        Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden.";
+      if (s.IsLegastheniker)
+        Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet. In den Fremdsprachen wurden die mündlichen Leistungen stärker gewichtet.";
+      if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
+        Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
+      Bemerkung += " ---";
+      IstVolljaehrig = s.Alter(Zugriff.Instance.Zeugnisdatum) >= 18 || Berichtsname != "rptZwischenzeugnis";
+
 
       if (jg == Jahrgangsstufe.Elf)
       {

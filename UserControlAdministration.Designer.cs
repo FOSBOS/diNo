@@ -31,8 +31,10 @@
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
       this.btnSelect = new System.Windows.Forms.Button();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
+      this.cbNotendruck = new System.Windows.Forms.ComboBox();
       this.btnKlassenliste = new System.Windows.Forms.Button();
       this.btnAttestpflicht = new System.Windows.Forms.Button();
+      this.btnNotendruck = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
       this.btnExportSchuelerZeugnisprogramm = new System.Windows.Forms.Button();
       this.btnNotenNachWinSV = new System.Windows.Forms.Button();
@@ -48,6 +50,8 @@
       this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.btnKurseLehrer = new System.Windows.Forms.Button();
       this.groupBoxEinstellungen = new System.Windows.Forms.GroupBox();
+      this.lbZeugnis = new System.Windows.Forms.Label();
+      this.dateZeugnis = new System.Windows.Forms.DateTimePicker();
       this.edBackupPfad = new System.Windows.Forms.TextBox();
       this.lbBackupPfad = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
@@ -57,8 +61,6 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
-      this.btnNotendruck = new System.Windows.Forms.Button();
-      this.cbNotendruck = new System.Windows.Forms.ComboBox();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
@@ -100,6 +102,23 @@
       this.groupBoxDrucken.TabStop = false;
       this.groupBoxDrucken.Text = "Drucken";
       // 
+      // cbNotendruck
+      // 
+      this.cbNotendruck.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cbNotendruck.FormattingEnabled = true;
+      this.cbNotendruck.Items.AddRange(new object[] {
+            "Notenmitteilung",
+            "Gefährdungen",
+            "Abiergebnisse",
+            "Bescheinigung",
+            "Zwischenzeugnis",
+            "Jahreszeugnis",
+            "Abiturzeugnis"});
+      this.cbNotendruck.Location = new System.Drawing.Point(21, 19);
+      this.cbNotendruck.Name = "cbNotendruck";
+      this.cbNotendruck.Size = new System.Drawing.Size(132, 21);
+      this.cbNotendruck.TabIndex = 7;
+      // 
       // btnKlassenliste
       // 
       this.btnKlassenliste.Location = new System.Drawing.Point(21, 63);
@@ -119,6 +138,16 @@
       this.btnAttestpflicht.Text = "Attestpflicht";
       this.btnAttestpflicht.UseVisualStyleBackColor = true;
       this.btnAttestpflicht.Click += new System.EventHandler(this.btnAttestpflicht_Click);
+      // 
+      // btnNotendruck
+      // 
+      this.btnNotendruck.Location = new System.Drawing.Point(159, 17);
+      this.btnNotendruck.Name = "btnNotendruck";
+      this.btnNotendruck.Size = new System.Drawing.Size(69, 23);
+      this.btnNotendruck.TabIndex = 1;
+      this.btnNotendruck.Text = "drucken";
+      this.btnNotendruck.UseVisualStyleBackColor = true;
+      this.btnNotendruck.Click += new System.EventHandler(this.btnNotendruck_Click);
       // 
       // groupBoxExport
       // 
@@ -270,6 +299,8 @@
       // 
       // groupBoxEinstellungen
       // 
+      this.groupBoxEinstellungen.Controls.Add(this.lbZeugnis);
+      this.groupBoxEinstellungen.Controls.Add(this.dateZeugnis);
       this.groupBoxEinstellungen.Controls.Add(this.edBackupPfad);
       this.groupBoxEinstellungen.Controls.Add(this.lbBackupPfad);
       this.groupBoxEinstellungen.Controls.Add(this.label2);
@@ -285,9 +316,26 @@
       this.groupBoxEinstellungen.TabStop = false;
       this.groupBoxEinstellungen.Text = "Globale Einstellungen";
       // 
+      // lbZeugnis
+      // 
+      this.lbZeugnis.AutoSize = true;
+      this.lbZeugnis.Location = new System.Drawing.Point(156, 28);
+      this.lbZeugnis.Name = "lbZeugnis";
+      this.lbZeugnis.Size = new System.Drawing.Size(74, 13);
+      this.lbZeugnis.TabIndex = 28;
+      this.lbZeugnis.Text = "Zeugnisdatum";
+      // 
+      // dateZeugnis
+      // 
+      this.dateZeugnis.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+      this.dateZeugnis.Location = new System.Drawing.Point(133, 47);
+      this.dateZeugnis.Name = "dateZeugnis";
+      this.dateZeugnis.Size = new System.Drawing.Size(97, 20);
+      this.dateZeugnis.TabIndex = 27;
+      // 
       // edBackupPfad
       // 
-      this.edBackupPfad.Location = new System.Drawing.Point(16, 158);
+      this.edBackupPfad.Location = new System.Drawing.Point(16, 166);
       this.edBackupPfad.Name = "edBackupPfad";
       this.edBackupPfad.Size = new System.Drawing.Size(217, 20);
       this.edBackupPfad.TabIndex = 17;
@@ -295,7 +343,7 @@
       // lbBackupPfad
       // 
       this.lbBackupPfad.AutoSize = true;
-      this.lbBackupPfad.Location = new System.Drawing.Point(13, 142);
+      this.lbBackupPfad.Location = new System.Drawing.Point(13, 150);
       this.lbBackupPfad.Name = "lbBackupPfad";
       this.lbBackupPfad.Size = new System.Drawing.Size(65, 13);
       this.lbBackupPfad.TabIndex = 16;
@@ -304,7 +352,7 @@
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(17, 92);
+      this.label2.Location = new System.Drawing.Point(17, 103);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(95, 13);
       this.label2.TabIndex = 14;
@@ -322,7 +370,7 @@
             "2. PA",
             "3. PA",
             "Jahresende"});
-      this.comboBoxZeitpunkt.Location = new System.Drawing.Point(16, 108);
+      this.comboBoxZeitpunkt.Location = new System.Drawing.Point(16, 119);
       this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";
       this.comboBoxZeitpunkt.Size = new System.Drawing.Size(217, 24);
       this.comboBoxZeitpunkt.TabIndex = 13;
@@ -330,17 +378,17 @@
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(13, 23);
+      this.label1.Location = new System.Drawing.Point(13, 18);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(153, 13);
+      this.label1.Size = new System.Drawing.Size(94, 26);
       this.label1.TabIndex = 3;
-      this.label1.Text = "Schuljahresbeginn (Jahreszahl)";
+      this.label1.Text = "Schuljahresbeginn\r\n(Jahreszahl)";
       // 
       // edSchuljahr
       // 
-      this.edSchuljahr.Location = new System.Drawing.Point(16, 39);
+      this.edSchuljahr.Location = new System.Drawing.Point(16, 47);
       this.edSchuljahr.Name = "edSchuljahr";
-      this.edSchuljahr.Size = new System.Drawing.Size(100, 20);
+      this.edSchuljahr.Size = new System.Drawing.Size(78, 20);
       this.edSchuljahr.TabIndex = 2;
       // 
       // btnSave
@@ -356,7 +404,7 @@
       // chkSperre
       // 
       this.chkSperre.AutoSize = true;
-      this.chkSperre.Location = new System.Drawing.Point(16, 68);
+      this.chkSperre.Location = new System.Drawing.Point(16, 79);
       this.chkSperre.Name = "chkSperre";
       this.chkSperre.Size = new System.Drawing.Size(165, 17);
       this.chkSperre.TabIndex = 0;
@@ -371,33 +419,6 @@
       this.lblStatus.Size = new System.Drawing.Size(77, 13);
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
-      // 
-      // btnNotendruck
-      // 
-      this.btnNotendruck.Location = new System.Drawing.Point(159, 17);
-      this.btnNotendruck.Name = "btnNotendruck";
-      this.btnNotendruck.Size = new System.Drawing.Size(69, 23);
-      this.btnNotendruck.TabIndex = 1;
-      this.btnNotendruck.Text = "drucken";
-      this.btnNotendruck.UseVisualStyleBackColor = true;
-      this.btnNotendruck.Click += new System.EventHandler(this.btnNotendruck_Click);
-      // 
-      // cbNotendruck
-      // 
-      this.cbNotendruck.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.cbNotendruck.FormattingEnabled = true;
-      this.cbNotendruck.Items.AddRange(new object[] {
-            "Notenmitteilung",
-            "Gefährdungen",
-            "Abiergebnisse",
-            "Bescheinigung",
-            "Zwischenzeugnis",
-            "Jahreszeugnis",
-            "Abiturzeugnis"});
-      this.cbNotendruck.Location = new System.Drawing.Point(21, 19);
-      this.cbNotendruck.Name = "cbNotendruck";
-      this.cbNotendruck.Size = new System.Drawing.Size(132, 21);
-      this.cbNotendruck.TabIndex = 7;
       // 
       // UserControlAdministration
       // 
@@ -457,5 +478,7 @@
     private System.Windows.Forms.Button btnExportSchuelerZeugnisprogramm;
     private System.Windows.Forms.ComboBox cbNotendruck;
     private System.Windows.Forms.Button btnNotendruck;
+    private System.Windows.Forms.Label lbZeugnis;
+    private System.Windows.Forms.DateTimePicker dateZeugnis;
   }
 }

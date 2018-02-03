@@ -322,7 +322,7 @@ namespace diNo
 
           if (kurs.schreibtKA && kurzarbeitenCount ==0)
           {
-            contr.Add(kurs, toText(kurzarbeitenCount, "", "Kurzarbeit"));
+            contr.Add(kurs, toText(kurzarbeitenCount, "", "Kurzarbeite"));
           }
 
           if ((!kurs.schreibtKA && muendlicheCount < 3) || muendlicheCount == 0)
@@ -540,9 +540,8 @@ namespace diNo
         n.SetZeitpunkt(contr.zeitpunkt);
 
         // Integrationsklasse: dort gibt es kein Bestehen...
-        if (schueler.getKlasse.Bezeichnung=="IntVk")
-        {
-          n.AnzahlNoten(6); // nur zur Initialisierung
+        if (schueler.getKlasse.Bezeichnung=="IV")
+        {          
           return;
         }
 
@@ -551,13 +550,14 @@ namespace diNo
           if (n.HatNichtBestanden())
           {
             contr.Add(Vorkommnisart.starkeGefaehrdungsmitteilung,n.Unterpunktungen,true);
-          }
-          else if (n.anz4P > 1 || n.AnzahlNoten(5) > 0)
+            if (!schueler.Data.IsProbezeitBisNull() && (schueler.Data.ProbezeitBis > DateTime.Parse("01.02." + (Zugriff.Instance.Schuljahr + 1))))
+              contr.Add(null, "<b>Probezeit nicht bestanden</b>", true);
+        }
+        else if (n.anz4P > 1 || n.AnzahlNoten(5) > 0)
           { 
             contr.Add(Vorkommnisart.BeiWeiteremAbsinken,n.Unterpunktungen,true);
           }
 
-          if (schueler.Data.IsProbezeitBisNull() || !(schueler.Data.ProbezeitBis > DateTime.Parse("01.02." +  (Zugriff.Instance.Schuljahr+1))))
             return; // bei Schülern ohne PZ geht es zum Halbjahr nur um Gefährdungen
         }
         else if (contr.zeitpunkt == Zeitpunkt.ErstePA)

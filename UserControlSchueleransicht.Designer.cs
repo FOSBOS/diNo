@@ -80,6 +80,11 @@ namespace diNo
       this.dateTimeAustritt = new System.Windows.Forms.DateTimePicker();
       this.dateTimeProbezeit = new System.Windows.Forms.DateTimePicker();
       this.panelSekretariat = new System.Windows.Forms.Panel();
+      this.pnlAdmin = new System.Windows.Forms.Panel();
+      this.textBoxAR = new System.Windows.Forms.TextBox();
+      this.label20 = new System.Windows.Forms.Label();
+      this.textBoxID = new System.Windows.Forms.TextBox();
+      this.labelID = new System.Windows.Forms.Label();
       this.checkBoxLegasthenie = new System.Windows.Forms.CheckBox();
       this.textBoxRufname = new System.Windows.Forms.TextBox();
       this.label19 = new System.Windows.Forms.Label();
@@ -89,15 +94,12 @@ namespace diNo
       this.label7 = new System.Windows.Forms.Label();
       this.btnResetProbezeit = new System.Windows.Forms.Button();
       this.labelAustrittHinweis = new System.Windows.Forms.Label();
+      this.textBoxZeugnisbemerkung = new System.Windows.Forms.TextBox();
+      this.labelZeugnisbemerkung = new System.Windows.Forms.Label();
       this.numAndereFremdspr2Note = new diNo.NumericUpDownNullable();
-      this.pnlAdmin = new System.Windows.Forms.Panel();
-      this.textBoxAR = new System.Windows.Forms.TextBox();
-      this.label20 = new System.Windows.Forms.Label();
-      this.textBoxID = new System.Windows.Forms.TextBox();
-      this.labelID = new System.Windows.Forms.Label();
       this.panelSekretariat.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
       this.pnlAdmin.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
       this.SuspendLayout();
       // 
       // lblAdresse
@@ -148,6 +150,7 @@ namespace diNo
       // 
       // textBoxGeburtsdatum
       // 
+      this.textBoxGeburtsdatum.Enabled = false;
       this.textBoxGeburtsdatum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxGeburtsdatum.Location = new System.Drawing.Point(27, 252);
       this.textBoxGeburtsdatum.Name = "textBoxGeburtsdatum";
@@ -166,6 +169,7 @@ namespace diNo
       // 
       // textBoxGeburtsort
       // 
+      this.textBoxGeburtsort.Enabled = false;
       this.textBoxGeburtsort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxGeburtsort.Location = new System.Drawing.Point(118, 252);
       this.textBoxGeburtsort.Name = "textBoxGeburtsort";
@@ -246,7 +250,7 @@ namespace diNo
       this.textBoxVorigeSchule.Location = new System.Drawing.Point(318, 291);
       this.textBoxVorigeSchule.Multiline = true;
       this.textBoxVorigeSchule.Name = "textBoxVorigeSchule";
-      this.textBoxVorigeSchule.Size = new System.Drawing.Size(240, 60);
+      this.textBoxVorigeSchule.Size = new System.Drawing.Size(240, 34);
       this.textBoxVorigeSchule.TabIndex = 21;
       // 
       // labelAdresseEltern
@@ -261,6 +265,7 @@ namespace diNo
       // 
       // textBoxAdresseEltern
       // 
+      this.textBoxAdresseEltern.Enabled = false;
       this.textBoxAdresseEltern.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxAdresseEltern.Location = new System.Drawing.Point(27, 291);
       this.textBoxAdresseEltern.Multiline = true;
@@ -454,7 +459,7 @@ namespace diNo
       // 
       this.textBoxDNote.Enabled = false;
       this.textBoxDNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxDNote.Location = new System.Drawing.Point(453, 380);
+      this.textBoxDNote.Location = new System.Drawing.Point(453, 393);
       this.textBoxDNote.Name = "textBoxDNote";
       this.textBoxDNote.Size = new System.Drawing.Size(47, 20);
       this.textBoxDNote.TabIndex = 22;
@@ -463,7 +468,7 @@ namespace diNo
       // 
       this.label12.AutoSize = true;
       this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label12.Location = new System.Drawing.Point(318, 380);
+      this.label12.Location = new System.Drawing.Point(318, 393);
       this.label12.Name = "label12";
       this.label12.Size = new System.Drawing.Size(99, 13);
       this.label12.TabIndex = 55;
@@ -473,7 +478,7 @@ namespace diNo
       // 
       this.label13.AutoSize = true;
       this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label13.Location = new System.Drawing.Point(318, 408);
+      this.label13.Location = new System.Drawing.Point(318, 421);
       this.label13.Name = "label13";
       this.label13.Size = new System.Drawing.Size(139, 13);
       this.label13.TabIndex = 57;
@@ -483,7 +488,7 @@ namespace diNo
       // 
       this.label14.AutoSize = true;
       this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label14.Location = new System.Drawing.Point(318, 424);
+      this.label14.Location = new System.Drawing.Point(318, 437);
       this.label14.Name = "label14";
       this.label14.Size = new System.Drawing.Size(69, 13);
       this.label14.TabIndex = 59;
@@ -492,7 +497,7 @@ namespace diNo
       // textBoxAndereFremdspr2Text
       // 
       this.textBoxAndereFremdspr2Text.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxAndereFremdspr2Text.Location = new System.Drawing.Point(393, 440);
+      this.textBoxAndereFremdspr2Text.Location = new System.Drawing.Point(393, 453);
       this.textBoxAndereFremdspr2Text.Name = "textBoxAndereFremdspr2Text";
       this.textBoxAndereFremdspr2Text.Size = new System.Drawing.Size(165, 20);
       this.textBoxAndereFremdspr2Text.TabIndex = 25;
@@ -501,7 +506,7 @@ namespace diNo
       // 
       this.label15.AutoSize = true;
       this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label15.Location = new System.Drawing.Point(390, 424);
+      this.label15.Location = new System.Drawing.Point(390, 437);
       this.label15.Name = "label15";
       this.label15.Size = new System.Drawing.Size(61, 13);
       this.label15.TabIndex = 61;
@@ -511,7 +516,7 @@ namespace diNo
       // 
       this.label16.AutoSize = true;
       this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label16.Location = new System.Drawing.Point(509, 365);
+      this.label16.Location = new System.Drawing.Point(509, 378);
       this.label16.Name = "label16";
       this.label16.Size = new System.Drawing.Size(52, 13);
       this.label16.TabIndex = 63;
@@ -521,7 +526,7 @@ namespace diNo
       // 
       this.textBoxDNoteAllg.Enabled = false;
       this.textBoxDNoteAllg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxDNoteAllg.Location = new System.Drawing.Point(511, 380);
+      this.textBoxDNoteAllg.Location = new System.Drawing.Point(511, 393);
       this.textBoxDNoteAllg.Name = "textBoxDNoteAllg";
       this.textBoxDNoteAllg.Size = new System.Drawing.Size(47, 20);
       this.textBoxDNoteAllg.TabIndex = 23;
@@ -530,7 +535,7 @@ namespace diNo
       // 
       this.label17.AutoSize = true;
       this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label17.Location = new System.Drawing.Point(450, 364);
+      this.label17.Location = new System.Drawing.Point(450, 377);
       this.label17.Name = "label17";
       this.label17.Size = new System.Drawing.Size(49, 13);
       this.label17.TabIndex = 65;
@@ -540,7 +545,7 @@ namespace diNo
       // 
       this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.btnSave.Image = global::diNo.Properties.Resources.Save;
-      this.btnSave.Location = new System.Drawing.Point(518, 466);
+      this.btnSave.Location = new System.Drawing.Point(518, 479);
       this.btnSave.Name = "btnSave";
       this.btnSave.Size = new System.Drawing.Size(40, 40);
       this.btnSave.TabIndex = 26;
@@ -580,6 +585,56 @@ namespace diNo
       this.panelSekretariat.Size = new System.Drawing.Size(260, 140);
       this.panelSekretariat.TabIndex = 72;
       this.panelSekretariat.Visible = false;
+      // 
+      // pnlAdmin
+      // 
+      this.pnlAdmin.Controls.Add(this.textBoxAR);
+      this.pnlAdmin.Controls.Add(this.label20);
+      this.pnlAdmin.Controls.Add(this.textBoxID);
+      this.pnlAdmin.Controls.Add(this.labelID);
+      this.pnlAdmin.Location = new System.Drawing.Point(150, 40);
+      this.pnlAdmin.Name = "pnlAdmin";
+      this.pnlAdmin.Size = new System.Drawing.Size(114, 83);
+      this.pnlAdmin.TabIndex = 75;
+      this.pnlAdmin.Visible = false;
+      // 
+      // textBoxAR
+      // 
+      this.textBoxAR.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxAR.Location = new System.Drawing.Point(3, 19);
+      this.textBoxAR.MaxLength = 1;
+      this.textBoxAR.Name = "textBoxAR";
+      this.textBoxAR.Size = new System.Drawing.Size(88, 20);
+      this.textBoxAR.TabIndex = 85;
+      // 
+      // label20
+      // 
+      this.label20.AutoSize = true;
+      this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label20.Location = new System.Drawing.Point(0, 5);
+      this.label20.Name = "label20";
+      this.label20.Size = new System.Drawing.Size(102, 13);
+      this.label20.TabIndex = 86;
+      this.label20.Text = "Ausbildungsrichtung";
+      // 
+      // textBoxID
+      // 
+      this.textBoxID.Enabled = false;
+      this.textBoxID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxID.Location = new System.Drawing.Point(3, 56);
+      this.textBoxID.Name = "textBoxID";
+      this.textBoxID.Size = new System.Drawing.Size(88, 20);
+      this.textBoxID.TabIndex = 83;
+      // 
+      // labelID
+      // 
+      this.labelID.AutoSize = true;
+      this.labelID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.labelID.Location = new System.Drawing.Point(0, 42);
+      this.labelID.Name = "labelID";
+      this.labelID.Size = new System.Drawing.Size(57, 13);
+      this.labelID.TabIndex = 84;
+      this.labelID.Text = "Schüler-ID";
       // 
       // checkBoxLegasthenie
       // 
@@ -669,10 +724,28 @@ namespace diNo
       this.labelAustrittHinweis.Text = "Bei Austritt erst Status ändern!";
       this.labelAustrittHinweis.Visible = false;
       // 
+      // textBoxZeugnisbemerkung
+      // 
+      this.textBoxZeugnisbemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxZeugnisbemerkung.Location = new System.Drawing.Point(318, 344);
+      this.textBoxZeugnisbemerkung.Name = "textBoxZeugnisbemerkung";
+      this.textBoxZeugnisbemerkung.Size = new System.Drawing.Size(240, 20);
+      this.textBoxZeugnisbemerkung.TabIndex = 76;
+      // 
+      // labelZeugnisbemerkung
+      // 
+      this.labelZeugnisbemerkung.AutoSize = true;
+      this.labelZeugnisbemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.labelZeugnisbemerkung.Location = new System.Drawing.Point(318, 328);
+      this.labelZeugnisbemerkung.Name = "labelZeugnisbemerkung";
+      this.labelZeugnisbemerkung.Size = new System.Drawing.Size(153, 13);
+      this.labelZeugnisbemerkung.TabIndex = 75;
+      this.labelZeugnisbemerkung.Text = "zusätzliche Zeugnisbemerkung";
+      // 
       // numAndereFremdspr2Note
       // 
       this.numAndereFremdspr2Note.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numAndereFremdspr2Note.Location = new System.Drawing.Point(321, 440);
+      this.numAndereFremdspr2Note.Location = new System.Drawing.Point(321, 453);
       this.numAndereFremdspr2Note.Maximum = new decimal(new int[] {
             15,
             0,
@@ -683,61 +756,13 @@ namespace diNo
       this.numAndereFremdspr2Note.TabIndex = 24;
       this.numAndereFremdspr2Note.Value = null;
       // 
-      // pnlAdmin
-      // 
-      this.pnlAdmin.Controls.Add(this.textBoxAR);
-      this.pnlAdmin.Controls.Add(this.label20);
-      this.pnlAdmin.Controls.Add(this.textBoxID);
-      this.pnlAdmin.Controls.Add(this.labelID);
-      this.pnlAdmin.Location = new System.Drawing.Point(150, 40);
-      this.pnlAdmin.Name = "pnlAdmin";
-      this.pnlAdmin.Size = new System.Drawing.Size(114, 83);
-      this.pnlAdmin.TabIndex = 75;
-      this.pnlAdmin.Visible = false;
-      // 
-      // textBoxAR
-      // 
-      this.textBoxAR.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxAR.Location = new System.Drawing.Point(3, 19);
-      this.textBoxAR.MaxLength = 1;
-      this.textBoxAR.Name = "textBoxAR";
-      this.textBoxAR.Size = new System.Drawing.Size(88, 20);
-      this.textBoxAR.TabIndex = 85;
-      // 
-      // label20
-      // 
-      this.label20.AutoSize = true;
-      this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label20.Location = new System.Drawing.Point(0, 5);
-      this.label20.Name = "label20";
-      this.label20.Size = new System.Drawing.Size(102, 13);
-      this.label20.TabIndex = 86;
-      this.label20.Text = "Ausbildungsrichtung";
-      // 
-      // textBoxID
-      // 
-      this.textBoxID.Enabled = false;
-      this.textBoxID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxID.Location = new System.Drawing.Point(3, 56);
-      this.textBoxID.Name = "textBoxID";
-      this.textBoxID.Size = new System.Drawing.Size(88, 20);
-      this.textBoxID.TabIndex = 83;
-      // 
-      // labelID
-      // 
-      this.labelID.AutoSize = true;
-      this.labelID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelID.Location = new System.Drawing.Point(0, 42);
-      this.labelID.Name = "labelID";
-      this.labelID.Size = new System.Drawing.Size(57, 13);
-      this.labelID.TabIndex = 84;
-      this.labelID.Text = "Schüler-ID";
-      // 
       // UserControlSchueleransicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
+      this.Controls.Add(this.textBoxZeugnisbemerkung);
+      this.Controls.Add(this.labelZeugnisbemerkung);
       this.Controls.Add(this.labelAustrittHinweis);
       this.Controls.Add(this.btnResetProbezeit);
       this.Controls.Add(this.panelSekretariat);
@@ -795,9 +820,9 @@ namespace diNo
       this.Size = new System.Drawing.Size(641, 573);
       this.panelSekretariat.ResumeLayout(false);
       this.panelSekretariat.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).EndInit();
       this.pnlAdmin.ResumeLayout(false);
       this.pnlAdmin.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -869,5 +894,7 @@ namespace diNo
     private System.Windows.Forms.Label label20;
     private System.Windows.Forms.TextBox textBoxID;
     private System.Windows.Forms.Label labelID;
+    private System.Windows.Forms.TextBox textBoxZeugnisbemerkung;
+    private System.Windows.Forms.Label labelZeugnisbemerkung;
   }
 }

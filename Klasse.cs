@@ -28,8 +28,7 @@ namespace diNo
     Sozial = 1,
     Technik = 2,
     Wirtschaft = 3,
-    Umwelt = 4,
-    ALLE = 15
+    Umwelt = 4    
   }
 
   public class Klasse :  IRepositoryObject
@@ -90,6 +89,17 @@ namespace diNo
         return Faecherkanon.GetJahrgangsstufe(data.Bezeichnung);
       }
     }
+
+    public string JahrgangsstufeZeugnis
+    {
+      get
+      {
+        if (Bezeichnung == "IV") return "Integrationsvorklasse";
+        if (Jahrgangsstufe == Jahrgangsstufe.Vorklasse) return "Vorklasse";
+        return "Jahrgangstufe " + ((int)Jahrgangsstufe);
+      }
+    }    
+
 
     public Schulart Schulart
     {

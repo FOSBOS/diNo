@@ -171,17 +171,17 @@ namespace diNo
         {
           if (s.hatVorkommnis(Vorkommnisart.BeiWeiteremAbsinken) || s.hatVorkommnis(Vorkommnisart.starkeGefaehrdungsmitteilung))
           {
-            var b = new BriefDaten(s, false, true, true);
+            var b = new BriefDaten(s, BriefTyp.Gefaehrdung);
             if (s.hatVorkommnis(Vorkommnisart.BeiWeiteremAbsinken))
               b.Inhalt = "Bei weiterem Absinken der Leistungen ist das Erreichen des Klassenziels gefährdet.";
             else
               b.Inhalt = "Das Erreichen des Klassenziels ist sehr gefährdet.";
-            if (s.Wiederholt())
+            if (s.hatVorkommnis(Vorkommnisart.GefahrDerAbweisung))
               b.Inhalt += "\nDie Jahrgangstufe darf nicht mehr wiederholt werden.";
 
             b.Inhalt2 = s.VornameName + " hat ";
             if (!s.AlteFOBOSO()) b.Inhalt2 += "bei einem Punktedurchschnitt von " + String.Format("{0:0.00}", s.getNoten.Punkteschnitt) + " ";
-            b.Inhalt2 += "nur die angeführten Leistungen erzielt:";
+            b.Inhalt2 += "in den folgenden Fächern nur die angeführten Leistungen erzielt:";
             bindingDataSource.Add(b);
           }
 

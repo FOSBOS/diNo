@@ -31,7 +31,6 @@ namespace diNo
       {
         NotenCheckModusDict.Add(NotenCheckModus.VorkommnisseErzeugen,"Vorkommnisse erzeugen");
         NotenCheckModusDict.Add(NotenCheckModus.BerechnungenSpeichern,"Berechnungen speichern");
-        lbZeugnis.Visible = true; dateZeugnis.Visible = true;
       }   
       comboBoxCheckModus.BeginUpdate();
       comboBoxCheckModus.DataSource = NotenCheckModusDict.ToList();
@@ -71,7 +70,7 @@ namespace diNo
 
     private void StarteNotenCheck()
     {                        
-      var contr = new NotenCheckController(GetZeitpunkt(),(NotenCheckModus)comboBoxCheckModus.SelectedValue, dateZeugnis.Value);
+      var contr = new NotenCheckController(GetZeitpunkt(),(NotenCheckModus)comboBoxCheckModus.SelectedValue);
       progressBarChecks.Maximum = contr.AnzahlSchueler;
       if (contr.zuPruefendeKlassen.Count == 0)
       {

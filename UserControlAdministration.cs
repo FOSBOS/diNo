@@ -28,6 +28,7 @@ namespace diNo
         edSchuljahr.Text = konstanten.Schuljahr.ToString();
         comboBoxZeitpunkt.SelectedIndex = konstanten.aktZeitpunkt-1;
         edBackupPfad.Text = konstanten.BackupPfad;
+        dateZeugnis.Value = konstanten.Zeugnisdatum;
       }
       cbNotendruck.SelectedIndex = 0;
     }
@@ -116,10 +117,12 @@ namespace diNo
     {      
       if (schueler != null)
       {        
-        var b = new BriefDaten(schueler, true, true, false);
+        var b = new BriefDaten(schueler, BriefTyp.Attestpflicht);
         b.Betreff = "Attestpflicht";
-        b.Inhalt += "da sich im laufenden Schuljahr bei Ihnen die krankheitsbedingten Schulversäumnisse häufen, ";
-        b.Inhalt += "werden Sie gemäß § 20 (2) BaySchO dazu verpflichtet, künftig jede weitere krankheitsbedingte Abwesenheit ";
+        b.Inhalt += "da sich im laufenden Schuljahr bei ";
+        if (b.IstU18) b.Inhalt += (schueler.Data.Geschlecht == "M" ? "Ihrem Sohn " : "Ihrer Tochter ") + schueler.benutzterVorname;
+        else b.Inhalt += "Ihnen";
+        b.Inhalt += " die krankheitsbedingten Schulversäumnisse häufen, werden Sie gemäß § 20 (2) BaySchO dazu verpflichtet, künftig jede weitere krankheitsbedingte Abwesenheit ";
         b.Inhalt += "durch ein aktuelles ärztliches Zeugnis (Schulunfähigkeitsbescheinigung) zu belegen.<br><br>";
         b.Inhalt += "Wird das Zeugnis nicht unverzüglich vorgelegt, so gilt das Fernbleiben als unentschuldigt.";                        
         b.Unterschrift2 = "Helga Traut, OStDin\nSchulleiterin";
@@ -135,6 +138,7 @@ namespace diNo
       konstanten.Schuljahr = int.Parse(edSchuljahr.Text);
       konstanten.aktZeitpunkt = comboBoxZeitpunkt.SelectedIndex+1;
       konstanten.BackupPfad = edBackupPfad.Text;
+      konstanten.Zeugnisdatum = dateZeugnis.Value;
       (new GlobaleKonstantenTableAdapter()).Update(konstanten);
     }
 

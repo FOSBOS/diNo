@@ -22,13 +22,11 @@ namespace diNo
         private int aktKlassenId=0;
         private Schueler aktSchueler,vorigerSchueler;
         private bool UnterpunktungGedruckt;
-        private DateTime Zeugnisdatum;
-
-        public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus, DateTime aZeugnisdatum)
+        
+        public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus)
         {
             zeitpunkt = azeitpunkt;            
             modus = amodus; 
-            Zeugnisdatum = aZeugnisdatum;
             Zugriff.Instance.markierteSchueler.Clear();
 
       // je nach Modus und Zeitpunkt werden nur bestimmte Klassen ausgewählt
@@ -159,9 +157,9 @@ namespace diNo
 
       if (modus==NotenCheckModus.VorkommnisseErzeugen)        
       {
-        s.AddVorkommnis(v,Zeugnisdatum,""); // Zeugnis als Vorkommnis anlegen
+        s.AddVorkommnis(v,Zugriff.Instance.Zeugnisdatum,""); // Zeugnis als Vorkommnis anlegen
         if (s.getNoten.ErhaeltMittlereReife())
-          s.AddVorkommnis(Vorkommnisart.MittlereReife,Zeugnisdatum,"");
+          s.AddVorkommnis(Vorkommnisart.MittlereReife, Zugriff.Instance.Zeugnisdatum, "");
       }
       else
       {

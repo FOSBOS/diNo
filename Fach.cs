@@ -7,27 +7,46 @@ using System.Text;
 
 namespace diNo
 {
-    public class Fach :IRepositoryObject
+  public class Fach :IRepositoryObject
+  {
+    private diNoDataSet.FachRow data;
+    private int[] sort = new int[5]; // Profilfachnummer je nach Ausbildungsrichtung (Index vgl. enum Zweig)
+
+    public Fach(int id)
     {
-        private diNoDataSet.FachRow data;
+      var rst = new FachTableAdapter().GetDataById(id);
+      if (rst.Count == 1)
+      {
+          this.data = rst[0];
+      }
+      else
+      {
+          throw new InvalidOperationException("Konstruktor Kurs: Ungültige ID=" + id);
+      }
+    }
 
-        public Fach(int id)
+    public Fach(diNoDataSet.FachRow f)
+    {
+      data = f;
+      InitSortierung();
+    }
+
+    private void InitSortierung()
+    { if (Typ == FachTyp.Profilfach)
+      {
+        var ta = new FachSortierungTableAdapter();
+        var d = ta.GetDataByFachId(Id);
+        if (d.Count==0)
+          throw new InvalidOperationException("Im Fach " + Bezeichnung + " (Id=" + Id + ") liegt keine Sortierung vor.");
+        foreach (var r in d)
         {
-            var rst = new FachTableAdapter().GetDataById(id);
-            if (rst.Count == 1)
-            {
-                this.data = rst[0];
-            }
-            else
-            {
-                throw new InvalidOperationException("Konstruktor Kurs: Ungültige ID.");
-            }
+          byte i = (byte)Faecherkanon.GetZweig(r.Zweig);
+          sort[i] = r.Sortierung;
         }
 
-        public Fach(diNoDataSet.FachRow f)
-        {
-          data = f;
-        }
+      }
+    }
+
 
     public static Fach CreateFach(int id)
     {
@@ -80,18 +99,16 @@ namespace diNo
             return AnzahlSA(zweig,jg)>0;
         }
 
-        public int Sortierung
+        public int Sortierung(Zweig zweig)
         {
-          get {
-            if (Typ == FachTyp.Profilfach)
-            {
-              return 1;//Zweig
-            }
-            else
-            {
-              return this.data.Sortierung;
-            }
+          if (zweig != Zweig.None && Typ == FachTyp.Profilfach)
+          {            
+            return 100+sort[(byte)zweig];
           }
+          else
+          {
+            return this.data.Sortierung;
+          }          
         }
 
         public FachTyp Typ
@@ -239,8 +256,7 @@ public static class Faecherkanon
         case Zweig.Sozial: return "S";
         case Zweig.Wirtschaft: return "W";
         case Zweig.Technik: return "T";
-        case Zweig.Umwelt: return "U";
-        case Zweig.ALLE: return "ALLE";
+        case Zweig.Umwelt: return "U";        
         default: throw new InvalidOperationException("Unbekannter Zweig : " + zweig);
       }
     }

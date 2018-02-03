@@ -63,6 +63,7 @@ namespace diNo
           dateTimeAustritt.Value = schueler.Data.IsAustrittsdatumNull() ? dateTimeAustritt.MinDate : schueler.Data.Austrittsdatum;
           textBoxEmail.Text = schueler.Data.Email;
           cbStatus.SelectedIndex = schueler.Data.Status;
+          textBoxZeugnisbemerkung.Text = schueler.Data.IsZeugnisbemerkungNull() ? "" : schueler.Data.Zeugnisbemerkung;
           textBoxDNote.Text = schueler.Data.IsDNoteNull() ? "" : string.Format("{0:F1}", schueler.Data.DNote);
           textBoxDNoteAllg.Text = schueler.Data.IsDNoteAllgNull() ? "" : string.Format("{0:F1}", schueler.Data.DNoteAllg);
           numAndereFremdspr2Note.Value = schueler.Data.IsAndereFremdspr2NoteNull() ? null : (decimal?) schueler.Data.AndereFremdspr2Note;
@@ -120,6 +121,9 @@ namespace diNo
         else schueler.Data.AndereFremdspr2Note = (int) numAndereFremdspr2Note.Value.GetValueOrDefault();            
       if (textBoxAndereFremdspr2Text.Text=="") schueler.Data.SetAndereFremdspr2TextNull();
         else schueler.Data.AndereFremdspr2Text = textBoxAndereFremdspr2Text.Text;
+
+      if (textBoxZeugnisbemerkung.Text == "") schueler.Data.SetZeugnisbemerkungNull();
+      else schueler.Data.Zeugnisbemerkung = textBoxZeugnisbemerkung.Text;
     
       schueler.Data.Name = textBoxNachname.Text;
       schueler.Data.Vorname = textBoxVorname.Text;

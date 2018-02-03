@@ -36,8 +36,6 @@
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.comboBoxCheckModus = new System.Windows.Forms.ComboBox();
-      this.dateZeugnis = new System.Windows.Forms.DateTimePicker();
-      this.lbZeugnis = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // imageList1
@@ -128,32 +126,11 @@
       this.comboBoxCheckModus.Size = new System.Drawing.Size(218, 24);
       this.comboBoxCheckModus.TabIndex = 17;
       // 
-      // dateZeugnis
-      // 
-      this.dateZeugnis.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-      this.dateZeugnis.Location = new System.Drawing.Point(129, 117);
-      this.dateZeugnis.Name = "dateZeugnis";
-      this.dateZeugnis.Size = new System.Drawing.Size(114, 20);
-      this.dateZeugnis.TabIndex = 19;
-      this.dateZeugnis.Visible = false;
-      // 
-      // lbZeugnis
-      // 
-      this.lbZeugnis.AutoSize = true;
-      this.lbZeugnis.Location = new System.Drawing.Point(22, 120);
-      this.lbZeugnis.Name = "lbZeugnis";
-      this.lbZeugnis.Size = new System.Drawing.Size(74, 13);
-      this.lbZeugnis.TabIndex = 20;
-      this.lbZeugnis.Text = "Zeugnisdatum";
-      this.lbZeugnis.Visible = false;
-      // 
       // NotenCheckForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(329, 222);
-      this.Controls.Add(this.lbZeugnis);
-      this.Controls.Add(this.dateZeugnis);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.comboBoxCheckModus);
       this.Controls.Add(this.label1);
@@ -176,7 +153,5 @@
         private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.ComboBox comboBoxCheckModus;
-    private System.Windows.Forms.DateTimePicker dateZeugnis;
-    private System.Windows.Forms.Label lbZeugnis;
   }
 }
