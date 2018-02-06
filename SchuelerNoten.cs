@@ -143,23 +143,7 @@ namespace diNo
       return liste;
 
     }
-
-    // TODO: Überflüssig, wegen lokaler Variable
-    public string GetUnterpunktungenString(Zeitpunkt z)
-    {
-      string result = "";
-      foreach (var fach in alleKurse)
-      {
-        byte? note = fach.getRelevanteNote(z);
-        if (note != null && note < 4)
-        {
-          result += fach.getFach.Kuerzel + "(" + note + ")";
-        }
-      }
-
-      return result;
-    }
-    
+     
     // Zu diesem Zeitpunkt werden die Notenanzahlen gebildet,
     // wird dieser geändert, muss neu gerechnet werden
     public void SetZeitpunkt(Zeitpunkt z)
@@ -271,7 +255,7 @@ namespace diNo
       return AnzahlNoten(6) == 0 && AnzahlNoten(5) == 0 && AnzahlNoten(4) == 0;
     }
     
-    // Mittlere Reife, falls nur 4er oder 1x5,1x2 oder 1x5,2x3, vgl. §58(5)
+    // Mittlere Reife, falls nur 4er oder 1x5,1x2 oder 1x5,2x3, vgl. §7(2), Ausgleich nur über Hauptfächer, falls 5 in Hauptfach
     public bool ErhaeltMittlereReife()
     {
       if (schueler.getKlasse.Jahrgangsstufe!=Jahrgangsstufe.Vorklasse 

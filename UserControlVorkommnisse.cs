@@ -125,10 +125,7 @@ namespace diNo
       
       if (notenRelevanteVorkommnisse.Contains(art))
       {
-        // ich ersetzen nun durch aktuellen (globalen) Zeitpunkt
-        // das macht die etwas dubiose Methode ErrateZeitpunkt überflüssig (es gibt inzwischen zuviele Vorkommnisse):
-        edVorkommnisBemerkung.Text = schueler.getNoten.GetUnterpunktungenString((Zeitpunkt)Zugriff.Instance.aktZeitpunkt);
-        //edVorkommnisBemerkung.Text = schueler.getNoten.GetUnterpunktungenString(ErrateZeitpunkt(art));
+        edVorkommnisBemerkung.Text = schueler.getNoten.Unterpunktungen;
       }
       else
       {
@@ -136,29 +133,6 @@ namespace diNo
       }
     }
 
-/*
-    /// <summary>
-    /// Methode versucht den korrekten Zeitpunkt zu erraten.
-    /// Dient nur dem Komfort, weil dann die relevanten Noten automatisch ermittelt werden.
-    /// Funktioniert dies nicht automatisch korrekt, muss von Hand die Bemerkung angepasst werden.
-    /// </summary>
-    /// <param name="vorkommnis">Das Vorkommnis.</param>
-    /// <returns>Möglicher Zeitpunkt, an welchem dieses Vorkommnis meist auftritt.</returns>
-    private Zeitpunkt ErrateZeitpunkt(Vorkommnisart vorkommnis)
-    {
-      switch (vorkommnis)
-      {
-        case Vorkommnisart.Gefaehrdungsmitteilung: return Zeitpunkt.HalbjahrUndProbezeitFOS;
-        case Vorkommnisart.ProbezeitNichtBestanden: return DateTime.Now.Month == 12 ? Zeitpunkt.ProbezeitBOS : Zeitpunkt.HalbjahrUndProbezeitFOS;
-        case Vorkommnisart.NichtZurPruefungZugelassen: return Zeitpunkt.ErstePA;
-        case Vorkommnisart.KeineVorrueckungserlaubnis: return Zeitpunkt.Jahresende;
-        case Vorkommnisart.endgueltigNichtBestanden: return Zeitpunkt.DrittePA;
-        case Vorkommnisart.bisherNichtBestandenMAPmoeglich: return Zeitpunkt.ZweitePA;
-        case Vorkommnisart.VorrueckenAufProbe: return Zeitpunkt.Jahresende;
-        default: return Zeitpunkt.Jahresende;
-      }
-    }
-*/
     private void objectListViewVorkommnisse_CellEditStarting(object sender, BrightIdeasSoftware.CellEditEventArgs e)
     {      // special cell edit handling for our delete-row
       if (e.Column == olvColumnLoeschen)
