@@ -540,10 +540,10 @@ namespace diNo
         n.SetZeitpunkt(contr.zeitpunkt);
 
         // Integrationsklasse: dort gibt es kein Bestehen...
-        if (schueler.getKlasse.Bezeichnung=="IV")
+        /*if (schueler.getKlasse.Bezeichnung=="IV")
         {          
           return;
-        }
+        }*/
 
         if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
         {
