@@ -14794,9 +14794,9 @@ SELECT Id, Bezeichnung, Kuerzel, IstSAP, Sortierung, Typ, BezZeugnis FROM Fach W
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@kuerzel", global::System.Data.SqlDbType.NChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT  Distinct      Fach.Id, Fach.Bezeichnung, Fach.Kuerzel, Fach.IstSAP,Fach.S" +
-                "ortierung\r\nFROM            Fach,Kurs\r\nWHERE Kurs.FachId = Fach.Id and Kurs.Lehre" +
-                "rId = @LehrerId\r\nORDER BY Sortierung";
+            this._commandCollection[3].CommandText = "SELECT  Distinct     Fach.BezZeugnis, Fach.Bezeichnung, Fach.Id, Fach.IstSAP,Fach" +
+                ".Kuerzel, Fach.Sortierung,\r\n Fach.Typ \r\nFROM            Fach,Kurs\r\nWHERE Kurs.Fa" +
+                "chId = Fach.Id and Kurs.LehrerId = @LehrerId\r\nORDER BY Sortierung";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
@@ -14874,9 +14874,14 @@ select distinct
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.FachDataTable GetDataByLehrerId(int LehrerId) {
+        public virtual diNoDataSet.FachDataTable GetDataByLehrerId(global::System.Nullable<int> LehrerId) {
             this.Adapter.SelectCommand = this.CommandCollection[3];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(LehrerId));
+            if ((LehrerId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((int)(LehrerId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
             diNoDataSet.FachDataTable dataTable = new diNoDataSet.FachDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

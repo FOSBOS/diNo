@@ -37,36 +37,44 @@ namespace diNo
 
     private Zugriff()
     {
-      Klassen = new List<Klasse>();
-      markierteSchueler = new Dictionary<int, Schueler>();
-      Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-      // TODO: Username ToUpper verwenden, dann muss aber die DB passen
-      if (Username == "Markus-PC\\Markus")
+      try
       {
-        Username = "FOSBOS\\msiegel";
-      }
-      if (Username == "ClausPC\\Claus")
-      {
-        Username = "FOSBOS\\ckonrad";
-      }
-      
-      Username = Username.Replace("FOSBOS\\", "");
-      Username = Username.Replace("VW\\", "");
-      var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
-      if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
-      else
-      {
-        MessageBox.Show("Keine Zugriffsberechtigung!\nBitte wenden Sie sich an einen Administrator.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        Application.ExitThread();
-        Environment.Exit(1);
-      }
-      SiehtAlles = (this.lehrer.HatRolle(Rolle.Admin) || this.lehrer.HatRolle(Rolle.Sekretariat) || this.lehrer.HatRolle(Rolle.Schulleitung));
-      HatVerwaltungsrechte = lehrer.HatRolle(Rolle.Admin) || lehrer.HatRolle(Rolle.Sekretariat);      
+        Klassen = new List<Klasse>();
+        markierteSchueler = new Dictionary<int, Schueler>();
+        Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+        // TODO: Username ToUpper verwenden, dann muss aber die DB passen
+        if (Username == "Markus-PC\\Markus")
+        {
+          Username = "FOSBOS\\msiegel";
+        }
+        if (Username == "ClausPC\\Claus")
+        {
+          Username = "FOSBOS\\ckonrad";
+        }
 
-      // LoadSchueler(); erst in Klassenansicht, wegen Parameter nurAktive
-      LoadFaecher();
-      LoadLehrer();
-      LoadGlobaleKonstanten();
+        Username = Username.Replace("FOSBOS\\", "");
+        Username = Username.Replace("VW\\", "");
+
+        var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
+        if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
+        else
+        {
+          MessageBox.Show("Keine Zugriffsberechtigung!\nBitte wenden Sie sich an einen Administrator.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          Application.ExitThread();
+          Environment.Exit(1);
+        }
+        SiehtAlles = (this.lehrer.HatRolle(Rolle.Admin) || this.lehrer.HatRolle(Rolle.Sekretariat) || this.lehrer.HatRolle(Rolle.Schulleitung));
+        HatVerwaltungsrechte = lehrer.HatRolle(Rolle.Admin) || lehrer.HatRolle(Rolle.Sekretariat);
+
+        // LoadSchueler(); erst in Klassenansicht, wegen Parameter nurAktive
+        LoadFaecher();
+        LoadLehrer();
+        LoadGlobaleKonstanten();
+      }
+      catch (Exception e)
+      {
+        MessageBox.Show(e.Message + "\n" + e.StackTrace, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
     }
 
     public static Zugriff Instance
