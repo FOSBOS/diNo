@@ -158,7 +158,7 @@ namespace diNo
       if (modus==NotenCheckModus.VorkommnisseErzeugen)        
       {
         s.AddVorkommnis(v,Zugriff.Instance.Zeugnisdatum,""); // Zeugnis als Vorkommnis anlegen
-        if (s.getNoten.ErhaeltMittlereReife())
+        if (s.getNoten.ErhaeltMittlereReife() && zeitpunkt == Zeitpunkt.Jahresende)
           s.AddVorkommnis(Vorkommnisart.MittlereReife, Zugriff.Instance.Zeugnisdatum, "");
       }
       else
