@@ -137,7 +137,7 @@ namespace diNo
           if (fpa1.IsGesamtNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
           else if (fpa1.Gesamt < 4)
           {
-              contr.Add(null, "Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.");
+              contr.Add(null, "<b>Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.</b>");
           }
       }            
       else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
@@ -145,7 +145,7 @@ namespace diNo
           if (fpa1.IsGesamtNull() || fpa2.IsGesamtNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
           else if (fpa1.Gesamt < 4 || fpa2.Gesamt < 4 || fpa1.Gesamt+fpa2.Gesamt < 10)
           {
-              contr.Add(null, "Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.");
+              contr.Add(null, "<b>Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.</b>");
           }
       }           
     }

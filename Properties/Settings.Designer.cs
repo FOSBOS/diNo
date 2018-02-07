@@ -25,7 +25,7 @@ namespace diNo.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\192.168.235.3\\\\NotendateienBackup\\\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\\\\\192.168.235.3\\\\projects\\\\NotendateienBackup\\\\")]
         public string sicherungsverzeichnis {
             get {
                 return ((string)(this["sicherungsverzeichnis"]));
