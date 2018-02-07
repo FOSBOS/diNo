@@ -432,11 +432,33 @@ namespace diNo
           // Nur wenn einer der Schnitte feststeht, wird diese Schnittkonstellation gespeichert
           if (bnote.SchnittMuendlich != null || bnote. SchnittSchulaufgaben != null)
             bnote.writeToDB();
+
+          if ((kurs.Id == 128 || kurs.Id == 129) && !(new Schueler(sid).getKlasse.AlteFOBOSO()) && bnote.JahresfortgangGanzzahlig != null)
+          {
+            // Sport Integrationsvorklasse
+            HjLeistung l = FindOrCreateHjLeistung(sid, new HjLeistungTableAdapter(), (hj == Halbjahr.Erstes) ? HjArt.Hj1 : HjArt.Hj2);
+            l.Punkte = (byte)bnote.JahresfortgangGanzzahlig;
+            l.Punkte2Dez = bnote.JahresfortgangMitKomma;
+            l.SchnittMdl = bnote.SchnittMuendlich;
+            l.WriteToDB();
+          }
         }
          
         i += 2;
         indexAP++;
       }
+    }
+
+    private HjLeistung FindOrCreateHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art)
+    {
+      var vorhandeneNote = FindHjLeistung(sid, ada, art);
+      return vorhandeneNote != null ? vorhandeneNote : new HjLeistung(sid, kurs.getFach, art);
+    }
+
+    private HjLeistung FindHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art)
+    {
+      var vorhandeneNoten = ada.GetDataBySchuelerAndFach(sid, kurs.getFach.Id).Where(x => x.Art == (byte)art);
+      return vorhandeneNoten != null && vorhandeneNoten.Count() == 1 ? new HjLeistung(vorhandeneNoten.First()) : null;
     }
 
   }

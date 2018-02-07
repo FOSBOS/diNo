@@ -1,6 +1,7 @@
 ﻿todos für diNo
 --------------
 
+- Sport-IV-Hack wieder entfernen zum neuen Schuljahr
 - Kurzarbeit als eigenen Reiter und im Notenbogen im Excel vorsehen (automatisch doppelt gewichtet) zur Fehlervermeidung
 - Tabelle Lehrer aufräumen: Name raus, weil Vor- und Nachname schon drin, Geschlecht speichern (wegen Lehrer/in)
 - Berechnung Nachtermin (z.B. 19/38 BE=6 bei Haupttermin 39)
