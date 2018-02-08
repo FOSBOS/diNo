@@ -439,12 +439,6 @@
     <None Include="Resources\piktogrammNotenbogen.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="diNoTray\avatarFrau.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="diNoTray\avatarMann.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Save.png" />
   </ItemGroup>
   <ItemGroup>
