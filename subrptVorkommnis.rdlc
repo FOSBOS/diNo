@@ -124,6 +124,11 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSetVorkommnis</DataSetName>
+        <SortExpressions>
+          <SortExpression>
+            <Value>=Fields!Datum.Value</Value>
+          </SortExpression>
+        </SortExpressions>
         <Height>0.41479cm</Height>
         <Width>17.9cm</Width>
         <Style>

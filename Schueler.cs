@@ -127,7 +127,7 @@ namespace diNo
         if (k.Bezeichnung.Substring(0, 2) == "FB")
           return k.Bezeichnung + "_" + Data.Schulart;
         else
-          return k.Bezeichnung + (k.Zweig == Zweig.None ? "_" + data.Ausbildungsrichtung : "");
+          return k.Bezeichnung + ((k.Zweig == Zweig.None && data.Ausbildungsrichtung != "V") ? "_" + data.Ausbildungsrichtung : "");
       }
     }
 
@@ -531,6 +531,12 @@ namespace diNo
 
         if (art == Vorkommnisart.ProbezeitNichtBestanden)
         {
+          if ((Zeitpunkt)(Zugriff.Instance.aktZeitpunkt) == Zeitpunkt.HalbjahrUndProbezeitFOS)
+          {
+            var ta = new VorkommnisTableAdapter();
+            ta.DeleteForPZBySchuelerId(Id); // löscht Zwischenzeugnis und Gefährdungsmitteilungen
+            ta.UpdateGefahrAbweisung(Id); // wird "darf nicht mehr wiederholen"
+          }
           if (MessageBox.Show("Soll der Schüler aus allen Kursen abgemeldet werden?", "diNo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             Austritt(Data.ProbezeitBis);
         }
@@ -1052,7 +1058,9 @@ namespace diNo
 
       Klasse = s.getKlasse.Bezeichnung;
       KlasseMitZweig = s.KlassenBezeichnung;
-      JgKurz = s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse ? "VKL" : ((int)s.getKlasse.Jahrgangsstufe).ToString();
+      if (s.getKlasse.Bezeichnung == "IV") JgKurz = "IV";
+      else if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse) JgKurz = "VKL";
+      else JgKurz = ((int)s.getKlasse.Jahrgangsstufe).ToString();
       Bekenntnis = "Bekenntnis: " + s.Data.Bekenntnis;
       var KL = s.getKlasse.Klassenleiter;
       Klassenleiter = KL.NameDienstbezeichnung + "\n" + KL.KLString;

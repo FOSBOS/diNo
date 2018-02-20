@@ -155,7 +155,7 @@ namespace diNo
     {
       eigeneFaecher = new List<Fach>();
       var ta = new FachTableAdapter();
-      diNoDataSet.FachDataTable dtFach = this.lehrer.HatRolle(Rolle.Admin) ? ta.GetData() : ta.GetDataByLehrerId(lehrer.Id);
+      diNoDataSet.FachDataTable dtFach = SiehtAlles ? ta.GetData() : ta.GetDataByLehrerId(lehrer.Id);
       foreach (var fRow in dtFach)
       {
         Fach f = new Fach(fRow);
