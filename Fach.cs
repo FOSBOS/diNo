@@ -120,20 +120,17 @@ namespace diNo
         {
           get { return (data.IsBezZeugnisNull() ? data.Bezeichnung : data.BezZeugnis); }
         }
+   
+    public bool IstSAPFach(Zweig zweig)
+    {
 
-
-    // solange Umwelt nicht ist, tut es auch aus Performancegründen das:
-    public bool IstSAPFach()
-        {
-          return data.IstSAP;
-        }
-
-        public bool IstSAPFach(Zweig zweig)
-        {
-          // TODO: nur für Umweltzweig brauchen wir Bio als SAP-Fach, für den Sozialzweig als SA-Fach; vorläufige Lösung:
-          if (zweig==Zweig.Umwelt && Kuerzel == "B") return true;
-          else return this.data.IstSAP;
-        }
+      if (Kuerzel == "D" || Kuerzel == "E" || Kuerzel == "M") return true;
+      else if (Typ == FachTyp.Profilfach)
+      {
+        return sort[(int)zweig] == 1; // nur das 1. Profilfach ist SAP-Fach
+      }
+      else return false;
+    }
 
         // Ermittelt die SA-Wertung für diesen Kurs
         public Schulaufgabenwertung GetSchulaufgabenwertung(Zweig zweig,Jahrgangsstufe jg)
@@ -196,14 +193,9 @@ public static class Faecherkanon
         return Jahrgangsstufe.Vorkurs;
       }
 
-      if (jahrgangsstufe.ToUpper().Contains("VK"))
+      if (jahrgangsstufe=="IV" || jahrgangsstufe.ToUpper().Contains("VK"))
       {
         return Jahrgangsstufe.Vorklasse;
-      }
-
-      if (jahrgangsstufe.Contains("10"))
-      {
-        return Jahrgangsstufe.Vorklasse; // FOS Vorklasse
       }
 
       if (jahrgangsstufe.Contains("11"))

@@ -21,6 +21,7 @@ namespace diNo
     private diNoDataSet.FpaDataTable fpaDT; // wird zum Speichern benötigt: FPA-Halbjahr 1 und 2
     private diNoDataSet.SeminarfachnoteRow seminar;
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
+    public Zweig Zweig;
 
     public Schueler(int id)
     {
@@ -32,6 +33,7 @@ namespace diNo
     {
       this.Id = s.Id;
       this.data = s;
+      Zweig = Faecherkanon.GetZweig(data.Ausbildungsrichtung);
     }
 
     // statische Methode für das Repository
@@ -59,6 +61,7 @@ namespace diNo
       this.kurse = null;
       this.noten = null;
       this.vorkommnisse = null;
+      Zweig = Faecherkanon.GetZweig(data.Ausbildungsrichtung);
     }
 
     /// <summary>
@@ -432,14 +435,6 @@ namespace diNo
       get
       {
         return SchulnummernHolder.GetSchulname(this.Data.EintrittAusSchulnummer);
-      }
-    }
-
-    public Zweig Zweig
-    {
-      get
-      {
-        return Faecherkanon.GetZweig(this.data.Ausbildungsrichtung);
       }
     }
 
@@ -1098,7 +1093,7 @@ namespace diNo
       Bemerkung = "Bemerkungen:";
       if (!s.Data.IsZeugnisbemerkungNull())
         Bemerkung += "<br>" + s.Data.Zeugnisbemerkung;
-      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse)
+      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && s.getKlasse.Bezeichnung != "IV")
         Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden.";
       if (s.IsLegastheniker)
         Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet. In den Fremdsprachen wurden die mündlichen Leistungen stärker gewichtet.";

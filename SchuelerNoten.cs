@@ -181,7 +181,7 @@ namespace diNo
         kuerzel = fachNoten.getFach.Kuerzel;
         if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Sw" || kuerzel == "Sm" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
         byte? relevanteNote = fachNoten.getRelevanteNote(zeitpunkt);
-        int istSAP = fachNoten.getFach.IstSAPFach() ? 1:0;
+        int istSAP = fachNoten.getFach.IstSAPFach(schueler.Zweig) ? 1:0;
         if (relevanteNote != null)
         {
           Punktesumme += relevanteNote.GetValueOrDefault();
@@ -289,7 +289,7 @@ namespace diNo
         if (note<4)
         {          
           jf = f.getSchnitt(Halbjahr.Zweites).JahresfortgangMitKomma;
-          istSAPFach = f.getFach.IstSAPFach();
+          istSAPFach = f.getFach.IstSAPFach(schueler.Zweig);
 
           // Nur Fächer in denen eine MAP möglich ist (nicht Englisch und Fächer aus der 11. Klasse)
           if (kuerzel!="E" && jf!=null)
@@ -557,7 +557,7 @@ namespace diNo
       if (!jf.HasValue || kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Sw" || kuerzel == "Sm" || kuerzel == "Ku") return ""; // in Nebenfächern wie G,TZ,... gibt es keine MAP
 
       int map;
-      if (!getFach.IstSAPFach()) // Nebenfächer
+      if (!getFach.IstSAPFach(schueler.Zweig)) // Nebenfächer
       {
         map = (int)Math.Ceiling((decimal)(6.99)-jf.GetValueOrDefault());
         return map.ToString();

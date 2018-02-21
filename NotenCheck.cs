@@ -249,7 +249,7 @@ namespace diNo
         // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
         if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
         {
-          if (fachNoten.getFach.IstSAPFach() && fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
+          if (fachNoten.getFach.IstSAPFach(schueler.Zweig) && fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
           {
             contr.Add(kurs, "Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
             if (fachNoten.getFach.Kuerzel == "E" && fachNoten.getNotenanzahl(Notentyp.APMuendlich) == 0)
@@ -317,7 +317,10 @@ namespace diNo
           {
             contr.Add(kurs, toText(schulaufgabenCount, "", "Schulaufgabe"));
           }
-          
+          if (schulaufgabenCount > noetigeAnzahlSchulaufgaben)
+          {
+            contr.Add(kurs, "Es sind zuviele Schulaufgaben eingetragen.");
+          }
           if (hatErsatzpruefung) continue;
 
           if (kurs.schreibtKA && kurzarbeitenCount ==0)
@@ -348,7 +351,7 @@ namespace diNo
         // -------------------------------------------------
         if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
         {
-          if (fachNoten.getFach.IstSAPFach() && fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
+          if (fachNoten.getFach.IstSAPFach(schueler.Zweig) && fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
           {
             contr.Add(kurs, "Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
             if (fachNoten.getFach.Kuerzel == "E" && fachNoten.getNotenanzahl(Notentyp.APMuendlich) == 0)
@@ -719,7 +722,7 @@ namespace diNo
 
       foreach (var fach in noten.alleKurse)
       {                       
-        if (!fach.getFach.IstSAPFach()) continue;
+        if (!fach.getFach.IstSAPFach(schueler.Zweig)) continue;
         if (fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APSchriftlich)==0) return; // Note fehlt
         noteSAP = fach.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich)[0];
         if (noteSAP<10) return; // keine SAP-Note darf einstellig sein.

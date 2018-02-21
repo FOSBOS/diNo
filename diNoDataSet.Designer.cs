@@ -14316,13 +14316,11 @@ namespace diNo.diNoDataSetTableAdapters {
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Fach] WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ([Kuerzel] = @Original_Kuerzel) AND ((@IsNull_IstSAP = 1 AND [IstSAP] IS NULL) OR ([IstSAP] = @Original_IstSAP)) AND ((@IsNull_Sortierung = 1 AND [Sortierung] IS NULL) OR ([Sortierung] = @Original_Sortierung)) AND ((@IsNull_Typ = 1 AND [Typ] IS NULL) OR ([Typ] = @Original_Typ)) AND ((@IsNull_BezZeugnis = 1 AND [BezZeugnis] IS NULL) OR ([BezZeugnis] = @Original_BezZeugnis)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Fach] WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ([Kuerzel] = @Original_Kuerzel) AND ((@IsNull_Sortierung = 1 AND [Sortierung] IS NULL) OR ([Sortierung] = @Original_Sortierung)) AND ((@IsNull_Typ = 1 AND [Typ] IS NULL) OR ([Typ] = @Original_Typ)) AND ((@IsNull_BezZeugnis = 1 AND [BezZeugnis] IS NULL) OR ([BezZeugnis] = @Original_BezZeugnis)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Kuerzel", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_IstSAP", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IstSAP", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IstSAP", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IstSAP", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Sortierung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sortierung", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Sortierung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sortierung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Typ", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Typ", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -14331,31 +14329,29 @@ namespace diNo.diNoDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_BezZeugnis", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BezZeugnis", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Fach] ([Bezeichnung], [Kuerzel], [IstSAP], [Sortierung], [Typ], [BezZeugnis]) VALUES (@Bezeichnung, @Kuerzel, @IstSAP, @Sortierung, @Typ, @BezZeugnis);
-SELECT Id, Bezeichnung, Kuerzel, IstSAP, Sortierung, Typ, BezZeugnis FROM Fach WHERE (Id = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [Fach] ([Bezeichnung], [Kuerzel], [Sortierung], [Typ], [BezZeugnis]) " +
+                "VALUES (@Bezeichnung, @Kuerzel, @Sortierung, @Typ, @BezZeugnis);\r\nSELECT Id, Bez" +
+                "eichnung, Kuerzel, Sortierung, Typ, BezZeugnis FROM Fach WHERE (Id = SCOPE_IDENT" +
+                "ITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Kuerzel", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IstSAP", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IstSAP", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Sortierung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sortierung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Typ", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Typ", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BezZeugnis", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BezZeugnis", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [Fach] SET [Bezeichnung] = @Bezeichnung, [Kuerzel] = @Kuerzel, [IstSAP] = @IstSAP, [Sortierung] = @Sortierung, [Typ] = @Typ, [BezZeugnis] = @BezZeugnis WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ([Kuerzel] = @Original_Kuerzel) AND ((@IsNull_IstSAP = 1 AND [IstSAP] IS NULL) OR ([IstSAP] = @Original_IstSAP)) AND ((@IsNull_Sortierung = 1 AND [Sortierung] IS NULL) OR ([Sortierung] = @Original_Sortierung)) AND ((@IsNull_Typ = 1 AND [Typ] IS NULL) OR ([Typ] = @Original_Typ)) AND ((@IsNull_BezZeugnis = 1 AND [BezZeugnis] IS NULL) OR ([BezZeugnis] = @Original_BezZeugnis)));
-SELECT Id, Bezeichnung, Kuerzel, IstSAP, Sortierung, Typ, BezZeugnis FROM Fach WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Fach] SET [Bezeichnung] = @Bezeichnung, [Kuerzel] = @Kuerzel, [Sortierung] = @Sortierung, [Typ] = @Typ, [BezZeugnis] = @BezZeugnis WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ([Kuerzel] = @Original_Kuerzel) AND ((@IsNull_Sortierung = 1 AND [Sortierung] IS NULL) OR ([Sortierung] = @Original_Sortierung)) AND ((@IsNull_Typ = 1 AND [Typ] IS NULL) OR ([Typ] = @Original_Typ)) AND ((@IsNull_BezZeugnis = 1 AND [BezZeugnis] IS NULL) OR ([BezZeugnis] = @Original_BezZeugnis)));
+SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis FROM Fach WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Kuerzel", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IstSAP", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IstSAP", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Sortierung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sortierung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Typ", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Typ", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BezZeugnis", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BezZeugnis", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Kuerzel", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_IstSAP", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IstSAP", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_IstSAP", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "IstSAP", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Sortierung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sortierung", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Sortierung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sortierung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Typ", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Typ", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -14382,27 +14378,26 @@ SELECT Id, Bezeichnung, Kuerzel, IstSAP, Sortierung, Typ, BezZeugnis FROM Fach W
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT BezZeugnis, Bezeichnung, Id, IstSAP, Kuerzel, Sortierung, Typ FROM Fach WH" +
-                "ERE (Id = @Id)";
+            this._commandCollection[1].CommandText = "SELECT * FROM Fach WHERE (Id = @Id)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT BezZeugnis, Bezeichnung, Id, IstSAP, Kuerzel, Sortierung, Typ FROM Fach WH" +
-                "ERE (Kuerzel = @kuerzel)";
+            this._commandCollection[2].CommandText = "SELECT BezZeugnis, Bezeichnung, Id, Kuerzel, Sortierung, Typ FROM Fach WHERE (Kue" +
+                "rzel = @kuerzel)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@kuerzel", global::System.Data.SqlDbType.NChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT  Distinct     Fach.BezZeugnis, Fach.Bezeichnung, Fach.Id, Fach.IstSAP,Fach" +
-                ".Kuerzel, Fach.Sortierung,\r\n Fach.Typ \r\nFROM            Fach,Kurs\r\nWHERE Kurs.Fa" +
-                "chId = Fach.Id and Kurs.LehrerId = @LehrerId\r\nORDER BY Sortierung";
+            this._commandCollection[3].CommandText = "SELECT  Distinct     Fach.BezZeugnis, Fach.Bezeichnung, Fach.Id, Fach.Kuerzel, Fa" +
+                "ch.Sortierung,\r\n Fach.Typ \r\nFROM            Fach,Kurs\r\nWHERE Kurs.FachId = Fach." +
+                "Id and Kurs.LehrerId = @LehrerId\r\nORDER BY Sortierung";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[4].Connection = this.Connection;
             this._commandCollection[4].CommandText = @"SELECT distinct 
-    Fach.BezZeugnis, Fach.Bezeichnung, Fach.Id, Fach.IstSAP,Fach.Kuerzel, Fach.Sortierung, Fach.Typ 
+    Fach.BezZeugnis, Fach.Bezeichnung, Fach.Id, Fach.Kuerzel, Fach.Sortierung, Fach.Typ 
 FROM Fach, HjLeistung
 Where HjLeistung.FachId = Fach.Id AND
 HjLeistung.SchuelerId = @SchuelerId AND
@@ -14415,19 +14410,6 @@ select distinct
 ";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(diNoDataSet.FachDataTable dataTable) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14532,7 +14514,7 @@ select distinct
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, string Original_Bezeichnung, string Original_Kuerzel, global::System.Nullable<bool> Original_IstSAP, global::System.Nullable<int> Original_Sortierung, global::System.Nullable<byte> Original_Typ, string Original_BezZeugnis) {
+        public virtual int Delete(int Original_Id, string Original_Bezeichnung, string Original_Kuerzel, global::System.Nullable<int> Original_Sortierung, global::System.Nullable<byte> Original_Typ, string Original_BezZeugnis) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             if ((Original_Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Original_Bezeichnung");
@@ -14546,37 +14528,29 @@ select distinct
             else {
                 this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_Kuerzel));
             }
-            if ((Original_IstSAP.HasValue == true)) {
+            if ((Original_Sortierung.HasValue == true)) {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((bool)(Original_IstSAP.Value));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((int)(Original_Sortierung.Value));
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
-            if ((Original_Sortierung.HasValue == true)) {
+            if ((Original_Typ.HasValue == true)) {
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((int)(Original_Sortierung.Value));
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((byte)(Original_Typ.Value));
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
-            if ((Original_Typ.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((byte)(Original_Typ.Value));
-            }
-            else {
+            if ((Original_BezZeugnis == null)) {
                 this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
-            if ((Original_BezZeugnis == null)) {
-                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[10].Value = global::System.DBNull.Value;
-            }
             else {
-                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[10].Value = ((string)(Original_BezZeugnis));
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[8].Value = ((string)(Original_BezZeugnis));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -14598,7 +14572,7 @@ select distinct
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string Bezeichnung, string Kuerzel, global::System.Nullable<bool> IstSAP, global::System.Nullable<int> Sortierung, global::System.Nullable<byte> Typ, string BezZeugnis) {
+        public virtual int Insert(string Bezeichnung, string Kuerzel, global::System.Nullable<int> Sortierung, global::System.Nullable<byte> Typ, string BezZeugnis) {
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
             }
@@ -14611,29 +14585,23 @@ select distinct
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((string)(Kuerzel));
             }
-            if ((IstSAP.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((bool)(IstSAP.Value));
+            if ((Sortierung.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((int)(Sortierung.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
-            if ((Sortierung.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((int)(Sortierung.Value));
+            if ((Typ.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[3].Value = ((byte)(Typ.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            if ((Typ.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[4].Value = ((byte)(Typ.Value));
-            }
-            else {
+            if ((BezZeugnis == null)) {
                 this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
-            if ((BezZeugnis == null)) {
-                this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
             else {
-                this.Adapter.InsertCommand.Parameters[5].Value = ((string)(BezZeugnis));
+                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(BezZeugnis));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -14655,7 +14623,7 @@ select distinct
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Bezeichnung, string Kuerzel, global::System.Nullable<bool> IstSAP, global::System.Nullable<int> Sortierung, global::System.Nullable<byte> Typ, string BezZeugnis, int Original_Id, string Original_Bezeichnung, string Original_Kuerzel, global::System.Nullable<bool> Original_IstSAP, global::System.Nullable<int> Original_Sortierung, global::System.Nullable<byte> Original_Typ, string Original_BezZeugnis, int Id) {
+        public virtual int Update(string Bezeichnung, string Kuerzel, global::System.Nullable<int> Sortierung, global::System.Nullable<byte> Typ, string BezZeugnis, int Original_Id, string Original_Bezeichnung, string Original_Kuerzel, global::System.Nullable<int> Original_Sortierung, global::System.Nullable<byte> Original_Typ, string Original_BezZeugnis, int Id) {
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
             }
@@ -14668,76 +14636,62 @@ select distinct
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((string)(Kuerzel));
             }
-            if ((IstSAP.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((bool)(IstSAP.Value));
+            if ((Sortierung.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(Sortierung.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
-            if ((Sortierung.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Sortierung.Value));
+            if ((Typ.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[3].Value = ((byte)(Typ.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
             }
-            if ((Typ.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[4].Value = ((byte)(Typ.Value));
-            }
-            else {
+            if ((BezZeugnis == null)) {
                 this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
-            if ((BezZeugnis == null)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
-            }
             else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((string)(BezZeugnis));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(BezZeugnis));
             }
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_Id));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_Id));
             if ((Original_Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Original_Bezeichnung");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_Bezeichnung));
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Original_Bezeichnung));
             }
             if ((Original_Kuerzel == null)) {
                 throw new global::System.ArgumentNullException("Original_Kuerzel");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_Kuerzel));
-            }
-            if ((Original_IstSAP.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((bool)(Original_IstSAP.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_Kuerzel));
             }
             if ((Original_Sortierung.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(Original_Sortierung.Value));
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_Sortierung.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[12].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
             if ((Original_Typ.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((byte)(Original_Typ.Value));
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((byte)(Original_Typ.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[14].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
             }
             if ((Original_BezZeugnis == null)) {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[16].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((string)(Original_BezZeugnis));
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Original_BezZeugnis));
             }
-            this.Adapter.UpdateCommand.Parameters[17].Value = ((int)(Id));
+            this.Adapter.UpdateCommand.Parameters[14].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -14758,8 +14712,8 @@ select distinct
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Bezeichnung, string Kuerzel, global::System.Nullable<bool> IstSAP, global::System.Nullable<int> Sortierung, global::System.Nullable<byte> Typ, string BezZeugnis, int Original_Id, string Original_Bezeichnung, string Original_Kuerzel, global::System.Nullable<bool> Original_IstSAP, global::System.Nullable<int> Original_Sortierung, global::System.Nullable<byte> Original_Typ, string Original_BezZeugnis) {
-            return this.Update(Bezeichnung, Kuerzel, IstSAP, Sortierung, Typ, BezZeugnis, Original_Id, Original_Bezeichnung, Original_Kuerzel, Original_IstSAP, Original_Sortierung, Original_Typ, Original_BezZeugnis, Original_Id);
+        public virtual int Update(string Bezeichnung, string Kuerzel, global::System.Nullable<int> Sortierung, global::System.Nullable<byte> Typ, string BezZeugnis, int Original_Id, string Original_Bezeichnung, string Original_Kuerzel, global::System.Nullable<int> Original_Sortierung, global::System.Nullable<byte> Original_Typ, string Original_BezZeugnis) {
+            return this.Update(Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, Original_Id, Original_Bezeichnung, Original_Kuerzel, Original_Sortierung, Original_Typ, Original_BezZeugnis, Original_Id);
         }
     }
     
