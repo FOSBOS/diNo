@@ -1203,8 +1203,6 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnKuerzel;
             
-            private global::System.Data.DataColumn columnIstSAP;
-            
             private global::System.Data.DataColumn columnSortierung;
             
             private global::System.Data.DataColumn columnTyp;
@@ -1270,14 +1268,6 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn IstSAPColumn {
-                get {
-                    return this.columnIstSAP;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn SortierungColumn {
                 get {
                     return this.columnSortierung;
@@ -1337,13 +1327,12 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public FachRow AddFachRow(string Bezeichnung, string Kuerzel, bool IstSAP, int Sortierung, byte Typ, string BezZeugnis) {
+            public FachRow AddFachRow(string Bezeichnung, string Kuerzel, int Sortierung, byte Typ, string BezZeugnis) {
                 FachRow rowFachRow = ((FachRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Bezeichnung,
                         Kuerzel,
-                        IstSAP,
                         Sortierung,
                         Typ,
                         BezZeugnis};
@@ -1379,7 +1368,6 @@ namespace diNo {
                 this.columnId = base.Columns["Id"];
                 this.columnBezeichnung = base.Columns["Bezeichnung"];
                 this.columnKuerzel = base.Columns["Kuerzel"];
-                this.columnIstSAP = base.Columns["IstSAP"];
                 this.columnSortierung = base.Columns["Sortierung"];
                 this.columnTyp = base.Columns["Typ"];
                 this.columnBezZeugnis = base.Columns["BezZeugnis"];
@@ -1394,8 +1382,6 @@ namespace diNo {
                 base.Columns.Add(this.columnBezeichnung);
                 this.columnKuerzel = new global::System.Data.DataColumn("Kuerzel", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnKuerzel);
-                this.columnIstSAP = new global::System.Data.DataColumn("IstSAP", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnIstSAP);
                 this.columnSortierung = new global::System.Data.DataColumn("Sortierung", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSortierung);
                 this.columnTyp = new global::System.Data.DataColumn("Typ", typeof(byte), null, global::System.Data.MappingType.Element);
@@ -9147,22 +9133,6 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IstSAP {
-                get {
-                    try {
-                        return ((bool)(this[this.tableFach.IstSAPColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte IstSAP in Tabelle Fach ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableFach.IstSAPColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public int Sortierung {
                 get {
                     try {
@@ -9207,18 +9177,6 @@ namespace diNo {
                 set {
                     this[this.tableFach.BezZeugnisColumn] = value;
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsIstSAPNull() {
-                return this.IsNull(this.tableFach.IstSAPColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetIstSAPNull() {
-                this[this.tableFach.IstSAPColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14309,7 +14267,6 @@ namespace diNo.diNoDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("Id", "Id");
             tableMapping.ColumnMappings.Add("Bezeichnung", "Bezeichnung");
             tableMapping.ColumnMappings.Add("Kuerzel", "Kuerzel");
-            tableMapping.ColumnMappings.Add("IstSAP", "IstSAP");
             tableMapping.ColumnMappings.Add("Sortierung", "Sortierung");
             tableMapping.ColumnMappings.Add("Typ", "Typ");
             tableMapping.ColumnMappings.Add("BezZeugnis", "BezZeugnis");
@@ -14374,11 +14331,12 @@ SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis FROM Fach WHERE (Id
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT       *\r\nFROM            Fach\r\n";
+            this._commandCollection[0].CommandText = "SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis FROM Fach";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT * FROM Fach WHERE (Id = @Id)";
+            this._commandCollection[1].CommandText = "SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis FROM Fach WHERE (Id " +
+                "= @Id)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();

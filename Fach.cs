@@ -83,8 +83,7 @@ namespace diNo
           }
           else if (jg == Jahrgangsstufe.Elf)
           {
-            if (IstSAPFach(zweig)) z=1;
-
+            if (IstSAPFach(zweig)) z=1;            
           }
           else // 12./13. Klasse
           {
