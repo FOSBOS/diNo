@@ -259,6 +259,6 @@ public static class Faecherkanon
     Allgemein = 0,
     Profilfach = 1,
     WPF = 2,
-    WPFohneNC = 3
+    OhneNoten = 9
   }
 }

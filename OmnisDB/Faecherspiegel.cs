@@ -157,6 +157,22 @@ namespace diNo.OmnisDB
         return schueler.getNoten.FindeFach("Eth", false);
       }
 
+      if (faecherKuerzel.Equals("Smw", StringComparison.OrdinalIgnoreCase))
+      {
+        var result = schueler.getNoten.FindeFach(faecherKuerzel, false);
+        if (result == null)
+        {
+          result = schueler.getNoten.FindeFach("Sm", false);
+          if (result == null)
+          {
+            result = schueler.getNoten.FindeFach("Sw", false);
+          }
+        }
+
+        return result;
+      }
+
+
       return schueler.getNoten.FindeFach(faecherKuerzel, false);
     }
 

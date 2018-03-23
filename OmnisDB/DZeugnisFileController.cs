@@ -37,7 +37,7 @@ namespace diNo.OmnisDB
           }
           
           Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-          if (BrauchtZeugnis(schueler, zeitpunkt))
+          if (BrauchtZeugnis(schueler, zeitpunkt) && schueler.Status == Schuelerstatus.Aktiv)
           {
             if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf && (zeitpunkt == Zeitpunkt.DrittePA || zeitpunkt == Zeitpunkt.Jahresende)))
             {
@@ -148,22 +148,26 @@ namespace diNo.OmnisDB
 
     private bool BrauchtZeugnis(Schueler schueler, Zeitpunkt zeitpunkt)
     {
-      if (zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
       {
-        return true; // zum Halbjahr bekommen alle ein Zeugnis
-      }
+        // andere Schüler brauchen zwar auch Zeugnisse, aber nicht mehr aus diesem Export
 
-      // zu den PA-Sitzungen werden nur für die 12. und 13. Jahrgangsstufe Zeugnisse übertragen
-      if (zeitpunkt == Zeitpunkt.ErstePA || zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
-      {
-        return schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf;
-      }
+        if (zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+        {
+          return true; // zum Halbjahr bekommen alle ein Zeugnis
+        }
 
-      if (zeitpunkt == Zeitpunkt.Jahresende)
-      {
-        return schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorkurs;
-      }
+        // zu den PA-Sitzungen werden nur für die 12. und 13. Jahrgangsstufe Zeugnisse übertragen
+        if (zeitpunkt == Zeitpunkt.ErstePA || zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
+        {
+          return schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf;
+        }
 
+        if (zeitpunkt == Zeitpunkt.Jahresende)
+        {
+          return schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorkurs;
+        }
+      }
       return false;
     }
 
