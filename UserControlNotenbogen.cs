@@ -61,8 +61,10 @@ namespace diNo
           dataGridNoten.Rows[lineCount].Cells[2].Value = hjl.SchnittMdl.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[4].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[5].Value = hjl.Punkte;
-          SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[5]);
+          if (Zugriff.Instance.aktZeitpunkt <= 2)
+            SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[5]);
         }
+
         dataGridNoten.Rows[lineCount].Cells[8].Value = fach.SA(Halbjahr.Zweites);
         dataGridNoten.Rows[lineCount].Cells[6].Value = fach.sL(Halbjahr.Zweites);
         hjl = fach.getHjLeistung(HjArt.Hj2);
@@ -71,7 +73,19 @@ namespace diNo
           dataGridNoten.Rows[lineCount].Cells[7].Value = hjl.SchnittMdl.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[9].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[10].Value = hjl.Punkte;
-          SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[10]);
+          if (Zugriff.Instance.aktZeitpunkt > 2)
+            SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[10]);
+        }
+
+        if ((int)schueler.getKlasse.Jahrgangsstufe < 12)
+          hjl = fach.getHjLeistung(HjArt.JN);
+        else
+          hjl = fach.getHjLeistung(HjArt.GesErg);
+        if (hjl != null)
+        {         
+          dataGridNoten.Rows[lineCount].Cells[14].Value = hjl.Punkte;
+          if (Zugriff.Instance.aktZeitpunkt > 2)
+            SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[14]);
         }
         lineCount++;
       }
@@ -98,17 +112,9 @@ namespace diNo
       if (notenwert < 1.5) return Color.Coral;
       if (notenwert < 2.5) return Color.Orange;
       if (notenwert < 3.5) return Color.Gold;
-      // Ab der zweiten PA interessieren Vierer niemanden mehr
-      if (aktuellerZeitpunkt < (int)Zeitpunkt.ZweitePA)
-      {
-        if (notenwert < 4.5) return Color.Yellow;
-        if (notenwert < 5.5) return Color.LightYellow;
-      }
-
-      if (notenwert > 13.5) return Color.LimeGreen;
       if (notenwert > 11.5) return Color.PaleGreen;
-      return dataGridNoten.BackgroundColor;
-    }
+      return Color.LightYellow;
+  }
 
     private void FillCell(DataGridViewCell c, HjLeistung hjl)
     {

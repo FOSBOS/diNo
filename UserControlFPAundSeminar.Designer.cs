@@ -33,67 +33,72 @@
       this.label1 = new System.Windows.Forms.Label();
       this.pnlFPA = new System.Windows.Forms.Panel();
       this.groupHj2 = new System.Windows.Forms.GroupBox();
-      this.numGesamt2 = new diNo.NumericUpDownNullable();
       this.label16 = new System.Windows.Forms.Label();
-      this.numVertiefung2 = new diNo.NumericUpDownNullable();
       this.lbVertiefung2 = new System.Windows.Forms.Label();
-      this.numVertiefung22 = new diNo.NumericUpDownNullable();
       this.lbVertiefung22 = new System.Windows.Forms.Label();
-      this.numVertiefung12 = new diNo.NumericUpDownNullable();
       this.lbVertiefung12 = new System.Windows.Forms.Label();
-      this.numAnleitung2 = new diNo.NumericUpDownNullable();
       this.label20 = new System.Windows.Forms.Label();
       this.label21 = new System.Windows.Forms.Label();
       this.edBemerkung2 = new System.Windows.Forms.TextBox();
       this.label22 = new System.Windows.Forms.Label();
       this.edStelle2 = new System.Windows.Forms.TextBox();
-      this.numBetrieb2 = new diNo.NumericUpDownNullable();
       this.label23 = new System.Windows.Forms.Label();
       this.groupHj1 = new System.Windows.Forms.GroupBox();
-      this.numGesamt1 = new diNo.NumericUpDownNullable();
       this.label15 = new System.Windows.Forms.Label();
-      this.numVertiefung1 = new diNo.NumericUpDownNullable();
       this.lbVertiefung1 = new System.Windows.Forms.Label();
-      this.numVertiefung21 = new diNo.NumericUpDownNullable();
       this.lbVertiefung21 = new System.Windows.Forms.Label();
-      this.numVertiefung11 = new diNo.NumericUpDownNullable();
       this.lbVertiefung11 = new System.Windows.Forms.Label();
-      this.numAnleitung1 = new diNo.NumericUpDownNullable();
       this.label6 = new System.Windows.Forms.Label();
       this.label8 = new System.Windows.Forms.Label();
       this.edBemerkung1 = new System.Windows.Forms.TextBox();
       this.label12 = new System.Windows.Forms.Label();
       this.edStelle1 = new System.Windows.Forms.TextBox();
-      this.numBetrieb1 = new diNo.NumericUpDownNullable();
       this.label2 = new System.Windows.Forms.Label();
-      this.btnSaveFPA = new System.Windows.Forms.Button();
       this.label9 = new System.Windows.Forms.Label();
       this.pnlSeminar = new System.Windows.Forms.Panel();
       this.btnSaveSeminar = new System.Windows.Forms.Button();
-      this.numSeminarpunkte = new diNo.NumericUpDownNullable();
       this.label11 = new System.Windows.Forms.Label();
       this.label10 = new System.Windows.Forms.Label();
       this.textBoxSeminarfachthemaKurz = new System.Windows.Forms.TextBox();
       this.textBoxSeminarfachthemaLang = new System.Windows.Forms.TextBox();
       this.label5 = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
+      this.numSeminarpunkte = new diNo.NumericUpDownNullable();
+      this.numGesamt2 = new diNo.NumericUpDownNullable();
+      this.numVertiefung2 = new diNo.NumericUpDownNullable();
+      this.numVertiefung22 = new diNo.NumericUpDownNullable();
+      this.numVertiefung12 = new diNo.NumericUpDownNullable();
+      this.numAnleitung2 = new diNo.NumericUpDownNullable();
+      this.numBetrieb2 = new diNo.NumericUpDownNullable();
+      this.numGesamt1 = new diNo.NumericUpDownNullable();
+      this.numVertiefung1 = new diNo.NumericUpDownNullable();
+      this.numVertiefung21 = new diNo.NumericUpDownNullable();
+      this.numVertiefung11 = new diNo.NumericUpDownNullable();
+      this.numAnleitung1 = new diNo.NumericUpDownNullable();
+      this.numBetrieb1 = new diNo.NumericUpDownNullable();
+      this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.jahrespunkte = new diNo.NumericUpDownNullable();
+      this.label7 = new System.Windows.Forms.Label();
+      this.btnSaveFPA = new System.Windows.Forms.Button();
       this.pnlFPA.SuspendLayout();
       this.groupHj2.SuspendLayout();
+      this.groupHj1.SuspendLayout();
+      this.pnlSeminar.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numSeminarpunkte)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numGesamt2)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung2)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung22)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung12)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numAnleitung2)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numBetrieb2)).BeginInit();
-      this.groupHj1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numGesamt1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung21)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung11)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numAnleitung1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numBetrieb1)).BeginInit();
-      this.pnlSeminar.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numSeminarpunkte)).BeginInit();
+      this.groupBox1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.jahrespunkte)).BeginInit();
       this.SuspendLayout();
       // 
       // buttonSpeichern
@@ -128,14 +133,14 @@
       // 
       // pnlFPA
       // 
+      this.pnlFPA.Controls.Add(this.groupBox1);
       this.pnlFPA.Controls.Add(this.groupHj2);
       this.pnlFPA.Controls.Add(this.groupHj1);
-      this.pnlFPA.Controls.Add(this.btnSaveFPA);
       this.pnlFPA.Controls.Add(this.label9);
       this.pnlFPA.Enabled = false;
       this.pnlFPA.Location = new System.Drawing.Point(15, 12);
       this.pnlFPA.Name = "pnlFPA";
-      this.pnlFPA.Size = new System.Drawing.Size(619, 356);
+      this.pnlFPA.Size = new System.Drawing.Size(732, 356);
       this.pnlFPA.TabIndex = 0;
       // 
       // groupHj2
@@ -164,21 +169,6 @@
       this.groupHj2.TabStop = false;
       this.groupHj2.Text = "2. Halbjahr";
       // 
-      // numGesamt2
-      // 
-      this.numGesamt2.Enabled = false;
-      this.numGesamt2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numGesamt2.Location = new System.Drawing.Point(196, 168);
-      this.numGesamt2.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numGesamt2.Name = "numGesamt2";
-      this.numGesamt2.Size = new System.Drawing.Size(58, 23);
-      this.numGesamt2.TabIndex = 5;
-      this.numGesamt2.Value = null;
-      // 
       // label16
       // 
       this.label16.AutoSize = true;
@@ -188,20 +178,6 @@
       this.label16.Size = new System.Drawing.Size(103, 15);
       this.label16.TabIndex = 79;
       this.label16.Text = "Gesamtpunktzahl";
-      // 
-      // numVertiefung2
-      // 
-      this.numVertiefung2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numVertiefung2.Location = new System.Drawing.Point(196, 139);
-      this.numVertiefung2.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numVertiefung2.Name = "numVertiefung2";
-      this.numVertiefung2.Size = new System.Drawing.Size(58, 23);
-      this.numVertiefung2.TabIndex = 4;
-      this.numVertiefung2.Value = null;
       // 
       // lbVertiefung2
       // 
@@ -213,21 +189,6 @@
       this.lbVertiefung2.TabIndex = 77;
       this.lbVertiefung2.Text = "Vertiefung (25%)";
       // 
-      // numVertiefung22
-      // 
-      this.numVertiefung22.Enabled = false;
-      this.numVertiefung22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numVertiefung22.Location = new System.Drawing.Point(196, 110);
-      this.numVertiefung22.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numVertiefung22.Name = "numVertiefung22";
-      this.numVertiefung22.Size = new System.Drawing.Size(58, 23);
-      this.numVertiefung22.TabIndex = 3;
-      this.numVertiefung22.Value = null;
-      // 
       // lbVertiefung22
       // 
       this.lbVertiefung22.AutoSize = true;
@@ -238,21 +199,6 @@
       this.lbVertiefung22.TabIndex = 75;
       this.lbVertiefung22.Text = "Vertiefung 2. Fach";
       // 
-      // numVertiefung12
-      // 
-      this.numVertiefung12.Enabled = false;
-      this.numVertiefung12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numVertiefung12.Location = new System.Drawing.Point(196, 81);
-      this.numVertiefung12.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numVertiefung12.Name = "numVertiefung12";
-      this.numVertiefung12.Size = new System.Drawing.Size(58, 23);
-      this.numVertiefung12.TabIndex = 2;
-      this.numVertiefung12.Value = null;
-      // 
       // lbVertiefung12
       // 
       this.lbVertiefung12.AutoSize = true;
@@ -262,20 +208,6 @@
       this.lbVertiefung12.Size = new System.Drawing.Size(105, 15);
       this.lbVertiefung12.TabIndex = 73;
       this.lbVertiefung12.Text = "Vertiefung 1. Fach";
-      // 
-      // numAnleitung2
-      // 
-      this.numAnleitung2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numAnleitung2.Location = new System.Drawing.Point(196, 52);
-      this.numAnleitung2.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numAnleitung2.Name = "numAnleitung2";
-      this.numAnleitung2.Size = new System.Drawing.Size(58, 23);
-      this.numAnleitung2.TabIndex = 1;
-      this.numAnleitung2.Value = null;
       // 
       // label20
       // 
@@ -325,20 +257,6 @@
       this.edStelle2.Size = new System.Drawing.Size(238, 38);
       this.edStelle2.TabIndex = 6;
       // 
-      // numBetrieb2
-      // 
-      this.numBetrieb2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numBetrieb2.Location = new System.Drawing.Point(196, 23);
-      this.numBetrieb2.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numBetrieb2.Name = "numBetrieb2";
-      this.numBetrieb2.Size = new System.Drawing.Size(58, 23);
-      this.numBetrieb2.TabIndex = 0;
-      this.numBetrieb2.Value = null;
-      // 
       // label23
       // 
       this.label23.AutoSize = true;
@@ -375,21 +293,6 @@
       this.groupHj1.TabStop = false;
       this.groupHj1.Text = "1. Halbjahr";
       // 
-      // numGesamt1
-      // 
-      this.numGesamt1.Enabled = false;
-      this.numGesamt1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numGesamt1.Location = new System.Drawing.Point(196, 168);
-      this.numGesamt1.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numGesamt1.Name = "numGesamt1";
-      this.numGesamt1.Size = new System.Drawing.Size(58, 23);
-      this.numGesamt1.TabIndex = 5;
-      this.numGesamt1.Value = null;
-      // 
       // label15
       // 
       this.label15.AutoSize = true;
@@ -399,20 +302,6 @@
       this.label15.Size = new System.Drawing.Size(103, 15);
       this.label15.TabIndex = 79;
       this.label15.Text = "Gesamtpunktzahl";
-      // 
-      // numVertiefung1
-      // 
-      this.numVertiefung1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numVertiefung1.Location = new System.Drawing.Point(196, 139);
-      this.numVertiefung1.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numVertiefung1.Name = "numVertiefung1";
-      this.numVertiefung1.Size = new System.Drawing.Size(58, 23);
-      this.numVertiefung1.TabIndex = 4;
-      this.numVertiefung1.Value = null;
       // 
       // lbVertiefung1
       // 
@@ -424,21 +313,6 @@
       this.lbVertiefung1.TabIndex = 77;
       this.lbVertiefung1.Text = "Vertiefung (25%)";
       // 
-      // numVertiefung21
-      // 
-      this.numVertiefung21.Enabled = false;
-      this.numVertiefung21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numVertiefung21.Location = new System.Drawing.Point(196, 110);
-      this.numVertiefung21.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numVertiefung21.Name = "numVertiefung21";
-      this.numVertiefung21.Size = new System.Drawing.Size(58, 23);
-      this.numVertiefung21.TabIndex = 3;
-      this.numVertiefung21.Value = null;
-      // 
       // lbVertiefung21
       // 
       this.lbVertiefung21.AutoSize = true;
@@ -449,21 +323,6 @@
       this.lbVertiefung21.TabIndex = 75;
       this.lbVertiefung21.Text = "Vertiefung 2. Fach";
       // 
-      // numVertiefung11
-      // 
-      this.numVertiefung11.Enabled = false;
-      this.numVertiefung11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numVertiefung11.Location = new System.Drawing.Point(196, 81);
-      this.numVertiefung11.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numVertiefung11.Name = "numVertiefung11";
-      this.numVertiefung11.Size = new System.Drawing.Size(58, 23);
-      this.numVertiefung11.TabIndex = 2;
-      this.numVertiefung11.Value = null;
-      // 
       // lbVertiefung11
       // 
       this.lbVertiefung11.AutoSize = true;
@@ -473,20 +332,6 @@
       this.lbVertiefung11.Size = new System.Drawing.Size(105, 15);
       this.lbVertiefung11.TabIndex = 73;
       this.lbVertiefung11.Text = "Vertiefung 1. Fach";
-      // 
-      // numAnleitung1
-      // 
-      this.numAnleitung1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numAnleitung1.Location = new System.Drawing.Point(196, 52);
-      this.numAnleitung1.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numAnleitung1.Name = "numAnleitung1";
-      this.numAnleitung1.Size = new System.Drawing.Size(58, 23);
-      this.numAnleitung1.TabIndex = 1;
-      this.numAnleitung1.Value = null;
       // 
       // label6
       // 
@@ -536,20 +381,6 @@
       this.edStelle1.Size = new System.Drawing.Size(238, 38);
       this.edStelle1.TabIndex = 6;
       // 
-      // numBetrieb1
-      // 
-      this.numBetrieb1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numBetrieb1.Location = new System.Drawing.Point(196, 23);
-      this.numBetrieb1.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numBetrieb1.Name = "numBetrieb1";
-      this.numBetrieb1.Size = new System.Drawing.Size(58, 23);
-      this.numBetrieb1.TabIndex = 0;
-      this.numBetrieb1.Value = null;
-      // 
       // label2
       // 
       this.label2.AutoSize = true;
@@ -559,17 +390,6 @@
       this.label2.Size = new System.Drawing.Size(82, 15);
       this.label2.TabIndex = 2;
       this.label2.Text = "Betrieb (50%)";
-      // 
-      // btnSaveFPA
-      // 
-      this.btnSaveFPA.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.btnSaveFPA.Image = global::diNo.Properties.Resources.Save;
-      this.btnSaveFPA.Location = new System.Drawing.Point(568, 304);
-      this.btnSaveFPA.Name = "btnSaveFPA";
-      this.btnSaveFPA.Size = new System.Drawing.Size(40, 40);
-      this.btnSaveFPA.TabIndex = 63;
-      this.btnSaveFPA.UseVisualStyleBackColor = true;
-      this.btnSaveFPA.Click += new System.EventHandler(this.btnSaveFPA_Click);
       // 
       // label9
       // 
@@ -607,20 +427,6 @@
       this.btnSaveSeminar.TabIndex = 66;
       this.btnSaveSeminar.UseVisualStyleBackColor = true;
       this.btnSaveSeminar.Click += new System.EventHandler(this.btnSaveSeminar_Click);
-      // 
-      // numSeminarpunkte
-      // 
-      this.numSeminarpunkte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numSeminarpunkte.Location = new System.Drawing.Point(132, 39);
-      this.numSeminarpunkte.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numSeminarpunkte.Name = "numSeminarpunkte";
-      this.numSeminarpunkte.Size = new System.Drawing.Size(88, 23);
-      this.numSeminarpunkte.TabIndex = 0;
-      this.numSeminarpunkte.Value = null;
       // 
       // label11
       // 
@@ -682,6 +488,242 @@
       this.label4.TabIndex = 60;
       this.label4.Text = "Thema (lang; muss nur ausgefüllt werden, wenn länger als 117 Zeichen)";
       // 
+      // numSeminarpunkte
+      // 
+      this.numSeminarpunkte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numSeminarpunkte.Location = new System.Drawing.Point(132, 39);
+      this.numSeminarpunkte.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numSeminarpunkte.Name = "numSeminarpunkte";
+      this.numSeminarpunkte.Size = new System.Drawing.Size(88, 23);
+      this.numSeminarpunkte.TabIndex = 0;
+      this.numSeminarpunkte.Value = null;
+      // 
+      // numGesamt2
+      // 
+      this.numGesamt2.Enabled = false;
+      this.numGesamt2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numGesamt2.Location = new System.Drawing.Point(196, 168);
+      this.numGesamt2.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numGesamt2.Name = "numGesamt2";
+      this.numGesamt2.Size = new System.Drawing.Size(58, 23);
+      this.numGesamt2.TabIndex = 5;
+      this.numGesamt2.Value = null;
+      // 
+      // numVertiefung2
+      // 
+      this.numVertiefung2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numVertiefung2.Location = new System.Drawing.Point(196, 139);
+      this.numVertiefung2.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numVertiefung2.Name = "numVertiefung2";
+      this.numVertiefung2.Size = new System.Drawing.Size(58, 23);
+      this.numVertiefung2.TabIndex = 4;
+      this.numVertiefung2.Value = null;
+      // 
+      // numVertiefung22
+      // 
+      this.numVertiefung22.Enabled = false;
+      this.numVertiefung22.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numVertiefung22.Location = new System.Drawing.Point(196, 110);
+      this.numVertiefung22.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numVertiefung22.Name = "numVertiefung22";
+      this.numVertiefung22.Size = new System.Drawing.Size(58, 23);
+      this.numVertiefung22.TabIndex = 3;
+      this.numVertiefung22.Value = null;
+      // 
+      // numVertiefung12
+      // 
+      this.numVertiefung12.Enabled = false;
+      this.numVertiefung12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numVertiefung12.Location = new System.Drawing.Point(196, 81);
+      this.numVertiefung12.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numVertiefung12.Name = "numVertiefung12";
+      this.numVertiefung12.Size = new System.Drawing.Size(58, 23);
+      this.numVertiefung12.TabIndex = 2;
+      this.numVertiefung12.Value = null;
+      // 
+      // numAnleitung2
+      // 
+      this.numAnleitung2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numAnleitung2.Location = new System.Drawing.Point(196, 52);
+      this.numAnleitung2.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numAnleitung2.Name = "numAnleitung2";
+      this.numAnleitung2.Size = new System.Drawing.Size(58, 23);
+      this.numAnleitung2.TabIndex = 1;
+      this.numAnleitung2.Value = null;
+      // 
+      // numBetrieb2
+      // 
+      this.numBetrieb2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numBetrieb2.Location = new System.Drawing.Point(196, 23);
+      this.numBetrieb2.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numBetrieb2.Name = "numBetrieb2";
+      this.numBetrieb2.Size = new System.Drawing.Size(58, 23);
+      this.numBetrieb2.TabIndex = 0;
+      this.numBetrieb2.Value = null;
+      // 
+      // numGesamt1
+      // 
+      this.numGesamt1.Enabled = false;
+      this.numGesamt1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numGesamt1.Location = new System.Drawing.Point(196, 168);
+      this.numGesamt1.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numGesamt1.Name = "numGesamt1";
+      this.numGesamt1.Size = new System.Drawing.Size(58, 23);
+      this.numGesamt1.TabIndex = 5;
+      this.numGesamt1.Value = null;
+      // 
+      // numVertiefung1
+      // 
+      this.numVertiefung1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numVertiefung1.Location = new System.Drawing.Point(196, 139);
+      this.numVertiefung1.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numVertiefung1.Name = "numVertiefung1";
+      this.numVertiefung1.Size = new System.Drawing.Size(58, 23);
+      this.numVertiefung1.TabIndex = 4;
+      this.numVertiefung1.Value = null;
+      // 
+      // numVertiefung21
+      // 
+      this.numVertiefung21.Enabled = false;
+      this.numVertiefung21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numVertiefung21.Location = new System.Drawing.Point(196, 110);
+      this.numVertiefung21.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numVertiefung21.Name = "numVertiefung21";
+      this.numVertiefung21.Size = new System.Drawing.Size(58, 23);
+      this.numVertiefung21.TabIndex = 3;
+      this.numVertiefung21.Value = null;
+      // 
+      // numVertiefung11
+      // 
+      this.numVertiefung11.Enabled = false;
+      this.numVertiefung11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numVertiefung11.Location = new System.Drawing.Point(196, 81);
+      this.numVertiefung11.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numVertiefung11.Name = "numVertiefung11";
+      this.numVertiefung11.Size = new System.Drawing.Size(58, 23);
+      this.numVertiefung11.TabIndex = 2;
+      this.numVertiefung11.Value = null;
+      // 
+      // numAnleitung1
+      // 
+      this.numAnleitung1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numAnleitung1.Location = new System.Drawing.Point(196, 52);
+      this.numAnleitung1.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numAnleitung1.Name = "numAnleitung1";
+      this.numAnleitung1.Size = new System.Drawing.Size(58, 23);
+      this.numAnleitung1.TabIndex = 1;
+      this.numAnleitung1.Value = null;
+      // 
+      // numBetrieb1
+      // 
+      this.numBetrieb1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numBetrieb1.Location = new System.Drawing.Point(196, 23);
+      this.numBetrieb1.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numBetrieb1.Name = "numBetrieb1";
+      this.numBetrieb1.Size = new System.Drawing.Size(58, 23);
+      this.numBetrieb1.TabIndex = 0;
+      this.numBetrieb1.Value = null;
+      // 
+      // groupBox1
+      // 
+      this.groupBox1.Controls.Add(this.btnSaveFPA);
+      this.groupBox1.Controls.Add(this.jahrespunkte);
+      this.groupBox1.Controls.Add(this.label7);
+      this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.groupBox1.Location = new System.Drawing.Point(568, 36);
+      this.groupBox1.Name = "groupBox1";
+      this.groupBox1.Size = new System.Drawing.Size(144, 308);
+      this.groupBox1.TabIndex = 68;
+      this.groupBox1.TabStop = false;
+      this.groupBox1.Text = "Gesamt";
+      // 
+      // jahrespunkte
+      // 
+      this.jahrespunkte.Enabled = false;
+      this.jahrespunkte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.jahrespunkte.Location = new System.Drawing.Point(11, 168);
+      this.jahrespunkte.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.jahrespunkte.Name = "jahrespunkte";
+      this.jahrespunkte.Size = new System.Drawing.Size(58, 23);
+      this.jahrespunkte.TabIndex = 5;
+      this.jahrespunkte.Value = null;
+      // 
+      // label7
+      // 
+      this.label7.AutoSize = true;
+      this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label7.Location = new System.Drawing.Point(8, 147);
+      this.label7.Name = "label7";
+      this.label7.Size = new System.Drawing.Size(81, 15);
+      this.label7.TabIndex = 79;
+      this.label7.Text = "Jahrespunkte";
+      // 
+      // btnSaveFPA
+      // 
+      this.btnSaveFPA.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.btnSaveFPA.Image = global::diNo.Properties.Resources.Save;
+      this.btnSaveFPA.Location = new System.Drawing.Point(11, 262);
+      this.btnSaveFPA.Name = "btnSaveFPA";
+      this.btnSaveFPA.Size = new System.Drawing.Size(40, 40);
+      this.btnSaveFPA.TabIndex = 80;
+      this.btnSaveFPA.UseVisualStyleBackColor = true;
+      // 
       // UserControlFPAundSeminar
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -693,28 +735,31 @@
       this.Controls.Add(this.label3);
       this.Controls.Add(this.label1);
       this.Name = "UserControlFPAundSeminar";
-      this.Size = new System.Drawing.Size(645, 596);
+      this.Size = new System.Drawing.Size(752, 596);
       this.pnlFPA.ResumeLayout(false);
       this.pnlFPA.PerformLayout();
       this.groupHj2.ResumeLayout(false);
       this.groupHj2.PerformLayout();
+      this.groupHj1.ResumeLayout(false);
+      this.groupHj1.PerformLayout();
+      this.pnlSeminar.ResumeLayout(false);
+      this.pnlSeminar.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numSeminarpunkte)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numGesamt2)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung2)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung22)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung12)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numAnleitung2)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numBetrieb2)).EndInit();
-      this.groupHj1.ResumeLayout(false);
-      this.groupHj1.PerformLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numGesamt1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung21)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numVertiefung11)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numAnleitung1)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numBetrieb1)).EndInit();
-      this.pnlSeminar.ResumeLayout(false);
-      this.pnlSeminar.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numSeminarpunkte)).EndInit();
+      this.groupBox1.ResumeLayout(false);
+      this.groupBox1.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.jahrespunkte)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -734,7 +779,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private NumericUpDownNullable numSeminarpunkte;
-    private System.Windows.Forms.Button btnSaveFPA;
     private System.Windows.Forms.Button btnSaveSeminar;
     private System.Windows.Forms.GroupBox groupHj1;
     private NumericUpDownNullable numGesamt1;
@@ -770,5 +814,9 @@
     private System.Windows.Forms.TextBox edStelle2;
     private NumericUpDownNullable numBetrieb2;
     private System.Windows.Forms.Label label23;
+    private System.Windows.Forms.GroupBox groupBox1;
+    private System.Windows.Forms.Button btnSaveFPA;
+    private NumericUpDownNullable jahrespunkte;
+    private System.Windows.Forms.Label label7;
   }
 }

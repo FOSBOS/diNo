@@ -8150,6 +8150,8 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnGesamt;
             
+            private global::System.Data.DataColumn columnJahrespunkte;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public FpaDataTable() {
@@ -8273,6 +8275,14 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn JahrespunkteColumn {
+                get {
+                    return this.columnJahrespunkte;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -8308,7 +8318,7 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public FpaRow AddFpaRow(SchuelerRow parentSchuelerRowByFK_Fpa_Schueler, byte Halbjahr, byte Betrieb, byte Anleitung, byte Vertiefung, byte Vertiefung1, byte Vertiefung2, string Stelle, string Bemerkung, byte Gesamt) {
+            public FpaRow AddFpaRow(SchuelerRow parentSchuelerRowByFK_Fpa_Schueler, byte Halbjahr, byte Betrieb, byte Anleitung, byte Vertiefung, byte Vertiefung1, byte Vertiefung2, string Stelle, string Bemerkung, byte Gesamt, byte Jahrespunkte) {
                 FpaRow rowFpaRow = ((FpaRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -8321,7 +8331,8 @@ namespace diNo {
                         Vertiefung2,
                         Stelle,
                         Bemerkung,
-                        Gesamt};
+                        Gesamt,
+                        Jahrespunkte};
                 if ((parentSchuelerRowByFK_Fpa_Schueler != null)) {
                     columnValuesArray[1] = parentSchuelerRowByFK_Fpa_Schueler[0];
                 }
@@ -8365,6 +8376,7 @@ namespace diNo {
                 this.columnStelle = base.Columns["Stelle"];
                 this.columnBemerkung = base.Columns["Bemerkung"];
                 this.columnGesamt = base.Columns["Gesamt"];
+                this.columnJahrespunkte = base.Columns["Jahrespunkte"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8392,6 +8404,8 @@ namespace diNo {
                 base.Columns.Add(this.columnBemerkung);
                 this.columnGesamt = new global::System.Data.DataColumn("Gesamt", typeof(byte), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnGesamt);
+                this.columnJahrespunkte = new global::System.Data.DataColumn("Jahrespunkte", typeof(byte), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnJahrespunkte);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AutoIncrement = true;
@@ -13203,6 +13217,22 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public byte Jahrespunkte {
+                get {
+                    try {
+                        return ((byte)(this[this.tableFpa.JahrespunkteColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Jahrespunkte in Tabelle Fpa ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFpa.JahrespunkteColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SchuelerRow SchuelerRow {
                 get {
                     return ((SchuelerRow)(this.GetParentRow(this.Table.ParentRelations["FK_Fpa_Schueler"])));
@@ -13306,6 +13336,18 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetGesamtNull() {
                 this[this.tableFpa.GesamtColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsJahrespunkteNull() {
+                return this.IsNull(this.tableFpa.JahrespunkteColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetJahrespunkteNull() {
+                this[this.tableFpa.JahrespunkteColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -23055,7 +23097,7 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl F
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "Select *\r\nFrom HjLeistung\r\nWhere Id=@Id";
@@ -23063,15 +23105,20 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl F
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "Select *\r\nFrom HjLeistung\r\nWhere SchuelerId=@SchuelerId and FachId=@FachId";
+            this._commandCollection[1].CommandText = "DELETE FROM HjLeistung WHERE (Id = @Id) ";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FachId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "FachId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "Select *\r\nFrom HjLeistung\r\nWhere SchuelerId=@SchuelerId";
+            this._commandCollection[2].CommandText = "Select *\r\nFrom HjLeistung\r\nWhere SchuelerId=@SchuelerId and FachId=@FachId";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FachId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "FachId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[3].Connection = this.Connection;
+            this._commandCollection[3].CommandText = "Select *\r\nFrom HjLeistung\r\nWhere SchuelerId=@SchuelerId";
+            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -23091,7 +23138,7 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl F
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual diNoDataSet.HjLeistungDataTable GetDataBySchuelerAndFach(int SchuelerId, int FachId) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
+            this.Adapter.SelectCommand = this.CommandCollection[2];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(SchuelerId));
             this.Adapter.SelectCommand.Parameters[1].Value = ((int)(FachId));
             diNoDataSet.HjLeistungDataTable dataTable = new diNoDataSet.HjLeistungDataTable();
@@ -23104,7 +23151,7 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl F
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual diNoDataSet.HjLeistungDataTable GetDataBySchuelerId(int SchuelerId) {
-            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand = this.CommandCollection[3];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(SchuelerId));
             diNoDataSet.HjLeistungDataTable dataTable = new diNoDataSet.HjLeistungDataTable();
             this.Adapter.Fill(dataTable);
@@ -23305,6 +23352,30 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl F
         public virtual int Update(int SchuelerId, int FachId, byte Art, byte Punkte, bool Einbringen, global::System.Nullable<decimal> Punkte2Dez, global::System.Nullable<decimal> SchnittMdl, int Original_Id, int Original_SchuelerId, int Original_FachId, byte Original_Art, byte Original_Punkte, bool Original_Einbringen, global::System.Nullable<decimal> Original_Punkte2Dez, global::System.Nullable<decimal> Original_SchnittMdl) {
             return this.Update(SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl, Original_Id, Original_SchuelerId, Original_FachId, Original_Art, Original_Punkte, Original_Einbringen, Original_Punkte2Dez, Original_SchnittMdl, Original_Id);
         }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, false)]
+        public virtual int Delete1(int Id) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            command.Parameters[0].Value = ((int)(Id));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
     }
     
     /// <summary>
@@ -23439,10 +23510,11 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl F
             tableMapping.ColumnMappings.Add("Stelle", "Stelle");
             tableMapping.ColumnMappings.Add("Bemerkung", "Bemerkung");
             tableMapping.ColumnMappings.Add("Gesamt", "Gesamt");
+            tableMapping.ColumnMappings.Add("Jahrespunkte", "Jahrespunkte");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Fpa] WHERE (([Id] = @Original_Id) AND ([SchuelerId] = @Original_SchuelerId) AND ([Halbjahr] = @Original_Halbjahr) AND ((@IsNull_Betrieb = 1 AND [Betrieb] IS NULL) OR ([Betrieb] = @Original_Betrieb)) AND ((@IsNull_Anleitung = 1 AND [Anleitung] IS NULL) OR ([Anleitung] = @Original_Anleitung)) AND ((@IsNull_Vertiefung = 1 AND [Vertiefung] IS NULL) OR ([Vertiefung] = @Original_Vertiefung)) AND ((@IsNull_Vertiefung1 = 1 AND [Vertiefung1] IS NULL) OR ([Vertiefung1] = @Original_Vertiefung1)) AND ((@IsNull_Vertiefung2 = 1 AND [Vertiefung2] IS NULL) OR ([Vertiefung2] = @Original_Vertiefung2)) AND ((@IsNull_Gesamt = 1 AND [Gesamt] IS NULL) OR ([Gesamt] = @Original_Gesamt)) AND ((@IsNull_Stelle = 1 AND [Stelle] IS NULL) OR ([Stelle] = @Original_Stelle)) AND ((@IsNull_Bemerkung = 1 AND [Bemerkung] IS NULL) OR ([Bemerkung] = @Original_Bemerkung)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Fpa] WHERE (([Id] = @Original_Id) AND ([SchuelerId] = @Original_SchuelerId) AND ([Halbjahr] = @Original_Halbjahr) AND ((@IsNull_Betrieb = 1 AND [Betrieb] IS NULL) OR ([Betrieb] = @Original_Betrieb)) AND ((@IsNull_Anleitung = 1 AND [Anleitung] IS NULL) OR ([Anleitung] = @Original_Anleitung)) AND ((@IsNull_Vertiefung = 1 AND [Vertiefung] IS NULL) OR ([Vertiefung] = @Original_Vertiefung)) AND ((@IsNull_Vertiefung1 = 1 AND [Vertiefung1] IS NULL) OR ([Vertiefung1] = @Original_Vertiefung1)) AND ((@IsNull_Vertiefung2 = 1 AND [Vertiefung2] IS NULL) OR ([Vertiefung2] = @Original_Vertiefung2)) AND ((@IsNull_Gesamt = 1 AND [Gesamt] IS NULL) OR ([Gesamt] = @Original_Gesamt)) AND ((@IsNull_Stelle = 1 AND [Stelle] IS NULL) OR ([Stelle] = @Original_Stelle)) AND ((@IsNull_Bemerkung = 1 AND [Bemerkung] IS NULL) OR ([Bemerkung] = @Original_Bemerkung)) AND ((@IsNull_Jahrespunkte = 1 AND [Jahrespunkte] IS NULL) OR ([Jahrespunkte] = @Original_Jahrespunkte)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -23463,10 +23535,12 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl F
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Stelle", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Stelle", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Bemerkung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bemerkung", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bemerkung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bemerkung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Jahrespunkte", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Jahrespunkte", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Jahrespunkte", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Jahrespunkte", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Fpa] ([SchuelerId], [Halbjahr], [Betrieb], [Anleitung], [Vertiefung], [Vertiefung1], [Vertiefung2], [Gesamt], [Stelle], [Bemerkung]) VALUES (@SchuelerId, @Halbjahr, @Betrieb, @Anleitung, @Vertiefung, @Vertiefung1, @Vertiefung2, @Gesamt, @Stelle, @Bemerkung);
-SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Vertiefung2, Gesamt, Stelle, Bemerkung FROM Fpa WHERE (Id = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Fpa] ([SchuelerId], [Halbjahr], [Betrieb], [Anleitung], [Vertiefung], [Vertiefung1], [Vertiefung2], [Gesamt], [Stelle], [Bemerkung], [Jahrespunkte]) VALUES (@SchuelerId, @Halbjahr, @Betrieb, @Anleitung, @Vertiefung, @Vertiefung1, @Vertiefung2, @Gesamt, @Stelle, @Bemerkung, @Jahrespunkte);
+SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Vertiefung2, Gesamt, Stelle, Bemerkung, Jahrespunkte FROM Fpa WHERE (Id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Halbjahr", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Halbjahr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -23478,10 +23552,11 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Gesamt", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gesamt", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Stelle", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Stelle", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bemerkung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bemerkung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Jahrespunkte", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Jahrespunkte", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [Fpa] SET [SchuelerId] = @SchuelerId, [Halbjahr] = @Halbjahr, [Betrieb] = @Betrieb, [Anleitung] = @Anleitung, [Vertiefung] = @Vertiefung, [Vertiefung1] = @Vertiefung1, [Vertiefung2] = @Vertiefung2, [Gesamt] = @Gesamt, [Stelle] = @Stelle, [Bemerkung] = @Bemerkung WHERE (([Id] = @Original_Id) AND ([SchuelerId] = @Original_SchuelerId) AND ([Halbjahr] = @Original_Halbjahr) AND ((@IsNull_Betrieb = 1 AND [Betrieb] IS NULL) OR ([Betrieb] = @Original_Betrieb)) AND ((@IsNull_Anleitung = 1 AND [Anleitung] IS NULL) OR ([Anleitung] = @Original_Anleitung)) AND ((@IsNull_Vertiefung = 1 AND [Vertiefung] IS NULL) OR ([Vertiefung] = @Original_Vertiefung)) AND ((@IsNull_Vertiefung1 = 1 AND [Vertiefung1] IS NULL) OR ([Vertiefung1] = @Original_Vertiefung1)) AND ((@IsNull_Vertiefung2 = 1 AND [Vertiefung2] IS NULL) OR ([Vertiefung2] = @Original_Vertiefung2)) AND ((@IsNull_Gesamt = 1 AND [Gesamt] IS NULL) OR ([Gesamt] = @Original_Gesamt)) AND ((@IsNull_Stelle = 1 AND [Stelle] IS NULL) OR ([Stelle] = @Original_Stelle)) AND ((@IsNull_Bemerkung = 1 AND [Bemerkung] IS NULL) OR ([Bemerkung] = @Original_Bemerkung)));
-SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Vertiefung2, Gesamt, Stelle, Bemerkung FROM Fpa WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Fpa] SET [SchuelerId] = @SchuelerId, [Halbjahr] = @Halbjahr, [Betrieb] = @Betrieb, [Anleitung] = @Anleitung, [Vertiefung] = @Vertiefung, [Vertiefung1] = @Vertiefung1, [Vertiefung2] = @Vertiefung2, [Gesamt] = @Gesamt, [Stelle] = @Stelle, [Bemerkung] = @Bemerkung, [Jahrespunkte] = @Jahrespunkte WHERE (([Id] = @Original_Id) AND ([SchuelerId] = @Original_SchuelerId) AND ([Halbjahr] = @Original_Halbjahr) AND ((@IsNull_Betrieb = 1 AND [Betrieb] IS NULL) OR ([Betrieb] = @Original_Betrieb)) AND ((@IsNull_Anleitung = 1 AND [Anleitung] IS NULL) OR ([Anleitung] = @Original_Anleitung)) AND ((@IsNull_Vertiefung = 1 AND [Vertiefung] IS NULL) OR ([Vertiefung] = @Original_Vertiefung)) AND ((@IsNull_Vertiefung1 = 1 AND [Vertiefung1] IS NULL) OR ([Vertiefung1] = @Original_Vertiefung1)) AND ((@IsNull_Vertiefung2 = 1 AND [Vertiefung2] IS NULL) OR ([Vertiefung2] = @Original_Vertiefung2)) AND ((@IsNull_Gesamt = 1 AND [Gesamt] IS NULL) OR ([Gesamt] = @Original_Gesamt)) AND ((@IsNull_Stelle = 1 AND [Stelle] IS NULL) OR ([Stelle] = @Original_Stelle)) AND ((@IsNull_Bemerkung = 1 AND [Bemerkung] IS NULL) OR ([Bemerkung] = @Original_Bemerkung)) AND ((@IsNull_Jahrespunkte = 1 AND [Jahrespunkte] IS NULL) OR ([Jahrespunkte] = @Original_Jahrespunkte)));
+SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Vertiefung2, Gesamt, Stelle, Bemerkung, Jahrespunkte FROM Fpa WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Halbjahr", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Halbjahr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -23493,6 +23568,7 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Gesamt", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gesamt", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Stelle", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Stelle", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bemerkung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bemerkung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Jahrespunkte", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Jahrespunkte", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Halbjahr", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Halbjahr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -23512,6 +23588,8 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Stelle", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Stelle", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Bemerkung", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bemerkung", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bemerkung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bemerkung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Jahrespunkte", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Jahrespunkte", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Jahrespunkte", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Jahrespunkte", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -23532,7 +23610,9 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT *\r\nFROM Fpa WHERE (SchuelerId = @SchuelerId) ORDER BY Halbjahr";
+            this._commandCollection[1].CommandText = "SELECT Anleitung, Bemerkung, Betrieb, Gesamt, Halbjahr, Id, Jahrespunkte, Schuele" +
+                "rId, Stelle, Vertiefung, Vertiefung1, Vertiefung2 FROM Fpa WHERE (SchuelerId = @" +
+                "SchuelerId) ORDER BY Halbjahr";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -23593,7 +23673,7 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, int Original_SchuelerId, byte Original_Halbjahr, global::System.Nullable<byte> Original_Betrieb, global::System.Nullable<byte> Original_Anleitung, global::System.Nullable<byte> Original_Vertiefung, global::System.Nullable<byte> Original_Vertiefung1, global::System.Nullable<byte> Original_Vertiefung2, global::System.Nullable<byte> Original_Gesamt, string Original_Stelle, string Original_Bemerkung) {
+        public virtual int Delete(int Original_Id, int Original_SchuelerId, byte Original_Halbjahr, global::System.Nullable<byte> Original_Betrieb, global::System.Nullable<byte> Original_Anleitung, global::System.Nullable<byte> Original_Vertiefung, global::System.Nullable<byte> Original_Vertiefung1, global::System.Nullable<byte> Original_Vertiefung2, global::System.Nullable<byte> Original_Gesamt, string Original_Stelle, string Original_Bemerkung, global::System.Nullable<byte> Original_Jahrespunkte) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_SchuelerId));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((byte)(Original_Halbjahr));
@@ -23661,6 +23741,14 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                 this.Adapter.DeleteCommand.Parameters[17].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[18].Value = ((string)(Original_Bemerkung));
             }
+            if ((Original_Jahrespunkte.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[19].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[20].Value = ((byte)(Original_Jahrespunkte.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[19].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[20].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -23681,7 +23769,7 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int SchuelerId, byte Halbjahr, global::System.Nullable<byte> Betrieb, global::System.Nullable<byte> Anleitung, global::System.Nullable<byte> Vertiefung, global::System.Nullable<byte> Vertiefung1, global::System.Nullable<byte> Vertiefung2, global::System.Nullable<byte> Gesamt, string Stelle, string Bemerkung) {
+        public virtual int Insert(int SchuelerId, byte Halbjahr, global::System.Nullable<byte> Betrieb, global::System.Nullable<byte> Anleitung, global::System.Nullable<byte> Vertiefung, global::System.Nullable<byte> Vertiefung1, global::System.Nullable<byte> Vertiefung2, global::System.Nullable<byte> Gesamt, string Stelle, string Bemerkung, global::System.Nullable<byte> Jahrespunkte) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(SchuelerId));
             this.Adapter.InsertCommand.Parameters[1].Value = ((byte)(Halbjahr));
             if ((Betrieb.HasValue == true)) {
@@ -23732,6 +23820,12 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
             else {
                 this.Adapter.InsertCommand.Parameters[9].Value = ((string)(Bemerkung));
             }
+            if ((Jahrespunkte.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[10].Value = ((byte)(Jahrespunkte.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -23763,6 +23857,7 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     global::System.Nullable<byte> Gesamt, 
                     string Stelle, 
                     string Bemerkung, 
+                    global::System.Nullable<byte> Jahrespunkte, 
                     int Original_Id, 
                     int Original_SchuelerId, 
                     byte Original_Halbjahr, 
@@ -23774,6 +23869,7 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     global::System.Nullable<byte> Original_Gesamt, 
                     string Original_Stelle, 
                     string Original_Bemerkung, 
+                    global::System.Nullable<byte> Original_Jahrespunkte, 
                     int Id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(SchuelerId));
             this.Adapter.UpdateCommand.Parameters[1].Value = ((byte)(Halbjahr));
@@ -23825,74 +23921,88 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
             else {
                 this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Bemerkung));
             }
-            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Original_Id));
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(Original_SchuelerId));
-            this.Adapter.UpdateCommand.Parameters[12].Value = ((byte)(Original_Halbjahr));
-            if ((Original_Betrieb.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((byte)(Original_Betrieb.Value));
+            if ((Jahrespunkte.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((byte)(Jahrespunkte.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[14].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(Original_Id));
+            this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(Original_SchuelerId));
+            this.Adapter.UpdateCommand.Parameters[13].Value = ((byte)(Original_Halbjahr));
+            if ((Original_Betrieb.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((byte)(Original_Betrieb.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
             if ((Original_Anleitung.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((byte)(Original_Anleitung.Value));
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((byte)(Original_Anleitung.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[16].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
             }
             if ((Original_Vertiefung.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((byte)(Original_Vertiefung.Value));
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((byte)(Original_Vertiefung.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
             }
             if ((Original_Vertiefung1.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[20].Value = ((byte)(Original_Vertiefung1.Value));
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((byte)(Original_Vertiefung1.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[20].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[21].Value = global::System.DBNull.Value;
             }
             if ((Original_Vertiefung2.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[22].Value = ((byte)(Original_Vertiefung2.Value));
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[23].Value = ((byte)(Original_Vertiefung2.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
             }
             if ((Original_Gesamt.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((byte)(Original_Gesamt.Value));
+                this.Adapter.UpdateCommand.Parameters[24].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[25].Value = ((byte)(Original_Gesamt.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[24].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[25].Value = global::System.DBNull.Value;
             }
             if ((Original_Stelle == null)) {
-                this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[26].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[27].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[25].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[26].Value = ((string)(Original_Stelle));
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[27].Value = ((string)(Original_Stelle));
             }
             if ((Original_Bemerkung == null)) {
-                this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[28].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[28].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[29].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[28].Value = ((string)(Original_Bemerkung));
+                this.Adapter.UpdateCommand.Parameters[28].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[29].Value = ((string)(Original_Bemerkung));
             }
-            this.Adapter.UpdateCommand.Parameters[29].Value = ((int)(Id));
+            if ((Original_Jahrespunkte.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[30].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[31].Value = ((byte)(Original_Jahrespunkte.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[30].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[31].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[32].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -23924,6 +24034,7 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     global::System.Nullable<byte> Gesamt, 
                     string Stelle, 
                     string Bemerkung, 
+                    global::System.Nullable<byte> Jahrespunkte, 
                     int Original_Id, 
                     int Original_SchuelerId, 
                     byte Original_Halbjahr, 
@@ -23934,8 +24045,9 @@ SELECT Id, SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Ve
                     global::System.Nullable<byte> Original_Vertiefung2, 
                     global::System.Nullable<byte> Original_Gesamt, 
                     string Original_Stelle, 
-                    string Original_Bemerkung) {
-            return this.Update(SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Vertiefung2, Gesamt, Stelle, Bemerkung, Original_Id, Original_SchuelerId, Original_Halbjahr, Original_Betrieb, Original_Anleitung, Original_Vertiefung, Original_Vertiefung1, Original_Vertiefung2, Original_Gesamt, Original_Stelle, Original_Bemerkung, Original_Id);
+                    string Original_Bemerkung, 
+                    global::System.Nullable<byte> Original_Jahrespunkte) {
+            return this.Update(SchuelerId, Halbjahr, Betrieb, Anleitung, Vertiefung, Vertiefung1, Vertiefung2, Gesamt, Stelle, Bemerkung, Jahrespunkte, Original_Id, Original_SchuelerId, Original_Halbjahr, Original_Betrieb, Original_Anleitung, Original_Vertiefung, Original_Vertiefung1, Original_Vertiefung2, Original_Gesamt, Original_Stelle, Original_Bemerkung, Original_Jahrespunkte, Original_Id);
         }
     }
     

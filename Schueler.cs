@@ -229,6 +229,8 @@ namespace diNo
     // Berechnet die FPA-Gesamtpunktzahl aus den Teilnoten
     public void calcFPA()
     {
+      byte gespunkte = 0;
+      byte gesanzahl = 0;
       foreach (diNoDataSet.FpaRow fpa in FPANoten)
       {
         // Vertiefungsnote berechnen
@@ -264,12 +266,18 @@ namespace diNo
             fpa.Gesamt = 0;
           else
             fpa.Gesamt = (byte)Math.Round((2 * fpa.Betrieb + fpa.Anleitung + fpa.Vertiefung) / 4.0, MidpointRounding.AwayFromZero);
+
+          gespunkte += fpa.Gesamt;
+          gesanzahl++;
+
+          // Jahrespunkte
+          if (gesanzahl == 2) fpa.Jahrespunkte = (byte)Math.Round(gespunkte / 2.0, MidpointRounding.AwayFromZero);
         }
         else
         {
           fpa.SetGesamtNull();
         }
-      }
+      }      
     }
 
     public diNoDataSet.SeminarfachnoteRow Seminarfachnote

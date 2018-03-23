@@ -57,7 +57,16 @@ namespace diNo
         ta.Update(data);
       }
     }
+    public void Delete()
+    {
+      if (data != null)
+      {
+        var ta = new HjLeistungTableAdapter();        
+        ta.Delete1(data.Id);
+      }        
+    }
   }
+
 
   public enum HjArt
   {
@@ -67,6 +76,7 @@ namespace diNo
     AP = 3,  // Abschlussprüfung-Gesamt
     GesErg = 4, // Gesamtergebnis
     VorHj1 = 5, // ggf. für 11/1
-    VorHj2 = 6 // ggf. für 11/2
+    VorHj2 = 6, // ggf. für 11/2
+    JN = 7 // Jahresnote
   }
 }

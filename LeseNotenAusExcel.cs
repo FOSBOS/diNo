@@ -224,13 +224,20 @@ namespace diNo
           }
         }
 
+        byte? jahresnote = xls.ReadNote("Y" + i, xls.notenbogen);
+        if (jahresnote != null)
+        {
+          HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.JN);
+          l.Punkte = (byte)jahresnote;
+          l.WriteToDB();
+        }
+
         byte? fachreferat = xls.ReadNote("Z" + i, xls.notenbogen);
         if (fachreferat != null)
         {
           HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.FR);
           l.Punkte = (byte)fachreferat;
           l.Punkte2Dez = Convert.ToDecimal((byte)fachreferat);
-          //l.SchnittMdl = Convert.ToDecimal((byte)fachreferat);
           l.WriteToDB();
         }
 

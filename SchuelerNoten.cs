@@ -426,15 +426,34 @@ namespace diNo
           return hjLeistung[(int)art];
         }
 
-    /*
-    public IList<int> getNoten(Notentyp typ)
+    /// <summary>
+    /// Berechnet das Gesamtergebnis aufgrund der vorliegenden HjLeistungen neu (nur Abiturklassen)
+    /// </summary>
+    public void calcGesErg()
     {
-        IList<int> res = new List<int>(noten[(int)Halbjahr.Erstes, (int)typ]);
-        noten[(int)Halbjahr.Zweites, (int)typ].CopyTo(res);
-        return res;
-    }
-    */
+      HjLeistung gesErg = getHjLeistung(HjArt.GesErg);
 
+      // 11. und Vk: Gesamtergebnis besteht aus den 2 Hj-Leistungen
+      if ((int)schueler.getKlasse.Jahrgangsstufe >= 12) 
+      { /*
+        if (getHjLeistung(HjArt.Hj1) != null && getHjLeistung(HjArt.Hj2) != null)
+        {
+          if (gesErg==null)
+          {
+            gesErg = new HjLeistung(schueler.Id, fach, HjArt.GesErg);
+          }
+          gesErg.Punkte2Dez = (decimal)((getHjLeistung(HjArt.Hj1).Punkte + getHjLeistung(HjArt.Hj2).Punkte) / 2.0);
+          gesErg.Punkte = (byte)Math.Round((getHjLeistung(HjArt.Hj1).Punkte + getHjLeistung(HjArt.Hj2).Punkte) / 2.0, MidpointRounding.AwayFromZero);
+          
+
+          gesErg.WriteToDB();
+        }
+        else
+          gesErg.Delete(); // ggf. nicht mehr gültig
+          */
+      }
+    }
+    
     /// <summary>
     /// Liefert die zur Zeit z (z.B. Probezeit BOS) relevante Note (hier Jahresfortgang Ganzz. 1. Hj.)
     /// </summary>

@@ -75,6 +75,7 @@ namespace diNo
       var fpANoten = schueler.FPANoten;
       FillFPAHj(fpANoten[0], numBetrieb1, numAnleitung1, numVertiefung11, numVertiefung21, numVertiefung1, numGesamt1, edStelle1, edBemerkung1);
       FillFPAHj(fpANoten[1], numBetrieb2, numAnleitung2, numVertiefung12, numVertiefung22, numVertiefung2, numGesamt2, edStelle2, edBemerkung2);
+      jahrespunkte.Value = fpANoten[1].IsJahrespunkteNull() ? null : (byte?)fpANoten[1].Jahrespunkte;
     }
 
     private void FillFPAHj(diNoDataSet.FpaRow r,NumericUpDownNullable betrieb, NumericUpDownNullable anleitung,
