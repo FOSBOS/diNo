@@ -317,10 +317,10 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
     /// <param name="kurs">Der Kurs.</param>
     /// <returns>Den Text Lehrer oder Lehrerin.</returns>
     private string GetLehrerOderLehrerin(Kurs kurs)
-    {
+    {      
       if (kurs.getLehrer != null)
       {
-        if (kurs.getLehrer.Data.Dienstbezeichnung.ToLower().Contains("in"))
+        if (kurs.getLehrer.Data.Geschlecht=="W")
            return "Lehrerin";
       }
       return "Lehrer";

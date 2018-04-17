@@ -107,6 +107,7 @@
     <Compile Include="Datenauswahl.Designer.cs">
       <DependentUpon>Datenauswahl.cs</DependentUpon>
     </Compile>
+    <Compile Include="DruckObjekte.cs" />
     <Compile Include="HjLeistung.cs" />
     <Compile Include="ImportKlassenleiter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
