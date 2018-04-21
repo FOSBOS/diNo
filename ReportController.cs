@@ -160,14 +160,17 @@ namespace diNo
 
   public class ReportGefaehrdungen : ReportController
   {
+    private List<Schueler> orgdataSource;
     private List<BriefDaten> bindingDataSource;
-    public ReportGefaehrdungen() : base() { }
+    public ReportGefaehrdungen(List<Schueler> dataSource) : base() 
+    {
+      orgdataSource = dataSource;
+    }
     public override void Init()
     {
       // suche alle Schüler mit Gefährdungen
-      bindingDataSource = new List<BriefDaten>();
-      foreach (var k in Zugriff.Instance.Klassen)
-        foreach (var s in k.eigeneSchueler)
+      bindingDataSource = new List<BriefDaten>();      
+      foreach (var s in orgdataSource)
         {
           if (s.hatVorkommnis(Vorkommnisart.BeiWeiteremAbsinken) || s.hatVorkommnis(Vorkommnisart.starkeGefaehrdungsmitteilung))
           {

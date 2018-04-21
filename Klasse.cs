@@ -370,7 +370,7 @@ namespace diNo
 
     private void setSchreibtKA()
     {
-      var rst = new NoteTableAdapter().GetKAByKursId(Id);
+      var rst = new NoteTableAdapter().GetKAByKursId(Id,(byte)Zugriff.Instance.aktHalbjahr);
       schreibtKA = rst.Count > 0;
     }
 

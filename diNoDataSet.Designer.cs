@@ -17566,9 +17566,11 @@ SELECT Id, Notenart, Punktwert, Datum, Zelle, Halbjahr, SchuelerId, KursId FROM 
             this._commandCollection[7] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[7].Connection = this.Connection;
             this._commandCollection[7].CommandText = "SELECT        Id, Notenart, Punktwert, Datum, Zelle, Halbjahr, SchuelerId, KursId" +
-                "\r\nFROM            Note\r\nWHERE       KursId=@KursId and Notenart=2";
+                "\r\nFROM            Note\r\nWHERE       KursId=@KursId and Notenart=2 and Halbjahr=@" +
+                "Halbjahr";
             this._commandCollection[7].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Halbjahr", global::System.Data.SqlDbType.TinyInt, 1, global::System.Data.ParameterDirection.Input, 0, 0, "Halbjahr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17635,9 +17637,10 @@ SELECT Id, Notenart, Punktwert, Datum, Zelle, Halbjahr, SchuelerId, KursId FROM 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.NoteDataTable GetKAByKursId(int KursId) {
+        public virtual diNoDataSet.NoteDataTable GetKAByKursId(int KursId, byte Halbjahr) {
             this.Adapter.SelectCommand = this.CommandCollection[7];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KursId));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((byte)(Halbjahr));
             diNoDataSet.NoteDataTable dataTable = new diNoDataSet.NoteDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

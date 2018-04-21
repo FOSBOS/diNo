@@ -49,10 +49,10 @@ namespace diNo
       get { return this.data.Nachname + ", " + this.Data.Vorname; }
     }
 
-    public string NameMitAbkVorname
+/*  public string NameMitAbkVorname
     {
       get { return Data.Vorname.Substring(0, 1) + ". " + Data.Nachname; }
-    }
+    }*/
 
     public string VornameName
     {
@@ -62,11 +62,6 @@ namespace diNo
     public string NameDienstbezeichnung
     {
       get { return Data.Vorname + " " + Data.Nachname + ", " + Data.Dienstbezeichnung; }
-    }
-
-    public string NameMitAbkVornameDienstbezeichnung
-    {
-      get { return Data.Vorname.Substring(0, 1) + ". " + Data.Nachname + ", " + Data.Dienstbezeichnung; }
     }
 
     public string KLString

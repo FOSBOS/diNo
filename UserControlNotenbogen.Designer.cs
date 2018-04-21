@@ -59,7 +59,7 @@
       this.cSAP = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.MAP = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.APG = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.cGE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cJN = new System.Windows.Forms.DataGridViewTextBoxColumn();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).BeginInit();
       this.SuspendLayout();
       // 
@@ -92,7 +92,7 @@
             this.cSAP,
             this.MAP,
             this.APG,
-            this.cGE});
+            this.cJN});
       this.dataGridNoten.Location = new System.Drawing.Point(0, 70);
       this.dataGridNoten.Name = "dataGridNoten";
       this.dataGridNoten.ReadOnly = true;
@@ -130,8 +130,6 @@
       // chkShowAbi
       // 
       this.chkShowAbi.AutoSize = true;
-      this.chkShowAbi.Checked = true;
-      this.chkShowAbi.CheckState = System.Windows.Forms.CheckState.Checked;
       this.chkShowAbi.Location = new System.Drawing.Point(3, 47);
       this.chkShowAbi.Name = "chkShowAbi";
       this.chkShowAbi.Size = new System.Drawing.Size(99, 17);
@@ -290,17 +288,17 @@
       this.APG.ReadOnly = true;
       this.APG.Width = 55;
       // 
-      // cGE
+      // cJN
       // 
       dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cGE.DefaultCellStyle = dataGridViewCellStyle13;
-      this.cGE.DividerWidth = 2;
-      this.cGE.Frozen = true;
-      this.cGE.HeaderText = "GE";
-      this.cGE.Name = "cGE";
-      this.cGE.ReadOnly = true;
-      this.cGE.ToolTipText = "Gesamtergebnis";
-      this.cGE.Width = 52;
+      this.cJN.DefaultCellStyle = dataGridViewCellStyle13;
+      this.cJN.DividerWidth = 2;
+      this.cJN.Frozen = true;
+      this.cJN.HeaderText = "JN";
+      this.cJN.Name = "cJN";
+      this.cJN.ReadOnly = true;
+      this.cJN.ToolTipText = "Jahresnote";
+      this.cJN.Width = 52;
       // 
       // UserControlNotenbogen
       // 
@@ -338,6 +336,6 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn cSAP;
     private System.Windows.Forms.DataGridViewTextBoxColumn MAP;
     private System.Windows.Forms.DataGridViewTextBoxColumn APG;
-    private System.Windows.Forms.DataGridViewTextBoxColumn cGE;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cJN;
   }
 }

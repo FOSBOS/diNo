@@ -188,19 +188,18 @@ namespace diNo
     
     private void btnNotendruck_Click(object sender, EventArgs e)
     {
-      if (cbNotendruck.SelectedIndex == 1)
+      var obj = getSelectedObjects();
+      if (obj.Count>0)
       {
-        new ReportGefaehrdungen().Show(); // Gefährdungen werden anders selektiert
-      }
-      else
-      {
-        var obj = getSelectedObjects();
-        if (obj.Count>0)
-        {         
-          new ReportSchuelerdruck(obj, "rpt" + cbNotendruck.Text);          
+        if (cbNotendruck.SelectedIndex == 1)
+        {
+          new ReportGefaehrdungen(obj).Show(); // Gefährdungen werden anders selektiert
         }
-          
-      }
+        else
+        {
+          new ReportSchuelerdruck(obj, "rpt" + cbNotendruck.Text);
+        }
+      }          
     }
   }
 }

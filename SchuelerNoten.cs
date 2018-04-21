@@ -463,6 +463,7 @@ namespace diNo
       {
         HjLeistung hj;
         if (z <= Zeitpunkt.HalbjahrUndProbezeitFOS) hj = getHjLeistung(HjArt.Hj1);
+        else if ((byte)schueler.getKlasse.Jahrgangsstufe < 12) hj = getHjLeistung(HjArt.JN);
         else hj = getHjLeistung(HjArt.GesErg);
         if (hj == null) return null;
         else return hj.Punkte;

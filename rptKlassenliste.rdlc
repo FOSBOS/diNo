@@ -211,10 +211,6 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Klassenleitung: </Value>
-                                  <Style />
-                                </TextRun>
-                                <TextRun>
                                   <Value>=Fields!Klassenleiter.Value</Value>
                                   <Style />
                                 </TextRun>

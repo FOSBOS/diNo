@@ -30,6 +30,7 @@ namespace diNo
     public int Schuljahr { get { return globaleKonstanten.Schuljahr; } }
     public Sperrtyp Sperre { get { return (Sperrtyp)globaleKonstanten.Sperre; } }
     public int aktZeitpunkt { get { return globaleKonstanten.aktZeitpunkt; } }
+    public Halbjahr aktHalbjahr { get { return (globaleKonstanten.aktZeitpunkt <= 2 ? Halbjahr.Erstes : Halbjahr.Zweites); } }
     public string BackupPfad { get { return globaleKonstanten.BackupPfad; } }
     public DateTime Zeugnisdatum { get { return globaleKonstanten.Zeugnisdatum; } }
     public bool SiehtAlles{ get; private set; }

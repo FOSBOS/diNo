@@ -16,6 +16,7 @@ namespace diNo
     public UserControlNotenbogen()
     {
       InitializeComponent();
+      chkShowAbi_CheckedChanged(this,null);
     }
   
     public Schueler Schueler
@@ -61,7 +62,7 @@ namespace diNo
           dataGridNoten.Rows[lineCount].Cells[2].Value = hjl.SchnittMdl.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[4].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[5].Value = hjl.Punkte;
-          if (Zugriff.Instance.aktZeitpunkt <= 2)
+          if (Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes)
             SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[5]);
         }
 
@@ -73,18 +74,16 @@ namespace diNo
           dataGridNoten.Rows[lineCount].Cells[7].Value = hjl.SchnittMdl.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[9].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[10].Value = hjl.Punkte;
-          if (Zugriff.Instance.aktZeitpunkt > 2)
+          if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites)
             SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[10]);
         }
 
-        if ((int)schueler.getKlasse.Jahrgangsstufe < 12)
-          hjl = fach.getHjLeistung(HjArt.JN);
-        else
-          hjl = fach.getHjLeistung(HjArt.GesErg);
+        hjl = fach.getHjLeistung(HjArt.JN); // Jahresnote (unabhängig von Einbringung)
+        // hjl = fach.getHjLeistung(HjArt.GesErg); --> kommt im Reiter Hj-Leistung
         if (hjl != null)
         {         
           dataGridNoten.Rows[lineCount].Cells[14].Value = hjl.Punkte;
-          if (Zugriff.Instance.aktZeitpunkt > 2)
+          if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites)
             SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[14]);
         }
         lineCount++;
@@ -108,12 +107,12 @@ namespace diNo
     {
       int aktuellerZeitpunkt = Zugriff.Instance.aktZeitpunkt;
 
-      if (notenwert < 1) return Color.Crimson;
-      if (notenwert < 1.5) return Color.Coral;
-      if (notenwert < 2.5) return Color.Orange;
-      if (notenwert < 3.5) return Color.Gold;
-      if (notenwert > 11.5) return Color.PaleGreen;
-      return Color.LightYellow;
+      if (notenwert < 1) return Color.Coral;
+      /*if (notenwert < 1.5) return Color.Coral;
+      if (notenwert < 2.5) return Color.Orange;*/
+      if (notenwert < 3.5) return Color.Khaki;
+      //if (notenwert > 11.5) return Color.PaleGreen;
+      return dataGridNoten.BackgroundColor;
   }
 
     private void FillCell(DataGridViewCell c, HjLeistung hjl)
@@ -133,19 +132,26 @@ namespace diNo
 
     private void chkShowHj1_CheckedChanged(object sender, EventArgs e)
     {
-      ShowCols(1,5,chkShowHj1.Checked);
+      ShowCols(1,4,chkShowHj1.Checked);
+      ShowFixedCols();
     }
 
     private void chkShowHj2_CheckedChanged(object sender, EventArgs e)
     {
-      ShowCols(6,10,chkShowHj2.Checked);
-      ShowCols(14, 14, chkShowHj2.Checked|| chkShowAbi.Checked);
+      ShowCols(6,9,chkShowHj2.Checked);
+      ShowFixedCols();
     }
 
     private void chkShowAbi_CheckedChanged(object sender, EventArgs e)
     {
       ShowCols(11,13,chkShowAbi.Checked);
-      ShowCols(14, 14, chkShowHj2.Checked || chkShowAbi.Checked);
+      ShowFixedCols();
+    }
+
+    private void ShowFixedCols() // bestimmte Gesamtwert-Spalten bleiben (fast) immer sichtbar
+    {
+      dataGridNoten.Columns[10].Visible = chkShowHj2.Checked || chkShowAbi.Checked; // 2. Hj
+      dataGridNoten.Columns[14].Visible = chkShowHj2.Checked || chkShowAbi.Checked; // Jahresnote
     }
   }
 }
