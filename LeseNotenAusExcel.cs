@@ -219,7 +219,7 @@ namespace diNo
             HjLeistung hjNote1 = FindHjLeistung(sid, ada, HjArt.Hj1);
             if (hjNote1 != null && hjNote1.Punkte != zeugnisnoteHJ1)
             {
-              hinweise.Add("Die Note aus dem ersten Halbjahr (" + zeugnisnoteHJ1 + ") stimmt nicht mit der Datenbank (" + hjNote1 + ") überein. Prüfen Sie Ihre Noten bzw. wenden Sie sich an den Administrator!");
+              hinweise.Add("SchülerId "+sid+": Die Note aus dem ersten Halbjahr (" + zeugnisnoteHJ1 + ") stimmt nicht mit der Datenbank (" + hjNote1.Punkte + ") überein. Prüfen Sie Ihre Noten bzw. wenden Sie sich an den Administrator!");
             }
           }
         }
