@@ -17,7 +17,8 @@ namespace diNo
       var rst = new FachTableAdapter().GetDataById(id);
       if (rst.Count == 1)
       {
-          this.data = rst[0];
+        data = rst[0];
+        InitSortierung();
       }
       else
       {

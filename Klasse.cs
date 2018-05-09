@@ -36,37 +36,66 @@ namespace diNo
     private diNoDataSet.KlasseRow data;
     private diNoDataSet.SchuelerDataTable schueler;
     private Lehrer klassenleiter;
+    private Jahrgangsstufe jg;
+    private Zweig zweig;
+    private Schulart schulart;
     public List<Schueler> eigeneSchueler;
     private List<Kurs> kurse = null;
 
     public Klasse(int id)
-    {
-      eigeneSchueler = new List<Schueler>();
+    {   
       var rst = new KlasseTableAdapter().GetDataById(id);
       if (rst.Count == 1)
       {
-        this.data = rst[0];
+        data = rst[0];
+        Init();
       }
       else
       {
-        throw new InvalidOperationException("Konstruktor Klasse: Ungültige ID.");
+        throw new InvalidOperationException("Konstruktor Klasse: Ungültige ID=" + id);
       }
     }
-
-    public int GetId()
-    {
-      return data.Id;
+    
+    public Klasse(diNoDataSet.KlasseRow klasseR)
+    {      
+      data = klasseR;
+      Init();
     }
 
-    public Klasse(diNoDataSet.KlasseRow klasseR)
+    private void Init()
     {
       eigeneSchueler = new List<Schueler>();
-      data = klasseR;
+      jg = Faecherkanon.GetJahrgangsstufe(data.Bezeichnung);
+      
+      // Zweig der Klasse (None für Mischklassen)
+      string bez = this.Bezeichnung;
+      if (bez.Contains("_"))
+        zweig = CharToZweig(bez.Substring(bez.Length - 1, 1)); // Teilklasse      
+      else if      (bez.Contains("W") && !bez.Contains("S") && !bez.Contains("U") && !bez.Contains("T"))
+        zweig = Zweig.Wirtschaft;
+      else if (bez.Contains("S") && !bez.Contains("W") && !bez.Contains("U") && !bez.Contains("T"))
+        zweig = Zweig.Sozial;
+      else if (bez.Contains("T") && !bez.Contains("S") && !bez.Contains("U") && !bez.Contains("W"))
+        zweig = Zweig.Technik;
+      else if (bez.Contains("U") && !bez.Contains("S") && !bez.Contains("T") && !bez.Contains("W"))
+        zweig = Zweig.Umwelt;
+      else //hier stehen nur noch die Klassen, deren Zweig nicht eindeutig ist, z. B. Vorkurs BOS oder Mischklassen      
+        zweig = Zweig.None;
+      
+      if (bez.StartsWith("B") || bez.StartsWith("b"))
+        schulart = Schulart.BOS;
+      else
+        schulart = Schulart.FOS;
     }
 
     public static Klasse CreateKlasse(int id)
     {
       return new Klasse(id);
+    }
+
+    public int GetId()
+    {
+      return data.Id;
     }
 
     public diNoDataSet.KlasseRow Data
@@ -84,10 +113,12 @@ namespace diNo
 
     public Jahrgangsstufe Jahrgangsstufe
     {
-      get
-      {
-        return Faecherkanon.GetJahrgangsstufe(data.Bezeichnung);
-      }
+      get { return jg; }
+    }
+
+    public Zweig Zweig
+    {
+      get { return zweig; }
     }
 
     public string JahrgangsstufeZeugnis
@@ -99,56 +130,10 @@ namespace diNo
         return "Jahrgangstufe " + ((int)Jahrgangsstufe);
       }
     }    
-
-
+    
     public Schulart Schulart
     {
-      get
-      {
-        string klasse = data.Bezeichnung;
-        if (klasse.StartsWith("B") || klasse.StartsWith("b"))
-        {
-          return Schulart.BOS;
-        }
-        else
-        {
-          return Schulart.FOS;
-        }
-      }
-    }
-
-    public Zweig Zweig
-    {
-      get
-      {
-        string bez = this.Bezeichnung;//.ToUpper();
-        string letztesZeichen = bez.Substring(bez.Length-1,1);
-        if (bez.Contains("_")) return CharToZweig(letztesZeichen); // Teilklasse
-
-        // TODO: eleganter über Regex lösen...
-        if ((bez.Contains("W") && !bez.Contains("S") && !bez.Contains("U") && !bez.Contains("T")) || bez.EndsWith("_W"))
-        {
-          return Zweig.Wirtschaft;
-        }
-
-        if ((bez.Contains("S") && !bez.Contains("W") && !bez.Contains("U") && !bez.Contains("T")) || bez.EndsWith("_S"))
-        {
-          return Zweig.Sozial;
-        }
-
-        if ((bez.Contains("T") && !bez.Contains("S") && !bez.Contains("U") && !bez.Contains("W")) || bez.EndsWith("_T"))
-        {
-          return Zweig.Technik;
-        }
-
-        if ((bez.Contains("U") && !bez.Contains("S") && !bez.Contains("T") && !bez.Contains("W")) || bez.EndsWith("_U"))
-        {
-          return Zweig.Umwelt;
-        }
-
-        //hier stehen nur noch die Klassen, deren Zweig nicht eindeutig ist, z. B. Vorkurs BOS oder Mischklassen
-        return Zweig.None;
-      }
+      get { return schulart; }
     }
 
     private Zweig CharToZweig(string c)
