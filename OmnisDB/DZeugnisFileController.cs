@@ -289,7 +289,7 @@ namespace diNo.OmnisDB
       public VerwalteZeile(string line)
       {
         eintraege = line.Split('\t');
-        if (eintraege.Length != 233)
+        if (eintraege.Length != 234)
         {
           throw new InvalidDataException("ungültige zeile für DZeugnis hat "+eintraege.Length + "Einträge statt 233");
         }
