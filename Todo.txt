@@ -2,22 +2,36 @@
 --------------
 
 - Sport-IV-Hack wieder entfernen zum neuen Schuljahr
-- Kurzarbeit als eigenen Reiter und im Notenbogen im Excel vorsehen (automatisch doppelt gewichtet) zur Fehlervermeidung
+
 - Tabelle Lehrer aufräumen: Name raus, weil Vor- und Nachname schon drin, Geschlecht speichern (wegen Lehrer/in)
-- Berechnung Nachtermin (z.B. 19/38 BE=6 bei Haupttermin 39)
+
 - Soll HjLeistung der 11. Klasse gleich in 11/1 bzw. 11/2 also mit Schlüssel 5 und 6 gespeichert werden? Wie sieht es bei der Vorklasse aus (dort wird nichts übernommen)?
   --> aktuelles Jahr ist immer 0 bzw. 1, erst beim Import ins nächste Jahr wird der Schlüssel geändert.
+
 - Import/Export neuer FPA-Noten fehlt. Noch zu klären: Brauchen wir da die Teilnoten auch oder reicht Gesamtbewertung?
   --> alte SO (nur Sj. 17/18 die 12. Klassen): verwende Tabelle Fpa12alt
   --> neue SO: wir verwalten diese ganz normal als Hj-Leistung
+
+- Import/Export der Halbjahresleistungen
+  --> was geschieht mit Halbjahresleistungen von Wiederholern?
+  --> Beim Rücktritt in eine Vorklasse müssen die Halbjahresleistungen aus der 11ten FOS bzw. 12ten BOS gelöscht werden
+      (bei den dieses Jahr schon zurückgetretenen muss ich das noch manuell nachholen (betrifft HJ 1 aus FOS11 bei Rücktritt in FVk)
+
 - Umgang mit Legasthenikern in neuer SchO nachlesen und ggf. programmieren
-- neue Notendatei testen
-- Import der neuen Notendatei testen
-  * Einlesen der Abschlussprüfung fehlt noch völlig
-- WinSV:
-  * BOS Vorrücken von 12 in 13 wird nicht gefüllt. "N" nicht erhalten, "-" darf vorrücken. Fraglich: welches Feld ist das überhaupt?
-  * Reverse Engineering: Vielleicht findet man ja doch noch raus in welche Spalte die Franz-Noten müssen. Oder besser auf neue Version der WinSV warten?
-- ganz großes Todo: neue WinSV mit Halbjahresnoten irgendwie anbinden?
-- Testen: Wird eine Note mit Gewichtung 0,5 von diNo korrekt eingelesen und irgendwie im Notenbogen gekennzeichnet?
+
+- neue Notendatei
+  --> testen
+  --> Import der neuen Notendatei (Kurzarbeits-Reiter, Zellen anpassen)
+  --> Einlesen der Abschlussprüfung fehlt noch völlig
+  --> evtl. Zurückspielen der eingebrachten Halbjahre nach der ersten PA möglich
+
 - Statistiken ?
    --> die letzten zwei Punkte sind N2H, die wir programmieren, wenn sonst alles läuft und uns nix besseres einfällt. ;-)
+
+- Anzeige der Halbjahresleistungen und evtl. manuelle Wahl eingebrachter Halbjahre (?!)
+
+- Erstellen eines Vorschlages zur Einbringung von Halbjahresleistungen
+
+- neue Vorrücken- und Bestehensregeln
+
+- 12te Klassen ab Schuljahr 2018/19 auf neue Schulordnung umstellen
