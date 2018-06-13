@@ -92,9 +92,9 @@ namespace diNo
             dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.Abschlusszeugnis;
             if (Zugriff.Instance.aktZeitpunkt > 3) // ab der 2.PA werden die Prüfungsnoten auch farblich hervorgehoben
             {
-              SetBackgroundColor((double)zeugnis.PruefungGesamt, dataGridNoten.Rows[lineCount].Cells[21]);
-              SetBackgroundColor((double)zeugnis.SchnittFortgangUndPruefung, dataGridNoten.Rows[lineCount].Cells[22]);
-              SetBackgroundColor((double)zeugnis.Abschlusszeugnis, dataGridNoten.Rows[lineCount].Cells[23]);
+              SetBackgroundColor(Convert.ToDouble(zeugnis.PruefungGesamt), dataGridNoten.Rows[lineCount].Cells[21]);
+              SetBackgroundColor(Convert.ToDouble(zeugnis.SchnittFortgangUndPruefung), dataGridNoten.Rows[lineCount].Cells[22]);
+              SetBackgroundColor(Convert.ToDouble(zeugnis.Abschlusszeugnis), dataGridNoten.Rows[lineCount].Cells[23]);
             }
           }
           else
@@ -102,7 +102,7 @@ namespace diNo
             dataGridNoten.Rows[lineCount].Cells[23].Value = zeugnis.JahresfortgangGanzzahlig;
             if (Zugriff.Instance.aktZeitpunkt > 3 && zeugnis.JahresfortgangGanzzahlig != null) // ab der 2.PA werden die Prüfungsnoten auch farblich hervorgehoben
             {
-              SetBackgroundColor((double)zeugnis.JahresfortgangGanzzahlig, dataGridNoten.Rows[lineCount].Cells[23]);
+              SetBackgroundColor(Convert.ToDouble(zeugnis.JahresfortgangGanzzahlig), dataGridNoten.Rows[lineCount].Cells[23]);
             }
           }
         }
