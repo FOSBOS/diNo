@@ -141,11 +141,11 @@ namespace diNo
                 }
             }
             // Kontrollmöglichkeit: alle weiteren Unterpunktungen werden gedruckt
-            if (s.getNoten.Unterpunktungen!="" && !UnterpunktungGedruckt && zeitpunkt!=Zeitpunkt.HalbjahrUndProbezeitFOS
-              && (modus==NotenCheckModus.Gesamtpruefung || modus==NotenCheckModus.EigeneKlasse))
-              Add(null, "Unterpunktet in " + s.getNoten.Unterpunktungen 
-                + (zeitpunkt != Zeitpunkt.ProbezeitBOS && s.AlteFOBOSO() ? "" : " Schnitt: " + String.Format("{0:0.00}", s.getNoten.Punkteschnitt)));
-
+            if (s.getNoten.Unterpunktungen != "" && !UnterpunktungGedruckt && zeitpunkt != Zeitpunkt.HalbjahrUndProbezeitFOS
+              && (modus == NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse))
+            {
+              Add(null, "Unterpunktet in " + s.getNoten.Unterpunktungen);
+            }
             vorigerSchueler = s; // CreateResults braucht noch den
           }
     }   
@@ -158,8 +158,6 @@ namespace diNo
       if (modus==NotenCheckModus.VorkommnisseErzeugen)        
       {
         s.AddVorkommnis(v,Zugriff.Instance.Zeugnisdatum,""); // Zeugnis als Vorkommnis anlegen
-        if (s.getNoten.ErhaeltMittlereReife() && zeitpunkt == Zeitpunkt.Jahresende)
-          s.AddVorkommnis(Vorkommnisart.MittlereReife, Zugriff.Instance.Zeugnisdatum, "");
       }
       else
       {

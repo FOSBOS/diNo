@@ -229,22 +229,23 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="FPAText">
+                    <Textbox Name="Textbox8">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!FPAText.Value</Value>
-                              <MarkupType>HTML</MarkupType>
-                              <Style />
+                              <Value />
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>FPAText</rd:DefaultName>
+                      <rd:DefaultName>Textbox8</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -265,7 +266,7 @@
                 <TablixCell>
                   <CellContents>
                     <Subreport Name="subrptFachSchuelerNoten11Klasse">
-                      <ReportName>subrptFachSchuelerNoten11</ReportName>
+                      <ReportName>subrptFachSchuelerNoten11Klasse</ReportName>
                       <Parameters>
                         <Parameter Name="SId">
                           <Value>=Fields!Id.Value</Value>
@@ -380,12 +381,8 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="Anschrift">
-          <DataField>Anschrift</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Bekenntnis">
-          <DataField>Bekenntnis</DataField>
+        <Field Name="Anrede">
+          <DataField>Anrede</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Bemerkung">
@@ -400,10 +397,6 @@
           <DataField>FPAText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="GeborenInAm">
-          <DataField>GeborenInAm</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="Id">
           <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
@@ -412,20 +405,8 @@
           <DataField>Klasse</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="KlasseMitZweig">
-          <DataField>KlasseMitZweig</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="Klassenleiter">
           <DataField>Klassenleiter</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Laufbahn">
-          <DataField>Laufbahn</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Legasthenie">
-          <DataField>Legasthenie</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Nachname">
@@ -444,10 +425,6 @@
           <DataField>Schuljahr</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Telefon">
-          <DataField>Telefon</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="Vorname">
           <DataField>Vorname</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -455,8 +432,8 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>diNo</rd:DataSetName>
-        <rd:TableName>SchuelerDruck</rd:TableName>
-        <rd:ObjectDataSourceType>diNo.SchuelerDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>NotenmitteilungDruck</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.NotenmitteilungDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

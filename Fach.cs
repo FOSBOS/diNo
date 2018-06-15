@@ -121,11 +121,11 @@ namespace diNo
           get { return (data.IsBezZeugnisNull() ? data.Bezeichnung : data.BezZeugnis); }
         }
    
-    public bool IstSAPFach(Zweig zweig)
+    public bool IstSAPFach(Zweig zweig, bool inVorklasse=false)
     {
 
       if (Kuerzel == "D" || Kuerzel == "E" || Kuerzel == "M") return true;
-      else if (Typ == FachTyp.Profilfach)
+      else if (!inVorklasse && Typ == FachTyp.Profilfach) // in der Vorklasse gibt es noch kein richtiges Profilfach
       {
         return sort[(int)zweig] == 1; // nur das 1. Profilfach ist SAP-Fach
       }

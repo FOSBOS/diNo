@@ -46,7 +46,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -120,7 +119,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
@@ -227,28 +225,26 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox8">
+                    <Textbox Name="FPAText">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>12pt</FontSize>
-                              </Style>
+                              <Value>=Fields!FPAText.Value</Value>
+                              <MarkupType>HTML</MarkupType>
+                              <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox8</rd:DefaultName>
+                      <rd:DefaultName>FPAText</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -269,7 +265,7 @@
                 <TablixCell>
                   <CellContents>
                     <Subreport Name="subrptFachSchuelerNoten11Klasse">
-                      <ReportName>subrptFachSchuelerNoten11Klasse</ReportName>
+                      <ReportName>subrptFachSchuelerNoten11</ReportName>
                       <Parameters>
                         <Parameter Name="SId">
                           <Value>=Fields!Id.Value</Value>
@@ -282,7 +278,6 @@
                       </Style>
                     </Subreport>
                     <ColSpan>2</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -385,12 +380,8 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="Anschrift">
-          <DataField>Anschrift</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Bekenntnis">
-          <DataField>Bekenntnis</DataField>
+        <Field Name="Anrede">
+          <DataField>Anrede</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Bemerkung">
@@ -401,8 +392,8 @@
           <DataField>DNote</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="GeborenInAm">
-          <DataField>GeborenInAm</DataField>
+        <Field Name="FPAText">
+          <DataField>FPAText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Id">
@@ -415,14 +406,6 @@
         </Field>
         <Field Name="Klassenleiter">
           <DataField>Klassenleiter</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Laufbahn">
-          <DataField>Laufbahn</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Legasthenie">
-          <DataField>Legasthenie</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Nachname">
@@ -441,10 +424,6 @@
           <DataField>Schuljahr</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Telefon">
-          <DataField>Telefon</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="Vorname">
           <DataField>Vorname</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -452,8 +431,8 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>diNo</rd:DataSetName>
-        <rd:TableName>SchuelerDruck</rd:TableName>
-        <rd:ObjectDataSourceType>diNo.SchuelerDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>NotenmitteilungDruck</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.NotenmitteilungDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

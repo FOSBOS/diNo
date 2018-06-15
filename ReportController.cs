@@ -14,7 +14,8 @@ namespace diNo
     public abstract class ReportController    
     {
         protected static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        protected ReportForm rpt;        
+        protected ReportForm rpt;
+        protected Bericht bericht;     
         
         public ReportController()
         {
@@ -49,44 +50,29 @@ namespace diNo
         }
     }
   
-  // teilt zu druckende Schülerdaten auf die verschiedenen Berichte auf (11./12. Klasse getrennt)
-  public class ReportSchuelerdruck
-  {
-    public ReportSchuelerdruck(List<Schueler> dataSource, string Berichtsname)
-    {
-      List<SchuelerDruck> s11 = new List<SchuelerDruck>(); // Schüler aus der 11. Klasse
-      List<SchuelerDruck> s12 = new List<SchuelerDruck>(); // und 12. müssen getrennt gedruckt werden (andere Berichtsgrundlage)
-      foreach (Schueler s in dataSource)
-      {
-        if ((Berichtsname== "rptNotenbogen" || (Berichtsname == "rptNotenmitteilung")) 
-            && s.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Elf)
-          s11.Add(new SchuelerDruck(s,Berichtsname));
-        else
-          s12.Add(new SchuelerDruck(s,Berichtsname));
-      }
-
-      if (Berichtsname == "rptBescheinigung") Berichtsname = "rptZwischenzeugnis"; // geht genauso
-
-      if (s11.Count>0)
-        new rptSchuelerdruck(s11, "diNo." + Berichtsname + "11.rdlc").Show();
-      if (s12.Count > 0)
-        new rptSchuelerdruck(s12, "diNo." + Berichtsname + ".rdlc").Show();
-    }    
-  }
-
-
+  
   // kann diverse Schüler-/Notenberichte drucken, die Grunddaten sind jeweils eine Schülerliste  
-  public class rptSchuelerdruck : ReportController
+  public class ReportSchuelerdruck : ReportController
   {
-    private List<SchuelerDruck> bindingDataSource;
+    private List<SchuelerDruck> bindingDataSource= new List<SchuelerDruck>();
     private string rptName;
 
-    public rptSchuelerdruck(List<SchuelerDruck> dataSource, string Berichtsname) : base()
-    {
-      rptName = Berichtsname;
-      bindingDataSource = dataSource;
-    }
-        
+    public ReportSchuelerdruck(List<Schueler> dataSource, Bericht b) : base()
+    {      
+      foreach (Schueler s in dataSource)
+      {
+        bindingDataSource.Add(SchuelerDruck.CreateSchuelerDruck(s, b));
+      }
+
+      rptName = SchuelerDruck.GetBerichtsname(b);
+      if ((b == Bericht.Notenbogen || b == Bericht.Notenmitteilung || b == Bericht.Abiergebnisse)
+            && dataSource[0].getKlasse.Jahrgangsstufe > Jahrgangsstufe.Elf)
+      {
+        rptName += "Alt"; // für diese Typen müssen noch Bericht nach alter FOBOSO verwendet werden.
+      }
+      rptName = "diNo." + rptName + ".rdlc";
+    }         
+       
     public override void Init()
     {
       rpt.BerichtBindingSource.DataSource = bindingDataSource;

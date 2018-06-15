@@ -167,7 +167,7 @@ namespace diNo
 
     private void btnKlassenliste_Click(object sender, EventArgs e)
     {
-      new ReportSchuelerdruck(getSelectedObjects(), "rptKlassenliste");
+      new ReportSchuelerdruck(getSelectedObjects(), Bericht.Klassenliste).Show();
     }
 
     private void btnSelect_Click(object sender, EventArgs e)
@@ -193,11 +193,14 @@ namespace diNo
       {
         if (cbNotendruck.SelectedIndex == 1)
         {
-          new ReportGefaehrdungen(obj).Show(); // Gefährdungen werden anders selektiert
+          if (Zugriff.Instance.aktZeitpunkt == (int)Zeitpunkt.HalbjahrUndProbezeitFOS)
+            new ReportGefaehrdungen(obj).Show(); // Gefährdungen werden anders selektiert
+          else
+            MessageBox.Show("Gefährdungen können nur zum Halbjahr gedruckt werden.","diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         else
         {
-          new ReportSchuelerdruck(obj, "rpt" + cbNotendruck.Text);
+          new ReportSchuelerdruck(obj, (Bericht) cbNotendruck.SelectedIndex).Show();
         }
       }          
     }

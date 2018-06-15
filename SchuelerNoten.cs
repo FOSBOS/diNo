@@ -181,7 +181,7 @@ namespace diNo
         kuerzel = fachNoten.getFach.Kuerzel;
         if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Sw" || kuerzel == "Sm" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
         byte? relevanteNote = fachNoten.getRelevanteNote(zeitpunkt);
-        int istSAP = fachNoten.getFach.IstSAPFach(schueler.Zweig) ? 1:0;
+        int istSAP = fachNoten.getFach.IstSAPFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse) ? 1:0;
         if (relevanteNote != null)
         {
           Punktesumme += relevanteNote.GetValueOrDefault();
@@ -220,15 +220,26 @@ namespace diNo
           Unterpunktungen += "Sem (" + relevanteNote +") ";
       }
       Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2, MidpointRounding.AwayFromZero);
-      if (Unterpunktungen != "" && !schueler.AlteFOBOSO()) Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
+      if (Unterpunktungen != "" && !schueler.AlteFOBOSO() && !(zeitpunkt==Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse))
+        Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
     }
 
     public bool HatNichtBestanden()
     {
-      if (schueler.AlteFOBOSO() && zeitpunkt!=Zeitpunkt.ProbezeitBOS)
-        // Achtung: Vorklasse hat am Jahresende eine besondere Bestanden-Regelung
+      if (schueler.AlteFOBOSO() && zeitpunkt!=Zeitpunkt.ProbezeitBOS)        
         return AnzahlNoten(6) > 0 || AnzahlNoten(5) > 1;
-      else
+
+      // Achtung: Vorklasse hat am Jahresende eine besondere Bestanden-Regelung
+      else if (zeitpunkt == Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse)
+      {
+        if (AnzahlNoten(6) == 0 && AnzahlNoten(5) == 0) return false;  // bestanden
+        if (AnzahlNoten(6) > 0 || AnzahlNoten(5) > 1) return true;  // da geht nichts mehr
+        if (AnzahlNoten(5, true) > 0) // eine 5 in D,E oder M kann nur dadurch ausgeglichen werden
+          return !(AnzahlNoten(1, true) + AnzahlNoten(2, true) > 0 || AnzahlNoten(3, true) > 1);
+        else
+          return !(AnzahlNoten(1) + AnzahlNoten(2) > 0 || AnzahlNoten(3) > 1);
+      }
+      else 
         return !(AnzahlNoten(6) == 0 && AnzahlNoten(5) == 0 ||
           AnzahlNoten(6) == 0 && AnzahlNoten(5) == 1 && Punkteschnitt >= 5 ||
           (AnzahlNoten(6) * 2 + AnzahlNoten(5)) == 2 && Punkteschnitt >= 6);
@@ -255,17 +266,6 @@ namespace diNo
       return AnzahlNoten(6) == 0 && AnzahlNoten(5) == 0 && AnzahlNoten(4) == 0;
     }
     
-    // Mittlere Reife, falls nur 4er oder 1x5,1x2 oder 1x5,2x3, vgl. §7(2), Ausgleich nur über Hauptfächer, falls 5 in Hauptfach
-    public bool ErhaeltMittlereReife()
-    {
-      if (schueler.getKlasse.Jahrgangsstufe!=Jahrgangsstufe.Vorklasse 
-        || schueler.getKlasse.Bezeichnung=="IV") return false;
-
-      return (AnzahlNoten(6) == 0) && 
-        (AnzahlNoten(5) == 0 ||
-        (AnzahlNoten(5) == 1 && (AnzahlNoten(1) > 0 || AnzahlNoten(2) > 0 || AnzahlNoten(3) > 1)));
-    }
-
     public bool MAPmoeglich()
     {
       // Anzahl 5er und 6er nach einen MAP mit "bestmöglichem" Ergebnis

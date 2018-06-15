@@ -589,17 +589,14 @@ namespace diNo
           
         // Jahresende, 3. PA, Probezeit (BOS und Hj.)
         if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse && contr.zeitpunkt == Zeitpunkt.Jahresende)
-        {
-        // nur bestanden ohne 5er/6er §28(4)
-          if (n.AnzahlNoten(6) > 0 || n.AnzahlNoten(5) > 0)
-          {
+        {          
+          if (schueler.getNoten.HatNichtBestanden())          
             contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen,true);
-            if (n.ErhaeltMittlereReife())
-              contr.Add(null, "Trotzdem Zeugnis über mittlere Reife",true);                          
-          }
-          /*else if (n.Unterpunktungen!="")
-            contr.Add(null, "Unterpunktet in: " + n.Unterpunktungen,true);*/
-            
+
+          // Schüler der BOS-Vk erhalten mittlere Reife, wenn sie bestanden haben:
+          else if (schueler.Data.Schulart == "B")          
+            contr.Add(Vorkommnisart.MittlereReife, "");
+         
           if (n.HatIn12KeinePZ())
             contr.Add(Vorkommnisart.KeineProbezeitNaechstesSJ , "");
         }

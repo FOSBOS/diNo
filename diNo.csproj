@@ -251,12 +251,12 @@
       <DependentUpon>Klassenansicht.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="rptZwischenzeugnis.rdlc" />
+    <EmbeddedResource Include="rptZeugnis.rdlc" />
     <EmbeddedResource Include="rptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="rptKlassenliste.rdlc" />
-    <EmbeddedResource Include="rptNotenbogen11.rdlc" />
-    <EmbeddedResource Include="rptNotenmitteilung11.rdlc" />
+    <EmbeddedResource Include="rptNotenbogen.rdlc" />
     <EmbeddedResource Include="rptNotenmitteilung.rdlc" />
+    <EmbeddedResource Include="rptNotenmitteilungAlt.rdlc" />
     <EmbeddedResource Include="subrptFPANoten.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten11Klasse.rdlc" />
@@ -287,12 +287,12 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
+    <EmbeddedResource Include="rptAbiergebnisseAlt.rdlc" />
     <EmbeddedResource Include="rptBrief.rdlc" />
     <EmbeddedResource Include="ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="rptNotenbogen.rdlc" />
+    <EmbeddedResource Include="rptNotenbogenAlt.rdlc" />
     <EmbeddedResource Include="rptNotenCheck.rdlc" />
     <EmbeddedResource Include="subrptAbiergebnisseNoten.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />

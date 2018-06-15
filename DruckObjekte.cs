@@ -6,6 +6,20 @@ using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
+  public enum Bericht
+  {    
+    Notenmitteilung,
+    Gefaehrdung,
+    Abiergebnisse,
+    Bescheinigung,
+    Zwischenzeugnis,
+    Jahreszeugnis,
+    Abizeugnis,
+    Notenbogen,
+    Klassenliste
+  }
+
+  // Basisklasse für Berichtsdaten von Notenbögen und Zeugnissen
   public class SchuelerDruck
   {
     public int Id { get; private set; }
@@ -13,59 +27,31 @@ namespace diNo
     public string Vorname { get; private set; }
     public string Rufname { get; private set; }
     public string Anrede { get; private set; }
-    public string Anschrift { get; private set; }
-    public string Telefon { get; private set; }
-    public string GeborenInAm { get; private set; }
     public string Klasse { get; private set; }
-    public string KlasseMitZweig { get; private set; }
-    public string KlasseARZeugnis { get; private set; }
-    public string JgKurz { get; private set; }
-    public string Bekenntnis { get; private set; }
+
     public string Klassenleiter { get; private set; }
-    public string Legasthenie { get; private set; }
-    public string Laufbahn { get; private set; }
+    public string KlassenleiterText { get; private set; }
     public string Schuljahr { get; private set; }
     public string Schulart { get; private set; }
-    public string ZeugnisArt { get; private set; }
-    public string DatumZeugnis { get; private set; }
 
     // Zeugnisbemerkung muss im Bericht als HTML eingestellt sein (re. Maus auf Datenfeld)
-    public string Bemerkung { get; private set; }
-    public string DNote { get; private set; }
-    public string FPAText { get; private set; } // nur für Notenmitteilung    
-    public bool IstVolljaehrig { get; private set; }
+    public string Bemerkung { get; protected set; }
+    protected Jahrgangsstufe jg;
 
-    public SchuelerDruck(Schueler s, string Berichtsname)
+    public SchuelerDruck(Schueler s, Bericht Berichtsname)
     {
-      var jg = s.getKlasse.Jahrgangsstufe;
-      string tmp;
+      jg = s.getKlasse.Jahrgangsstufe;
 
       Id = s.Id;//.ToString();
       Nachname = s.Name;
       Vorname = s.Vorname;
       Rufname = s.Data.Rufname;
       Anrede = s.getHerrFrau();
-      Anschrift = s.Data.AnschriftStrasse + "\n" + s.Data.AnschriftPLZ + " " + s.Data.AnschriftOrt;
-      Telefon = s.Data.AnschriftTelefonnummer;
-      GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
-
       Klasse = s.getKlasse.Bezeichnung;
-      KlasseMitZweig = s.KlassenBezeichnung;
-      if (s.getKlasse.Bezeichnung == "IV") JgKurz = "IV";
-      else if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse) JgKurz = "VKL";
-      else JgKurz = ((int)s.getKlasse.Jahrgangsstufe).ToString();
-      Bekenntnis = "Bekenntnis: " + s.Data.Bekenntnis;
+
       var KL = s.getKlasse.Klassenleiter;
-      Klassenleiter = KL.NameDienstbezeichnung + (s.AlteFOBOSO() && Berichtsname=="rptNotenbogen" ? "": "\n" + KL.KLString);
-      Legasthenie = s.Data.LRSStoerung ? "\nLegasthenie" : "";
-      Laufbahn = "Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm.ToString("dd.MM.yyyy");
-      Laufbahn += " aus " + s.Data.SchulischeVorbildung + " von " + s.EintrittAusSchulname;//.Substring(0,25);
-                                                                                            // ggf. berufl. Bildung (aber da steht nix in der DB außer BA)      
-      if (!s.Data.IsProbezeitBisNull()) Laufbahn += "\nProbezeit bis " + s.Data.ProbezeitBis.ToString("dd.MM.yyyy");
-      if (!s.Data.IsAustrittsdatumNull()) Laufbahn += "\nAustritt am " + s.Data.Austrittsdatum.ToString("dd.MM.yyyy");
-      // Wiederholungen
-      tmp = s.getWiederholungen();
-      if (tmp != "") Laufbahn += "\nWiederholungen: " + tmp;
+      Klassenleiter = KL.NameDienstbezeichnung; // + (s.AlteFOBOSO() && Berichtsname == Bericht.Notenbogen ? "" : "\n" + KL.KLString);
+      KlassenleiterText = KL.KLString;
 
       if (s.Data.Schulart == "B")
         Schulart = "Staatliche Berufsoberschule Kempten (Allgäu)";
@@ -73,34 +59,84 @@ namespace diNo
         Schulart = "Staatliche Fachoberschule Kempten (Allgäu)";
 
       Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
-      ZeugnisArt = Berichtsname.Substring(3).ToUpper();
+      
+      if (jg == Jahrgangsstufe.Dreizehn)
+      {
+        if (!s.Seminarfachnote.IsThemaKurzNull())
+        {
+          Bemerkung = "<b>Thema der Seminararbeit:</b><br>";
+          Bemerkung += s.Seminarfachnote.ThemaKurz;
+        }
+      }
+    }
+    
+    public static string GetBerichtsname(Bericht b)
+    {
+      switch (b)
+      {
+        case Bericht.Notenbogen: return "rptNotenbogen";
+        case Bericht.Bescheinigung: 
+        case Bericht.Zwischenzeugnis: 
+        case Bericht.Jahreszeugnis: return "rptZeugnis";
+        case Bericht.Gefaehrdung: return "rptGefaehrdung";
+        case Bericht.Abiergebnisse: return "rptAbiergebnisse";
+        case Bericht.Notenmitteilung: return "rptNotenmitteilung";
+        
+        case Bericht.Klassenliste: return "rptKlassenliste";
+        default: return "";
+      }
+    }
 
-      KlasseARZeugnis = (Berichtsname == "rptZwischenzeugnis" ? "besucht" : "besuchte") + " im " + Schuljahr;
-      KlasseARZeugnis += " die " + s.getKlasse.JahrgangsstufeZeugnis + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
-      if (s.Data.Ausbildungsrichtung != "V") // IV idR. ohne AR
-        KlasseARZeugnis += ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s);
-      KlasseARZeugnis += " in der Klasse " + s.getKlasse.Bezeichnung;
-      if (Berichtsname == "rptBescheinigung")
-        KlasseARZeugnis += "\nund ist heute aus der Schule ausgetreten. \n\nIm laufenden Schulhalbjahr erzielte " + s.getErSie() + " bis zum Austritt folgende Leistungen:";
-      else
-        KlasseARZeugnis += ".";
+    public static SchuelerDruck CreateSchuelerDruck(Schueler s, Bericht b)
+    {
+      switch (b)
+      {
+        case Bericht.Notenbogen: return new NotenbogenDruck(s);
+        case Bericht.Bescheinigung:
+        case Bericht.Zwischenzeugnis: 
+        case Bericht.Jahreszeugnis: 
+        case Bericht.Gefaehrdung: return new ZeugnisDruck(s, b);
+        case Bericht.Abiergebnisse: 
+        case Bericht.Notenmitteilung: return new NotenmitteilungDruck(s, b);        
+        default: return new SchuelerDruck(s,b);
+      }
+    }
+  }
 
-      DatumZeugnis = Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy");
+  public class NotenbogenDruck : SchuelerDruck
+  {
+    public string Anschrift { get; private set; }
+    public string Telefon { get; private set; }
+    public string GeborenInAm { get; private set; }
+    public string KlasseMitZweig { get; private set; }
+    public string Laufbahn { get; private set; }           
+    
+    public NotenbogenDruck(Schueler s) : base(s, Bericht.Notenbogen)
+    {
+      Anschrift = s.Data.AnschriftStrasse + "\n" + s.Data.AnschriftPLZ + " " + s.Data.AnschriftOrt;
+      Telefon = s.Data.AnschriftTelefonnummer;
+      GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
+      KlasseMitZweig = s.KlassenBezeichnung;
 
-      // allgemeine Zeugnisbemerkungen (als HTML-Text!)
-      Bemerkung = "Bemerkungen:";
-      if (!s.Data.IsZeugnisbemerkungNull())
-        Bemerkung += "<br>" + s.Data.Zeugnisbemerkung;
-      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && s.getKlasse.Bezeichnung != "IV")
-        Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden.";
-      if (s.IsLegastheniker)
-        Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet. In den Fremdsprachen wurden die mündlichen Leistungen stärker gewichtet.";
-      if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
-        Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
-      Bemerkung += " ---";
-      IstVolljaehrig = s.Alter(Zugriff.Instance.Zeugnisdatum) >= 18 || Berichtsname != "rptZwischenzeugnis";
+      Laufbahn = "Bekenntnis: " + s.Data.Bekenntnis;     
+      Laufbahn += "<br>Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm.ToString("dd.MM.yyyy");
+      Laufbahn += " aus " + s.Data.SchulischeVorbildung + " von " + s.EintrittAusSchulname;//.Substring(0,25);
+      if (!s.Data.IsProbezeitBisNull()) Laufbahn += "<br>Probezeit bis " + s.Data.ProbezeitBis.ToString("dd.MM.yyyy");
+      if (!s.Data.IsAustrittsdatumNull()) Laufbahn += "<br>Austritt am " + s.Data.Austrittsdatum.ToString("dd.MM.yyyy");
+      // Wiederholungen
+      string tmp = s.getWiederholungen();
+      if (tmp != "") Laufbahn += "<br>Wiederholungen: " + tmp;
+      if (s.Data.LRSStoerung) Laufbahn += "<br><b>Legasthenie</b>";      
+    }
+  }
 
+  public class NotenmitteilungDruck : SchuelerDruck
+  {
+    public string DNote { get; private set; }
+    public string FPAText { get; private set; }
 
+    public NotenmitteilungDruck(Schueler s, Bericht b) : base(s, b)
+    {
       if (jg == Jahrgangsstufe.Elf)
       {
         diNoDataSet.FpaRow fpa;
@@ -115,26 +151,8 @@ namespace diNo
           FPAText += ", Vertiefung " + fpa.Vertiefung + (fpa.IsVertiefung1Null() ? "" : " (Teilnoten " + fpa.Vertiefung1 + " " + fpa.Vertiefung2 + ") ");
         }
       }
-      else if (jg == Jahrgangsstufe.Zwoelf)
-      {
-        var ta = new Fpa12altTableAdapter();
-        var dt = ta.GetDataBySchuelerId(s.Id);
-        if (dt.Count > 0)
-        {
-          var fpa12 = dt[0];
-          if (!fpa12.IsErfolgNull())
-            Bemerkung = "Die <b>fachpraktische Ausbildung</b> wurde in der 11. Klasse " + ErfolgText(fpa12.Erfolg) + " durchlaufen.<br>";
-        }
-      }
-      else if (jg == Jahrgangsstufe.Dreizehn)
-      {
-        if (!s.Seminarfachnote.IsThemaKurzNull())
-        {
-          Bemerkung = "<b>Thema der Seminararbeit:</b><br>";
-          Bemerkung += s.Seminarfachnote.ThemaKurz;
-        }
-      }
 
+      // für Abiergebnisse
       if (!s.hatVorkommnis(Vorkommnisart.NichtBestanden))
       {
         if (!s.Data.IsDNoteNull())
@@ -150,18 +168,73 @@ namespace diNo
         }
       }
     }
+  }
 
-    private string ErfolgText(int note)
+  public class ZeugnisDruck : SchuelerDruck
+  {
+    public string KlasseAR { get; private set; }
+    public string JgKurz { get; private set; }
+    public string ZeugnisArt { get; private set; }
+    public string DatumZeugnis { get; private set; }
+    public bool ShowKenntnisGenommen { get; private set; } // Minderjährige beim Zwischenzeugnis
+    public bool ShowGezSL { get; private set; } // statt eigenhändige Unterschrift erscheint gez. Helga Traut
+    public bool ShowFOBOSOHinweis { get; private set; } // Diesem Zeungnis liegt die Schulordnung ...
+    public string Siegel { get; private set; } // (Siegel) andrucken
+    
+    public ZeugnisDruck(Schueler s, Bericht b) : base(s, b)
     {
-      switch (note)
+      if (s.getKlasse.Bezeichnung == "IV") JgKurz = "IV";
+      else if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse) JgKurz = "VKL";
+      else JgKurz = ((int)s.getKlasse.Jahrgangsstufe).ToString();
+
+      if (b == Bericht.Bescheinigung) ZeugnisArt = "Bescheinigung";
+      else if (b == Bericht.Zwischenzeugnis) ZeugnisArt = "Zwischenzeugnis";
+      else /*if (b == Bericht.Jahreszeugnis)*/ ZeugnisArt = "Jahreszeugnis";
+      ZeugnisArt = ZeugnisArt.ToUpper();
+
+      KlasseAR = (b == Bericht.Zwischenzeugnis ? "besucht" : "besuchte") + " im " + Schuljahr;
+      KlasseAR += " die " + s.getKlasse.JahrgangsstufeZeugnis + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
+      if (s.Data.Ausbildungsrichtung != "V") // IV idR. ohne AR
+        KlasseAR += ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s);
+      KlasseAR += " in der Klasse " + s.getKlasse.Bezeichnung;
+      if (b == Bericht.Bescheinigung)
+        KlasseAR += "\nund ist heute aus der Schule ausgetreten. \n\nIm laufenden Schulhalbjahr erzielte " + s.getErSie() + " bis zum Austritt folgende Leistungen:";
+      else
+        KlasseAR += ".";
+
+      DatumZeugnis = Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy");
+
+      // allgemeine Zeugnisbemerkungen (als HTML-Text!)
+      Bemerkung = "Bemerkungen:";
+      if (!s.Data.IsZeugnisbemerkungNull())
+        Bemerkung += "<br>" + s.Data.Zeugnisbemerkung;
+      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && s.getKlasse.Bezeichnung != "IV")
+        Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden.";
+      if (s.IsLegastheniker)
+        Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet. In den Fremdsprachen wurden die mündlichen Leistungen stärker gewichtet.";
+      if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
+        Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
+      if (s.hatVorkommnis(Vorkommnisart.MittlereReife))
+        Bemerkung += "<br><b>Dieses Zeugnis verleiht den mittleren Schulabschluss gemäß Art. 25 Abs. 1 Satz 2 Nr. 6 BayEUG.</b>";
+      if (jg==Jahrgangsstufe.Elf)        
+        Bemerkung += "<br><b>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 12 hat " + s.getErSie() + (s.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis) ? " nicht": "") + " erhalten.</b>";
+      if (jg >= Jahrgangsstufe.Zwoelf && b == Bericht.Jahreszeugnis)
       {
-        case 1: return "mit sehr gutem Erfolg";
-        case 2: return "mit gutem Erfolg";
-        case 3: return "mit Erfolg";
-        default: return "ohne Erfolg";
+        if (jg == Jahrgangsstufe.Zwoelf && s.Data.Schulart == "B")
+          Bemerkung += "<br>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 13 hat " + s.getErSie() + (!s.hatVorkommnis(Vorkommnisart.VorrueckenBOS13moeglich) ? " nicht" : "") + " erhalten.";
+        else
+          Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " hat sich der Fachabiturprüfung ohne Erfolg unterzogen. " + s.getErSie(true) + " darf die Prüfung gemäß Art. 54 Abs. 5 Satz 1 BayEUG " 
+              + (s.hatVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen) ? "nicht mehr": "noch einmal") + " wiederholen.";
       }
+      Bemerkung += " ---";
+      ShowKenntnisGenommen = s.Alter(Zugriff.Instance.Zeugnisdatum) < 18 && b == Bericht.Zwischenzeugnis;
+      ShowGezSL = (b == Bericht.Zwischenzeugnis);
+      if (b == Bericht.Jahreszeugnis || b == Bericht.Abizeugnis)
+        Siegel = "(Siegel)";
+      else Siegel = "";      
     }
   }
+
 
   // erzeugt die Druckdaten für die FPA, halbjahresweise
   public class FPADruck

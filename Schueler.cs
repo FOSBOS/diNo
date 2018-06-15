@@ -523,7 +523,9 @@ namespace diNo
 
     public void AddVorkommnis(Vorkommnisart art, string bemerkung, bool DuplikateErlaubt = false)
     {
-      AddVorkommnis(art, DateTime.Today, bemerkung, DuplikateErlaubt);
+      DateTime datum = DateTime.Today;
+      if (art == Vorkommnisart.MittlereReife) datum = Zugriff.Instance.Zeugnisdatum; // ggf. um andere Zeugnisarten ergänzen
+      AddVorkommnis(art, datum, bemerkung, DuplikateErlaubt);
     }
 
     public void AddVorkommnis(Vorkommnisart art, DateTime datum, string bemerkung, bool DuplikateErlaubt = false)
@@ -907,9 +909,10 @@ namespace diNo
       return jahre;
     }
 
-    public string getErSie()
+    public string getErSie(bool Satzanfang=false)
     {
-      return (Data.Geschlecht == "M" ? "er" : "sie");
+      if (Satzanfang) return (Data.Geschlecht == "M" ? "Er" : "Sie");
+      else return (Data.Geschlecht == "M" ? "er" : "sie");
     }
 
     public string getHerrFrau()

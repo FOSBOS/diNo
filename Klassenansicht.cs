@@ -168,13 +168,13 @@ namespace diNo
     // einer Klasse die Klassenliste
     private void btnPrint_Click(object sender, EventArgs e)
     {
-      string rpt;
+      Bericht rpt;
       var obj = SelectedObjects();
       if (Zugriff.Instance.HatVerwaltungsrechte || obj.Count == 1)
-        rpt = "rptNotenbogen";
+        rpt = Bericht.Notenbogen;
       else
-        rpt = "rptKlassenliste";       
-      new ReportSchuelerdruck(obj, rpt);
+        rpt = Bericht.Klassenliste;
+      new ReportSchuelerdruck(obj, rpt).Show();
     }
 
     // liefert den angeklickten Schüler, oder eine Liste von Klassen (nur für Admins)
@@ -199,6 +199,13 @@ namespace diNo
           {               
             res.Add(s);
           }
+        }
+      }
+      else if (obj.Count > 0 && obj[0] is Schueler)
+      {
+        foreach (Schueler s in obj)
+        {
+          res.Add(s);
         }
       }
       else if (schueler!=null)
