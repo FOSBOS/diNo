@@ -30,5 +30,76 @@ namespace diNo
         s.Save();
       }
     }
+
+    /// <summary>
+    /// Methode macht einen Vorschlag zur Einbringung der Halbjahresleistungen eines Schülers.
+    /// </summary>
+    /// <param name="s">Der Schueler.</param>
+    public static void BerechneEinbringung(Schueler s)
+    {
+      var sowiesoPflicht = new List<HjLeistung>();
+      var einbringen = new List<HjLeistung>();
+      var streichen = new List<HjLeistung>();
+
+      foreach (var fachNoten in s.getNoten.alleFaecher)
+      {
+        var hjLeistungen = new List<HjLeistung>();
+        foreach (HjArt art in Enum.GetValues(typeof(HjArt)))
+        {
+          var hjLeistung = fachNoten.getHjLeistung(art);
+          if (hjLeistung == null)
+            continue;
+
+          if (hjLeistung.Art == HjArt.AP || hjLeistung.Art == HjArt.FR /*TODO: Oder Seminarfach oder FpA*/)
+          {
+            sowiesoPflicht.Add(hjLeistung);
+          }
+          else
+          {
+            hjLeistungen.Add(hjLeistung);
+          }
+        }
+
+        // jetzt stehen alle "normalen" Halbjahresleistungen in hjLeistungen.
+        // Sortieren, nur eine davon kann gestrichen werden
+        // TODO: In manchen Fächern kann z.B. auch 11/1 nicht eingebracht werden
+        // TODO: Fach überhaupt einbringungsfähig?
+        hjLeistungen.Sort((x, y) => x.Punkte.CompareTo(y.Punkte));
+        einbringen.AddRange(hjLeistungen.GetRange(0, hjLeistungen.Count - 1));
+        streichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
+      }
+
+      int fehlend = GetNoetigeAnzahl(s) - einbringen.Count;
+      streichen.Sort((x, y) => x.Punkte.CompareTo(y.Punkte));
+      einbringen.AddRange(streichen.GetRange(0, fehlend));
+      streichen.RemoveRange(0, fehlend);
+
+      foreach (var hjLeistung in sowiesoPflicht.Union(einbringen))
+      {
+        hjLeistung.Einbringen = true;
+        hjLeistung.WriteToDB();
+      }
+      foreach (var hjLeistung in streichen)
+      {
+        hjLeistung.Einbringen = false;
+        hjLeistung.WriteToDB();
+      }
+    }
+
+    private static int GetNoetigeAnzahl(Schueler s)
+    {
+      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      {
+        return 16;
+      }
+      if (s.getKlasse.Schulart == Schulart.BOS)
+      {
+        return 17;
+      }
+
+      return 25; //FOS11
+
+
+    }
   }
 }
