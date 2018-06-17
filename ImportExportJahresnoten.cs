@@ -25,10 +25,10 @@ namespace diNo
 
     /// <summary>
     /// Methode exportiert alle Noten in eine csv-Datei
-    /// Format: ID;Name;Fachkürzel;Lehrerkürzel;Zeugnisnote
+    /// Format: ID;Name;Fachkürzel;HJPunkte;HJPunkte2Dez;HJSchnittMdl;HJArt
     /// </summary>
     /// <param name="fileName">Der Dateiname.</param>
-    public static void ExportiereNoten(string fileName)
+    public static void ExportiereHjLeistungen(string fileName)
     {
       using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
       using (StreamWriter writer = new StreamWriter(stream))
@@ -37,66 +37,34 @@ namespace diNo
         foreach (var dbSchueler in schuelerAdapter.GetData())
         {
           Schueler schueler = new Schueler(dbSchueler);
-          foreach (var fachNote in schueler.getNoten.alleKurse)
+          foreach (var fachNoten in schueler.getNoten.alleFaecher)
           {
-            var fachKuerzel = fachNote.getFach.Kuerzel;
-
-            if (IsExportNecessary(fachKuerzel, schueler))
+            // Exportiert werden erst mal alle Halbjahres-Leistungen aller Schüler
+            foreach (HjArt hjArt in Enum.GetValues(typeof(HjArt)))
             {
-              var lehrer = Zugriff.Instance.KursRep.Find(fachNote.kursId).getLehrer;
-              string lehrerKuerzel = lehrer == null ? "" : lehrer.Kuerzel;
-              var noteImFach = schueler.getNoten.getFach(fachNote.kursId);
-              var note = noteImFach.getRelevanteNote(Zeitpunkt.Jahresende);
-              writer.WriteLine(schueler.Id +""+ Separator + schueler.Name + Separator + noteImFach.getFach.Kuerzel + Separator + lehrerKuerzel + Separator + note);
-
+              HjLeistung note = fachNoten.getHjLeistung(hjArt);
+              if (note != null)
+              {
+                writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + note.getFach.Kuerzel + Separator + note.Punkte + Separator + note.Punkte2Dez + Separator + note.SchnittMdl + Separator + note.Art);
+              }
             }
-          }
-
-          if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.getKlasse.Schulart == Schulart.FOS)
-          {/*
-            var fpa = schueler.FPANoten;
-            if (!fpa.IsErfolgNull())
-            {
-              writer.WriteLine(schueler.Id + Separator + schueler.Name + Separator + fpa.Erfolg);
-            }*/
           }
         }
       }
     }
 
     /// <summary>
-    /// Methode prüft ob ein Export nötig ist.
-    /// </summary>
-    /// <param name="fachKuerzel">Fachkürzel.</param>
-    /// <param name="schueler">Der Schüler.</param>
-    /// <returns>Ob für diesen Schüler die Note des genannten Faches exportiert werden soll.</returns>
-    private static bool IsExportNecessary(string fachKuerzel, Schueler schueler)
-    {
-      // Momentan exportieren wir nur die Noten der FOS in den Fächern, die dort abgelegt werden.
-      if (schueler.getKlasse.Schulart == Schulart.FOS)
-      {
-        return fachKuerzel == "G" ||
-          (schueler.Data.Ausbildungsrichtung == "W" && fachKuerzel == "Rl") ||
-          (schueler.Data.Ausbildungsrichtung == "S" && fachKuerzel == "C") ||
-          (schueler.Data.Ausbildungsrichtung == "T" && fachKuerzel == "TZ");
-      }
-      else return false;
-    }
-
-    /// <summary>
-    /// Methode importiert die Zeugnisnoten des Vorjahres.
+    /// Importiert die Halbjahresleistungen der Schüler.
     /// </summary>
     /// <param name="fileName">Der Dateiname.</param>
-    public static void ImportiereNoten(string fileName)
+    public static void ImportierteHJLeistungen(string fileName)
     {
+      HjLeistungTableAdapter ada = new HjLeistungTableAdapter();
+      FachTableAdapter fta = new FachTableAdapter();
       using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(stream))
       {
         var schuelerAdapter = new SchuelerTableAdapter();
-        var fpaAdapter = new Fpa12altTableAdapter();
-        Dictionary<string, Kurs> kurse = GetKursverzeichnis();
-        kurse.Add("G", GetGeschichteKurs());
-
         while (!reader.EndOfStream)
         {
           string[] line = reader.ReadLine().Split(SeparatorChar);
@@ -111,171 +79,71 @@ namespace diNo
           if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
           {
             // nur bei Schülern in der zwölften Klasse wird irgendetwas importiert
-            if (line.Length == 5)
+            if (line.Length == 7)
             {
-              //notenzeile
-              string nachname = line[1];
-              string fachKuerzel = line[2];
-              string lehrerKuerzel = line[3];
+              string nameVorname = line[1];
+              int fachId = GetFachId(fta, line[2]);
 
-              if (string.IsNullOrEmpty(line[4])) // was das heißt ist aber auch fraglich. keine Note?
+              byte note = byte.Parse(line[3]);
+              decimal note2Dez = decimal.Parse(line[4]);
+              decimal schnittMdl = decimal.Parse(line[5]);
+              HjArt notenArt = (HjArt)byte.Parse(line[6]);
+
+              // Importiere nur die Noten der elften Klasse (ggf. bei Wiederholern ein Fachreferat)
+              if (schueler.Wiederholt())
               {
-                continue;
+                if (notenArt == HjArt.FR || notenArt == HjArt.VorHj1 || notenArt == HjArt.VorHj1)
+                {
+                  // Bei Wiederholern stehen diese bereits als Vorjahresleistungen (HJArt.VorHj1 = 5 bzw. HJArt.VorHj2 = 6) drin. Importiere nur diese und Fachreferat.
+                  ada.Insert(schueler.Id, fachId, (byte)notenArt, note, false, note2Dez, schnittMdl);
+                }
               }
-
-              byte zeugnisnote = byte.Parse(line[4]);
-
-              if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
+              else
               {
-                schueler.MeldeAn(kurse[fachKuerzel.ToUpper()]);
-                BerechneteNote bnote = new BerechneteNote(kurse[fachKuerzel.ToUpper()].Id, schueler.Id);
-                bnote.ErstesHalbjahr = false;
-                bnote.JahresfortgangGanzzahlig = zeugnisnote;
-                bnote.Abschlusszeugnis = zeugnisnote;
-                bnote.writeToDB();
+                // Bei normal aufgerückten Schülern stehen sie als aktuelle Leistung (Hj1 = 0, Hj2 = 1) in der Datei, müssen aber zum VorHJ gemacht werden
+                if (notenArt == HjArt.Hj1 || notenArt == HjArt.Hj2)
+                {
+                  ada.Insert(schueler.Id, fachId, (byte)ConvertHjArt(notenArt), note, false, note2Dez, schnittMdl);
+                }
               }
             }
-            else if (line.Length == 3)
-            {
-              //FpA-Zeile
-              string nachname = line[1];
-              int gesamterfolg = int.Parse(line[2]);
-              fpaAdapter.Insert(schuelerId, gesamterfolg);
-            }
-            else
-              throw new InvalidOperationException("Diese Zeile hat " + line.Length + " Spalten. Das ist mir unbekannt");
-          }
-        }
-      }
-
-      TrageFehlendeSchülerInDummykurseEin();
-    }
-
-    /// <summary>
-    /// Geschichte wird etwas anders gehandhabt, weil jeder Geschichte ablegt - deshalb außerhalb des normalen Kursverzeichnisses.
-    /// </summary>
-    /// <returns>Der Dummy-Geschichtekurs.</returns>
-    private static Kurs GetGeschichteKurs()
-    {
-      return FindOrCreateDummyKurs("Geschichte aus elfter Jahrgangsstufe", "G");
-    }
-
-    private static Dictionary<string, Kurs> GetKursverzeichnis()
-    {
-      Dictionary<string, Kurs> kurse = new Dictionary<string, Kurs>();
-      kurse.Add("RL", FindOrCreateDummyKurs("Rechtslehre aus elfter Jahrgangsstufe", "Rl"));
-      kurse.Add("C", FindOrCreateDummyKurs("Chemie aus elfter Jahrgangsstufe", "C"));
-      kurse.Add("TZ", FindOrCreateDummyKurs("TZ aus elfter Jahrgangsstufe", "TZ"));
-      // laut Stundentafel legt der Umweltzweig außer Geschichte nichts ab.
-      return kurse;
-    }
-
-    public static void TrageFehlendeSchülerInDummykurseEin()
-    {
-      var kurse = GetKursverzeichnis();
-      foreach (var dbSchueler in new SchuelerTableAdapter().GetData())
-      {
-        Schueler schueler = new Schueler(dbSchueler);
-        if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf && schueler.getKlasse.Schulart == Schulart.FOS)
-        {
-          schueler.MeldeAn(GetGeschichteKurs());
-          switch (schueler.Zweig)
-          {
-            case Zweig.Umwelt: break;
-            case Zweig.Sozial: schueler.MeldeAn(kurse["C"]); break;
-            case Zweig.Technik: schueler.MeldeAn(kurse["TZ"]); break;
-            case Zweig.Wirtschaft: schueler.MeldeAn(kurse["RL"]); break;
           }
         }
       }
     }
 
     /// <summary>
-    /// Methode importiert die Zeugnisnoten des Vorjahres.
+    /// Macht aus einem aktuellen Halbjahr die passende Vorjahresnote
     /// </summary>
-    /// <param name="fileName">Der Dateiname.</param>
-    public static void ImportiereNotenAusWinSD(string fileName)
+    /// <param name="art">Art der Note (vorher: aktuelles Halbjahr)</param>
+    /// <returns>Art der Note (nachher: Vor-Halbjahr)</returns>
+    private static HjArt ConvertHjArt(HjArt art)
     {
-      using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
-      using (StreamReader reader = new StreamReader(stream))
+      switch (art)
       {
-        var schuelerAdapter = new SchuelerTableAdapter();
-        //var fpaAdapter = new FpANotenTableAdapter();
-        Kurs geschichte = GetGeschichteKurs();
-        Dictionary<string, Kurs> kurse = new Dictionary<string, Kurs>();
-        kurse.Add("W11", FindOrCreateDummyKurs("Rechtslehre aus elfter Jahrgangsstufe", "Rl"));
-        kurse.Add("S11", FindOrCreateDummyKurs("Chemie aus elfter Jahrgangsstufe", "C"));
-        kurse.Add("T11", FindOrCreateDummyKurs("TZ aus elfter Jahrgangsstufe", "TZ"));
-        kurse.Add("A11", null); // laut Stundentafel legt der Umweltzweig außer Geschichte nichts ab.
-
-        while (!reader.EndOfStream)
-        {
-          string[] line = reader.ReadLine().Split(SeparatorChar);
-          if (line.Length == 5)
-          {
-            //notenzeile
-            int schuelerId = int.Parse(line[0]);
-            string faecherspiegel = line[1];
-            fpaNote fpaNote = OmnisDB.Konstanten.GetFpaNoteFromString(line[2]);
-            byte? geschichteNote = string.IsNullOrEmpty(line[3]) ? (byte?)null : byte.Parse(line[3]);
-            byte? zweitesAbgelegtesFachNote = string.IsNullOrEmpty(line[4]) ? (byte?)null : byte.Parse(line[4]);
-
-            var schuelerGefunden = schuelerAdapter.GetDataById(schuelerId);
-            if (schuelerGefunden == null || schuelerGefunden.Count == 0)
-            {
-              continue;
-            }
-
-            var schueler = new Schueler(schuelerGefunden[0]);
-
-            if (geschichteNote != null)
-            {
-              TrageNoteEin(geschichte, (byte)geschichteNote, schueler);
-            }
-            Kurs zweitesFach = kurse[faecherspiegel];
-            if (zweitesFach != null && zweitesAbgelegtesFachNote != null)
-            {
-              TrageNoteEin(zweitesFach, (byte)zweitesAbgelegtesFachNote, schueler);
-            }
-
-
-            //fpaAdapter.Insert(schuelerId, "", null, null, null, null, (int)fpaNote,null,null);
-          }
-          else
-            throw new InvalidOperationException("Diese Zeile hat " + line.Length + " Spalten. Das ist mir unbekannt");
-        }
+        case HjArt.Hj1: return HjArt.VorHj1;
+        case HjArt.Hj2: return HjArt.VorHj2;
+        default: throw new InvalidOperationException("Halbjahres-Noten vom Typ "+art+" können nicht ins nächste Jahr übertragen werden");
       }
-
-      TrageFehlendeSchülerInDummykurseEin();
     }
 
-    private static void TrageNoteEin(Kurs kurs, byte note, Schueler schueler)
+    /// <summary>
+    /// Sucht nach dem Fach in der Datenbank und liefert die Id zurück
+    /// Wirft eine Exception wenn das Fach nicht gefunden werden kann
+    /// </summary>
+    /// <param name="fta">Fach Table Adapter.</param>
+    /// <param name="fachKuerzel">Das eingelesene Fächerkürzel.</param>
+    /// <returns>Die Id des Faches.</returns>
+    private static int GetFachId(FachTableAdapter fta, string fachKuerzel)
     {
-      schueler.MeldeAn(kurs);
-      BerechneteNote bnote = new BerechneteNote(kurs.Id, schueler.Id);
-      bnote.ErstesHalbjahr = false;
-      bnote.JahresfortgangGanzzahlig = note;
-      bnote.Abschlusszeugnis = note;
-      bnote.writeToDB();
-    }
-
-    private static Kurs FindOrCreateDummyKurs(string bezeichnung, string fachKuerzel)
-    {
-      var kursAdapter = new KursTableAdapter();
-      var fachAdapter = new FachTableAdapter();
-
-      var kurse = kursAdapter.GetDataByBezeichnung(bezeichnung);
-      if (kurse == null || kurse.Count == 0)
+      var ergebnisFachSuche = fta.GetDataByKuerzel(fachKuerzel);
+      if (ergebnisFachSuche == null || ergebnisFachSuche.Count == 0)
       {
-        kursAdapter.Insert(bezeichnung, null, fachAdapter.GetDataByKuerzel(fachKuerzel)[0].Id, null, null);
-        kurse = kursAdapter.GetDataByBezeichnung(bezeichnung);
-      }
-      if (kurse == null || kurse.Count == 0)
-      {
-        throw new InvalidOperationException("Dummykurs "+ bezeichnung + " konnte nicht angelegt werden.");
+        throw new InvalidDataException("ungültiges Fachkürzel in Halbjahresleistung " + fachKuerzel);
       }
 
-      return new Kurs(kurse[0]);
+      int fachId = ergebnisFachSuche[0].Id;
+      return fachId;
     }
   }
 }

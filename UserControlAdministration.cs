@@ -64,7 +64,7 @@ namespace diNo
       dia.Title = "Dateiname wählen";
       if (dia.ShowDialog() == DialogResult.OK)
       {
-        ImportExportJahresnoten.ExportiereNoten(dia.FileName);
+        ImportExportJahresnoten.ExportiereHjLeistungen(dia.FileName);
       }
     }
 
@@ -74,7 +74,7 @@ namespace diNo
       dia.Title = "Dateiname wählen";
       if (dia.ShowDialog() == DialogResult.OK)
       {
-        ImportExportJahresnoten.ImportiereNoten(dia.FileName);
+        ImportExportJahresnoten.ImportierteHJLeistungen(dia.FileName);
       }
     }
 
