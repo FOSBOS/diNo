@@ -19,6 +19,13 @@ namespace diNo
     Klassenliste
   }
 
+  public enum UnterschriftZeugnis
+  {
+    SL = 0, // Chef unterschreibt das Zeugnis
+    Stv = 1, // Konrektor
+    gez = 2 // ohne Unterschrift, nur mit gez. Chef
+  }
+
   // Basisklasse für Berichtsdaten von Notenbögen und Zeugnissen
   public class SchuelerDruck
   {
@@ -94,7 +101,7 @@ namespace diNo
       }
     }
 
-    public static SchuelerDruck CreateSchuelerDruck(Schueler s, Bericht b)
+    public static SchuelerDruck CreateSchuelerDruck(Schueler s, Bericht b, UnterschriftZeugnis u)
     {
       switch (b)
       {
@@ -102,7 +109,7 @@ namespace diNo
         case Bericht.Bescheinigung:
         case Bericht.Zwischenzeugnis: 
         case Bericht.Jahreszeugnis: 
-        case Bericht.Gefaehrdung: return new ZeugnisDruck(s, b);
+        case Bericht.Gefaehrdung: return new ZeugnisDruck(s, b, u);
         case Bericht.Abiergebnisse: 
         case Bericht.Notenmitteilung: return new NotenmitteilungDruck(s, b);        
         default: return new SchuelerDruck(s,b);
@@ -183,13 +190,15 @@ namespace diNo
     public string JgKurz { get; private set; }
     public string ZeugnisArt { get; private set; }
     public string DatumZeugnis { get; private set; }
+    public string Schulleiter { get; private set; }
+    public string SchulleiterText { get; private set; }
     public bool ShowKenntnisGenommen { get; private set; } // Minderjährige beim Zwischenzeugnis
     public bool ShowGezSL { get; private set; } // statt eigenhändige Unterschrift erscheint gez. Helga Traut
     public bool ShowFOBOSOHinweis { get; private set; } // Diesem Zeungnis liegt die Schulordnung ...
     public string Siegel { get; private set; } // (Siegel) andrucken
     public bool IstJahreszeugnis { get; private set; }
 
-    public ZeugnisDruck(Schueler s, Bericht b) : base(s, b)
+    public ZeugnisDruck(Schueler s, Bericht b, UnterschriftZeugnis u) : base(s, b)
     {
       if (s.getKlasse.Bezeichnung == "IV") JgKurz = "IV";
       else if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse) JgKurz = "VKL";
@@ -212,6 +221,15 @@ namespace diNo
         KlasseAR += ".";
 
       DatumZeugnis = Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy");
+      ShowGezSL = (u == UnterschriftZeugnis.gez);
+      if (u==UnterschriftZeugnis.Stv)
+      {
+        Schulleiter = "Josef Mirl, StD"; SchulleiterText = "Stv. Schulleiter"; // TODO: aus GlobaleStrings ziehen
+      }
+      else
+      {
+        Schulleiter = "Helga Traut, OStDin"; SchulleiterText = "Schulleiterin";
+      }
 
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
       Bemerkung = "Bemerkungen:";
@@ -236,8 +254,7 @@ namespace diNo
               + (s.hatVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen) ? "nicht mehr": "noch einmal") + " wiederholen.";
       }
       Bemerkung += " ---";
-      ShowKenntnisGenommen = s.Alter(Zugriff.Instance.Zeugnisdatum) < 18 && b == Bericht.Zwischenzeugnis;
-      ShowGezSL = (b == Bericht.Zwischenzeugnis);
+      ShowKenntnisGenommen = s.Alter(Zugriff.Instance.Zeugnisdatum) < 18 && b == Bericht.Zwischenzeugnis;      
       if (b == Bericht.Jahreszeugnis || b == Bericht.Abizeugnis)
         Siegel = "(Siegel)";
       else Siegel = "";      

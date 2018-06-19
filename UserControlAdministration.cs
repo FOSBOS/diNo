@@ -14,6 +14,7 @@ namespace diNo
     public UserControlAdministration()
     {
       InitializeComponent();
+      konstanten = Zugriff.Instance.globaleKonstanten;
       if (!Zugriff.Instance.HatRolle(Rolle.Admin))
       {
         groupBoxBerechtigungen.Visible = false;
@@ -22,14 +23,13 @@ namespace diNo
         groupBoxEinstellungen.Visible = false;
       }
       else
-      {        
-        konstanten = Zugriff.Instance.globaleKonstanten;
+      {                
         chkSperre.Checked = konstanten.Sperre == 1;
         edSchuljahr.Text = konstanten.Schuljahr.ToString();
         comboBoxZeitpunkt.SelectedIndex = konstanten.aktZeitpunkt-1;
-        edBackupPfad.Text = konstanten.BackupPfad;
-        dateZeugnis.Value = konstanten.Zeugnisdatum;
+        edBackupPfad.Text = konstanten.BackupPfad;        
       }
+      dateZeugnis.Value = konstanten.Zeugnisdatum;
       cbNotendruck.SelectedIndex = 0;
     }
 
@@ -186,8 +186,17 @@ namespace diNo
       }
     }
     
+    private UnterschriftZeugnis getUnterschriftZeugnis()
+    {
+      if (opStv.Checked) return UnterschriftZeugnis.Stv;
+      else if (opGez.Checked) return UnterschriftZeugnis.gez;
+      else return UnterschriftZeugnis.SL;
+
+    }
+
     private void btnNotendruck_Click(object sender, EventArgs e)
     {
+      konstanten.Zeugnisdatum = dateZeugnis.Value; // lokale Übernahme (Speichern nur durch Übernehmen-Button)
       var obj = getSelectedObjects();
       if (obj.Count>0)
       {
@@ -200,9 +209,14 @@ namespace diNo
         }
         else
         {
-          new ReportSchuelerdruck(obj, (Bericht) cbNotendruck.SelectedIndex).Show();
+          new ReportSchuelerdruck(obj, (Bericht) cbNotendruck.SelectedIndex, getUnterschriftZeugnis()).Show();
         }
       }          
+    }
+
+    private void cbNotendruck_SelectedIndexChanged(object sender, EventArgs e)
+    {
+
     }
   }
 }

@@ -50,8 +50,6 @@
       this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.btnKurseLehrer = new System.Windows.Forms.Button();
       this.groupBoxEinstellungen = new System.Windows.Forms.GroupBox();
-      this.lbZeugnis = new System.Windows.Forms.Label();
-      this.dateZeugnis = new System.Windows.Forms.DateTimePicker();
       this.edBackupPfad = new System.Windows.Forms.TextBox();
       this.lbBackupPfad = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
@@ -61,12 +59,19 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
+      this.lbZeugnis = new System.Windows.Forms.Label();
+      this.dateZeugnis = new System.Windows.Forms.DateTimePicker();
+      this.gbUnterschrift = new System.Windows.Forms.GroupBox();
+      this.opSL = new System.Windows.Forms.RadioButton();
+      this.opStv = new System.Windows.Forms.RadioButton();
+      this.opGez = new System.Windows.Forms.RadioButton();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
       this.groupBoxBerechtigungen.SuspendLayout();
       this.groupBoxEinstellungen.SuspendLayout();
+      this.gbUnterschrift.SuspendLayout();
       this.SuspendLayout();
       // 
       // groupBoxAnalyse
@@ -91,6 +96,9 @@
       // 
       // groupBoxDrucken
       // 
+      this.groupBoxDrucken.Controls.Add(this.gbUnterschrift);
+      this.groupBoxDrucken.Controls.Add(this.lbZeugnis);
+      this.groupBoxDrucken.Controls.Add(this.dateZeugnis);
       this.groupBoxDrucken.Controls.Add(this.cbNotendruck);
       this.groupBoxDrucken.Controls.Add(this.btnKlassenliste);
       this.groupBoxDrucken.Controls.Add(this.btnAttestpflicht);
@@ -114,14 +122,15 @@
             "Zwischenzeugnis",
             "Jahreszeugnis",
             "Abiturzeugnis"});
-      this.cbNotendruck.Location = new System.Drawing.Point(21, 19);
+      this.cbNotendruck.Location = new System.Drawing.Point(21, 102);
       this.cbNotendruck.Name = "cbNotendruck";
       this.cbNotendruck.Size = new System.Drawing.Size(132, 21);
       this.cbNotendruck.TabIndex = 7;
+      this.cbNotendruck.SelectedIndexChanged += new System.EventHandler(this.cbNotendruck_SelectedIndexChanged);
       // 
       // btnKlassenliste
       // 
-      this.btnKlassenliste.Location = new System.Drawing.Point(21, 63);
+      this.btnKlassenliste.Location = new System.Drawing.Point(21, 166);
       this.btnKlassenliste.Name = "btnKlassenliste";
       this.btnKlassenliste.Size = new System.Drawing.Size(132, 23);
       this.btnKlassenliste.TabIndex = 3;
@@ -131,7 +140,7 @@
       // 
       // btnAttestpflicht
       // 
-      this.btnAttestpflicht.Location = new System.Drawing.Point(21, 106);
+      this.btnAttestpflicht.Location = new System.Drawing.Point(21, 195);
       this.btnAttestpflicht.Name = "btnAttestpflicht";
       this.btnAttestpflicht.Size = new System.Drawing.Size(132, 23);
       this.btnAttestpflicht.TabIndex = 2;
@@ -141,7 +150,7 @@
       // 
       // btnNotendruck
       // 
-      this.btnNotendruck.Location = new System.Drawing.Point(159, 17);
+      this.btnNotendruck.Location = new System.Drawing.Point(159, 102);
       this.btnNotendruck.Name = "btnNotendruck";
       this.btnNotendruck.Size = new System.Drawing.Size(69, 23);
       this.btnNotendruck.TabIndex = 1;
@@ -299,8 +308,6 @@
       // 
       // groupBoxEinstellungen
       // 
-      this.groupBoxEinstellungen.Controls.Add(this.lbZeugnis);
-      this.groupBoxEinstellungen.Controls.Add(this.dateZeugnis);
       this.groupBoxEinstellungen.Controls.Add(this.edBackupPfad);
       this.groupBoxEinstellungen.Controls.Add(this.lbBackupPfad);
       this.groupBoxEinstellungen.Controls.Add(this.label2);
@@ -315,23 +322,6 @@
       this.groupBoxEinstellungen.TabIndex = 6;
       this.groupBoxEinstellungen.TabStop = false;
       this.groupBoxEinstellungen.Text = "Globale Einstellungen";
-      // 
-      // lbZeugnis
-      // 
-      this.lbZeugnis.AutoSize = true;
-      this.lbZeugnis.Location = new System.Drawing.Point(156, 28);
-      this.lbZeugnis.Name = "lbZeugnis";
-      this.lbZeugnis.Size = new System.Drawing.Size(74, 13);
-      this.lbZeugnis.TabIndex = 28;
-      this.lbZeugnis.Text = "Zeugnisdatum";
-      // 
-      // dateZeugnis
-      // 
-      this.dateZeugnis.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-      this.dateZeugnis.Location = new System.Drawing.Point(133, 47);
-      this.dateZeugnis.Name = "dateZeugnis";
-      this.dateZeugnis.Size = new System.Drawing.Size(97, 20);
-      this.dateZeugnis.TabIndex = 27;
       // 
       // edBackupPfad
       // 
@@ -352,7 +342,7 @@
       // label2
       // 
       this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(17, 103);
+      this.label2.Location = new System.Drawing.Point(13, 81);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(95, 13);
       this.label2.TabIndex = 14;
@@ -370,7 +360,7 @@
             "2. PA",
             "3. PA",
             "Jahresende"});
-      this.comboBoxZeitpunkt.Location = new System.Drawing.Point(16, 119);
+      this.comboBoxZeitpunkt.Location = new System.Drawing.Point(16, 97);
       this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";
       this.comboBoxZeitpunkt.Size = new System.Drawing.Size(217, 24);
       this.comboBoxZeitpunkt.TabIndex = 13;
@@ -386,7 +376,7 @@
       // 
       // edSchuljahr
       // 
-      this.edSchuljahr.Location = new System.Drawing.Point(16, 47);
+      this.edSchuljahr.Location = new System.Drawing.Point(113, 18);
       this.edSchuljahr.Name = "edSchuljahr";
       this.edSchuljahr.Size = new System.Drawing.Size(78, 20);
       this.edSchuljahr.TabIndex = 2;
@@ -404,7 +394,7 @@
       // chkSperre
       // 
       this.chkSperre.AutoSize = true;
-      this.chkSperre.Location = new System.Drawing.Point(16, 79);
+      this.chkSperre.Location = new System.Drawing.Point(16, 53);
       this.chkSperre.Name = "chkSperre";
       this.chkSperre.Size = new System.Drawing.Size(165, 17);
       this.chkSperre.TabIndex = 0;
@@ -419,6 +409,69 @@
       this.lblStatus.Size = new System.Drawing.Size(77, 13);
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
+      // 
+      // lbZeugnis
+      // 
+      this.lbZeugnis.AutoSize = true;
+      this.lbZeugnis.Location = new System.Drawing.Point(18, 37);
+      this.lbZeugnis.Name = "lbZeugnis";
+      this.lbZeugnis.Size = new System.Drawing.Size(74, 13);
+      this.lbZeugnis.TabIndex = 30;
+      this.lbZeugnis.Text = "Zeugnisdatum";
+      // 
+      // dateZeugnis
+      // 
+      this.dateZeugnis.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+      this.dateZeugnis.Location = new System.Drawing.Point(21, 53);
+      this.dateZeugnis.Name = "dateZeugnis";
+      this.dateZeugnis.Size = new System.Drawing.Size(132, 20);
+      this.dateZeugnis.TabIndex = 29;
+      // 
+      // gbUnterschrift
+      // 
+      this.gbUnterschrift.Controls.Add(this.opGez);
+      this.gbUnterschrift.Controls.Add(this.opStv);
+      this.gbUnterschrift.Controls.Add(this.opSL);
+      this.gbUnterschrift.Location = new System.Drawing.Point(159, 19);
+      this.gbUnterschrift.Name = "gbUnterschrift";
+      this.gbUnterschrift.Size = new System.Drawing.Size(68, 77);
+      this.gbUnterschrift.TabIndex = 31;
+      this.gbUnterschrift.TabStop = false;
+      this.gbUnterschrift.Text = "Unterschr";
+      // 
+      // opSL
+      // 
+      this.opSL.AutoSize = true;
+      this.opSL.Checked = true;
+      this.opSL.Location = new System.Drawing.Point(14, 16);
+      this.opSL.Name = "opSL";
+      this.opSL.Size = new System.Drawing.Size(38, 17);
+      this.opSL.TabIndex = 0;
+      this.opSL.TabStop = true;
+      this.opSL.Text = "SL";
+      this.opSL.UseVisualStyleBackColor = true;
+      // 
+      // opStv
+      // 
+      this.opStv.AutoSize = true;
+      this.opStv.Location = new System.Drawing.Point(14, 34);
+      this.opStv.Name = "opStv";
+      this.opStv.Size = new System.Drawing.Size(41, 17);
+      this.opStv.TabIndex = 1;
+      this.opStv.TabStop = true;
+      this.opStv.Text = "Stv";
+      this.opStv.UseVisualStyleBackColor = true;
+      // 
+      // opGez
+      // 
+      this.opGez.AutoSize = true;
+      this.opGez.Location = new System.Drawing.Point(14, 52);
+      this.opGez.Name = "opGez";
+      this.opGez.Size = new System.Drawing.Size(42, 17);
+      this.opGez.TabIndex = 2;
+      this.opGez.TabStop = true;
+      this.opGez.Text = "gez";
+      this.opGez.UseVisualStyleBackColor = true;
       // 
       // UserControlAdministration
       // 
@@ -435,11 +488,14 @@
       this.Size = new System.Drawing.Size(907, 530);
       this.groupBoxAnalyse.ResumeLayout(false);
       this.groupBoxDrucken.ResumeLayout(false);
+      this.groupBoxDrucken.PerformLayout();
       this.groupBoxExport.ResumeLayout(false);
       this.groupBoxImport.ResumeLayout(false);
       this.groupBoxBerechtigungen.ResumeLayout(false);
       this.groupBoxEinstellungen.ResumeLayout(false);
       this.groupBoxEinstellungen.PerformLayout();
+      this.gbUnterschrift.ResumeLayout(false);
+      this.gbUnterschrift.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -480,5 +536,9 @@
     private System.Windows.Forms.Button btnNotendruck;
     private System.Windows.Forms.Label lbZeugnis;
     private System.Windows.Forms.DateTimePicker dateZeugnis;
+    private System.Windows.Forms.GroupBox gbUnterschrift;
+    private System.Windows.Forms.RadioButton opGez;
+    private System.Windows.Forms.RadioButton opStv;
+    private System.Windows.Forms.RadioButton opSL;
   }
 }

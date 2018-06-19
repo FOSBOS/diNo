@@ -400,7 +400,14 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>gez. Helga Traut, OStDin</Value>
+                              <Value>gez. </Value>
+                              <Style>
+                                <FontFamily>Times New Roman</FontFamily>
+                                <FontSize>11pt</FontSize>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!Schulleiter.Value</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -412,7 +419,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Schulleiterin</Value>
+                              <Value>=Fields!SchulleiterText.Value</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -617,7 +624,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Helga Traut, OStDin</Value>
+                              <Value>=Fields!Schulleiter.Value</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -629,7 +636,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Schulleiterin</Value>
+                              <Value>=Fields!SchulleiterText.Value</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
                                 <FontSize>9pt</FontSize>
@@ -2084,6 +2091,14 @@
         </Field>
         <Field Name="Schuljahr">
           <DataField>Schuljahr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Schulleiter">
+          <DataField>Schulleiter</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SchulleiterText">
+          <DataField>SchulleiterText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ShowFOBOSOHinweis">

@@ -57,11 +57,11 @@ namespace diNo
     private string rptName;
     private Bericht rptTyp;
 
-    public ReportSchuelerdruck(List<Schueler> dataSource, Bericht b) : base()
+    public ReportSchuelerdruck(List<Schueler> dataSource, Bericht b, UnterschriftZeugnis u=UnterschriftZeugnis.SL) : base()
     {      
       foreach (Schueler s in dataSource)
       {
-        bindingDataSource.Add(SchuelerDruck.CreateSchuelerDruck(s, b));
+        bindingDataSource.Add(SchuelerDruck.CreateSchuelerDruck(s, b, u));
       }
 
       rptTyp = b;

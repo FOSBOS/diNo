@@ -358,6 +358,7 @@
     <None Include="Properties\DataSources\SchuljahrSchulartDruck.datasource" />
     <None Include="Properties\DataSources\SchullaufbahnDruck.datasource" />
     <None Include="Properties\DataSources\Schueler.datasource" />
+    <None Include="Properties\DataSources\ZeugnisDruck.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
