@@ -274,7 +274,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DataSetFachSchuelerNoten</DataSetName>
+        <DataSetName>DataSet1</DataSetName>
         <Height>1.84039cm</Height>
         <Width>11.17646cm</Width>
         <Style>
@@ -321,7 +321,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetFachSchuelerNoten">
+    <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>diNo</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -331,8 +331,8 @@
           <DataField>fachBez</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="GE">
-          <DataField>GE</DataField>
+        <Field Name="fachGruppe">
+          <DataField>fachGruppe</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Hj1">
@@ -343,11 +343,19 @@
           <DataField>Hj2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="JN">
+          <DataField>JN</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JNText">
+          <DataField>JNText</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>diNo</rd:DataSetName>
-        <rd:TableName>FachSchuelerNotenZeugnisDruck</rd:TableName>
-        <rd:ObjectDataSourceType>diNo.FachSchuelerNotenZeugnisDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>NotenZeugnisDruck</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.NotenZeugnisDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

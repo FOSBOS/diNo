@@ -793,7 +793,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DataSetFachSchuelerNoten</DataSetName>
+        <DataSetName>DataSet1</DataSetName>
         <Height>1.1cm</Height>
         <Width>17.83634cm</Width>
         <Style>
@@ -872,7 +872,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetFachSchuelerNoten">
+    <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>diNo</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -922,6 +922,14 @@
           <DataField>MAP</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="MAP1P">
+          <DataField>MAP1P</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MAP4P">
+          <DataField>MAP4P</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="N1">
           <DataField>N1</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -941,8 +949,8 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>diNo</rd:DataSetName>
-        <rd:TableName>FachSchuelerNotenDruckKurz</rd:TableName>
-        <rd:ObjectDataSourceType>diNo.FachSchuelerNotenDruckKurz, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>FachSchuelerNotenDruckAlt</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.FachSchuelerNotenDruckAlt, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

@@ -150,7 +150,7 @@
                               <Value>=Fields!KlasseAR.Value</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -178,7 +178,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>3.34395cm</Height>
+              <Height>0.69812cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -192,6 +192,40 @@
                           <Value>=Fields!JgKurz.Value</Value>
                         </Parameter>
                       </Parameters>
+                      <Visibility>
+                        <Hidden>=Fields!IstJahreszeugnis.Value</Hidden>
+                      </Visibility>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Subreport>
+                    <ColSpan>3</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.635cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Subreport Name="subrptJahreszeugnis">
+                      <ReportName>subrptJahreszeugnis</ReportName>
+                      <Parameters>
+                        <Parameter Name="SId">
+                          <Value>=Fields!Id.Value</Value>
+                        </Parameter>
+                        <Parameter Name="JgKurz">
+                          <Value>=Fields!JgKurz.Value</Value>
+                        </Parameter>
+                      </Parameters>
+                      <Visibility>
+                        <Hidden>=Not Fields!IstJahreszeugnis.Value</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -234,7 +268,7 @@
                               <MarkupType>HTML</MarkupType>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -275,7 +309,7 @@
                               <Style>
                                 <FontStyle>Normal</FontStyle>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>8pt</FontSize>
+                                <FontSize>11pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#000000</Color>
                               </Style>
@@ -290,7 +324,7 @@
                               <Style>
                                 <FontStyle>Normal</FontStyle>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#000000</Color>
                               </Style>
@@ -305,7 +339,7 @@
                               <Style>
                                 <FontStyle>Normal</FontStyle>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#000000</Color>
                               </Style>
@@ -315,7 +349,7 @@
                               <Style>
                                 <FontStyle>Normal</FontStyle>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#000000</Color>
                               </Style>
@@ -369,7 +403,7 @@
                               <Value>gez. Helga Traut, OStDin</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -453,7 +487,7 @@
                               <Value>=Fields!Siegel.Value</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -499,7 +533,7 @@
                               <Value>.........................................................</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -574,7 +608,7 @@
                               <Value>.........................................................</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -644,7 +678,7 @@
                               <Value>=Fields!Siegel.Value</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -690,7 +724,7 @@
                               <Value>.........................................................</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -762,10 +796,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Diesem Zeugnis liegt die Schulordnung für die Berufliche Oberschule - Fachoberschulen und </Value>
+                              <Value>Diesem Zeugnis liegt die Schulordnung für die Berufliche Oberschule - Fachoberschulen und Berufsoberschulen - in der </Value>
                               <Style>
                                 <FontStyle>Normal</FontStyle>
                                 <FontFamily>times New Roman</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#000000</Color>
                               </Style>
@@ -776,10 +811,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Berufsoberschulen - in der jeweils geltenden Fassung zugrunde.</Value>
+                              <Value>jeweils geltenden Fassung zugrunde.</Value>
                               <Style>
                                 <FontStyle>Normal</FontStyle>
                                 <FontFamily>times New Roman</FontFamily>
+                                <FontSize>9pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#000000</Color>
                               </Style>
@@ -837,7 +873,7 @@
                               <Style>
                                 <FontStyle>Normal</FontStyle>
                                 <FontFamily>times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                                 <Color>#000000</Color>
                               </Style>
@@ -1021,6 +1057,7 @@
                     <TablixMember />
                     <TablixMember />
                     <TablixMember />
+                    <TablixMember />
                     <TablixMember>
                       <Visibility>
                         <Hidden>=Not Fields!ShowGezSL.Value</Hidden>
@@ -1051,7 +1088,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>18.40672cm</Height>
+        <Height>16.39589cm</Height>
         <Width>16.5cm</Width>
         <Style>
           <Border>
@@ -1997,9 +2034,21 @@
           <DataField>DatumZeugnis</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="HideHj2">
+          <DataField>HideHj2</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="HideVorHj">
+          <DataField>HideVorHj</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
         <Field Name="Id">
           <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="IstJahreszeugnis">
+          <DataField>IstJahreszeugnis</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
         <Field Name="JgKurz">
           <DataField>JgKurz</DataField>
@@ -2036,6 +2085,10 @@
         <Field Name="Schuljahr">
           <DataField>Schuljahr</DataField>
           <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ShowFOBOSOHinweis">
+          <DataField>ShowFOBOSOHinweis</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
         </Field>
         <Field Name="ShowGezSL">
           <DataField>ShowGezSL</DataField>

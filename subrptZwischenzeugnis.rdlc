@@ -212,7 +212,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
@@ -251,7 +251,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
@@ -287,7 +287,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
@@ -317,7 +317,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.55246cm</Height>
+              <Height>0.5cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -331,11 +331,12 @@
                               <Value />
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
+                          <SpaceAfter>0pt</SpaceAfter>
                           <Style>
                             <TextAlign>Center</TextAlign>
                           </Style>
@@ -370,7 +371,7 @@
                               <Value>=Fields!Hj1.Value</Value>
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
@@ -410,7 +411,7 @@
                               <Value />
                               <Style>
                                 <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>12pt</FontSize>
+                                <FontSize>11pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
@@ -746,7 +747,7 @@
                                 <Value>Erzielte Leistungen:</Value>
                                 <Style>
                                   <FontFamily>Times New Roman</FontFamily>
-                                  <FontSize>12pt</FontSize>
+                                  <FontSize>11pt</FontSize>
                                   <FontWeight>Bold</FontWeight>
                                 </Style>
                               </TextRun>
@@ -820,7 +821,7 @@
                                 <Value>Fach</Value>
                                 <Style>
                                   <FontFamily>Times New Roman</FontFamily>
-                                  <FontSize>12pt</FontSize>
+                                  <FontSize>11pt</FontSize>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -913,7 +914,7 @@
                                     <Value>=Fields!fachGruppe.Value</Value>
                                     <Style>
                                       <FontFamily>Times New Roman</FontFamily>
-                                      <FontSize>12pt</FontSize>
+                                      <FontSize>11pt</FontSize>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -1001,7 +1002,7 @@
                                     <MarkupType>HTML</MarkupType>
                                     <Style>
                                       <FontFamily>Times New Roman</FontFamily>
-                                      <FontSize>12pt</FontSize>
+                                      <FontSize>11pt</FontSize>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -1023,6 +1024,7 @@
                               <PaddingBottom>1pt</PaddingBottom>
                             </Style>
                           </Textbox>
+                          <rd:Selected>true</rd:Selected>
                         </CellContents>
                       </TablixHeader>
                       <TablixMembers>
@@ -1163,8 +1165,8 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DataSetFachSchuelerNoten</DataSetName>
-        <Height>3.89738cm</Height>
+        <DataSetName>DataSet1</DataSetName>
+        <Height>3.84492cm</Height>
         <Width>14.27688cm</Width>
         <Style>
           <Border>
@@ -1210,7 +1212,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetFachSchuelerNoten">
+    <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>diNo</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -1224,10 +1226,6 @@
           <DataField>fachGruppe</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="GE">
-          <DataField>GE</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="Hj1">
           <DataField>Hj1</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -1236,11 +1234,19 @@
           <DataField>Hj2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="JN">
+          <DataField>JN</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JNText">
+          <DataField>JNText</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>diNo</rd:DataSetName>
-        <rd:TableName>FachSchuelerNotenZeugnisDruck</rd:TableName>
-        <rd:ObjectDataSourceType>diNo.FachSchuelerNotenZeugnisDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>NotenZeugnisDruck</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.NotenZeugnisDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

@@ -319,7 +319,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>GE</Value>
+                              <Value>JN</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -704,7 +704,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!GE.Value</Value>
+                              <Value>=Fields!JN.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -839,7 +839,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DataSetFachSchuelerNoten</DataSetName>
+        <DataSetName>DataSet1</DataSetName>
         <Height>1.1cm</Height>
         <Width>18cm</Width>
         <Style>
@@ -855,7 +855,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>SA=Schulaufgaben, sL=sonstige Leistungen, G=Gesamtschnitt aller Noten des Halbjahres, Hj=Halbjahresleistung, GE=Gesamtergebnis</Value>
+                <Value>SA=Schulaufgaben, sL=sonstige Leistungen, G=Gesamtschnitt aller Noten des Halbjahres, Hj=Halbjahresleistung, JN=Jahresnote</Value>
                 <Style>
                   <FontSize>7pt</FontSize>
                 </Style>
@@ -917,7 +917,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetFachSchuelerNoten">
+    <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>diNo</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -927,8 +927,8 @@
           <DataField>fachBez</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="GE">
-          <DataField>GE</DataField>
+        <Field Name="FR">
+          <DataField>FR</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Hj1">
@@ -937,6 +937,10 @@
         </Field>
         <Field Name="Hj2">
           <DataField>Hj2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="JN">
+          <DataField>JN</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="S1">
@@ -971,11 +975,19 @@
           <DataField>SsL2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="VorHj1">
+          <DataField>VorHj1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="VorHj2">
+          <DataField>VorHj2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>diNo</rd:DataSetName>
-        <rd:TableName>FachSchuelerNotenDruck11</rd:TableName>
-        <rd:ObjectDataSourceType>diNo.FachSchuelerNotenDruck11, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>NotenSjDruck</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.NotenSjDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

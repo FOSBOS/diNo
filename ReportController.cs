@@ -15,8 +15,7 @@ namespace diNo
     {
         protected static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         protected ReportForm rpt;
-        protected Bericht bericht;     
-        
+       
         public ReportController()
         {
             rpt = new ReportForm();                                 
@@ -56,6 +55,7 @@ namespace diNo
   {
     private List<SchuelerDruck> bindingDataSource= new List<SchuelerDruck>();
     private string rptName;
+    private Bericht rptTyp;
 
     public ReportSchuelerdruck(List<Schueler> dataSource, Bericht b) : base()
     {      
@@ -64,6 +64,7 @@ namespace diNo
         bindingDataSource.Add(SchuelerDruck.CreateSchuelerDruck(s, b));
       }
 
+      rptTyp = b;
       rptName = SchuelerDruck.GetBerichtsname(b);
       if ((b == Bericht.Notenbogen || b == Bericht.Notenmitteilung || b == Bericht.Abiergebnisse)
             && dataSource[0].getKlasse.Jahrgangsstufe > Jahrgangsstufe.Elf)
@@ -92,30 +93,19 @@ namespace diNo
         if (schuelerId>0)
         {
           Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-        if (subrpt == "subrptFachSchuelerNoten" || subrpt == "subrptFachSchuelerNoten11Klasse"
-         || subrpt == "subrptAbiergebnisseNoten")
-        {
-          IList<FachSchuelerNotenDruckKurz> noten = schueler.getNoten.SchuelerNotenDruck(rptName);
-          e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten", noten));
-        }
-        else if (subrpt == "subrptFachSchuelerNoten11")
-        {
-          IList<FachSchuelerNotenDruck11> noten = schueler.getNoten.SchuelerNotenDruck11(rptName);
-          e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten", noten));
-        }
-        else if (subrpt == "subrptZwischenzeugnis")
+
+        if (subrpt == "subrptZwischenzeugnis" || subrpt == "subrptJahreszeugnis" )
         {          
-          IList<FachSchuelerNotenZeugnisDruck> noten = schueler.getNoten.SchuelerNotenZeugnisDruck("rptZwischenzeugnis");
-          e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten", noten));
+          IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenZeugnisDruck(rptTyp);
+          e.DataSources.Add(new ReportDataSource("DataSet1", noten));
         }
         else if (subrpt == "subrptFPANoten")
         {
           e.DataSources.Add(new ReportDataSource("DataSetFPANoten", schueler.FPANotenDruck()));
         }
-        else if (subrpt == "subrptNotenstufen")
+        else if (subrpt == "subrptNotenSjAlt" || subrpt == "subrptAbiergebnisseAlt")
         {
-          var d = new List<Dummy>();
-          d.Add(new Dummy());
+          var d = schueler.getNoten.SchuelerNotenDruckAlt(rptTyp);          
           e.DataSources.Add(new ReportDataSource("DataSet1", d));
         }
         else if (subrpt == "subrptVorkommnis" || subrpt == "subrptAbiVorkommnis")
@@ -128,7 +118,12 @@ namespace diNo
           else
             BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);
           e.DataSources.Add(new ReportDataSource("DataSetVorkommnis", (DataTable)vorkommnisse));
-        }          
+        }
+        else 
+        {
+          IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenDruck(rptTyp);
+          e.DataSources.Add(new ReportDataSource("DataSet1", noten));
+        }        
       }     
     }    
   }
@@ -190,8 +185,8 @@ namespace diNo
       if (schuelerId > 0)
       {
         Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-        IList<FachSchuelerNotenZeugnisDruck> noten = schueler.getNoten.SchuelerNotenZeugnisDruck("rptGefaehrdungen");
-        e.DataSources.Add(new ReportDataSource("DataSetFachSchuelerNoten", noten));
+        IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenZeugnisDruck(Bericht.Gefaehrdung);
+        e.DataSources.Add(new ReportDataSource("DataSet1", noten));
       }
     }
   }

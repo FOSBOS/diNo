@@ -629,7 +629,7 @@
             </TablixMember>
           </TablixMembers>
         </TablixRowHierarchy>
-        <DataSetName>DataSetFachSchuelerNoten</DataSetName>
+        <DataSetName>DataSet1</DataSetName>
         <Height>1.17938cm</Height>
         <Width>17.41896cm</Width>
         <Style>
@@ -743,7 +743,7 @@
     </DataSource>
   </DataSources>
   <DataSets>
-    <DataSet Name="DataSetFachSchuelerNoten">
+    <DataSet Name="DataSet1">
       <Query>
         <DataSourceName>diNo</DataSourceName>
         <CommandText>/* Local Query */</CommandText>
@@ -820,8 +820,8 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>diNo</rd:DataSetName>
-        <rd:TableName>FachSchuelerNotenDruckKurz</rd:TableName>
-        <rd:ObjectDataSourceType>diNo.FachSchuelerNotenDruckKurz, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>FachSchuelerNotenDruckAlt</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.FachSchuelerNotenDruckAlt, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

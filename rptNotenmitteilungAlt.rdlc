@@ -265,8 +265,8 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Subreport Name="subrptFachSchuelerNoten11Klasse">
-                      <ReportName>subrptFachSchuelerNoten11Klasse</ReportName>
+                    <Subreport Name="subrptNotenSjAlt">
+                      <ReportName>subrptNotenSjAlt</ReportName>
                       <Parameters>
                         <Parameter Name="SId">
                           <Value>=Fields!Id.Value</Value>
@@ -279,6 +279,7 @@
                       </Style>
                     </Subreport>
                     <ColSpan>2</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />

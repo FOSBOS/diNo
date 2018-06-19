@@ -241,8 +241,8 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Subreport Name="subrptAbiergebnisseNoten">
-                      <ReportName>subrptAbiergebnisseNoten</ReportName>
+                    <Subreport Name="subrptAbiergebnisseAlt">
+                      <ReportName>subrptAbiergebnisseAlt</ReportName>
                       <Parameters>
                         <Parameter Name="SId">
                           <Value>=Fields!Id.Value</Value>
@@ -255,6 +255,7 @@
                       </Style>
                     </Subreport>
                     <ColSpan>2</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />

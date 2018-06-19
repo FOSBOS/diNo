@@ -82,66 +82,74 @@ namespace diNo
       return null;
     }
 
-    /// <summary>
-    /// Liefert eine Liste in der je Fach alle Noten in druckbarer Form vorliegen.
-    /// </summary>
-    public IList<FachSchuelerNotenDruckKurz> SchuelerNotenDruck(string rptName)
+    public IList<FachSchuelerNotenDruckAlt> SchuelerNotenDruckAlt(Bericht rptName)
     {
-      IList<FachSchuelerNotenDruckKurz> liste = new List<FachSchuelerNotenDruckKurz>();      
+      IList<FachSchuelerNotenDruckAlt> liste = new List<FachSchuelerNotenDruckAlt>();
       foreach (FachSchuelerNoten f in alleKurse)
-      {               
-        liste.Add(new FachSchuelerNotenDruckKurz(f, f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe),rptName));
+      {                
+        liste.Add(new FachSchuelerNotenDruckAlt(f, f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe), rptName));
       }
+      
       if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Dreizehn)
       {
         if (!schueler.Data.IsAndereFremdspr2NoteNull())
         {
-          liste.Add(new FachSchuelerNotenDruckKurz(
+          liste.Add(new FachSchuelerNotenDruckAlt(
             (schueler.Data.IsAndereFremdspr2TextNull() ? "Andere 2. Fremdsprache" :  schueler.Data.AndereFremdspr2Text ),
             schueler.Data.AndereFremdspr2Note));
         }
+        liste.Add(new FachSchuelerNotenDruckAlt(schueler.Seminarfachnote));
+      }
 
+      return liste;
+    }
+
+
+    /// <summary>
+    /// Liefert eine Liste in der je Fach alle Noten in druckbarer Form vorliegen.
+    /// </summary>
+    public IList<NotenDruck> SchuelerNotenDruck(Bericht rptName)
+    {
+      IList<NotenDruck> liste = new List<NotenDruck>();      
+      foreach (FachSchuelerNoten f in alleKurse)
+      {               
+        liste.Add(NotenDruck.CreateNotenDruck(f,rptName));
+      }
+      /*
+      if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Dreizehn)
+      {
+        if (!schueler.Data.IsAndereFremdspr2NoteNull())
+        {
+          liste.Add(new NotenSjDruck(
+            (schueler.Data.IsAndereFremdspr2TextNull() ? "Andere 2. Fremdsprache" :  schueler.Data.AndereFremdspr2Text ),
+            schueler.Data.AndereFremdspr2Note));
+        }
         liste.Add(new FachSchuelerNotenDruckKurz(schueler.Seminarfachnote));
       }
-
+      */
       // FPA ausgeben für Notenmitteilung (im Notenbogen als Bemerkung)
-      if (rptName=="diNo.rptNotenmitteilung.rdlc" && schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
+      /*if (rptName=="diNo.rptNotenmitteilung.rdlc" && schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
       {
-        liste.Add(new FachSchuelerNotenDruckKurz(schueler.FPANoten));
-      }
+        liste.Add(new NotenDruck(schueler.FPANoten));
+      }*/
       return liste;
     }
 
-    public IList<FachSchuelerNotenDruck11> SchuelerNotenDruck11(string rptName)
+    public IList<NotenDruck> SchuelerNotenZeugnisDruck(Bericht rptName)
     {
-      IList<FachSchuelerNotenDruck11> liste = new List<FachSchuelerNotenDruck11>();
+      IList<NotenDruck> liste = new List<NotenDruck>();      
       foreach (FachSchuelerNoten f in alleKurse)
       {
-        liste.Add(new FachSchuelerNotenDruck11(f,rptName));
+        if (rptName!=Bericht.Gefaehrdung || f.getRelevanteNote(zeitpunkt)<=4)
+          liste.Add(new NotenZeugnisDruck(f, rptName));
       }
-      return liste;
-
-    }
-
-    public IList<FachSchuelerNotenZeugnisDruck> SchuelerNotenZeugnisDruck(string rptName)
-    {
-      IList<FachSchuelerNotenZeugnisDruck> liste = new List<FachSchuelerNotenZeugnisDruck>();      
-      foreach (FachSchuelerNoten f in alleKurse)
-      {
-        if (rptName!="rptGefaehrdungen" || f.getRelevanteNote(zeitpunkt)<=4)
-          liste.Add(new FachSchuelerNotenZeugnisDruck(f, rptName));
-      }
-      if (rptName != "rptGefaehrdungen" && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
-      {
-        //if (!schueler.FPANoten[0].IsGesamtNull())
-        {
-          FachSchuelerNotenZeugnisDruck f = new FachSchuelerNotenZeugnisDruck(schueler.FPANoten);          
-          liste.Add(f);
-        }
+      if (rptName != Bericht.Gefaehrdung && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
+      {        
+        NotenZeugnisDruck f = new NotenZeugnisDruck(schueler.FPANoten);          
+        liste.Add(f);
       }
 
       return liste;
-
     }
      
     // Zu diesem Zeitpunkt werden die Notenanzahlen gebildet,
