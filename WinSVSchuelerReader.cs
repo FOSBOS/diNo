@@ -124,8 +124,7 @@ namespace diNo
       row.Id = int.Parse(cleanArray[schuelerIdSpalte]);
       row.Name = cleanArray[nachnameSpalte];
       row.Vorname = cleanArray[vornameSpalte];
-      row.KlasseId = klasse.Id;
-      row.AlteSO = new Klasse(klasse).AlteFOBOSO();
+      row.KlasseId = klasse.Id;      
       row.Schulart = klasse.Bezeichnung.StartsWith("B") ? "B" : "F";
       row.Rufname = cleanArray[rufnameSpalte];
       row.Geschlecht = cleanArray[geschlechtSpalte];
@@ -196,18 +195,6 @@ namespace diNo
       row.SchulischeVorbildung = cleanArray[schulischeVorbildungSpalte];
       row.BeruflicheVorbildung = cleanArray[beruflicheVorbildungSpalte];
       row.LRSStoerung = cleanArray[lrsStoerungSpalte] == "1";
-      row.LRSSchwaeche = cleanArray[lrsSchwaecheSpalte] == "1";
-
-      DateTime? lrsBis = ParseDate(cleanArray[lrsBisDatumSpalte]);
-      if (lrsBis == null)
-      {
-        row.SetLRSBisDatumNull();
-      }
-      else
-      {
-        row.LRSBisDatum = (DateTime)lrsBis;
-      }
-
       row.VerwandtschaftsbezeichnungEltern1 = cleanArray[verwandtschaftsbezeichnungEltern1Spalte];
       row.NachnameEltern1 = cleanArray[nachnameEltern1Spalte];
       row.VornameEltern1 = cleanArray[vornameEltern1Spalte];

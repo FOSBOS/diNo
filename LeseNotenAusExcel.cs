@@ -182,6 +182,7 @@ namespace diNo
       foreach (int sid in sidList)
       {
         HjArt art = GetAktuellesHalbjahr();
+        Jahrgangsstufe jg = (Zugriff.Instance.SchuelerRep.Find(sid)).getKlasse.Jahrgangsstufe;
         if (art == HjArt.Hj1)
         {
           ErzeugeNoten(i, sid, new string[] { "C", "D", "E" }, Halbjahr.Erstes, Notentyp.Ex); // Exen bzw. Kurzarbeiten 1. HJ
@@ -190,7 +191,7 @@ namespace diNo
           byte? zeugnisnote = xls.ReadNote("M" + i, xls.notenbogen);
           if (zeugnisnote != null)
           {
-            HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj1);
+            HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj1, jg);
             l.Punkte = (byte)zeugnisnote;
             l.Punkte2Dez = xls.ReadKommanote("L" + i, xls.notenbogen);
             l.SchnittMdl = xls.ReadKommanote("I" + i, xls.notenbogen);
@@ -205,7 +206,7 @@ namespace diNo
           byte? zeugnisnote2 = xls.ReadNote("X" + i, xls.notenbogen);
           if (zeugnisnote2 != null)
           {
-            HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj2);
+            HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.Hj2,jg);
             l.Punkte = (byte)zeugnisnote2;
             l.Punkte2Dez = xls.ReadKommanote("W" + i, xls.notenbogen);
             l.SchnittMdl = xls.ReadKommanote("T" + i, xls.notenbogen);
@@ -227,7 +228,7 @@ namespace diNo
         byte? jahresnote = xls.ReadNote("Y" + i, xls.notenbogen);
         if (jahresnote != null)
         {
-          HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.JN);
+          HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.JN,jg);
           l.Punkte = (byte)jahresnote;
           l.WriteToDB();
         }
@@ -235,7 +236,7 @@ namespace diNo
         byte? fachreferat = xls.ReadNote("Z" + i, xls.notenbogen);
         if (fachreferat != null)
         {
-          HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.FR);
+          HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.FR,jg);
           l.Punkte = (byte)fachreferat;
           l.Punkte2Dez = Convert.ToDecimal((byte)fachreferat);
           l.WriteToDB();
@@ -246,10 +247,10 @@ namespace diNo
       }
     }
 
-    private HjLeistung FindOrCreateHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art)
+    private HjLeistung FindOrCreateHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art, Jahrgangsstufe jg)
     {
       var vorhandeneNote = FindHjLeistung(sid, ada, art);
-      return vorhandeneNote != null ? vorhandeneNote : new HjLeistung(sid, kurs.getFach, art);
+      return vorhandeneNote != null ? vorhandeneNote : new HjLeistung(sid, kurs.getFach, art, jg);
     }
 
     private HjLeistung FindHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art)
@@ -459,7 +460,7 @@ namespace diNo
     private HjLeistung FindOrCreateHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art)
     {
       var vorhandeneNote = FindHjLeistung(sid, ada, art);
-      return vorhandeneNote != null ? vorhandeneNote : new HjLeistung(sid, kurs.getFach, art);
+      return vorhandeneNote != null ? vorhandeneNote : new HjLeistung(sid, kurs.getFach, art, Jahrgangsstufe.IntVk); //Hack für IV
     }
 
     private HjLeistung FindHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art)

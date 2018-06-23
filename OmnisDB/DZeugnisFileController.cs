@@ -165,7 +165,7 @@ namespace diNo.OmnisDB
 
         if (zeitpunkt == Zeitpunkt.Jahresende)
         {
-          return schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorkurs;
+          return schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Elf;
         }
       }
       return false;

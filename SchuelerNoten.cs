@@ -189,7 +189,7 @@ namespace diNo
         kuerzel = fachNoten.getFach.Kuerzel;
         if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Sw" || kuerzel == "Sm" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
         byte? relevanteNote = fachNoten.getRelevanteNote(zeitpunkt);
-        int istSAP = fachNoten.getFach.IstSAPFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse) ? 1:0;
+        int istSAP = fachNoten.getFach.IstSAPFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse) ? 1:0;
         if (relevanteNote != null)
         {
           Punktesumme += relevanteNote.GetValueOrDefault();
@@ -228,7 +228,7 @@ namespace diNo
           Unterpunktungen += "Sem (" + relevanteNote +") ";
       }
       Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2, MidpointRounding.AwayFromZero);
-      if (Unterpunktungen != "" && !schueler.AlteFOBOSO() && !(zeitpunkt==Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse))
+      if (Unterpunktungen != "" && !schueler.AlteFOBOSO() && !(zeitpunkt==Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse))
         Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
     }
 
@@ -399,9 +399,11 @@ namespace diNo
                         new BerechneteNote(kursId, schueler.Id, bnoteR);
             }
           }
-            // HjLeistungen
-          diNoDataSet.HjLeistungDataTable hjDT;            
-          hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id,getFach.Id);
+          // HjLeistungen
+          //diNoDataSet.HjLeistungDataTable hjDT;
+          // nur die HjLeistungen holen, die der aktuellen JgStufe entsprechen, oder früher waren (TODO: Datenstruktur schaffen)
+          int jg = (int)schueler.getKlasse.Jahrgangsstufe;
+          var hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id,getFach.Id).Where(x => x.JgStufe == jg);
           foreach (var hjR in hjDT)
           {                
             hjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);

@@ -80,7 +80,7 @@ namespace diNo
         private void KlasseInNotenpruefungAufnehmen(Klasse k)
         {
             if (zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS || 
-                zeitpunkt==Zeitpunkt.ProbezeitBOS && k.Jahrgangsstufe == Jahrgangsstufe.Vorklasse ||
+                zeitpunkt==Zeitpunkt.ProbezeitBOS && k.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse ||
                 k.Jahrgangsstufe>=Jahrgangsstufe.Zwoelf && zeitpunkt<=Zeitpunkt.DrittePA || 
                 k.Jahrgangsstufe<Jahrgangsstufe.Zwoelf && zeitpunkt==Zeitpunkt.Jahresende)
             {

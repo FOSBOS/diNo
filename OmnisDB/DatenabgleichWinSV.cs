@@ -116,12 +116,8 @@ namespace diNo
       using (var lrsresult = command.ExecuteReader())
       {
         if (lrsresult.Read())
-        {
-          bool lrsSchwaecheNeu = lrsresult.GetString(0) != "0" && lrsresult.GetString(0) != "";
-          bool lrsStoerungNeu = lrsresult.GetString(1) != "0" && lrsresult.GetString(1) != "";
-          DateTime lrsBisDatum = lrsresult.GetString(2) != "" ? lrsresult.GetDateTime(2) : DateTime.MaxValue;
-
-          bool istLegasthenikerNeu = (lrsStoerungNeu || lrsStoerungNeu) && lrsBisDatum > DateTime.Today;
+        {          
+          bool istLegasthenikerNeu = lrsresult.GetString(1) != "0" && lrsresult.GetString(1) != "";                    
           if (schueler.IsLegastheniker != istLegasthenikerNeu)
           {
             schueler.IsLegastheniker = istLegasthenikerNeu;

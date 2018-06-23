@@ -90,7 +90,8 @@ namespace diNo
               HjArt notenArt = (HjArt)byte.Parse(line[6]);
 
               // Importiere nur die Noten der elften Klasse (ggf. bei Wiederholern ein Fachreferat)
-              if (schueler.Wiederholt())
+              /*
+              if (schueler.Wiederholt()) //  FR darf nicht übernommen werden!
               {
                 if (notenArt == HjArt.FR || notenArt == HjArt.VorHj1 || notenArt == HjArt.VorHj1)
                 {
@@ -98,12 +99,12 @@ namespace diNo
                   ada.Insert(schueler.Id, fachId, (byte)notenArt, note, false, note2Dez, schnittMdl);
                 }
               }
-              else
+              else */
               {
                 // Bei normal aufgerückten Schülern stehen sie als aktuelle Leistung (Hj1 = 0, Hj2 = 1) in der Datei, müssen aber zum VorHJ gemacht werden
                 if (notenArt == HjArt.Hj1 || notenArt == HjArt.Hj2)
                 {
-                  ada.Insert(schueler.Id, fachId, (byte)ConvertHjArt(notenArt), note, false, note2Dez, schnittMdl);
+                  ada.Insert(schueler.Id, fachId, (byte)ConvertHjArt(notenArt), note, false, note2Dez, schnittMdl,11);
                 }
               }
             }

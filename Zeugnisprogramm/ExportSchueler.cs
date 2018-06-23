@@ -22,7 +22,7 @@ namespace diNo.Zeugnisprogramm
         {
           Schueler schueler = new Schueler(dbSchueler);
           Jahrgangsstufe jgstufe = schueler.getKlasse.Jahrgangsstufe;
-          if (jgstufe == Jahrgangsstufe.Elf || jgstufe == Jahrgangsstufe.None || jgstufe == Jahrgangsstufe.Vorklasse || jgstufe == Jahrgangsstufe.Vorkurs)
+          if (jgstufe <= Jahrgangsstufe.Elf)
           {
             Schuelerzeile zeile = new Schuelerzeile();
             zeile.SchuelerId = schueler.Id;
@@ -43,6 +43,7 @@ namespace diNo.Zeugnisprogramm
             zeile.Geschlecht = schueler.Data.Geschlecht;
             switch (jgstufe)
             {
+              case Jahrgangsstufe.IntVk:
               case Jahrgangsstufe.Vorklasse: zeile.Jahrgangsstufe = schueler.Data.Schulart == "F" ? "10" : "11"; break;
               case Jahrgangsstufe.Vorkurs: zeile.Jahrgangsstufe = "11"; break; // BOS Vorkurs
               case Jahrgangsstufe.Elf: zeile.Jahrgangsstufe = "11"; break;

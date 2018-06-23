@@ -77,7 +77,7 @@ namespace diNo
         public int AnzahlSA(Zweig zweig, Jahrgangsstufe jg)
         {
           int z=0;
-          if (jg == Jahrgangsstufe.Vorklasse)
+          if (jg == Jahrgangsstufe.Vorklasse || jg == Jahrgangsstufe.IntVk)
           {
              // in D,E,M je 2 SA
              if (Kuerzel == "D" || Kuerzel == "DAZ" || Kuerzel == "E" || Kuerzel == "M") z=2;             
@@ -193,7 +193,12 @@ public static class Faecherkanon
         return Jahrgangsstufe.Vorkurs;
       }
 
-      if (jahrgangsstufe=="IV" || jahrgangsstufe.ToUpper().Contains("VK"))
+      if (jahrgangsstufe=="IV")
+      {
+        return Jahrgangsstufe.IntVk;
+      }
+
+      if (jahrgangsstufe.ToUpper().Contains("VK"))
       {
         return Jahrgangsstufe.Vorklasse;
       }
@@ -220,7 +225,8 @@ public static class Faecherkanon
     {
       switch (jahrgangsstufe)
       {
-        case Jahrgangsstufe.Vorklasse: return "10";  // FOS Vorklasse
+        case Jahrgangsstufe.IntVk: return "9";
+        case Jahrgangsstufe.Vorklasse: return "10";
         case Jahrgangsstufe.Elf: return "11";
         case Jahrgangsstufe.Zwoelf: return "12" ;
         case Jahrgangsstufe.Dreizehn: return "13" ;

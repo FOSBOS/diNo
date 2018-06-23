@@ -586,9 +586,14 @@ namespace diNo
           }          
           return;        
         }
-          
+
         // Jahresende, 3. PA, Probezeit (BOS und Hj.)
-        if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse && contr.zeitpunkt == Zeitpunkt.Jahresende)
+        if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.IntVk && contr.zeitpunkt == Zeitpunkt.Jahresende)
+        {
+          if (schueler.getNoten.HatNichtBestanden())
+            contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
+        }
+        else if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse && contr.zeitpunkt == Zeitpunkt.Jahresende)
         {          
           if (schueler.getNoten.HatNichtBestanden())          
             contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen,true);

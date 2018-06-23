@@ -353,7 +353,7 @@ namespace diNo
       WriteValueProtectedCell(notenbogen, CellConstant.Nachname + zeile, aSchueler.Name);
       WriteValueProtectedCell(notenbogen, CellConstant.Vorname + (zeile + 1), "   " + aSchueler.Rufname);
       WriteValueProtectedCell(sid, CellConstant.SId + zeileFuerSId, aSchueler.Id.ToString());
-      if (setzeLegasthenie && (aSchueler.LRSStoerung || aSchueler.LRSSchwaeche))
+      if (setzeLegasthenie && aSchueler.LRSStoerung)
       {
         WriteValue(notenbogen, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
       }

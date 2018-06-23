@@ -7,7 +7,8 @@ namespace diNo
   public enum Jahrgangsstufe
   {
     None = 0,
-    Vorkurs = 9,
+    Vorkurs = 8,
+    IntVk = 9,
     Vorklasse = 10,    
     Elf = 11,
     Zwoelf = 12,
@@ -125,7 +126,7 @@ namespace diNo
     {
       get
       {
-        if (Bezeichnung == "IV") return "Integrationsvorklasse";
+        if (Jahrgangsstufe == Jahrgangsstufe.IntVk) return "Integrationsvorklasse";
         if (Jahrgangsstufe == Jahrgangsstufe.Vorklasse) return "Vorklasse";
         return "Jahrgangstufe " + ((int)Jahrgangsstufe);
       }

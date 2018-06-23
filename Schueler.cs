@@ -163,8 +163,7 @@ namespace diNo
       get { return this.data.LRSStoerung; }
       set
       {
-        this.data.LRSStoerung = value;
-        this.data.LRSSchwaeche = value;
+        this.data.LRSStoerung = value;        
       }
     }
 
@@ -189,9 +188,6 @@ namespace diNo
           throw new InvalidOperationException("Klasse passt nicht zur KlassenID des Schülers.");
       }
     }
-
-    public int BetreuerId
-    { get { return data.IsBetreuerIdNull() ? 0 : data.BetreuerId; } }
 
     /// <summary>
     /// FPA-Noten

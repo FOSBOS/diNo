@@ -165,7 +165,7 @@ namespace diNo
           FPAText += ", Vertiefung " + fpa.Vertiefung + (fpa.IsVertiefung1Null() ? "" : " (Teilnoten " + fpa.Vertiefung1 + " " + fpa.Vertiefung2 + ") ");
         }
       }
-
+      
       // für Abiergebnisse
       if (!s.hatVorkommnis(Vorkommnisart.NichtBestanden))
       {
@@ -173,12 +173,12 @@ namespace diNo
         {
           if (Bemerkung != "") Bemerkung += "<br>";
           Bemerkung += "<b>Durchschnittsnote (" + (jg == Jahrgangsstufe.Zwoelf ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";
-          DNote = "Durchschnittsnote*: " + s.Data.DNote;
+          DNote = "Durchschnittsnote*: " + String.Format("{0:0.0}", s.Data.DNote);
         }
         if (!s.Data.IsDNoteAllgNull())
         {
           Bemerkung += "<b>Durchschnittsnote (allgemeine Hochschulreife): " + s.Data.DNoteAllg + "</b><br>";
-          DNote += " (allg. HSR: " + s.Data.DNoteAllg + ")";
+          DNote += " (allg. HSR: " + String.Format("{0:0.0}", s.Data.DNoteAllg) + ")";
         }
       }
     }
@@ -200,7 +200,7 @@ namespace diNo
 
     public ZeugnisDruck(Schueler s, Bericht b, UnterschriftZeugnis u) : base(s, b)
     {
-      if (s.getKlasse.Bezeichnung == "IV") JgKurz = "IV";
+      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.IntVk) JgKurz = "IV";
       else if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse) JgKurz = "VKL";
       else JgKurz = ((int)s.getKlasse.Jahrgangsstufe).ToString();
 
@@ -235,7 +235,7 @@ namespace diNo
       Bemerkung = "Bemerkungen:";
       if (!s.Data.IsZeugnisbemerkungNull())
         Bemerkung += "<br>" + s.Data.Zeugnisbemerkung;
-      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && s.getKlasse.Bezeichnung != "IV")
+      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse)
         Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden.";
       if (s.IsLegastheniker)
         Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet. In den Fremdsprachen wurden die mündlichen Leistungen stärker gewichtet.";

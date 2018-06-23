@@ -14,14 +14,16 @@ namespace diNo
     public HjArt Art { get; private set; }
     public byte Punkte;
     public bool Einbringen=false;
+    public Jahrgangsstufe JgStufe;
     public decimal? Punkte2Dez=null;
     public decimal? SchnittMdl=null;
 
-    public HjLeistung(int SchuelerId,Fach afach,HjArt aart)
+    public HjLeistung(int SchuelerId,Fach afach,HjArt aart, Jahrgangsstufe jg)
     {
       schuelerId=SchuelerId;
       Art=aart;
-      fach=afach;      
+      fach=afach;
+      JgStufe = jg;
     }
 
     public HjLeistung(diNoDataSet.HjLeistungRow r)
@@ -30,6 +32,7 @@ namespace diNo
       Art = (HjArt)r.Art;
       Punkte = r.Punkte;
       Einbringen = r.Einbringen;
+      JgStufe = (Jahrgangsstufe) r.JgStufe;
       if (!r.IsPunkte2DezNull()) Punkte2Dez =  r.Punkte2Dez;
       if (!r.IsSchnittMdlNull()) SchnittMdl =  r.SchnittMdl;      
     }
@@ -46,7 +49,7 @@ namespace diNo
       var ta = new HjLeistungTableAdapter();
       if (data==null) // neue HjLeistung -->INSERT
       {        
-        ta.Insert(schuelerId,getFach.Id,(byte)Art,Punkte,Einbringen,Punkte2Dez,SchnittMdl);
+        ta.Insert(schuelerId,getFach.Id,(byte)Art,Punkte,Einbringen,Punkte2Dez,SchnittMdl,(int)JgStufe);
       }
       else // vorhandene HjLeistung anpassen
       {
