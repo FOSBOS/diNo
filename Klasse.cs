@@ -7,7 +7,7 @@ namespace diNo
   public enum Jahrgangsstufe
   {
     None = 0,
-    Vorkurs = 8,
+    Vorkurs = 8, // funktioniert noch nicht
     IntVk = 9,
     Vorklasse = 10,    
     Elf = 11,
@@ -219,6 +219,7 @@ namespace diNo
     private diNoDataSet.SchuelerDataTable schueler;
     private Fach fach;
     private Lehrer lehrer;
+    public Jahrgangsstufe JgStufe;
     public bool schreibtKA;
 
 
@@ -229,7 +230,7 @@ namespace diNo
       if (rst.Count == 1)
       {
         this.data = rst[0];
-        setSchreibtKA();
+        Init();
       }
       else
       {
@@ -241,7 +242,7 @@ namespace diNo
     {
       this.Id = data.Id;
       this.data = data;
-      setSchreibtKA();
+      Init();
     }
 
     public static Kurs CreateKurs(int id)
@@ -354,10 +355,20 @@ namespace diNo
       }
     }
 
-    private void setSchreibtKA()
+    private void Init()
     {
       var rst = new NoteTableAdapter().GetKAByKursId(Id,(byte)Zugriff.Instance.aktHalbjahr);
       schreibtKA = rst.Count > 0;
+
+      var ta = new KlasseTableAdapter();
+      var dt = ta.GetDataByKursId(Id);
+      JgStufe = Jahrgangsstufe.None;
+      foreach (var d in dt)
+      {
+        Klasse k = Zugriff.Instance.KlassenRep.Find(d.Id); // normalerweise wird ein Kurs nur in einer Jgstufe angeboten (Problem WPF--> s. LeseNotenausExcel)
+        if (k.Jahrgangsstufe>JgStufe)
+          JgStufe = k.Jahrgangsstufe;
+      }      
     }
 
     public void SetzeNeuenLehrer(Lehrer lehrer)

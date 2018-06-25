@@ -428,8 +428,11 @@ namespace diNo
       hj2 = s.getHjLeistung(HjArt.Hj2);
       Hj1 = putHj(hj1);
       Hj2 = putHj(hj2);
-      VorHj1 = putHj(s, HjArt.VorHj1);
-      VorHj2 = putHj(s, HjArt.VorHj2);
+      if (s.schueler.hatVorHj)
+      {
+        VorHj1 = putHj(s.getVorHjLeistung(HjArt.Hj1));
+        VorHj2 = putHj(s.getVorHjLeistung(HjArt.Hj2));
+      }
     }
 
     public static NotenDruck CreateNotenDruck(FachSchuelerNoten s, Bericht b)

@@ -52,7 +52,7 @@ namespace diNo
         return;
 
       // nur FOS 12. hat Leistungen aus der 11. Klasse:
-      bool hatVorHj = (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Zwoelf) && (schueler.Data.Schulart == "F");
+      bool hatVorHj = schueler.hatVorHj;
       dataGridHjLeistung.Columns[1].Visible = hatVorHj;
       dataGridHjLeistung.Columns[2].Visible = hatVorHj;
 
@@ -71,8 +71,8 @@ namespace diNo
 
         if (hatVorHj)
         {
-          FillCell(dataGridHjLeistung.Rows[lineCount].Cells[1], fach.getHjLeistung(HjArt.VorHj1));
-          FillCell(dataGridHjLeistung.Rows[lineCount].Cells[2], fach.getHjLeistung(HjArt.VorHj2));
+          FillCell(dataGridHjLeistung.Rows[lineCount].Cells[1], fach.getVorHjLeistung(HjArt.Hj1));
+          FillCell(dataGridHjLeistung.Rows[lineCount].Cells[2], fach.getVorHjLeistung(HjArt.Hj2));
         }
 
         FillCell(dataGridHjLeistung.Rows[lineCount].Cells[3], fach.getHjLeistung(HjArt.Hj1));   

@@ -13946,35 +13946,39 @@ SELECT Id, Bezeichnung, KlassenleiterId FROM Klasse WHERE (Id = @Id)";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[6];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT * FROM Klasse";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT Bezeichnung, Id, KlassenleiterId FROM Klasse WHERE (Bezeichnung = @bezeich" +
-                "nung)";
+            this._commandCollection[1].CommandText = "SELECT * \r\nFROM Klasse WHERE (Bezeichnung = @bezeichnung)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@bezeichnung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT Bezeichnung, Id, KlassenleiterId FROM Klasse WHERE (Id = @id)";
+            this._commandCollection[2].CommandText = "SELECT * \r\nFROM Klasse WHERE (Id = @id)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT Bezeichnung, Id, KlassenleiterId FROM Klasse WHERE (KlassenleiterId = @Kla" +
-                "ssenleiterId)";
+            this._commandCollection[3].CommandText = "SELECT * \r\nFROM Klasse WHERE (KlassenleiterId = @KlassenleiterId)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlassenleiterId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlassenleiterId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[4].Connection = this.Connection;
-            this._commandCollection[4].CommandText = "SELECT Klasse.Bezeichnung, Klasse.Id, Klasse.KlassenleiterId FROM Klasse INNER JO" +
-                "IN KlasseKurs ON Klasse.Id = KlasseKurs.KlasseId INNER JOIN Kurs ON KlasseKurs.K" +
-                "ursId = Kurs.Id WHERE (Kurs.LehrerId = @lehrerId)";
+            this._commandCollection[4].CommandText = "SELECT Klasse.* \r\nFROM Klasse, KlasseKurs\r\nWHERE Klasse.Id=KlasseKurs.KlasseId an" +
+                "d KlasseKurs.KursId=@KursId\r\n";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@lehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[5].Connection = this.Connection;
+            this._commandCollection[5].CommandText = "SELECT Klasse.* FROM Klasse INNER JOIN KlasseKurs ON Klasse.Id = KlasseKurs.Klass" +
+                "eId INNER JOIN Kurs ON KlasseKurs.KursId = Kurs.Id WHERE (Kurs.LehrerId = @lehre" +
+                "rId)";
+            this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@lehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14051,8 +14055,20 @@ SELECT Id, Bezeichnung, KlassenleiterId FROM Klasse WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.KlasseDataTable GetDataByLehrerId(global::System.Nullable<int> lehrerId) {
+        public virtual diNoDataSet.KlasseDataTable GetDataByKursId(int KursId) {
             this.Adapter.SelectCommand = this.CommandCollection[4];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KursId));
+            diNoDataSet.KlasseDataTable dataTable = new diNoDataSet.KlasseDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.KlasseDataTable GetDataByLehrerId(global::System.Nullable<int> lehrerId) {
+            this.Adapter.SelectCommand = this.CommandCollection[5];
             if ((lehrerId.HasValue == true)) {
                 this.Adapter.SelectCommand.Parameters[0].Value = ((int)(lehrerId.Value));
             }

@@ -78,7 +78,7 @@ namespace diNo
     FR = 2, // Fachreferat
     AP = 3,  // Abschlussprüfung-Gesamt
     GesErg = 4, // Gesamtergebnis
-    VorHj1 = 5, // ggf. für 11/1
+    VorHj1 = 5, // ggf. für 11/1  ACHTUNG: TODO: Erst zum Jahreswechsel löschen, sonst passen die Arraydimensionen nicht mehr!
     VorHj2 = 6, // ggf. für 11/2
     JN = 7 // Jahresnote (stammt aus Excel und gibt unabhängig von den eingebrachten Leistungen den Durchschnitt von Hj1/2 an)
   }

@@ -12,14 +12,15 @@ namespace diNo
     private SchuelerverwaltungController verwaltungController;
     private Brief frmBrief=null;
     private bool zeigeAlteFOSBOSO = false;
+    private bool zeigeHjLeistung = false;
 
     public Klassenansicht()
     {
       InitializeComponent();
       this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
 
-      tabControl1.Controls.Remove(tabPageNoten); // Start mit neuer FOBOSO
-      tabControl1.Controls.Remove(tabPageHjLeistung); // neue FOBOSO
+      tabControl1.Controls.Remove(tabPageNoten); // Start mit neuer FOBOSO    
+      tabControl1.Controls.Remove(tabPageHjLeistung); // ab 12. Klasse
 
       // Verwaltungsreiter
       if (Zugriff.Instance.HatVerwaltungsrechte)
@@ -56,8 +57,7 @@ namespace diNo
           if (schueler.AlteFOBOSO())
           {
             if (!zeigeAlteFOSBOSO)
-            {
-              tabControl1.Controls.Remove(tabPageHjLeistung);
+            {              
               tabControl1.Controls.Remove(tabPageNotenbogen);
               tabControl1.TabPages.Insert(1,tabPageNoten);
               zeigeAlteFOSBOSO = true;
@@ -70,16 +70,27 @@ namespace diNo
             {
               tabControl1.Controls.Remove(tabPageNoten);
               tabControl1.TabPages.Insert(1, tabPageNotenbogen);
-              if (schueler != null && schueler.getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
-              {
-                // nur ab der zwölften Klasse anzeigen
-                tabControl1.TabPages.Insert(2, tabPageHjLeistung);
-              }
               zeigeAlteFOSBOSO = false;
             }
             userControlNotenbogen1.Schueler = schueler;
-            userControlHjLeistung1.Schueler = schueler;
           }
+
+          // Reiter HjLeistungen anzeigen:
+          if (!schueler.AlteFOBOSO() && schueler.getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
+            {
+              if (!zeigeHjLeistung) // noch nicht angezeigt
+              {
+                tabControl1.TabPages.Insert(2, tabPageHjLeistung);
+                zeigeHjLeistung = true;
+              }              
+              userControlHjLeistung1.Schueler = schueler;
+            }
+            else
+            {
+              tabControl1.Controls.Remove(tabPageHjLeistung);
+              zeigeHjLeistung = false;
+            }
+            
 
           nameLabel.Text = schueler.NameVorname;
           klasseLabel.Text = schueler.KlassenBezeichnung;

@@ -219,7 +219,7 @@
       // 
       // cSchnittMdl2
       // 
-      dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
       this.cSchnittMdl2.DefaultCellStyle = dataGridViewCellStyle9;
       this.cSchnittMdl2.Frozen = true;
       this.cSchnittMdl2.HeaderText = "Ø sL";

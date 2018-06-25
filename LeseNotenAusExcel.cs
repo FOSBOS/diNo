@@ -182,7 +182,12 @@ namespace diNo
       foreach (int sid in sidList)
       {
         HjArt art = GetAktuellesHalbjahr();
-        Jahrgangsstufe jg = (Zugriff.Instance.SchuelerRep.Find(sid)).getKlasse.Jahrgangsstufe;
+        Jahrgangsstufe jg;        
+        if (kurs.getFach.Typ == FachTyp.WPF) // WPFs werden Jg-Übergreifend angeboten, Klasse des Schülers verwenden
+          jg = (Zugriff.Instance.SchuelerRep.Find(sid)).getKlasse.Jahrgangsstufe;
+        else  // Kurs hängt an Klasse (alte Noten werden weiterhin dieser Klasse zugeordnet)
+          jg = kurs.JgStufe;
+
         if (art == HjArt.Hj1)
         {
           ErzeugeNoten(i, sid, new string[] { "C", "D", "E" }, Halbjahr.Erstes, Notentyp.Ex); // Exen bzw. Kurzarbeiten 1. HJ
@@ -217,7 +222,7 @@ namespace diNo
           byte? zeugnisnoteHJ1 = xls.ReadNote("M" + i, xls.notenbogen);
           if (zeugnisnoteHJ1 != null)
           {
-            HjLeistung hjNote1 = FindHjLeistung(sid, ada, HjArt.Hj1);
+            HjLeistung hjNote1 = FindHjLeistung(sid, ada, HjArt.Hj1,jg);
             if (hjNote1 != null && hjNote1.Punkte != zeugnisnoteHJ1)
             {
               hinweise.Add("SchülerId "+sid+": Die Note aus dem ersten Halbjahr (" + zeugnisnoteHJ1 + ") stimmt nicht mit der Datenbank (" + hjNote1.Punkte + ") überein. Prüfen Sie Ihre Noten bzw. wenden Sie sich an den Administrator!");
@@ -249,13 +254,13 @@ namespace diNo
 
     private HjLeistung FindOrCreateHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art, Jahrgangsstufe jg)
     {
-      var vorhandeneNote = FindHjLeistung(sid, ada, art);
+      var vorhandeneNote = FindHjLeistung(sid, ada, art,jg);
       return vorhandeneNote != null ? vorhandeneNote : new HjLeistung(sid, kurs.getFach, art, jg);
     }
 
-    private HjLeistung FindHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art)
+    private HjLeistung FindHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art, Jahrgangsstufe jg)
     {
-      var vorhandeneNoten = ada.GetDataBySchuelerAndFach(sid, kurs.getFach.Id).Where(x => x.Art == (byte)art);
+      var vorhandeneNoten = ada.GetDataBySchuelerAndFach(sid, kurs.getFach.Id).Where(x => x.Art == (byte)art && x.JgStufe == (byte)jg);
       return vorhandeneNoten != null && vorhandeneNoten.Count() == 1 ? new HjLeistung(vorhandeneNoten.First()) : null;
     }
 

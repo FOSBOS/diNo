@@ -59,7 +59,8 @@ namespace diNo
         HjLeistung hjl = fach.getHjLeistung(HjArt.Hj1);
         if (hjl!=null)
         {
-          dataGridNoten.Rows[lineCount].Cells[2].Value = hjl.SchnittMdl.GetValueOrDefault(); 
+          if (hjl.SchnittMdl!=null) // der Rest sollte befüllt sein!
+            dataGridNoten.Rows[lineCount].Cells[2].Value = hjl.SchnittMdl.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[4].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[5].Value = hjl.Punkte;
           if (Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes)
@@ -71,7 +72,8 @@ namespace diNo
         hjl = fach.getHjLeistung(HjArt.Hj2);
         if (hjl!=null)
         {
-          dataGridNoten.Rows[lineCount].Cells[7].Value = hjl.SchnittMdl.GetValueOrDefault(); 
+          if (hjl.SchnittMdl != null)
+            dataGridNoten.Rows[lineCount].Cells[7].Value = hjl.SchnittMdl.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[9].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
           dataGridNoten.Rows[lineCount].Cells[10].Value = hjl.Punkte;
           if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites)

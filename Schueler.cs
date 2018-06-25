@@ -54,7 +54,7 @@ namespace diNo
       }
       else
       {
-        throw new InvalidOperationException("Konstruktor Schueler: Ungültige ID="+Id);
+        throw new InvalidOperationException("Konstruktor Schueler: Ungültige ID=" + Id);
       }
 
       this.klasse = null;
@@ -163,7 +163,7 @@ namespace diNo
       get { return this.data.LRSStoerung; }
       set
       {
-        this.data.LRSStoerung = value;        
+        this.data.LRSStoerung = value;
       }
     }
 
@@ -188,6 +188,9 @@ namespace diNo
           throw new InvalidOperationException("Klasse passt nicht zur KlassenID des Schülers.");
       }
     }
+
+    public bool hatVorHj
+    { get { return  (!Data.SonderfallNur2Hj) && (getKlasse.Jahrgangsstufe==Jahrgangsstufe.Zwoelf) && (Data.Schulart == "F"); } }
 
     /// <summary>
     /// FPA-Noten

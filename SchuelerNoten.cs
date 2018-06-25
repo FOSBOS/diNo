@@ -351,7 +351,8 @@ namespace diNo
         private IList<int>[,] noten = new List<int>[Enum.GetValues(typeof(Halbjahr)).Length,Enum.GetValues(typeof(Notentyp)).Length];
         private BerechneteNote[] schnitte = new BerechneteNote[Enum.GetValues(typeof(Halbjahr)).Length];
         private HjLeistung[] hjLeistung = new HjLeistung[Enum.GetValues(typeof(HjArt)).Length];
-    
+        private HjLeistung[] vorHjLeistung = new HjLeistung[2]; // enthält nur 11/1 und 11/2
+
         public FachSchuelerNoten(Schueler aschueler, int akursid)
         {
             kursId = akursid;        
@@ -399,14 +400,22 @@ namespace diNo
                         new BerechneteNote(kursId, schueler.Id, bnoteR);
             }
           }
-          // HjLeistungen
-          //diNoDataSet.HjLeistungDataTable hjDT;
-          // nur die HjLeistungen holen, die der aktuellen JgStufe entsprechen, oder früher waren (TODO: Datenstruktur schaffen)
+          // HjLeistungen          
+          // nur die HjLeistungen holen, die der aktuellen JgStufe entsprechen
           int jg = (int)schueler.getKlasse.Jahrgangsstufe;
           var hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id,getFach.Id).Where(x => x.JgStufe == jg);
           foreach (var hjR in hjDT)
           {                
             hjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
+          }
+
+          if (schueler.hatVorHj) // suche 11. Klassnoten
+          {
+            hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == 11 && x.Art < 2);
+            foreach (var hjR in hjDT)
+            {
+              vorHjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
+            }
           }
         }
 
@@ -435,6 +444,11 @@ namespace diNo
         {
           return hjLeistung[(int)art];
         }
+
+    public HjLeistung getVorHjLeistung(HjArt art)
+    {
+      return vorHjLeistung[(int)art];
+    }
 
     /// <summary>
     /// Berechnet das Gesamtergebnis aufgrund der vorliegenden HjLeistungen neu (nur Abiturklassen)

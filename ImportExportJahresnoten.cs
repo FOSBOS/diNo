@@ -104,7 +104,7 @@ namespace diNo
                 // Bei normal aufgerückten Schülern stehen sie als aktuelle Leistung (Hj1 = 0, Hj2 = 1) in der Datei, müssen aber zum VorHJ gemacht werden
                 if (notenArt == HjArt.Hj1 || notenArt == HjArt.Hj2)
                 {
-                  ada.Insert(schueler.Id, fachId, (byte)ConvertHjArt(notenArt), note, false, note2Dez, schnittMdl,11);
+                  ada.Insert(schueler.Id, fachId, (byte)notenArt, note, false, note2Dez, schnittMdl,11);
                 }
               }
             }
@@ -113,21 +113,7 @@ namespace diNo
       }
     }
 
-    /// <summary>
-    /// Macht aus einem aktuellen Halbjahr die passende Vorjahresnote
-    /// </summary>
-    /// <param name="art">Art der Note (vorher: aktuelles Halbjahr)</param>
-    /// <returns>Art der Note (nachher: Vor-Halbjahr)</returns>
-    private static HjArt ConvertHjArt(HjArt art)
-    {
-      switch (art)
-      {
-        case HjArt.Hj1: return HjArt.VorHj1;
-        case HjArt.Hj2: return HjArt.VorHj2;
-        default: throw new InvalidOperationException("Halbjahres-Noten vom Typ "+art+" können nicht ins nächste Jahr übertragen werden");
-      }
-    }
-
+    
     /// <summary>
     /// Sucht nach dem Fach in der Datenbank und liefert die Id zurück
     /// Wirft eine Exception wenn das Fach nicht gefunden werden kann
