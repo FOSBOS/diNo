@@ -17,7 +17,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>4.75338cm</Height>
+              <Height>4.9915cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -137,6 +137,34 @@
                                 <FontFamily>Times New Roman</FontFamily>
                                 <FontSize>12pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <LineHeight>15pt</LineHeight>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!GeborenInAm.Value</Value>
+                              <Style>
+                                <FontFamily>Times New Roman</FontFamily>
+                                <FontSize>11pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <LineHeight>15pt</LineHeight>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontFamily>Times New Roman</FontFamily>
+                                <FontSize>6pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1095,7 +1123,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>16.39589cm</Height>
+        <Height>16.63402cm</Height>
         <Width>16.5cm</Width>
         <Style>
           <Border>
@@ -2041,6 +2069,10 @@
           <DataField>DatumZeugnis</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="GeborenInAm">
+          <DataField>GeborenInAm</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="HideHj2">
           <DataField>HideHj2</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
@@ -2056,6 +2088,10 @@
         <Field Name="IstJahreszeugnis">
           <DataField>IstJahreszeugnis</DataField>
           <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="jg">
+          <DataField>jg</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
         </Field>
         <Field Name="JgKurz">
           <DataField>JgKurz</DataField>

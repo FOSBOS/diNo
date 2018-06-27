@@ -258,11 +258,12 @@
     <EmbeddedResource Include="rptNotenmitteilung.rdlc" />
     <EmbeddedResource Include="rptNotenmitteilungAlt.rdlc" />
     <EmbeddedResource Include="subrptAbiergebnisseAlt.rdlc" />
+    <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
+    <EmbeddedResource Include="subrptNoten.rdlc" />
     <EmbeddedResource Include="subrptNotenSjAlt.rdlc" />
     <EmbeddedResource Include="subrptFPANoten.rdlc" />
     <EmbeddedResource Include="subrptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="subrptNotenSj.rdlc" />
-    <EmbeddedResource Include="subrptNotenstufen.rdlc" />
     <EmbeddedResource Include="subrptJahreszeugnis.rdlc" />
     <EmbeddedResource Include="subrptZwischenzeugnis.rdlc" />
     <EmbeddedResource Include="UserControlAdministration.resx">

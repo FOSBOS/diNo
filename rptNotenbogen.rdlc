@@ -116,6 +116,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
+                              <Value>=Fields!Anrede.Value</Value>
+                              <Style>
+                                <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value xml:space="preserve"> </Value>
+                              <Style>
+                                <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
                               <Value>=Fields!Nachname.Value</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
@@ -250,23 +262,25 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.97042cm</Height>
+              <Height>0.65292cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Subreport Name="subrptFachSchuelerNoten11">
-                      <ReportName>subrptFachSchuelerNoten11</ReportName>
+                    <Subreport Name="subrptNotenSj">
+                      <ReportName>subrptNotenSj</ReportName>
                       <Parameters>
                         <Parameter Name="SId">
                           <Value>=Fields!Id.Value</Value>
                         </Parameter>
                       </Parameters>
+                      <Visibility>
+                        <Hidden>=Fields!jg.Value&gt;11</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -274,6 +288,44 @@
                       </Style>
                     </Subreport>
                     <ColSpan>3</ColSpan>
+                  </CellContents>
+                </TablixCell>
+                <TablixCell />
+                <TablixCell />
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Subreport Name="subrptNoten">
+                      <ReportName>subrptNoten</ReportName>
+                      <Parameters>
+                        <Parameter Name="SId">
+                          <Value>=Fields!Id.Value</Value>
+                        </Parameter>
+                        <Parameter Name="Jg">
+                          <Value>=Fields!jg.Value</Value>
+                        </Parameter>
+                        <Parameter Name="HideHj2">
+                          <Value>=Fields!HideHj2.Value</Value>
+                        </Parameter>
+                        <Parameter Name="HideVorHj">
+                          <Value>=Fields!HideVorHj.Value</Value>
+                        </Parameter>
+                      </Parameters>
+                      <Visibility>
+                        <Hidden>=Fields!jg.Value &lt; 12</Hidden>
+                      </Visibility>
+                      <Style>
+                        <Border>
+                          <Style>Solid</Style>
+                        </Border>
+                      </Style>
+                    </Subreport>
+                    <ColSpan>3</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -292,6 +344,9 @@
                           <Value>=Fields!Id.Value</Value>
                         </Parameter>
                       </Parameters>
+                      <Visibility>
+                        <Hidden>=Fields!jg.Value&lt;&gt;11</Hidden>
+                      </Visibility>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -456,6 +511,17 @@
                           </TextRuns>
                           <Style />
                         </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>=Fields!KlassenleiterText.Value</Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox15</rd:DefaultName>
                       <Style>
@@ -598,6 +664,9 @@
                 <TablixMember>
                   <KeepWithGroup>Before</KeepWithGroup>
                 </TablixMember>
+                <TablixMember>
+                  <KeepWithGroup>Before</KeepWithGroup>
+                </TablixMember>
               </TablixMembers>
             </TablixMember>
           </TablixMembers>
@@ -606,7 +675,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>7.9204cm</Height>
+        <Height>8.2029cm</Height>
         <Width>17.89229cm</Width>
         <Style>
           <Border>
@@ -617,7 +686,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>3.11827in</Height>
+    <Height>3.22949in</Height>
     <Style />
   </Body>
   <Width>7.04421in</Width>
@@ -671,9 +740,21 @@
           <DataField>GeborenInAm</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="HideHj2">
+          <DataField>HideHj2</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="HideVorHj">
+          <DataField>HideVorHj</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
         <Field Name="Id">
           <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="jg">
+          <DataField>jg</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
         </Field>
         <Field Name="Klasse">
           <DataField>Klasse</DataField>
@@ -685,6 +766,10 @@
         </Field>
         <Field Name="Klassenleiter">
           <DataField>Klassenleiter</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KlassenleiterText">
+          <DataField>KlassenleiterText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Laufbahn">

@@ -160,8 +160,8 @@ namespace diNo
       {
         anzahlNoten = null;
         anzahlNoten = new int[7, 2];
-        InitAnzahlNoten();
         zeitpunkt = z;
+        InitAnzahlNoten();        
       }
     }
     
@@ -238,7 +238,7 @@ namespace diNo
         return AnzahlNoten(6) > 0 || AnzahlNoten(5) > 1;
 
       // Achtung: Vorklasse hat am Jahresende eine besondere Bestanden-Regelung
-      else if (zeitpunkt == Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse)
+      else if (zeitpunkt == Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse)
       {
         if (AnzahlNoten(6) == 0 && AnzahlNoten(5) == 0) return false;  // bestanden
         if (AnzahlNoten(6) > 0 || AnzahlNoten(5) > 1) return true;  // da geht nichts mehr
@@ -487,8 +487,13 @@ namespace diNo
       {
         HjLeistung hj;
         if (z <= Zeitpunkt.HalbjahrUndProbezeitFOS) hj = getHjLeistung(HjArt.Hj1);
-        else if ((byte)schueler.getKlasse.Jahrgangsstufe < 12) hj = getHjLeistung(HjArt.JN);
+        else if ((byte)schueler.getKlasse.Jahrgangsstufe < 12)
+        {
+          hj = getHjLeistung(HjArt.JN);
+          if (hj==null) hj = getHjLeistung(HjArt.Hj2); // Behelfskonstruktion, falls im 1. Hj keine Note gebildet wurde (z.B. Rücktritt in Fvk)
+        }
         else hj = getHjLeistung(HjArt.GesErg);
+
         if (hj == null) return null;
         else return hj.Punkte;
       }

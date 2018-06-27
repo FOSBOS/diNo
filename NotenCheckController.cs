@@ -123,7 +123,7 @@ namespace diNo
                 || zeitpunkt == Zeitpunkt.DrittePA)
               )
           {
-            // je Klasse wird die akkumlierte Liste neu erstellt
+            // je Klasse wird die akkumulierte Liste neu erstellt
             if (klasse.Data.Id != aktKlassenId)
             {
               CreateResults();

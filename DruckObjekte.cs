@@ -46,12 +46,11 @@ namespace diNo
 
     public bool HideHj2 { get; private set; } // wird als Parameter an den Unterbericht gereicht
     public bool HideVorHj { get; private set; }
-
-    protected Jahrgangsstufe jg;
+    public byte jg { get; private set; }
 
     public SchuelerDruck(Schueler s, Bericht Berichtsname)
     {
-      jg = s.getKlasse.Jahrgangsstufe;
+      jg = (byte)s.getKlasse.Jahrgangsstufe;
 
       Id = s.Id;//.ToString();
       Nachname = s.Name;
@@ -71,7 +70,7 @@ namespace diNo
 
       Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
       
-      if (jg == Jahrgangsstufe.Dreizehn)
+      if (jg == 13)
       {
         if (!s.Seminarfachnote.IsThemaKurzNull())
         {
@@ -81,7 +80,7 @@ namespace diNo
       }
 
       HideHj2 = Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes;
-      HideVorHj = !(jg == Jahrgangsstufe.Zwoelf && s.Data.Schulart == "F"); // nur bei F12 anzeigen
+      HideVorHj = !(jg == 12 && s.Data.Schulart == "F"); // nur bei F12 anzeigen
     }
     
     public static string GetBerichtsname(Bericht b)
@@ -151,7 +150,7 @@ namespace diNo
 
     public NotenmitteilungDruck(Schueler s, Bericht b) : base(s, b)
     {
-      if (jg == Jahrgangsstufe.Elf)
+      if (jg == 11)
       {
         diNoDataSet.FpaRow fpa;
         if (Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.HalbjahrUndProbezeitFOS)
@@ -172,7 +171,7 @@ namespace diNo
         if (!s.Data.IsDNoteNull())
         {
           if (Bemerkung != "") Bemerkung += "<br>";
-          Bemerkung += "<b>Durchschnittsnote (" + (jg == Jahrgangsstufe.Zwoelf ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";
+          Bemerkung += "<b>Durchschnittsnote (" + (jg == 12 ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";
           DNote = "Durchschnittsnote*: " + String.Format("{0:0.0}", s.Data.DNote);
         }
         if (!s.Data.IsDNoteAllgNull())
@@ -187,6 +186,7 @@ namespace diNo
   public class ZeugnisDruck : SchuelerDruck
   {
     public string KlasseAR { get; private set; }
+    public string GeborenInAm { get; private set; }
     public string JgKurz { get; private set; }
     public string ZeugnisArt { get; private set; }
     public string DatumZeugnis { get; private set; }
@@ -209,7 +209,8 @@ namespace diNo
       else /*if (b == Bericht.Jahreszeugnis)*/ ZeugnisArt = "Jahreszeugnis";
       ZeugnisArt = ZeugnisArt.ToUpper();
       IstJahreszeugnis = (b == Bericht.Jahreszeugnis);
-
+      
+      GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
       KlasseAR = (b == Bericht.Zwischenzeugnis ? "besucht" : "besuchte") + " im " + Schuljahr;
       KlasseAR += " die " + s.getKlasse.JahrgangsstufeZeugnis + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
       if (s.Data.Ausbildungsrichtung != "V") // IV idR. ohne AR
@@ -232,7 +233,11 @@ namespace diNo
       }
 
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
-      Bemerkung = "Bemerkungen:";
+      if (jg==11)      
+        Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.<br><br>Bemerkungen:";      
+      else
+        Bemerkung = "Bemerkungen:";
+
       if (!s.Data.IsZeugnisbemerkungNull())
         Bemerkung += "<br>" + s.Data.Zeugnisbemerkung;
       if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse)
@@ -243,11 +248,11 @@ namespace diNo
         Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
       if (s.hatVorkommnis(Vorkommnisart.MittlereReife))
         Bemerkung += "<br><b>Dieses Zeugnis verleiht den mittleren Schulabschluss gemäß Art. 25 Abs. 1 Satz 2 Nr. 6 BayEUG.</b>";
-      if (jg==Jahrgangsstufe.Elf && b == Bericht.Jahreszeugnis)
+      if (jg==11 && b == Bericht.Jahreszeugnis)
         Bemerkung += "<br><b>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 12 hat " + s.getErSie() + (s.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis) ? " nicht": "") + " erhalten.</b>";
-      if (jg >= Jahrgangsstufe.Zwoelf && b == Bericht.Jahreszeugnis)
+      if (jg >= 12 && b == Bericht.Jahreszeugnis)
       {
-        if (jg == Jahrgangsstufe.Zwoelf && s.Data.Schulart == "B")
+        if (jg == 12 && s.Data.Schulart == "B")
           Bemerkung += "<br>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 13 hat " + s.getErSie() + (!s.hatVorkommnis(Vorkommnisart.VorrueckenBOS13moeglich) ? " nicht" : "") + " erhalten.";
         else
           Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " hat sich der Fachabiturprüfung ohne Erfolg unterzogen. " + s.getErSie(true) + " darf die Prüfung gemäß Art. 54 Abs. 5 Satz 1 BayEUG " 
@@ -438,7 +443,7 @@ namespace diNo
     public static NotenDruck CreateNotenDruck(FachSchuelerNoten s, Bericht b)
     {
       if (b == Bericht.Abiergebnisse) return new NotenAbiDruck(s);
-      if (b == Bericht.Notenmitteilung) return new NotenSjDruck(s);
+      if (b == Bericht.Notenmitteilung || (byte)s.schueler.getKlasse.Jahrgangsstufe < 12) return new NotenSjDruck(s);
       return new NotenHjDruck(s);
     }
 
@@ -637,7 +642,7 @@ namespace diNo
 
     private void JNToZeugnis(HjLeistung t)
     {
-      if (t == null) JNText = "-----";
+      if (t == null) JNToZeugnis((byte?)null);
       else JNToZeugnis(t.Punkte);
     }
 
