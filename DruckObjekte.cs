@@ -70,15 +70,6 @@ namespace diNo
 
       Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
       
-      if (jg == 13)
-      {
-        if (!s.Seminarfachnote.IsThemaKurzNull())
-        {
-          Bemerkung = "<b>Thema der Seminararbeit:</b><br>";
-          Bemerkung += s.Seminarfachnote.ThemaKurz;
-        }
-      }
-
       HideHj2 = Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes;
       HideVorHj = !(jg == 12 && s.Data.Schulart == "F"); // nur bei F12 anzeigen
     }
@@ -139,7 +130,25 @@ namespace diNo
       // Wiederholungen
       string tmp = s.getWiederholungen();
       if (tmp != "") Laufbahn += "<br>Wiederholungen: " + tmp;
-      if (s.Data.LRSStoerung) Laufbahn += "<br><b>Legasthenie</b>";      
+      if (s.Data.LRSStoerung) Laufbahn += "<br><b>Legasthenie</b>";
+
+      if (jg == 13)
+      {
+        if (!s.Seminarfachnote.IsThemaKurzNull())
+        {
+          Bemerkung = "<b>Thema der Seminararbeit:</b><br>";
+          Bemerkung += s.Seminarfachnote.ThemaKurz + "<br><br>";
+        }
+      }
+
+      if (!s.Data.IsDNoteNull() && !s.hatVorkommnis(Vorkommnisart.NichtBestanden))
+      {        
+        Bemerkung += "<b>Durchschnittsnote (" + (jg == 12 ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";          
+        if (!s.Data.IsDNoteAllgNull())
+        {
+          Bemerkung += "<b>Durchschnittsnote (allgemeine Hochschulreife): " + s.Data.DNoteAllg + "</b><br>";          
+        }
+      }
     }
   }
 
@@ -166,17 +175,13 @@ namespace diNo
       }
       
       // für Abiergebnisse
-      if (!s.hatVorkommnis(Vorkommnisart.NichtBestanden))
+      if (!s.Data.IsDNoteNull() && !s.hatVorkommnis(Vorkommnisart.NichtBestanden))
       {
-        if (!s.Data.IsDNoteNull())
-        {
-          if (Bemerkung != "") Bemerkung += "<br>";
-          Bemerkung += "<b>Durchschnittsnote (" + (jg == 12 ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";
+        if (Bemerkung != "") Bemerkung += "<br>";          
           DNote = "Durchschnittsnote*: " + String.Format("{0:0.0}", s.Data.DNote);
-        }
+
         if (!s.Data.IsDNoteAllgNull())
-        {
-          Bemerkung += "<b>Durchschnittsnote (allgemeine Hochschulreife): " + s.Data.DNoteAllg + "</b><br>";
+        {          
           DNote += " (allg. HSR: " + String.Format("{0:0.0}", s.Data.DNoteAllg) + ")";
         }
       }

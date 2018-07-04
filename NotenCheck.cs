@@ -555,8 +555,8 @@ namespace diNo
             contr.Add(Vorkommnisart.starkeGefaehrdungsmitteilung,n.Unterpunktungen,true);
             if (!schueler.Data.IsProbezeitBisNull() && (schueler.Data.ProbezeitBis > DateTime.Parse("01.02." + (Zugriff.Instance.Schuljahr + 1))))
               contr.Add(null, "<b>Probezeit nicht bestanden</b>", true);
-        }
-        else if (n.anz4P > 1 || n.AnzahlNoten(5) > 0)
+          }
+          else if (n.anz4P > 1 || n.AnzahlNoten(5) > 0)
           { 
             contr.Add(Vorkommnisart.BeiWeiteremAbsinken,n.Unterpunktungen,true);
           }
@@ -609,15 +609,18 @@ namespace diNo
         {
           if (!schueler.AlteFOBOSO() || contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
           {
-            contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
+            if (contr.zeitpunkt == Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
+              contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis, n.Unterpunktungen, true);
+            else
+              contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
           }
           else if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich möglich: " + n.Unterpunktungen,true);
           else
           {
             if (contr.zeitpunkt == Zeitpunkt.DrittePA)
               contr.Add(Vorkommnisart.NichtBestanden,n.Unterpunktungen,true);
-            else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
-              contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,n.Unterpunktungen,true);
+            //else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
+            //  contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,n.Unterpunktungen,true);
             else 
               contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen,true); 
           }
