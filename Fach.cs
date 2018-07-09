@@ -33,7 +33,8 @@ namespace diNo
     }
 
     private void InitSortierung()
-    { if (Typ == FachTyp.Profilfach)
+    { 
+      if (Typ == FachTyp.Profilfach)
       {
         var ta = new FachSortierungTableAdapter();
         var d = ta.GetDataByFachId(Id);
@@ -68,10 +69,10 @@ namespace diNo
         get { return this.data.Bezeichnung; }
     }
 
-        public string Kuerzel
-        {
-            get { return this.data.Kuerzel; }
-        }
+    public string Kuerzel
+    {
+       get { return this.data.Kuerzel; }
+    }
 
         // ab neuer FOBOSO: SA pro Halbjahr
         public int AnzahlSA(Zweig zweig, Jahrgangsstufe jg)
@@ -147,8 +148,15 @@ namespace diNo
           return ((sa==Schulart.BOS || jg==Jahrgangsstufe.Dreizehn) && (Kuerzel=="K" || Kuerzel=="Ev" || Kuerzel=="Eth"));
             // || ggf. Kunst im S-Zweig, und Wl in A-Zweig in der 11. Klasse
         }
-      }
-    
+
+        public bool NichtNC
+        {
+          get 
+          { 
+            return data.NichtNC; 
+          }     
+        } 
+     }
 
 
 ///  <summary>

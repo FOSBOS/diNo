@@ -43,30 +43,37 @@ namespace diNo
 
       foreach (var fachNoten in s.getNoten.alleFaecher)
       {
-        var hjLeistungen = new List<HjLeistung>();
-        foreach (HjArt art in Enum.GetValues(typeof(HjArt)))
+        if (!fachNoten.getFach.NichtNC) 
         {
-          var hjLeistung = fachNoten.getHjLeistung(art);
-          if (hjLeistung == null)
-            continue;
+          var hjLeistungen = new List<HjLeistung>();
+          foreach (HjArt art in Enum.GetValues(typeof(HjArt)))
+          {
+            var hjLeistung = fachNoten.getHjLeistung(art);
+            if (hjLeistung == null)
+              continue;
 
-          if (hjLeistung.Art == HjArt.AP || hjLeistung.Art == HjArt.FR /*TODO: Oder Seminarfach oder FpA*/)
-          {
-            sowiesoPflicht.Add(hjLeistung);
+            if (hjLeistung.Art == HjArt.AP || hjLeistung.Art == HjArt.FR /*TODO: Oder Seminarfach oder FpA*/)
+            {
+              sowiesoPflicht.Add(hjLeistung);
+            }
+            else
+            {
+              hjLeistungen.Add(hjLeistung);
+            }
           }
-          else
+
+          if (hjLeistungen.Count == 4)
           {
-            hjLeistungen.Add(hjLeistung);
+            // werfe 11/1 weg
+            hjLeistungen.RemoveAll(x=> x.JgStufe == Jahrgangsstufe.Elf && x.Art == HjArt.Hj1);
           }
+
+          // jetzt stehen alle "normalen" Halbjahresleistungen in hjLeistungen.
+          // Sortieren, nur eine davon kann gestrichen werden
+          hjLeistungen.Sort((x, y) => x.Punkte.CompareTo(y.Punkte));
+          einbringen.AddRange(hjLeistungen.GetRange(0, hjLeistungen.Count - 1));
+          streichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
         }
-
-        // jetzt stehen alle "normalen" Halbjahresleistungen in hjLeistungen.
-        // Sortieren, nur eine davon kann gestrichen werden
-        // TODO: In manchen Fächern kann z.B. auch 11/1 nicht eingebracht werden
-        // TODO: Fach überhaupt einbringungsfähig?
-        hjLeistungen.Sort((x, y) => x.Punkte.CompareTo(y.Punkte));
-        einbringen.AddRange(hjLeistungen.GetRange(0, hjLeistungen.Count - 1));
-        streichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
       }
 
       int fehlend = GetNoetigeAnzahl(s) - einbringen.Count;
