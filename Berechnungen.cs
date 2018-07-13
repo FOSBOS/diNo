@@ -83,12 +83,12 @@ namespace diNo
 
       foreach (var hjLeistung in sowiesoPflicht.Union(einbringen))
       {
-        hjLeistung.Einbringen = true;
+        hjLeistung.Status = HjStatus.Einbringen;
         hjLeistung.WriteToDB();
       }
       foreach (var hjLeistung in streichen)
       {
-        hjLeistung.Einbringen = false;
+        hjLeistung.Status = HjStatus.NichtEinbringen;
         hjLeistung.WriteToDB();
       }
     }

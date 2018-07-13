@@ -103,8 +103,10 @@ namespace diNo
         // Farbgebug: Grau => wird nicht eingebracht
         //            Rot  => 0 Punkte (nur wenn eingebracht werden muss)
         //            Gelb => 1-3 Punkt (nur wenn eingebracht werden muss)
-        if (!hjl.Einbringen)
+        if (hjl.Status==HjStatus.NichtEinbringen)
           c.DataGridView.BackgroundColor = Color.LightGray;
+        else if (hjl.Status == HjStatus.Ungueltig)
+          c.DataGridView.BackgroundColor = Color.Gray;
         else if (hjl.Punkte == 0)
           c.DataGridView.BackgroundColor = Color.Crimson;
         else if (hjl.Punkte == 1 || hjl.Punkte == 2 || hjl.Punkte == 3)

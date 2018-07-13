@@ -7037,7 +7037,7 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnPunkte;
             
-            private global::System.Data.DataColumn columnEinbringen;
+            private global::System.Data.DataColumn columnStatus;
             
             private global::System.Data.DataColumn columnPunkte2Dez;
             
@@ -7120,9 +7120,9 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn EinbringenColumn {
+            public global::System.Data.DataColumn StatusColumn {
                 get {
-                    return this.columnEinbringen;
+                    return this.columnStatus;
                 }
             }
             
@@ -7187,7 +7187,7 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public HjLeistungRow AddHjLeistungRow(SchuelerRow parentSchuelerRowByFK_HjLeistung_SchuelerId, FachRow parentFachRowByFK_HjLeistung_FachId, byte Art, byte Punkte, bool Einbringen, decimal Punkte2Dez, decimal SchnittMdl, int JgStufe) {
+            public HjLeistungRow AddHjLeistungRow(SchuelerRow parentSchuelerRowByFK_HjLeistung_SchuelerId, FachRow parentFachRowByFK_HjLeistung_FachId, byte Art, byte Punkte, byte Status, decimal Punkte2Dez, decimal SchnittMdl, int JgStufe) {
                 HjLeistungRow rowHjLeistungRow = ((HjLeistungRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -7195,7 +7195,7 @@ namespace diNo {
                         null,
                         Art,
                         Punkte,
-                        Einbringen,
+                        Status,
                         Punkte2Dez,
                         SchnittMdl,
                         JgStufe};
@@ -7239,7 +7239,7 @@ namespace diNo {
                 this.columnFachId = base.Columns["FachId"];
                 this.columnArt = base.Columns["Art"];
                 this.columnPunkte = base.Columns["Punkte"];
-                this.columnEinbringen = base.Columns["Einbringen"];
+                this.columnStatus = base.Columns["Status"];
                 this.columnPunkte2Dez = base.Columns["Punkte2Dez"];
                 this.columnSchnittMdl = base.Columns["SchnittMdl"];
                 this.columnJgStufe = base.Columns["JgStufe"];
@@ -7258,8 +7258,8 @@ namespace diNo {
                 base.Columns.Add(this.columnArt);
                 this.columnPunkte = new global::System.Data.DataColumn("Punkte", typeof(byte), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPunkte);
-                this.columnEinbringen = new global::System.Data.DataColumn("Einbringen", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnEinbringen);
+                this.columnStatus = new global::System.Data.DataColumn("Status", typeof(byte), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStatus);
                 this.columnPunkte2Dez = new global::System.Data.DataColumn("Punkte2Dez", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPunkte2Dez);
                 this.columnSchnittMdl = new global::System.Data.DataColumn("SchnittMdl", typeof(decimal), null, global::System.Data.MappingType.Element);
@@ -7278,7 +7278,8 @@ namespace diNo {
                 this.columnFachId.AllowDBNull = false;
                 this.columnArt.AllowDBNull = false;
                 this.columnPunkte.AllowDBNull = false;
-                this.columnEinbringen.AllowDBNull = false;
+                this.columnStatus.AllowDBNull = false;
+                this.columnStatus.DefaultValue = ((byte)(0));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -11979,12 +11980,12 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool Einbringen {
+            public byte Status {
                 get {
-                    return ((bool)(this[this.tableHjLeistung.EinbringenColumn]));
+                    return ((byte)(this[this.tableHjLeistung.StatusColumn]));
                 }
                 set {
-                    this[this.tableHjLeistung.EinbringenColumn] = value;
+                    this[this.tableHjLeistung.StatusColumn] = value;
                 }
             }
             
@@ -21368,65 +21369,65 @@ SELECT Id, Bezeichnung, KlassenString FROM Rolle WHERE (Id = @Id)";
             tableMapping.ColumnMappings.Add("FachId", "FachId");
             tableMapping.ColumnMappings.Add("Art", "Art");
             tableMapping.ColumnMappings.Add("Punkte", "Punkte");
-            tableMapping.ColumnMappings.Add("Einbringen", "Einbringen");
             tableMapping.ColumnMappings.Add("Punkte2Dez", "Punkte2Dez");
             tableMapping.ColumnMappings.Add("SchnittMdl", "SchnittMdl");
             tableMapping.ColumnMappings.Add("JgStufe", "JgStufe");
+            tableMapping.ColumnMappings.Add("Status", "Status");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [HjLeistung] WHERE (([Id] = @Original_Id) AND ([SchuelerId] = @Original_SchuelerId) AND ([FachId] = @Original_FachId) AND ([Art] = @Original_Art) AND ([Punkte] = @Original_Punkte) AND ([Einbringen] = @Original_Einbringen) AND ((@IsNull_Punkte2Dez = 1 AND [Punkte2Dez] IS NULL) OR ([Punkte2Dez] = @Original_Punkte2Dez)) AND ((@IsNull_SchnittMdl = 1 AND [SchnittMdl] IS NULL) OR ([SchnittMdl] = @Original_SchnittMdl)) AND ((@IsNull_JgStufe = 1 AND [JgStufe] IS NULL) OR ([JgStufe] = @Original_JgStufe)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [HjLeistung] WHERE (([Id] = @Original_Id) AND ([SchuelerId] = @Original_SchuelerId) AND ([FachId] = @Original_FachId) AND ([Art] = @Original_Art) AND ([Punkte] = @Original_Punkte) AND ((@IsNull_Punkte2Dez = 1 AND [Punkte2Dez] IS NULL) OR ([Punkte2Dez] = @Original_Punkte2Dez)) AND ((@IsNull_SchnittMdl = 1 AND [SchnittMdl] IS NULL) OR ([SchnittMdl] = @Original_SchnittMdl)) AND ((@IsNull_JgStufe = 1 AND [JgStufe] IS NULL) OR ([JgStufe] = @Original_JgStufe)) AND ([Status] = @Original_Status))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_FachId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FachId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Art", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Art", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Punkte", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Einbringen", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Einbringen", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Punkte2Dez", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte2Dez", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Punkte2Dez", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "Punkte2Dez", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SchnittMdl", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchnittMdl", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchnittMdl", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "SchnittMdl", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_JgStufe", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "JgStufe", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_JgStufe", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "JgStufe", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Status", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [HjLeistung] ([SchuelerId], [FachId], [Art], [Punkte], [Einbringen], [Punkte2Dez], [SchnittMdl], [JgStufe]) VALUES (@SchuelerId, @FachId, @Art, @Punkte, @Einbringen, @Punkte2Dez, @SchnittMdl, @JgStufe);
-SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl, JgStufe FROM HjLeistung WHERE (Id = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [HjLeistung] ([SchuelerId], [FachId], [Art], [Punkte], [Punkte2Dez], [SchnittMdl], [JgStufe], [Status]) VALUES (@SchuelerId, @FachId, @Art, @Punkte, @Punkte2Dez, @SchnittMdl, @JgStufe, @Status);
+SELECT Id, SchuelerId, FachId, Art, Punkte, Punkte2Dez, SchnittMdl, JgStufe, Status FROM HjLeistung WHERE (Id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FachId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FachId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Art", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Art", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Punkte", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Einbringen", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Einbringen", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Punkte2Dez", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "Punkte2Dez", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchnittMdl", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "SchnittMdl", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@JgStufe", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "JgStufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Status", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [HjLeistung] SET [SchuelerId] = @SchuelerId, [FachId] = @FachId, [Art] = @Art, [Punkte] = @Punkte, [Einbringen] = @Einbringen, [Punkte2Dez] = @Punkte2Dez, [SchnittMdl] = @SchnittMdl, [JgStufe] = @JgStufe WHERE (([Id] = @Original_Id) AND ([SchuelerId] = @Original_SchuelerId) AND ([FachId] = @Original_FachId) AND ([Art] = @Original_Art) AND ([Punkte] = @Original_Punkte) AND ([Einbringen] = @Original_Einbringen) AND ((@IsNull_Punkte2Dez = 1 AND [Punkte2Dez] IS NULL) OR ([Punkte2Dez] = @Original_Punkte2Dez)) AND ((@IsNull_SchnittMdl = 1 AND [SchnittMdl] IS NULL) OR ([SchnittMdl] = @Original_SchnittMdl)) AND ((@IsNull_JgStufe = 1 AND [JgStufe] IS NULL) OR ([JgStufe] = @Original_JgStufe)));
-SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl, JgStufe FROM HjLeistung WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [HjLeistung] SET [SchuelerId] = @SchuelerId, [FachId] = @FachId, [Art] = @Art, [Punkte] = @Punkte, [Punkte2Dez] = @Punkte2Dez, [SchnittMdl] = @SchnittMdl, [JgStufe] = @JgStufe, [Status] = @Status WHERE (([Id] = @Original_Id) AND ([SchuelerId] = @Original_SchuelerId) AND ([FachId] = @Original_FachId) AND ([Art] = @Original_Art) AND ([Punkte] = @Original_Punkte) AND ((@IsNull_Punkte2Dez = 1 AND [Punkte2Dez] IS NULL) OR ([Punkte2Dez] = @Original_Punkte2Dez)) AND ((@IsNull_SchnittMdl = 1 AND [SchnittMdl] IS NULL) OR ([SchnittMdl] = @Original_SchnittMdl)) AND ((@IsNull_JgStufe = 1 AND [JgStufe] IS NULL) OR ([JgStufe] = @Original_JgStufe)) AND ([Status] = @Original_Status));
+SELECT Id, SchuelerId, FachId, Art, Punkte, Punkte2Dez, SchnittMdl, JgStufe, Status FROM HjLeistung WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FachId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FachId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Art", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Art", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Punkte", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Einbringen", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Einbringen", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Punkte2Dez", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "Punkte2Dez", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchnittMdl", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "SchnittMdl", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@JgStufe", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "JgStufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Status", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_FachId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FachId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Art", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Art", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Punkte", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Einbringen", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Einbringen", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Punkte2Dez", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Punkte2Dez", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Punkte2Dez", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "Punkte2Dez", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_SchnittMdl", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchnittMdl", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchnittMdl", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 2, "SchnittMdl", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_JgStufe", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "JgStufe", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_JgStufe", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "JgStufe", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Status", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -21443,7 +21444,7 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl, 
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "Select *\r\nFrom HjLeistung\r\nWhere Id=@Id";
+            this._commandCollection[0].CommandText = "SELECT * FROM HjLeistung WHERE (Id = @Id)";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
@@ -21453,14 +21454,15 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl, 
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT *\r\nFROM HjLeistung WHERE (SchuelerId = @SchuelerId) AND (FachId = @FachId)" +
-                "";
+            this._commandCollection[2].CommandText = "SELECT Art, FachId, Id, JgStufe, Punkte, Punkte2Dez, SchnittMdl, SchuelerId, Stat" +
+                "us FROM HjLeistung WHERE (SchuelerId = @SchuelerId) AND (FachId = @FachId)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FachId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "FachId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT *\r\nFROM HjLeistung WHERE (SchuelerId = @SchuelerId)";
+            this._commandCollection[3].CommandText = "SELECT Art, FachId, Id, JgStufe, Punkte, Punkte2Dez, SchnittMdl, SchuelerId, Stat" +
+                "us FROM HjLeistung WHERE (SchuelerId = @SchuelerId)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -21535,37 +21537,37 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl, 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, int Original_SchuelerId, int Original_FachId, byte Original_Art, byte Original_Punkte, bool Original_Einbringen, global::System.Nullable<decimal> Original_Punkte2Dez, global::System.Nullable<decimal> Original_SchnittMdl, global::System.Nullable<int> Original_JgStufe) {
+        public virtual int Delete(int Original_Id, int Original_SchuelerId, int Original_FachId, byte Original_Art, byte Original_Punkte, global::System.Nullable<decimal> Original_Punkte2Dez, global::System.Nullable<decimal> Original_SchnittMdl, global::System.Nullable<int> Original_JgStufe, byte Original_Status) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_SchuelerId));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_FachId));
             this.Adapter.DeleteCommand.Parameters[3].Value = ((byte)(Original_Art));
             this.Adapter.DeleteCommand.Parameters[4].Value = ((byte)(Original_Punkte));
-            this.Adapter.DeleteCommand.Parameters[5].Value = ((bool)(Original_Einbringen));
             if ((Original_Punkte2Dez.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[7].Value = ((decimal)(Original_Punkte2Dez.Value));
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((decimal)(Original_Punkte2Dez.Value));
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[7].Value = global::System.DBNull.Value;
+                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             if ((Original_SchnittMdl.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[9].Value = ((decimal)(Original_SchnittMdl.Value));
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[8].Value = ((decimal)(Original_SchnittMdl.Value));
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[8].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[9].Value = global::System.DBNull.Value;
+                this.Adapter.DeleteCommand.Parameters[7].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
             if ((Original_JgStufe.HasValue == true)) {
-                this.Adapter.DeleteCommand.Parameters[10].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[11].Value = ((int)(Original_JgStufe.Value));
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[10].Value = ((int)(Original_JgStufe.Value));
             }
             else {
-                this.Adapter.DeleteCommand.Parameters[10].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[11].Value = global::System.DBNull.Value;
+                this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[10].Value = global::System.DBNull.Value;
             }
+            this.Adapter.DeleteCommand.Parameters[11].Value = ((byte)(Original_Status));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -21586,30 +21588,30 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl, 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int SchuelerId, int FachId, byte Art, byte Punkte, bool Einbringen, global::System.Nullable<decimal> Punkte2Dez, global::System.Nullable<decimal> SchnittMdl, global::System.Nullable<int> JgStufe) {
+        public virtual int Insert(int SchuelerId, int FachId, byte Art, byte Punkte, global::System.Nullable<decimal> Punkte2Dez, global::System.Nullable<decimal> SchnittMdl, global::System.Nullable<int> JgStufe, byte Status) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(SchuelerId));
             this.Adapter.InsertCommand.Parameters[1].Value = ((int)(FachId));
             this.Adapter.InsertCommand.Parameters[2].Value = ((byte)(Art));
             this.Adapter.InsertCommand.Parameters[3].Value = ((byte)(Punkte));
-            this.Adapter.InsertCommand.Parameters[4].Value = ((bool)(Einbringen));
             if ((Punkte2Dez.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[5].Value = ((decimal)(Punkte2Dez.Value));
+                this.Adapter.InsertCommand.Parameters[4].Value = ((decimal)(Punkte2Dez.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((SchnittMdl.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[5].Value = ((decimal)(SchnittMdl.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
-            if ((SchnittMdl.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[6].Value = ((decimal)(SchnittMdl.Value));
+            if ((JgStufe.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[6].Value = ((int)(JgStufe.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
-            if ((JgStufe.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[7].Value = ((int)(JgStufe.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
-            }
+            this.Adapter.InsertCommand.Parameters[7].Value = ((byte)(Status));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -21635,73 +21637,73 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl, 
                     int FachId, 
                     byte Art, 
                     byte Punkte, 
-                    bool Einbringen, 
                     global::System.Nullable<decimal> Punkte2Dez, 
                     global::System.Nullable<decimal> SchnittMdl, 
                     global::System.Nullable<int> JgStufe, 
+                    byte Status, 
                     int Original_Id, 
                     int Original_SchuelerId, 
                     int Original_FachId, 
                     byte Original_Art, 
                     byte Original_Punkte, 
-                    bool Original_Einbringen, 
                     global::System.Nullable<decimal> Original_Punkte2Dez, 
                     global::System.Nullable<decimal> Original_SchnittMdl, 
                     global::System.Nullable<int> Original_JgStufe, 
+                    byte Original_Status, 
                     int Id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(SchuelerId));
             this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(FachId));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((byte)(Art));
             this.Adapter.UpdateCommand.Parameters[3].Value = ((byte)(Punkte));
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((bool)(Einbringen));
             if ((Punkte2Dez.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((decimal)(Punkte2Dez.Value));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((decimal)(Punkte2Dez.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((SchnittMdl.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((decimal)(SchnittMdl.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
-            if ((SchnittMdl.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((decimal)(SchnittMdl.Value));
+            if ((JgStufe.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(JgStufe.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
-            if ((JgStufe.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(JgStufe.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
-            }
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((byte)(Status));
             this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(Original_Id));
             this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_SchuelerId));
             this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Original_FachId));
             this.Adapter.UpdateCommand.Parameters[11].Value = ((byte)(Original_Art));
             this.Adapter.UpdateCommand.Parameters[12].Value = ((byte)(Original_Punkte));
-            this.Adapter.UpdateCommand.Parameters[13].Value = ((bool)(Original_Einbringen));
             if ((Original_Punkte2Dez.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((decimal)(Original_Punkte2Dez.Value));
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((decimal)(Original_Punkte2Dez.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[14].Value = global::System.DBNull.Value;
             }
             if ((Original_SchnittMdl.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[17].Value = ((decimal)(Original_SchnittMdl.Value));
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((decimal)(Original_SchnittMdl.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[16].Value = global::System.DBNull.Value;
             }
             if ((Original_JgStufe.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((int)(Original_JgStufe.Value));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((int)(Original_JgStufe.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
             }
+            this.Adapter.UpdateCommand.Parameters[19].Value = ((byte)(Original_Status));
             this.Adapter.UpdateCommand.Parameters[20].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -21728,20 +21730,20 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl, 
                     int FachId, 
                     byte Art, 
                     byte Punkte, 
-                    bool Einbringen, 
                     global::System.Nullable<decimal> Punkte2Dez, 
                     global::System.Nullable<decimal> SchnittMdl, 
                     global::System.Nullable<int> JgStufe, 
+                    byte Status, 
                     int Original_Id, 
                     int Original_SchuelerId, 
                     int Original_FachId, 
                     byte Original_Art, 
                     byte Original_Punkte, 
-                    bool Original_Einbringen, 
                     global::System.Nullable<decimal> Original_Punkte2Dez, 
                     global::System.Nullable<decimal> Original_SchnittMdl, 
-                    global::System.Nullable<int> Original_JgStufe) {
-            return this.Update(SchuelerId, FachId, Art, Punkte, Einbringen, Punkte2Dez, SchnittMdl, JgStufe, Original_Id, Original_SchuelerId, Original_FachId, Original_Art, Original_Punkte, Original_Einbringen, Original_Punkte2Dez, Original_SchnittMdl, Original_JgStufe, Original_Id);
+                    global::System.Nullable<int> Original_JgStufe, 
+                    byte Original_Status) {
+            return this.Update(SchuelerId, FachId, Art, Punkte, Punkte2Dez, SchnittMdl, JgStufe, Status, Original_Id, Original_SchuelerId, Original_FachId, Original_Art, Original_Punkte, Original_Punkte2Dez, Original_SchnittMdl, Original_JgStufe, Original_Status, Original_Id);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
