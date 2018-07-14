@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
@@ -67,6 +68,15 @@ namespace diNo
         var ta = new HjLeistungTableAdapter();        
         ta.Delete1(data.Id);
       }        
+    }
+
+    public Color GetBackgroundColor()
+    {
+      if (Status == HjStatus.Ungueltig) return Color.Gray;
+      if (Status == HjStatus.NichtEinbringen) return Color.LightGray;
+      if (Punkte < 1) return Color.Coral;
+      if (Punkte < 3.5) return Color.Khaki;
+      return Color.White;
     }
   }
 

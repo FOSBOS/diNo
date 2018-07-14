@@ -339,6 +339,7 @@ namespace diNo
     {
         public Schueler schueler;        
         private Fach fach=null;
+        public bool NoteUngueltig = false;
         public int kursId
         {
             get;
@@ -490,12 +491,21 @@ namespace diNo
         else if ((byte)schueler.getKlasse.Jahrgangsstufe < 12)
         {
           hj = getHjLeistung(HjArt.JN);
-          if (hj==null) hj = getHjLeistung(HjArt.Hj2); // Behelfskonstruktion, falls im 1. Hj keine Note gebildet wurde (z.B. Rücktritt in Fvk)
+          if (hj == null)
+          {
+            hj = getHjLeistung(HjArt.Hj2); // Behelfskonstruktion, falls im 1. Hj keine Note gebildet wurde (z.B. Rücktritt in Fvk)
+            NoteUngueltig = true;
+          }
         }
         else hj = getHjLeistung(HjArt.GesErg);
 
         if (hj == null) return null;
-        else return hj.Punkte;
+        else
+        {
+          if (hj.Status == HjStatus.Ungueltig)
+            NoteUngueltig = true;
+          return hj.Punkte;
+        }
       }
 
       // Alte FOBOSO:

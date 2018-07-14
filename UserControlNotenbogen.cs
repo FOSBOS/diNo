@@ -97,25 +97,8 @@ namespace diNo
 
     private void SetBackgroundColor(HjLeistung hj, DataGridViewCell cell)
     {
-      Color color = GetBackgroundColor(hj);
-      if (color == dataGridNoten.BackgroundColor)
-      {
-        return; // nothing to do
-      }
-      else
-      {
-        cell.Style.BackColor = color;
-      }
+      cell.Style.BackColor = hj.GetBackgroundColor(); ;      
     }
-
-    private Color GetBackgroundColor(HjLeistung hj)
-    {
-      if (hj.Status == HjStatus.Ungueltig) return Color.Violet;
-      if (hj.Status == HjStatus.NichtEinbringen) return Color.LightGray;
-      if (hj.Punkte < 1) return Color.Coral;
-      if (hj.Punkte < 3.5) return Color.Khaki;
-      return dataGridNoten.BackgroundColor;
-  }
 
     private void FillCell(DataGridViewCell c, HjLeistung hjl)
     {
@@ -167,7 +150,7 @@ namespace diNo
     private void contextMenu_Opening(object sender, CancelEventArgs e)
     {
       var c = dataGridNoten.SelectedCells[0];
-      if (c.Tag == null)
+      if (c.Tag == null || !Zugriff.Instance.HatVerwaltungsrechte)
       {
         e.Cancel = true;
         return;
