@@ -104,7 +104,7 @@ namespace diNo
                 // Bei normal aufgerückten Schülern stehen sie als aktuelle Leistung (Hj1 = 0, Hj2 = 1) in der Datei, müssen aber zum VorHJ gemacht werden
                 if (notenArt == HjArt.Hj1 || notenArt == HjArt.Hj2)
                 {
-                  ada.Insert(schueler.Id, fachId, (byte)notenArt, note, false, note2Dez, schnittMdl,11);
+                  ada.Insert(schueler.Id, fachId, (byte)notenArt, note, note2Dez, schnittMdl,11,0);
                 }
               }
             }

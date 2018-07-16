@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
@@ -13,7 +14,7 @@ namespace diNo
     private int schuelerId;    
     public HjArt Art { get; private set; }
     public byte Punkte;
-    public bool Einbringen=false;
+    public HjStatus Status=HjStatus.None;
     public Jahrgangsstufe JgStufe;
     public decimal? Punkte2Dez=null;
     public decimal? SchnittMdl=null;
@@ -31,7 +32,7 @@ namespace diNo
       data = r;
       Art = (HjArt)r.Art;
       Punkte = r.Punkte;
-      Einbringen = r.Einbringen;
+      Status = (HjStatus) r.Status;
       JgStufe = (Jahrgangsstufe) r.JgStufe;
       if (!r.IsPunkte2DezNull()) Punkte2Dez =  r.Punkte2Dez;
       if (!r.IsSchnittMdlNull()) SchnittMdl =  r.SchnittMdl;      
@@ -49,12 +50,12 @@ namespace diNo
       var ta = new HjLeistungTableAdapter();
       if (data==null) // neue HjLeistung -->INSERT
       {        
-        ta.Insert(schuelerId,getFach.Id,(byte)Art,Punkte,Einbringen,Punkte2Dez,SchnittMdl,(int)JgStufe);
+        ta.Insert(schuelerId,getFach.Id,(byte)Art,Punkte,Punkte2Dez,SchnittMdl,(int)JgStufe,(byte)Status);
       }
       else // vorhandene HjLeistung anpassen
       {
         data.Punkte=Punkte;
-        data.Einbringen = Einbringen;
+        data.Status = (byte)Status;
         if (Punkte2Dez==null) data.SetPunkte2DezNull(); else data.Punkte2Dez = Punkte2Dez.GetValueOrDefault();
         if (SchnittMdl==null) data.SetSchnittMdlNull(); else data.SchnittMdl = SchnittMdl.GetValueOrDefault();
         ta.Update(data);
@@ -67,6 +68,15 @@ namespace diNo
         var ta = new HjLeistungTableAdapter();        
         ta.Delete1(data.Id);
       }        
+    }
+
+    public Color GetBackgroundColor()
+    {
+      if (Status == HjStatus.Ungueltig) return Color.Gray;
+      if (Status == HjStatus.NichtEinbringen) return Color.LightGray;
+      if (Punkte < 1) return Color.Coral;
+      if (Punkte < 3.5) return Color.Khaki;
+      return Color.White;
     }
   }
 
@@ -81,5 +91,13 @@ namespace diNo
     VorHj1 = 5, // ggf. für 11/1  ACHTUNG: TODO: Erst zum Jahreswechsel löschen, sonst passen die Arraydimensionen nicht mehr!
     VorHj2 = 6, // ggf. für 11/2
     JN = 7 // Jahresnote (stammt aus Excel und gibt unabhängig von den eingebrachten Leistungen den Durchschnitt von Hj1/2 an)
+  }
+
+  public enum HjStatus
+  {
+    None = 0,
+    Einbringen = 1,
+    NichtEinbringen = 2,
+    Ungueltig = 3 // z.B. Note steht zwar drin, aber es gibt nur eine Ex --> nicht bewertbar
   }
 }

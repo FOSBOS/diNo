@@ -61,10 +61,11 @@ namespace diNo
         {
           if (hjl.SchnittMdl!=null) // der Rest sollte befüllt sein!
             dataGridNoten.Rows[lineCount].Cells[2].Value = hjl.SchnittMdl.GetValueOrDefault(); 
-          dataGridNoten.Rows[lineCount].Cells[4].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
+          dataGridNoten.Rows[lineCount].Cells[4].Value = hjl.Punkte2Dez.GetValueOrDefault();
+          dataGridNoten.Rows[lineCount].Cells[5].Tag = hjl;
           dataGridNoten.Rows[lineCount].Cells[5].Value = hjl.Punkte;
-          if (Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes)
-            SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[5]);
+          //if (Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes)
+            SetBackgroundColor(hjl, dataGridNoten.Rows[lineCount].Cells[5]);
         }
 
         dataGridNoten.Rows[lineCount].Cells[8].Value = fach.SA(Halbjahr.Zweites);
@@ -74,48 +75,30 @@ namespace diNo
         {
           if (hjl.SchnittMdl != null)
             dataGridNoten.Rows[lineCount].Cells[7].Value = hjl.SchnittMdl.GetValueOrDefault(); 
-          dataGridNoten.Rows[lineCount].Cells[9].Value = hjl.Punkte2Dez.GetValueOrDefault(); 
+          dataGridNoten.Rows[lineCount].Cells[9].Value = hjl.Punkte2Dez.GetValueOrDefault();
+          dataGridNoten.Rows[lineCount].Cells[10].Tag = hjl;
           dataGridNoten.Rows[lineCount].Cells[10].Value = hjl.Punkte;
-          if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites)
-            SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[10]);
+          //if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites)
+            SetBackgroundColor(hjl, dataGridNoten.Rows[lineCount].Cells[10]);
         }
 
         hjl = fach.getHjLeistung(HjArt.JN); // Jahresnote (unabhängig von Einbringung)
         // hjl = fach.getHjLeistung(HjArt.GesErg); --> kommt im Reiter Hj-Leistung
         if (hjl != null)
-        {         
+        {
+          dataGridNoten.Rows[lineCount].Cells[14].Tag = hjl;
           dataGridNoten.Rows[lineCount].Cells[14].Value = hjl.Punkte;
-          if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites)
-            SetBackgroundColor(hjl.Punkte, dataGridNoten.Rows[lineCount].Cells[14]);
+          //if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites)
+            SetBackgroundColor(hjl, dataGridNoten.Rows[lineCount].Cells[14]);
         }
         lineCount++;
       }
     }
 
-    private void SetBackgroundColor(double notenwert, DataGridViewCell cell)
+    private void SetBackgroundColor(HjLeistung hj, DataGridViewCell cell)
     {
-      Color color = GetBackgroundColor(notenwert);
-      if (color == dataGridNoten.BackgroundColor)
-      {
-        return; // nothing to do
-      }
-      else
-      {
-        cell.Style.BackColor = color;
-      }
+      cell.Style.BackColor = hj.GetBackgroundColor(); ;      
     }
-
-    private Color GetBackgroundColor(double notenwert)
-    {
-      int aktuellerZeitpunkt = Zugriff.Instance.aktZeitpunkt;
-
-      if (notenwert < 1) return Color.Coral;
-      /*if (notenwert < 1.5) return Color.Coral;
-      if (notenwert < 2.5) return Color.Orange;*/
-      if (notenwert < 3.5) return Color.Khaki;
-      //if (notenwert > 11.5) return Color.PaleGreen;
-      return dataGridNoten.BackgroundColor;
-  }
 
     private void FillCell(DataGridViewCell c, HjLeistung hjl)
     {
@@ -154,6 +137,56 @@ namespace diNo
     {
       dataGridNoten.Columns[10].Visible = chkShowHj2.Checked || chkShowAbi.Checked; // 2. Hj
       dataGridNoten.Columns[14].Visible = chkShowHj2.Checked || chkShowAbi.Checked; // Jahresnote
+    }
+
+    private void setStatus(HjStatus status)
+    {
+      HjLeistung hj = (HjLeistung) dataGridNoten.SelectedCells[0].Tag;
+      hj.Status = status;
+      hj.WriteToDB();
+      SetBackgroundColor(hj, dataGridNoten.SelectedCells[0]);
+    }
+
+    private void contextMenu_Opening(object sender, CancelEventArgs e)
+    {
+      var c = dataGridNoten.SelectedCells[0];
+      if (c.Tag == null || !Zugriff.Instance.HatVerwaltungsrechte)
+      {
+        e.Cancel = true;
+        return;
+      }
+
+      byte s = (byte)((HjLeistung)c.Tag).Status; // aktueller Status anhaken
+      for (int i = 0; i < 4; i++)
+        ((ToolStripMenuItem)contextMenu.Items[i]).Checked = i == s;
+    }
+
+    private void undefiniertToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      setStatus(HjStatus.None);
+    }
+
+    private void einbringenToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      setStatus(HjStatus.Einbringen);
+    }
+
+    private void nichtEinbringenToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      setStatus(HjStatus.NichtEinbringen);
+    }
+
+    private void ungueltigToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      setStatus(HjStatus.Ungueltig);
+    }
+
+    private void dataGridNoten_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+    {
+      if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
+      {
+        dataGridNoten.CurrentCell = dataGridNoten.Rows[e.RowIndex].Cells[e.ColumnIndex];
+      }
     }
   }
 }

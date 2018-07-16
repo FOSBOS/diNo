@@ -6,9 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using System.Threading.Tasks.Parallel;
 using System.Windows.Forms;
 using diNo;
 using diNo.diNoDataSetTableAdapters;
+using System.Collections.Concurrent;
 
 namespace diNo
 {
@@ -78,7 +80,17 @@ namespace diNo
         return;
       }
 
-      // Check für alle eigenen Schüler durchführen      
+      // Check für alle eigenen Schüler durchführen       
+      /*Partitioner.Create(0, contr.zuPruefendeKlassen.Count)
+      Parallel.ForEach(contr.zuPruefendeKlassen, k => 
+       {
+         foreach (var s in k.eigeneSchueler)
+         {
+           contr.CheckSchueler(s);           
+         }
+       });
+       */
+      
       foreach (var k in contr.zuPruefendeKlassen)
       {
         lbStatus.Text = "Prüfe Klasse " + k.Bezeichnung;
@@ -89,7 +101,8 @@ namespace diNo
           progressBarChecks.Increment(1);
           if (abbrechen) break;
         }
-      }            
+      }
+                 
       contr.CreateResults();
       Close();
       if (contr.res.list.Count==0)

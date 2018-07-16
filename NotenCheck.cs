@@ -285,6 +285,11 @@ namespace diNo
           contr.Add(kurs, toText(0, "", "Note", hj));
           continue;
         }
+        if (fachNoten.NoteUngueltig)
+        {
+          contr.Add(kurs, "Die Gesamtnote ist ungültig.");
+          continue;
+        }
 
         if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
         {

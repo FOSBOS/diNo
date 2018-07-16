@@ -635,7 +635,7 @@ namespace diNo
 
     private string HjToZeugnis(HjLeistung t) // für NeueFOBOSO
     {
-      if (t == null) return "--";
+      if (t == null || t.Status == HjStatus.Ungueltig) return "--";
       else return t.Punkte.ToString("D2");
     }
 
@@ -647,7 +647,7 @@ namespace diNo
 
     private void JNToZeugnis(HjLeistung t)
     {
-      if (t == null) JNToZeugnis((byte?)null);
+      if (t == null || t.Status == HjStatus.Ungueltig) JNToZeugnis((byte?)null);
       else JNToZeugnis(t.Punkte);
     }
 
