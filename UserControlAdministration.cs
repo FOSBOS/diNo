@@ -26,8 +26,9 @@ namespace diNo
       {                
         chkSperre.Checked = konstanten.Sperre == 1;
         edSchuljahr.Text = konstanten.Schuljahr.ToString();
-        comboBoxZeitpunkt.SelectedIndex = konstanten.aktZeitpunkt-1;
-        edBackupPfad.Text = konstanten.BackupPfad;        
+        comboBoxZeitpunkt.SelectedIndex = konstanten.aktZeitpunkt-1;        
+        opNurAktuelleNoten.Checked = konstanten.LeseModusExcel == 0;
+        opVollstaendig.Checked = konstanten.LeseModusExcel == 1;
       }
       dateZeugnis.Value = konstanten.Zeugnisdatum;
       cbNotendruck.SelectedIndex = 0;
@@ -136,9 +137,9 @@ namespace diNo
     {
       konstanten.Sperre = chkSperre.Checked ? 1 : 0;
       konstanten.Schuljahr = int.Parse(edSchuljahr.Text);
-      konstanten.aktZeitpunkt = comboBoxZeitpunkt.SelectedIndex+1;
-      konstanten.BackupPfad = edBackupPfad.Text;
+      konstanten.aktZeitpunkt = comboBoxZeitpunkt.SelectedIndex+1;      
       konstanten.Zeugnisdatum = dateZeugnis.Value;
+      konstanten.LeseModusExcel = opVollstaendig.Checked ? 1 : 0;
       (new GlobaleKonstantenTableAdapter()).Update(konstanten);
     }
 
@@ -212,11 +213,6 @@ namespace diNo
           new ReportSchuelerdruck(obj, (Bericht) cbNotendruck.SelectedIndex, getUnterschriftZeugnis()).Show();
         }
       }          
-    }
-
-    private void cbNotendruck_SelectedIndexChanged(object sender, EventArgs e)
-    {
-
     }
   }
 }

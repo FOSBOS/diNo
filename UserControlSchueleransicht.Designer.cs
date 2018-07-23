@@ -434,7 +434,7 @@ namespace diNo
       this.label10.Name = "label10";
       this.label10.Size = new System.Drawing.Size(85, 13);
       this.label10.TabIndex = 53;
-      this.label10.Text = "in Jahrgangstufe";
+      this.label10.Text = "in Jahrgangsstufe";
       // 
       // textBoxEintrittAm
       // 

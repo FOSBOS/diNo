@@ -128,7 +128,7 @@ namespace diNo
       {
         if (Jahrgangsstufe == Jahrgangsstufe.IntVk) return "Integrationsvorklasse";
         if (Jahrgangsstufe == Jahrgangsstufe.Vorklasse) return "Vorklasse";
-        return "Jahrgangstufe " + ((int)Jahrgangsstufe);
+        return "Jahrgangsstufe " + ((int)Jahrgangsstufe);
       }
     }    
     

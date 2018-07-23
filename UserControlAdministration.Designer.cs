@@ -31,6 +31,12 @@
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
       this.btnSelect = new System.Windows.Forms.Button();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
+      this.gbUnterschrift = new System.Windows.Forms.GroupBox();
+      this.opGez = new System.Windows.Forms.RadioButton();
+      this.opStv = new System.Windows.Forms.RadioButton();
+      this.opSL = new System.Windows.Forms.RadioButton();
+      this.lbZeugnis = new System.Windows.Forms.Label();
+      this.dateZeugnis = new System.Windows.Forms.DateTimePicker();
       this.cbNotendruck = new System.Windows.Forms.ComboBox();
       this.btnKlassenliste = new System.Windows.Forms.Button();
       this.btnAttestpflicht = new System.Windows.Forms.Button();
@@ -50,8 +56,6 @@
       this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.btnKurseLehrer = new System.Windows.Forms.Button();
       this.groupBoxEinstellungen = new System.Windows.Forms.GroupBox();
-      this.edBackupPfad = new System.Windows.Forms.TextBox();
-      this.lbBackupPfad = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.comboBoxZeitpunkt = new System.Windows.Forms.ComboBox();
       this.label1 = new System.Windows.Forms.Label();
@@ -59,19 +63,17 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
-      this.lbZeugnis = new System.Windows.Forms.Label();
-      this.dateZeugnis = new System.Windows.Forms.DateTimePicker();
-      this.gbUnterschrift = new System.Windows.Forms.GroupBox();
-      this.opSL = new System.Windows.Forms.RadioButton();
-      this.opStv = new System.Windows.Forms.RadioButton();
-      this.opGez = new System.Windows.Forms.RadioButton();
+      this.gbLeseModusExcel = new System.Windows.Forms.GroupBox();
+      this.opVollstaendig = new System.Windows.Forms.RadioButton();
+      this.opNurAktuelleNoten = new System.Windows.Forms.RadioButton();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
+      this.gbUnterschrift.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
       this.groupBoxBerechtigungen.SuspendLayout();
       this.groupBoxEinstellungen.SuspendLayout();
-      this.gbUnterschrift.SuspendLayout();
+      this.gbLeseModusExcel.SuspendLayout();
       this.SuspendLayout();
       // 
       // groupBoxAnalyse
@@ -110,6 +112,69 @@
       this.groupBoxDrucken.TabStop = false;
       this.groupBoxDrucken.Text = "Drucken";
       // 
+      // gbUnterschrift
+      // 
+      this.gbUnterschrift.Controls.Add(this.opGez);
+      this.gbUnterschrift.Controls.Add(this.opStv);
+      this.gbUnterschrift.Controls.Add(this.opSL);
+      this.gbUnterschrift.Location = new System.Drawing.Point(159, 19);
+      this.gbUnterschrift.Name = "gbUnterschrift";
+      this.gbUnterschrift.Size = new System.Drawing.Size(68, 77);
+      this.gbUnterschrift.TabIndex = 31;
+      this.gbUnterschrift.TabStop = false;
+      this.gbUnterschrift.Text = "Unterschr";
+      // 
+      // opGez
+      // 
+      this.opGez.AutoSize = true;
+      this.opGez.Location = new System.Drawing.Point(14, 52);
+      this.opGez.Name = "opGez";
+      this.opGez.Size = new System.Drawing.Size(42, 17);
+      this.opGez.TabIndex = 2;
+      this.opGez.TabStop = true;
+      this.opGez.Text = "gez";
+      this.opGez.UseVisualStyleBackColor = true;
+      // 
+      // opStv
+      // 
+      this.opStv.AutoSize = true;
+      this.opStv.Location = new System.Drawing.Point(14, 34);
+      this.opStv.Name = "opStv";
+      this.opStv.Size = new System.Drawing.Size(41, 17);
+      this.opStv.TabIndex = 1;
+      this.opStv.TabStop = true;
+      this.opStv.Text = "Stv";
+      this.opStv.UseVisualStyleBackColor = true;
+      // 
+      // opSL
+      // 
+      this.opSL.AutoSize = true;
+      this.opSL.Checked = true;
+      this.opSL.Location = new System.Drawing.Point(14, 16);
+      this.opSL.Name = "opSL";
+      this.opSL.Size = new System.Drawing.Size(38, 17);
+      this.opSL.TabIndex = 0;
+      this.opSL.TabStop = true;
+      this.opSL.Text = "SL";
+      this.opSL.UseVisualStyleBackColor = true;
+      // 
+      // lbZeugnis
+      // 
+      this.lbZeugnis.AutoSize = true;
+      this.lbZeugnis.Location = new System.Drawing.Point(18, 37);
+      this.lbZeugnis.Name = "lbZeugnis";
+      this.lbZeugnis.Size = new System.Drawing.Size(74, 13);
+      this.lbZeugnis.TabIndex = 30;
+      this.lbZeugnis.Text = "Zeugnisdatum";
+      // 
+      // dateZeugnis
+      // 
+      this.dateZeugnis.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+      this.dateZeugnis.Location = new System.Drawing.Point(21, 53);
+      this.dateZeugnis.Name = "dateZeugnis";
+      this.dateZeugnis.Size = new System.Drawing.Size(132, 20);
+      this.dateZeugnis.TabIndex = 29;
+      // 
       // cbNotendruck
       // 
       this.cbNotendruck.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -126,7 +191,6 @@
       this.cbNotendruck.Name = "cbNotendruck";
       this.cbNotendruck.Size = new System.Drawing.Size(132, 21);
       this.cbNotendruck.TabIndex = 7;
-      this.cbNotendruck.SelectedIndexChanged += new System.EventHandler(this.cbNotendruck_SelectedIndexChanged);
       // 
       // btnKlassenliste
       // 
@@ -308,8 +372,7 @@
       // 
       // groupBoxEinstellungen
       // 
-      this.groupBoxEinstellungen.Controls.Add(this.edBackupPfad);
-      this.groupBoxEinstellungen.Controls.Add(this.lbBackupPfad);
+      this.groupBoxEinstellungen.Controls.Add(this.gbLeseModusExcel);
       this.groupBoxEinstellungen.Controls.Add(this.label2);
       this.groupBoxEinstellungen.Controls.Add(this.comboBoxZeitpunkt);
       this.groupBoxEinstellungen.Controls.Add(this.label1);
@@ -322,22 +385,6 @@
       this.groupBoxEinstellungen.TabIndex = 6;
       this.groupBoxEinstellungen.TabStop = false;
       this.groupBoxEinstellungen.Text = "Globale Einstellungen";
-      // 
-      // edBackupPfad
-      // 
-      this.edBackupPfad.Location = new System.Drawing.Point(16, 166);
-      this.edBackupPfad.Name = "edBackupPfad";
-      this.edBackupPfad.Size = new System.Drawing.Size(217, 20);
-      this.edBackupPfad.TabIndex = 17;
-      // 
-      // lbBackupPfad
-      // 
-      this.lbBackupPfad.AutoSize = true;
-      this.lbBackupPfad.Location = new System.Drawing.Point(13, 150);
-      this.lbBackupPfad.Name = "lbBackupPfad";
-      this.lbBackupPfad.Size = new System.Drawing.Size(65, 13);
-      this.lbBackupPfad.TabIndex = 16;
-      this.lbBackupPfad.Text = "Backuppfad";
       // 
       // label2
       // 
@@ -410,68 +457,37 @@
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
       // 
-      // lbZeugnis
+      // gbLeseModusExcel
       // 
-      this.lbZeugnis.AutoSize = true;
-      this.lbZeugnis.Location = new System.Drawing.Point(18, 37);
-      this.lbZeugnis.Name = "lbZeugnis";
-      this.lbZeugnis.Size = new System.Drawing.Size(74, 13);
-      this.lbZeugnis.TabIndex = 30;
-      this.lbZeugnis.Text = "Zeugnisdatum";
+      this.gbLeseModusExcel.Controls.Add(this.opVollstaendig);
+      this.gbLeseModusExcel.Controls.Add(this.opNurAktuelleNoten);
+      this.gbLeseModusExcel.Location = new System.Drawing.Point(16, 127);
+      this.gbLeseModusExcel.Name = "gbLeseModusExcel";
+      this.gbLeseModusExcel.Size = new System.Drawing.Size(144, 61);
+      this.gbLeseModusExcel.TabIndex = 15;
+      this.gbLeseModusExcel.TabStop = false;
+      this.gbLeseModusExcel.Text = "Lesemodus Exceldateien";
       // 
-      // dateZeugnis
+      // opVollstaendig
       // 
-      this.dateZeugnis.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-      this.dateZeugnis.Location = new System.Drawing.Point(21, 53);
-      this.dateZeugnis.Name = "dateZeugnis";
-      this.dateZeugnis.Size = new System.Drawing.Size(132, 20);
-      this.dateZeugnis.TabIndex = 29;
+      this.opVollstaendig.AutoSize = true;
+      this.opVollstaendig.Location = new System.Drawing.Point(10, 35);
+      this.opVollstaendig.Name = "opVollstaendig";
+      this.opVollstaendig.Size = new System.Drawing.Size(118, 17);
+      this.opVollstaendig.TabIndex = 2;
+      this.opVollstaendig.Text = "Vollständig einlesen";
+      this.opVollstaendig.UseVisualStyleBackColor = true;
       // 
-      // gbUnterschrift
+      // opNurAktuelleNoten
       // 
-      this.gbUnterschrift.Controls.Add(this.opGez);
-      this.gbUnterschrift.Controls.Add(this.opStv);
-      this.gbUnterschrift.Controls.Add(this.opSL);
-      this.gbUnterschrift.Location = new System.Drawing.Point(159, 19);
-      this.gbUnterschrift.Name = "gbUnterschrift";
-      this.gbUnterschrift.Size = new System.Drawing.Size(68, 77);
-      this.gbUnterschrift.TabIndex = 31;
-      this.gbUnterschrift.TabStop = false;
-      this.gbUnterschrift.Text = "Unterschr";
-      // 
-      // opSL
-      // 
-      this.opSL.AutoSize = true;
-      this.opSL.Checked = true;
-      this.opSL.Location = new System.Drawing.Point(14, 16);
-      this.opSL.Name = "opSL";
-      this.opSL.Size = new System.Drawing.Size(38, 17);
-      this.opSL.TabIndex = 0;
-      this.opSL.TabStop = true;
-      this.opSL.Text = "SL";
-      this.opSL.UseVisualStyleBackColor = true;
-      // 
-      // opStv
-      // 
-      this.opStv.AutoSize = true;
-      this.opStv.Location = new System.Drawing.Point(14, 34);
-      this.opStv.Name = "opStv";
-      this.opStv.Size = new System.Drawing.Size(41, 17);
-      this.opStv.TabIndex = 1;
-      this.opStv.TabStop = true;
-      this.opStv.Text = "Stv";
-      this.opStv.UseVisualStyleBackColor = true;
-      // 
-      // opGez
-      // 
-      this.opGez.AutoSize = true;
-      this.opGez.Location = new System.Drawing.Point(14, 52);
-      this.opGez.Name = "opGez";
-      this.opGez.Size = new System.Drawing.Size(42, 17);
-      this.opGez.TabIndex = 2;
-      this.opGez.TabStop = true;
-      this.opGez.Text = "gez";
-      this.opGez.UseVisualStyleBackColor = true;
+      this.opNurAktuelleNoten.AutoSize = true;
+      this.opNurAktuelleNoten.Checked = true;
+      this.opNurAktuelleNoten.Location = new System.Drawing.Point(10, 17);
+      this.opNurAktuelleNoten.Name = "opNurAktuelleNoten";
+      this.opNurAktuelleNoten.Size = new System.Drawing.Size(114, 17);
+      this.opNurAktuelleNoten.TabIndex = 1;
+      this.opNurAktuelleNoten.Text = "Nur aktuelle Noten";
+      this.opNurAktuelleNoten.UseVisualStyleBackColor = true;
       // 
       // UserControlAdministration
       // 
@@ -489,13 +505,15 @@
       this.groupBoxAnalyse.ResumeLayout(false);
       this.groupBoxDrucken.ResumeLayout(false);
       this.groupBoxDrucken.PerformLayout();
+      this.gbUnterschrift.ResumeLayout(false);
+      this.gbUnterschrift.PerformLayout();
       this.groupBoxExport.ResumeLayout(false);
       this.groupBoxImport.ResumeLayout(false);
       this.groupBoxBerechtigungen.ResumeLayout(false);
       this.groupBoxEinstellungen.ResumeLayout(false);
       this.groupBoxEinstellungen.PerformLayout();
-      this.gbUnterschrift.ResumeLayout(false);
-      this.gbUnterschrift.PerformLayout();
+      this.gbLeseModusExcel.ResumeLayout(false);
+      this.gbLeseModusExcel.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -523,8 +541,6 @@
     private System.Windows.Forms.CheckBox chkSperre;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.ComboBox comboBoxZeitpunkt;
-    private System.Windows.Forms.Label lbBackupPfad;
-    private System.Windows.Forms.TextBox edBackupPfad;
     private System.Windows.Forms.Button btnCreateExcels;
     private System.Windows.Forms.Label lblStatus;
     private System.Windows.Forms.Button btnSendExcelFiles;
@@ -540,5 +556,8 @@
     private System.Windows.Forms.RadioButton opGez;
     private System.Windows.Forms.RadioButton opStv;
     private System.Windows.Forms.RadioButton opSL;
+    private System.Windows.Forms.GroupBox gbLeseModusExcel;
+    private System.Windows.Forms.RadioButton opVollstaendig;
+    private System.Windows.Forms.RadioButton opNurAktuelleNoten;
   }
 }

@@ -27,12 +27,13 @@ namespace diNo
     public Repository<Fach> FachRep = new Repository<Fach>(Fach.CreateFach);
     
     public diNoDataSet.GlobaleKonstantenRow globaleKonstanten;
+    private GlobaleStringsContainer globaleStrings = new GlobaleStringsContainer();
     public int Schuljahr { get { return globaleKonstanten.Schuljahr; } }
     public Sperrtyp Sperre { get { return (Sperrtyp)globaleKonstanten.Sperre; } }
     public int aktZeitpunkt { get { return globaleKonstanten.aktZeitpunkt; } }
-    public Halbjahr aktHalbjahr { get { return (globaleKonstanten.aktZeitpunkt <= 2 ? Halbjahr.Erstes : Halbjahr.Zweites); } }
-    public string BackupPfad { get { return globaleKonstanten.BackupPfad; } }
+    public Halbjahr aktHalbjahr { get { return (globaleKonstanten.aktZeitpunkt <= 2 ? Halbjahr.Erstes : Halbjahr.Zweites); } }    
     public DateTime Zeugnisdatum { get { return globaleKonstanten.Zeugnisdatum; } }
+    public LesemodusExcel Lesemodus { get { return (LesemodusExcel)globaleKonstanten.LeseModusExcel ; } }
     public bool SiehtAlles{ get; private set; }
     public bool HatVerwaltungsrechte{ get; private set; }
 
@@ -182,7 +183,13 @@ namespace diNo
     {
       globaleKonstanten = new GlobaleKonstantenTableAdapter().GetData()[0];
     }
-        
+    
+    public string getString(GlobaleStrings g)
+    {
+      return globaleStrings.getString(g);
+    }
+
+
     public bool HatRolle(Rolle typ)
     {
       return lehrer.HatRolle(typ);
@@ -193,6 +200,12 @@ namespace diNo
   {
     Keine = 0,
     Notenschluss = 1
+  }
+
+  public enum LesemodusExcel
+  {
+    NurAktuelleNoten = 0,
+    Vollstaendig = 1
   }
 
   public enum Rolle

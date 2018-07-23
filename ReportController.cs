@@ -161,7 +161,7 @@ namespace diNo
             else
               b.Inhalt = "Das Erreichen des Klassenziels ist sehr gefährdet.";
             if (s.hatVorkommnis(Vorkommnisart.GefahrDerAbweisung))
-              b.Inhalt += "\nDie Jahrgangstufe darf nicht mehr wiederholt werden.";
+              b.Inhalt += "\nDie Jahrgangsstufe darf nicht mehr wiederholt werden.";
 
             b.Inhalt2 = s.VornameName + " hat ";
             if (!s.AlteFOBOSO()) b.Inhalt2 += "bei einem Punktedurchschnitt von " + String.Format("{0:0.00}", s.getNoten.Punkteschnitt) + " ";

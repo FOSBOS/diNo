@@ -29,7 +29,7 @@ namespace diNo
     private void Sichern()
     {
       // Datei sichern
-      string sicherungsverzeichnis = Zugriff.Instance.globaleKonstanten.BackupPfad;
+      string sicherungsverzeichnis = Zugriff.Instance.getString(GlobaleStrings.Backuppfad);
       if (!string.IsNullOrEmpty(sicherungsverzeichnis))
       {
         try
