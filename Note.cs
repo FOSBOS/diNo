@@ -214,87 +214,105 @@ namespace diNo
           if (JahresfortgangMitKomma !=null)
             JahresfortgangGanzzahlig = Notentools.RundeJF(JahresfortgangMitKomma.GetValueOrDefault());
         }
-      }               
-    
-        /// <summary>
-        /// Eine Note.
-        /// </summary>
-        public class Note
-        {
-            private int kursid, schuelerid;
+      }
 
-            // baut Notenobjekt aus einer DB-Zeile auf
-            public Note(diNoDataSet.NoteRow nr)
-            {
-                kursid = nr.KursId;
-                schuelerid = nr.SchuelerId;
-                Typ = (Notentyp)nr.Notenart;
-                Punktwert = nr.Punktwert;
-                Datum = nr.Datum;
-                Zelle = nr.Zelle;
-                Halbjahr = (Halbjahr)nr.Halbjahr;
-            }
+  /// <summary>
+  /// Eine Note.
+  /// </summary>
+  public class Note
+  {
+    private int kursid, schuelerid;
+    private diNoDataSet.NoteRow row;
 
-            // Note von Hand eingeben (z.B. aus Excel)
-            public Note(int aKursId, int aSchuelerId)
-            {
-                this.kursid = aKursId;
-                this.schuelerid = aSchuelerId;
-            }
+    // baut Notenobjekt aus einer DB-Zeile auf
+    public Note(diNoDataSet.NoteRow nr)
+    {
+      kursid = nr.KursId;
+      schuelerid = nr.SchuelerId;
+      Typ = (Notentyp)nr.Notenart;
+      Punktwert = nr.Punktwert;
+      Datum = nr.Datum;
+      Zelle = nr.Zelle;
+      Halbjahr = (Halbjahr)nr.Halbjahr;
 
-            /// <summary>
-            /// Der Typ der Note, z. B. Schulaufgabe oder Ex.
-            /// </summary>
-            public Notentyp Typ
-            {
-                get;
-                set;
-            }
+      row = nr;
+    }
 
-            /// <summary>
-            /// Der Punktwert der Note (0-15).
-            /// </summary>
-            public byte Punktwert
-            {
-                get;
-                set;
-            }
+    // Note von Hand eingeben (z.B. aus Excel)
+    public Note(int aKursId, int aSchuelerId)
+    {
+      this.kursid = aKursId;
+      this.schuelerid = aSchuelerId;
+    }
 
-            /// <summary>
-            /// Das Datum der Note.
-            /// </summary>
-            public DateTime Datum
-            {
-                get;
-                set;
-            }
+    /// <summary>
+    /// Der Typ der Note, z. B. Schulaufgabe oder Ex.
+    /// </summary>
+    public Notentyp Typ
+    {
+      get;
+      set;
+    }
 
-            /// <summary>
-            /// In welcher Zelle diese Note steht.
-            /// </summary>
-            public string Zelle
-            {
-                get;
-                set;
-            }
+    /// <summary>
+    /// Der Punktwert der Note (0-15).
+    /// </summary>
+    public byte Punktwert
+    {
+      get;
+      set;
+    }
 
-            /// <summary>
-            /// Das Halbjahr, welchem die Note zuzuordnen ist.
-            /// </summary>
-            public Halbjahr Halbjahr
-            {
-                get;
-                set;
-            }
+    /// <summary>
+    /// Das Datum der Note.
+    /// </summary>
+    public DateTime Datum
+    {
+      get;
+      set;
+    }
 
-            // schreibt ein Notenobjekt in die DB (keine Aktualisierung, d.h. alte Note muss vorher gelöscht sein)
-            public void writeToDB()
-            {
-                int noteid;
-                NoteTableAdapter na = new NoteTableAdapter();
-                na.Insert((int)Typ, Punktwert, DateTime.Now.Date, Zelle, (byte)Halbjahr, schuelerid, kursid, out noteid);
-            }
-        }
+    /// <summary>
+    /// In welcher Zelle diese Note steht.
+    /// </summary>
+    public string Zelle
+    {
+      get;
+      set;
+    }
+
+    /// <summary>
+    /// Das Halbjahr, welchem die Note zuzuordnen ist.
+    /// </summary>
+    public Halbjahr Halbjahr
+    {
+      get;
+      set;
+    }
+
+    // schreibt ein Notenobjekt in die DB
+    public void writeToDB()
+    {
+      NoteTableAdapter na = new NoteTableAdapter();
+      if (row == null)
+      {
+        int noteid;
+        na.Insert((int)Typ, Punktwert, DateTime.Now.Date, Zelle, (byte)Halbjahr, schuelerid, kursid, out noteid);
+
+        row = na.GetDataById(noteid)[0]; // todo: testen ob das so auch wirklich geht, d.h. steht in noteId tatsächlich die ID der Note nach dem Insert?
+      }
+      else
+      {
+        row.Datum = this.Datum;
+        row.Halbjahr = (byte)this.Halbjahr;
+        row.KursId = this.kursid;
+        row.Notenart = (int)this.Typ;
+        row.Punktwert = this.Punktwert;
+        row.SchuelerId = this.schuelerid;
+        na.Update(row);
+      }
+    }
+  }
      
 
   public static class Notentools

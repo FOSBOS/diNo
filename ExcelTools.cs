@@ -140,6 +140,11 @@ namespace diNo
     public Worksheet notenbogen;
 
     /// <summary>
+    /// Das Sheet mit den Daten des zweiten Halbjahres
+    /// </summary>
+    public Worksheet notenbogen2;
+
+    /// <summary>
     /// Das Sheet Abschlussprüfung
     /// </summary>
     public Worksheet AP;
@@ -151,11 +156,18 @@ namespace diNo
 
     public BasisNotendatei(string filename): base(filename)
     {
-      notenbogen = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("Notenbogen") select sh).FirstOrDefault();
+      notenbogen = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("1. Halbjahr") select sh).FirstOrDefault();
       if (notenbogen == null)
       {
-        throw new InvalidOperationException("kein Sheet mit dem Namen \"Notenbogen\" gefunden");
+        notenbogen = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("Notenbogen") select sh).FirstOrDefault(); // für Dateien nach alter SchO
+        if (notenbogen == null)
+        {
+          throw new InvalidOperationException("kein Sheet mit dem Namen \"Notenbogen\" oder \"1. Halbjahr\" gefunden");
+        }
       }
+
+      notenbogen2 = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("2. Halbjahr") select sh).FirstOrDefault();
+      // hier dieses Jahr noch keine Exception werfen, denn nach der alten SchO gibt es dieses Sheet wirklich nicht
 
       AP = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("AP") select sh).FirstOrDefault();
       if (AP == null)
