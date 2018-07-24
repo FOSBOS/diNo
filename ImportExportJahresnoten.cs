@@ -45,31 +45,32 @@ namespace diNo
                 writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + note.getFach.Kuerzel + Separator + (int)note.JgStufe + Separator + note.Punkte + Separator + note.Punkte2Dez + Separator + note.SchnittMdl + Separator + (byte)note.Art + Separator + (byte)note.Status);
               }
             }
+          }
 
-            // und dann noch die fpA
-            if (schueler.FPANoten != null && schueler.FPANoten.Count > 0)
+          // und dann noch die fpA
+          if (schueler.FPANoten != null && schueler.FPANoten.Count > 0)
+          {
+            foreach (var fpaZeile in schueler.FPANoten)
             {
-              foreach (var fpaZeile in schueler.FPANoten)
+              if (fpaZeile.IsGesamtNull())
               {
-                if (fpaZeile.IsGesamtNull())
-                {
-                  continue;
-                }
-                // jahrespunkte sind null bei den fpaNoten aus dem ersten Halbjahr
-                // vertiefung1 und vertiefung2 sind nur bei den Sozialen gefüllt
-                // bemerkung und stelle sind für uns auch nicht so wichtig und dürften null sein
-                byte? jahresPunkte = fpaZeile.IsJahrespunkteNull() ? (byte?)null : fpaZeile.Jahrespunkte;
-                string bemerkung = fpaZeile.IsBemerkungNull() ? null : fpaZeile.Bemerkung;
-                byte? vertiefung1 = fpaZeile.IsVertiefung1Null() ? (byte?)null : fpaZeile.Vertiefung1;
-                byte? vertiefung2 = fpaZeile.IsVertiefung2Null() ? (byte?)null : fpaZeile.Vertiefung2;
-                string stelle = fpaZeile.IsStelleNull() ? null : fpaZeile.Stelle;
-                {
-                  // Erzeugt eine Zeile mit mind. 12 durch ; getrennten Werten (kann mehr sein, falls in der Bemerkung auch ;e enthalten sind)
-                  writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + FpAKennzeichen + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Halbjahr + Separator + jahresPunkte + Separator + fpaZeile.Vertiefung + Separator + vertiefung1 + Separator + vertiefung2 + Separator + fpaZeile.Anleitung + Separator + fpaZeile.Betrieb + Separator + stelle + Separator + bemerkung);
-                }
+                continue;
+              }
+              // jahrespunkte sind null bei den fpaNoten aus dem ersten Halbjahr
+              // vertiefung1 und vertiefung2 sind nur bei den Sozialen gefüllt
+              // bemerkung und stelle sind für uns auch nicht so wichtig und dürften null sein
+              byte? jahresPunkte = fpaZeile.IsJahrespunkteNull() ? (byte?)null : fpaZeile.Jahrespunkte;
+              string bemerkung = fpaZeile.IsBemerkungNull() ? null : fpaZeile.Bemerkung;
+              byte? vertiefung1 = fpaZeile.IsVertiefung1Null() ? (byte?)null : fpaZeile.Vertiefung1;
+              byte? vertiefung2 = fpaZeile.IsVertiefung2Null() ? (byte?)null : fpaZeile.Vertiefung2;
+              string stelle = fpaZeile.IsStelleNull() ? null : fpaZeile.Stelle;
+              {
+                // Erzeugt eine Zeile mit mind. 12 durch ; getrennten Werten (kann mehr sein, falls in der Bemerkung auch ;e enthalten sind)
+                writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + FpAKennzeichen + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Halbjahr + Separator + jahresPunkte + Separator + fpaZeile.Vertiefung + Separator + vertiefung1 + Separator + vertiefung2 + Separator + fpaZeile.Anleitung + Separator + fpaZeile.Betrieb + Separator + stelle + Separator + bemerkung);
               }
             }
           }
+
         }
       }
     }
