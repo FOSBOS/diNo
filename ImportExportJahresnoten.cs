@@ -1,18 +1,13 @@
-﻿using System.IO;
-using diNo.diNoDataSetTableAdapters;
+﻿using diNo.diNoDataSetTableAdapters;
 using System;
 using System.Collections.Generic;
-using diNo.OmnisDB;
+using System.IO;
 
 namespace diNo
 {
 
   /// <summary>
-  /// Exportiert die Jahresnoten aus der elften Klasse ins nächste Jahr. Exportiert wird jeweils Geschichte und
-  /// T: Technisches Zeichnen
-  /// W: Rechtslehre
-  /// S: Chemie
-  /// A: ---
+  /// Exportiert die Halbjahresnoten aus der elften Klasse ins nächste Jahr.
   /// </summary>
   public class ImportExportJahresnoten
   {
@@ -22,6 +17,7 @@ namespace diNo
     /// </summary>
     private static char SeparatorChar = ';';
     private static string Separator = "" + SeparatorChar;
+    private static string FpAKennzeichen = "FpA";
 
     /// <summary>
     /// Methode exportiert alle Noten in eine csv-Datei
@@ -45,7 +41,32 @@ namespace diNo
               HjLeistung note = fachNoten.getHjLeistung(hjArt);
               if (note != null)
               {
-                writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + note.getFach.Kuerzel + Separator + note.Punkte + Separator + note.Punkte2Dez + Separator + note.SchnittMdl + Separator + note.Art);
+                // Erzeugt eine Zeile mit 9 durch ; getrennten Werten
+                writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + note.getFach.Kuerzel + Separator + (int)note.JgStufe + Separator + note.Punkte + Separator + note.Punkte2Dez + Separator + note.SchnittMdl + Separator + (byte)note.Art + Separator + (byte)note.Status);
+              }
+            }
+
+            // und dann noch die fpA
+            if (schueler.FPANoten != null && schueler.FPANoten.Count > 0)
+            {
+              foreach (var fpaZeile in schueler.FPANoten)
+              {
+                if (fpaZeile.IsGesamtNull())
+                {
+                  continue;
+                }
+                // jahrespunkte sind null bei den fpaNoten aus dem ersten Halbjahr
+                // vertiefung1 und vertiefung2 sind nur bei den Sozialen gefüllt
+                // bemerkung und stelle sind für uns auch nicht so wichtig und dürften null sein
+                byte? jahresPunkte = fpaZeile.IsJahrespunkteNull() ? (byte?)null : fpaZeile.Jahrespunkte;
+                string bemerkung = fpaZeile.IsBemerkungNull() ? null : fpaZeile.Bemerkung;
+                byte? vertiefung1 = fpaZeile.IsVertiefung1Null() ? (byte?)null : fpaZeile.Vertiefung1;
+                byte? vertiefung2 = fpaZeile.IsVertiefung2Null() ? (byte?)null : fpaZeile.Vertiefung2;
+                string stelle = fpaZeile.IsStelleNull() ? null : fpaZeile.Stelle;
+                {
+                  // Erzeugt eine Zeile mit mind. 12 durch ; getrennten Werten (kann mehr sein, falls in der Bemerkung auch ;e enthalten sind)
+                  writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + FpAKennzeichen + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Halbjahr + Separator + jahresPunkte + Separator + fpaZeile.Vertiefung + Separator + vertiefung1 + Separator + vertiefung2 + Separator + fpaZeile.Anleitung + Separator + fpaZeile.Betrieb + Separator + stelle + Separator + bemerkung);
+                }
               }
             }
           }
@@ -61,6 +82,7 @@ namespace diNo
     {
       HjLeistungTableAdapter ada = new HjLeistungTableAdapter();
       FachTableAdapter fta = new FachTableAdapter();
+      FpaTableAdapter fpata = new FpaTableAdapter();
       using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(stream))
       {
@@ -72,41 +94,65 @@ namespace diNo
           var schuelerGefunden = schuelerAdapter.GetDataById(schuelerId);
           if (schuelerGefunden == null || schuelerGefunden.Count == 0)
           {
-            continue;
+            continue; // das ist normal. Schließlich sind auch die Halbjahresleistungen der letzten Absolventen noch mit in der Datei
           }
 
           var schueler = new Schueler(schuelerGefunden[0]);
           if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
           {
             // nur bei Schülern in der zwölften Klasse wird irgendetwas importiert
-            if (line.Length == 7)
+            if (line.Length == 9)
             {
-              string nameVorname = line[1];
+              // Zeile mit normaler Halbjahresleistung
+              string nameVorname = line[1]; // nur zu Kontrollzwecken vorhanden
               int fachId = GetFachId(fta, line[2]);
+              Jahrgangsstufe jgstufe = (Jahrgangsstufe)int.Parse(line[3]);
+              byte note = byte.Parse(line[4]);
+              decimal note2Dez = decimal.Parse(line[5]);
+              decimal schnittMdl = decimal.Parse(line[6]);
+              HjArt notenArt = (HjArt)byte.Parse(line[7]);
+              HjStatus status = (HjStatus)byte.Parse(line[8]);
 
-              byte note = byte.Parse(line[3]);
-              decimal note2Dez = decimal.Parse(line[4]);
-              decimal schnittMdl = decimal.Parse(line[5]);
-              HjArt notenArt = (HjArt)byte.Parse(line[6]);
+              // Importiere nur die Noten der elften Klasse
+              if (jgstufe == Jahrgangsstufe.Elf)
+              {
+                ada.Insert(schueler.Id, fachId, (byte)notenArt, note, note2Dez, schnittMdl, (int)jgstufe, (byte)status);
+              }
+            }
 
-              // Importiere nur die Noten der elften Klasse (ggf. bei Wiederholern ein Fachreferat)
-              /*
-              if (schueler.Wiederholt()) //  FR darf nicht übernommen werden!
+            if (line.Length >= 13)
+            {
+              // FpaZeile
+              string nameVorname = line[1]; // nur zu Kontrollzwecken vorhanden
+              string fach = line[2];
+              if (fach != FpAKennzeichen)
               {
-                if (notenArt == HjArt.FR || notenArt == HjArt.VorHj1 || notenArt == HjArt.VorHj1)
-                {
-                  // Bei Wiederholern stehen diese bereits als Vorjahresleistungen (HJArt.VorHj1 = 5 bzw. HJArt.VorHj2 = 6) drin. Importiere nur diese und Fachreferat.
-                  ada.Insert(schueler.Id, fachId, (byte)notenArt, note, false, note2Dez, schnittMdl);
-                }
+                throw new InvalidDataException("FpA-Zeile zu SchülerId " + schuelerId + " nicht korrekt. Erwartet: " + FpAKennzeichen + " enthielt: " + fach);
               }
-              else */
+
+              byte gesamt = byte.Parse(line[3]);
+              byte halbjahr = byte.Parse(line[4]);
+              byte? jahrespunkte = line[5] == "null" ? (byte?)null : byte.Parse(line[5]); // Jahrespunkte können null sein
+              byte vertiefung = byte.Parse(line[6]);
+              byte vertiefung1 = byte.Parse(line[7]);
+              byte vertiefung2 = byte.Parse(line[8]);
+              byte anleitung = byte.Parse(line[9]);
+              byte betrieb = byte.Parse(line[10]);
+              string stelle = line[11] == "null" ? null : line[11];
+
+              string bemerkung = null;
+              if (line[12] != "null")
               {
-                // Bei normal aufgerückten Schülern stehen sie als aktuelle Leistung (Hj1 = 0, Hj2 = 1) in der Datei, müssen aber zum VorHJ gemacht werden
-                if (notenArt == HjArt.Hj1 || notenArt == HjArt.Hj2)
+                List<string> bemerkungen = new List<string>();
+                for (int i = 12; i < line.Length; i++) // im Normalfall nur eine Bemerkung. Aber falls jemand einen ; in der Bemerkung hatte...
                 {
-                  ada.Insert(schueler.Id, fachId, (byte)notenArt, note, note2Dez, schnittMdl,11,0);
+                  bemerkungen.Add(line[i]);
                 }
+
+                bemerkung = string.Join(Separator, bemerkungen);
               }
+
+              fpata.Insert(schuelerId, halbjahr, betrieb, anleitung, vertiefung, vertiefung1, vertiefung2, gesamt, stelle, bemerkung, jahrespunkte);
             }
           }
         }
