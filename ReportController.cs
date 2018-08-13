@@ -191,6 +191,17 @@ namespace diNo
     }
   }
 
+  public class ReportBerechtigungen : ReportController
+  {
+    private List<LehrerRolleDruck> bindingDataSource;
+    public ReportBerechtigungen(List<LehrerRolleDruck> dataSource) : base() { bindingDataSource = dataSource; }
+    public override void Init()
+    {
+      rpt.BerichtBindingSource.DataSource = bindingDataSource;
+      rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptLehrerRolle.rdlc";
+    }
+  }
+
   public class Dummy
   {
     public int Id { get; private set; }

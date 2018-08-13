@@ -29,6 +29,7 @@
     private void InitializeComponent()
     {
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
+      this.btnEinserAbi = new System.Windows.Forms.Button();
       this.btnSelect = new System.Windows.Forms.Button();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
       this.gbUnterschrift = new System.Windows.Forms.GroupBox();
@@ -52,10 +53,14 @@
       this.btnImportSchueler = new System.Windows.Forms.Button();
       this.btnImportUnterricht = new System.Windows.Forms.Button();
       this.importNoten = new System.Windows.Forms.Button();
-      this.groupBoxBerechtigungen = new System.Windows.Forms.GroupBox();
-      this.btnBerechtigungen = new System.Windows.Forms.Button();
-      this.btnKurseLehrer = new System.Windows.Forms.Button();
+      this.groupBoxStammdaten = new System.Windows.Forms.GroupBox();
+      this.btnGlobales = new System.Windows.Forms.Button();
+      this.btnLehrer = new System.Windows.Forms.Button();
+      this.btnKurse = new System.Windows.Forms.Button();
       this.groupBoxEinstellungen = new System.Windows.Forms.GroupBox();
+      this.gbLeseModusExcel = new System.Windows.Forms.GroupBox();
+      this.opVollstaendig = new System.Windows.Forms.RadioButton();
+      this.opNurAktuelleNoten = new System.Windows.Forms.RadioButton();
       this.label2 = new System.Windows.Forms.Label();
       this.comboBoxZeitpunkt = new System.Windows.Forms.ComboBox();
       this.label1 = new System.Windows.Forms.Label();
@@ -63,21 +68,20 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
-      this.gbLeseModusExcel = new System.Windows.Forms.GroupBox();
-      this.opVollstaendig = new System.Windows.Forms.RadioButton();
-      this.opNurAktuelleNoten = new System.Windows.Forms.RadioButton();
+      this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
       this.groupBoxExport.SuspendLayout();
       this.groupBoxImport.SuspendLayout();
-      this.groupBoxBerechtigungen.SuspendLayout();
+      this.groupBoxStammdaten.SuspendLayout();
       this.groupBoxEinstellungen.SuspendLayout();
       this.gbLeseModusExcel.SuspendLayout();
       this.SuspendLayout();
       // 
       // groupBoxAnalyse
       // 
+      this.groupBoxAnalyse.Controls.Add(this.btnEinserAbi);
       this.groupBoxAnalyse.Controls.Add(this.btnSelect);
       this.groupBoxAnalyse.Location = new System.Drawing.Point(19, 268);
       this.groupBoxAnalyse.Name = "groupBoxAnalyse";
@@ -85,6 +89,16 @@
       this.groupBoxAnalyse.TabIndex = 4;
       this.groupBoxAnalyse.TabStop = false;
       this.groupBoxAnalyse.Text = "Datenanalyse";
+      // 
+      // btnEinserAbi
+      // 
+      this.btnEinserAbi.Location = new System.Drawing.Point(21, 52);
+      this.btnEinserAbi.Name = "btnEinserAbi";
+      this.btnEinserAbi.Size = new System.Drawing.Size(132, 23);
+      this.btnEinserAbi.TabIndex = 3;
+      this.btnEinserAbi.Text = "Einser-Abi";
+      this.btnEinserAbi.UseVisualStyleBackColor = true;
+      this.btnEinserAbi.Click += new System.EventHandler(this.btnEinserAbi_Click);
       // 
       // btnSelect
       // 
@@ -339,36 +353,48 @@
       this.importNoten.UseVisualStyleBackColor = true;
       this.importNoten.Click += new System.EventHandler(this.importNoten_Click);
       // 
-      // groupBoxBerechtigungen
+      // groupBoxStammdaten
       // 
-      this.groupBoxBerechtigungen.Controls.Add(this.btnBerechtigungen);
-      this.groupBoxBerechtigungen.Controls.Add(this.btnKurseLehrer);
-      this.groupBoxBerechtigungen.Location = new System.Drawing.Point(555, 28);
-      this.groupBoxBerechtigungen.Name = "groupBoxBerechtigungen";
-      this.groupBoxBerechtigungen.Size = new System.Drawing.Size(250, 233);
-      this.groupBoxBerechtigungen.TabIndex = 5;
-      this.groupBoxBerechtigungen.TabStop = false;
-      this.groupBoxBerechtigungen.Text = "Berechtigungen";
+      this.groupBoxStammdaten.Controls.Add(this.btnBerechtigungen);
+      this.groupBoxStammdaten.Controls.Add(this.btnGlobales);
+      this.groupBoxStammdaten.Controls.Add(this.btnLehrer);
+      this.groupBoxStammdaten.Controls.Add(this.btnKurse);
+      this.groupBoxStammdaten.Location = new System.Drawing.Point(543, 277);
+      this.groupBoxStammdaten.Name = "groupBoxStammdaten";
+      this.groupBoxStammdaten.Size = new System.Drawing.Size(211, 217);
+      this.groupBoxStammdaten.TabIndex = 5;
+      this.groupBoxStammdaten.TabStop = false;
+      this.groupBoxStammdaten.Text = "Stammdaten";
       // 
-      // btnBerechtigungen
+      // btnGlobales
       // 
-      this.btnBerechtigungen.Location = new System.Drawing.Point(6, 50);
-      this.btnBerechtigungen.Name = "btnBerechtigungen";
-      this.btnBerechtigungen.Size = new System.Drawing.Size(164, 23);
-      this.btnBerechtigungen.TabIndex = 1;
-      this.btnBerechtigungen.Text = "Berechtigungen verwalten";
-      this.btnBerechtigungen.UseVisualStyleBackColor = true;
-      this.btnBerechtigungen.Click += new System.EventHandler(this.btnBerechtigungen_Click);
+      this.btnGlobales.Location = new System.Drawing.Point(17, 135);
+      this.btnGlobales.Name = "btnGlobales";
+      this.btnGlobales.Size = new System.Drawing.Size(163, 23);
+      this.btnGlobales.TabIndex = 3;
+      this.btnGlobales.Text = "Globale Texte";
+      this.btnGlobales.UseVisualStyleBackColor = true;
+      this.btnGlobales.Click += new System.EventHandler(this.btnGlobales_Click);
       // 
-      // btnKurseLehrer
+      // btnLehrer
       // 
-      this.btnKurseLehrer.Location = new System.Drawing.Point(6, 21);
-      this.btnKurseLehrer.Name = "btnKurseLehrer";
-      this.btnKurseLehrer.Size = new System.Drawing.Size(164, 23);
-      this.btnKurseLehrer.TabIndex = 0;
-      this.btnKurseLehrer.Text = "Kurse und Lehrer zuordnen";
-      this.btnKurseLehrer.UseVisualStyleBackColor = true;
-      this.btnKurseLehrer.Click += new System.EventHandler(this.btnKurseLehrer_Click);
+      this.btnLehrer.Location = new System.Drawing.Point(16, 27);
+      this.btnLehrer.Name = "btnLehrer";
+      this.btnLehrer.Size = new System.Drawing.Size(164, 23);
+      this.btnLehrer.TabIndex = 2;
+      this.btnLehrer.Text = "Lehrer";
+      this.btnLehrer.UseVisualStyleBackColor = true;
+      this.btnLehrer.Click += new System.EventHandler(this.btnLehrer_Click);
+      // 
+      // btnKurse
+      // 
+      this.btnKurse.Location = new System.Drawing.Point(17, 56);
+      this.btnKurse.Name = "btnKurse";
+      this.btnKurse.Size = new System.Drawing.Size(164, 23);
+      this.btnKurse.TabIndex = 0;
+      this.btnKurse.Text = "Kurse";
+      this.btnKurse.UseVisualStyleBackColor = true;
+      this.btnKurse.Click += new System.EventHandler(this.btnKurs_Click);
       // 
       // groupBoxEinstellungen
       // 
@@ -379,12 +405,45 @@
       this.groupBoxEinstellungen.Controls.Add(this.edSchuljahr);
       this.groupBoxEinstellungen.Controls.Add(this.btnSave);
       this.groupBoxEinstellungen.Controls.Add(this.chkSperre);
-      this.groupBoxEinstellungen.Location = new System.Drawing.Point(555, 268);
+      this.groupBoxEinstellungen.Location = new System.Drawing.Point(543, 28);
       this.groupBoxEinstellungen.Name = "groupBoxEinstellungen";
-      this.groupBoxEinstellungen.Size = new System.Drawing.Size(250, 226);
+      this.groupBoxEinstellungen.Size = new System.Drawing.Size(211, 233);
       this.groupBoxEinstellungen.TabIndex = 6;
       this.groupBoxEinstellungen.TabStop = false;
       this.groupBoxEinstellungen.Text = "Globale Einstellungen";
+      // 
+      // gbLeseModusExcel
+      // 
+      this.gbLeseModusExcel.Controls.Add(this.opVollstaendig);
+      this.gbLeseModusExcel.Controls.Add(this.opNurAktuelleNoten);
+      this.gbLeseModusExcel.Location = new System.Drawing.Point(16, 127);
+      this.gbLeseModusExcel.Name = "gbLeseModusExcel";
+      this.gbLeseModusExcel.Size = new System.Drawing.Size(144, 61);
+      this.gbLeseModusExcel.TabIndex = 15;
+      this.gbLeseModusExcel.TabStop = false;
+      this.gbLeseModusExcel.Text = "Lesemodus Exceldateien";
+      // 
+      // opVollstaendig
+      // 
+      this.opVollstaendig.AutoSize = true;
+      this.opVollstaendig.Location = new System.Drawing.Point(10, 35);
+      this.opVollstaendig.Name = "opVollstaendig";
+      this.opVollstaendig.Size = new System.Drawing.Size(118, 17);
+      this.opVollstaendig.TabIndex = 2;
+      this.opVollstaendig.Text = "Vollständig einlesen";
+      this.opVollstaendig.UseVisualStyleBackColor = true;
+      // 
+      // opNurAktuelleNoten
+      // 
+      this.opNurAktuelleNoten.AutoSize = true;
+      this.opNurAktuelleNoten.Checked = true;
+      this.opNurAktuelleNoten.Location = new System.Drawing.Point(10, 17);
+      this.opNurAktuelleNoten.Name = "opNurAktuelleNoten";
+      this.opNurAktuelleNoten.Size = new System.Drawing.Size(114, 17);
+      this.opNurAktuelleNoten.TabIndex = 1;
+      this.opNurAktuelleNoten.TabStop = true;
+      this.opNurAktuelleNoten.Text = "Nur aktuelle Noten";
+      this.opNurAktuelleNoten.UseVisualStyleBackColor = true;
       // 
       // label2
       // 
@@ -409,7 +468,7 @@
             "Jahresende"});
       this.comboBoxZeitpunkt.Location = new System.Drawing.Point(16, 97);
       this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";
-      this.comboBoxZeitpunkt.Size = new System.Drawing.Size(217, 24);
+      this.comboBoxZeitpunkt.Size = new System.Drawing.Size(175, 24);
       this.comboBoxZeitpunkt.TabIndex = 13;
       // 
       // label1
@@ -457,37 +516,15 @@
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
       // 
-      // gbLeseModusExcel
+      // btnBerechtigungen
       // 
-      this.gbLeseModusExcel.Controls.Add(this.opVollstaendig);
-      this.gbLeseModusExcel.Controls.Add(this.opNurAktuelleNoten);
-      this.gbLeseModusExcel.Location = new System.Drawing.Point(16, 127);
-      this.gbLeseModusExcel.Name = "gbLeseModusExcel";
-      this.gbLeseModusExcel.Size = new System.Drawing.Size(144, 61);
-      this.gbLeseModusExcel.TabIndex = 15;
-      this.gbLeseModusExcel.TabStop = false;
-      this.gbLeseModusExcel.Text = "Lesemodus Exceldateien";
-      // 
-      // opVollstaendig
-      // 
-      this.opVollstaendig.AutoSize = true;
-      this.opVollstaendig.Location = new System.Drawing.Point(10, 35);
-      this.opVollstaendig.Name = "opVollstaendig";
-      this.opVollstaendig.Size = new System.Drawing.Size(118, 17);
-      this.opVollstaendig.TabIndex = 2;
-      this.opVollstaendig.Text = "Vollständig einlesen";
-      this.opVollstaendig.UseVisualStyleBackColor = true;
-      // 
-      // opNurAktuelleNoten
-      // 
-      this.opNurAktuelleNoten.AutoSize = true;
-      this.opNurAktuelleNoten.Checked = true;
-      this.opNurAktuelleNoten.Location = new System.Drawing.Point(10, 17);
-      this.opNurAktuelleNoten.Name = "opNurAktuelleNoten";
-      this.opNurAktuelleNoten.Size = new System.Drawing.Size(114, 17);
-      this.opNurAktuelleNoten.TabIndex = 1;
-      this.opNurAktuelleNoten.Text = "Nur aktuelle Noten";
-      this.opNurAktuelleNoten.UseVisualStyleBackColor = true;
+      this.btnBerechtigungen.Location = new System.Drawing.Point(17, 179);
+      this.btnBerechtigungen.Name = "btnBerechtigungen";
+      this.btnBerechtigungen.Size = new System.Drawing.Size(163, 23);
+      this.btnBerechtigungen.TabIndex = 5;
+      this.btnBerechtigungen.Text = "Berechtigungen";
+      this.btnBerechtigungen.UseVisualStyleBackColor = true;
+      this.btnBerechtigungen.Click += new System.EventHandler(this.btnBerechtigungen_Click);
       // 
       // UserControlAdministration
       // 
@@ -495,7 +532,7 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.Controls.Add(this.lblStatus);
       this.Controls.Add(this.groupBoxEinstellungen);
-      this.Controls.Add(this.groupBoxBerechtigungen);
+      this.Controls.Add(this.groupBoxStammdaten);
       this.Controls.Add(this.groupBoxExport);
       this.Controls.Add(this.groupBoxImport);
       this.Controls.Add(this.groupBoxAnalyse);
@@ -509,7 +546,7 @@
       this.gbUnterschrift.PerformLayout();
       this.groupBoxExport.ResumeLayout(false);
       this.groupBoxImport.ResumeLayout(false);
-      this.groupBoxBerechtigungen.ResumeLayout(false);
+      this.groupBoxStammdaten.ResumeLayout(false);
       this.groupBoxEinstellungen.ResumeLayout(false);
       this.groupBoxEinstellungen.PerformLayout();
       this.gbLeseModusExcel.ResumeLayout(false);
@@ -530,9 +567,8 @@
     private System.Windows.Forms.Button btnImportUnterricht;
     private System.Windows.Forms.Button btnImportSchueler;
     private System.Windows.Forms.Button btnImportKlassenleiter;
-    private System.Windows.Forms.GroupBox groupBoxBerechtigungen;
-    private System.Windows.Forms.Button btnKurseLehrer;
-    private System.Windows.Forms.Button btnBerechtigungen;
+    private System.Windows.Forms.GroupBox groupBoxStammdaten;
+    private System.Windows.Forms.Button btnKurse;
     private System.Windows.Forms.Button btnAttestpflicht;
     private System.Windows.Forms.GroupBox groupBoxEinstellungen;
     private System.Windows.Forms.Label label1;
@@ -559,5 +595,9 @@
     private System.Windows.Forms.GroupBox gbLeseModusExcel;
     private System.Windows.Forms.RadioButton opVollstaendig;
     private System.Windows.Forms.RadioButton opNurAktuelleNoten;
+    private System.Windows.Forms.Button btnLehrer;
+    private System.Windows.Forms.Button btnGlobales;
+    private System.Windows.Forms.Button btnEinserAbi;
+    private System.Windows.Forms.Button btnBerechtigungen;
   }
 }

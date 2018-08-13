@@ -7,7 +7,7 @@ using diNo.diNoDataSetTableAdapters;
 namespace diNo
 {
   public enum Bericht
-  {    
+  {
     Notenmitteilung,
     Gefaehrdung,
     Abiergebnisse,
@@ -16,7 +16,8 @@ namespace diNo
     Jahreszeugnis,
     Abizeugnis,
     Notenbogen,
-    Klassenliste
+    Klassenliste,
+    EinserAbi
   }
 
   public enum UnterschriftZeugnis
@@ -69,24 +70,25 @@ namespace diNo
         Schulart = "Staatliche Fachoberschule Kempten (Allgäu)";
 
       Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
-      
+
       HideHj2 = Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes;
       HideVorHj = !(jg == 12 && s.Data.Schulart == "F"); // nur bei F12 anzeigen
     }
-    
+
     public static string GetBerichtsname(Bericht b)
     {
       switch (b)
       {
         case Bericht.Notenbogen: return "rptNotenbogen";
-        case Bericht.Bescheinigung: 
-        case Bericht.Zwischenzeugnis: 
+        case Bericht.Bescheinigung:
+        case Bericht.Zwischenzeugnis:
         case Bericht.Jahreszeugnis: return "rptZeugnis";
         case Bericht.Gefaehrdung: return "rptGefaehrdung";
         case Bericht.Abiergebnisse: return "rptAbiergebnisse";
         case Bericht.Notenmitteilung: return "rptNotenmitteilung";
-        
+
         case Bericht.Klassenliste: return "rptKlassenliste";
+        case Bericht.EinserAbi: return "rptEinserAbi";
         default: return "";
       }
     }
@@ -97,12 +99,13 @@ namespace diNo
       {
         case Bericht.Notenbogen: return new NotenbogenDruck(s);
         case Bericht.Bescheinigung:
-        case Bericht.Zwischenzeugnis: 
-        case Bericht.Jahreszeugnis: 
+        case Bericht.Zwischenzeugnis:
+        case Bericht.Jahreszeugnis:
         case Bericht.Gefaehrdung: return new ZeugnisDruck(s, b, u);
-        case Bericht.Abiergebnisse: 
-        case Bericht.Notenmitteilung: return new NotenmitteilungDruck(s, b);        
-        default: return new SchuelerDruck(s,b);
+        case Bericht.Abiergebnisse:
+        case Bericht.EinserAbi:
+        case Bericht.Notenmitteilung: return new NotenmitteilungDruck(s, b);
+        default: return new SchuelerDruck(s, b);
       }
     }
   }
@@ -113,8 +116,8 @@ namespace diNo
     public string Telefon { get; private set; }
     public string GeborenInAm { get; private set; }
     public string KlasseMitZweig { get; private set; }
-    public string Laufbahn { get; private set; }           
-    
+    public string Laufbahn { get; private set; }
+
     public NotenbogenDruck(Schueler s) : base(s, Bericht.Notenbogen)
     {
       Anschrift = s.Data.AnschriftStrasse + "\n" + s.Data.AnschriftPLZ + " " + s.Data.AnschriftOrt;
@@ -122,7 +125,7 @@ namespace diNo
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
       KlasseMitZweig = s.KlassenBezeichnung;
 
-      Laufbahn = "Bekenntnis: " + s.Data.Bekenntnis;     
+      Laufbahn = "Bekenntnis: " + s.Data.Bekenntnis;
       Laufbahn += "<br>Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm.ToString("dd.MM.yyyy");
       Laufbahn += " aus " + s.Data.SchulischeVorbildung + " von " + s.EintrittAusSchulname;//.Substring(0,25);
       if (!s.Data.IsProbezeitBisNull()) Laufbahn += "<br>Probezeit bis " + s.Data.ProbezeitBis.ToString("dd.MM.yyyy");
@@ -142,11 +145,11 @@ namespace diNo
       }
 
       if (!s.Data.IsDNoteNull() && !s.hatVorkommnis(Vorkommnisart.NichtBestanden))
-      {        
-        Bemerkung += "<b>Durchschnittsnote (" + (jg == 12 ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";          
+      {
+        Bemerkung += "<b>Durchschnittsnote (" + (jg == 12 ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";
         if (!s.Data.IsDNoteAllgNull())
         {
-          Bemerkung += "<b>Durchschnittsnote (allgemeine Hochschulreife): " + s.Data.DNoteAllg + "</b><br>";          
+          Bemerkung += "<b>Durchschnittsnote (allgemeine Hochschulreife): " + s.Data.DNoteAllg + "</b><br>";
         }
       }
     }
@@ -173,15 +176,15 @@ namespace diNo
           FPAText += ", Vertiefung " + fpa.Vertiefung + (fpa.IsVertiefung1Null() ? "" : " (Teilnoten " + fpa.Vertiefung1 + " " + fpa.Vertiefung2 + ") ");
         }
       }
-      
+
       // für Abiergebnisse
       if (!s.Data.IsDNoteNull() && !s.hatVorkommnis(Vorkommnisart.NichtBestanden))
       {
-        if (Bemerkung != "") Bemerkung += "<br>";          
-          DNote = "Durchschnittsnote*: " + String.Format("{0:0.0}", s.Data.DNote);
+        if (Bemerkung != "") Bemerkung += "<br>";
+        DNote = (b == Bericht.EinserAbi ? "" : "Durchschnittsnote*: ") + String.Format("{0:0.0}", s.Data.DNote);
 
         if (!s.Data.IsDNoteAllgNull())
-        {          
+        {
           DNote += " (allg. HSR: " + String.Format("{0:0.0}", s.Data.DNoteAllg) + ")";
         }
       }
@@ -214,7 +217,7 @@ namespace diNo
       else /*if (b == Bericht.Jahreszeugnis)*/ ZeugnisArt = "Jahreszeugnis";
       ZeugnisArt = ZeugnisArt.ToUpper();
       IstJahreszeugnis = (b == Bericht.Jahreszeugnis);
-      
+
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
       KlasseAR = (b == Bericht.Zwischenzeugnis ? "besucht" : "besuchte") + " im " + Schuljahr;
       KlasseAR += " die " + s.getKlasse.JahrgangsstufeZeugnis + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
@@ -228,18 +231,20 @@ namespace diNo
 
       DatumZeugnis = Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy");
       ShowGezSL = (u == UnterschriftZeugnis.gez);
-      if (u==UnterschriftZeugnis.Stv)
+      if (u == UnterschriftZeugnis.Stv)
       {
-        Schulleiter = "Josef Mirl, StD"; SchulleiterText = "Stv. Schulleiter"; // TODO: aus GlobaleStrings ziehen
+        Schulleiter = Zugriff.Instance.getString(GlobaleStrings.Stellvertreter);
+        SchulleiterText = Zugriff.Instance.getString(GlobaleStrings.StellvertreterText);
       }
       else
       {
-        Schulleiter = "Helga Traut, OStDin"; SchulleiterText = "Schulleiterin";
+        Schulleiter = Zugriff.Instance.getString(GlobaleStrings.Schulleiter);
+        SchulleiterText = Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
       }
 
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
-      if (jg==11)      
-        Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.<br><br>Bemerkungen:";      
+      if (jg == 11)
+        Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.<br><br>Bemerkungen:";
       else
         Bemerkung = "Bemerkungen:";
 
@@ -253,21 +258,21 @@ namespace diNo
         Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
       if (s.hatVorkommnis(Vorkommnisart.MittlereReife))
         Bemerkung += "<br><b>Dieses Zeugnis verleiht den mittleren Schulabschluss gemäß Art. 25 Abs. 1 Satz 2 Nr. 6 BayEUG.</b>";
-      if (jg==11 && b == Bericht.Jahreszeugnis)
-        Bemerkung += "<br><b>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 12 hat " + s.getErSie() + (s.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis) ? " nicht": "") + " erhalten.</b>";
+      if (jg == 11 && b == Bericht.Jahreszeugnis)
+        Bemerkung += "<br><b>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 12 hat " + s.getErSie() + (s.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis) ? " nicht" : "") + " erhalten.</b>";
       if (jg >= 12 && b == Bericht.Jahreszeugnis)
       {
         if (jg == 12 && s.Data.Schulart == "B")
           Bemerkung += "<br>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 13 hat " + s.getErSie() + (!s.hatVorkommnis(Vorkommnisart.VorrueckenBOS13moeglich) ? " nicht" : "") + " erhalten.";
         else
-          Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " hat sich der Fachabiturprüfung ohne Erfolg unterzogen. " + s.getErSie(true) + " darf die Prüfung gemäß Art. 54 Abs. 5 Satz 1 BayEUG " 
-              + (s.hatVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen) ? "nicht mehr": "noch einmal") + " wiederholen.";
+          Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " hat sich der Fachabiturprüfung ohne Erfolg unterzogen. " + s.getErSie(true) + " darf die Prüfung gemäß Art. 54 Abs. 5 Satz 1 BayEUG "
+              + (s.hatVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen) ? "nicht mehr" : "noch einmal") + " wiederholen.";
       }
       Bemerkung += " ---";
-      ShowKenntnisGenommen = s.Alter(Zugriff.Instance.Zeugnisdatum) < 18 && b == Bericht.Zwischenzeugnis;      
+      ShowKenntnisGenommen = s.Alter(Zugriff.Instance.Zeugnisdatum) < 18 && b == Bericht.Zwischenzeugnis;
       if (b == Bericht.Jahreszeugnis || b == Bericht.Abizeugnis)
         Siegel = "(Siegel)";
-      else Siegel = "";      
+      else Siegel = "";
     }
   }
 
@@ -387,7 +392,7 @@ namespace diNo
         JF2 = Z;
       }
     }
-    
+
     private string put(IList<int> n, int index)
     {
       if (index < n.Count)
@@ -456,11 +461,11 @@ namespace diNo
     protected string putHj(FachSchuelerNoten s, HjArt a)
     {
       var hjl = s.getHjLeistung(a);
-      return putHj(hjl);      
+      return putHj(hjl);
     }
 
     protected string putHj(HjLeistung hjl)
-    {      
+    {
       if (hjl != null) return hjl.Punkte.ToString();
       else return "";
     }
@@ -468,7 +473,7 @@ namespace diNo
     // Liefert die erste Note einer Notenliste (v.a. bei einelementigen Noten, wie SAP,...)
     protected string getFirst(IList<int> n)
     {
-      if (n.Count>0)
+      if (n.Count > 0)
         return n[0].ToString();
       else
         return "";
@@ -486,15 +491,15 @@ namespace diNo
     public string FR { get; private set; } // Fachreferat
     public string SAP { get; private set; }
     public string MAP { get; private set; }
-    public string APG { get; private set; }    
+    public string APG { get; private set; }
     public string GE { get; private set; } // Gesamtergebnis
 
     public NotenHjDruck(FachSchuelerNoten s) : base(s, Bericht.Notenbogen)
     {
-      Halbjahr h = Zugriff.Instance.aktHalbjahr;      
-      SA = s.SA(h);      
+      Halbjahr h = Zugriff.Instance.aktHalbjahr;
+      SA = s.SA(h);
       sL = s.sL(h);
-      HjLeistung hj = (h == Halbjahr.Erstes ? hj1 : hj2);      
+      HjLeistung hj = (h == Halbjahr.Erstes ? hj1 : hj2);
 
       if (hj != null)
       {
@@ -524,8 +529,8 @@ namespace diNo
     public string FR { get; private set; }
     public string JN { get; private set; } // Jahresnote    
 
-    public NotenSjDruck(FachSchuelerNoten s) : base (s,Bericht.Notenmitteilung)
-    {     
+    public NotenSjDruck(FachSchuelerNoten s) : base(s, Bericht.Notenmitteilung)
+    {
 
       SA1 = s.SA(Halbjahr.Erstes);
       SA2 = s.SA(Halbjahr.Zweites);
@@ -534,7 +539,7 @@ namespace diNo
       if (hj1 != null)
       {
         SsL1 = hj1.SchnittMdl == null ? "" : String.Format("{0:f2}", hj1.SchnittMdl);
-        S1 = hj1.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj1.Punkte2Dez);        
+        S1 = hj1.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj1.Punkte2Dez);
       }
       if (hj2 != null)
       {
@@ -577,7 +582,7 @@ namespace diNo
     {
       return "";
     }
-  } 
+  }
 
   public class NotenZeugnisDruck : NotenDruck
   {
@@ -607,7 +612,7 @@ namespace diNo
       JNToZeugnis(s.getHjLeistung(HjArt.JN));
     }
 
-    public NotenZeugnisDruck(diNoDataSet.FpaDataTable f) 
+    public NotenZeugnisDruck(diNoDataSet.FpaDataTable f)
     {
       fachGruppe = "Profilfächer"; // Workaround: läuft unter dieser Gruppe, weil Gruppe gleich das Fach ist.
       fachBez = "<b>Fachpraktische Ausbildung</b>";
@@ -623,7 +628,7 @@ namespace diNo
     public NotenZeugnisDruck(HjLeistung f, string FachBezeichnung)
     {
       fachGruppe = "Wahlpflichtfächer"; // Workaround: läuft unter dieser Gruppe, weil Gruppe gleich das Fach ist.
-      fachBez = "<b>" + FachBezeichnung + "</b>";     
+      fachBez = "<b>" + FachBezeichnung + "</b>";
       JNToZeugnis(f);
     }
 
@@ -669,4 +674,30 @@ namespace diNo
     }
   }
 
+  public class LehrerRolleDruck
+  {
+    public string RechteBezeichnung { get; private set; }
+    public string LehrerName { get; set; }
+
+    public LehrerRolleDruck(string bez, string vorname, string nachname)
+    {
+      RechteBezeichnung = bez;
+      LehrerName = nachname + ", " + vorname;
+    }
+
+    public static List<LehrerRolleDruck> CreateLehrerRolleDruck()
+    {
+      List<LehrerRolleDruck> liste = new List<LehrerRolleDruck>();
+      var ta = new vwLehrerRolleTableAdapter();
+      var dt = ta.GetData();
+      foreach (var r in dt)
+        liste.Add(new LehrerRolleDruck(r.Bezeichnung, r.Vorname, r.Nachname));
+      return liste;
+    }
+  }
 }
+  
+
+
+
+

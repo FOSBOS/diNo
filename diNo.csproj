@@ -10,9 +10,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>diNo</RootNamespace>
     <AssemblyName>diNo</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -59,15 +60,23 @@
     <Reference Include="log4net">
       <HintPath>log4net\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.Common, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">
-      <Private>True</Private>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Windows\assembly\GAC_MSIL\Microsoft.ReportViewer.ProcessingObjectModel\12.0.0.0__89845dcd8080cc91\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.WinForms, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <Private>True</Private>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="System" />
@@ -83,18 +92,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdminBerechtigungenForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AdminBerechtigungenForm.Designer.cs">
-      <DependentUpon>AdminBerechtigungenForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AdminKursLehrerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AdminKursLehrerForm.Designer.cs">
-      <DependentUpon>AdminKursLehrerForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="BasisForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +108,18 @@
     <Compile Include="Globales.cs" />
     <Compile Include="HjLeistung.cs" />
     <Compile Include="ImportKlassenleiter.cs" />
+    <Compile Include="KurseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KurseForm.Designer.cs">
+      <DependentUpon>KurseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LehrerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LehrerForm.Designer.cs">
+      <DependentUpon>LehrerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -118,6 +127,19 @@
     </Compile>
     <Compile Include="Repository.cs" />
     <Compile Include="SchuelerverwaltungController.cs" />
+    <Compile Include="GlobalesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GlobalesForm.Designer.cs">
+      <DependentUpon>GlobalesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Stammdaten.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stammdaten.Designer.cs">
+      <DependentUpon>Stammdaten.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControlAdministration.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -236,12 +258,6 @@
     <Compile Include="WinSVSchuelerReader.cs" />
     <Compile Include="Zeugnisprogramm\ExportSchueler.cs" />
     <Compile Include="Zugriff.cs" />
-    <EmbeddedResource Include="AdminBerechtigungenForm.resx">
-      <DependentUpon>AdminBerechtigungenForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="AdminKursLehrerForm.resx">
-      <DependentUpon>AdminKursLehrerForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="BasisForm.resx">
       <DependentUpon>BasisForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -252,12 +268,26 @@
       <DependentUpon>Klassenansicht.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="KurseForm.resx">
+      <DependentUpon>KurseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LehrerForm.resx">
+      <DependentUpon>LehrerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rptLehrerRolle.rdlc" />
+    <EmbeddedResource Include="rptEinserAbi.rdlc" />
     <EmbeddedResource Include="rptZeugnis.rdlc" />
     <EmbeddedResource Include="rptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="rptKlassenliste.rdlc" />
     <EmbeddedResource Include="rptNotenbogen.rdlc" />
     <EmbeddedResource Include="rptNotenmitteilung.rdlc" />
     <EmbeddedResource Include="rptNotenmitteilungAlt.rdlc" />
+    <EmbeddedResource Include="GlobalesForm.resx">
+      <DependentUpon>GlobalesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Stammdaten.resx">
+      <DependentUpon>Stammdaten.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="subrptAbiergebnisseAlt.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptNoten.rdlc" />
@@ -330,6 +360,7 @@
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
     </None>
     <EmbeddedResource Include="ListeAllerSchulenInBayern.csv" />
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\BriefDaten.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.BerechneteNoteTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.FachTableAdapter.datasource" />
@@ -340,21 +371,25 @@
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.LehrerTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.NotenartTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.NoteTableAdapter.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.QueriesTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.SchuelerKursTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.SchuelerTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.SchulaufgabenfachTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.SeminarfachnoteTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.TableAdapterManager+UpdateOrderOption.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.TableAdapterManager.datasource" />
+    <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.vwLehrerRolleTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.diNoDataSetTableAdapters.vwNotenbogenTableAdapter.datasource" />
     <None Include="Properties\DataSources\diNo.Properties.Resources.datasource" />
     <None Include="Properties\DataSources\diNo.Properties.Settings.datasource" />
+    <None Include="Properties\DataSources\diNoDataSet.BerechneteNoteRow.datasource" />
     <None Include="Properties\DataSources\FachSchuelerNoten.datasource" />
     <None Include="Properties\DataSources\FachSchuelerNotenDruck.datasource" />
     <None Include="Properties\DataSources\FachSchuelerNotenDruck11.datasource" />
     <None Include="Properties\DataSources\FachSchuelerNotenZeugnisDruck.datasource" />
     <None Include="Properties\DataSources\FPADruck.datasource" />
     <None Include="Properties\DataSources\Klasse.datasource" />
+    <None Include="Properties\DataSources\LehrerRolleDruck.datasource" />
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />
     <None Include="Properties\DataSources\SchuelerDruck.datasource" />
     <None Include="Properties\DataSources\SchuljahrSchulartDruck.datasource" />
@@ -449,7 +484,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Lupe.png" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="stegosaurus-304011__180 klein.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

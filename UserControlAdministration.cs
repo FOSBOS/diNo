@@ -17,7 +17,7 @@ namespace diNo
       konstanten = Zugriff.Instance.globaleKonstanten;
       if (!Zugriff.Instance.HatRolle(Rolle.Admin))
       {
-        groupBoxBerechtigungen.Visible = false;
+        groupBoxStammdaten.Visible = false;
         groupBoxImport.Visible = false;
         groupBoxExport.Visible = false;
         groupBoxEinstellungen.Visible = false;
@@ -32,6 +32,7 @@ namespace diNo
       }
       dateZeugnis.Value = konstanten.Zeugnisdatum;
       cbNotendruck.SelectedIndex = 0;
+      lblStatus.Text = "";
     }
 
     public Schueler Schueler
@@ -103,17 +104,7 @@ namespace diNo
     {
         new ImportKlassenleiter();
     }
-
-    private void btnKurseLehrer_Click(object sender, EventArgs e)
-    {
-      new AdminKursLehrerForm().ShowDialog();
-    }
-
-    private void btnBerechtigungen_Click(object sender, EventArgs e)
-    {
-      new AdminBerechtigungenForm().ShowDialog();
-    }
-
+    
     private void btnAttestpflicht_Click(object sender, EventArgs e)
     {      
       if (schueler != null)
@@ -213,6 +204,42 @@ namespace diNo
           new ReportSchuelerdruck(obj, (Bericht) cbNotendruck.SelectedIndex, getUnterschriftZeugnis()).Show();
         }
       }          
+    }
+
+    private void btnLehrer_Click(object sender, EventArgs e)
+    {
+      new LehrerForm().ShowDialog();
+    }
+
+    private void btnKurs_Click(object sender, EventArgs e)
+    {
+      new KurseForm().ShowDialog();
+    }
+
+    private void btnGlobales_Click(object sender, EventArgs e)
+    {
+      new GlobalesForm().ShowDialog();
+    }
+
+    private void btnEinserAbi_Click(object sender, EventArgs e)
+    {
+      List<Schueler> alle = Zugriff.Instance.SchuelerRep.getList();
+      List<Schueler> liste = new List<Schueler>();
+
+      foreach (var s in alle)
+      {
+        if (!s.Data.IsDNoteAllgNull())
+        {
+          if ((double)Math.Min(s.Data.DNote,s.Data.DNoteAllg)< 2.0) liste.Add(s);
+        }
+        else if (!s.Data.IsDNoteNull() && (double)s.Data.DNote < 2.0) liste.Add(s);
+      }
+      new ReportSchuelerdruck(liste, Bericht.EinserAbi).Show();
+    }
+
+    private void btnBerechtigungen_Click(object sender, EventArgs e)
+    {
+      new ReportBerechtigungen(LehrerRolleDruck.CreateLehrerRolleDruck()).Show();
     }
   }
 }

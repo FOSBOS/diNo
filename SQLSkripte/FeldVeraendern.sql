@@ -1,7 +1,7 @@
 use diNo
 go
 
-alter table GlobaleKonstanten 
-alter Column Sperre int not null
+alter table Lehrer 
+alter Column Geschlecht nvarchar(1) not null
 go
 

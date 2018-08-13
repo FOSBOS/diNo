@@ -3,13 +3,14 @@
   <Body>
     <ReportItems>
       <Image Name="imgFB">
-        <Source>Embedded</Source>
-        <Value>FBLogo</Value>
+        <Source>Database</Source>
+        <Value>=Fields!Logo.Value</Value>
+        <MIMEType>image/png</MIMEType>
         <Sizing>FitProportional</Sizing>
         <Top>0.3937cm</Top>
-        <Left>13.51072cm</Left>
+        <Left>12.98155cm</Left>
         <Height>3.6157cm</Height>
-        <Width>3.28084cm</Width>
+        <Width>3.81001cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -24,7 +25,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Berufliche Oberschule · Kotterner Str. 41 · 87435 Kempten</Value>
+                <Value>=Fields!Absenderzeile.Value</Value>
                 <Style>
                   <FontStyle>Normal</FontStyle>
                   <FontFamily>Tahoma</FontFamily>
@@ -39,10 +40,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox1</rd:DefaultName>
-        <Top>2.50981cm</Top>
+        <Top>2.65092cm</Top>
         <Left>0.0699cm</Left>
-        <Height>0.60854cm</Height>
-        <Width>8.46666cm</Width>
+        <Height>0.53799cm</Height>
+        <Width>9.28687cm</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -76,7 +77,7 @@
         <Top>3.22419cm</Top>
         <Left>0.06989cm</Left>
         <Height>1.94938cm</Height>
-        <Width>8.46667cm</Width>
+        <Width>9.28688cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
           <Border>
@@ -307,7 +308,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Berufliche Oberschule Kempten</Value>
+                  <Value>=Fields!Absender.Value</Value>
                   <Style>
                     <FontStyle>Normal</FontStyle>
                     <FontFamily>Tahoma</FontFamily>
@@ -318,82 +319,6 @@
                 </TextRun>
               </TextRuns>
               <Style />
-            </Paragraph>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>Staatliche Fach- und Berufsoberschule</Value>
-                  <Style>
-                    <FontStyle>Normal</FontStyle>
-                    <FontFamily>Tahoma</FontFamily>
-                    <FontSize>9pt</FontSize>
-                    <FontWeight>Normal</FontWeight>
-                    <TextDecoration>None</TextDecoration>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0cm</LeftIndent>
-              <RightIndent>0cm</RightIndent>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>Kotterner Straße 41</Value>
-                  <Style>
-                    <FontStyle>Normal</FontStyle>
-                    <FontFamily>Tahoma</FontFamily>
-                    <FontSize>9pt</FontSize>
-                    <FontWeight>Normal</FontWeight>
-                    <TextDecoration>None</TextDecoration>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0cm</LeftIndent>
-              <RightIndent>0cm</RightIndent>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>87435 Kempten (Allgäu)</Value>
-                  <Style>
-                    <FontStyle>Normal</FontStyle>
-                    <FontFamily>Tahoma</FontFamily>
-                    <FontSize>9pt</FontSize>
-                    <FontWeight>Normal</FontWeight>
-                    <TextDecoration>None</TextDecoration>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0cm</LeftIndent>
-              <RightIndent>0cm</RightIndent>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value />
-                  <Style>
-                    <FontStyle>Normal</FontStyle>
-                    <FontFamily>Tahoma</FontFamily>
-                    <FontSize>9pt</FontSize>
-                    <FontWeight>Normal</FontWeight>
-                    <TextDecoration>None</TextDecoration>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0cm</LeftIndent>
-              <RightIndent>0cm</RightIndent>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
             </Paragraph>
             <Paragraph>
               <TextRuns>
@@ -456,7 +381,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>Telefon: (0831) 2 53 85-410</Value>
+                  <Value>=Fields!Telefon.Value</Value>
                   <Style>
                     <FontStyle>Normal</FontStyle>
                     <FontFamily>Tahoma</FontFamily>
@@ -468,66 +393,6 @@
                 </TextRun>
               </TextRuns>
               <Style />
-            </Paragraph>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>Telefax: (0831) 2 53 85-420</Value>
-                  <Style>
-                    <FontStyle>Normal</FontStyle>
-                    <FontFamily>Tahoma</FontFamily>
-                    <FontSize>9pt</FontSize>
-                    <FontWeight>Normal</FontWeight>
-                    <TextDecoration>None</TextDecoration>
-                    <Color>#000000</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0.05997cm</LeftIndent>
-              <RightIndent>0cm</RightIndent>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>www.fosbos-kempten.de</Value>
-                  <Style>
-                    <FontStyle>Normal</FontStyle>
-                    <FontFamily>Tahoma</FontFamily>
-                    <FontSize>9pt</FontSize>
-                    <FontWeight>Normal</FontWeight>
-                    <TextDecoration>None</TextDecoration>
-                    <Color>#000000</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0.05997cm</LeftIndent>
-              <RightIndent>0cm</RightIndent>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
-            </Paragraph>
-            <Paragraph>
-              <TextRuns>
-                <TextRun>
-                  <Value>sekretariat@fosbos-kempten.de</Value>
-                  <Style>
-                    <FontStyle>Normal</FontStyle>
-                    <FontFamily>Tahoma</FontFamily>
-                    <FontSize>9pt</FontSize>
-                    <FontWeight>Normal</FontWeight>
-                    <TextDecoration>None</TextDecoration>
-                    <Color>#000000</Color>
-                  </Style>
-                </TextRun>
-              </TextRuns>
-              <LeftIndent>0.05997cm</LeftIndent>
-              <RightIndent>0cm</RightIndent>
-              <Style>
-                <TextAlign>Left</TextAlign>
-              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox9</rd:DefaultName>
@@ -591,6 +456,14 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="Absender">
+          <DataField>Absender</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Absenderzeile">
+          <DataField>Absenderzeile</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Adressfeld">
           <DataField>Adressfeld</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -607,12 +480,28 @@
           <DataField>Inhalt</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Inhalt2">
+          <DataField>Inhalt2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="IstU18">
+          <DataField>IstU18</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
         <Field Name="Klasse">
           <DataField>Klasse</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Logo">
+          <DataField>Logo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Name">
           <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Telefon">
+          <DataField>Telefon</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Unterschrift">
@@ -621,6 +510,10 @@
         </Field>
         <Field Name="Unterschrift2">
           <DataField>Unterschrift2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="UnterschriftsText">
+          <DataField>UnterschriftsText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="VornameName">

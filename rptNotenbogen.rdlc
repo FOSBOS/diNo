@@ -220,6 +220,7 @@
                       </Style>
                     </Textbox>
                     <ColSpan>2</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -325,7 +326,6 @@
                       </Style>
                     </Subreport>
                     <ColSpan>3</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -503,7 +503,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Klassenleiter.Value</Value>
+                              <Value>Helga Traut, OStDin</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -514,7 +514,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!KlassenleiterText.Value</Value>
+                              <Value>Schulleiterin</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -578,7 +578,13 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>                           Helga Traut, OStDin</Value>
+                              <Value xml:space="preserve">                           </Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!Klassenleiter.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -589,7 +595,13 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>                           Schulleiterin</Value>
+                              <Value xml:space="preserve">                           </Value>
+                              <Style>
+                                <FontSize>8pt</FontSize>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!KlassenleiterText.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>

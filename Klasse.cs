@@ -324,6 +324,11 @@ namespace diNo
       }
     }
 
+    public void SetFachNull() // erzwingt ein neues Laden
+    {
+      fach = null;
+    }
+
     public Lehrer getLehrer
     {
       get
@@ -336,6 +341,17 @@ namespace diNo
       }
     }
 
+    public void SetLehrerNull() // erzwingt ein neues Laden
+    {
+      lehrer = null;
+    }
+
+    public string Kurzbez // TODO: Kurzbez aus Datenbank
+    {
+      get { return getFach.Kuerzel + " " + Id; }
+      //get { return Data.Kurzbez; }
+    }
+    
     public string Kursbezeichnung
     {
       get { return Data.Bezeichnung; }

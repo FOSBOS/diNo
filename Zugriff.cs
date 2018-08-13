@@ -167,7 +167,7 @@ namespace diNo
       }
     }
 
-    private void LoadLehrer()
+    public void LoadLehrer()
     {
       diNoDataSet.LehrerDataTable dt;      
       var ta = new LehrerTableAdapter();

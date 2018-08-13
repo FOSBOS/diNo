@@ -61,6 +61,19 @@ namespace diNo
     public void Clear()
     {
       Liste.Clear();
-    }    
+    }
+    
+    public void Remove(int id)
+    {
+      Liste.Remove(id);
+    }
+
+    public List<T>getList()
+    {
+      var q = new List<T>();
+      foreach (var e in Liste.Values)
+        q.Add(e);
+      return q;
+    }  
   }
 }

@@ -44,6 +44,8 @@
       this.imageList1.Images.SetKeyName(3, "print.png");
       this.imageList1.Images.SetKeyName(4, "Save.png");
       this.imageList1.Images.SetKeyName(5, "Excel.png");
+      this.imageList1.Images.SetKeyName(6, "Plus.png");
+      this.imageList1.Images.SetKeyName(7, "Minus.png");
       // 
       // BasisForm
       // 

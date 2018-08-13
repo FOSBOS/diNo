@@ -26,7 +26,7 @@ namespace diNo
       string s;
       dic.TryGetValue((int)g, out s);
       return s;
-    }
+    }   
   }
   
   public enum GlobaleStrings
@@ -39,9 +39,10 @@ namespace diNo
     FOSName,
     BOSName,
     SchulName,
+    SchulNameZusatz,
     SchulStrasse,
-    SchulPLZ,
-    SchulOrt,
+    SchulPLZOrt,
+    SchulAbsenderzeile,
     SchulTel,
     SchulFax,
     SchulWeb,
