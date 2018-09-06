@@ -229,7 +229,7 @@ namespace diNo
       else
         KlasseAR += ".";
 
-      DatumZeugnis = Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy");
+      DatumZeugnis = Zugriff.Instance.getString(GlobaleStrings.SchulOrt) +", den " + Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy");
       ShowGezSL = (u == UnterschriftZeugnis.gez);
       if (u == UnterschriftZeugnis.Stv)
       {

@@ -29,8 +29,8 @@ namespace diNo
             modus = amodus; 
             Zugriff.Instance.markierteSchueler.Clear();
 
-      // je nach Modus und Zeitpunkt werden nur bestimmte Klassen ausgewählt
-      if (modus == NotenCheckModus.EigeneKlasse)
+            // je nach Modus und Zeitpunkt werden nur bestimmte Klassen ausgewählt
+            if (modus == NotenCheckModus.EigeneKlasse)
             {
               KlasseInNotenpruefungAufnehmen(Zugriff.Instance.eigeneKlasse);
             }
@@ -80,7 +80,7 @@ namespace diNo
         private void KlasseInNotenpruefungAufnehmen(Klasse k)
         {
             if (zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS || 
-                zeitpunkt==Zeitpunkt.ProbezeitBOS && k.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse ||
+                zeitpunkt==Zeitpunkt.ProbezeitBOS ||
                 k.Jahrgangsstufe>=Jahrgangsstufe.Zwoelf && zeitpunkt<=Zeitpunkt.DrittePA || 
                 k.Jahrgangsstufe<Jahrgangsstufe.Zwoelf && zeitpunkt==Zeitpunkt.Jahresende)
             {

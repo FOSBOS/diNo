@@ -168,7 +168,7 @@ namespace diNo
       Absenderzeile = Zugriff.Instance.getString(GlobaleStrings.SchulAbsenderzeile);
       Absender = Zugriff.Instance.getString(GlobaleStrings.SchulName);
       if (Zugriff.Instance.getString(GlobaleStrings.SchulNameZusatz) != "") Absender += "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulNameZusatz);
-      Absender += "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulStrasse) + "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulPLZOrt);
+      Absender += "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulStrasse) + "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) + " " + Zugriff.Instance.getString(GlobaleStrings.SchulOrt);
       Telefon = "Telefon: " + Zugriff.Instance.getString(GlobaleStrings.SchulTel) + "\nTelefax: " + Zugriff.Instance.getString(GlobaleStrings.SchulFax);
       Telefon += "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulWeb) + "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulMail);
 

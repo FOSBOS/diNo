@@ -363,16 +363,6 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Kempten, den </Value>
-                              <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>11pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                                <Color>#000000</Color>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
                               <Value>=Fields!DatumZeugnis.Value</Value>
                               <Style>
                                 <FontStyle>Normal</FontStyle>
@@ -398,6 +388,7 @@
                       </Style>
                     </Textbox>
                     <ColSpan>3</ColSpan>
+                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
@@ -1123,7 +1114,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>16.63402cm</Height>
+        <Height>16.63401cm</Height>
         <Width>16.5cm</Width>
         <Style>
           <Border>
