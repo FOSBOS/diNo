@@ -13,7 +13,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
-	<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -145,12 +145,6 @@
     </Compile>
     <Compile Include="UserControlAdministration.Designer.cs">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControlHjLeistung.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControlHjLeistung.Designer.cs">
-      <DependentUpon>UserControlHjLeistung.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControlKurszuordnungen.cs">
       <SubType>UserControl</SubType>
@@ -299,9 +293,6 @@
     <EmbeddedResource Include="subrptZwischenzeugnis.rdlc" />
     <EmbeddedResource Include="UserControlAdministration.resx">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControlHjLeistung.resx">
-      <DependentUpon>UserControlHjLeistung.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlKurszuordnungen.resx">
       <DependentUpon>UserControlKurszuordnungen.cs</DependentUpon>

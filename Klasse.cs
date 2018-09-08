@@ -151,7 +151,7 @@ namespace diNo
            
     public bool AlteFOBOSO()
     {
-        return (Jahrgangsstufe >= Jahrgangsstufe.Zwoelf);
+        return (Jahrgangsstufe >= Jahrgangsstufe.Dreizehn);
     }
    
     public int KlassenleiterId

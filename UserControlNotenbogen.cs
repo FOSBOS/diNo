@@ -47,50 +47,54 @@ namespace diNo
         dataGridNoten.RowsDefaultCellStyle.BackColor = Color.LightGray;
       }
 
+      // Hj-Leistungen aus 11/1 und 11/2 anzeigen?
+      bool show11 = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf && schueler.Data.Schulart == "F";
+      dataGridNoten.Columns[1].Visible = show11;
+      dataGridNoten.Columns[2].Visible = show11;
+
       int lineCount = 0;
-      foreach (var fach in schueler.getNoten.alleKurse)
+      foreach (var fach in schueler.getNoten.alleFaecher)
       {
         dataGridNoten.Rows.Add();
         dataGridNoten.Rows[lineCount].Height += 2;
         dataGridNoten.Rows[lineCount].Cells[0].Value = fach.getFach.Bezeichnung;
 
-        dataGridNoten.Rows[lineCount].Cells[3].Value = fach.SA(Halbjahr.Erstes);
-        dataGridNoten.Rows[lineCount].Cells[1].Value = fach.sL(Halbjahr.Erstes);
+        if (show11)
+        {
+          FillCell(dataGridNoten.Rows[lineCount].Cells[1], fach.getVorHjLeistung(HjArt.Hj1));
+          FillCell(dataGridNoten.Rows[lineCount].Cells[2], fach.getVorHjLeistung(HjArt.Hj2));
+        }
+
+        dataGridNoten.Rows[lineCount].Cells[5].Value = fach.SA(Halbjahr.Erstes);
+        dataGridNoten.Rows[lineCount].Cells[3].Value = fach.sL(Halbjahr.Erstes);
+
         HjLeistung hjl = fach.getHjLeistung(HjArt.Hj1);
         if (hjl!=null)
         {
           if (hjl.SchnittMdl!=null) // der Rest sollte befüllt sein!
-            dataGridNoten.Rows[lineCount].Cells[2].Value = hjl.SchnittMdl.GetValueOrDefault(); 
-          dataGridNoten.Rows[lineCount].Cells[4].Value = hjl.Punkte2Dez.GetValueOrDefault();
-          dataGridNoten.Rows[lineCount].Cells[5].Tag = hjl;
-          dataGridNoten.Rows[lineCount].Cells[5].Value = hjl.Punkte;
-          //if (Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes)
-            SetBackgroundColor(hjl, dataGridNoten.Rows[lineCount].Cells[5]);
+            dataGridNoten.Rows[lineCount].Cells[4].Value = hjl.SchnittMdl.GetValueOrDefault(); 
+          dataGridNoten.Rows[lineCount].Cells[6].Value = hjl.Punkte2Dez.GetValueOrDefault();          
+          FillCell(dataGridNoten.Rows[lineCount].Cells[7], hjl);
         }
 
-        dataGridNoten.Rows[lineCount].Cells[8].Value = fach.SA(Halbjahr.Zweites);
-        dataGridNoten.Rows[lineCount].Cells[6].Value = fach.sL(Halbjahr.Zweites);
+        dataGridNoten.Rows[lineCount].Cells[10].Value = fach.SA(Halbjahr.Zweites);
+        dataGridNoten.Rows[lineCount].Cells[8].Value = fach.sL(Halbjahr.Zweites);
+
         hjl = fach.getHjLeistung(HjArt.Hj2);
         if (hjl!=null)
         {
           if (hjl.SchnittMdl != null)
-            dataGridNoten.Rows[lineCount].Cells[7].Value = hjl.SchnittMdl.GetValueOrDefault(); 
-          dataGridNoten.Rows[lineCount].Cells[9].Value = hjl.Punkte2Dez.GetValueOrDefault();
-          dataGridNoten.Rows[lineCount].Cells[10].Tag = hjl;
-          dataGridNoten.Rows[lineCount].Cells[10].Value = hjl.Punkte;
-          //if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites)
-            SetBackgroundColor(hjl, dataGridNoten.Rows[lineCount].Cells[10]);
+            dataGridNoten.Rows[lineCount].Cells[9].Value = hjl.SchnittMdl.GetValueOrDefault(); 
+          dataGridNoten.Rows[lineCount].Cells[11].Value = hjl.Punkte2Dez.GetValueOrDefault();
+          FillCell(dataGridNoten.Rows[lineCount].Cells[12], hjl);
         }
 
-        hjl = fach.getHjLeistung(HjArt.JN); // Jahresnote (unabhängig von Einbringung)
-        // hjl = fach.getHjLeistung(HjArt.GesErg); --> kommt im Reiter Hj-Leistung
-        if (hjl != null)
-        {
-          dataGridNoten.Rows[lineCount].Cells[14].Tag = hjl;
-          dataGridNoten.Rows[lineCount].Cells[14].Value = hjl.Punkte;
-          //if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites)
-            SetBackgroundColor(hjl, dataGridNoten.Rows[lineCount].Cells[14]);
-        }
+        dataGridNoten.Rows[lineCount].Cells[13].Value = fach.ToString(Halbjahr.Zweites, Notentyp.APSchriftlich);
+        dataGridNoten.Rows[lineCount].Cells[14].Value = fach.ToString(Halbjahr.Zweites, Notentyp.APMuendlich);
+        FillCell(dataGridNoten.Rows[lineCount].Cells[15], fach.getHjLeistung(HjArt.AP));
+
+        FillCell(dataGridNoten.Rows[lineCount].Cells[16], fach.getHjLeistung(HjArt.JN));
+        FillCell(dataGridNoten.Rows[lineCount].Cells[17], fach.getHjLeistung(HjArt.GesErg));
         lineCount++;
       }
     }
@@ -104,7 +108,9 @@ namespace diNo
     {
       if (hjl!=null)
       {
+        c.Tag = hjl;
         c.Value = hjl.Punkte;
+        SetBackgroundColor(hjl, c);
       }
     }
 
@@ -117,26 +123,28 @@ namespace diNo
 
     private void chkShowHj1_CheckedChanged(object sender, EventArgs e)
     {
-      ShowCols(1,4,chkShowHj1.Checked);
+      ShowCols(3,6,chkShowHj1.Checked);
       ShowFixedCols();
     }
 
     private void chkShowHj2_CheckedChanged(object sender, EventArgs e)
     {
-      ShowCols(6,9,chkShowHj2.Checked);
+      ShowCols(8,11,chkShowHj2.Checked);
       ShowFixedCols();
     }
 
     private void chkShowAbi_CheckedChanged(object sender, EventArgs e)
     {
-      ShowCols(11,13,chkShowAbi.Checked);
+      ShowCols(13,15,chkShowAbi.Checked);
       ShowFixedCols();
     }
 
     private void ShowFixedCols() // bestimmte Gesamtwert-Spalten bleiben (fast) immer sichtbar
     {
-      dataGridNoten.Columns[10].Visible = chkShowHj2.Checked || chkShowAbi.Checked; // 2. Hj
-      dataGridNoten.Columns[14].Visible = chkShowHj2.Checked || chkShowAbi.Checked; // Jahresnote
+      bool c = chkShowHj2.Checked || chkShowAbi.Checked || !chkShowHj1.Checked && !chkShowHj2.Checked & !chkShowAbi.Checked;
+      dataGridNoten.Columns[12].Visible = c; // 2. Hj
+      dataGridNoten.Columns[16].Visible = c; // Jahresnote
+      dataGridNoten.Columns[17].Visible = chkShowAbi.Checked || !chkShowHj1.Checked && !chkShowHj2.Checked & !chkShowAbi.Checked; // GE
     }
 
     private void setStatus(HjStatus status)

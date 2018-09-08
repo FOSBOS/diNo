@@ -570,6 +570,11 @@ namespace diNo
       return (NotenString(getNoten(hj, Notentyp.Schulaufgabe), "")).TrimEnd();
     }
 
+    public string ToString(Halbjahr hj, Notentyp typ)
+    {
+      return (NotenString(getNoten(hj, typ), "")).TrimEnd();
+    }
+
     /// <summary>
     /// Liefert alle sonstige Leistungen eines Faches als Text
     /// </summary>

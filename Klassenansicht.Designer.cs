@@ -37,8 +37,6 @@
       this.notenbogen1 = new diNo.Notenbogen();
       this.tabPageNotenbogen = new System.Windows.Forms.TabPage();
       this.userControlNotenbogen1 = new diNo.UserControlNotenbogen();
-      this.tabPageHjLeistung = new System.Windows.Forms.TabPage();
-      this.userControlHjLeistung1 = new diNo.UserControlHjLeistung();
       this.tabPageFPASeminar = new System.Windows.Forms.TabPage();
       this.userControlFPAundSeminar1 = new diNo.UserControlFPAundSeminar();
       this.tabPageVorkommnisse = new System.Windows.Forms.TabPage();
@@ -67,7 +65,6 @@
       this.tabPageStammdaten.SuspendLayout();
       this.tabPageNoten.SuspendLayout();
       this.tabPageNotenbogen.SuspendLayout();
-      this.tabPageHjLeistung.SuspendLayout();
       this.tabPageFPASeminar.SuspendLayout();
       this.tabPageVorkommnisse.SuspendLayout();
       this.tabPageKurszuordnungen.SuspendLayout();
@@ -97,7 +94,6 @@
       this.tabControl1.Controls.Add(this.tabPageStammdaten);
       this.tabControl1.Controls.Add(this.tabPageNoten);
       this.tabControl1.Controls.Add(this.tabPageNotenbogen);
-      this.tabControl1.Controls.Add(this.tabPageHjLeistung);
       this.tabControl1.Controls.Add(this.tabPageFPASeminar);
       this.tabControl1.Controls.Add(this.tabPageVorkommnisse);
       this.tabControl1.Controls.Add(this.tabPageKurszuordnungen);
@@ -174,27 +170,6 @@
       this.userControlNotenbogen1.Schueler = null;
       this.userControlNotenbogen1.Size = new System.Drawing.Size(884, 444);
       this.userControlNotenbogen1.TabIndex = 0;
-      // 
-      // tabPageHjLeistung
-      // 
-      this.tabPageHjLeistung.Controls.Add(this.userControlHjLeistung1);
-      this.tabPageHjLeistung.Location = new System.Drawing.Point(4, 33);
-      this.tabPageHjLeistung.Name = "tabPageHjLeistung";
-      this.tabPageHjLeistung.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPageHjLeistung.Size = new System.Drawing.Size(890, 450);
-      this.tabPageHjLeistung.TabIndex = 6;
-      this.tabPageHjLeistung.Text = "Hj-Leistungen";
-      this.tabPageHjLeistung.UseVisualStyleBackColor = true;
-      // 
-      // userControlHjLeistung1
-      // 
-      this.userControlHjLeistung1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.userControlHjLeistung1.Location = new System.Drawing.Point(3, 3);
-      this.userControlHjLeistung1.Margin = new System.Windows.Forms.Padding(4);
-      this.userControlHjLeistung1.Name = "userControlHjLeistung1";
-      this.userControlHjLeistung1.Schueler = null;
-      this.userControlHjLeistung1.Size = new System.Drawing.Size(884, 444);
-      this.userControlHjLeistung1.TabIndex = 0;
       // 
       // tabPageFPASeminar
       // 
@@ -476,7 +451,6 @@
       this.tabPageStammdaten.ResumeLayout(false);
       this.tabPageNoten.ResumeLayout(false);
       this.tabPageNotenbogen.ResumeLayout(false);
-      this.tabPageHjLeistung.ResumeLayout(false);
       this.tabPageFPASeminar.ResumeLayout(false);
       this.tabPageVorkommnisse.ResumeLayout(false);
       this.tabPageKurszuordnungen.ResumeLayout(false);
@@ -520,8 +494,6 @@
     private System.Windows.Forms.CheckBox chkNurAktive;
     private System.Windows.Forms.TabPage tabPageAdministration;
     private UserControlAdministration userControlAdministration1;
-    private System.Windows.Forms.TabPage tabPageHjLeistung;
-    private UserControlHjLeistung userControlHjLeistung1;
     private System.Windows.Forms.TabPage tabPageNotenbogen;
     private UserControlNotenbogen userControlNotenbogen1;
     private System.Windows.Forms.Button btnRefresh;

@@ -11,16 +11,14 @@ namespace diNo
     private Schueler schueler=null;
     private SchuelerverwaltungController verwaltungController;
     private Brief frmBrief=null;
-    private bool zeigeAlteFOSBOSO = false;
-    private bool zeigeHjLeistung = false;
+    private bool zeigeAlteFOSBOSO = false;    
 
     public Klassenansicht()
     {
       InitializeComponent();
       this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
 
-      tabControl1.Controls.Remove(tabPageNoten); // Start mit neuer FOBOSO    
-      tabControl1.Controls.Remove(tabPageHjLeistung); // ab 12. Klasse
+      tabControl1.Controls.Remove(tabPageNoten); // Start mit neuer FOBOSO          
 
       // Verwaltungsreiter
       if (Zugriff.Instance.HatVerwaltungsrechte)
@@ -74,23 +72,6 @@ namespace diNo
             }
             userControlNotenbogen1.Schueler = schueler;
           }
-
-          // Reiter HjLeistungen anzeigen:
-          if (!schueler.AlteFOBOSO() && schueler.getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
-            {
-              if (!zeigeHjLeistung) // noch nicht angezeigt
-              {
-                tabControl1.TabPages.Insert(2, tabPageHjLeistung);
-                zeigeHjLeistung = true;
-              }              
-              userControlHjLeistung1.Schueler = schueler;
-            }
-            else
-            {
-              tabControl1.Controls.Remove(tabPageHjLeistung);
-              zeigeHjLeistung = false;
-            }
-            
 
           nameLabel.Text = schueler.NameVorname;
           klasseLabel.Text = schueler.KlassenBezeichnung;
