@@ -43,6 +43,7 @@ namespace diNo
     /// Achtung diese Konstanten liegen auf einem anderen Datenblatt "diNo".
     /// </summary>
     public static string SId = "C";
+    public static string Regelung = "D";
     public static int zeileSIdErsterSchueler = 4;
     public static string KursId = "F2";
 

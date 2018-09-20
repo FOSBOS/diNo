@@ -555,9 +555,12 @@ namespace diNo
     private string NotenString(IList<int>noten, string bez="")
     {
       string s="";
-      foreach (var note in noten)
-      {        
-        s += note + bez + "  ";
+      if (noten != null)
+      {
+        foreach (var note in noten)
+        {
+          s += note + bez + "  ";
+        }
       }
       return s;
     }

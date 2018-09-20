@@ -241,5 +241,15 @@ namespace diNo
     {
       new ReportBerechtigungen(LehrerRolleDruck.CreateLehrerRolleDruck()).Show();
     }
+
+    private void btnReadWahlpflichtfaecher_Click(object sender, EventArgs e)
+    {
+      OpenFileDialog dia = new OpenFileDialog();
+      dia.Title = "Dateiname wählen";
+      if (dia.ShowDialog() == DialogResult.OK)
+      {
+        WahlpflichtfachReader.Read(dia.FileName);
+      }
+    }
   }
 }

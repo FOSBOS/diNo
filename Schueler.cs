@@ -848,7 +848,7 @@ namespace diNo
     {
       var result = new List<Kurs>();
       foreach (Kurs k in getKlasse.Kurse)
-        if (KursPasstZumSchueler(k))
+        if (KursPasstZumSchueler(k) && k.getFach.Typ != FachTyp.WPF)
           result.Add(k);
 
       return result;

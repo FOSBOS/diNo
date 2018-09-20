@@ -81,6 +81,12 @@ namespace diNo
           continue;
         }
 
+        if (dbFach.Typ == (byte)FachTyp.OhneNoten)
+        {
+          log.Debug("Ignoriere Fach, in welchem keine Noten gemacht werden: Kürzel " + dbFach.Kuerzel);
+          continue;
+        }
+
         var dblehrer = FindLehrer(lehrer);
         if (dblehrer == null)
         {
@@ -92,7 +98,10 @@ namespace diNo
         var klasseKursAdapter = new KlasseKursTableAdapter();
         Dictionary<string, IList<string>> unterschiedlicheKlassen = GetKlassenTeile(klassen);
         string zweig = GetZweig(unterschiedlicheKlassen);
-        var kurs = FindOrCreateKurs(dbFach.Bezeichnung.Trim() + " " + klassenString, dblehrer.Id, fach, zweig);
+
+        //bei Wahlpflichtfächern muss unbedingt das Fach aus der Untis-Datei erhalten bleiben, sonst finden wir es später nicht wieder
+        string bezeichnung = dbFach.Typ == (byte)FachTyp.WPF ? fach : dbFach.Bezeichnung.Trim() + " " + klassenString;
+        var kurs = FindOrCreateKurs(bezeichnung, dblehrer.Id, fach, zweig);
 
         foreach (var klasseKvp in unterschiedlicheKlassen)
         {
@@ -266,9 +275,20 @@ namespace diNo
         var faecher = fachAdapter.GetDataByKuerzel(aFach);
         if (faecher.Count == 0)
         {
-          // Fach voller Name muss in der Datenbank angepasst werden
-          new FachTableAdapter().Insert("", aFach,999,9,null,false);
-          faecher = new FachTableAdapter().GetDataByKuerzel(aFach);
+          // letzter Versuch: Ist am Ende eine Zahl versuche es mal ohne diese Zahl
+          if (char.IsNumber(aFach.Last()))
+          {
+            string fachOhneZahl = aFach.Substring(0, aFach.Length - 1);
+            faecher = fachAdapter.GetDataByKuerzel(fachOhneZahl);
+          }
+
+          if (faecher.Count == 0)
+          {
+            // wenn so auch nicht gefunden, dann neu anlegen
+            // Fach voller Name muss in der Datenbank angepasst werden
+            new FachTableAdapter().Insert("", aFach, 999, 9, null, false);
+            faecher = new FachTableAdapter().GetDataByKuerzel(aFach);
+          }
         }
 
         return faecher[0];

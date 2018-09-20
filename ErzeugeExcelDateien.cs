@@ -32,16 +32,15 @@ namespace diNo
 
       foreach (var kurs in kurse)
       {
+        Kurs derKurs = new Kurs(kurs);
 
-
-        //if (kurs.Id > 824 && kurs.Id < 840)
         if (!kurs.IsLehrerIdNull())
         {
           if (statusChangedHandler != null)
           {
             statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = "Erzeuge Datei " + count + " von " + kurse.Count });
           }
-          var derKurs = new Kurs(kurs);
+
           var alleSchueler = derKurs.getSchueler(true); // sind bereits via SQL nach Klasse und Namen sortiert
           Jahrgangsstufe jgStufe = Jahrgangsstufe.Elf;
           if (alleSchueler.Count > 0)
@@ -50,7 +49,7 @@ namespace diNo
             jgStufe = ersterSchueler.getKlasse.Jahrgangsstufe;
           }
 
-          if (jgStufe == Jahrgangsstufe.Zwoelf || jgStufe == Jahrgangsstufe.Dreizehn)
+          if (jgStufe == Jahrgangsstufe.Dreizehn)
           {
             new ErzeugeAlteExcelDatei(kurs);
           }
@@ -201,7 +200,10 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
         return; // es gibt auch Kurse ohne Lehrer, z. B. übernommene Noten aus 11ter Klasse
       }
 
-      alleSchueler = kurs.getSchueler(true); // sind bereits via SQL nach Klasse und Namen sortiert
+      List<diNoDataSet.SchuelerRow> dieSchueler= new List<diNoDataSet.SchuelerRow>(kurs.getSchueler(true));
+      dieSchueler.Sort((x, y) => (x.Name + x.Vorname).CompareTo(y.Name + y.Vorname));
+      alleSchueler = dieSchueler;
+      
 
       if (alleSchueler.Count == 0)
       {
@@ -214,7 +216,7 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
         throw new InvalidOperationException("zu viele Schüler " + alleSchueler.Count);
       }
 
-      if (string.IsNullOrEmpty(kurs.FachBezeichnung))
+      if (string.IsNullOrEmpty(kurs.FachBezeichnung) || kurs.getFach.Typ == FachTyp.OhneNoten)
       {
         // ignoriere FPA, Seminare und ähnliche Platzhalter
         log.Debug("Erzeuge keine Datei für das Fach " + kurs.getFach.Kuerzel);
@@ -250,15 +252,7 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
         File.Delete(fileName); // bisherige Datei löschen
       }
 
-      // kopiere Vorlage
-      if (kurs.FachBezeichnung == "Englisch")
-      {
-        File.Copy(Konstanten.ExcelPfad + "\\Vorlage Englisch.xlsx", fileName);
-      }
-      else
-      {
-        File.Copy(Konstanten.ExcelPfad + "\\Vorlage.xlsx", fileName);
-      }
+      File.Copy(Konstanten.ExcelPfad + "\\Vorlage.xlsx", fileName);
     }
 
     /// <summary>
@@ -276,10 +270,10 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
 
       // schreibe Notenbogen - Kopf
       xls.WriteValue(xls.notenbogen, "E1", kurs.getFach.Bezeichnung);
-      xls.WriteValueProtectedCell(xls.notenbogen, "K1", GetLehrerOderLehrerin(kurs));
-      xls.WriteValue(xls.notenbogen, "M1", kurs.getLehrer.Name);
-      xls.WriteValue(xls.notenbogen, "U1", Konstanten.Schuljahr);
-      xls.WriteValueProtectedCell(xls.sid, CellConstant.KursId, kurs.Id.ToString());
+      xls.WriteValueProtectedCell(xls.notenbogen, "I1", GetLehrerOderLehrerin(kurs));
+      xls.WriteValue(xls.notenbogen, "K1", kurs.getLehrer.Name);
+      xls.WriteValueProtectedCell(xls.AP, "B1", "Abschlussprüfung " + Konstanten.Schuljahr);
+      xls.WriteValueProtectedCell(xls.sid, "F2", kurs.Id.ToString());
 
       int zeile = 4;
       int zeileFuerSId = CellConstant.zeileSIdErsterSchueler;
@@ -296,12 +290,7 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
         // Schüler in die Exceldatei schreiben
         xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name+", "+ schueler.benutzterVorname);
         xls.WriteValueProtectedCell(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
-
-        //TODO: Umgang mit Legasthenikern (Neu)?
-        //if (schueler.IsLegastheniker && (kurs.getFach.Kuerzel == "E" || kurs.getFach.Kuerzel == "F"))
-        //{
-        //  xls.SetLegasthenievermerkByZeile(zeile, true);
-        //}
+        xls.WriteValueProtectedCell(xls.sid, CellConstant.Regelung + zeileFuerSId, schueler.hatVorHj ? "FOS" : "BOS");
 
         zeile ++;
         zeileFuerSId++;
@@ -309,6 +298,16 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
 
       // Klassenbezeichnung wird aus allen Schülern gesammelt
       xls.WriteValue(xls.notenbogen, "B1", klassen.Aggregate((x, y) => x + ", " + y));
+
+      if (kurs.getFach.Kuerzel == "E")
+      {
+        xls.HideWorksheet("APRohpunkte");
+      }
+      else
+      {
+        xls.HideWorksheet("Eingabe Abitur");
+        xls.HideWorksheet("Ausdruck MAP");
+      }
     }
 
     /// <summary>
@@ -335,17 +334,23 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
       switch (kurs.getFach.Kuerzel)
       {
         case "E":
+        case "EBC": //English Book Club
           schluessel = "E";
           ug = "34";
           og = "49";
           break;
-        case "SWR": //Sozialwirtschaft und Recht
+        case "RSw": //Sozialwirtschaft und Recht
         case "BwR":
         case "WIn":
         case "VWL":
         case "Wl":
         case "Rl":
         case "Inf": //Informatik für Sozial-13
+        case "Inf_WT": // Informatik Wahlfach für Techniker
+        case "Inf_W_AS": // Informatik Wahlfach für ABU, Soziale
+        case "WAk": // Wirtschaft aktuell
+        case "WR": // Wirtschaft und Recht
+        case "IBS": // International Business Studies
           schluessel = "M";
           ug = "30";
           og = "44";
@@ -357,7 +362,7 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
           break;
       }
 
-      foreach (string sheetName in new[] { "I1SA", "I2SA", "I1Ext", "I2Ext", "I3Ext", "II1SA", "II2SA", "II1Ext", "II2Ext", "II3Ext" })
+      foreach (string sheetName in new[] { "I1SA", "I2SA", "I1KA", "I2KA", "I1Ext", "I2Ext", "I3Ext", "II1SA", "II2SA", "II1KA", "II2KA", "II1Ext", "II2Ext", "II3Ext" })
       {
         // Trage schon mal den zum Fach passenden Notenschlüssel und die Prozente ein
         var pruefungssheet = xls.getSheet(sheetName);
