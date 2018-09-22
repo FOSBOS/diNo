@@ -286,6 +286,19 @@ namespace diNo
 
       return zeile + 1;
     }
+
+    /// <summary>
+    /// Blendet das Tabellenblatt mit dem übergebenen Namen aus.
+    /// </summary>
+    /// <param name="name">Name des Tabellenblattes.</param>
+    public void HideWorksheet(string name)
+    {
+      Worksheet sheet = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals(name) select sh).FirstOrDefault();
+      if (sheet != null)
+      {
+        sheet.Visible = XlSheetVisibility.xlSheetHidden;
+      }
+    }
   }
 
   public class OpenNotendatei: BasisNotendatei

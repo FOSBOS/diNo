@@ -54,6 +54,7 @@
       this.btnImportUnterricht = new System.Windows.Forms.Button();
       this.importNoten = new System.Windows.Forms.Button();
       this.groupBoxStammdaten = new System.Windows.Forms.GroupBox();
+      this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.btnGlobales = new System.Windows.Forms.Button();
       this.btnLehrer = new System.Windows.Forms.Button();
       this.btnKurse = new System.Windows.Forms.Button();
@@ -68,7 +69,7 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
-      this.btnBerechtigungen = new System.Windows.Forms.Button();
+      this.btnReadWahlpflichtfaecher = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -302,6 +303,7 @@
       // 
       // groupBoxImport
       // 
+      this.groupBoxImport.Controls.Add(this.btnReadWahlpflichtfaecher);
       this.groupBoxImport.Controls.Add(this.btnImportKlassenleiter);
       this.groupBoxImport.Controls.Add(this.btnImportSchueler);
       this.groupBoxImport.Controls.Add(this.btnImportUnterricht);
@@ -365,6 +367,16 @@
       this.groupBoxStammdaten.TabIndex = 5;
       this.groupBoxStammdaten.TabStop = false;
       this.groupBoxStammdaten.Text = "Stammdaten";
+      // 
+      // btnBerechtigungen
+      // 
+      this.btnBerechtigungen.Location = new System.Drawing.Point(17, 179);
+      this.btnBerechtigungen.Name = "btnBerechtigungen";
+      this.btnBerechtigungen.Size = new System.Drawing.Size(163, 23);
+      this.btnBerechtigungen.TabIndex = 5;
+      this.btnBerechtigungen.Text = "Berechtigungen";
+      this.btnBerechtigungen.UseVisualStyleBackColor = true;
+      this.btnBerechtigungen.Click += new System.EventHandler(this.btnBerechtigungen_Click);
       // 
       // btnGlobales
       // 
@@ -516,15 +528,15 @@
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
       // 
-      // btnBerechtigungen
+      // btnReadWahlpflichtfaecher
       // 
-      this.btnBerechtigungen.Location = new System.Drawing.Point(17, 179);
-      this.btnBerechtigungen.Name = "btnBerechtigungen";
-      this.btnBerechtigungen.Size = new System.Drawing.Size(163, 23);
-      this.btnBerechtigungen.TabIndex = 5;
-      this.btnBerechtigungen.Text = "Berechtigungen";
-      this.btnBerechtigungen.UseVisualStyleBackColor = true;
-      this.btnBerechtigungen.Click += new System.EventHandler(this.btnBerechtigungen_Click);
+      this.btnReadWahlpflichtfaecher.Location = new System.Drawing.Point(6, 135);
+      this.btnReadWahlpflichtfaecher.Name = "btnReadWahlpflichtfaecher";
+      this.btnReadWahlpflichtfaecher.Size = new System.Drawing.Size(182, 23);
+      this.btnReadWahlpflichtfaecher.TabIndex = 7;
+      this.btnReadWahlpflichtfaecher.Text = "Wahlpflichtfächer aus Untis";
+      this.btnReadWahlpflichtfaecher.UseVisualStyleBackColor = true;
+      this.btnReadWahlpflichtfaecher.Click += new System.EventHandler(this.btnReadWahlpflichtfaecher_Click);
       // 
       // UserControlAdministration
       // 
@@ -599,5 +611,6 @@
     private System.Windows.Forms.Button btnGlobales;
     private System.Windows.Forms.Button btnEinserAbi;
     private System.Windows.Forms.Button btnBerechtigungen;
+    private System.Windows.Forms.Button btnReadWahlpflichtfaecher;
   }
 }

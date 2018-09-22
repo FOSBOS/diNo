@@ -28,7 +28,7 @@ namespace diNo
     public static class Konstanten
     {
         public const string ExcelPfad = "C:\\projects\\diNo\\ExcelFiles\\";
-        public const string Schuljahr = "2017 / 2018";
+        public const string Schuljahr = "2018 / 2019";
     }
     
 }

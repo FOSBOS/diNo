@@ -133,7 +133,6 @@
     <Compile Include="GlobalesForm.Designer.cs">
       <DependentUpon>GlobalesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Stammdaten.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -249,6 +248,7 @@
       <DependentUpon>Brief.cs</DependentUpon>
     </Compile>
     <Compile Include="Vorkommnis.cs" />
+    <Compile Include="WahlpflichtfachReader.cs" />
     <Compile Include="WinSVSchuelerReader.cs" />
     <Compile Include="Zeugnisprogramm\ExportSchueler.cs" />
     <Compile Include="Zugriff.cs" />
@@ -475,19 +475,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Lupe.png" />
-    <Content Include="SqlServerTypes\readme.htm" />
-    <Content Include="SqlServerTypes\x64\msvcr120.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x86\msvcr120.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="stegosaurus-304011__180 klein.ico" />
   </ItemGroup>
   <ItemGroup>

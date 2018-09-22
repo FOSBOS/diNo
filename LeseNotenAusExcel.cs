@@ -178,6 +178,20 @@ namespace diNo
       HjLeistungTableAdapter ada = new HjLeistungTableAdapter();
       NoteTableAdapter ta = new NoteTableAdapter();
 
+      //ermittle erst mal welche Teile jetzt eingelesen werden sollen
+      bool liesErstesHJ = (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ProbezeitBOS || (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS;
+      bool liesZweitesHJ = ErmittleObHJ2GelesenWird();
+      bool liesSAP = kurs.IstSAPKurs && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ZweitePA; // nur in Prüfungsklassen zur 2.PA
+      bool liesMAP = kurs.IstSAPKurs && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.DrittePA;
+      if (liesErstesHJ)
+      {
+        ta.DeleteByKursAndHalbjahr(kurs.Id, (byte)Halbjahr.Erstes);
+      }
+      if (liesZweitesHJ)
+      {
+        ta.DeleteByKursAndHalbjahr(kurs.Id, (byte)Halbjahr.Zweites);
+      }
+
       foreach (int sid in sidList)
       {
         HjArt art = GetAktuellesHalbjahr();
@@ -189,21 +203,14 @@ namespace diNo
 
         PruefeAlteNoten(i, ada, sid, jg);
 
-        //ermittle erst mal welche Teile jetzt eingelesen werden sollen
-        bool liesErstesHJ = (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ProbezeitBOS || (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS;
-        bool liesZweitesHJ = ErmittleObHJ2GelesenWird(jg);
-        bool liesSAP = (jg == Jahrgangsstufe.Zwoelf || jg == Jahrgangsstufe.Dreizehn) && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ZweitePA; // nur in Prüfungsklassen zur 2.PA
-        bool liesMAP = (jg == Jahrgangsstufe.Zwoelf || jg == Jahrgangsstufe.Dreizehn) && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.DrittePA;
 
         if (liesErstesHJ)
         {
-          ta.DeleteByKursAndHalbjahr(kurs.Id, (byte)Halbjahr.Erstes);
           LiesHalbjahr(xls.notenbogen, Halbjahr.Erstes, i, ada, sid, jg);
         }
 
         if (liesZweitesHJ)
         {
-          ta.DeleteByKursAndHalbjahr(kurs.Id, (byte)Halbjahr.Zweites);
           LiesHalbjahr(xls.notenbogen2, Halbjahr.Zweites, i, ada, sid, jg);
 
           byte? jahresnote = xls.ReadNote("R" + i, xls.notenbogen2);
@@ -328,14 +335,13 @@ namespace diNo
     /// <summary>
     /// Ermittelt, ob die Noten des zweiten Halbjahres gelesen werden sollen.
     /// </summary>
-    /// <param name="jg">Jahrgangsstufe.</param>
     /// <returns>true wenn wir uns im zweiten Halbjahr befinden und dieses für diese Jahrgangsstufe auch noch nicht abgeschlossen ist.</returns>
-    private bool ErmittleObHJ2GelesenWird(Jahrgangsstufe jg)
+    private bool ErmittleObHJ2GelesenWird()
     {
       if ((Zeitpunkt)Zugriff.Instance.aktZeitpunkt <= Zeitpunkt.HalbjahrUndProbezeitFOS)
         return false; // solange des erste Halbjahr noch läuft, wird das zweite nicht eingelesen
 
-      if (jg == Jahrgangsstufe.Zwoelf || jg == Jahrgangsstufe.Dreizehn)
+      if (kurs.IstSAPKurs)
       {
         // in den Prüfungsklassen wird das zweite Halbjahr nur von Februar bis zur ersten PA gelesen
         return (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ErstePA;
@@ -357,7 +363,7 @@ namespace diNo
       ErzeugeNoten(sheet, i, sid, new string[] { "C", "D" }, hj, Notentyp.Kurzarbeit);
       ErzeugeNoten(sheet, i, sid, new string[] { "E", "F", "G" }, hj, Notentyp.Ex);
       ErzeugeNoten(sheet, i, sid, new string[] { "H", "I", "J" }, hj, Notentyp.EchteMuendliche);
-      ErzeugeNoten(sheet, i, sid, new string[] { "K", "L" }, hj, Notentyp.Schulaufgabe);
+      ErzeugeNoten(sheet, i, sid, new string[] { "L", "M" }, hj, Notentyp.Schulaufgabe);
       byte? zeugnisnote = xls.ReadNote("O" + i, sheet);
       if (zeugnisnote != null)
       {

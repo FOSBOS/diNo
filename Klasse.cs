@@ -312,6 +312,15 @@ namespace diNo
       }
     }
 
+    /// <summary>
+    /// Methode ermittelt anhand des ersten Schülers ob 
+    /// </summary>
+    /// <returns></returns>
+    public bool IstSAPKurs
+    {
+      get; private set;
+    }
+
     public Fach getFach
     {
       get
@@ -379,11 +388,15 @@ namespace diNo
       var ta = new KlasseTableAdapter();
       var dt = ta.GetDataByKursId(Id);
       JgStufe = Jahrgangsstufe.None;
+      IstSAPKurs = false;
       foreach (var d in dt)
       {
         Klasse k = Zugriff.Instance.KlassenRep.Find(d.Id); // normalerweise wird ein Kurs nur in einer Jgstufe angeboten (Problem WPF--> s. LeseNotenausExcel)
-        if (k.Jahrgangsstufe>JgStufe)
+        if (k.Jahrgangsstufe > JgStufe)
+        {
           JgStufe = k.Jahrgangsstufe;
+          IstSAPKurs = (JgStufe == Jahrgangsstufe.Zwoelf || JgStufe == Jahrgangsstufe.Dreizehn) && getFach.IstSAPFach(k.Zweig);
+        }
       }      
     }
 

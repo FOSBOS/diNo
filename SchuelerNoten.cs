@@ -560,9 +560,12 @@ namespace diNo
     {
       if (noten == null) return ""; // tritt bei Fach ohne Kurs auf (z.B. Fpa)
       string s="";
-      foreach (var note in noten)
-      {        
-        s += note + bez + "  ";
+      if (noten != null)
+      {
+        foreach (var note in noten)
+        {
+          s += note + bez + "  ";
+        }
       }
       return s;
     }

@@ -91,6 +91,8 @@ namespace diNo
         while (!reader.EndOfStream)
         {
           string[] line = reader.ReadLine().Split(SeparatorChar);
+          if (line.Length != 9 && line.Length < 13)
+            continue;
           int schuelerId = int.Parse(line[0]);
           var schuelerGefunden = schuelerAdapter.GetDataById(schuelerId);
           if (schuelerGefunden == null || schuelerGefunden.Count == 0)
@@ -106,17 +108,22 @@ namespace diNo
             {
               // Zeile mit normaler Halbjahresleistung
               string nameVorname = line[1]; // nur zu Kontrollzwecken vorhanden
-              int fachId = GetFachId(fta, line[2]);
+              string fachKuerzel = line[2] == "SWR" ? "RSw" : line[2]; // TODO: wieder rauswerfen, nur wegen Fachumbenennung zum Jahr 2018/19
+              int fachId = GetFachId(fta, fachKuerzel);
               Jahrgangsstufe jgstufe = (Jahrgangsstufe)int.Parse(line[3]);
-              byte note = byte.Parse(line[4]);
-              decimal note2Dez = decimal.Parse(line[5]);
-              decimal schnittMdl = decimal.Parse(line[6]);
-              HjArt notenArt = (HjArt)byte.Parse(line[7]);
-              HjStatus status = (HjStatus)byte.Parse(line[8]);
 
-              // Importiere nur die Noten der elften Klasse
-              if (jgstufe == Jahrgangsstufe.Elf)
+              HjArt notenArt = (HjArt)byte.Parse(line[7]);
+
+              // Importiere nur die Halbjahres-Noten der elften Klasse
+              if (jgstufe == Jahrgangsstufe.Elf && (notenArt == HjArt.Hj1 || notenArt == HjArt.Hj2))
               {
+                byte note = byte.Parse(line[4]);
+                decimal note2Dez = decimal.Parse(line[5]);
+                decimal schnittMdl = decimal.Parse(line[6]);
+
+                HjStatus status = (HjStatus)byte.Parse(line[8]);
+
+                
                 ada.Insert(schueler.Id, fachId, (byte)notenArt, note, note2Dez, schnittMdl, (int)jgstufe, (byte)status);
               }
             }
@@ -133,10 +140,10 @@ namespace diNo
 
               byte gesamt = byte.Parse(line[3]);
               byte halbjahr = byte.Parse(line[4]);
-              byte? jahrespunkte = line[5] == "null" ? (byte?)null : byte.Parse(line[5]); // Jahrespunkte können null sein
+              byte? jahrespunkte = line[5] == "null" || line[5] == "" ? (byte?)null : byte.Parse(line[5]); // Jahrespunkte können null sein
               byte vertiefung = byte.Parse(line[6]);
-              byte vertiefung1 = byte.Parse(line[7]);
-              byte vertiefung2 = byte.Parse(line[8]);
+              byte? vertiefung1 = line[7] == "null" || line[7] == "" ? (byte?)null : byte.Parse(line[7]);
+              byte? vertiefung2 = line[8] == "null" || line[8] == "" ? (byte?)null : byte.Parse(line[8]);
               byte anleitung = byte.Parse(line[9]);
               byte betrieb = byte.Parse(line[10]);
               string stelle = line[11] == "null" ? null : line[11];
