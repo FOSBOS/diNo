@@ -91,15 +91,12 @@ namespace diNo
     /// <param name="schueler">Der Schüler.</param>    
     public override void Check(Schueler schueler)
     {
-            base.Check(schueler);
-            int sum=0;
-            foreach (var fach in noten.alleKurse)
-                sum += fach.getNotenanzahl(Notentyp.Fachreferat);
-            
-            if (sum == 0)
-                contr.Add(null,"Es ist keine Note für das Fachreferat vorhanden.");
-            else if (sum>1)
-                contr.Add( null, "Es sind " + sum + " Noten für das Fachreferat vorhanden.");
+      base.Check(schueler);
+      int anz = schueler.Fachreferat.Count;
+      if (anz == 0)
+        contr.Add(null,"Es ist keine Note für das Fachreferat vorhanden.");
+      else if (anz > 1)
+        contr.Add( null, "Es sind " + anz + " Noten für das Fachreferat vorhanden.");
     }
   }
 

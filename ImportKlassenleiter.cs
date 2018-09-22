@@ -18,7 +18,7 @@ namespace diNo
 
     public ImportKlassenleiter()
     {
-      MessageBox.Show("Benötigt wird eine Excelliste, bei der in Spalte 3 das Kürzel und in Spalte 4 die Klasse steht.\nAb Zeile 2 müssen Daten enthalten sein.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
+      MessageBox.Show("Benötigt wird eine Excelliste, bei der in Spalte 3 das Kürzel und in Spalte 4 die Klasse steht.\nAb Zeile 2 müssen Daten enthalten sein.\nDie Klassen müssen schon angelegt worden sein.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
       var fileDialog = new OpenFileDialog();
       fileDialog.Filter = "Excel Files|*.xls*";
             

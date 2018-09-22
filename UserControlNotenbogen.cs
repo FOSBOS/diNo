@@ -97,6 +97,15 @@ namespace diNo
         FillCell(dataGridNoten.Rows[lineCount].Cells[17], fach.getHjLeistung(HjArt.GesErg));
         lineCount++;
       }
+      foreach (HjLeistung fr in schueler.Fachreferat)
+      {        
+        dataGridNoten.Rows.Add();
+        dataGridNoten.Rows[lineCount].Height += 2;
+        dataGridNoten.Rows[lineCount].Cells[0].Value = "Fachreferat in " + fr.getFach.Bezeichnung;
+        FillCell(dataGridNoten.Rows[lineCount].Cells[12], fr);
+        FillCell(dataGridNoten.Rows[lineCount].Cells[17], fr);
+        lineCount++;
+      }
     }
 
     private void SetBackgroundColor(HjLeistung hj, DataGridViewCell cell)

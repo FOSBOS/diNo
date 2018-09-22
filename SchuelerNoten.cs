@@ -408,6 +408,10 @@ namespace diNo
           foreach (var hjR in hjDT)
           {                
             hjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
+            if ((HjArt)hjR.Art == HjArt.FR)
+            {
+              schueler.Fachreferat.Add(hjLeistung[(int)(hjR.Art)]);              
+            }
           }
 
           if (schueler.hatVorHj) // suche 11. Klassnoten
@@ -554,6 +558,7 @@ namespace diNo
 
     private string NotenString(IList<int>noten, string bez="")
     {
+      if (noten == null) return ""; // tritt bei Fach ohne Kurs auf (z.B. Fpa)
       string s="";
       foreach (var note in noten)
       {        

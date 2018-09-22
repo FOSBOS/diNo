@@ -22,6 +22,7 @@ namespace diNo
     private diNoDataSet.SeminarfachnoteRow seminar;
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
     public Zweig Zweig;
+    public List<HjLeistung> Fachreferat = new List<HjLeistung>(); // sollte i.d.R. nur einelementig sein, aber wegen irrtümlicher Doppelvergabe
 
     public Schueler(int id)
     {
