@@ -111,7 +111,7 @@ namespace diNo
     public IList<NotenDruck> SchuelerNotenDruck(Bericht rptName)
     {
       IList<NotenDruck> liste = new List<NotenDruck>();      
-      foreach (FachSchuelerNoten f in alleKurse)
+      foreach (FachSchuelerNoten f in alleFaecher)
       {               
         liste.Add(NotenDruck.CreateNotenDruck(f,rptName));
       }

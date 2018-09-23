@@ -473,7 +473,7 @@ namespace diNo
     // Liefert die erste Note einer Notenliste (v.a. bei einelementigen Noten, wie SAP,...)
     protected string getFirst(IList<int> n)
     {
-      if (n.Count > 0)
+      if (n!=null && n.Count > 0)
         return n[0].ToString();
       else
         return "";

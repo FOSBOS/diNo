@@ -67,7 +67,7 @@ namespace diNo
       rptTyp = b;
       rptName = SchuelerDruck.GetBerichtsname(b);
       if ((b == Bericht.Notenbogen || b == Bericht.Notenmitteilung || b == Bericht.Abiergebnisse)
-            && dataSource[0].getKlasse.Jahrgangsstufe > Jahrgangsstufe.Elf)
+            && dataSource[0].getKlasse.AlteFOBOSO())
       {
         rptName += "Alt"; // für diese Typen müssen noch Bericht nach alter FOBOSO verwendet werden.
       }
