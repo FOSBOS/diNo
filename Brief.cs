@@ -195,7 +195,8 @@ namespace diNo
       try
       {
         string verz = Directory.GetCurrentDirectory();
-        verz = verz.Substring(0,verz.IndexOf("bin\\")) + "Logo\\Logo.png";
+        string ordner = (verz.IndexOf("bin\\") > 0) ? verz.Substring(0, verz.IndexOf("bin\\")) : verz;
+        verz = ordner + "Logo\\Logo.png";
         Logo = ConvertImageToBase64(Image.FromFile(verz), ImageFormat.Png);
       }
       catch

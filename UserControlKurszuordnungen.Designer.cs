@@ -43,6 +43,8 @@
       this.label5 = new System.Windows.Forms.Label();
       this.textBoxReliOderEthik = new System.Windows.Forms.TextBox();
       this.label6 = new System.Windows.Forms.Label();
+      this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView2)).BeginInit();
       this.SuspendLayout();
@@ -59,7 +61,7 @@
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(257, 52);
+      this.label3.Location = new System.Drawing.Point(325, 52);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(168, 13);
       this.label3.TabIndex = 3;
@@ -69,12 +71,14 @@
       // 
       this.objectListView1.AllColumns.Add(this.olvColumnCurrentId);
       this.objectListView1.AllColumns.Add(this.olvColumnCurrentBezeichnung);
+      this.objectListView1.AllColumns.Add(this.olvColumn4);
       this.objectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnCurrentId,
-            this.olvColumnCurrentBezeichnung});
+            this.olvColumnCurrentBezeichnung,
+            this.olvColumn4});
       this.objectListView1.Location = new System.Drawing.Point(20, 68);
       this.objectListView1.Name = "objectListView1";
-      this.objectListView1.Size = new System.Drawing.Size(210, 270);
+      this.objectListView1.Size = new System.Drawing.Size(271, 270);
       this.objectListView1.TabIndex = 4;
       this.objectListView1.UseCompatibleStateImageBehavior = false;
       this.objectListView1.View = System.Windows.Forms.View.Details;
@@ -99,12 +103,14 @@
       // 
       this.objectListView2.AllColumns.Add(this.olvColumn1);
       this.objectListView2.AllColumns.Add(this.olvColumn2);
+      this.objectListView2.AllColumns.Add(this.olvColumn3);
       this.objectListView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn1,
-            this.olvColumn2});
-      this.objectListView2.Location = new System.Drawing.Point(260, 68);
+            this.olvColumn2,
+            this.olvColumn3});
+      this.objectListView2.Location = new System.Drawing.Point(328, 68);
       this.objectListView2.Name = "objectListView2";
-      this.objectListView2.Size = new System.Drawing.Size(210, 270);
+      this.objectListView2.Size = new System.Drawing.Size(270, 270);
       this.objectListView2.TabIndex = 5;
       this.objectListView2.UseCompatibleStateImageBehavior = false;
       this.objectListView2.View = System.Windows.Forms.View.Details;
@@ -128,7 +134,7 @@
       // textBoxWahlpflichtfach
       // 
       this.textBoxWahlpflichtfach.Enabled = false;
-      this.textBoxWahlpflichtfach.Location = new System.Drawing.Point(498, 68);
+      this.textBoxWahlpflichtfach.Location = new System.Drawing.Point(630, 68);
       this.textBoxWahlpflichtfach.Name = "textBoxWahlpflichtfach";
       this.textBoxWahlpflichtfach.Size = new System.Drawing.Size(78, 20);
       this.textBoxWahlpflichtfach.TabIndex = 6;
@@ -136,7 +142,7 @@
       // label1
       // 
       this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(495, 52);
+      this.label1.Location = new System.Drawing.Point(627, 52);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(81, 13);
       this.label1.TabIndex = 7;
@@ -145,7 +151,7 @@
       // label4
       // 
       this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(495, 96);
+      this.label4.Location = new System.Drawing.Point(627, 96);
       this.label4.Name = "label4";
       this.label4.Size = new System.Drawing.Size(80, 13);
       this.label4.TabIndex = 9;
@@ -154,7 +160,7 @@
       // textBoxFremdsprache2
       // 
       this.textBoxFremdsprache2.Enabled = false;
-      this.textBoxFremdsprache2.Location = new System.Drawing.Point(498, 112);
+      this.textBoxFremdsprache2.Location = new System.Drawing.Point(630, 112);
       this.textBoxFremdsprache2.Name = "textBoxFremdsprache2";
       this.textBoxFremdsprache2.Size = new System.Drawing.Size(78, 20);
       this.textBoxFremdsprache2.TabIndex = 8;
@@ -162,7 +168,7 @@
       // label5
       // 
       this.label5.AutoSize = true;
-      this.label5.Location = new System.Drawing.Point(495, 145);
+      this.label5.Location = new System.Drawing.Point(627, 145);
       this.label5.Name = "label5";
       this.label5.Size = new System.Drawing.Size(94, 13);
       this.label5.TabIndex = 11;
@@ -171,7 +177,7 @@
       // textBoxReliOderEthik
       // 
       this.textBoxReliOderEthik.Enabled = false;
-      this.textBoxReliOderEthik.Location = new System.Drawing.Point(498, 161);
+      this.textBoxReliOderEthik.Location = new System.Drawing.Point(630, 161);
       this.textBoxReliOderEthik.Name = "textBoxReliOderEthik";
       this.textBoxReliOderEthik.Size = new System.Drawing.Size(78, 20);
       this.textBoxReliOderEthik.TabIndex = 10;
@@ -185,6 +191,16 @@
       this.label6.Size = new System.Drawing.Size(508, 17);
       this.label6.TabIndex = 12;
       this.label6.Text = "Um Kurse hinzuzufügen oder wegzunehmen auf die Kursnummer doppelclicken";
+      // 
+      // olvColumn3
+      // 
+      this.olvColumn3.AspectName = "Kursbezeichnung";
+      this.olvColumn3.Text = "Bezeichnung2";
+      // 
+      // olvColumn4
+      // 
+      this.olvColumn4.AspectName = "Kursbezeichnung";
+      this.olvColumn4.Text = "Bezeichnung2";
       // 
       // UserControlKurszuordnungen
       // 
@@ -227,5 +243,7 @@
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.TextBox textBoxReliOderEthik;
     private System.Windows.Forms.Label label6;
+    private BrightIdeasSoftware.OLVColumn olvColumn3;
+    private BrightIdeasSoftware.OLVColumn olvColumn4;
   }
 }
