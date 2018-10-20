@@ -216,7 +216,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!Jg.Value</Value>
+                                  <Value>=Parameters!JgKurz.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -363,7 +363,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!Jg.Value</Value>
+                                  <Value>=Parameters!JgKurz.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -403,7 +403,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Parameters!Jg.Value</Value>
+                                  <Value>=Parameters!JgKurz.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -1152,17 +1152,17 @@
                 </TablixMember>
                 <TablixMember>
                   <Visibility>
-                    <Hidden>=Parameters!HideHj2.Value</Hidden>
+                    <Hidden>=Parameters!HideAbi.Value</Hidden>
                   </Visibility>
                 </TablixMember>
                 <TablixMember>
                   <Visibility>
-                    <Hidden>=Parameters!HideHj2.Value</Hidden>
+                    <Hidden>=Parameters!HideAbi.Value</Hidden>
                   </Visibility>
                 </TablixMember>
                 <TablixMember>
                   <Visibility>
-                    <Hidden>=Parameters!HideHj2.Value</Hidden>
+                    <Hidden>=Parameters!HideAbi.Value</Hidden>
                   </Visibility>
                 </TablixMember>
                 <TablixMember>
@@ -1276,7 +1276,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>SA=Schulaufgaben, sL=sonstige Leistungen, G=Gesamtschnitt aller Noten des Halbjahres, Hj=Halbjahresleistung, JN=Jahresnote</Value>
+                    <Value>SA=Schulaufgaben, sL=sonstige Leistungen, G=Gesamtschnitt aller Noten des Halbjahres, */1 und */2=Halbjahresleistung, JN=Jahresnote</Value>
                     <Style>
                       <FontSize>7pt</FontSize>
                     </Style>
@@ -1358,11 +1358,19 @@
       <DataType>Boolean</DataType>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
+    <ReportParameter Name="HideAbi">
+      <DataType>Boolean</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="JgKurz">
+      <DataType>String</DataType>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
   </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>2</NumberOfColumns>
-      <NumberOfRows>2</NumberOfRows>
+      <NumberOfRows>3</NumberOfRows>
       <CellDefinitions>
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
@@ -1383,6 +1391,16 @@
           <ColumnIndex>1</ColumnIndex>
           <RowIndex>1</RowIndex>
           <ParameterName>HideVorHj</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>HideAbi</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>1</ColumnIndex>
+          <RowIndex>2</RowIndex>
+          <ParameterName>JgKurz</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

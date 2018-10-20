@@ -264,11 +264,26 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Subreport Name="subrptNotenSj">
-                      <ReportName>subrptNotenSj</ReportName>
+                    <Subreport Name="subrptNoten">
+                      <ReportName>subrptNoten</ReportName>
                       <Parameters>
                         <Parameter Name="SId">
                           <Value>=Fields!Id.Value</Value>
+                        </Parameter>
+                        <Parameter Name="Jg">
+                          <Value>=Fields!jg.Value</Value>
+                        </Parameter>
+                        <Parameter Name="HideHj2">
+                          <Value>=Fields!HideHj2.Value</Value>
+                        </Parameter>
+                        <Parameter Name="HideVorHj">
+                          <Value>=Fields!HideVorHj.Value</Value>
+                        </Parameter>
+                        <Parameter Name="HideAbi">
+                          <Value>=Fields!HideAbi.Value</Value>
+                        </Parameter>
+                        <Parameter Name="JgKurz">
+                          <Value>=Fields!JgKurz.Value</Value>
                         </Parameter>
                       </Parameters>
                       <Style>
@@ -397,9 +412,29 @@
           <DataField>FPAText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="HideAbi">
+          <DataField>HideAbi</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="HideHj2">
+          <DataField>HideHj2</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="HideVorHj">
+          <DataField>HideVorHj</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
         <Field Name="Id">
           <DataField>Id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="jg">
+          <DataField>jg</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
+        </Field>
+        <Field Name="JgKurz">
+          <DataField>JgKurz</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Klasse">
           <DataField>Klasse</DataField>
@@ -407,6 +442,10 @@
         </Field>
         <Field Name="Klassenleiter">
           <DataField>Klassenleiter</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KlassenleiterText">
+          <DataField>KlassenleiterText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Nachname">

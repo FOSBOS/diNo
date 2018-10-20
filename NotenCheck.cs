@@ -96,7 +96,13 @@ namespace diNo
       if (anz == 0)
         contr.Add(null,"Es ist keine Note für das Fachreferat vorhanden.");
       else if (anz > 1)
-        contr.Add( null, "Es sind " + anz + " Noten für das Fachreferat vorhanden.");
+      {
+        string s="";
+        foreach (var hj in schueler.Fachreferat)
+          s += hj.getFach.Kuerzel + " ";
+
+        contr.Add(null, "Es sind " + anz + " Noten für das Fachreferat vorhanden; Fächer: " + s);
+      }        
     }
   }
 
@@ -131,20 +137,25 @@ namespace diNo
 
       if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
       {
-          if (fpa1.IsGesamtNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
-          else if (fpa1.Gesamt < 4)
-          {
-              contr.Add(null, "<b>Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.</b>");
-          }
+        if (fpa1.IsGesamtNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
+        else if (fpa1.Gesamt < 4)
+        {
+            contr.Add(null, "<b>Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.</b>");
+        }
+        if (fpa1.IsStelleNull())
+          contr.Add(null, "Die FpA-Stelle ist nicht angegeben.");
       }            
       else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
       {
-          if (fpa1.IsGesamtNull() || fpa2.IsGesamtNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
-          else if (fpa1.Gesamt < 4 || fpa2.Gesamt < 4 || fpa1.Gesamt+fpa2.Gesamt < 10)
-          {
-              contr.Add(null, "<b>Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.</b>");
-          }
-      }           
+        if (fpa1.IsGesamtNull() || fpa2.IsGesamtNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
+        else if (fpa1.Gesamt < 4 || fpa2.Gesamt < 4 || fpa1.Gesamt+fpa2.Gesamt < 10)
+        {
+            contr.Add(null, "<b>Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.</b>");
+        }
+        if (fpa2.IsStelleNull())
+          contr.Add(null, "Die FpA-Stelle ist nicht angegeben.");
+
+      }
     }
   }
 

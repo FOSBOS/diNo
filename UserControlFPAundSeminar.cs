@@ -179,7 +179,7 @@ namespace diNo
       var fpANoten = schueler.FPANoten;
       SaveFPAHj(fpANoten[0], numBetrieb1, numAnleitung1, numVertiefung11, numVertiefung21, numVertiefung1, numGesamt1, edStelle1, edBemerkung1);
       SaveFPAHj(fpANoten[1], numBetrieb2, numAnleitung2, numVertiefung12, numVertiefung22, numVertiefung2, numGesamt2, edStelle2, edBemerkung2);
-      schueler.calcFPA();
+      FPA.Save(schueler.FPANoten,schueler.Zweig);      
       schueler.Save();
       FillFPA();
     }

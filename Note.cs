@@ -34,7 +34,7 @@ namespace diNo
         /// <summary>
         /// Fachreferat.
         /// </summary>
-        Fachreferat = 5,
+        Fachreferat = 5, // TODO: 5-7 raus, wenn AlteFOBOSO raus
         /// <summary>
         /// Seminararfach.
         /// </summary>

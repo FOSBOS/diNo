@@ -259,7 +259,7 @@ namespace diNo
             Note dieSAPNote = SucheAPNote(ta, sid, kurs.Id, Notentyp.APSchriftlich);
             if (dieSAPNote != null && dieSAPNote.Punktwert != sapNote)
             {
-              hinweise.Add("SchülerId " + sid + ": Die Note aus der schriftlichen Abschlussprüfung (" + sapNote + ") stimmt nicht mit der Datenbank (" + dieSAPNote.Punktwert + ") überein. Prüfen Sie Ihre Noten bzw. wenden Sie sich an den Administrator!");
+              hinweise.Add(sid + ": Die Punktzahl der SAP wurde verändert (alt: " + dieSAPNote.Punktwert + ", neu: " + sapNote + ").");              
             }
           }
 
@@ -306,30 +306,52 @@ namespace diNo
     /// <param name="jg">Die Jahrgangsstufe des Schülers.</param>
     private void PruefeAlteNoten(int i, HjLeistungTableAdapter ada, int sid, Jahrgangsstufe jg)
     {
-      byte? zeugnisnoteHJ1 = xls.ReadNote("O" + i, xls.notenbogen);
-      if (zeugnisnoteHJ1 != null)
+      Schueler s = Zugriff.Instance.SchuelerRep.Find(sid);
+      if ((Zeitpunkt)Zugriff.Instance.aktZeitpunkt > Zeitpunkt.HalbjahrUndProbezeitFOS)
       {
-        // Prüfe, ob die Gesamtnote aus dem ersten Halbjahr unverändert ist
-        HjLeistung hjNote1 = FindHjLeistung(sid, ada, HjArt.Hj1, jg);
-        if (hjNote1 != null && hjNote1.Punkte != zeugnisnoteHJ1)
+        byte? zeugnisnoteHJ1 = xls.ReadNote("O" + i, xls.notenbogen);
+        if (zeugnisnoteHJ1 != null)
         {
-          hinweise.Add("SchülerId " + sid + ": Die Note aus dem ersten Halbjahr (" + zeugnisnoteHJ1 + ") stimmt nicht mit der Datenbank (" + hjNote1.Punkte + ") überein. Prüfen Sie Ihre Noten bzw. wenden Sie sich an den Administrator!");
+          // Prüfe, ob die Gesamtnote aus dem ersten Halbjahr unverändert ist          
+          HjLeistung hjNote1 = FindHjLeistung(sid, ada, HjArt.Hj1, jg);
+          if (hjNote1 != null && hjNote1.Punkte != zeugnisnoteHJ1)
+          {            
+            hinweise.Add(s.NameVorname + ": Die Punktzahl im 1. Halbjahr wurde verändert (alt: " + hjNote1.Punkte + ", neu: "+ zeugnisnoteHJ1 + ").");
+          }
         }
       }
-
-      if ((Zeitpunkt)Zugriff.Instance.aktZeitpunkt > Zeitpunkt.ErstePA)
+      
+      if ((Zeitpunkt)Zugriff.Instance.aktZeitpunkt > Zeitpunkt.ErstePA && (int)s.getKlasse.Jahrgangsstufe > 11)
       {
         // prüfe, ob sich die Noten des zweiten Halbjahres noch im richtigen Zustand befinden
+        // TODO: Gibt Französisch später noch Noten ein?
         byte? zeugnisnoteHJ2 = xls.ReadNote("O" + i, xls.notenbogen2);
         if (zeugnisnoteHJ2 != null)
         {
           HjLeistung hjNote2 = FindHjLeistung(sid, ada, HjArt.Hj2, jg);
           if (hjNote2 != null && hjNote2.Punkte != zeugnisnoteHJ2)
-          {
-            hinweise.Add("SchülerId " + sid + ": Die Note aus dem zweiten Halbjahr (" + zeugnisnoteHJ2 + ") stimmt nicht mit der Datenbank (" + hjNote2.Punkte + ") überein. Prüfen Sie Ihre Noten bzw. wenden Sie sich an den Administrator!");
+          {            
+            hinweise.Add(s.NameVorname + ": Die Punktzahl im 2. Halbjahr wurde verändert (alt: " + hjNote2.Punkte + ", neu: " + zeugnisnoteHJ2 + ").");
           }
         }
       }
+
+      /*
+      if ((Zeitpunkt)Zugriff.Instance.aktZeitpunkt > Zeitpunkt.ZweitePA && (int)s.getKlasse.Jahrgangsstufe > 11)
+      {
+        // prüfe, ob sich die Noten der schriftlichen AP noch im richtigen Zustand befinden
+        byte? SAPxls = xls.ReadNote("G" + i, xls.AP);
+        if (SAPxls != null)
+        {
+          byte? SAPdb = s.getNoten.FindeFach() kursid;
+
+          if (SAPdb != null && SAPdb != SAPxls)
+          {
+            hinweise.Add(s.NameVorname + ": Die Punktzahl der SAP wurde verändert (alt: " + SAPdb + ", neu: " + SAPxls + ").");
+          }
+        }
+      }
+      */
     }
 
     /// <summary>
@@ -597,17 +619,7 @@ namespace diNo
 
           // Nur wenn einer der Schnitte feststeht, wird diese Schnittkonstellation gespeichert
           if (bnote.SchnittMuendlich != null || bnote. SchnittSchulaufgaben != null)
-            bnote.writeToDB();
-
-          if ((kurs.Id == 128 || kurs.Id == 129) && !(new Schueler(sid).getKlasse.AlteFOBOSO()) && bnote.JahresfortgangGanzzahlig != null)
-          {
-            // Sport Integrationsvorklasse
-            HjLeistung l = FindOrCreateHjLeistung(sid, new HjLeistungTableAdapter(), (hj == Halbjahr.Erstes) ? HjArt.Hj1 : HjArt.Hj2);
-            l.Punkte = (byte)bnote.JahresfortgangGanzzahlig;
-            l.Punkte2Dez = bnote.JahresfortgangMitKomma;
-            l.SchnittMdl = bnote.SchnittMuendlich;
-            l.WriteToDB();
-          }
+            bnote.writeToDB();        
         }
          
         i += 2;

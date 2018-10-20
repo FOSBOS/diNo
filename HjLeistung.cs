@@ -85,12 +85,10 @@ namespace diNo
   {
     Hj1 = 0, // aktuelles Sj./1
     Hj2 = 1, // aktuelles Sj./2
-    FR = 2, // Fachreferat
+    JN = 2, // Jahresnote (stammt aus Excel und gibt unabhängig von den eingebrachten Leistungen den Durchschnitt von Hj1/2 an)    
     AP = 3,  // Abschlussprüfung-Gesamt
-    GesErg = 4, // Gesamtergebnis
-    VorHj1 = 5, // ggf. für 11/1  ACHTUNG: TODO: Erst zum Jahreswechsel löschen, sonst passen die Arraydimensionen nicht mehr!
-    VorHj2 = 6, // ggf. für 11/2
-    JN = 7 // Jahresnote (stammt aus Excel und gibt unabhängig von den eingebrachten Leistungen den Durchschnitt von Hj1/2 an)
+    GesErg = 4, // Gesamtergebnis 
+    FR = 5
   }
 
   public enum HjStatus

@@ -1,30 +1,12 @@
 ﻿todos für diNo
 --------------
 
-- Sport-IV-Hack wieder entfernen zum neuen Schuljahr (muss dringend gemacht werden :-))
-
-- Import/Export neuer FPA-Noten fehlt. Noch zu klären: Brauchen wir da die Teilnoten auch oder reicht Gesamtbewertung?
-  --> alte SO (nur Sj. 17/18 die 12. Klassen): verwende Tabelle Fpa12alt
-  --> neue SO: wir verwalten diese ganz normal als Hj-Leistung
-
-- Import/Export der Halbjahresleistungen
-  --> was geschieht mit Halbjahresleistungen von Wiederholern?
-  --> Beim Rücktritt in eine Vorklasse müssen die Halbjahresleistungen aus der 11ten FOS bzw. 12ten BOS gelöscht werden
-      (bei den dieses Jahr schon zurückgetretenen muss ich das noch manuell nachholen (betrifft HJ 1 aus FOS11 bei Rücktritt in FVk)
-
 - Umgang mit Legasthenikern in neuer SchO nachlesen und ggf. programmieren
 
 - neue Notendatei
-  --> testen
-  --> Import der neuen Notendatei (Kurzarbeits-Reiter, Zellen anpassen)
-  --> Einlesen der Abschlussprüfung fehlt noch völlig
-  --> evtl. Zurückspielen der eingebrachten Halbjahre nach der ersten PA möglich
+  --> Schriftgröße für Gewicht kleiner, so dass 0,5 möglich sit
 
 - Statistiken ?
    --> die letzten zwei Punkte sind N2H, die wir programmieren, wenn sonst alles läuft und uns nix besseres einfällt. ;-)
-
-- Anzeige der Halbjahresleistungen und evtl. manuelle Wahl eingebrachter Halbjahre (?!)
-
-- Erstellen eines Vorschlages zur Einbringung von Halbjahresleistungen
 
 - neue Vorrücken- und Bestehensregeln

@@ -17,7 +17,8 @@ namespace diNo
     /// </summary>
     private static char SeparatorChar = ';';
     private static string Separator = "" + SeparatorChar;
-    private static string FpAKennzeichen = "FpA";
+    private static string FpAKennzeichen = "FpA-Teilnoten";
+    private static string FpAKuerzel = "FpA";
 
     /// <summary>
     /// Methode exportiert alle Noten in eine csv-Datei
@@ -67,6 +68,8 @@ namespace diNo
               {
                 // Erzeugt eine Zeile mit mind. 12 durch ; getrennten Werten (kann mehr sein, falls in der Bemerkung auch ;e enthalten sind)
                 writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + FpAKennzeichen + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Halbjahr + Separator + jahresPunkte + Separator + fpaZeile.Vertiefung + Separator + vertiefung1 + Separator + vertiefung2 + Separator + fpaZeile.Anleitung + Separator + fpaZeile.Betrieb + Separator + stelle + Separator + bemerkung);
+                // dasselbe als Hj-Leistung abspeichern:
+                writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + FpAKuerzel + Separator + "11" + Separator + fpaZeile.Gesamt + Separator + "" + Separator + "" + Separator + fpaZeile.Halbjahr + Separator + 0);
               }
             }
           }

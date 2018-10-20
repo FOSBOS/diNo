@@ -153,7 +153,7 @@ namespace diNo
       bool c = chkShowHj2.Checked || chkShowAbi.Checked || !chkShowHj1.Checked && !chkShowHj2.Checked & !chkShowAbi.Checked;
       dataGridNoten.Columns[12].Visible = c; // 2. Hj
       dataGridNoten.Columns[16].Visible = c; // Jahresnote
-      dataGridNoten.Columns[17].Visible = chkShowAbi.Checked || !chkShowHj1.Checked && !chkShowHj2.Checked & !chkShowAbi.Checked; // GE
+      dataGridNoten.Columns[17].Visible = c; // GE
     }
 
     private void setStatus(HjStatus status)

@@ -47,11 +47,16 @@ namespace diNo
 
     public bool HideHj2 { get; private set; } // wird als Parameter an den Unterbericht gereicht
     public bool HideVorHj { get; private set; }
+    public bool HideAbi { get; private set; }
     public byte jg { get; private set; }
+    public string JgKurz { get; private set; }
 
     public SchuelerDruck(Schueler s, Bericht Berichtsname)
     {
       jg = (byte)s.getKlasse.Jahrgangsstufe;
+      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.IntVk) JgKurz = "IV";
+      else if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse) JgKurz = "Vk";
+      else JgKurz = jg.ToString();
 
       Id = s.Id;//.ToString();
       Nachname = s.Name;
@@ -73,6 +78,7 @@ namespace diNo
 
       HideHj2 = Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes;
       HideVorHj = !(jg == 12 && s.Data.Schulart == "F"); // nur bei F12 anzeigen
+      HideAbi = jg < 12 || Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.ErstePA;
     }
 
     public static string GetBerichtsname(Bericht b)
@@ -194,8 +200,7 @@ namespace diNo
   public class ZeugnisDruck : SchuelerDruck
   {
     public string KlasseAR { get; private set; }
-    public string GeborenInAm { get; private set; }
-    public string JgKurz { get; private set; }
+    public string GeborenInAm { get; private set; }    
     public string ZeugnisArt { get; private set; }
     public string DatumZeugnis { get; private set; }
     public string Schulleiter { get; private set; }
@@ -208,10 +213,6 @@ namespace diNo
 
     public ZeugnisDruck(Schueler s, Bericht b, UnterschriftZeugnis u) : base(s, b)
     {
-      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.IntVk) JgKurz = "IV";
-      else if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse) JgKurz = "VKL";
-      else JgKurz = ((int)s.getKlasse.Jahrgangsstufe).ToString();
-
       if (b == Bericht.Bescheinigung) ZeugnisArt = "Bescheinigung";
       else if (b == Bericht.Zwischenzeugnis) ZeugnisArt = "Zwischenzeugnis";
       else /*if (b == Bericht.Jahreszeugnis)*/ ZeugnisArt = "Jahreszeugnis";
@@ -420,6 +421,7 @@ namespace diNo
     public string fachBez { get; protected set; }
     public string Hj1 { get; protected set; }  // Halbjahrespunktzahl 1.Hj
     public string Hj2 { get; protected set; }
+    public string GE { get; private set; } // Gesamtergebnis
     protected HjLeistung hj1, hj2;
 
     public string VorHj1 { get; private set; }  // 11/1 und 11/2
@@ -447,16 +449,29 @@ namespace diNo
       {
         VorHj1 = putHj(s.getVorHjLeistung(HjArt.Hj1));
         VorHj2 = putHj(s.getVorHjLeistung(HjArt.Hj2));
-      }
+      }          
+      GE = putHj(s.getHjLeistung(HjArt.GesErg));
     }
+
+    // aktuell nur für Fachreferat
+    public NotenDruck(HjLeistung h)
+    {
+      if (h.Art == HjArt.FR)
+        fachBez = "Fachreferat  in " + h.getFach.Bezeichnung;
+      else
+        fachBez = h.getFach.Bezeichnung;
+
+      Hj2 = h.Punkte.ToString();
+      GE = h.Punkte.ToString();
+    }
+    
 
     public static NotenDruck CreateNotenDruck(FachSchuelerNoten s, Bericht b)
     {
       if (b == Bericht.Abiergebnisse) return new NotenAbiDruck(s);
-      if (b == Bericht.Notenmitteilung || (byte)s.schueler.getKlasse.Jahrgangsstufe < 12) return new NotenSjDruck(s);
+      if (b == Bericht.Notenbogen && (byte)s.schueler.getKlasse.Jahrgangsstufe < 12) return new NotenSjDruck(s);
       return new NotenHjDruck(s);
     }
-
 
     protected string putHj(FachSchuelerNoten s, HjArt a)
     {
@@ -478,6 +493,19 @@ namespace diNo
       else
         return "";
     }
+
+    protected string putFpa(diNoDataSet.FpaRow t, out string sL)
+    {
+      sL = "";
+      if (t == null) return "";
+      if (!t.IsBetriebNull()) sL = t.Betrieb.ToString() + "B ";
+      if (!t.IsVertiefungNull()) sL += t.Vertiefung.ToString() + "V ";
+      if (!t.IsVertiefung1Null() && !t.IsVertiefung2Null())
+        sL += "(" + t.Vertiefung1.ToString() + " " + t.Vertiefung2.ToString() + ") ";
+      if (!t.IsAnleitungNull()) sL += t.Anleitung.ToString() + "A";
+
+      if (!t.IsGesamtNull()) return t.Gesamt.ToString(); else return "";
+    }
   }
 
   // Alle Noten eines Halbjahres (z.B. für Notenbogen)
@@ -488,11 +516,10 @@ namespace diNo
     public string SsL { get; private set; }  // Schnitt mdl. 1. Hj.
     public string S { get; private set; }   // Schnitt 1. Hj.
     public string JN { get; private set; } // Jahresnote
-    public string FR { get; private set; } // Fachreferat
+    public string FR { get; private set; } // Fachreferat (leer) TODO: raus
     public string SAP { get; private set; }
     public string MAP { get; private set; }
     public string APG { get; private set; }
-    public string GE { get; private set; } // Gesamtergebnis
 
     public NotenHjDruck(FachSchuelerNoten s) : base(s, Bericht.Notenbogen)
     {
@@ -507,12 +534,24 @@ namespace diNo
         S = hj.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj.Punkte2Dez);
       }
       JN = putHj(s, HjArt.JN);
-      FR = putHj(s, HjArt.FR);
       SAP = getFirst(s.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich));
       MAP = getFirst(s.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich));
       APG = putHj(s, HjArt.AP);
-      GE = putHj(s, HjArt.GesErg);
     }
+
+    public NotenHjDruck(HjLeistung h) : base(h)
+    {
+    }
+
+    public NotenHjDruck(diNoDataSet.FpaDataTable f)
+    {
+      fachBez = "Fachpraktische Ausbildung";      
+      Hj1 = putFpa(f[0], out string s1);      
+      Hj2 = putFpa(f[1], out string s2);      
+      if (Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes) sL = s1; else sL = s2;
+      if (f[1] != null && !f[1].IsJahrespunkteNull()) JN = f[1].Jahrespunkte.ToString();
+    }
+
   }
 
   // Alle Noten des Schuljahres (z.B. für Notenmitteilung)
@@ -546,9 +585,18 @@ namespace diNo
         SsL2 = hj2.SchnittMdl == null ? "" : String.Format("{0:f2}", hj2.SchnittMdl);
         S2 = hj2.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj2.Punkte2Dez);
       }
-      JN = putHj(s, HjArt.JN);
-      FR = putHj(s, HjArt.FR);
+      JN = putHj(s, HjArt.JN);      
     }
+
+    public NotenSjDruck(diNoDataSet.FpaDataTable f)
+    {      
+      fachBez = "Fachpraktische Ausbildung";      
+      Hj1 = putFpa(f[0],out string s1);
+      sL1 = s1;
+      Hj2 = putFpa(f[1], out string s2);
+      sL2 = s2;
+      if (f[1]!= null && !f[1].IsJahrespunkteNull()) JN = f[1].Jahrespunkte.ToString();      
+    }    
   }
 
   // Abiergebnisse
@@ -557,8 +605,7 @@ namespace diNo
     public string SAP { get; private set; }
     public string MAP { get; private set; }
     public string APG { get; private set; }
-    public string S { get; private set; } // Gesamtschnitt
-    public string GE { get; private set; } // Gesamtergebnis
+    public string S { get; private set; } // Gesamtschnitt    
     public string MAP1P { get; private set; }
     public string MAP4P { get; private set; }
 
@@ -570,8 +617,7 @@ namespace diNo
       var ge = s.getHjLeistung(HjArt.GesErg);
       if (ge != null)
       {
-        S = ge.Punkte2Dez == null ? "" : String.Format("{0:f2}", ge.Punkte2Dez);
-        GE = ge.Punkte.ToString();
+        S = ge.Punkte2Dez == null ? "" : String.Format("{0:f2}", ge.Punkte2Dez);        
       }
       //MAP4P = NotwendigeNoteInMAP(s,4);
       //MAP1P = NotwendigeNoteInMAP(s,1);

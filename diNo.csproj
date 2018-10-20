@@ -105,6 +105,7 @@
       <DependentUpon>Datenauswahl.cs</DependentUpon>
     </Compile>
     <Compile Include="DruckObjekte.cs" />
+    <Compile Include="FPA.cs" />
     <Compile Include="Globales.cs" />
     <Compile Include="HjLeistung.cs" />
     <Compile Include="ImportKlassenleiter.cs" />
@@ -381,7 +382,9 @@
     <None Include="Properties\DataSources\FPADruck.datasource" />
     <None Include="Properties\DataSources\Klasse.datasource" />
     <None Include="Properties\DataSources\LehrerRolleDruck.datasource" />
+    <None Include="Properties\DataSources\NotenbogenDruck.datasource" />
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />
+    <None Include="Properties\DataSources\NotenmitteilungDruck.datasource" />
     <None Include="Properties\DataSources\SchuelerDruck.datasource" />
     <None Include="Properties\DataSources\SchuljahrSchulartDruck.datasource" />
     <None Include="Properties\DataSources\SchullaufbahnDruck.datasource" />

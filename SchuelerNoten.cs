@@ -44,6 +44,16 @@ namespace diNo
             Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
             alleFaecher.Add(new FachSchuelerNoten(schueler, fach));
           }
+
+          // Fachreferat als eigenes Fach führen --> macht leider auch viele Probleme, deshalb erst mal so lassen
+          // (Sollte es mehrere FR geben, bleibt aber nur das letzte übrig, weil alle in denselben Index geschrieben werden).
+          /*
+          if (schueler.Fachreferat.Count>0)
+          {
+            alleFaecher.Add(new  FachSchuelerNoten(schueler, schueler.Fachreferat));  
+          }
+          */
+
           Zweig z = (schueler.AlteFOBOSO() ? Zweig.None : schueler.Zweig); // Profilfächer haben neue Sortierung
           alleFaecher.Sort((x,y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
           alleKurse.Sort((x,y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
@@ -115,6 +125,11 @@ namespace diNo
       {               
         liste.Add(NotenDruck.CreateNotenDruck(f,rptName));
       }
+      foreach (var f in schueler.Fachreferat)
+      {
+        liste.Add(new NotenHjDruck(f));
+      }
+
       /*
       if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Dreizehn)
       {
@@ -128,11 +143,13 @@ namespace diNo
       }
       */
       // FPA ausgeben für Notenmitteilung (im Notenbogen als Bemerkung)
-      /*if (rptName=="diNo.rptNotenmitteilung.rdlc" && schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
+      /*
+      if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
       {
-        liste.Add(new NotenDruck(schueler.FPANoten));
+        if (rptName == Bericht.Notenmitteilung) liste.Add(new NotenHjDruck(schueler.FPANoten));
+        else liste.Add(new NotenSjDruck(schueler.FPANoten));
       }*/
-      return liste;
+      return liste;      
     }
 
     public IList<NotenDruck> SchuelerNotenZeugnisDruck(Bericht rptName)
@@ -148,7 +165,10 @@ namespace diNo
         NotenZeugnisDruck f = new NotenZeugnisDruck(schueler.FPANoten);          
         liste.Add(f);
       }
-
+      foreach (var f in schueler.Fachreferat)
+      {
+        //liste.Add(new NotenDruck(f));
+      }
       return liste;
     }
      
@@ -380,49 +400,59 @@ namespace diNo
           LeseNotenAusDB();
         }
 
-        private void LeseNotenAusDB()
+    // HjLeistungen, die als eigenes Fach behandelt werden, aber aus andere Quelle kommen (FR, FpA, Seminar)
+    public FachSchuelerNoten(Schueler aschueler, List<HjLeistung> hjList)
+    {
+      fach = hjList[0].getFach;
+      foreach (var hj in hjList)
+      {
+        hjLeistung[(int)(hj.Art)] = hj;
+      }        
+    }
+
+    private void LeseNotenAusDB()
+    {
+      if (kursId>0)
+      { 
+        diNoDataSet.NoteDataTable notenDT;
+        notenDT = new NoteTableAdapter().GetDataBySchuelerAndKurs(schueler.Id, kursId);
+        foreach (var noteR in notenDT)
         {
-          if (kursId>0)
-          { 
-            diNoDataSet.NoteDataTable notenDT;
-            notenDT = new NoteTableAdapter().GetDataBySchuelerAndKurs(schueler.Id, kursId);
-            foreach (var noteR in notenDT)
-            {
-              noten[noteR.Halbjahr,noteR.Notenart].Add(noteR.Punktwert);
-            }
-
-            // Schnitte werden direkt gelesen
-            diNoDataSet.BerechneteNoteDataTable bnotenDT;
-            // liefert max. 2 Datensätze (einen für 1. und 2. Hj.), historische Stände werden nicht geliefert
-            bnotenDT = new BerechneteNoteTableAdapter().GetDataBySchuelerAndKurs(kursId, schueler.Id);
-            foreach (var bnoteR in bnotenDT)
-            {                
-              schnitte[(int)(bnoteR.ErstesHalbjahr ? Halbjahr.Erstes : Halbjahr.Zweites)] = 
-                        new BerechneteNote(kursId, schueler.Id, bnoteR);
-            }
-          }
-          // HjLeistungen          
-          // nur die HjLeistungen holen, die der aktuellen JgStufe entsprechen
-          int jg = (int)schueler.getKlasse.Jahrgangsstufe;
-          var hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id,getFach.Id).Where(x => x.JgStufe == jg);
-          foreach (var hjR in hjDT)
-          {                
-            hjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
-            if ((HjArt)hjR.Art == HjArt.FR)
-            {
-              schueler.Fachreferat.Add(hjLeistung[(int)(hjR.Art)]);              
-            }
-          }
-
-          if (schueler.hatVorHj) // suche 11. Klassnoten
-          {
-            hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == 11 && x.Art < 2);
-            foreach (var hjR in hjDT)
-            {
-              vorHjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
-            }
-          }
+          noten[noteR.Halbjahr,noteR.Notenart].Add(noteR.Punktwert);
         }
+
+        // Schnitte werden direkt gelesen
+        diNoDataSet.BerechneteNoteDataTable bnotenDT;
+        // liefert max. 2 Datensätze (einen für 1. und 2. Hj.), historische Stände werden nicht geliefert
+        bnotenDT = new BerechneteNoteTableAdapter().GetDataBySchuelerAndKurs(kursId, schueler.Id);
+        foreach (var bnoteR in bnotenDT)
+        {                
+          schnitte[(int)(bnoteR.ErstesHalbjahr ? Halbjahr.Erstes : Halbjahr.Zweites)] = 
+                    new BerechneteNote(kursId, schueler.Id, bnoteR);
+        }
+      }
+      // HjLeistungen          
+      // nur die HjLeistungen holen, die der aktuellen JgStufe entsprechen
+      int jg = (int)schueler.getKlasse.Jahrgangsstufe;
+      var hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id,getFach.Id).Where(x => x.JgStufe == jg);
+      foreach (var hjR in hjDT)
+      {                
+        hjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
+        if ((HjArt)hjR.Art == HjArt.FR)
+        {
+          schueler.Fachreferat.Add(hjLeistung[(int)(hjR.Art)]);              
+        }        
+      }
+
+      if (schueler.hatVorHj) // suche 11. Klassnoten
+      {
+        hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == 11 && x.Art < 2);
+        foreach (var hjR in hjDT)
+        {
+          vorHjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
+        }
+      }
+    }
 
         /// <summary>
         /// Liefert alle Noten eines Schülers in einem Fach von diesem Typ
