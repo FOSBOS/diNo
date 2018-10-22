@@ -194,9 +194,7 @@ namespace diNo
       Inhalt = s.ErzeugeAnrede(IstU18);
       try
       {
-        string verz = Directory.GetCurrentDirectory();
-        string ordner = (verz.IndexOf("bin\\") > 0) ? verz.Substring(0, verz.IndexOf("bin\\")) : verz;
-        verz = ordner + "Logo\\Logo.png";
+        string verz = Directory.GetCurrentDirectory() + "\\Logo\\Logo.png";
         Logo = ConvertImageToBase64(Image.FromFile(verz), ImageFormat.Png);
       }
       catch
