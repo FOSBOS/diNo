@@ -72,7 +72,7 @@ namespace diNo
 
     private void StarteNotenCheck()
     {                        
-      var contr = new NotenCheckController(GetZeitpunkt(),(NotenCheckModus)comboBoxCheckModus.SelectedValue);
+      var contr = new NotenCheckController(GetZeitpunkt(),(NotenCheckModus)comboBoxCheckModus.SelectedValue,progressBarChecks);
       progressBarChecks.Maximum = contr.AnzahlSchueler;
       if (contr.zuPruefendeKlassen.Count == 0)
       {
@@ -84,26 +84,18 @@ namespace diNo
       /*Partitioner.Create(0, contr.zuPruefendeKlassen.Count)
       Parallel.ForEach(contr.zuPruefendeKlassen, k => 
        {
-         foreach (var s in k.eigeneSchueler)
-         {
-           contr.CheckSchueler(s);           
-         }
-       });
+         contr.CheckKlasse(k);
+       }
+       );
        */
       
       foreach (var k in contr.zuPruefendeKlassen)
       {
         lbStatus.Text = "Prüfe Klasse " + k.Bezeichnung;
         Refresh(); // Formular aktualisieren
-        foreach (var s in k.eigeneSchueler)
-        {
-          contr.CheckSchueler(s);
-          progressBarChecks.Increment(1);
-          if (abbrechen) break;
-        }
+        contr.CheckKlasse(k);                      
       }
-                 
-      contr.CreateResults();
+                     
       Close();
       if (contr.res.list.Count==0)
         MessageBox.Show("Es traten keine Fehler auf.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);

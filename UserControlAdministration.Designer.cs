@@ -49,6 +49,7 @@
       this.btnCreateExcels = new System.Windows.Forms.Button();
       this.exportNoten = new System.Windows.Forms.Button();
       this.groupBoxImport = new System.Windows.Forms.GroupBox();
+      this.btnReadWahlpflichtfaecher = new System.Windows.Forms.Button();
       this.btnImportKlassenleiter = new System.Windows.Forms.Button();
       this.btnImportSchueler = new System.Windows.Forms.Button();
       this.btnImportUnterricht = new System.Windows.Forms.Button();
@@ -69,7 +70,8 @@
       this.btnSave = new System.Windows.Forms.Button();
       this.chkSperre = new System.Windows.Forms.CheckBox();
       this.lblStatus = new System.Windows.Forms.Label();
-      this.btnReadWahlpflichtfaecher = new System.Windows.Forms.Button();
+      this.btnHjLeistungenWuerfeln = new System.Windows.Forms.Button();
+      this.groupboxTest = new System.Windows.Forms.GroupBox();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -78,6 +80,7 @@
       this.groupBoxStammdaten.SuspendLayout();
       this.groupBoxEinstellungen.SuspendLayout();
       this.gbLeseModusExcel.SuspendLayout();
+      this.groupboxTest.SuspendLayout();
       this.SuspendLayout();
       // 
       // groupBoxAnalyse
@@ -315,6 +318,16 @@
       this.groupBoxImport.TabStop = false;
       this.groupBoxImport.Text = "Import";
       // 
+      // btnReadWahlpflichtfaecher
+      // 
+      this.btnReadWahlpflichtfaecher.Location = new System.Drawing.Point(6, 135);
+      this.btnReadWahlpflichtfaecher.Name = "btnReadWahlpflichtfaecher";
+      this.btnReadWahlpflichtfaecher.Size = new System.Drawing.Size(182, 23);
+      this.btnReadWahlpflichtfaecher.TabIndex = 7;
+      this.btnReadWahlpflichtfaecher.Text = "Wahlpflichtfächer aus Untis";
+      this.btnReadWahlpflichtfaecher.UseVisualStyleBackColor = true;
+      this.btnReadWahlpflichtfaecher.Click += new System.EventHandler(this.btnReadWahlpflichtfaecher_Click);
+      // 
       // btnImportKlassenleiter
       // 
       this.btnImportKlassenleiter.Location = new System.Drawing.Point(6, 106);
@@ -370,7 +383,7 @@
       // 
       // btnBerechtigungen
       // 
-      this.btnBerechtigungen.Location = new System.Drawing.Point(17, 179);
+      this.btnBerechtigungen.Location = new System.Drawing.Point(18, 153);
       this.btnBerechtigungen.Name = "btnBerechtigungen";
       this.btnBerechtigungen.Size = new System.Drawing.Size(163, 23);
       this.btnBerechtigungen.TabIndex = 5;
@@ -380,7 +393,7 @@
       // 
       // btnGlobales
       // 
-      this.btnGlobales.Location = new System.Drawing.Point(17, 135);
+      this.btnGlobales.Location = new System.Drawing.Point(18, 124);
       this.btnGlobales.Name = "btnGlobales";
       this.btnGlobales.Size = new System.Drawing.Size(163, 23);
       this.btnGlobales.TabIndex = 3;
@@ -528,20 +541,31 @@
       this.lblStatus.TabIndex = 7;
       this.lblStatus.Text = "Statusmeldung";
       // 
-      // btnReadWahlpflichtfaecher
+      // btnHjLeistungenWuerfeln
       // 
-      this.btnReadWahlpflichtfaecher.Location = new System.Drawing.Point(6, 135);
-      this.btnReadWahlpflichtfaecher.Name = "btnReadWahlpflichtfaecher";
-      this.btnReadWahlpflichtfaecher.Size = new System.Drawing.Size(182, 23);
-      this.btnReadWahlpflichtfaecher.TabIndex = 7;
-      this.btnReadWahlpflichtfaecher.Text = "Wahlpflichtfächer aus Untis";
-      this.btnReadWahlpflichtfaecher.UseVisualStyleBackColor = true;
-      this.btnReadWahlpflichtfaecher.Click += new System.EventHandler(this.btnReadWahlpflichtfaecher_Click);
+      this.btnHjLeistungenWuerfeln.Location = new System.Drawing.Point(15, 27);
+      this.btnHjLeistungenWuerfeln.Name = "btnHjLeistungenWuerfeln";
+      this.btnHjLeistungenWuerfeln.Size = new System.Drawing.Size(163, 23);
+      this.btnHjLeistungenWuerfeln.TabIndex = 6;
+      this.btnHjLeistungenWuerfeln.Text = "HjLeistungen würfeln";
+      this.btnHjLeistungenWuerfeln.UseVisualStyleBackColor = true;
+      this.btnHjLeistungenWuerfeln.Click += new System.EventHandler(this.btnHjLeistungenWuerfeln_Click);
+      // 
+      // groupboxTest
+      // 
+      this.groupboxTest.Controls.Add(this.btnHjLeistungenWuerfeln);
+      this.groupboxTest.Location = new System.Drawing.Point(781, 277);
+      this.groupboxTest.Name = "groupboxTest";
+      this.groupboxTest.Size = new System.Drawing.Size(198, 217);
+      this.groupboxTest.TabIndex = 8;
+      this.groupboxTest.TabStop = false;
+      this.groupboxTest.Text = "Testverfahren";
       // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.groupboxTest);
       this.Controls.Add(this.lblStatus);
       this.Controls.Add(this.groupBoxEinstellungen);
       this.Controls.Add(this.groupBoxStammdaten);
@@ -550,7 +574,7 @@
       this.Controls.Add(this.groupBoxAnalyse);
       this.Controls.Add(this.groupBoxDrucken);
       this.Name = "UserControlAdministration";
-      this.Size = new System.Drawing.Size(907, 530);
+      this.Size = new System.Drawing.Size(1039, 530);
       this.groupBoxAnalyse.ResumeLayout(false);
       this.groupBoxDrucken.ResumeLayout(false);
       this.groupBoxDrucken.PerformLayout();
@@ -563,6 +587,7 @@
       this.groupBoxEinstellungen.PerformLayout();
       this.gbLeseModusExcel.ResumeLayout(false);
       this.gbLeseModusExcel.PerformLayout();
+      this.groupboxTest.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -612,5 +637,7 @@
     private System.Windows.Forms.Button btnEinserAbi;
     private System.Windows.Forms.Button btnBerechtigungen;
     private System.Windows.Forms.Button btnReadWahlpflichtfaecher;
+    private System.Windows.Forms.Button btnHjLeistungenWuerfeln;
+    private System.Windows.Forms.GroupBox groupboxTest;
   }
 }

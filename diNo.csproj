@@ -140,6 +140,7 @@
     <Compile Include="Stammdaten.Designer.cs">
       <DependentUpon>Stammdaten.cs</DependentUpon>
     </Compile>
+    <Compile Include="Testdaten.cs" />
     <Compile Include="UserControlAdministration.cs">
       <SubType>UserControl</SubType>
     </Compile>

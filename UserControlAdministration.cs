@@ -251,5 +251,13 @@ namespace diNo
         WahlpflichtfachReader.Read(dia.FileName);
       }
     }
+
+    private void btnHjLeistungenWuerfeln_Click(object sender, EventArgs e)
+    {
+      var t = new Testdaten();
+      var obj = getSelectedObjects();
+      foreach (var s in obj)
+        t.ZufallHjLeistung(s);
+    }
   }
 }
