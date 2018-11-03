@@ -16,7 +16,6 @@ namespace diNo
 {
   public partial class NotenCheckForm : BasisForm
   {
-    private bool abbrechen = false;
     private Dictionary<NotenCheckModus,string> NotenCheckModusDict;    
 
     public NotenCheckForm()

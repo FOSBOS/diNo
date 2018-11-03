@@ -272,6 +272,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="rptLehrerRolle.rdlc" />
     <EmbeddedResource Include="rptEinserAbi.rdlc" />
+    <EmbeddedResource Include="rptAbiturzeugnis.rdlc" />
     <EmbeddedResource Include="rptZeugnis.rdlc" />
     <EmbeddedResource Include="rptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="rptKlassenliste.rdlc" />
@@ -285,6 +286,7 @@
       <DependentUpon>Stammdaten.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="subrptAbiergebnisseAlt.rdlc" />
+    <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptNoten.rdlc" />
     <EmbeddedResource Include="subrptNotenSjAlt.rdlc" />

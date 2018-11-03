@@ -13,11 +13,27 @@ namespace diNo
   {
     private Zeitpunkt zeitpunkt;
     private Schueler schueler;
+    public delegate void Aufgabe(Schueler s);
+    public List<Aufgabe> aufgaben; // speichert alle zu erledigenden Berechnungsaufgaben eines Schülers
+
     public Berechnungen(Zeitpunkt azeitpunkt)
     {
       zeitpunkt = azeitpunkt;
     }
 
+    /// <summary>
+    /// Führt alle Berechnungen, die in den Aufgaben vermerkt sind, für einen Schüler durch.
+    /// </summary>
+    public void BerechneSchueler(Schueler s)
+    {
+      schueler = s;
+      foreach (var a in aufgaben)
+      {
+        a(s);
+      }
+    }
+
+    /*
     public void BerechneSchueler(Schueler s)
     { 
       schueler = s;
@@ -30,12 +46,13 @@ namespace diNo
         s.Save();
       }
     }
+    */
 
     /// <summary>
     /// Methode macht einen Vorschlag zur Einbringung der Halbjahresleistungen eines Schülers.
     /// </summary>
     /// <param name="s">Der Schueler.</param>
-    public static void BerechneEinbringung(Schueler s)
+    public void BerechneEinbringung(Schueler s)
     {
       var sowiesoPflicht = new List<HjLeistung>();
       var einbringen = new List<HjLeistung>();
@@ -43,7 +60,7 @@ namespace diNo
 
       foreach (var fachNoten in s.getNoten.alleFaecher)
       {
-        if (!fachNoten.getFach.NichtNC) 
+        if (!fachNoten.getFach.NichtNC)
         {
           var hjLeistungen = new List<HjLeistung>();
           foreach (HjArt art in Enum.GetValues(typeof(HjArt)))
@@ -65,7 +82,7 @@ namespace diNo
           if (hjLeistungen.Count == 4)
           {
             // werfe 11/1 weg
-            hjLeistungen.RemoveAll(x=> x.JgStufe == Jahrgangsstufe.Elf && x.Art == HjArt.Hj1);
+            hjLeistungen.RemoveAll(x => x.JgStufe == Jahrgangsstufe.Elf && x.Art == HjArt.Hj1);
           }
 
           // jetzt stehen alle "normalen" Halbjahresleistungen in hjLeistungen.
@@ -93,20 +110,36 @@ namespace diNo
       }
     }
 
-    private static int GetNoetigeAnzahl(Schueler s)
+    private int GetNoetigeAnzahl(Schueler s)
     {
       if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
       {
         return 16;
       }
-      if (s.getKlasse.Schulart == Schulart.BOS)
+      if (!s.hatVorHj)
       {
         return 17;
       }
 
       return 25; //FOS11
+    }
 
 
+    /// <summary>
+    /// Berechnet das Gesamtergebnis aller Fächer, sowie die Punktesumme
+    /// </summary>
+    public void CalcGesErg(Schueler s)
+    {
+      int anzNoten;
+      s.Data.Punktesumme = 0;
+
+      foreach (var f in s.getNoten.alleFaecher)
+      {        
+        s.Data.Punktesumme += f.CalcGesErg(out anzNoten);
+        s.AnzahlNotenInPunktesumme += anzNoten;
+      }
+
+      s.Save(); // Punktesumme speichern
     }
   }
 }

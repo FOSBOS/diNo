@@ -23,6 +23,8 @@ namespace diNo
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
     public Zweig Zweig;
     public List<HjLeistung> Fachreferat = new List<HjLeistung>(); // sollte i.d.R. nur einelementig sein, aber wegen irrtümlicher Doppelvergabe
+    public int AnzahlNotenInPunktesumme = 0;
+
 
     public Schueler(int id)
     {
@@ -193,6 +195,9 @@ namespace diNo
 
     public bool hatVorHj
     { get { return  (!Data.SonderfallNur2Hj) && (getKlasse.Jahrgangsstufe==Jahrgangsstufe.Zwoelf) && (Data.Schulart == "F"); } }
+
+    public int APFaktor
+    { get { return (hatVorHj?3:2); } }
 
     /// <summary>
     /// FPA-Noten

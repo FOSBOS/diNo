@@ -31,6 +31,7 @@ namespace diNo
         if (jn==null)
            jn = new HjLeistung(f.schueler.Id, f.getFach, HjArt.JN, f.schueler.getKlasse.Jahrgangsstufe);
         jn.Punkte = sum;
+        jn.SchnittMdl = 20;
         jn.WriteToDB();
 
         if (f.getFach.IstSAPFach(s.Zweig))
@@ -50,6 +51,7 @@ namespace diNo
       {
         HjLeistung hj = new HjLeistung(f.schueler.Id, f.getFach, a, f.schueler.getKlasse.Jahrgangsstufe);
         hj.Punkte = (byte)r.Next(16);
+        hj.SchnittMdl = 20; // sinnloser Wert, um gewürfelte Noten zu erkennen.
         hj.WriteToDB();
         return hj.Punkte;
       }

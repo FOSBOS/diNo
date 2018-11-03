@@ -485,32 +485,57 @@ namespace diNo
       return vorHjLeistung[(int)art];
     }
 
-    /// <summary>
-    /// Berechnet das Gesamtergebnis aufgrund der vorliegenden HjLeistungen neu (nur Abiturklassen)
-    /// </summary>
-    public void calcGesErg()
+    private int NimmHj(HjArt a, bool vorJahr, ref int anzNoten)
     {
-      HjLeistung gesErg = getHjLeistung(HjArt.GesErg);
+      int faktor = 1;
+      HjLeistung hj;
+      if (vorJahr) hj = getVorHjLeistung(a);
+      else hj = getHjLeistung(a);
 
-      // 11. und Vk: Gesamtergebnis besteht aus den 2 Hj-Leistungen
-      if ((int)schueler.getKlasse.Jahrgangsstufe >= 12) 
-      { /*
-        if (getHjLeistung(HjArt.Hj1) != null && getHjLeistung(HjArt.Hj2) != null)
+      if (hj!=null && hj.Status==HjStatus.Einbringen)
+      {
+        if (a==HjArt.AP)
         {
-          if (gesErg==null)
-          {
-            gesErg = new HjLeistung(schueler.Id, fach, HjArt.GesErg);
-          }
-          gesErg.Punkte2Dez = (decimal)((getHjLeistung(HjArt.Hj1).Punkte + getHjLeistung(HjArt.Hj2).Punkte) / 2.0);
-          gesErg.Punkte = (byte)Math.Round((getHjLeistung(HjArt.Hj1).Punkte + getHjLeistung(HjArt.Hj2).Punkte) / 2.0, MidpointRounding.AwayFromZero);
-          
-
-          gesErg.WriteToDB();
+          faktor = schueler.APFaktor;
         }
-        else
-          gesErg.Delete(); // ggf. nicht mehr gültig
-          */
+        anzNoten += faktor;
+        return hj.Punkte * faktor;
       }
+      return 0; // nicht einbeziehen
+    }
+
+    /// <summary>
+    /// Berechnet das Gesamtergebnis für dieses Fach aufgrund der vorliegenden HjLeistungen neu (nur Abiturklassen)
+    /// </summary>
+    public int CalcGesErg(out int anzNoten)
+    {
+      anzNoten = 0;
+      int sum = 0;
+      HjLeistung gesErg = getHjLeistung(HjArt.GesErg);
+      if (gesErg == null) gesErg = new HjLeistung(schueler.Id,fach,HjArt.GesErg,schueler.getKlasse.Jahrgangsstufe);
+
+      // bei Nicht-einbringungsfähigen Fächern ist das Gesamtergebnis gleich der Jahresnote.
+      if (fach.NichtNC)
+      {
+        var jn = getHjLeistung(HjArt.JN);
+        if (jn != null) gesErg.Punkte = jn.Punkte;
+        else return 0;
+      }
+      else
+      {
+        sum += NimmHj(HjArt.Hj1, true, ref anzNoten);
+        sum += NimmHj(HjArt.Hj2, true, ref anzNoten);
+        sum += NimmHj(HjArt.Hj1,false, ref anzNoten);
+        sum += NimmHj(HjArt.Hj2, false, ref anzNoten);
+        sum += NimmHj(HjArt.AP, false, ref anzNoten);
+        sum += NimmHj(HjArt.FR, false, ref anzNoten);
+
+        if (anzNoten == 0) return 0; // nichts speichern
+        gesErg.Punkte = (byte)Math.Round(sum / (double)anzNoten, MidpointRounding.AwayFromZero);
+      }
+
+      gesErg.WriteToDB();
+      return sum;
     }
     
     /// <summary>

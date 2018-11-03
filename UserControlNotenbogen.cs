@@ -15,7 +15,13 @@ namespace diNo
 
     public UserControlNotenbogen()
     {
+      int z = Zugriff.Instance.aktZeitpunkt;
       InitializeComponent();
+      chkShowHj1.Checked = z <= (int)Zeitpunkt.HalbjahrUndProbezeitFOS;
+      chkShowHj2.Checked = z  == (int)Zeitpunkt.ErstePA || z == (int)Zeitpunkt.Jahresende;
+      chkShowAbi.Checked = z == (int)Zeitpunkt.ZweitePA || z == (int)Zeitpunkt.DrittePA;
+      chkShowHj1_CheckedChanged(this, null);
+      chkShowHj2_CheckedChanged(this, null);
       chkShowAbi_CheckedChanged(this,null);
     }
   

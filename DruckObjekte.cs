@@ -14,7 +14,7 @@ namespace diNo
     Bescheinigung,
     Zwischenzeugnis,
     Jahreszeugnis,
-    Abizeugnis,
+    Abiturzeugnis,
     Notenbogen,
     Klassenliste,
     EinserAbi
@@ -89,6 +89,7 @@ namespace diNo
         case Bericht.Bescheinigung:
         case Bericht.Zwischenzeugnis:
         case Bericht.Jahreszeugnis: return "rptZeugnis";
+        case Bericht.Abiturzeugnis: return "rptAbiturzeugnis";
         case Bericht.Gefaehrdung: return "rptGefaehrdung";
         case Bericht.Abiergebnisse: return "rptAbiergebnisse";
         case Bericht.Notenmitteilung: return "rptNotenmitteilung";
@@ -107,6 +108,7 @@ namespace diNo
         case Bericht.Bescheinigung:
         case Bericht.Zwischenzeugnis:
         case Bericht.Jahreszeugnis:
+        case Bericht.Abiturzeugnis:
         case Bericht.Gefaehrdung: return new ZeugnisDruck(s, b, u);
         case Bericht.Abiergebnisse:
         case Bericht.EinserAbi:
@@ -271,7 +273,7 @@ namespace diNo
       }
       Bemerkung += " ---";
       ShowKenntnisGenommen = s.Alter(Zugriff.Instance.Zeugnisdatum) < 18 && b == Bericht.Zwischenzeugnis;
-      if (b == Bericht.Jahreszeugnis || b == Bericht.Abizeugnis)
+      if (b == Bericht.Jahreszeugnis)
         Siegel = "(Siegel)";
       else Siegel = "";
     }

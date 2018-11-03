@@ -30,6 +30,8 @@ namespace diNo
         opNurAktuelleNoten.Checked = konstanten.LeseModusExcel == 0;
         opVollstaendig.Checked = konstanten.LeseModusExcel == 1;
       }
+      string usr = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+      groupboxTest.Visible = usr == "Markus-PC\\Markus" || usr == "ClausPC\\Claus";
       dateZeugnis.Value = konstanten.Zeugnisdatum;
       cbNotendruck.SelectedIndex = 0;
       lblStatus.Text = "";
