@@ -14,344 +14,251 @@
     <ReportSection>
       <Body>
         <ReportItems>
-          <Tablix Name="Tablix1">
-            <TablixBody>
-              <TablixColumns>
-                <TablixColumn>
-                  <Width>17.81558cm</Width>
-                </TablixColumn>
-              </TablixColumns>
-              <TablixRows>
-                <TablixRow>
-                  <Height>2.67875cm</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Rectangle Name="Rectangle1">
-                          <ReportItems>
-                            <Subreport Name="subrptPunktesumme">
-                              <ReportName>subrptFPANoten</ReportName>
-                              <Height>2.67875cm</Height>
-                              <Width>17.81558cm</Width>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                              </Style>
-                            </Subreport>
-                          </ReportItems>
-                          <KeepTogether>true</KeepTogether>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                          </Style>
-                        </Rectangle>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>1.65833cm</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox3">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>IV. Bemerkungen</Value>
-                                  <Style>
-                                    <FontFamily>times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>---</Value>
-                                  <Style>
-                                    <FontFamily>times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Normal</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox3</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>2.37271cm</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox1">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>V. </Value>
-                                  <Style>
-                                    <FontFamily>times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>hat die Fachabiturprüfung bestanden. Der Prüfungsausschuss hat ihm die </Value>
-                                  <Style>
-                                    <FontFamily>times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Fachhochschulreife</Value>
-                                  <Style>
-                                    <FontFamily>times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>verliehen.</Value>
-                                  <Style>
-                                    <FontFamily>times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Left</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox1</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>4.54229cm</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox5">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>.........................................................                     (Siegel)</Value>
-                                  <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>9pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>9pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>9pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>9pt</FontSize>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Diesem Zeugnis liegt die Schulordnung für die Berufliche Oberschule - Fachoberschulen und Berufsoberschulen - in der jeweils geltenden Fassung zugrunde.</Value>
-                                  <Style>
-                                    <FontStyle>Normal</FontStyle>
-                                    <FontFamily>times New Roman</FontFamily>
-                                    <FontSize>9pt</FontSize>
-                                    <FontWeight>Normal</FontWeight>
-                                    <Color>#000000</Color>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox5</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>None</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-              </TablixRows>
-            </TablixBody>
-            <TablixColumnHierarchy>
-              <TablixMembers>
-                <TablixMember />
-              </TablixMembers>
-            </TablixColumnHierarchy>
-            <TablixRowHierarchy>
-              <TablixMembers>
-                <TablixMember>
-                  <Group Name="Details" />
-                  <TablixMembers>
-                    <TablixMember />
-                    <TablixMember />
-                    <TablixMember />
-                    <TablixMember />
-                  </TablixMembers>
-                </TablixMember>
-              </TablixMembers>
-            </TablixRowHierarchy>
-            <Height>11.25208cm</Height>
-            <Width>17.81558cm</Width>
+          <Textbox Name="Textbox1">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>IV. Bemerkungen</Value>
+                    <Style>
+                      <FontFamily>times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>---</Value>
+                    <Style>
+                      <FontFamily>times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Normal</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>V. </Value>
+                    <Style>
+                      <FontFamily>times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>hat die Fachabiturprüfung bestanden. Der Prüfungsausschuss hat ihm die </Value>
+                    <Style>
+                      <FontFamily>times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Fachhochschulreife</Value>
+                    <Style>
+                      <FontFamily>times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>verliehen.</Value>
+                    <Style>
+                      <FontFamily>times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontFamily>times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>.........................................................                     (Siegel)</Value>
+                    <Style>
+                      <FontFamily>Times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontFamily>Times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontFamily>Times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontFamily>Times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontFamily>Times New Roman</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Diesem Zeugnis liegt die Schulordnung für die Berufliche Oberschule - Fachoberschulen und Berufsoberschulen - in der jeweils geltenden Fassung zugrunde.</Value>
+                    <Style>
+                      <FontStyle>Normal</FontStyle>
+                      <FontFamily>times New Roman</FontFamily>
+                      <FontSize>9pt</FontSize>
+                      <FontWeight>Normal</FontWeight>
+                      <Color>#000000</Color>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox1</rd:DefaultName>
+            <Top>3.40995cm</Top>
+            <Height>6.59005cm</Height>
+            <Width>16.23896cm</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Subreport Name="subrptFPANoten">
+            <ReportName>subrptFPANoten</ReportName>
+            <Parameters>
+              <Parameter Name="SId">
+                <Value>=Parameters!SId.Value</Value>
+              </Parameter>
+            </Parameters>
+            <Height>3.26884cm</Height>
+            <Width>15.80474cm</Width>
+            <ZIndex>1</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
               </Border>
             </Style>
-          </Tablix>
+          </Subreport>
         </ReportItems>
-        <Height>4.42995in</Height>
+        <Height>10cm</Height>
         <Style>
           <Border>
             <Color>White</Color>
@@ -359,7 +266,7 @@
           </Border>
         </Style>
       </Body>
-      <Width>7.01401in</Width>
+      <Width>16.3cm</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>

@@ -271,7 +271,8 @@ namespace diNo
         // Grunddaten dieses Fachs
         // -----------------------
         int noetigeAnzahlSchulaufgaben = fachNoten.getFach.AnzahlSA(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe);
-        bool istSAFach = noetigeAnzahlSchulaufgaben > 0;               
+        bool istSAFach = noetigeAnzahlSchulaufgaben > 0;
+        bool istSAPFach = fachNoten.getFach.IstSAPFach(schueler.Zweig);
 
         // Halbjahresprüfung
         // -----------------
@@ -301,18 +302,28 @@ namespace diNo
 
         if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
         {
-          // zur Probezeit BOS muss noch keine SA vorliegen, wenn nur pro HJ eine geschrieben wird        
-          if (istSAFach && schulaufgabenCount == 0 && noetigeAnzahlSchulaufgaben>1)
+          // zur Probezeit BOS muss eine SA vorliegen, wenn 2 SA pro Hj (Vorklasse) oder ein SAP-Fach vorliegt
+          if (schulaufgabenCount == 0 && (istSAPFach || noetigeAnzahlSchulaufgaben>1))
           {
             contr.Add(kurs, toText(schulaufgabenCount, "", "Schulaufgabe", hj));
           }
 
           if (hatErsatzpruefung) continue;
 
+          // Schreibt der Lehrer KA, dann muss sie bei allen Schülern vorliegen
           if (kurs.schreibtKA && kurzarbeitenCount==0)
           {
             contr.Add(kurs, toText(kurzarbeitenCount, "", "Kurzarbeite", hj));
           }
+
+          // Profilfach 2: mind. 2 Noten
+          if (istSAFach && !istSAPFach && schulaufgabenCount + kurzarbeitenCount + muendlicheCount <2)
+          {
+            contr.Add(kurs, toText(schulaufgabenCount + kurzarbeitenCount + muendlicheCount, "", "Note", hj));
+            continue;
+          }
+
+          // zusätzliche mdl. Note, falls kritisch (<4 P. im Hj)
           if (kurs.schreibtKA && muendlicheCount == 0)
           {
             byte punktePZ = fachNoten.getHjLeistung(HjArt.Hj1).Punkte;
@@ -324,7 +335,7 @@ namespace diNo
             contr.Add(kurs, toText(muendlicheCount, "mündliche", "Note", hj));
           }
         }
-        else         
+        else // alles außer PZ-BOS:       
         {
           if (schulaufgabenCount < noetigeAnzahlSchulaufgaben)
           {
