@@ -207,7 +207,8 @@ namespace diNo
       foreach (var fachNoten in alleKurse)
       {
         kuerzel = fachNoten.getFach.Kuerzel;
-        if (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Sw" || kuerzel == "Sm" || kuerzel == "Ku") continue;  // keine Vorrückungsfächer
+        if (schueler.AlteFOBOSO() &&  (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Sw" || kuerzel == "Sm" || kuerzel == "Ku")) continue;  // keine Vorrückungsfächer
+        if (!schueler.AlteFOBOSO() && fachNoten.getFach.NichtNC) continue;  // Nicht-NC-Fächer
         byte? relevanteNote = fachNoten.getRelevanteNote(zeitpunkt);
         int istSAP = fachNoten.getFach.IstSAPFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse) ? 1:0;
         if (relevanteNote != null)
