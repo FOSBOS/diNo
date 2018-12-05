@@ -75,6 +75,7 @@ namespace diNo
     nichtZurMAPangetreten = 24,
     VorrueckenBOS13moeglich = 25,
     PruefungNichtBestanden = 26,
+    PruefungAbgebrochen = 27,
 
     // Jahresende
     NichtBestanden = 31,

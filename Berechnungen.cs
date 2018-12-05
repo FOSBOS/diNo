@@ -11,26 +11,34 @@ namespace diNo
   /// </summary>
   public class Berechnungen
   {
-    private Zeitpunkt zeitpunkt;
-    private Schueler schueler;
+    private Zeitpunkt zeitpunkt;    
     public delegate void Aufgabe(Schueler s);
     public List<Aufgabe> aufgaben; // speichert alle zu erledigenden Berechnungsaufgaben eines Schülers
 
     public Berechnungen(Zeitpunkt azeitpunkt)
     {
       zeitpunkt = azeitpunkt;
+      aufgaben = new List<Aufgabe>();
+      if (zeitpunkt == Zeitpunkt.ErstePA)
+        aufgaben.Add(BerechneEinbringung);
+
+      if (zeitpunkt >= Zeitpunkt.ErstePA && zeitpunkt <= Zeitpunkt.DrittePA)
+        aufgaben.Add(CalcGesErg);
+
+      if (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
+        aufgaben.Add(BerechneDNote);
     }
 
     /// <summary>
     /// Führt alle Berechnungen, die in den Aufgaben vermerkt sind, für einen Schüler durch.
     /// </summary>
     public void BerechneSchueler(Schueler s)
-    {
-      schueler = s;
+    {      
       foreach (var a in aufgaben)
       {
         a(s);
       }
+      s.Save();
     }
 
     /*
@@ -134,12 +142,92 @@ namespace diNo
       s.Data.Punktesumme = 0;
 
       foreach (var f in s.getNoten.alleFaecher)
-      {        
+      {
         s.Data.Punktesumme += f.CalcGesErg(out anzNoten);
         s.AnzahlNotenInPunktesumme += anzNoten;
+      }      
+    }
+
+    public void BerechneDNote(Schueler s)
+    {
+
+    }
+
+    private void berechneDNote(Schueler s, bool allgHSR)
+    {
+      int summe = 0, anz = 0;
+      decimal erg;
+      var faecher = s.getNoten.alleKurse;
+      bool FranzVorhanden = !s.Data.IsAndereFremdspr2NoteNull();
+
+      // Französisch wird nur in der 13. Klasse gewertet, wenn der Kurs belegt ist und
+      // der Schüler nicht nur fachgebundene HSR bekommt (z.B. wegen Note 5 in F)
+      // F-Wi zählt immer (auch 12. Klasse), weil es WIn ersetzt
+      // eine andere eingetragene 2. Fremdsprache zählt auch immer (in der 13.); dies kann eine RS-Note, Ergänzungspr.,
+      // aber auch bei fortgeführtem Franz. die Note der 11./12. oder 13. Klasse sein. Dadurch kann F-Wi sogar doppelt zählen!
+
+      foreach (var fach in faecher)
+      {
+        // alle Fächer außer Sport und Kunst, Franz. nur in der 13. 
+        var fk = fach.getFach.Kuerzel;
+        byte? note = fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
+
+        if (note == null || fk == "Ku" || fk == "Smw" || fk == "Sw" || fk == "Sm" || (fk == "F" && !allgHSR))
+          continue;
+
+        // liegen die Voraussetzungen für allg. HSR vor?
+        if (allgHSR && (fk == "F-Wi" || fk == "F" && note.GetValueOrDefault() > 3))
+          FranzVorhanden = true;
+
+        if (note == 0)
+        {
+          summe--; // Punktwert 0 wird als -1 gezählt
+        }
+        else
+        {
+          summe += note.GetValueOrDefault();
+        }
+        anz++;
       }
 
-      s.Save(); // Punktesumme speichern
+      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      {
+        if (!s.Seminarfachnote.IsGesamtnoteNull())
+        {
+          summe += s.Seminarfachnote.Gesamtnote;
+          anz++;
+        }
+
+        // Alternative 2. Fremdsprache für die allgemeine Hochschulreife
+        if (allgHSR && !s.Data.IsAndereFremdspr2NoteNull())
+        {
+          summe += s.Data.AndereFremdspr2Note;
+          anz++;
+        }
+      }
+
+      if (allgHSR && !FranzVorhanden)
+        s.Data.SetDNoteAllgNull();
+      else if (anz > 0)
+      {
+        erg = (17 - (decimal)summe / anz) / 3;
+        if (erg < 1)
+        {
+          erg = 1;
+        }
+        else
+        {
+          erg = Math.Floor(erg * 10) / 10; // auf 1 NK abrunden
+        }
+        if (allgHSR)
+          s.Data.DNoteAllg = erg;
+        else
+          s.Data.DNote = erg;
+      }
+      else
+      {
+        s.Data.SetDNoteNull();
+      }
     }
   }
 }

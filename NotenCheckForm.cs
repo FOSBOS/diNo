@@ -30,8 +30,7 @@ namespace diNo
       NotenCheckModusDict.Add(NotenCheckModus.Gesamtpruefung,"Gesamtprüfung");
       if (Zugriff.Instance.lehrer.HatRolle(Rolle.Admin))
       {
-        NotenCheckModusDict.Add(NotenCheckModus.VorkommnisseErzeugen,"Vorkommnisse erzeugen");
-        NotenCheckModusDict.Add(NotenCheckModus.BerechnungenSpeichern,"Berechnungen speichern");
+        NotenCheckModusDict.Add(NotenCheckModus.KonferenzVorbereiten,"Konferenz vorbereiten");        
       }   
       comboBoxCheckModus.BeginUpdate();
       comboBoxCheckModus.DataSource = NotenCheckModusDict.ToList();
@@ -43,13 +42,11 @@ namespace diNo
     }
 
     private void btnStart_Click(object sender, EventArgs e)
-    {      
-      if ((NotenCheckModus)comboBoxCheckModus.SelectedValue == NotenCheckModus.BerechnungenSpeichern)
-        StarteBerechnungen();
-      else
-        StarteNotenCheck();
+    {            
+      StarteNotenCheck();
     }
 
+    /*
     private void StarteBerechnungen()
     {
       var contr = new Berechnungen(GetZeitpunkt());
@@ -68,6 +65,7 @@ namespace diNo
       }                  
       Close();      
     }
+    */
 
     private void StarteNotenCheck()
     {                        

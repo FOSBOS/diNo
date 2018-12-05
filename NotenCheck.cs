@@ -302,8 +302,8 @@ namespace diNo
 
         if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
         {
-          // zur Probezeit BOS muss eine SA vorliegen, wenn 2 SA pro Hj (Vorklasse) oder ein SAP-Fach vorliegt
-          if (schulaufgabenCount == 0 && (istSAPFach || noetigeAnzahlSchulaufgaben>1))
+          // zur Probezeit BOS muss eine SA vorliegen, wenn 2 SA pro Hj (Vorklasse) oder ein SAP-Fach (mit SA, nicht Vk!) vorliegt
+          if (schulaufgabenCount == 0 && ((istSAPFach && noetigeAnzahlSchulaufgaben==1) || noetigeAnzahlSchulaufgaben > 1))
           {
             contr.Add(kurs, toText(schulaufgabenCount, "", "Schulaufgabe", hj));
           }
@@ -327,7 +327,7 @@ namespace diNo
           if (kurs.schreibtKA && muendlicheCount == 0)
           {
             byte punktePZ = fachNoten.getHjLeistung(HjArt.Hj1).Punkte;
-            if (!istSAFach || punktePZ < 4)
+            if (punktePZ < 4)
               contr.Add(kurs, toText(muendlicheCount, "mündliche", "Note", hj));
           }
           else if (!kurs.schreibtKA && muendlicheCount < 2)
@@ -566,133 +566,123 @@ namespace diNo
         SchuelerNoten n = schueler.getNoten;
         n.SetZeitpunkt(contr.zeitpunkt);
 
-        // Integrationsklasse: dort gibt es kein Bestehen...
-        /*if (schueler.getKlasse.Bezeichnung=="IV")
-        {          
+      // Integrationsklasse: dort gibt es kein Bestehen...
+      /*if (schueler.getKlasse.Bezeichnung=="IV")
+      {          
+        return;
+      }*/
+      if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
+      {
+        if (n.HatNichtBestanden())
+        {
+          contr.Add(null, "<b>Probezeit nicht bestanden</b> " + n.Unterpunktungen, true);
+        }
+      }
+
+      else if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+      {
+        if (n.HatNichtBestanden())
+        {
+          contr.Add(Vorkommnisart.starkeGefaehrdungsmitteilung, n.Unterpunktungen, true);
+          if (!schueler.Data.IsProbezeitBisNull() && (schueler.Data.ProbezeitBis > DateTime.Parse("01.02." + (Zugriff.Instance.Schuljahr + 1))))
+            contr.Add(null, "<b>Probezeit nicht bestanden</b> " + n.Unterpunktungen, true);
+        }
+        else if (n.anz4P > 1 || n.AnzahlNoten(5) > 0)
+        {
+          contr.Add(Vorkommnisart.BeiWeiteremAbsinken, n.Unterpunktungen, true);
+        }
+      }
+
+      else if (contr.zeitpunkt == Zeitpunkt.ErstePA)
+      {
+        if (schueler.AlteFOBOSO() && (n.AnzahlNoten(6) > 1 || (n.AnzahlNoten(6) + n.AnzahlNoten(5)) > 3))
+        {
+          contr.Add(Vorkommnisart.NichtZurPruefungZugelassen, n.Unterpunktungen, true);
           return;
-        }*/
-
-        if (contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
-        {
-          if (n.HatNichtBestanden())
-          {
-            contr.Add(Vorkommnisart.starkeGefaehrdungsmitteilung,n.Unterpunktungen,true);
-            if (!schueler.Data.IsProbezeitBisNull() && (schueler.Data.ProbezeitBis > DateTime.Parse("01.02." + (Zugriff.Instance.Schuljahr + 1))))
-              contr.Add(null, "<b>Probezeit nicht bestanden</b>", true);
-          }
-          else if (n.anz4P > 1 || n.AnzahlNoten(5) > 0)
-          { 
-            contr.Add(Vorkommnisart.BeiWeiteremAbsinken,n.Unterpunktungen,true);
-          }
-
-            return; // bei Schülern ohne PZ geht es zum Halbjahr nur um Gefährdungen
         }
-        else if (contr.zeitpunkt == Zeitpunkt.ErstePA)
+
+        // nur falls ein Schüler bereits zuviele schlechte Noten in Nichtprüfungsfächer hat
+        if (!schueler.AlteFOBOSO() && (n.AnzahlNoten(6, false) * 2 + n.AnzahlNoten(5, false)) > 2)
         {
-          if (n.AnzahlNoten(6) > 1 || (n.AnzahlNoten(6) + n.AnzahlNoten(5)) > 3)
-          {
-            contr.Add(Vorkommnisart.NichtZurPruefungZugelassen,n.Unterpunktungen,true);
-          }
-          else if (n.AnzahlNoten(6,false) + n.AnzahlNoten(5,false) > 0)
-            contr.Add(null, "Unterpunktet in einem Nichtprüfungsfach " + n.Unterpunktungen,true);
+          contr.Add(Vorkommnisart.NichtZurPruefungZugelassen, n.Unterpunktungen, true);
           return;
         }
-        else if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
-        {
-          if (n.HatNichtBestanden())
-          {         
-            if (n.MAPmoeglich())
-              contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich,n.Unterpunktungen,true);
-            else 
-              contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen,n.Unterpunktungen,true);
-            if (n.KannAusgleichen())
-              contr.Add(null,"Notenausgleich möglich");
-          }          
-          return;        
-        }
 
-        // Jahresende, 3. PA, Probezeit (BOS und Hj.)
-        if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.IntVk && contr.zeitpunkt == Zeitpunkt.Jahresende)
-        {
-          if (schueler.getNoten.HatNichtBestanden())
-            contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
-        }
-        else if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse && contr.zeitpunkt == Zeitpunkt.Jahresende)
-        {          
-          if (schueler.getNoten.HatNichtBestanden())          
-            contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen,true);
+        if (n.AnzahlNoten(6, false) + n.AnzahlNoten(5, false) > 0)
+          contr.Add(null, "Unterpunktet in einem Nichtprüfungsfach " + n.Unterpunktungen, true);
+      }
 
-          // Schüler der BOS-Vk erhalten mittlere Reife, wenn sie bestanden haben:
-          else if (schueler.Data.Schulart == "B")          
-            contr.Add(Vorkommnisart.MittlereReife, "");
-         
-          if (n.HatIn12KeinePZ())
-            contr.Add(Vorkommnisart.KeineProbezeitNaechstesSJ , "");
-        }
-        else if (n.HatNichtBestanden())
+      else if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
+      {
+        if (n.HatNichtBestanden())
         {
-          if (!schueler.AlteFOBOSO() || contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
-          {
-            if (contr.zeitpunkt == Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
-              contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis, n.Unterpunktungen, true);
-            else
-              contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
-          }
-          else if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich möglich: " + n.Unterpunktungen,true);
+          if (n.MAPmoeglich())
+            contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich, n.Unterpunktungen, true);
+          else
+            contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen, n.Unterpunktungen, true);
+          if (n.KannAusgleichen())
+            contr.Add(null, "Notenausgleich möglich");
+        }
+        return;
+      }
+
+      else if (contr.zeitpunkt == Zeitpunkt.DrittePA)
+      {
+        if (n.HatNichtBestanden())
+        {
+          if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich möglich: " + n.Unterpunktungen, true);
           else
           {
-            if (contr.zeitpunkt == Zeitpunkt.DrittePA)
-              contr.Add(Vorkommnisart.NichtBestanden,n.Unterpunktungen,true);
-            //else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
-            //  contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,n.Unterpunktungen,true);
-            else 
-              contr.Add(null, "Nicht bestanden: " + n.Unterpunktungen,true); 
+            contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
+            if (n.DarfInBOS13())
+              contr.Add(Vorkommnisart.VorrueckenBOS13moeglich, "");
           }
         }
+      }
+      else // Jahresende
+      {
+        if (schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Elf)
+        {
+          if (n.HatNichtBestanden()) // Jgstufe 11
+          {
+            contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis, n.Unterpunktungen, true);
+          }
+        }
+        else // Vorklassen
+        {
+          if (n.HatNichtBestanden())
+            contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
+
+          // Schüler der BOS-Vk erhalten mittlere Reife, wenn sie bestanden haben:
+          else if (schueler.Data.Schulart == "B")
+            contr.Add(Vorkommnisart.MittlereReife, "");
+
+          if (n.HatIn12KeinePZ())
+            contr.Add(Vorkommnisart.KeineProbezeitNaechstesSJ, "");
+        }        
+      }
     }
   }
 
-  // Prüft, ob in der 13. Klasse die Abiergebnisse zum Bestehen ausreichen
+  // Prüft, ob die Abiergebnisse zum Bestehen ausreichen
   public class AbiergebnisChecker : NotenCheck
   {
     public AbiergebnisChecker(NotenCheckController contr) :base (contr)
-        { }
+    { }
         
     public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
     {
-      return jahrgangsstufe == Jahrgangsstufe.Dreizehn;
+      return jahrgangsstufe >= Jahrgangsstufe.Zwoelf;
     }
    
     public override void Check(Schueler schueler)
     {
       base.Check(schueler);
-      int anz6=0;
-      int anz5=0;
-      string m="";
-      decimal apg;
-          
-      foreach (var fach in noten.alleKurse)
-      {
-        
-        if (fach.getSchnitt(Halbjahr.Zweites).PruefungGesamt.HasValue)
-        {
-          apg=fach.getSchnitt(Halbjahr.Zweites).PruefungGesamt.GetValueOrDefault();
-          if (apg < (decimal)1.0)
-          {
-            anz6++;
-            m+= fach.getFach.Kuerzel + "(" + apg + ") ";
-          }
-          else if (apg < (decimal)3.5)
-          {
-            anz5++;
-            m+= fach.getFach.Kuerzel + "(" + apg + ") ";
-          }
-        }
-      } 
-           
-      if (anz6 > 0 || anz5>2)
+      var n = schueler.getNoten;
+      
+      if (n.HatAbiNichtBestanden())
       {        
-        contr.Add(Vorkommnisart.PruefungNichtBestanden, m);
+        contr.Add(Vorkommnisart.PruefungNichtBestanden, n.UnterpunktungenAbi);
       }
     }
   }
@@ -764,4 +754,25 @@ namespace diNo
     }
   }
 
+  // Legt das passende Zeugnisvorkommnis an
+  public class ZeugnisVorkommnisAnlegen : NotenCheck
+  {
+    public ZeugnisVorkommnisAnlegen(NotenCheckController contr) : base(contr)
+    { }
+
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
+    {
+      return true;
+    }
+
+    public override void Check(Schueler schueler)
+    {
+      Vorkommnisart v = schueler.Zeugnisart(contr.zeitpunkt);
+      if (v == Vorkommnisart.NotSet) return;
+
+      schueler.AddVorkommnis(v, Zugriff.Instance.Zeugnisdatum, ""); // Zeugnis als Vorkommnis anlegen
+      if (v == Vorkommnisart.allgemeineHochschulreife)
+        contr.Add(v, ""); // zusätzliche Ausgabe für die Meldungsliste        
+    }
+  }
 }

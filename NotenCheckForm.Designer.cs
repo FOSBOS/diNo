@@ -115,12 +115,6 @@
       this.comboBoxCheckModus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.comboBoxCheckModus.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.comboBoxCheckModus.FormattingEnabled = true;
-      this.comboBoxCheckModus.Items.AddRange(new object[] {
-            "Probezeit BOS",
-            "Halbjahr",
-            "1. PA",
-            "2. PA",
-            "Jahresende"});
       this.comboBoxCheckModus.Location = new System.Drawing.Point(25, 28);
       this.comboBoxCheckModus.Name = "comboBoxCheckModus";
       this.comboBoxCheckModus.Size = new System.Drawing.Size(218, 24);

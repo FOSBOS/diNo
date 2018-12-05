@@ -74,53 +74,56 @@ namespace diNo
        get { return this.data.Kuerzel; }
     }
 
-        // ab neuer FOBOSO: SA pro Halbjahr
-        public int AnzahlSA(Zweig zweig, Jahrgangsstufe jg)
-        {
-          int z=0;
-          if (jg == Jahrgangsstufe.Vorklasse || jg == Jahrgangsstufe.IntVk)
-          {
-             // in D,E,M je 2 SA
-             if (Kuerzel == "D" || Kuerzel == "DAZ" || Kuerzel == "E" || Kuerzel == "M") z=2;             
-          }
-          else if (jg == Jahrgangsstufe.Elf)
-          {
-            if (IstSAPFach(zweig)) z=1;            
-          }
-          else // 12./13. Klasse
-          {
-            if (IstSAPFach(zweig) || Kuerzel=="F" /*|| Kuerzel=="F-Wi"*/) z = (jg == Jahrgangsstufe.Zwoelf) ? 3 : 2;
-            else if (Kuerzel == "TeIn" || Kuerzel == "B" || Kuerzel == "VWL" ||
-              (Kuerzel == "C" && zweig==Zweig.Umwelt)) z=2;
-          }
-          return z;
-        }
-        public bool IstSAFach(Zweig zweig, Jahrgangsstufe jg)
-        {
-            return AnzahlSA(zweig,jg)>0;
-        }
+    // ab neuer FOBOSO: SA pro Halbjahr
+    public int AnzahlSA(Zweig zweig, Jahrgangsstufe jg)
+    {
+      int z=0;
+      if (jg == Jahrgangsstufe.Vorklasse || jg == Jahrgangsstufe.IntVk)
+      {
+        // in D,E,M je 2 SA
+        if (Kuerzel == "D" || Kuerzel == "DAZ" || Kuerzel == "E" || Kuerzel == "M") z=2;             
+      }
+      else if (jg == Jahrgangsstufe.Elf)
+      {
+        if (IstSAPFach(zweig)) z=1;            
+      }
+      else if (jg == Jahrgangsstufe.Dreizehn) // 13. Klasse nach AlteFOBOSO
+      {
+        if (IstSAPFach(zweig) || Kuerzel=="F" || Kuerzel == "TeIn" || Kuerzel == "B" || Kuerzel == "VWL") z=2;
+      }
+      else
+      {
+        if (IstSAPFach(zweig) || Kuerzel == "F" || sort[(byte)zweig] == 2) z = 1; // Prüfungsfächer, Französisch und Profilfach 2
+      }
+      return z;
+    }
 
-        public int Sortierung(Zweig zweig)
-        {
-          if (zweig != Zweig.None && Typ == FachTyp.Profilfach)
-          {            
-            return 100+sort[(byte)zweig];
-          }
-          else
-          {
-            return this.data.Sortierung;
-          }          
-        }
+    public bool IstSAFach(Zweig zweig, Jahrgangsstufe jg)
+    {
+        return AnzahlSA(zweig,jg)>0;
+    }
 
-        public FachTyp Typ
-        {
-          get { return (FachTyp)data.Typ; }
-        }
+    public int Sortierung(Zweig zweig)
+    {
+      if (zweig != Zweig.None && Typ == FachTyp.Profilfach)
+      {            
+        return 100+sort[(byte)zweig];
+      }
+      else
+      {
+        return this.data.Sortierung;
+      }          
+    }
 
-        public string BezZeugnis
-        {
-          get { return (data.IsBezZeugnisNull() ? data.Bezeichnung : data.BezZeugnis); }
-        }
+    public FachTyp Typ
+    {
+      get { return (FachTyp)data.Typ; }
+    }
+
+    public string BezZeugnis
+    {
+      get { return (data.IsBezZeugnisNull() ? data.Bezeichnung : data.BezZeugnis); }
+    }
    
     public bool IstSAPFach(Zweig zweig, bool inVorklasse=false)
     {

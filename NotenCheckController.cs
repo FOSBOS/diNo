@@ -15,6 +15,8 @@ namespace diNo
   {
     public NotenCheckResults res = new NotenCheckResults();
     private IList<NotenCheck> alleNotenchecks = new List<NotenCheck>();
+    public delegate void Aufgabe(Schueler s);
+    public List<Aufgabe> aufgaben; // speichert alle zu erledigenden Berechnungsaufgaben + Notenchecks eines Schülers
     public Zeitpunkt zeitpunkt;
     public NotenCheckModus modus;
     public List<Klasse> zuPruefendeKlassen = new List<Klasse>();
@@ -25,6 +27,7 @@ namespace diNo
     private Schueler aktSchueler;
     private bool UnterpunktungGedruckt;
     private ProgressBar progressBar;
+    private Berechnungen berechnungen = null; 
 
     public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus, ProgressBar aprogressBar)
     {
@@ -49,35 +52,43 @@ namespace diNo
           KlasseInNotenpruefungAufnehmen(k);
       }
 
-      if (modus != NotenCheckModus.BerechnungenSpeichern && modus != NotenCheckModus.VorkommnisseErzeugen
-        && azeitpunkt != Zeitpunkt.DrittePA)
+      // Nötige Berechnungen, bevor geprüft wird
+      if (modus == NotenCheckModus.KonferenzVorbereiten)
+      {
+        berechnungen = new Berechnungen(azeitpunkt);
+      }
+
+      // Durchzuführende Prüfungen
+      if (azeitpunkt != Zeitpunkt.DrittePA)
         alleNotenchecks.Add(new NotenanzahlChecker(this));
       if (modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         alleNotenchecks.Add(new UnterpunktungChecker(this));
-      if (azeitpunkt == Zeitpunkt.ErstePA && (modus == NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse)) // nur dort FR prüfen
+      if (azeitpunkt == Zeitpunkt.ErstePA && modus != NotenCheckModus.EigeneNotenVollstaendigkeit) // nur dort FR prüfen
       {
         alleNotenchecks.Add(new FachreferatChecker(this));
         alleNotenchecks.Add(new SeminarfachChecker(this));
       }
       if ((azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
-        && (modus == NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse))
+        && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         alleNotenchecks.Add(new FpABestandenChecker(this));
-      if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) &&
-        (modus == NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse || modus == NotenCheckModus.VorkommnisseErzeugen))
+      if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
       {
         alleNotenchecks.Add(new AbiergebnisChecker(this));
         alleNotenchecks.Add(new EliteChecker(this));
       }
-      if (azeitpunkt == Zeitpunkt.DrittePA && (modus == NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse))
+      if (azeitpunkt == Zeitpunkt.DrittePA && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         alleNotenchecks.Add(new MAPChecker(this));
 
       // Folgende Vorkommnisse ggf. löschen, bzw. neu erzeugen bei 2./3.PA
-      if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) && (modus == NotenCheckModus.VorkommnisseErzeugen))
+      if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) )
       {
         VorkommnisTableAdapter ta = new VorkommnisTableAdapter();
         ta.DeleteVorkommnis((int)Vorkommnisart.bisherNichtBestandenMAPmoeglich);
         ta.DeleteVorkommnis((int)Vorkommnisart.PruefungNichtBestanden);
       }
+
+      if ((zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || zeitpunkt >= Zeitpunkt.DrittePA) && modus == NotenCheckModus.KonferenzVorbereiten)
+        alleNotenchecks.Add(new ZeugnisVorkommnisAnlegen(this));
     }
 
     // Klassenweise Vorauswahl, damit weniger Schüler einzeln erst analysiert werden müssen.
@@ -119,18 +130,7 @@ namespace diNo
       aktSchueler = s;
       if (s.Status==Schuelerstatus.Abgemeldet) return;
               
-      // auch abgebrochene bekommen ein Jahreszeugnis
-      if (modus!=NotenCheckModus.EigeneNotenVollstaendigkeit && (zeitpunkt >= Zeitpunkt.DrittePA || zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS))
-        ZeugnisVorkommnisAnlegen(s);
-
-      //if (s.Status == Schuelerstatus.SAPabgebrochen && zeitpunkt == Zeitpunkt.ZweitePA)
-      //  Add(null, "Prüfung abgebrochen"); // TODO: dazu Vorkommnis anlegen
-          
-      if ((s.Status == Schuelerstatus.SAPabgebrochen|| s.Status==Schuelerstatus.NichtZurSAPZugelassen) && zeitpunkt > Zeitpunkt.ErstePA ) // nicht zugelassene raus
-        return;
-
-      Klasse klasse;
-      klasse = s.getKlasse;          
+      Klasse klasse = s.getKlasse;          
       UnterpunktungGedruckt=false;
         
       // muss dieser Schüler überhaupt geprüft werden?
@@ -147,6 +147,16 @@ namespace diNo
             || zeitpunkt == Zeitpunkt.DrittePA)
           )
       {
+        // Erst werden alle Berechnungen durchgeführt (Gesamtergebnisse, DNote,...)
+        if (berechnungen!=null)
+          berechnungen.BerechneSchueler(s);
+
+        if (s.Status == Schuelerstatus.SAPabgebrochen && zeitpunkt == Zeitpunkt.ZweitePA)
+          Add(Vorkommnisart.PruefungAbgebrochen,"");
+
+        if ((s.Status == Schuelerstatus.SAPabgebrochen || s.Status == Schuelerstatus.NichtZurSAPZugelassen) && zeitpunkt > Zeitpunkt.ErstePA) // nicht zugelassene raus
+          return;
+
         foreach (var ch in alleNotenchecks)
         {
           if (ch.CheckIsNecessary(klasse.Jahrgangsstufe, klasse.Schulart))
@@ -157,29 +167,13 @@ namespace diNo
 
         // Kontrollmöglichkeit: alle weiteren Unterpunktungen werden gedruckt
         if (s.getNoten.Unterpunktungen != "" && !UnterpunktungGedruckt && zeitpunkt != Zeitpunkt.HalbjahrUndProbezeitFOS
-          && (modus == NotenCheckModus.Gesamtpruefung || modus == NotenCheckModus.EigeneKlasse))
+          && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         {
           Add(null, "Unterpunktet in " + s.getNoten.Unterpunktungen);
         }        
       }
     }   
     
-    public void ZeugnisVorkommnisAnlegen(Schueler s)
-    {
-      Vorkommnisart v = s.Zeugnisart(zeitpunkt);
-      if (v==Vorkommnisart.NotSet) return;
-
-      if (modus==NotenCheckModus.VorkommnisseErzeugen)        
-      {
-        s.AddVorkommnis(v,Zugriff.Instance.Zeugnisdatum,""); // Zeugnis als Vorkommnis anlegen
-      }
-      else
-      {
-        if (v==Vorkommnisart.allgemeineHochschulreife)
-          Add(v,""); // zusätzliche Ausgabe für die Meldungsliste        
-      }
-    }
-
     // fügt eine Meldung/Vorkommnis hinzu, und erzeugt ggf. abhängige Vorkommnisse
     public void Add(Vorkommnisart art, string meldung,bool aUnterpunktungGedruckt=false)
     {     
@@ -200,14 +194,12 @@ namespace diNo
 
     private void AddVorkommnis(Vorkommnisart art, string meldung)
     {
-      if (modus==NotenCheckModus.VorkommnisseErzeugen)
+      if (modus==NotenCheckModus.KonferenzVorbereiten && zeitpunkt>Zeitpunkt.ProbezeitBOS)
       {
         aktSchueler.AddVorkommnis(art,meldung);
       }
-      else
-      {
-        Add(null, Vorkommnisse.Instance.VorkommnisText(art) + " " + meldung);
-      }
+
+      Add(null, Vorkommnisse.Instance.VorkommnisText(art) + " " + meldung);
     }
 
     public void Add(Kurs k,string m,bool aUnterpunktungGedruckt=false)
@@ -234,7 +226,7 @@ namespace diNo
       if (!Zugriff.Instance.markierteSchueler.ContainsKey(aktSchueler.Id))
         Zugriff.Instance.markierteSchueler.Add(aktSchueler.Id,aktSchueler);
     }
-
+    
     public void CreateResults()
     {
       NotenCheckCounter cnt;
@@ -343,7 +335,6 @@ namespace diNo
       EigeneNotenVollstaendigkeit,
       EigeneKlasse, // nur für Klassenleiter
       Gesamtpruefung,
-      VorkommnisseErzeugen, // nur Admin
-      BerechnungenSpeichern // nur Admin
+      KonferenzVorbereiten  // nur Admin
      }
   }

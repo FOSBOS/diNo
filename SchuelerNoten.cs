@@ -6,71 +6,77 @@ using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
-    /// <summary>
-    /// Verwaltet alle Noten eines Schülers
-    /// </summary>
-    public class SchuelerNoten
+  /// <summary>
+  /// Verwaltet alle Noten eines Schülers
+  /// </summary>
+  public class SchuelerNoten
+  {
+    private Schueler schueler;
+    public List<FachSchuelerNoten> alleKurse; // enthält nur die aktuell besuchten Kurse
+    public List<FachSchuelerNoten> alleFaecher; // enthält alle Fächer, die der S jemals belegt hat
+    public List<FachSchuelerNoten> FaecherOhneKurse; // enthält alle Fächer, die der S aus vorigen JgStufen mitbringt
+
+    // die folgendes Array verwaltet die Anzahl der Einser, Zweier, usw., getrennt nach SAP-Fach und Nebenfach
+    // anzahlNoten[6,1] ergibt z.B. die Anzahl der Sechser in SAP-Fächern, anzahlNoten[5,0] die Anzahl der Fünfer in Nebenfächern
+    private int[,] anzahlNoten;
+    private int abi5er=0,abi6er=0; // Anzahl 5er und 6 im Abi
+    private Zeitpunkt zeitpunkt = (Zeitpunkt)Zugriff.Instance.aktZeitpunkt;
+    public string Unterpunktungen, UnterpunktungenAbi;
+    public bool hatDeutsch6 = false; // kann nicht ausgeglichen werden
+    public int anz4P=0;
+    public double Punkteschnitt = 0;
+
+    public SchuelerNoten(Schueler s)
     {
-        private Schueler schueler;
-        public List<FachSchuelerNoten> alleKurse; // enthält nur die aktuell besuchten Kurse
-        public List<FachSchuelerNoten> alleFaecher; // enthält alle Fächer, die der S jemals belegt hat
- 
-        // die folgendes Array verwaltet die Anzahl der Einser, Zweier, usw., getrennt nach SAP-Fach und Nebenfach
-        // anzahlNoten[6,1] ergibt z.B. die Anzahl der Sechser in SAP-Fächern, anzahlNoten[5,0] die Anzahl der Fünfer in Nebenfächern
-        private int[,] anzahlNoten;
-        private Zeitpunkt zeitpunkt= (Zeitpunkt)Zugriff.Instance.aktZeitpunkt;
-        public string Unterpunktungen;
-        public bool hatDeutsch6 = false; // kann nicht ausgeglichen werden
-        public int anz4P=0;
-        public double Punkteschnitt = 0;
+      schueler = s;
+      diNoDataSet.KursDataTable kurse = schueler.Kurse; // ermittle alle Kurse, die der S besucht
+      alleFaecher = new List<FachSchuelerNoten>();
+      alleKurse = new List<FachSchuelerNoten>();
+      FaecherOhneKurse = new List<FachSchuelerNoten>();
 
-        public SchuelerNoten(Schueler s)
-        {
-          schueler = s;
-          diNoDataSet.KursDataTable kurse = schueler.Kurse; // ermittle alle Kurse, die der S besucht
-          alleFaecher = new List<FachSchuelerNoten>();
-          alleKurse = new List<FachSchuelerNoten>();
-          foreach (var kurs in kurse)
-          {
-            var fsn = new FachSchuelerNoten(schueler, kurs.Id);
-            alleFaecher.Add(fsn);
-            alleKurse.Add(fsn);
-          }
+      foreach (var kurs in kurse)
+      {
+        var fsn = new FachSchuelerNoten(schueler, kurs.Id);
+        alleFaecher.Add(fsn);
+        alleKurse.Add(fsn);
+      }
 
-          // alle Fächer des Schülers ohne Kurs finden und diese HjLeistungen laden 
-          diNoDataSet.FachDataTable fDT = (new FachTableAdapter()).GetFaecherOhneKurseBySchuelerId(schueler.Id);
-          foreach (var fachR in fDT)
-          {
-            Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
-            alleFaecher.Add(new FachSchuelerNoten(schueler, fach));
-          }
+      // alle Fächer des Schülers ohne Kurs finden und diese HjLeistungen laden 
+      diNoDataSet.FachDataTable fDT = (new FachTableAdapter()).GetFaecherOhneKurseBySchuelerId(schueler.Id);
+      foreach (var fachR in fDT)
+      {
+        Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
+        var fsn = new FachSchuelerNoten(schueler, fach);
+        alleFaecher.Add(fsn);
+        FaecherOhneKurse.Add(fsn);
+      }
 
-          // Fachreferat als eigenes Fach führen --> macht leider auch viele Probleme, deshalb erst mal so lassen
-          // (Sollte es mehrere FR geben, bleibt aber nur das letzte übrig, weil alle in denselben Index geschrieben werden).
-          /*
-          if (schueler.Fachreferat.Count>0)
-          {
-            alleFaecher.Add(new  FachSchuelerNoten(schueler, schueler.Fachreferat));  
-          }
-          */
+      // Fachreferat als eigenes Fach führen --> macht leider auch viele Probleme, deshalb erst mal so lassen
+      // (Sollte es mehrere FR geben, bleibt aber nur das letzte übrig, weil alle in denselben Index geschrieben werden).
+      /*
+      if (schueler.Fachreferat.Count>0)
+      {
+        alleFaecher.Add(new  FachSchuelerNoten(schueler, schueler.Fachreferat));  
+      }
+      */
 
-          Zweig z = (schueler.AlteFOBOSO() ? Zweig.None : schueler.Zweig); // Profilfächer haben neue Sortierung
-          alleFaecher.Sort((x,y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
-          alleKurse.Sort((x,y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
+      Zweig z = (schueler.AlteFOBOSO() ? Zweig.None : schueler.Zweig); // Profilfächer haben neue Sortierung
+      alleFaecher.Sort((x,y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
+      alleKurse.Sort((x,y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
 
-          // Schnitt, Unterpunktungen etc. berechnen
-          anzahlNoten = new int[7, 2];
-          InitAnzahlNoten();
-        }
+      // Schnitt, Unterpunktungen etc. berechnen
+      anzahlNoten = new int[7, 2];
+      InitAnzahlNoten();
+    }
 
-        public FachSchuelerNoten getFach(int kursid)
-        {
-            foreach (FachSchuelerNoten f in alleFaecher)
-            {
-                if (f.kursId == kursid) return f;
-            }
-            throw new IndexOutOfRangeException("FachSchuelerNoten.getFach: falsche kursid");            
-        }
+    public FachSchuelerNoten getFach(int kursid)
+    {
+      foreach (FachSchuelerNoten f in alleFaecher)
+      {
+        if (f.kursId == kursid) return f;
+      }
+      throw new IndexOutOfRangeException("FachSchuelerNoten.getFach: falsche kursid");            
+  }
 
     /// <summary>
     /// Liefert die Noten des Schülers im übergebenen Fach.
@@ -204,11 +210,15 @@ namespace diNo
       int Punktesumme = 0;
       int AnzahlFaecher = 0;
       Unterpunktungen="";
-      foreach (var fachNoten in alleKurse)
+
+      List<FachSchuelerNoten> zuAnalysierendeNoten; // zum Abi werden alle Fächer betrachtet
+      zuAnalysierendeNoten = (zeitpunkt >= Zeitpunkt.ErstePA && zeitpunkt <= Zeitpunkt.DrittePA ? alleFaecher : alleKurse);
+
+      foreach (var fachNoten in zuAnalysierendeNoten)
       {
         kuerzel = fachNoten.getFach.Kuerzel;
         if (schueler.AlteFOBOSO() &&  (kuerzel == "F" || kuerzel == "Smw" || kuerzel == "Sw" || kuerzel == "Sm" || kuerzel == "Ku")) continue;  // keine Vorrückungsfächer
-        if (!schueler.AlteFOBOSO() && fachNoten.getFach.NichtNC) continue;  // Nicht-NC-Fächer
+        if (!schueler.AlteFOBOSO() && fachNoten.getFach.NichtNC) continue;  // Nicht-NC-Fächer zählen gar nicht
         byte? relevanteNote = fachNoten.getRelevanteNote(zeitpunkt);
         int istSAP = fachNoten.getFach.IstSAPFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse) ? 1:0;
         if (relevanteNote != null)
@@ -218,7 +228,7 @@ namespace diNo
           if (relevanteNote == 0)
           {
             anzahlNoten[6,istSAP]++;
-            if (kuerzel=="D") hatDeutsch6=true;
+            if (kuerzel=="D") hatDeutsch6=true; // nur AlteFOBOSO
           }
           else if (relevanteNote < 4) anzahlNoten[5,istSAP]++;          
           else if (relevanteNote >=13) anzahlNoten[1,istSAP]++;
@@ -230,6 +240,10 @@ namespace diNo
 
           if (relevanteNote <4 || relevanteNote == 4 && zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
             Unterpunktungen += fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
+        }
+        if (istSAP==1 && (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA))
+        {
+          InitAbiNoten(fachNoten);
         }
       }
 
@@ -251,6 +265,33 @@ namespace diNo
       Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2, MidpointRounding.AwayFromZero);
       if (Unterpunktungen != "" && !schueler.AlteFOBOSO() && !(zeitpunkt==Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse))
         Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
+    }
+
+    private void InitAbiNoten(FachSchuelerNoten f)
+    {      
+      decimal? apg=null;
+      if (f.schueler.AlteFOBOSO()) // wenn raus: dann apg ggf. auf Ganzzahl umstellen
+      {
+        apg = f.getSchnitt(Halbjahr.Zweites).PruefungGesamt;
+      }
+      else
+      {
+        HjLeistung hj = f.getHjLeistung(HjArt.AP);
+        if (hj!=null)
+          apg = hj.Punkte2Dez;
+      }
+
+      if (apg != null && apg < (decimal)3.5)
+      {
+        UnterpunktungenAbi += f.getFach.Kuerzel + "-Abi(" + apg + ") ";
+        if (apg < (decimal)1.0) abi6er++; else abi5er++;
+          
+      }
+    }
+
+    public bool HatAbiNichtBestanden()
+    {
+      return (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && abi6er > 0 || abi6er * 2 + abi5er > 2);
     }
 
     public bool HatNichtBestanden()
@@ -277,7 +318,7 @@ namespace diNo
     public bool KannAusgleichen()
     {
       // geht nur, wenn 1x6 und keine 5 oder 2x5 und keine 6 vorliegt.
-      if (hatDeutsch6 || 2*AnzahlNoten(6) + AnzahlNoten(5) >2 || schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse)
+      if (!schueler.AlteFOBOSO() || hatDeutsch6 || 2*AnzahlNoten(6) + AnzahlNoten(5) >2 || schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Vorklasse)
         return false;
 
       if (AnzahlNoten(3,true)>=3) return true; // Ausgleich mit 3x3 in Prüfungsfächern
@@ -351,12 +392,23 @@ namespace diNo
       return (anz6==0 && anz5<=1); // dann hätte er bestanden
     }
 
+    public bool DarfInBOS13()
+    {
+      if (schueler.Data.Schulart != "B" || schueler.getKlasse.Jahrgangsstufe != Jahrgangsstufe.Zwoelf) return false;
+
+      foreach (var f in alleKurse)
+      {
+        if (f.getHjLeistung(HjArt.JN).Punkte < 4)
+          return false;
+      }
+      return true;
+    }
   }
 
-    /// <summary>
-    /// Verwaltet alle Noten eines Schülers in einem Fach (=Kurs)
-    /// </summary>
-    public class FachSchuelerNoten
+  /// <summary>
+  /// Verwaltet alle Noten eines Schülers in einem Fach (=Kurs)
+  /// </summary>
+  public class FachSchuelerNoten
     {
         public Schueler schueler;        
         private Fach fach=null;
@@ -557,7 +609,11 @@ namespace diNo
             NoteUngueltig = true;
           }
         }
-        else hj = getHjLeistung(HjArt.GesErg);
+        else
+        {
+          hj = getHjLeistung(HjArt.GesErg);
+          if (hj==null) hj = getHjLeistung(HjArt.JN); // behelfsweise, damit man grob den Leistungsstand überprüfen kann
+        }
 
         if (hj == null) return null;
         else
@@ -700,7 +756,7 @@ namespace diNo
 
       if (map>15) return "nicht möglich";
       else return map.ToString();
-    }     
+    } 
   }
 
 }
