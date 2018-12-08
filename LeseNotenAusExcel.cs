@@ -63,10 +63,7 @@ namespace diNo
 
     protected void Status(string meldung)
     {
-      if (this.StatusChanged != null)
-      {
-        this.StatusChanged(this, new StatusChangedEventArgs() { Meldung = meldung });
-      }
+      this.StatusChanged?.Invoke(this, new StatusChangedEventArgs() { Meldung = meldung });
     }
 
     protected void HinweiseAusgeben(BasisNotendatei xls)
@@ -287,6 +284,13 @@ namespace diNo
         if (fachreferat != null)
         {
           HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.FR, jg);
+          if (l.getFach.Id != kurs.getFach.Id)
+          {
+            Schueler derSchueler = Zugriff.Instance.SchuelerRep.Find(sid);
+            hinweise.Add("Sie haben ein vorhandenes Fachreferat von " + derSchueler.NameVorname + " im Fach " + l.getFach.Bezeichnung + " überschrieben.");
+            hinweise.Add("Bitte prüfen Sie ggf. mit der Lehrkraft des Faches die Korrektheit der Fachreferat-Eintragungen!");
+            l.getFach = kurs.getFach;
+          }
           l.Punkte = (byte)fachreferat;
           l.Punkte2Dez = Convert.ToDecimal((byte)fachreferat);
           l.WriteToDB();
@@ -430,7 +434,7 @@ namespace diNo
     private HjLeistung FindOrCreateHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art, Jahrgangsstufe jg)
     {
       var vorhandeneNote = FindHjLeistung(sid, ada, art,jg);
-      return vorhandeneNote != null ? vorhandeneNote : new HjLeistung(sid, kurs.getFach, art, jg);
+      return vorhandeneNote ?? new HjLeistung(sid, kurs.getFach, art, jg);
     }
 
     private HjLeistung FindHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art, Jahrgangsstufe jg)

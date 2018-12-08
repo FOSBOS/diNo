@@ -38,12 +38,19 @@ namespace diNo
       if (!r.IsSchnittMdlNull()) SchnittMdl =  r.SchnittMdl;      
     }
 
-    public Fach getFach { get
+    public Fach getFach
     {
-      if (fach==null)
-          fach=Zugriff.Instance.FachRep.Find(data.FachId);
-      return fach;
-    }}
+      get
+      {
+        if (fach == null)
+          fach = Zugriff.Instance.FachRep.Find(data.FachId);
+        return fach;
+      }
+      set // das passiert eigentlich nie. Nur bei Fachreferaten kann es sein, dass man das Fach überschreiben muss.
+      {
+        fach = value;
+      }
+    }
 
     public void WriteToDB()
     {
@@ -56,6 +63,7 @@ namespace diNo
       {
         data.Punkte=Punkte;
         data.Status = (byte)Status;
+        data.FachId = getFach.Id;
         if (Punkte2Dez==null) data.SetPunkte2DezNull(); else data.Punkte2Dez = Punkte2Dez.GetValueOrDefault();
         if (SchnittMdl==null) data.SetSchnittMdlNull(); else data.SchnittMdl = SchnittMdl.GetValueOrDefault();
         ta.Update(data);
