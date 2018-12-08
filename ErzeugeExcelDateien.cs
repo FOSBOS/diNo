@@ -346,8 +346,7 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
         case "Wl":
         case "Rl":
         case "Inf": //Informatik für Sozial-13
-        case "Inf_WT": // Informatik Wahlfach für Techniker
-        case "Inf_W_AS": // Informatik Wahlfach für ABU, Soziale
+        case "Inf_W_AS": // Informatik Wahlfach für ABU, Soziale (für Inf_T gilt der Matheschlüssel)
         case "WAk": // Wirtschaft aktuell
         case "WR": // Wirtschaft und Recht
         case "IBS": // International Business Studies
