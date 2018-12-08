@@ -61,15 +61,15 @@ namespace diNo
               // vertiefung1 und vertiefung2 sind nur bei den Sozialen gefüllt
               // bemerkung und stelle sind für uns auch nicht so wichtig und dürften null sein
               byte? jahresPunkte = fpaZeile.IsJahrespunkteNull() ? (byte?)null : fpaZeile.Jahrespunkte;
-              string bemerkung = fpaZeile.IsBemerkungNull() ? null : fpaZeile.Bemerkung;
+              string bemerkung = fpaZeile.IsBemerkungNull() ? null : fpaZeile.Bemerkung.Replace("\n", ""); // mehrzeilig geht nicht mit csv
               byte? vertiefung1 = fpaZeile.IsVertiefung1Null() ? (byte?)null : fpaZeile.Vertiefung1;
               byte? vertiefung2 = fpaZeile.IsVertiefung2Null() ? (byte?)null : fpaZeile.Vertiefung2;
-              string stelle = fpaZeile.IsStelleNull() ? null : fpaZeile.Stelle;
+              string stelle = fpaZeile.IsStelleNull() ? null : fpaZeile.Stelle.Replace(";", ".").Replace("\n", "");
               {
                 // Erzeugt eine Zeile mit mind. 12 durch ; getrennten Werten (kann mehr sein, falls in der Bemerkung auch ;e enthalten sind)
                 writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + FpAKennzeichen + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Halbjahr + Separator + jahresPunkte + Separator + fpaZeile.Vertiefung + Separator + vertiefung1 + Separator + vertiefung2 + Separator + fpaZeile.Anleitung + Separator + fpaZeile.Betrieb + Separator + stelle + Separator + bemerkung);
-                // dasselbe als Hj-Leistung abspeichern:
-                writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + FpAKuerzel + Separator + "11" + Separator + fpaZeile.Gesamt + Separator + "" + Separator + "" + Separator + fpaZeile.Halbjahr + Separator + 0);
+                // dasselbe als Hj-Leistung abspeichern: trage hierbei Gesamt auch als mdl. und Note2Dez ein (ist richtiger als leer lassen)
+                writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + FpAKuerzel + Separator + "11" + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Halbjahr + Separator + 0);
               }
             }
           }
@@ -80,6 +80,7 @@ namespace diNo
 
     /// <summary>
     /// Importiert die Halbjahresleistungen der Schüler.
+    /// Schreibt fehlerhafte Datensätze in ein ErrorFile.
     /// </summary>
     /// <param name="fileName">Der Dateiname.</param>
     public static void ImportierteHJLeistungen(string fileName)
@@ -89,13 +90,18 @@ namespace diNo
       FpaTableAdapter fpata = new FpaTableAdapter();
       using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(stream))
+      using (StreamWriter writer = new StreamWriter(new FileStream(fileName+"_err.txt", FileMode.Create, FileAccess.ReadWrite)))
       {
         var schuelerAdapter = new SchuelerTableAdapter();
         while (!reader.EndOfStream)
         {
-          string[] line = reader.ReadLine().Split(SeparatorChar);
+          string orignal = reader.ReadLine();
+          string[] line = orignal.Split(SeparatorChar);
           if (line.Length != 9 && line.Length < 13)
+          {
+            writer.WriteLine(orignal);
             continue;
+          }
           int schuelerId = int.Parse(line[0]);
           var schuelerGefunden = schuelerAdapter.GetDataById(schuelerId);
           if (schuelerGefunden == null || schuelerGefunden.Count == 0)
@@ -125,8 +131,6 @@ namespace diNo
                 decimal schnittMdl = decimal.Parse(line[6]);
 
                 HjStatus status = (HjStatus)byte.Parse(line[8]);
-
-                
                 ada.Insert(schueler.Id, fachId, (byte)notenArt, note, note2Dez, schnittMdl, (int)jgstufe, (byte)status);
               }
             }
