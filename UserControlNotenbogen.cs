@@ -165,8 +165,7 @@ namespace diNo
     private void setStatus(HjStatus status)
     {
       HjLeistung hj = (HjLeistung) dataGridNoten.SelectedCells[0].Tag;
-      hj.Status = status;
-      hj.WriteToDB();
+      hj.SetStatus(status);      
       SetBackgroundColor(hj, dataGridNoten.SelectedCells[0]);
     }
 

@@ -261,5 +261,44 @@ namespace diNo
       foreach (var s in obj)
         t.ZufallHjLeistung(s);
     }
+
+    private void btnEinbringung_Click(object sender, EventArgs e)
+    {
+      var obj = getSelectedObjects();
+      var b = new Berechnungen(Zeitpunkt.None);
+      b.aufgaben.Add(b.BerechneEinbringung);
+      foreach (var s in obj)
+        b.BerechneSchueler(s);
+    }
+
+    private void DelEinbr(HjLeistung hj)
+    {
+      if (hj != null) hj.SetStatus(HjStatus.None);
+    }
+
+    private void btnDelEinbringung_Click(object sender, EventArgs e)
+    {
+      var obj = getSelectedObjects();
+      foreach (var s in obj)
+      {
+        foreach (var f in s.getNoten.alleFaecher)
+        {
+          DelEinbr(f.getHjLeistung(HjArt.Hj1));
+          DelEinbr(f.getHjLeistung(HjArt.Hj2));          
+          DelEinbr(f.getVorHjLeistung(HjArt.Hj1));
+          DelEinbr(f.getVorHjLeistung(HjArt.Hj2));
+        }
+      }
+    }
+
+    private void btnGesErg_Click(object sender, EventArgs e)
+    {
+      var obj = getSelectedObjects();
+      var b = new Berechnungen(Zeitpunkt.None);
+      b.aufgaben.Add(b.CalcGesErg);
+      foreach (var s in obj)
+        b.BerechneSchueler(s);
+    }
   }
 }
+

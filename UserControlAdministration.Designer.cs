@@ -72,6 +72,10 @@
       this.lblStatus = new System.Windows.Forms.Label();
       this.btnHjLeistungenWuerfeln = new System.Windows.Forms.Button();
       this.groupboxTest = new System.Windows.Forms.GroupBox();
+      this.groupBoxReparatur = new System.Windows.Forms.GroupBox();
+      this.btnEinbringung = new System.Windows.Forms.Button();
+      this.btnDelEinbringung = new System.Windows.Forms.Button();
+      this.btnGesErg = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -81,6 +85,7 @@
       this.groupBoxEinstellungen.SuspendLayout();
       this.gbLeseModusExcel.SuspendLayout();
       this.groupboxTest.SuspendLayout();
+      this.groupBoxReparatur.SuspendLayout();
       this.SuspendLayout();
       // 
       // groupBoxAnalyse
@@ -561,10 +566,53 @@
       this.groupboxTest.TabStop = false;
       this.groupboxTest.Text = "Testverfahren";
       // 
+      // groupBoxReparatur
+      // 
+      this.groupBoxReparatur.Controls.Add(this.btnGesErg);
+      this.groupBoxReparatur.Controls.Add(this.btnDelEinbringung);
+      this.groupBoxReparatur.Controls.Add(this.btnEinbringung);
+      this.groupBoxReparatur.Location = new System.Drawing.Point(781, 28);
+      this.groupBoxReparatur.Name = "groupBoxReparatur";
+      this.groupBoxReparatur.Size = new System.Drawing.Size(198, 233);
+      this.groupBoxReparatur.TabIndex = 9;
+      this.groupBoxReparatur.TabStop = false;
+      this.groupBoxReparatur.Text = "Reparaturen";
+      // 
+      // btnEinbringung
+      // 
+      this.btnEinbringung.Location = new System.Drawing.Point(15, 16);
+      this.btnEinbringung.Name = "btnEinbringung";
+      this.btnEinbringung.Size = new System.Drawing.Size(163, 23);
+      this.btnEinbringung.TabIndex = 7;
+      this.btnEinbringung.Text = "Einbringung berechnen";
+      this.btnEinbringung.UseVisualStyleBackColor = true;
+      this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
+      // 
+      // btnDelEinbringung
+      // 
+      this.btnDelEinbringung.Location = new System.Drawing.Point(15, 45);
+      this.btnDelEinbringung.Name = "btnDelEinbringung";
+      this.btnDelEinbringung.Size = new System.Drawing.Size(163, 23);
+      this.btnDelEinbringung.TabIndex = 8;
+      this.btnDelEinbringung.Text = "Einbringung löschen";
+      this.btnDelEinbringung.UseVisualStyleBackColor = true;
+      this.btnDelEinbringung.Click += new System.EventHandler(this.btnDelEinbringung_Click);
+      // 
+      // btnGesErg
+      // 
+      this.btnGesErg.Location = new System.Drawing.Point(15, 77);
+      this.btnGesErg.Name = "btnGesErg";
+      this.btnGesErg.Size = new System.Drawing.Size(163, 23);
+      this.btnGesErg.TabIndex = 9;
+      this.btnGesErg.Text = "Gesamtergebnis berechnen";
+      this.btnGesErg.UseVisualStyleBackColor = true;
+      this.btnGesErg.Click += new System.EventHandler(this.btnGesErg_Click);
+      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.groupBoxReparatur);
       this.Controls.Add(this.groupboxTest);
       this.Controls.Add(this.lblStatus);
       this.Controls.Add(this.groupBoxEinstellungen);
@@ -588,6 +636,7 @@
       this.gbLeseModusExcel.ResumeLayout(false);
       this.gbLeseModusExcel.PerformLayout();
       this.groupboxTest.ResumeLayout(false);
+      this.groupBoxReparatur.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -639,5 +688,9 @@
     private System.Windows.Forms.Button btnReadWahlpflichtfaecher;
     private System.Windows.Forms.Button btnHjLeistungenWuerfeln;
     private System.Windows.Forms.GroupBox groupboxTest;
+    private System.Windows.Forms.GroupBox groupBoxReparatur;
+    private System.Windows.Forms.Button btnEinbringung;
+    private System.Windows.Forms.Button btnDelEinbringung;
+    private System.Windows.Forms.Button btnGesErg;
   }
 }

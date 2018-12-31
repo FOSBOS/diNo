@@ -56,11 +56,124 @@ namespace diNo
     }
     */
 
+
+
+    
     /// <summary>
     /// Methode macht einen Vorschlag zur Einbringung der Halbjahresleistungen eines Schülers.
     /// </summary>
     /// <param name="s">Der Schueler.</param>
     public void BerechneEinbringung(Schueler s)
+    {
+      var sowiesoPflicht = new List<HjLeistung>(); // zählen nicht zu den 25 bzw. 17 HjLeistungen
+      var einbringen = new List<HjLeistung>(); // enthält alle "weiteren" HjErgebnisse (außer FR, FPA, AP)
+      var streichen = new List<HjLeistung>();
+      var unbedingtStreichen = new List<HjLeistung>();
+
+
+      foreach (var fachNoten in s.getNoten.alleFaecher)
+      {
+        // Fachweise nicht die Punkte suchen        
+        if (!fachNoten.getFach.NichtNC)
+        {
+          var kuerzel = fachNoten.getFach.Kuerzel;
+          HjLeistung hjLeistung;
+
+          var hjLeistungen = new List<HjLeistung>();
+          foreach (HjArt art in Enum.GetValues(typeof(HjArt))) // 12./13. Klasse
+          {
+            if (art == HjArt.GesErg || art == HjArt.JN) continue; // JN, GE dürfen nicht verwendet werden
+            hjLeistung = fachNoten.getHjLeistung(art);
+            if (hjLeistung == null)
+              continue;
+
+            if (hjLeistung.Art == HjArt.AP || hjLeistung.Art == HjArt.FR || kuerzel == "FpA" /*TODO: Oder Seminarfach*/)
+            {
+              sowiesoPflicht.Add(hjLeistung);
+            }
+            else
+            {
+              hjLeistungen.Add(hjLeistung);
+            }
+          }
+
+          hjLeistung = fachNoten.getVorHjLeistung(HjArt.Hj1); // Leistung aus 11/1
+          if (hjLeistung != null)
+          {
+            if (kuerzel == "FpA") hjLeistung.SetStatus(HjStatus.Einbringen);
+            else if (hjLeistungen.Count == 0) hjLeistungen.Add(hjLeistung); // in 12 nicht vorhanden --> einbringbar
+            else hjLeistung.SetStatus(HjStatus.NichtEinbringen); // kann nie eingebracht werden, wenn in 12 vorhanden
+          }
+
+          hjLeistung = fachNoten.getVorHjLeistung(HjArt.Hj2);
+          if (hjLeistung != null)
+          {
+            if (kuerzel == "FpA") hjLeistung.SetStatus(HjStatus.Einbringen);
+            else hjLeistungen.Add(hjLeistung); // 11/2 vorhanden --> einbringbar            
+          }
+
+          // jetzt stehen alle "normalen" Halbjahresleistungen in hjLeistungen.
+          // Sortieren, nur eine davon kann gestrichen werden
+          if (hjLeistungen.Count > 0)
+          {
+            hjLeistungen.Sort((x, y) => y.Punkte.CompareTo(x.Punkte));
+            einbringen.AddRange(hjLeistungen.GetRange(0, hjLeistungen.Count - 1)); // bis auf eine müssen eingebracht werden
+
+            // rutscht man mit allen unter 4, obwohl das bei einer Streichung nicht passiert, lassen wir den auf jeden Fall weg
+            if (hjLeistungen.Sum((x) => x.Punkte) /(double) hjLeistungen.Count < 3.5
+              && hjLeistungen.GetRange(0, hjLeistungen.Count - 1).Sum((x) => x.Punkte) /(double) (hjLeistungen.Count-1) >= 3.5)
+              unbedingtStreichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
+            else streichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
+          }
+        }
+      }
+
+      int fehlend = GetNoetigeAnzahl(s) - einbringen.Count;
+
+      if (fehlend > streichen.Count) // nicht genügend vorhanden ==> ggf. aus unbedingtStreichen holen
+      {
+        einbringen.AddRange(streichen);
+        streichen.Clear();
+        fehlend -= streichen.Count;
+        if (fehlend > unbedingtStreichen.Count)
+        {
+          einbringen.AddRange(unbedingtStreichen);
+          unbedingtStreichen.Clear();
+          fehlend -= streichen.Count;
+          System.Windows.Forms.MessageBox.Show("Es fehlen " + fehlend +" HjLeistungen bei Schüler " + s.NameVorname + ", " + s.getKlasse.Bezeichnung, "diNo", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+        }
+        else
+        {
+          unbedingtStreichen.Sort((x, y) => y.Punkte.CompareTo(x.Punkte));
+          einbringen.AddRange(unbedingtStreichen.GetRange(0, fehlend));
+          unbedingtStreichen.RemoveRange(0, fehlend);
+        }
+      }
+      else
+      {
+        streichen.Sort((x, y) => y.Punkte.CompareTo(x.Punkte));
+        einbringen.AddRange(streichen.GetRange(0, fehlend));
+        streichen.RemoveRange(0, fehlend);
+      }
+
+      foreach (var hjLeistung in sowiesoPflicht.Union(einbringen))
+      {
+        hjLeistung.Status = HjStatus.Einbringen;
+        hjLeistung.WriteToDB();
+      }
+      foreach (var hjLeistung in streichen.Union(unbedingtStreichen))
+      {
+        hjLeistung.Status = HjStatus.NichtEinbringen;
+        hjLeistung.WriteToDB();
+      }    
+    }
+
+    /*
+    /// <summary>
+    /// Methode macht einen Vorschlag zur Einbringung der Halbjahresleistungen eines Schülers.
+    /// </summary>
+    /// <param name="s">Der Schueler.</param>
+    public void BerechneEinbringung1(Schueler s)
     {
       var sowiesoPflicht = new List<HjLeistung>();
       var einbringen = new List<HjLeistung>();
@@ -77,7 +190,7 @@ namespace diNo
             if (hjLeistung == null)
               continue;
 
-            if (hjLeistung.Art == HjArt.AP || hjLeistung.Art == HjArt.FR /*TODO: Oder Seminarfach oder FpA*/)
+            if (hjLeistung.Art == HjArt.AP || hjLeistung.Art == HjArt.FR)
             {
               sowiesoPflicht.Add(hjLeistung);
             }
@@ -95,7 +208,7 @@ namespace diNo
 
           // jetzt stehen alle "normalen" Halbjahresleistungen in hjLeistungen.
           // Sortieren, nur eine davon kann gestrichen werden
-          hjLeistungen.Sort((x, y) => x.Punkte.CompareTo(y.Punkte));
+          hjLeistungen.Sort((x, y) => x.Punkte.CompareTo(y.Punkte));          
           einbringen.AddRange(hjLeistungen.GetRange(0, hjLeistungen.Count - 1));
           streichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
         }
@@ -117,7 +230,7 @@ namespace diNo
         hjLeistung.WriteToDB();
       }
     }
-
+  */
     private int GetNoetigeAnzahl(Schueler s)
     {
       if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)

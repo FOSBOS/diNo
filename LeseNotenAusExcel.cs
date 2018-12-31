@@ -193,8 +193,10 @@ namespace diNo
       {
         HjArt art = GetAktuellesHalbjahr();
         Jahrgangsstufe jg;
-        if (kurs.getFach.Typ == FachTyp.WPF) // WPFs werden Jg-Übergreifend angeboten, Klasse des Schülers verwenden
-          jg = (Zugriff.Instance.SchuelerRep.Find(sid)).getKlasse.Jahrgangsstufe;
+        Klasse klasse = (Zugriff.Instance.SchuelerRep.Find(sid)).getKlasse;
+        // WPFs werden Jg-Übergreifend angeboten, Klasse des Schülers verwenden, IntVk teilweise gemischt mit anderen JgStufen
+        if (kurs.getFach.Typ == FachTyp.WPF || klasse.Jahrgangsstufe==Jahrgangsstufe.IntVk) 
+          jg = klasse.Jahrgangsstufe;
         else  // Kurs hängt an Klasse (alte Noten werden weiterhin dieser Klasse zugeordnet)
           jg = kurs.JgStufe;
 

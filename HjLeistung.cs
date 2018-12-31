@@ -78,6 +78,12 @@ namespace diNo
       }        
     }
 
+    public void SetStatus(HjStatus s)
+    {
+      Status = s;
+      WriteToDB();
+    }
+
     public Color GetBackgroundColor()
     {
       if (Status == HjStatus.Ungueltig) return Color.Gray;
