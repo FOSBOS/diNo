@@ -36,6 +36,12 @@ namespace diNo
       }
     }
 
+    public void RefreshTabs()
+    {
+      userControlSchueleransicht1.Schueler = null;
+      treeListView1_SelectedIndexChanged(this, null);
+    }
+
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
     {
       Zugriff.Instance.markierteSchueler.Clear();

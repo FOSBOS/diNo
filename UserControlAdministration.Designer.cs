@@ -73,9 +73,9 @@
       this.btnHjLeistungenWuerfeln = new System.Windows.Forms.Button();
       this.groupboxTest = new System.Windows.Forms.GroupBox();
       this.groupBoxReparatur = new System.Windows.Forms.GroupBox();
-      this.btnEinbringung = new System.Windows.Forms.Button();
-      this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnGesErg = new System.Windows.Forms.Button();
+      this.btnDelEinbringung = new System.Windows.Forms.Button();
+      this.btnEinbringung = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -205,6 +205,7 @@
       this.cbNotendruck.Items.AddRange(new object[] {
             "Notenmitteilung",
             "Gefährdungen",
+            "Einbringungsvorschlag",
             "Abiergebnisse",
             "Bescheinigung",
             "Zwischenzeugnis",
@@ -578,15 +579,15 @@
       this.groupBoxReparatur.TabStop = false;
       this.groupBoxReparatur.Text = "Reparaturen";
       // 
-      // btnEinbringung
+      // btnGesErg
       // 
-      this.btnEinbringung.Location = new System.Drawing.Point(15, 16);
-      this.btnEinbringung.Name = "btnEinbringung";
-      this.btnEinbringung.Size = new System.Drawing.Size(163, 23);
-      this.btnEinbringung.TabIndex = 7;
-      this.btnEinbringung.Text = "Einbringung berechnen";
-      this.btnEinbringung.UseVisualStyleBackColor = true;
-      this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
+      this.btnGesErg.Location = new System.Drawing.Point(15, 77);
+      this.btnGesErg.Name = "btnGesErg";
+      this.btnGesErg.Size = new System.Drawing.Size(163, 23);
+      this.btnGesErg.TabIndex = 9;
+      this.btnGesErg.Text = "Gesamtergebnis berechnen";
+      this.btnGesErg.UseVisualStyleBackColor = true;
+      this.btnGesErg.Click += new System.EventHandler(this.btnGesErg_Click);
       // 
       // btnDelEinbringung
       // 
@@ -598,15 +599,15 @@
       this.btnDelEinbringung.UseVisualStyleBackColor = true;
       this.btnDelEinbringung.Click += new System.EventHandler(this.btnDelEinbringung_Click);
       // 
-      // btnGesErg
+      // btnEinbringung
       // 
-      this.btnGesErg.Location = new System.Drawing.Point(15, 77);
-      this.btnGesErg.Name = "btnGesErg";
-      this.btnGesErg.Size = new System.Drawing.Size(163, 23);
-      this.btnGesErg.TabIndex = 9;
-      this.btnGesErg.Text = "Gesamtergebnis berechnen";
-      this.btnGesErg.UseVisualStyleBackColor = true;
-      this.btnGesErg.Click += new System.EventHandler(this.btnGesErg_Click);
+      this.btnEinbringung.Location = new System.Drawing.Point(15, 16);
+      this.btnEinbringung.Name = "btnEinbringung";
+      this.btnEinbringung.Size = new System.Drawing.Size(163, 23);
+      this.btnEinbringung.TabIndex = 7;
+      this.btnEinbringung.Text = "Einbringung berechnen";
+      this.btnEinbringung.UseVisualStyleBackColor = true;
+      this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
       // 
       // UserControlAdministration
       // 

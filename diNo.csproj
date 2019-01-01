@@ -109,6 +109,12 @@
     <Compile Include="Globales.cs" />
     <Compile Include="HjLeistung.cs" />
     <Compile Include="ImportKlassenleiter.cs" />
+    <Compile Include="InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InputBox.Designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="KurseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -260,6 +266,9 @@
     <EmbeddedResource Include="Datenauswahl.resx">
       <DependentUpon>Datenauswahl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Klassenansicht.resx">
       <DependentUpon>Klassenansicht.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -273,6 +282,7 @@
     <EmbeddedResource Include="rptLehrerRolle.rdlc" />
     <EmbeddedResource Include="rptEinserAbi.rdlc" />
     <EmbeddedResource Include="rptAbiturzeugnis.rdlc" />
+    <EmbeddedResource Include="rptEinbringung.rdlc" />
     <EmbeddedResource Include="rptZeugnis.rdlc" />
     <EmbeddedResource Include="rptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="rptKlassenliste.rdlc" />
@@ -288,6 +298,7 @@
     <EmbeddedResource Include="subrptAbiergebnisseAlt.rdlc" />
     <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
+    <EmbeddedResource Include="subrptEinbringung.rdlc" />
     <EmbeddedResource Include="subrptNoten.rdlc" />
     <EmbeddedResource Include="subrptNotenSjAlt.rdlc" />
     <EmbeddedResource Include="subrptFPANoten.rdlc" />
@@ -387,6 +398,7 @@
     <None Include="Properties\DataSources\LehrerRolleDruck.datasource" />
     <None Include="Properties\DataSources\NotenbogenDruck.datasource" />
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />
+    <None Include="Properties\DataSources\NotenHjDruck.datasource" />
     <None Include="Properties\DataSources\NotenmitteilungDruck.datasource" />
     <None Include="Properties\DataSources\SchuelerDruck.datasource" />
     <None Include="Properties\DataSources\SchuljahrSchulartDruck.datasource" />

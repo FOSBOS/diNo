@@ -21,6 +21,7 @@ namespace diNo
         groupBoxImport.Visible = false;
         groupBoxExport.Visible = false;
         groupBoxEinstellungen.Visible = false;
+        groupBoxReparatur.Visible = false;
       }
       else
       {                
@@ -260,6 +261,7 @@ namespace diNo
       var obj = getSelectedObjects();
       foreach (var s in obj)
         t.ZufallHjLeistung(s);
+
     }
 
     private void btnEinbringung_Click(object sender, EventArgs e)
@@ -269,6 +271,8 @@ namespace diNo
       b.aufgaben.Add(b.BerechneEinbringung);
       foreach (var s in obj)
         b.BerechneSchueler(s);
+
+      RefreshNotenbogen();
     }
 
     private void DelEinbr(HjLeistung hj)
@@ -289,6 +293,7 @@ namespace diNo
           DelEinbr(f.getVorHjLeistung(HjArt.Hj2));
         }
       }
+      RefreshNotenbogen();
     }
 
     private void btnGesErg_Click(object sender, EventArgs e)
@@ -298,6 +303,12 @@ namespace diNo
       b.aufgaben.Add(b.CalcGesErg);
       foreach (var s in obj)
         b.BerechneSchueler(s);
+      RefreshNotenbogen();
+    }
+
+    private void RefreshNotenbogen()
+    {
+      ((Klassenansicht)(Parent.Parent.Parent)).RefreshTabs();
     }
   }
 }

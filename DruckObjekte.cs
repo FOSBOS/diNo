@@ -10,6 +10,7 @@ namespace diNo
   {
     Notenmitteilung,
     Gefaehrdung,
+    Einbringung,
     Abiergebnisse,
     Bescheinigung,
     Zwischenzeugnis,
@@ -93,6 +94,7 @@ namespace diNo
         case Bericht.Gefaehrdung: return "rptGefaehrdung";
         case Bericht.Abiergebnisse: return "rptAbiergebnisse";
         case Bericht.Notenmitteilung: return "rptNotenmitteilung";
+        case Bericht.Einbringung: return "rptEinbringung";
 
         case Bericht.Klassenliste: return "rptKlassenliste";
         case Bericht.EinserAbi: return "rptEinserAbi";
@@ -424,6 +426,7 @@ namespace diNo
     public string Hj1 { get; protected set; }  // Halbjahrespunktzahl 1.Hj
     public string Hj2 { get; protected set; }
     public string GE { get; private set; } // Gesamtergebnis
+    public string SGE { get; private set; } // Schnitt-Gesamtergebnis (2 Dez)
     protected HjLeistung hj1, hj2;
 
     public string VorHj1 { get; private set; }  // 11/1 und 11/2
@@ -436,6 +439,7 @@ namespace diNo
     public NotenDruck(FachSchuelerNoten s, Bericht b)
     {
       fachBez = s.getFach.Bezeichnung;
+      if ((b == Bericht.Einbringung || b == Bericht.Abiergebnisse) && s.getFach.NichtNC) fachBez += " *";
       if (b == Bericht.Notenbogen && fachBez.Contains("irtschafts")) // Fachbezeichnung sind zu lang für Notenbogen
       {
         string kuerzel = s.getFach.Kuerzel;
@@ -451,15 +455,17 @@ namespace diNo
       {
         VorHj1 = putHj(s.getVorHjLeistung(HjArt.Hj1));
         VorHj2 = putHj(s.getVorHjLeistung(HjArt.Hj2));
-      }          
-      GE = putHj(s.getHjLeistung(HjArt.GesErg));
+      }
+      var ge = s.getHjLeistung(HjArt.GesErg);
+      GE = putHj(ge);
+      SGE = ge == null ? "" : String.Format("{0:f2}", ge.Punkte2Dez);
     }
 
     // aktuell nur für Fachreferat
     public NotenDruck(HjLeistung h)
     {
       if (h.Art == HjArt.FR)
-        fachBez = "Fachreferat  in " + h.getFach.Bezeichnung;
+        fachBez = "Fachreferat in " + h.getFach.Bezeichnung;
       else
         fachBez = h.getFach.Bezeichnung;
 
@@ -472,7 +478,7 @@ namespace diNo
     {
       if (b == Bericht.Abiergebnisse) return new NotenAbiDruck(s);
       if (b == Bericht.Notenbogen && (byte)s.schueler.getKlasse.Jahrgangsstufe < 12) return new NotenSjDruck(s);
-      return new NotenHjDruck(s);
+      return new NotenHjDruck(s,b);
     }
 
     protected string putHj(FachSchuelerNoten s, HjArt a)
@@ -483,8 +489,9 @@ namespace diNo
 
     protected string putHj(HjLeistung hjl)
     {
-      if (hjl != null) return hjl.Punkte.ToString();
-      else return "";
+      if (hjl == null || hjl.Status == HjStatus.Ungueltig) return "";
+      if (hjl.Status == HjStatus.NichtEinbringen) return "(" + hjl.Punkte.ToString() + ")";
+      return hjl.Punkte.ToString();      
     }
 
     // Liefert die erste Note einer Notenliste (v.a. bei einelementigen Noten, wie SAP,...)
@@ -523,7 +530,7 @@ namespace diNo
     public string MAP { get; private set; }
     public string APG { get; private set; }
 
-    public NotenHjDruck(FachSchuelerNoten s) : base(s, Bericht.Notenbogen)
+    public NotenHjDruck(FachSchuelerNoten s, Bericht b) : base(s, b)
     {
       Halbjahr h = Zugriff.Instance.aktHalbjahr;
       SA = s.SA(h);

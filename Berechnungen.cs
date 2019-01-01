@@ -120,8 +120,7 @@ namespace diNo
             einbringen.AddRange(hjLeistungen.GetRange(0, hjLeistungen.Count - 1)); // bis auf eine müssen eingebracht werden
 
             // rutscht man mit allen unter 4, obwohl das bei einer Streichung nicht passiert, lassen wir den auf jeden Fall weg
-            if (hjLeistungen.Sum((x) => x.Punkte) /(double) hjLeistungen.Count < 3.5
-              && hjLeistungen.GetRange(0, hjLeistungen.Count - 1).Sum((x) => x.Punkte) /(double) (hjLeistungen.Count-1) >= 3.5)
+            if (UnbedingtStreichen(hjLeistungen))
               unbedingtStreichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
             else streichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
           }
@@ -231,6 +230,15 @@ namespace diNo
       }
     }
   */
+    // liefert wahr, wenn sich ohne Streichung zusätzlich eine 5 (oder 6) ergeben würde
+    private bool UnbedingtStreichen(List <HjLeistung>hjl)
+    {
+      double s = hjl.Sum((x) => x.Punkte) / (double)hjl.Count;
+      double s1 = hjl.GetRange(0, hjl.Count - 1).Sum((x) => x.Punkte) / (double)(hjl.Count - 1);
+
+      return (s1 >= 3.5 && s < 3.5 || s1 >= 1.0 && s < 1.0);
+    }
+
     private int GetNoetigeAnzahl(Schueler s)
     {
       if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)

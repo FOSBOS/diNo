@@ -43,16 +43,13 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridNoten = new System.Windows.Forms.DataGridView();
+      this.cFach = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.c11_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.undefiniertToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.einbringenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.nichtEinbringenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.ungueltigToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.chkShowHj1 = new System.Windows.Forms.CheckBox();
-      this.chkShowHj2 = new System.Windows.Forms.CheckBox();
-      this.chkShowAbi = new System.Windows.Forms.CheckBox();
-      this.cFach = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.c11_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.c11_2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.csLHj1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cSchnittMdl1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,6 +66,9 @@
       this.APG = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cJN = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.cGE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.chkShowHj1 = new System.Windows.Forms.CheckBox();
+      this.chkShowHj2 = new System.Windows.Forms.CheckBox();
+      this.chkShowAbi = new System.Windows.Forms.CheckBox();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).BeginInit();
       this.contextMenu.SuspendLayout();
       this.SuspendLayout();
@@ -116,6 +116,27 @@
       this.dataGridNoten.TabIndex = 1;
       this.dataGridNoten.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridNoten_CellMouseDown);
       // 
+      // cFach
+      // 
+      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.cFach.DefaultCellStyle = dataGridViewCellStyle2;
+      this.cFach.DividerWidth = 5;
+      this.cFach.Frozen = true;
+      this.cFach.HeaderText = "Fach";
+      this.cFach.Name = "cFach";
+      this.cFach.ReadOnly = true;
+      this.cFach.Width = 200;
+      // 
+      // c11_1
+      // 
+      this.c11_1.ContextMenuStrip = this.contextMenu;
+      this.c11_1.Frozen = true;
+      this.c11_1.HeaderText = "11/1";
+      this.c11_1.Name = "c11_1";
+      this.c11_1.ReadOnly = true;
+      this.c11_1.ToolTipText = "Punktzahl aus dem 1. Halbjahr der 11. Klasse";
+      this.c11_1.Width = 55;
+      // 
       // contextMenu
       // 
       this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -158,64 +179,6 @@
       this.ungueltigToolStripMenuItem.Tag = "3";
       this.ungueltigToolStripMenuItem.Text = "ungültig";
       this.ungueltigToolStripMenuItem.Click += new System.EventHandler(this.ungueltigToolStripMenuItem_Click);
-      // 
-      // chkShowHj1
-      // 
-      this.chkShowHj1.AutoSize = true;
-      this.chkShowHj1.Checked = true;
-      this.chkShowHj1.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chkShowHj1.Location = new System.Drawing.Point(3, 3);
-      this.chkShowHj1.Name = "chkShowHj1";
-      this.chkShowHj1.Size = new System.Drawing.Size(123, 17);
-      this.chkShowHj1.TabIndex = 2;
-      this.chkShowHj1.Text = "1. Halbjahr anzeigen";
-      this.chkShowHj1.UseVisualStyleBackColor = true;
-      this.chkShowHj1.CheckedChanged += new System.EventHandler(this.chkShowHj1_CheckedChanged);
-      // 
-      // chkShowHj2
-      // 
-      this.chkShowHj2.AutoSize = true;
-      this.chkShowHj2.Checked = true;
-      this.chkShowHj2.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chkShowHj2.Location = new System.Drawing.Point(3, 25);
-      this.chkShowHj2.Name = "chkShowHj2";
-      this.chkShowHj2.Size = new System.Drawing.Size(123, 17);
-      this.chkShowHj2.TabIndex = 3;
-      this.chkShowHj2.Text = "2. Halbjahr anzeigen";
-      this.chkShowHj2.UseVisualStyleBackColor = true;
-      this.chkShowHj2.CheckedChanged += new System.EventHandler(this.chkShowHj2_CheckedChanged);
-      // 
-      // chkShowAbi
-      // 
-      this.chkShowAbi.AutoSize = true;
-      this.chkShowAbi.Location = new System.Drawing.Point(3, 47);
-      this.chkShowAbi.Name = "chkShowAbi";
-      this.chkShowAbi.Size = new System.Drawing.Size(99, 17);
-      this.chkShowAbi.TabIndex = 4;
-      this.chkShowAbi.Text = "Abitur anzeigen";
-      this.chkShowAbi.UseVisualStyleBackColor = true;
-      this.chkShowAbi.CheckedChanged += new System.EventHandler(this.chkShowAbi_CheckedChanged);
-      // 
-      // cFach
-      // 
-      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      this.cFach.DefaultCellStyle = dataGridViewCellStyle2;
-      this.cFach.DividerWidth = 5;
-      this.cFach.Frozen = true;
-      this.cFach.HeaderText = "Fach";
-      this.cFach.Name = "cFach";
-      this.cFach.ReadOnly = true;
-      this.cFach.Width = 200;
-      // 
-      // c11_1
-      // 
-      this.c11_1.ContextMenuStrip = this.contextMenu;
-      this.c11_1.Frozen = true;
-      this.c11_1.HeaderText = "11/1";
-      this.c11_1.Name = "c11_1";
-      this.c11_1.ReadOnly = true;
-      this.c11_1.ToolTipText = "Punktzahl aus dem 1. Halbjahr der 11. Klasse";
-      this.c11_1.Width = 55;
       // 
       // c11_2
       // 
@@ -389,6 +352,43 @@
       this.cGE.ReadOnly = true;
       this.cGE.ToolTipText = "Gesamtergebnis";
       this.cGE.Width = 55;
+      // 
+      // chkShowHj1
+      // 
+      this.chkShowHj1.AutoSize = true;
+      this.chkShowHj1.Checked = true;
+      this.chkShowHj1.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.chkShowHj1.Location = new System.Drawing.Point(3, 3);
+      this.chkShowHj1.Name = "chkShowHj1";
+      this.chkShowHj1.Size = new System.Drawing.Size(123, 17);
+      this.chkShowHj1.TabIndex = 2;
+      this.chkShowHj1.Text = "1. Halbjahr anzeigen";
+      this.chkShowHj1.UseVisualStyleBackColor = true;
+      this.chkShowHj1.CheckedChanged += new System.EventHandler(this.chkShowHj1_CheckedChanged);
+      // 
+      // chkShowHj2
+      // 
+      this.chkShowHj2.AutoSize = true;
+      this.chkShowHj2.Checked = true;
+      this.chkShowHj2.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.chkShowHj2.Location = new System.Drawing.Point(3, 25);
+      this.chkShowHj2.Name = "chkShowHj2";
+      this.chkShowHj2.Size = new System.Drawing.Size(123, 17);
+      this.chkShowHj2.TabIndex = 3;
+      this.chkShowHj2.Text = "2. Halbjahr anzeigen";
+      this.chkShowHj2.UseVisualStyleBackColor = true;
+      this.chkShowHj2.CheckedChanged += new System.EventHandler(this.chkShowHj2_CheckedChanged);
+      // 
+      // chkShowAbi
+      // 
+      this.chkShowAbi.AutoSize = true;
+      this.chkShowAbi.Location = new System.Drawing.Point(3, 47);
+      this.chkShowAbi.Name = "chkShowAbi";
+      this.chkShowAbi.Size = new System.Drawing.Size(99, 17);
+      this.chkShowAbi.TabIndex = 4;
+      this.chkShowAbi.Text = "Abitur anzeigen";
+      this.chkShowAbi.UseVisualStyleBackColor = true;
+      this.chkShowAbi.CheckedChanged += new System.EventHandler(this.chkShowAbi_CheckedChanged);
       // 
       // UserControlNotenbogen
       // 

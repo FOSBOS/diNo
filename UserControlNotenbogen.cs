@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Globalization;
 
 namespace diNo
 {
@@ -23,6 +24,9 @@ namespace diNo
       chkShowHj1_CheckedChanged(this, null);
       chkShowHj2_CheckedChanged(this, null);
       chkShowAbi_CheckedChanged(this,null);
+
+      if (Zugriff.Instance.HatRolle(Rolle.Admin)) // bearbeiten von Punktewerten
+        dataGridNoten.CellDoubleClick += dataGridNoten_CellDoubleClick;
     }
   
     public Schueler Schueler
@@ -125,7 +129,17 @@ namespace diNo
       {
         c.Tag = hjl;
         c.Value = hjl.Punkte;
-        SetBackgroundColor(hjl, c);
+        SetBackgroundColor(hjl, c);        
+      }
+    }
+
+    private void EditHjLeistung(HjLeistung hj)
+    {
+      string input = InputBox.Show("Neue Notenpunkte:", hj.Punkte.ToString());
+      if (input != "")
+      {
+        hj.Punkte = Convert.ToByte(input, CultureInfo.CurrentUICulture);
+        hj.WriteToDB();
       }
     }
 
@@ -209,6 +223,14 @@ namespace diNo
       {
         dataGridNoten.CurrentCell = dataGridNoten.Rows[e.RowIndex].Cells[e.ColumnIndex];
       }
+    }
+
+    private void dataGridNoten_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+    {
+      var c = dataGridNoten.Rows[e.RowIndex].Cells[e.ColumnIndex];
+      if (c.Tag!=null)
+        EditHjLeistung((HjLeistung)c.Tag);
+      Init();
     }
   }
 }

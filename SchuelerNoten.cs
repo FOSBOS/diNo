@@ -545,7 +545,7 @@ namespace diNo
       if (vorJahr) hj = getVorHjLeistung(a);
       else hj = getHjLeistung(a);
 
-      if (hj!=null && hj.Status==HjStatus.Einbringen)
+      if (hj!=null && hj.Status!=HjStatus.NichtEinbringen)
       {
         if (a==HjArt.AP)
         {
@@ -567,24 +567,24 @@ namespace diNo
       HjLeistung gesErg = getHjLeistung(HjArt.GesErg);
       if (gesErg == null) gesErg = new HjLeistung(schueler.Id,fach,HjArt.GesErg,schueler.getKlasse.Jahrgangsstufe);
 
-      // bei Nicht-einbringungsfähigen Fächern ist das Gesamtergebnis gleich der Jahresnote.
-      if (fach.NichtNC)
+      // bei Nicht-einbringungsfähigen Fächern ist das Gesamtergebnis gleich der Jahresnote. (trotzdem berechnen, wegen 2 Dez.)
+      /*if (fach.NichtNC)
       {
         var jn = getHjLeistung(HjArt.JN);
         if (jn != null) gesErg.Punkte = jn.Punkte;
         else return 0;
       }
-      else
+      else */
       {
         sum += NimmHj(HjArt.Hj1, true, ref anzNoten);
         sum += NimmHj(HjArt.Hj2, true, ref anzNoten);
         sum += NimmHj(HjArt.Hj1,false, ref anzNoten);
         sum += NimmHj(HjArt.Hj2, false, ref anzNoten);
         sum += NimmHj(HjArt.AP, false, ref anzNoten);
-        sum += NimmHj(HjArt.FR, false, ref anzNoten);
-
+        
         if (anzNoten == 0) return 0; // nichts speichern
-        gesErg.Punkte = (byte)Math.Round(sum / (double)anzNoten, MidpointRounding.AwayFromZero);
+        gesErg.Punkte2Dez = sum / (decimal)anzNoten;
+        gesErg.Punkte = (byte)Math.Round((double)gesErg.Punkte2Dez, MidpointRounding.AwayFromZero);
       }
 
       gesErg.WriteToDB();
