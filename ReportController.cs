@@ -94,7 +94,8 @@ namespace diNo
         {
           Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
 
-        if (subrpt == "subrptZwischenzeugnis" || subrpt == "subrptJahreszeugnis" )
+        
+        if (subrpt.Substring(subrpt.Length - 7) == "zeugnis" )
         {          
           IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenZeugnisDruck(rptTyp);
           e.DataSources.Add(new ReportDataSource("DataSet1", noten));

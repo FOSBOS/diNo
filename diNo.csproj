@@ -299,6 +299,7 @@
     <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptEinbringung.rdlc" />
+    <EmbeddedResource Include="subrptAbiturzeugnis.rdlc" />
     <EmbeddedResource Include="subrptNoten.rdlc" />
     <EmbeddedResource Include="subrptNotenSjAlt.rdlc" />
     <EmbeddedResource Include="subrptFPANoten.rdlc" />
@@ -400,6 +401,7 @@
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />
     <None Include="Properties\DataSources\NotenHjDruck.datasource" />
     <None Include="Properties\DataSources\NotenmitteilungDruck.datasource" />
+    <None Include="Properties\DataSources\NotenZeugnisDruck.datasource" />
     <None Include="Properties\DataSources\SchuelerDruck.datasource" />
     <None Include="Properties\DataSources\SchuljahrSchulartDruck.datasource" />
     <None Include="Properties\DataSources\SchullaufbahnDruck.datasource" />

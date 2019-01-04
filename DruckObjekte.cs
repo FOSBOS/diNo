@@ -226,14 +226,18 @@ namespace diNo
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
       KlasseAR = (b == Bericht.Zwischenzeugnis ? "besucht" : "besuchte") + " im " + Schuljahr;
       KlasseAR += " die " + s.getKlasse.JahrgangsstufeZeugnis + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
-      if (s.Data.Ausbildungsrichtung != "V") // IV idR. ohne AR
-        KlasseAR += ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s);
-      KlasseAR += " in der Klasse " + s.getKlasse.Bezeichnung;
-      if (b == Bericht.Bescheinigung)
-        KlasseAR += "\nund ist heute aus der Schule ausgetreten. \n\nIm laufenden Schulhalbjahr erzielte " + s.getErSie() + " bis zum Austritt folgende Leistungen:";
+      if (b == Bericht.Abiturzeugnis)
+        KlasseAR += " und unterzog sich als Schüler" + (s.Data.Geschlecht == "M" ? "":"in") + " der Klasse " + s.getKlasse.Bezeichnung + " der Fachabiturprüfung in der Ausbildungsrichtung " + Faecherkanon.GetZweigText(s) + ".";
       else
-        KlasseAR += ".";
-
+      {
+        if (s.Data.Ausbildungsrichtung != "V") // IV idR. ohne AR
+          KlasseAR += ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s);
+        KlasseAR += " in der Klasse " + s.getKlasse.Bezeichnung;
+        if (b == Bericht.Bescheinigung)
+          KlasseAR += "\nund ist heute aus der Schule ausgetreten. \n\nIm laufenden Schulhalbjahr erzielte " + s.getErSie() + " bis zum Austritt folgende Leistungen:";
+        else
+          KlasseAR += ".";
+      }
       DatumZeugnis = Zugriff.Instance.getString(GlobaleStrings.SchulOrt) +", den " + Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy");
       ShowGezSL = (u == UnterschriftZeugnis.gez);
       if (u == UnterschriftZeugnis.Stv)
@@ -429,8 +433,8 @@ namespace diNo
     public string SGE { get; private set; } // Schnitt-Gesamtergebnis (2 Dez)
     protected HjLeistung hj1, hj2;
 
-    public string VorHj1 { get; private set; }  // 11/1 und 11/2
-    public string VorHj2 { get; private set; }
+    public string VorHj1 { get; protected set; }  // 11/1 und 11/2
+    public string VorHj2 { get; protected set; }
 
     public NotenDruck()
     {
@@ -524,8 +528,7 @@ namespace diNo
     public string sL { get; private set; }  // mdl. 1. Hj.
     public string SsL { get; private set; }  // Schnitt mdl. 1. Hj.
     public string S { get; private set; }   // Schnitt 1. Hj.
-    public string JN { get; private set; } // Jahresnote
-    public string FR { get; private set; } // Fachreferat (leer) TODO: raus
+    public string JN { get; private set; } // Jahresnote    
     public string SAP { get; private set; }
     public string MAP { get; private set; }
     public string APG { get; private set; }
@@ -642,11 +645,14 @@ namespace diNo
   public class NotenZeugnisDruck : NotenDruck
   {
     public string fachGruppe { get; private set; }
-    public string JN { get; set; } // Jahresnote
+    public string JN { get; set; } // Jahresnote oder Gesamtergebnis
     public string JNText { get; set; }
+    public string APG { get; private set; }
+    private Bericht rpt;
 
-    public NotenZeugnisDruck(FachSchuelerNoten s, Bericht rpt)
+    public NotenZeugnisDruck(FachSchuelerNoten s, Bericht arpt)
     {
+      rpt = arpt;
       switch (s.getFach.Typ)
       {
         case FachTyp.Allgemein: fachGruppe = "Allgemeinbildende Fächer"; break;
@@ -654,6 +660,7 @@ namespace diNo
         default: fachGruppe = "Wahlpflichtfächer"; break;
       }
       fachBez = s.getFach.BezZeugnis;
+      if (s.getFach.NichtNC) fachBez += "*";
 
       if (s.schueler.AlteFOBOSO()) // nur zum Test
       {
@@ -662,9 +669,20 @@ namespace diNo
         return;
       }
 
+      if (s.schueler.hatVorHj)
+      {
+        VorHj1 = HjToZeugnis(s.getVorHjLeistung(HjArt.Hj1));
+        VorHj2 = HjToZeugnis(s.getVorHjLeistung(HjArt.Hj2));
+      }
       Hj1 = HjToZeugnis(s.getHjLeistung(HjArt.Hj1));
       Hj2 = HjToZeugnis(s.getHjLeistung(HjArt.Hj2));
-      JNToZeugnis(s.getHjLeistung(HjArt.JN));
+      if (rpt == Bericht.Abiturzeugnis)
+      {
+        JNToZeugnis(s.getHjLeistung(HjArt.GesErg));
+        APG = HjToZeugnis(s.getHjLeistung(HjArt.AP));
+      }
+      else
+        JNToZeugnis(s.getHjLeistung(HjArt.JN));
     }
 
     public NotenZeugnisDruck(diNoDataSet.FpaDataTable f)
@@ -684,6 +702,7 @@ namespace diNo
     {
       fachGruppe = "Wahlpflichtfächer"; // Workaround: läuft unter dieser Gruppe, weil Gruppe gleich das Fach ist.
       fachBez = "<b>" + FachBezeichnung + "</b>";
+      Hj2 = HjToZeugnis(f);
       JNToZeugnis(f);
     }
 
@@ -695,7 +714,8 @@ namespace diNo
 
     private string HjToZeugnis(HjLeistung t) // für NeueFOBOSO
     {
-      if (t == null || t.Status == HjStatus.Ungueltig) return "--";
+      if (t == null || t.Status == HjStatus.Ungueltig) return rpt == Bericht.Abiturzeugnis ? "" : "--";
+      else if (rpt == Bericht.Abiturzeugnis && t.Status == HjStatus.NichtEinbringen) return "(" + t.Punkte.ToString("D2") + ")";
       else return t.Punkte.ToString("D2");
     }
 

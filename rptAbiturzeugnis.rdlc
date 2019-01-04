@@ -17,7 +17,7 @@
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.769cm</Height>
+              <Height>4.36588cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -30,40 +30,40 @@
                             <TextRun>
                               <Value>=Fields!Anrede.Value</Value>
                               <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>16pt</FontSize>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>14pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
                             <TextRun>
                               <Value xml:space="preserve"> </Value>
                               <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>16pt</FontSize>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>14pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
                             <TextRun>
                               <Value>=Fields!Vorname.Value</Value>
                               <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>16pt</FontSize>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>14pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
                             <TextRun>
                               <Value xml:space="preserve"> </Value>
                               <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>16pt</FontSize>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>14pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
                             <TextRun>
                               <Value>=Fields!Nachname.Value</Value>
                               <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>16pt</FontSize>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>14pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
@@ -77,7 +77,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>Times New Roman</FontFamily>
+                                <FontFamily>Tahoma</FontFamily>
                                 <FontSize>12pt</FontSize>
                                 <FontWeight>Normal</FontWeight>
                               </Style>
@@ -92,8 +92,7 @@
                             <TextRun>
                               <Value>=Fields!GeborenInAm.Value</Value>
                               <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontFamily>Tahoma</FontFamily>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -106,7 +105,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontFamily>Times New Roman</FontFamily>
+                                <FontFamily>Tahoma</FontFamily>
                                 <FontSize>6pt</FontSize>
                               </Style>
                             </TextRun>
@@ -120,8 +119,78 @@
                             <TextRun>
                               <Value>=Fields!KlasseAR.Value</Value>
                               <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <LineHeight>15pt</LineHeight>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <LineHeight>15pt</LineHeight>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>I. Erzielte Leistungen:</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <LineHeight>15pt</LineHeight>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>6pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <LineHeight>15pt</LineHeight>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Halbjahresergebnisse, die nicht in das Gesamtergebnis eingehen, sind in Klammern gesetzt.</Value>
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <LineHeight>15pt</LineHeight>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontFamily>Tahoma</FontFamily>
+                                <FontSize>6pt</FontSize>
+                                <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -187,8 +256,7 @@
                             <TextRun>
                               <Value>II. Abschlussergebnis und Ermittlung der Durchschnittsnote</Value>
                               <Style>
-                                <FontFamily>Times New Roman</FontFamily>
-                                <FontSize>11pt</FontSize>
+                                <FontFamily>Tahoma</FontFamily>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
@@ -216,14 +284,17 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Subreport Name="subrptJahreszeugnis">
-                      <ReportName>subrptJahreszeugnis</ReportName>
+                    <Subreport Name="subrptAbiturzeugnis">
+                      <ReportName>subrptAbiturzeugnis</ReportName>
                       <Parameters>
                         <Parameter Name="SId">
                           <Value>=Fields!Id.Value</Value>
                         </Parameter>
                         <Parameter Name="JgKurz">
                           <Value>=Fields!JgKurz.Value</Value>
+                        </Parameter>
+                        <Parameter Name="HideVorHj">
+                          <Value>=Fields!HideVorHj.Value</Value>
                         </Parameter>
                       </Parameters>
                       <Style>
@@ -278,7 +349,6 @@
                         </Border>
                       </Style>
                     </Subreport>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -327,7 +397,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>7.77045cm</Height>
+        <Height>9.36733cm</Height>
         <Width>37.4cm</Width>
         <Style>
           <Border>
@@ -338,13 +408,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>7.95623cm</Height>
+    <Height>9.36733cm</Height>
     <Style />
   </Body>
   <Width>37.4cm</Width>
   <Page>
     <PageFooter>
-      <Height>2.646cm</Height>
+      <Height>2.06392cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>

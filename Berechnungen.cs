@@ -125,6 +125,11 @@ namespace diNo
             else streichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
           }
         }
+        else // Nicht NC
+        {
+          fachNoten.getHjLeistung(HjArt.Hj1).SetStatus(HjStatus.NichtEinbringen);
+          fachNoten.getHjLeistung(HjArt.Hj2).SetStatus(HjStatus.NichtEinbringen);
+        }
       }
 
       int fehlend = GetNoetigeAnzahl(s) - einbringen.Count;

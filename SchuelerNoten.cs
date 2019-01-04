@@ -160,21 +160,31 @@ namespace diNo
 
     public IList<NotenDruck> SchuelerNotenZeugnisDruck(Bericht rptName)
     {
-      IList<NotenDruck> liste = new List<NotenDruck>();      
+      IList<NotenDruck> liste = new List<NotenDruck>(); 
+      if (rptName == Bericht.Abiturzeugnis)
+      {
+        foreach (FachSchuelerNoten f in alleFaecher)
+        {
+          liste.Add(new NotenZeugnisDruck(f, rptName));
+        }
+      }
+      else
       foreach (FachSchuelerNoten f in alleKurse)
       {
         if (rptName!=Bericht.Gefaehrdung || f.getRelevanteNote(zeitpunkt)<=4)
           liste.Add(new NotenZeugnisDruck(f, rptName));
+      }
+
+      foreach (var f in schueler.Fachreferat)
+      {
+        liste.Add(new NotenZeugnisDruck(f, "Fachreferat in " + f.getFach.BezZeugnis));
       }
       if (rptName != Bericht.Gefaehrdung && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
       {        
         NotenZeugnisDruck f = new NotenZeugnisDruck(schueler.FPANoten);          
         liste.Add(f);
       }
-      foreach (var f in schueler.Fachreferat)
-      {
-        //liste.Add(new NotenDruck(f));
-      }
+      
       return liste;
     }
      
@@ -564,30 +574,31 @@ namespace diNo
     {
       anzNoten = 0;
       int sum = 0;
+      bool NichtNC = fach.NichtNC;
       HjLeistung gesErg = getHjLeistung(HjArt.GesErg);
       if (gesErg == null) gesErg = new HjLeistung(schueler.Id,fach,HjArt.GesErg,schueler.getKlasse.Jahrgangsstufe);
-
-      // bei Nicht-einbringungsfähigen Fächern ist das Gesamtergebnis gleich der Jahresnote. (trotzdem berechnen, wegen 2 Dez.)
-      /*if (fach.NichtNC)
+      if (fach.NichtNC)
       {
-        var jn = getHjLeistung(HjArt.JN);
-        if (jn != null) gesErg.Punkte = jn.Punkte;
-        else return 0;
+        var hj = getHjLeistung(HjArt.Hj1);
+        if (hj != null) { sum += hj.Punkte; anzNoten++; }
+        hj = getHjLeistung(HjArt.Hj2);
+        if (hj != null) { sum += hj.Punkte; anzNoten++; }
       }
-      else */
+      else
       {
         sum += NimmHj(HjArt.Hj1, true, ref anzNoten);
         sum += NimmHj(HjArt.Hj2, true, ref anzNoten);
-        sum += NimmHj(HjArt.Hj1,false, ref anzNoten);
+        sum += NimmHj(HjArt.Hj1, false, ref anzNoten);
         sum += NimmHj(HjArt.Hj2, false, ref anzNoten);
         sum += NimmHj(HjArt.AP, false, ref anzNoten);
-        
-        if (anzNoten == 0) return 0; // nichts speichern
-        gesErg.Punkte2Dez = sum / (decimal)anzNoten;
-        gesErg.Punkte = (byte)Math.Round((double)gesErg.Punkte2Dez, MidpointRounding.AwayFromZero);
       }
-
+      if (anzNoten == 0) return 0; // nichts speichern
+      gesErg.Punkte2Dez = sum / (decimal)anzNoten;
+      if (gesErg.Punkte2Dez < (decimal)1.0) gesErg.Punkte = 0;
+      else gesErg.Punkte = (byte)Math.Round((double)gesErg.Punkte2Dez, MidpointRounding.AwayFromZero);
       gesErg.WriteToDB();
+
+      if (fach.NichtNC) { sum = 0; anzNoten = 0; } // nichts zurückgeben
       return sum;
     }
     
