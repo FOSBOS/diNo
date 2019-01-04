@@ -132,6 +132,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Punktesumme.cs" />
     <Compile Include="Repository.cs" />
     <Compile Include="SchuelerverwaltungController.cs" />
     <Compile Include="GlobalesForm.cs">
