@@ -23,19 +23,21 @@ namespace diNo
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
     public Zweig Zweig;
     public List<HjLeistung> Fachreferat = new List<HjLeistung>(); // sollte i.d.R. nur einelementig sein, aber wegen irrtümlicher Doppelvergabe
-    public int AnzahlNotenInPunktesumme = 0;
+    public Punktesumme punktesumme;
 
 
     public Schueler(int id)
     {
       this.Id = id;
       this.Refresh();
+      punktesumme = new Punktesumme(this);
     }
 
     public Schueler(diNoDataSet.SchuelerRow s)
     {
       this.Id = s.Id;
       this.data = s;
+      punktesumme = new Punktesumme(this);
       Zweig = Faecherkanon.GetZweig(data.Ausbildungsrichtung);
     }
 

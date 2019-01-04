@@ -42,6 +42,8 @@
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridNoten = new System.Windows.Forms.DataGridView();
       this.cFach = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.c11_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -69,8 +71,13 @@
       this.chkShowHj1 = new System.Windows.Forms.CheckBox();
       this.chkShowHj2 = new System.Windows.Forms.CheckBox();
       this.chkShowAbi = new System.Windows.Forms.CheckBox();
+      this.dataGridPunktesumme = new System.Windows.Forms.DataGridView();
+      this.cText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cSumme = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cAnzahl = new System.Windows.Forms.DataGridViewTextBoxColumn();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).BeginInit();
       this.contextMenu.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridPunktesumme)).BeginInit();
       this.SuspendLayout();
       // 
       // dataGridNoten
@@ -106,13 +113,13 @@
             this.APG,
             this.cJN,
             this.cGE});
-      this.dataGridNoten.Location = new System.Drawing.Point(0, 70);
+      this.dataGridNoten.Location = new System.Drawing.Point(3, 70);
       this.dataGridNoten.MultiSelect = false;
       this.dataGridNoten.Name = "dataGridNoten";
       this.dataGridNoten.ReadOnly = true;
       this.dataGridNoten.RowHeadersVisible = false;
       this.dataGridNoten.RowHeadersWidth = 70;
-      this.dataGridNoten.Size = new System.Drawing.Size(1149, 505);
+      this.dataGridNoten.Size = new System.Drawing.Size(1149, 409);
       this.dataGridNoten.TabIndex = 1;
       this.dataGridNoten.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridNoten_CellMouseDown);
       // 
@@ -390,10 +397,50 @@
       this.chkShowAbi.UseVisualStyleBackColor = true;
       this.chkShowAbi.CheckedChanged += new System.EventHandler(this.chkShowAbi_CheckedChanged);
       // 
+      // dataGridPunktesumme
+      // 
+      this.dataGridPunktesumme.AllowUserToAddRows = false;
+      this.dataGridPunktesumme.AllowUserToDeleteRows = false;
+      this.dataGridPunktesumme.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGridPunktesumme.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.cText,
+            this.cSumme,
+            this.cAnzahl});
+      this.dataGridPunktesumme.Location = new System.Drawing.Point(3, 504);
+      this.dataGridPunktesumme.Name = "dataGridPunktesumme";
+      this.dataGridPunktesumme.ReadOnly = true;
+      this.dataGridPunktesumme.RowHeadersVisible = false;
+      this.dataGridPunktesumme.Size = new System.Drawing.Size(405, 164);
+      this.dataGridPunktesumme.TabIndex = 5;
+      // 
+      // cText
+      // 
+      this.cText.HeaderText = "Punktesumme aus";
+      this.cText.Name = "cText";
+      this.cText.ReadOnly = true;
+      this.cText.Width = 200;
+      // 
+      // cSumme
+      // 
+      dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cSumme.DefaultCellStyle = dataGridViewCellStyle14;
+      this.cSumme.HeaderText = "Punkte";
+      this.cSumme.Name = "cSumme";
+      this.cSumme.ReadOnly = true;
+      // 
+      // cAnzahl
+      // 
+      dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cAnzahl.DefaultCellStyle = dataGridViewCellStyle15;
+      this.cAnzahl.HeaderText = "Faktor";
+      this.cAnzahl.Name = "cAnzahl";
+      this.cAnzahl.ReadOnly = true;
+      // 
       // UserControlNotenbogen
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.dataGridPunktesumme);
       this.Controls.Add(this.chkShowAbi);
       this.Controls.Add(this.chkShowHj2);
       this.Controls.Add(this.chkShowHj1);
@@ -402,6 +449,7 @@
       this.Size = new System.Drawing.Size(1149, 578);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).EndInit();
       this.contextMenu.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridPunktesumme)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -436,5 +484,9 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn APG;
     private System.Windows.Forms.DataGridViewTextBoxColumn cJN;
     private System.Windows.Forms.DataGridViewTextBoxColumn cGE;
+    private System.Windows.Forms.DataGridView dataGridPunktesumme;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cText;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cSumme;
+    private System.Windows.Forms.DataGridViewTextBoxColumn cAnzahl;
   }
 }

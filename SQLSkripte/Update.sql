@@ -1,18 +1,28 @@
-use diNo;
-go
+USE [diNo]
+GO
 
-insert into Fach (Bezeichnung, Kuerzel,Sortierung, Typ, NichtNC) values ('Fachreferat', 'FR', 301, 3, 0);
--- ergänzen Sortierung FpA = 305, Sem = 310
+/****** Object:  Table [dbo].[Punktesumme]    Script Date: 04.01.2019 14:28:30 ******/
+SET ANSI_NULLS ON
+GO
 
---delete from HjLeistung where Art > 4;
+SET QUOTED_IDENTIFIER ON
+GO
 
-insert into HjLeistung (SchuelerId, FachId,Art,Punkte,JgStufe, Status)
-SELECT SchuelerId
-	  ,74
-      ,Halbjahr
-      ,Gesamt
-	  ,11
-	  ,0
-FROM Fpa 
-Where Gesamt is not null;
+CREATE TABLE [dbo].[Punktesumme](
+	[ID] [int] IDENTITY(1,1) NOT NULL,
+	[SchuelerId] [int] NOT NULL,
+	[Art] [int] NOT NULL,
+	[Punktzahl] [int] NOT NULL,
+	[Anzahl] [int] NOT NULL
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Punktesumme]  WITH CHECK ADD  CONSTRAINT [FK_Punktesumme_Schueler] FOREIGN KEY([SchuelerId])
+REFERENCES [dbo].[Schueler] ([Id])
+GO
+
+ALTER TABLE [dbo].[Punktesumme] CHECK CONSTRAINT [FK_Punktesumme_Schueler]
+GO
+
 

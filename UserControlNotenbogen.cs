@@ -116,6 +116,25 @@ namespace diNo
         FillCell(dataGridNoten.Rows[lineCount].Cells[17], fr);
         lineCount++;
       }
+
+      if (dataGridPunktesumme.Visible = schueler.getKlasse.Jahrgangsstufe > Jahrgangsstufe.Elf && (Zugriff.Instance.aktZeitpunkt >= (int)Zeitpunkt.ErstePA || Zugriff.Instance.HatRolle(Rolle.Admin)))
+      {
+        lineCount = 0;
+        Punktesumme p = schueler.punktesumme;
+        dataGridPunktesumme.Rows.Clear();
+        foreach (PunktesummeArt a in Enum.GetValues(typeof(PunktesummeArt)))
+        {
+          if (p.Anzahl(a) > 0)
+          {
+            dataGridPunktesumme.Rows.Add();
+            dataGridPunktesumme.Rows[lineCount].Cells[0].Value = Punktesumme.ArtToText(a);
+            dataGridPunktesumme.Rows[lineCount].Cells[1].Value = p.Summe(a);
+            dataGridPunktesumme.Rows[lineCount].Cells[2].Value = p.Anzahl(a);
+            //if (a=PunktesummeArt.Gesamt) dataGridPunktesumme.Rows[lineCount].Cells[1]. Bold??
+            lineCount++;
+          }
+        }
+      }
     }
 
     private void SetBackgroundColor(HjLeistung hj, DataGridViewCell cell)

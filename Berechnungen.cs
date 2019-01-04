@@ -23,7 +23,7 @@ namespace diNo
         aufgaben.Add(BerechneEinbringung);
 
       if (zeitpunkt >= Zeitpunkt.ErstePA && zeitpunkt <= Zeitpunkt.DrittePA)
-        aufgaben.Add(CalcGesErg);
+        aufgaben.Add(BerechneGesErg);
 
       if (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
         aufgaben.Add(BerechneDNote);
@@ -172,69 +172,6 @@ namespace diNo
       }    
     }
 
-    /*
-    /// <summary>
-    /// Methode macht einen Vorschlag zur Einbringung der Halbjahresleistungen eines Schülers.
-    /// </summary>
-    /// <param name="s">Der Schueler.</param>
-    public void BerechneEinbringung1(Schueler s)
-    {
-      var sowiesoPflicht = new List<HjLeistung>();
-      var einbringen = new List<HjLeistung>();
-      var streichen = new List<HjLeistung>();
-
-      foreach (var fachNoten in s.getNoten.alleFaecher)
-      {
-        if (!fachNoten.getFach.NichtNC)
-        {
-          var hjLeistungen = new List<HjLeistung>();
-          foreach (HjArt art in Enum.GetValues(typeof(HjArt)))
-          {
-            var hjLeistung = fachNoten.getHjLeistung(art);
-            if (hjLeistung == null)
-              continue;
-
-            if (hjLeistung.Art == HjArt.AP || hjLeistung.Art == HjArt.FR)
-            {
-              sowiesoPflicht.Add(hjLeistung);
-            }
-            else
-            {
-              hjLeistungen.Add(hjLeistung);
-            }
-          }
-
-          if (hjLeistungen.Count == 4)
-          {
-            // werfe 11/1 weg
-            hjLeistungen.RemoveAll(x => x.JgStufe == Jahrgangsstufe.Elf && x.Art == HjArt.Hj1);
-          }
-
-          // jetzt stehen alle "normalen" Halbjahresleistungen in hjLeistungen.
-          // Sortieren, nur eine davon kann gestrichen werden
-          hjLeistungen.Sort((x, y) => x.Punkte.CompareTo(y.Punkte));          
-          einbringen.AddRange(hjLeistungen.GetRange(0, hjLeistungen.Count - 1));
-          streichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
-        }
-      }
-
-      int fehlend = GetNoetigeAnzahl(s) - einbringen.Count;
-      streichen.Sort((x, y) => x.Punkte.CompareTo(y.Punkte));
-      einbringen.AddRange(streichen.GetRange(0, fehlend));
-      streichen.RemoveRange(0, fehlend);
-
-      foreach (var hjLeistung in sowiesoPflicht.Union(einbringen))
-      {
-        hjLeistung.Status = HjStatus.Einbringen;
-        hjLeistung.WriteToDB();
-      }
-      foreach (var hjLeistung in streichen)
-      {
-        hjLeistung.Status = HjStatus.NichtEinbringen;
-        hjLeistung.WriteToDB();
-      }
-    }
-  */
     // liefert wahr, wenn sich ohne Streichung zusätzlich eine 5 (oder 6) ergeben würde
     private bool UnbedingtStreichen(List <HjLeistung>hjl)
     {
@@ -262,16 +199,20 @@ namespace diNo
     /// <summary>
     /// Berechnet das Gesamtergebnis aller Fächer, sowie die Punktesumme
     /// </summary>
-    public void CalcGesErg(Schueler s)
+    public void BerechneGesErg(Schueler s)
     {
-      int anzNoten;
-      s.Data.Punktesumme = 0;
-
+      Punktesumme p = new Punktesumme(s);
+      p.Clear();
+      
       foreach (var f in s.getNoten.alleFaecher)
       {
-        s.Data.Punktesumme += f.CalcGesErg(out anzNoten);
-        s.AnzahlNotenInPunktesumme += anzNoten;
-      }      
+        f.BerechneGesErg(p);
+      }
+
+      foreach (var f in s.Fachreferat)
+        p.Add(PunktesummeArt.FR, 1, f.Punkte);
+
+      p.WriteToDB();
     }
 
     public void BerechneDNote(Schueler s)
@@ -354,6 +295,12 @@ namespace diNo
       {
         s.Data.SetDNoteNull();
       }
+    }
+
+    public void BerechnePunktesumme()
+    {
+
+
     }
   }
 }

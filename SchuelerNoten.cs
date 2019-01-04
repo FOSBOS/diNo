@@ -548,7 +548,7 @@ namespace diNo
       return vorHjLeistung[(int)art];
     }
 
-    private int NimmHj(HjArt a, bool vorJahr, ref int anzNoten)
+    private void NimmHj(HjArt a, bool vorJahr, ref int anz, ref int sum)
     {
       int faktor = 1;
       HjLeistung hj;
@@ -561,18 +561,17 @@ namespace diNo
         {
           faktor = schueler.APFaktor;
         }
-        anzNoten += faktor;
-        return hj.Punkte * faktor;
+        anz += faktor;
+        sum += hj.Punkte * faktor;
       }
-      return 0; // nicht einbeziehen
     }
 
     /// <summary>
     /// Berechnet das Gesamtergebnis für dieses Fach aufgrund der vorliegenden HjLeistungen neu (nur Abiturklassen)
     /// </summary>
-    public int CalcGesErg(out int anzNoten)
+    public void BerechneGesErg(Punktesumme p)
     {
-      anzNoten = 0;
+      int anz = 0;
       int sum = 0;
       bool NichtNC = fach.NichtNC;
       HjLeistung gesErg = getHjLeistung(HjArt.GesErg);
@@ -580,26 +579,30 @@ namespace diNo
       if (fach.NichtNC)
       {
         var hj = getHjLeistung(HjArt.Hj1);
-        if (hj != null) { sum += hj.Punkte; anzNoten++; }
+        if (hj != null) { sum += hj.Punkte; anz++; }
         hj = getHjLeistung(HjArt.Hj2);
-        if (hj != null) { sum += hj.Punkte; anzNoten++; }
+        if (hj != null) { sum += hj.Punkte; anz++; }
       }
       else
       {
-        sum += NimmHj(HjArt.Hj1, true, ref anzNoten);
-        sum += NimmHj(HjArt.Hj2, true, ref anzNoten);
-        sum += NimmHj(HjArt.Hj1, false, ref anzNoten);
-        sum += NimmHj(HjArt.Hj2, false, ref anzNoten);
-        sum += NimmHj(HjArt.AP, false, ref anzNoten);
+        // 4 mögliche Halbjahre:
+        NimmHj(HjArt.Hj1, true, ref anz, ref sum);
+        NimmHj(HjArt.Hj2, true, ref anz, ref sum);
+        NimmHj(HjArt.Hj1, false, ref anz, ref sum);
+        NimmHj(HjArt.Hj2, false, ref anz, ref sum);
+        if (fach.Kuerzel=="FpA") p.Add(PunktesummeArt.FPA, anz, sum);
+        else p.Add(PunktesummeArt.HjLeistungen, anz, sum);
+        // AP
+        int anzAP = 0; int sumAP = 0;
+        NimmHj(HjArt.AP, false, ref anzAP, ref sumAP);
+        p.Add(PunktesummeArt.AP, anzAP, sumAP);
+        anz += anzAP; sum += sumAP; // für gesErg werden beide verwendet
       }
-      if (anzNoten == 0) return 0; // nichts speichern
-      gesErg.Punkte2Dez = sum / (decimal)anzNoten;
+      if (anz == 0) return; // nichts speichern
+      gesErg.Punkte2Dez = sum / (decimal)anz;
       if (gesErg.Punkte2Dez < (decimal)1.0) gesErg.Punkte = 0;
       else gesErg.Punkte = (byte)Math.Round((double)gesErg.Punkte2Dez, MidpointRounding.AwayFromZero);
       gesErg.WriteToDB();
-
-      if (fach.NichtNC) { sum = 0; anzNoten = 0; } // nichts zurückgeben
-      return sum;
     }
     
     /// <summary>

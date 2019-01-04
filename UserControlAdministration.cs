@@ -300,7 +300,7 @@ namespace diNo
     {
       var obj = getSelectedObjects();
       var b = new Berechnungen(Zeitpunkt.None);
-      b.aufgaben.Add(b.CalcGesErg);
+      b.aufgaben.Add(b.BerechneGesErg);
       foreach (var s in obj)
         b.BerechneSchueler(s);
       RefreshNotenbogen();
