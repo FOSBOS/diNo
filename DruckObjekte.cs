@@ -749,6 +749,77 @@ namespace diNo
     }
   }
 
+  public class PunkteSummeDruck
+  {
+    public string Text { get; set; }
+    public string Punkte { get; set; }
+    public string InWorten { get; set; }
+
+    public PunkteSummeDruck(string text, string punkte, string inWorten)
+    {
+      Text = text;
+      Punkte = punkte;
+      InWorten = InWorten;
+    }
+
+    public static List<PunkteSummeDruck> Create(Schueler s)
+    {
+      List<PunkteSummeDruck> list = new List<PunkteSummeDruck>();
+      Punktesumme p = s.punktesumme;
+      foreach (PunktesummeArt a in Enum.GetValues(typeof(PunktesummeArt)))
+      {
+        if (p.Anzahl(a) > 0)
+        {
+          list.Add(new PunkteSummeDruck(ArtToText(a, p, s), p.Summe(a).ToString(), ""));
+        }
+      }
+      list.Add(new PunkteSummeDruck("", "", "")); // Leerzeile
+      list.Add(new PunkteSummeDruck("Durchschnittsnote", string.Format("{0:F1}", s.Data.DNote), ZahlToText(s.Data.DNote)));
+
+      return list;
+    }
+
+    public static string ArtToText(PunktesummeArt art, Punktesumme p, Schueler s)
+    {
+      switch (art)
+      {
+        case PunktesummeArt.AP: return "- Punktesumme der vier Prüfungsergebnisse " + (s.hatVorHj ? "(dreifach)" : "(zweifach)");
+        case PunktesummeArt.FPA: return "- Punktesumme der fachpraktischen Ausbildung aus 11/1 und 11/2";
+        case PunktesummeArt.FR: return "- Ergebnis des Fachreferats";
+        case PunktesummeArt.HjLeistungen: return "- Punktesumme aus " + p.Anzahl(art) + " einzubringenden Halbjahresergebnissen";
+        case PunktesummeArt.Gesamt: return "Summe";
+        default: return "";
+      }
+    }
+
+    public static string ZahlToText(decimal zahl)
+    {
+      int vk = (int)Math.Floor(zahl);
+      int nk = (int)Math.Floor((zahl - vk) * 10 + (decimal)0.01);
+      return ZifferToText(vk) + "," + ZifferToText(nk);
+    }
+
+    public static string ZifferToText(int ziffer)
+    {
+      switch (ziffer)
+      {
+        case 0: return "null";
+        case 1: return "eins";
+        case 2: return "zwei";
+        case 3: return "drei";
+        case 4: return "vier";
+        case 5: return "fünf";
+        case 6: return "sechs";
+        case 7: return "sieben";
+        case 8: return "acht";
+        case 9: return "neun";
+        default: return "";
+      }
+    }
+  }
+  
+
+  
   public class LehrerRolleDruck
   {
     public string RechteBezeichnung { get; private set; }

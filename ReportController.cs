@@ -104,6 +104,10 @@ namespace diNo
         {
           e.DataSources.Add(new ReportDataSource("DataSetFPANoten", schueler.FPANotenDruck()));
         }
+        else if (subrpt == "subrptPunktesumme")
+        {
+          e.DataSources.Add(new ReportDataSource("DataSet1", PunkteSummeDruck.Create(schueler)));
+        }
         else if (subrpt == "subrptNotenSjAlt" || subrpt == "subrptAbiergebnisseAlt" || subrpt == "subrptFachSchuelerNoten")
         {
           var d = schueler.getNoten.SchuelerNotenDruckAlt(rptTyp);          
