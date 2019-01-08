@@ -298,6 +298,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="subrptAbiergebnisseAlt.rdlc" />
     <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />
+    <EmbeddedResource Include="subrptPunktesumme.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptEinbringung.rdlc" />
     <EmbeddedResource Include="subrptAbiturzeugnis.rdlc" />
@@ -307,9 +308,7 @@
     <EmbeddedResource Include="subrptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="subrptNotenSj.rdlc" />
     <EmbeddedResource Include="subrptJahreszeugnis.rdlc" />
-    <EmbeddedResource Include="subrptPunktesumme.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="subrptPunktesummeAlt.rdlc" />
     <EmbeddedResource Include="subrptZwischenzeugnis.rdlc" />
     <EmbeddedResource Include="UserControlAdministration.resx">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>
