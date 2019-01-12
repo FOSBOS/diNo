@@ -10,6 +10,133 @@
       <rd:DataSourceID>3b39489b-3872-4e0c-8d6c-8b5d34e20d63</rd:DataSourceID>
     </DataSource>
   </DataSources>
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Query>
+        <DataSourceName>diNo</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Anrede">
+          <DataField>Anrede</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Bemerkung">
+          <DataField>Bemerkung</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BestandenText">
+          <DataField>BestandenText</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DatumZeugnis">
+          <DataField>DatumZeugnis</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="GeborenInAm">
+          <DataField>GeborenInAm</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="HideAbi">
+          <DataField>HideAbi</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="HideHj2">
+          <DataField>HideHj2</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="HideVorHj">
+          <DataField>HideVorHj</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="Id">
+          <DataField>Id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="IstJahreszeugnis">
+          <DataField>IstJahreszeugnis</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="jg">
+          <DataField>jg</DataField>
+          <rd:TypeName>System.Byte</rd:TypeName>
+        </Field>
+        <Field Name="JgKurz">
+          <DataField>JgKurz</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Klasse">
+          <DataField>Klasse</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KlasseAR">
+          <DataField>KlasseAR</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Klassenleiter">
+          <DataField>Klassenleiter</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KlassenleiterText">
+          <DataField>KlassenleiterText</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Nachname">
+          <DataField>Nachname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rufname">
+          <DataField>Rufname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Schulart">
+          <DataField>Schulart</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Schuljahr">
+          <DataField>Schuljahr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Schulleiter">
+          <DataField>Schulleiter</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SchulleiterText">
+          <DataField>SchulleiterText</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ShowFOBOSOHinweis">
+          <DataField>ShowFOBOSOHinweis</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="ShowGezSL">
+          <DataField>ShowGezSL</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="ShowKenntnisGenommen">
+          <DataField>ShowKenntnisGenommen</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
+        <Field Name="Siegel">
+          <DataField>Siegel</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Vorname">
+          <DataField>Vorname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ZeugnisArt">
+          <DataField>ZeugnisArt</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>diNo</rd:DataSetName>
+        <rd:TableName>ZeugnisDruck</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.ZeugnisDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
   <ReportSections>
     <ReportSection>
       <Body>
@@ -46,11 +173,37 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>---</Value>
+                    <Value />
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>6pt</FontSize>
+                      <FontWeight>Normal</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!Bemerkung.Value</Value>
+                    <MarkupType>HTML</MarkupType>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Normal</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -78,13 +231,40 @@
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-              <Paragraph>
-                <TextRuns>
                   <TextRun>
-                    <Value>hat die Fachabiturprüfung bestanden. Der Prüfungsausschuss hat ihm die </Value>
+                    <Value>=Fields!Anrede.Value</Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value xml:space="preserve"> </Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Fields!Vorname.Value</Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value xml:space="preserve"> </Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Fields!Nachname.Value</Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
@@ -97,7 +277,36 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Fachhochschulreife</Value>
+                    <Value>=Fields!BestandenText.Value</Value>
+                    <MarkupType>HTML</MarkupType>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <MarkupType>HTML</MarkupType>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!ZeugnisArt.Value</Value>
+                    <MarkupType>HTML</MarkupType>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
@@ -113,6 +322,7 @@
                 <TextRuns>
                   <TextRun>
                     <Value>verliehen.</Value>
+                    <MarkupType>HTML</MarkupType>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
@@ -146,6 +356,21 @@
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!DatumZeugnis.Value</Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -166,7 +391,14 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>.........................................................                     (Siegel)</Value>
+                    <Value>=Fields!SchulleiterText.Value</Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>:</Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
@@ -182,6 +414,42 @@
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>.....................................................................                (Siegel)</Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!Schulleiter.Value</Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -228,9 +496,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>3.44523cm</Top>
-            <Height>8.60088cm</Height>
-            <Width>15.80474cm</Width>
+            <Top>1.74307cm</Top>
+            <Height>11.15852cm</Height>
+            <Width>16.43974cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -241,15 +509,16 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
-          <Subreport Name="subrptFPANoten">
-            <ReportName>subrptFPANoten</ReportName>
+          <Subreport Name="subrptFremdsprachen">
+            <ReportName>subrptFremdsprachen</ReportName>
             <Parameters>
               <Parameter Name="SId">
-                <Value>=Parameters!SId.Value</Value>
+                <Value>=First(Fields!Id.Value, "DataSet1")</Value>
               </Parameter>
             </Parameters>
-            <Height>3.26884cm</Height>
-            <Width>15.80474cm</Width>
+            <Top>0.92604cm</Top>
+            <Height>0.81703cm</Height>
+            <Width>15.16974cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -257,8 +526,40 @@
               </Border>
             </Style>
           </Subreport>
+          <Textbox Name="Textbox2">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>III. Fremdsprachen</Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Height>0.6cm</Height>
+            <Width>5.48979cm</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
-        <Height>12.07257cm</Height>
+        <Height>12.92806cm</Height>
         <Style>
           <Border>
             <Color>White</Color>
@@ -266,7 +567,7 @@
           </Border>
         </Style>
       </Body>
-      <Width>15.80474cm</Width>
+      <Width>16.43974cm</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>

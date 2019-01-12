@@ -32,6 +32,11 @@ namespace diNo
       InitSortierung();
     }
 
+    public Kursniveau getKursniveau()
+    {
+      return (Kursniveau)data.Kursniveau;
+    }
+
     private void InitSortierung()
     { 
       if (Typ == FachTyp.Profilfach)

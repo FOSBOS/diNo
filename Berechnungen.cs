@@ -27,6 +27,9 @@ namespace diNo
 
       if (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
         aufgaben.Add(BerechneDNote);
+
+      if (zeitpunkt == Zeitpunkt.DrittePA)
+        aufgaben.Add(BestimmeSprachniveau);
     }
 
     /// <summary>
@@ -210,7 +213,7 @@ namespace diNo
       }
 
       foreach (var f in s.Fachreferat)
-        p.Add(PunktesummeArt.FR, 1, f.Punkte);
+        p.Add(PunktesummeArt.FR, f.Punkte);
 
       p.WriteToDB();
     }
@@ -297,9 +300,38 @@ namespace diNo
       }
     }
 
-    public void BerechnePunktesumme()
+    private bool passt(FachSchuelerNoten f, HjArt art)
     {
+      HjLeistung hj = f.getHjLeistung(art);
+      return (hj != null && hj.Punkte >= 4);
+    }
 
+    public void BestimmeSprachniveau(Schueler s)
+    {
+      var ta = new HjLeistungTableAdapter();
+      ta.DeleteBySchuelerIdAndArt(s.Id, (byte)HjArt.Sprachenniveau); // vorher löschen, falls Stufe inzwischen nicht mehr erreicht wird
+
+      HjLeistung ge,hj2,ap;
+      foreach (var f in s.getNoten.alleFaecher)
+      {
+        Kursniveau n = f.getFach.getKursniveau();        
+        if (n!=Kursniveau.None)
+        {
+          ge = f.getHjLeistung(HjArt.GesErgSprache);
+          if (ge == null || ge.Punkte < 4) continue; // Gesamtergebnis muss immer mind. 4P sein.
+            
+          hj2 = f.getHjLeistung(HjArt.Hj2);
+          ap = f.getHjLeistung(HjArt.AP);
+
+          bool istSAP = n == Kursniveau.Englisch;
+          if (hj2 == null || ap == null && istSAP) continue;
+          if (hj2.Punkte < 4 && (!istSAP || ap.Punkte < 4)) continue; // Prüfung oder Hj2 muss mind. 4 sein
+
+          HjLeistung niveau = new HjLeistung(s.Id, f.getFach, HjArt.Sprachenniveau, s.getKlasse.Jahrgangsstufe);
+          niveau.Punkte = (byte)Fremdsprachen.GetSprachniveau(f.getFach.getKursniveau(), s.getKlasse.Jahrgangsstufe);
+          niveau.WriteToDB();
+        }
+      }
 
     }
   }

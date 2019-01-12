@@ -108,6 +108,17 @@ namespace diNo
         {
           e.DataSources.Add(new ReportDataSource("DataSet1", PunkteSummeDruck.Create(schueler)));
         }
+        else if (subrpt == "subrptFremdsprachen")
+        {
+          e.DataSources.Add(new ReportDataSource("DataSet1", SprachniveauDruck.Create(schueler)));
+        }
+        else if (subrpt == "subrptAbiRechteSeite")
+        {
+          var z = SchuelerDruck.CreateSchuelerDruck(schueler, Bericht.Abiturzeugnis, UnterschriftZeugnis.SL);
+          var l = new List<SchuelerDruck>();
+          l.Add(z);
+          e.DataSources.Add(new ReportDataSource("DataSet1", l));
+        }
         else if (subrpt == "subrptNotenSjAlt" || subrpt == "subrptAbiergebnisseAlt" || subrpt == "subrptFachSchuelerNoten")
         {
           var d = schueler.getNoten.SchuelerNotenDruckAlt(rptTyp);          

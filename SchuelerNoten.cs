@@ -408,7 +408,8 @@ namespace diNo
 
       foreach (var f in alleKurse)
       {
-        if (f.getHjLeistung(HjArt.JN).Punkte < 4)
+        var jn = f.getHjLeistung(HjArt.JN);
+        if (jn ==null || jn.Punkte < 4)
           return false;
       }
       return true;
@@ -548,21 +549,21 @@ namespace diNo
       return vorHjLeistung[(int)art];
     }
 
-    private void NimmHj(HjArt a, bool vorJahr, ref int anz, ref int sum)
+    private void NimmHj(Fachsumme fs, HjArt a, bool vorJahr, bool ignoreEinbringung=false)
     {
       int faktor = 1;
       HjLeistung hj;
       if (vorJahr) hj = getVorHjLeistung(a);
       else hj = getHjLeistung(a);
 
-      if (hj!=null && hj.Status!=HjStatus.NichtEinbringen)
+      if (hj!=null && (hj.Status!=HjStatus.NichtEinbringen || ignoreEinbringung))
       {
         if (a==HjArt.AP)
         {
           faktor = schueler.APFaktor;
         }
-        anz += faktor;
-        sum += hj.Punkte * faktor;
+        fs.anz += faktor;
+        fs.sum += hj.Punkte * faktor;
       }
     }
 
@@ -571,40 +572,45 @@ namespace diNo
     /// </summary>
     public void BerechneGesErg(Punktesumme p)
     {
-      int anz = 0;
-      int sum = 0;
+      Fachsumme fs = new Fachsumme();
+      Fachsumme fsprache = new Fachsumme(); // Fremdsprache getrennt
+      Fachsumme ap = new Fachsumme(); // Abiergebnis
+
       bool NichtNC = fach.NichtNC;
+      bool istFS = fach.getKursniveau() != Kursniveau.None; // Fremdsprache
       HjLeistung gesErg = getHjLeistung(HjArt.GesErg);
       if (gesErg == null) gesErg = new HjLeistung(schueler.Id,fach,HjArt.GesErg,schueler.getKlasse.Jahrgangsstufe);
-      if (fach.NichtNC)
+
+      // 4 mögliche Halbjahre:
+      NimmHj(fs, HjArt.Hj1, true);
+      NimmHj(fs, HjArt.Hj2, true);
+      NimmHj(fs, HjArt.Hj1, false, NichtNC); // NichtNC-Fächer werden zwar nicht eingebracht, GesErg wird aber über alle Hj gebildet
+      NimmHj(fs, HjArt.Hj2, false, NichtNC);
+      
+      NimmHj(ap, HjArt.AP, false); // AP        
+
+      // Verbuchen auf die richtige Punktesumme
+      if (fach.Kuerzel=="FpA") p.Add(PunktesummeArt.FPA, fs);
+      else p.Add(PunktesummeArt.HjLeistungen, fs);               
+      p.Add(PunktesummeArt.AP, ap);
+
+      // Gesamtergebnis berechnen
+      fs.Add(ap);
+      fs.SaveGesErg(gesErg);
+
+      // extra Rechnung für Sprachniveau (unabhängig von Einbringung)
+      if (istFS) 
       {
-        var hj = getHjLeistung(HjArt.Hj1);
-        if (hj != null) { sum += hj.Punkte; anz++; }
-        hj = getHjLeistung(HjArt.Hj2);
-        if (hj != null) { sum += hj.Punkte; anz++; }
+        NimmHj(fsprache, HjArt.Hj2, true, true);
+        NimmHj(fsprache, HjArt.Hj1, false, true);
+        NimmHj(fsprache, HjArt.Hj2, false, true);
+        fsprache.Add(ap);
+        gesErg = getHjLeistung(HjArt.GesErgSprache);
+        if (gesErg == null) gesErg = new HjLeistung(schueler.Id, fach, HjArt.GesErgSprache, schueler.getKlasse.Jahrgangsstufe);
+        fsprache.SaveGesErg(gesErg);
       }
-      else
-      {
-        // 4 mögliche Halbjahre:
-        NimmHj(HjArt.Hj1, true, ref anz, ref sum);
-        NimmHj(HjArt.Hj2, true, ref anz, ref sum);
-        NimmHj(HjArt.Hj1, false, ref anz, ref sum);
-        NimmHj(HjArt.Hj2, false, ref anz, ref sum);
-        if (fach.Kuerzel=="FpA") p.Add(PunktesummeArt.FPA, anz, sum);
-        else p.Add(PunktesummeArt.HjLeistungen, anz, sum);
-        // AP
-        int anzAP = 0; int sumAP = 0;
-        NimmHj(HjArt.AP, false, ref anzAP, ref sumAP);
-        p.Add(PunktesummeArt.AP, anzAP, sumAP);
-        anz += anzAP; sum += sumAP; // für gesErg werden beide verwendet
-      }
-      if (anz == 0) return; // nichts speichern
-      gesErg.Punkte2Dez = sum / (decimal)anz;
-      if (gesErg.Punkte2Dez < (decimal)1.0) gesErg.Punkte = 0;
-      else gesErg.Punkte = (byte)Math.Round((double)gesErg.Punkte2Dez, MidpointRounding.AwayFromZero);
-      gesErg.WriteToDB();
     }
-    
+
     /// <summary>
     /// Liefert die zur Zeit z (z.B. Probezeit BOS) relevante Note (hier Jahresfortgang Ganzz. 1. Hj.)
     /// </summary>

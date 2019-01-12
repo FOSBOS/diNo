@@ -104,7 +104,7 @@
       this.btnEinserAbi.Location = new System.Drawing.Point(21, 52);
       this.btnEinserAbi.Name = "btnEinserAbi";
       this.btnEinserAbi.Size = new System.Drawing.Size(132, 23);
-      this.btnEinserAbi.TabIndex = 3;
+      this.btnEinserAbi.TabIndex = 1;
       this.btnEinserAbi.Text = "Einser-Abi";
       this.btnEinserAbi.UseVisualStyleBackColor = true;
       this.btnEinserAbi.Click += new System.EventHandler(this.btnEinserAbi_Click);
@@ -114,7 +114,7 @@
       this.btnSelect.Location = new System.Drawing.Point(21, 23);
       this.btnSelect.Name = "btnSelect";
       this.btnSelect.Size = new System.Drawing.Size(132, 23);
-      this.btnSelect.TabIndex = 2;
+      this.btnSelect.TabIndex = 0;
       this.btnSelect.Text = "Schüler auswählen";
       this.btnSelect.UseVisualStyleBackColor = true;
       this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
@@ -143,7 +143,7 @@
       this.gbUnterschrift.Location = new System.Drawing.Point(159, 19);
       this.gbUnterschrift.Name = "gbUnterschrift";
       this.gbUnterschrift.Size = new System.Drawing.Size(68, 77);
-      this.gbUnterschrift.TabIndex = 31;
+      this.gbUnterschrift.TabIndex = 1;
       this.gbUnterschrift.TabStop = false;
       this.gbUnterschrift.Text = "Unterschr";
       // 
@@ -196,7 +196,7 @@
       this.dateZeugnis.Location = new System.Drawing.Point(21, 53);
       this.dateZeugnis.Name = "dateZeugnis";
       this.dateZeugnis.Size = new System.Drawing.Size(132, 20);
-      this.dateZeugnis.TabIndex = 29;
+      this.dateZeugnis.TabIndex = 0;
       // 
       // cbNotendruck
       // 
@@ -214,14 +214,14 @@
       this.cbNotendruck.Location = new System.Drawing.Point(21, 102);
       this.cbNotendruck.Name = "cbNotendruck";
       this.cbNotendruck.Size = new System.Drawing.Size(132, 21);
-      this.cbNotendruck.TabIndex = 7;
+      this.cbNotendruck.TabIndex = 2;
       // 
       // btnKlassenliste
       // 
       this.btnKlassenliste.Location = new System.Drawing.Point(21, 166);
       this.btnKlassenliste.Name = "btnKlassenliste";
       this.btnKlassenliste.Size = new System.Drawing.Size(132, 23);
-      this.btnKlassenliste.TabIndex = 3;
+      this.btnKlassenliste.TabIndex = 4;
       this.btnKlassenliste.Text = "Klassenliste";
       this.btnKlassenliste.UseVisualStyleBackColor = true;
       this.btnKlassenliste.Click += new System.EventHandler(this.btnKlassenliste_Click);
@@ -231,7 +231,7 @@
       this.btnAttestpflicht.Location = new System.Drawing.Point(21, 195);
       this.btnAttestpflicht.Name = "btnAttestpflicht";
       this.btnAttestpflicht.Size = new System.Drawing.Size(132, 23);
-      this.btnAttestpflicht.TabIndex = 2;
+      this.btnAttestpflicht.TabIndex = 5;
       this.btnAttestpflicht.Text = "Attestpflicht";
       this.btnAttestpflicht.UseVisualStyleBackColor = true;
       this.btnAttestpflicht.Click += new System.EventHandler(this.btnAttestpflicht_Click);
@@ -241,7 +241,7 @@
       this.btnNotendruck.Location = new System.Drawing.Point(159, 102);
       this.btnNotendruck.Name = "btnNotendruck";
       this.btnNotendruck.Size = new System.Drawing.Size(69, 23);
-      this.btnNotendruck.TabIndex = 1;
+      this.btnNotendruck.TabIndex = 3;
       this.btnNotendruck.Text = "drucken";
       this.btnNotendruck.UseVisualStyleBackColor = true;
       this.btnNotendruck.Click += new System.EventHandler(this.btnNotendruck_Click);

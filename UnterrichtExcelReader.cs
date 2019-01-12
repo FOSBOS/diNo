@@ -286,7 +286,7 @@ namespace diNo
           {
             // wenn so auch nicht gefunden, dann neu anlegen
             // Fach voller Name muss in der Datenbank angepasst werden
-            new FachTableAdapter().Insert("", aFach, 999, 9, null, false);
+            new FachTableAdapter().Insert("", aFach, 999, 9, null, false,0);
             faecher = new FachTableAdapter().GetDataByKuerzel(aFach);
           }
         }

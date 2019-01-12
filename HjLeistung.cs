@@ -9,7 +9,7 @@ namespace diNo
 {
   public class HjLeistung
   {
-    private diNoDataSet.HjLeistungRow data; // für Update
+    private diNoDataSet.HjLeistungRow data = null; // für Update
     private Fach fach=null;
     private int schuelerId;    
     public HjArt Art { get; private set; }
@@ -92,8 +92,9 @@ namespace diNo
       if (Punkte < 3.5) return Color.Khaki;
       return Color.White;
     }
-  }
 
+    
+  }
 
   public enum HjArt
   {
@@ -102,7 +103,9 @@ namespace diNo
     JN = 2, // Jahresnote (stammt aus Excel und gibt unabhängig von den eingebrachten Leistungen den Durchschnitt von Hj1/2 an)    
     AP = 3,  // Abschlussprüfung-Gesamt
     GesErg = 4, // Gesamtergebnis 
-    FR = 5
+    FR = 5,
+    GesErgSprache = 6, // Gesamtergebnis für das Sprachniveau (unabhängig von der Einbringung)
+    Sprachenniveau = 7 // keine echte HjLeistung, aber die Datenstruktur passt ganz gut
   }
 
   public enum HjStatus
@@ -112,4 +115,5 @@ namespace diNo
     NichtEinbringen = 2,
     Ungueltig = 3 // z.B. Note steht zwar drin, aber es gibt nur eine Ex --> nicht bewertbar
   }
+
 }

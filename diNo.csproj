@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="DruckObjekte.cs" />
     <Compile Include="FPA.cs" />
+    <Compile Include="Fremdsprachen.cs" />
     <Compile Include="Globales.cs" />
     <Compile Include="HjLeistung.cs" />
     <Compile Include="ImportKlassenleiter.cs" />
@@ -309,6 +310,7 @@
     <EmbeddedResource Include="subrptNotenSj.rdlc" />
     <EmbeddedResource Include="subrptJahreszeugnis.rdlc" />
     <EmbeddedResource Include="subrptPunktesummeAlt.rdlc" />
+    <EmbeddedResource Include="subrptFremdsprachen.rdlc" />
     <EmbeddedResource Include="subrptZwischenzeugnis.rdlc" />
     <EmbeddedResource Include="UserControlAdministration.resx">
       <DependentUpon>UserControlAdministration.cs</DependentUpon>
@@ -410,6 +412,7 @@
     <None Include="Properties\DataSources\SchuljahrSchulartDruck.datasource" />
     <None Include="Properties\DataSources\SchullaufbahnDruck.datasource" />
     <None Include="Properties\DataSources\Schueler.datasource" />
+    <None Include="Properties\DataSources\SprachniveauDruck.datasource" />
     <None Include="Properties\DataSources\ZeugnisDruck.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -214,13 +214,26 @@ namespace diNo
     public bool ShowFOBOSOHinweis { get; private set; } // Diesem Zeungnis liegt die Schulordnung ...
     public string Siegel { get; private set; } // (Siegel) andrucken
     public bool IstJahreszeugnis { get; private set; }
+    public string BestandenText { get; private set; } // nur für Abizeugnis
 
     public ZeugnisDruck(Schueler s, Bericht b, UnterschriftZeugnis u) : base(s, b)
     {
-      if (b == Bericht.Bescheinigung) ZeugnisArt = "Bescheinigung";
-      else if (b == Bericht.Zwischenzeugnis) ZeugnisArt = "Zwischenzeugnis";
-      else /*if (b == Bericht.Jahreszeugnis)*/ ZeugnisArt = "Jahreszeugnis";
-      ZeugnisArt = ZeugnisArt.ToUpper();
+      if (b == Bericht.Abiturzeugnis) // dort nicht mit Großbuchstaben
+      {
+        BestandenText = "hat die " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " bestanden. Der Prüfungsausschuss hat ";
+        BestandenText += (s.Data.Geschlecht == "M" ? "ihm" : "ihr") + " die";
+
+        if (jg == 12) ZeugnisArt = "Fachhochschulreife";
+        else if (s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife)) ZeugnisArt = "allgemeine Hochschulreife";
+        else ZeugnisArt = "fachgebundene Hochschulreife";
+      }
+      else
+      {
+        if (b == Bericht.Bescheinigung) ZeugnisArt = "Bescheinigung";
+        else if (b == Bericht.Zwischenzeugnis) ZeugnisArt = "Zwischenzeugnis";
+        else if (b == Bericht.Jahreszeugnis) ZeugnisArt = "Jahreszeugnis";
+        ZeugnisArt = ZeugnisArt.ToUpper();
+      }
       IstJahreszeugnis = (b == Bericht.Jahreszeugnis);
 
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
@@ -250,11 +263,11 @@ namespace diNo
         Schulleiter = Zugriff.Instance.getString(GlobaleStrings.Schulleiter);
         SchulleiterText = Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
       }
-
+   
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
       if (jg == 11)
         Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.<br><br>Bemerkungen:";
-      else
+      else if (b!=Bericht.Abiturzeugnis)
         Bemerkung = "Bemerkungen:";
 
       if (!s.Data.IsZeugnisbemerkungNull())
@@ -277,7 +290,10 @@ namespace diNo
           Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " hat sich der Fachabiturprüfung ohne Erfolg unterzogen. " + s.getErSie(true) + " darf die Prüfung gemäß Art. 54 Abs. 5 Satz 1 BayEUG "
               + (s.hatVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen) ? "nicht mehr" : "noch einmal") + " wiederholen.";
       }
-      Bemerkung += " ---";
+      if (b == Bericht.Abiturzeugnis)
+        Bemerkung = (Bemerkung == null ? "---" : Bemerkung.Substring(4) + " ---");
+      else
+        Bemerkung += " ---";
       ShowKenntnisGenommen = s.Alter(Zugriff.Instance.Zeugnisdatum) < 18 && b == Bericht.Zwischenzeugnis;
       if (b == Bericht.Jahreszeugnis)
         Siegel = "(Siegel)";
@@ -818,7 +834,30 @@ namespace diNo
     }
   }
   
+  public class SprachniveauDruck
+  {
+    public string fachBez { get; private set; }
+    public string Stufe { get; private set; }
 
+    public SprachniveauDruck(FachSchuelerNoten f)
+    {      
+      fachBez = f.getFach.BezZeugnis;
+      Stufe = Fremdsprachen.NiveauText(Fremdsprachen.HjToSprachniveau(f));
+    }
+
+    public static List<SprachniveauDruck> Create(Schueler s)
+    {
+      List<SprachniveauDruck> list = new List<SprachniveauDruck>();
+      foreach (var f in s.getNoten.alleFaecher)
+      {
+        if (f.getFach.getKursniveau() != Kursniveau.None && f.getHjLeistung(HjArt.Sprachenniveau)!=null)
+        {
+          list.Add(new SprachniveauDruck(f));
+        }
+      }
+      return list;
+    }
+  }
   
   public class LehrerRolleDruck
   {

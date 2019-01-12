@@ -72,10 +72,17 @@ namespace diNo
       }
     }
 
-    public void Add(PunktesummeArt art, int anz, int sum)
+    public void Add(PunktesummeArt art, Fachsumme fs)
     {
-      anzahl[(int)art] += anz;
-      summe[(int)art] += sum;
+      anzahl[(int)art] += fs.anz;
+      summe[(int)art] += fs.sum;
+    }
+
+    // Addition eines Einzelwertes
+    public void Add(PunktesummeArt art, int punkte)
+    {
+      anzahl[(int)art] ++;
+      summe[(int)art] += punkte;
     }
 
     public int Anzahl(PunktesummeArt art)
@@ -101,6 +108,29 @@ namespace diNo
       }
     }
   }
+
+  public class Fachsumme
+  {
+    public int anz, sum;
+
+    public void SaveGesErg(HjLeistung gesErg)
+    {
+      if (anz == 0) return; // nichts speichern
+
+      gesErg.Punkte2Dez = sum / (decimal)anz;
+      if (gesErg.Punkte2Dez < (decimal)1.0) gesErg.Punkte = 0;
+      else gesErg.Punkte = (byte)Math.Round((double)gesErg.Punkte2Dez, MidpointRounding.AwayFromZero);
+      gesErg.WriteToDB();
+    }
+
+    // Addiert eine andere Fachsumme dazu
+    public void Add(Fachsumme f)
+    {
+      anz += f.anz;
+      sum += f.sum;
+    }
+  }
+
 
   public enum PunktesummeArt
   {
