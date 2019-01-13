@@ -146,41 +146,11 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>I. Erzielte Leistungen:</Value>
-                              <Style>
-                                <FontFamily>Gadugi</FontFamily>
-                                <FontSize>11pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <LineHeight>15pt</LineHeight>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
                               <Value />
                               <Style>
                                 <FontFamily>Gadugi</FontFamily>
-                                <FontSize>6pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <LineHeight>15pt</LineHeight>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Halbjahresergebnisse, die nicht in das Gesamtergebnis eingehen, sind in Klammern gesetzt.</Value>
-                              <Style>
-                                <FontFamily>Gadugi</FontFamily>
                                 <FontSize>11pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
+                                <FontWeight>Bold</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>

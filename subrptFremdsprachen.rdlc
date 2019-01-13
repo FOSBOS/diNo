@@ -46,7 +46,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.71744cm</Height>
+                  <Height>0.66452cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -60,7 +60,6 @@
                                   <Value>Niveaustufe*</Value>
                                   <Style>
                                     <FontFamily>Gadugi</FontFamily>
-                                    <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -93,7 +92,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.70583cm</Height>
+                  <Height>0.62645cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -107,7 +106,6 @@
                                   <Value>=Fields!Stufe.Value</Value>
                                   <Style>
                                     <FontFamily>Gadugi</FontFamily>
-                                    <FontSize>11pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -131,7 +129,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -159,7 +156,6 @@
                                 <Value>Fremdsprachen</Value>
                                 <Style>
                                   <FontFamily>Gadugi</FontFamily>
-                                  <FontSize>11pt</FontSize>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -206,7 +202,6 @@
                                 <Value>=Fields!fachBez.Value</Value>
                                 <Style>
                                   <FontFamily>Gadugi</FontFamily>
-                                  <FontSize>11pt</FontSize>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -234,7 +229,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
-            <Height>1.42327cm</Height>
+            <Height>1.29098cm</Height>
             <Width>11.93339cm</Width>
             <Style>
               <Border>
@@ -260,7 +255,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.54199cm</Top>
+            <Top>1.39681cm</Top>
             <Height>0.6cm</Height>
             <Width>11.93339cm</Width>
             <ZIndex>1</ZIndex>
@@ -275,7 +270,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>0.94732in</Height>
+        <Height>0.91607in</Height>
         <Style>
           <Border>
             <Color>White</Color>

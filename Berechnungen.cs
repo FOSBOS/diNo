@@ -300,12 +300,6 @@ namespace diNo
       }
     }
 
-    private bool passt(FachSchuelerNoten f, HjArt art)
-    {
-      HjLeistung hj = f.getHjLeistung(art);
-      return (hj != null && hj.Punkte >= 4);
-    }
-
     public void BestimmeSprachniveau(Schueler s)
     {
       var ta = new HjLeistungTableAdapter();

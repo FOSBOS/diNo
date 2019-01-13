@@ -176,7 +176,6 @@
                     <Value />
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>6pt</FontSize>
                       <FontWeight>Normal</FontWeight>
                     </Style>
                   </TextRun>
@@ -190,7 +189,6 @@
                     <MarkupType>HTML</MarkupType>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
                       <FontWeight>Normal</FontWeight>
                     </Style>
                   </TextRun>
@@ -203,7 +201,6 @@
                     <Value />
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -355,7 +352,6 @@
                     <Value />
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
@@ -370,7 +366,6 @@
                     <Value>=Fields!DatumZeugnis.Value</Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -382,7 +377,6 @@
                     <Value />
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -394,14 +388,12 @@
                     <Value>=Fields!SchulleiterText.Value</Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
                   <TextRun>
                     <Value>:</Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -434,10 +426,16 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>.....................................................................                (Siegel)</Value>
+                    <Value>.....................................................................               </Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value> (Siegel)</Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -496,8 +494,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.74307cm</Top>
-            <Height>11.15852cm</Height>
+            <Top>1.9812cm</Top>
+            <Height>11.50249cm</Height>
             <Width>16.43974cm</Width>
             <Style>
               <Border>
@@ -516,7 +514,7 @@
                 <Value>=First(Fields!Id.Value, "DataSet1")</Value>
               </Parameter>
             </Parameters>
-            <Top>0.92604cm</Top>
+            <Top>0.77639cm</Top>
             <Height>0.81703cm</Height>
             <Width>15.16974cm</Width>
             <ZIndex>1</ZIndex>
@@ -559,7 +557,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>12.92806cm</Height>
+        <Height>13.48369cm</Height>
         <Style>
           <Border>
             <Color>White</Color>

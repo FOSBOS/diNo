@@ -775,7 +775,7 @@ namespace diNo
     {
       Text = text;
       Punkte = punkte;
-      InWorten = InWorten;
+      InWorten = inWorten;
     }
 
     public static List<PunkteSummeDruck> Create(Schueler s)
@@ -789,9 +789,16 @@ namespace diNo
           list.Add(new PunkteSummeDruck(ArtToText(a, p, s), p.Summe(a).ToString(), ""));
         }
       }
-      list.Add(new PunkteSummeDruck("", "", "")); // Leerzeile
-      list.Add(new PunkteSummeDruck("Durchschnittsnote", string.Format("{0:F1}", s.Data.DNote), ZahlToText(s.Data.DNote)));
-
+      if (!s.Data.IsDNoteNull())
+      {
+        list.Add(new PunkteSummeDruck("", "", "")); // Leerzeile
+        list.Add(new PunkteSummeDruck("Durchschnittsnote", string.Format("{0:F1}", s.Data.DNote), ZahlToText(s.Data.DNote)));
+      }
+      else // nur zum Test
+      {
+        list.Add(new PunkteSummeDruck("", "", "")); // Leerzeile
+        list.Add(new PunkteSummeDruck("Durchschnittsnote", string.Format("{0:F1}", 3.7), ZahlToText((decimal)3.7)));
+      }
       return list;
     }
 
