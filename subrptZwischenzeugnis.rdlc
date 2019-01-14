@@ -81,8 +81,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>12pt</FontSize>
+                                    <FontFamily>Gadugi</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -115,8 +114,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>12pt</FontSize>
+                                    <FontFamily>Gadugi</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -149,8 +147,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>12pt</FontSize>
+                                    <FontFamily>Gadugi</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -188,7 +185,8 @@
                                 <TextRun>
                                   <Value>Halbjahresergebnisse</Value>
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
+                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -201,7 +199,8 @@
                                 <TextRun>
                                   <Value>Punkte</Value>
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
+                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -214,13 +213,15 @@
                                 <TextRun>
                                   <Value>=Parameters!JgKurz.Value</Value>
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
+                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value>/1</Value>
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
+                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -262,8 +263,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
+                                    <FontFamily>Gadugi</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -301,8 +301,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
+                                    <FontFamily>Gadugi</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -337,8 +336,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
+                                    <FontFamily>Gadugi</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -381,8 +379,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
+                                    <FontFamily>Gadugi</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -419,8 +416,7 @@
                                 <TextRun>
                                   <Value>=Fields!Hj1.Value</Value>
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
+                                    <FontFamily>Gadugi</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -459,8 +455,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Times New Roman</FontFamily>
-                                    <FontSize>11pt</FontSize>
+                                    <FontFamily>Gadugi</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -753,7 +748,6 @@
                                 <Value />
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
-                                  <FontSize>11pt</FontSize>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -787,8 +781,7 @@
                                   <TextRun>
                                     <Value>Erzielte Leistungen:</Value>
                                     <Style>
-                                      <FontFamily>Times New Roman</FontFamily>
-                                      <FontSize>11pt</FontSize>
+                                      <FontFamily>Gadugi</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -827,7 +820,6 @@
                                 <Value />
                                 <Style>
                                   <FontFamily>Tahoma</FontFamily>
-                                  <FontSize>11pt</FontSize>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -861,8 +853,7 @@
                                   <TextRun>
                                     <Value>Fach</Value>
                                     <Style>
-                                      <FontFamily>Times New Roman</FontFamily>
-                                      <FontSize>11pt</FontSize>
+                                      <FontFamily>Gadugi</FontFamily>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -916,7 +907,6 @@
                                     <Value />
                                     <Style>
                                       <FontFamily>Tahoma</FontFamily>
-                                      <FontSize>11pt</FontSize>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -954,8 +944,7 @@
                                       <TextRun>
                                         <Value>=Fields!fachGruppe.Value</Value>
                                         <Style>
-                                          <FontFamily>Times New Roman</FontFamily>
-                                          <FontSize>11pt</FontSize>
+                                          <FontFamily>Gadugi</FontFamily>
                                           <FontWeight>Bold</FontWeight>
                                         </Style>
                                       </TextRun>
@@ -1003,7 +992,6 @@
                                     <Value />
                                     <Style>
                                       <FontFamily>Tahoma</FontFamily>
-                                      <FontSize>11pt</FontSize>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -1040,8 +1028,7 @@
                                         <Value>=Fields!fachBez.Value</Value>
                                         <MarkupType>HTML</MarkupType>
                                         <Style>
-                                          <FontFamily>Times New Roman</FontFamily>
-                                          <FontSize>11pt</FontSize>
+                                          <FontFamily>Gadugi</FontFamily>
                                         </Style>
                                       </TextRun>
                                     </TextRuns>
@@ -1166,7 +1153,7 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
-            <Height>3.67618cm</Height>
+            <Height>3.67619cm</Height>
             <Width>14.27688cm</Width>
             <Style>
               <Border>

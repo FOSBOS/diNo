@@ -112,7 +112,7 @@ namespace diNo
         {
           e.DataSources.Add(new ReportDataSource("DataSet1", SprachniveauDruck.Create(schueler)));
         }
-        else if (subrpt == "subrptAbiRechteSeite")
+        else if (subrpt == "subrptAbiRechteSeite" || subrpt == "subrptAbiLinkeSeite")
         {
           var z = SchuelerDruck.CreateSchuelerDruck(schueler, Bericht.Abiturzeugnis, UnterschriftZeugnis.SL);
           var l = new List<SchuelerDruck>();

@@ -298,6 +298,7 @@
       <DependentUpon>Stammdaten.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="subrptAbiergebnisseAlt.rdlc" />
+    <EmbeddedResource Include="subrptAbiLinkeSeite.rdlc" />
     <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />
     <EmbeddedResource Include="subrptPunktesumme.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />

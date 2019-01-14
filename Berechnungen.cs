@@ -220,10 +220,27 @@ namespace diNo
 
     public void BerechneDNote(Schueler s)
     {
-
+      int anz = s.punktesumme.Anzahl(PunktesummeArt.Gesamt);
+      if (anz>0)
+      {
+        decimal erg = (17/3 - 5 * (decimal)s.punktesumme.Summe(PunktesummeArt.Gesamt) / (15*anz));
+        if (erg < 1)
+        {
+          erg = 1;
+        }
+        else
+        {
+          erg = Math.Floor(erg * 10) / 10; // auf 1 NK abrunden
+        }
+        s.Data.DNote = erg;
+      }
+      else
+      {
+        s.Data.SetDNoteNull();
+      }    
     }
 
-    private void berechneDNote(Schueler s, bool allgHSR)
+    private void berechneDNoteAlt(Schueler s, bool allgHSR)
     {
       int summe = 0, anz = 0;
       decimal erg;
