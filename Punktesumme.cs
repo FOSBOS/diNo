@@ -129,6 +129,12 @@ namespace diNo
       anz += f.anz;
       sum += f.sum;
     }
+
+    public void Add(int punkte, int faktor)
+    {
+      anz += faktor;
+      sum += punkte * faktor;
+    }
   }
 
 

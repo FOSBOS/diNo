@@ -198,7 +198,6 @@
                     <Value />
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>8pt</FontSize>
                       <FontWeight>Normal</FontWeight>
                     </Style>
                   </TextRun>
@@ -213,7 +212,6 @@
                     <Value>=Fields!GeborenInAm.Value</Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -227,7 +225,6 @@
                     <Value />
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>6pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -241,7 +238,6 @@
                     <Value>=Fields!KlasseAR.Value</Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>

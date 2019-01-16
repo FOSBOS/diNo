@@ -220,10 +220,19 @@ namespace diNo
 
     public void BerechneDNote(Schueler s)
     {
+      if (s.AlteFOBOSO())
+      {
+        berechneDNoteAlt(s, false);
+        if (s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife))
+          berechneDNoteAlt(s, true);
+        return;
+      }
+
       int anz = s.punktesumme.Anzahl(PunktesummeArt.Gesamt);
       if (anz>0)
       {
-        decimal erg = (17/3 - 5 * (decimal)s.punktesumme.Summe(PunktesummeArt.Gesamt) / (15*anz));
+        //decimal erg = 17/ (decimal)3.0 - 5 * (decimal)s.punktesumme.Summe(PunktesummeArt.Gesamt) / (15*anz);
+        decimal erg = (17 - (decimal)s.punktesumme.Summe(PunktesummeArt.Gesamt) / anz) / 3;
         if (erg < 1)
         {
           erg = 1;

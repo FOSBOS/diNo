@@ -344,5 +344,10 @@ namespace diNo
       if (jf==null) return RundeJF(abi);
       else return RundeJF(Aufrunden2NK((jf.GetValueOrDefault()+abi)/2));
     }
+
+    public static byte BerechneAbiGes(int sap, int map)
+    {
+      return RundeJF((2 * sap+ map) / 3);
+    }
   }
 }

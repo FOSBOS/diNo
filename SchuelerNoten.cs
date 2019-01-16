@@ -272,7 +272,15 @@ namespace diNo
         if (relevanteNote <4)
           Unterpunktungen += "Sem (" + relevanteNote +") ";
       }
+
+      // Punkteschnitt berechnen
+      if (!schueler.AlteFOBOSO() && zeitpunkt>=Zeitpunkt.ErstePA && zeitpunkt<=Zeitpunkt.DrittePA)
+      {
+        Punktesumme = schueler.punktesumme.Summe(PunktesummeArt.Gesamt);
+        AnzahlFaecher = schueler.punktesumme.Anzahl(PunktesummeArt.Gesamt);
+      }
       Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2, MidpointRounding.AwayFromZero);
+
       if (Unterpunktungen != "" && !schueler.AlteFOBOSO() && !(zeitpunkt==Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse))
         Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
     }
@@ -347,6 +355,52 @@ namespace diNo
     }
     
     public bool MAPmoeglich()
+    {
+      // Anzahl 5er und 6er nach einen MAP mit "bestmöglichem" Ergebnis
+      int anz5 = 0;
+      int anz6 = 0;
+      int AnzMAP=0; // max. 2 MAP in den Prüfungsfächern möglich
+      
+
+      foreach (var f in alleKurse)
+      {
+        string kuerzel = f.getFach.Kuerzel;       
+
+        HjLeistung hj = f.getHjLeistung(HjArt.GesErg);
+        if (hj == null) continue; // sollte natürlich nicht passieren!
+        byte note = hj.Punkte;
+
+        // nur in Abifächern außer E kann man MAP machen
+        if (f.getFach.IstSAPFach(schueler.Zweig) && kuerzel != "E" && note < 4 && AnzMAP < 2)
+        {
+          if (f.getNotenanzahl(Halbjahr.Zweites, Notentyp.APSchriftlich) == 0) // Note liegt ggf. noch nicht vor.
+            return true;                                                    // Meldung über NotenanzahlChecker
+          
+          int sap = f.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich)[0];
+          Fachsumme fs = f.SummeHalbjahre();
+          int ap = Notentools.BerechneAbiGes(sap, 15);
+          if (schueler.hatVorHj)
+            fs.Add(ap, 3);
+          else
+            fs.Add(ap, 2);
+
+          byte noteMoegl = (byte)Math.Round(fs.sum / (double)fs.anz, MidpointRounding.AwayFromZero);                    
+          if (noteMoegl >= 4 || note == 0) // wenn er auf dem 5er bleibt, soll er lieber ein anderes Fach nehmen
+          {
+            note = noteMoegl;
+            AnzMAP++;
+          }          
+        }
+        if (note == 0) anz6++;
+        else if (note < 4) anz5++;       
+      }
+
+      return (anz6 == 0 && anz5 <= 1); // dann hätte er bestanden
+
+      // TODO: fehlt Schnitt aus neuer Punktesumme (es kann sich aber nur die Abisumme ändern!)
+    }
+  
+    public bool MAPmoeglichAlt()
     {
       // Anzahl 5er und 6er nach einen MAP mit "bestmöglichem" Ergebnis
       int anz5=0; 
@@ -549,7 +603,7 @@ namespace diNo
       return vorHjLeistung[(int)art];
     }
 
-    private void NimmHj(Fachsumme fs, HjArt a, bool vorJahr, bool ignoreEinbringung=false)
+    public void NimmHj(Fachsumme fs, HjArt a, bool vorJahr, bool ignoreEinbringung=false)
     {
       int faktor = 1;
       HjLeistung hj;
@@ -568,28 +622,37 @@ namespace diNo
     }
 
     /// <summary>
+    /// Bestimmt die Punktesumme der eingebrachten Halbjahre dieses Faches 
+    /// </summary>
+    public Fachsumme SummeHalbjahre(bool ignoreEinbringung = false)
+    {
+      Fachsumme fs = new Fachsumme();
+      NimmHj(fs, HjArt.Hj1, true, false);
+      NimmHj(fs, HjArt.Hj2, true, ignoreEinbringung);
+      NimmHj(fs, HjArt.Hj1, false, ignoreEinbringung); // NichtNC-Fächer werden zwar nicht eingebracht, GesErg wird aber über alle Hj gebildet
+      NimmHj(fs, HjArt.Hj2, false, ignoreEinbringung);
+      return fs;
+    }
+
+    /// <summary>
     /// Berechnet das Gesamtergebnis für dieses Fach aufgrund der vorliegenden HjLeistungen neu (nur Abiturklassen)
     /// </summary>
     public void BerechneGesErg(Punktesumme p)
     {
-      Fachsumme fs = new Fachsumme();
-      Fachsumme fsprache = new Fachsumme(); // Fremdsprache getrennt
+      Fachsumme fs;
+      Fachsumme fsprache; // Fremdsprache getrennt
       Fachsumme ap = new Fachsumme(); // Abiergebnis
-
-      bool NichtNC = fach.NichtNC;
+      
       bool istFS = fach.getKursniveau() != Kursniveau.None; // Fremdsprache
       HjLeistung gesErg = getHjLeistung(HjArt.GesErg);
       if (gesErg == null) gesErg = new HjLeistung(schueler.Id,fach,HjArt.GesErg,schueler.getKlasse.Jahrgangsstufe);
 
       // 4 mögliche Halbjahre:
-      NimmHj(fs, HjArt.Hj1, true);
-      NimmHj(fs, HjArt.Hj2, true);
-      NimmHj(fs, HjArt.Hj1, false, NichtNC); // NichtNC-Fächer werden zwar nicht eingebracht, GesErg wird aber über alle Hj gebildet
-      NimmHj(fs, HjArt.Hj2, false, NichtNC);
+      fs = SummeHalbjahre(fach.NichtNC);
       
       NimmHj(ap, HjArt.AP, false); // AP        
 
-      // Verbuchen auf die richtige Punktesumme
+      // Verbuchen auf die richtige Gesamt-Punktesumme (über alle Fächer)
       if (fach.Kuerzel=="FpA") p.Add(PunktesummeArt.FPA, fs);
       else p.Add(PunktesummeArt.HjLeistungen, fs);               
       p.Add(PunktesummeArt.AP, ap);
@@ -601,9 +664,7 @@ namespace diNo
       // extra Rechnung für Sprachniveau (unabhängig von Einbringung)
       if (istFS) 
       {
-        NimmHj(fsprache, HjArt.Hj2, true, true);
-        NimmHj(fsprache, HjArt.Hj1, false, true);
-        NimmHj(fsprache, HjArt.Hj2, false, true);
+        fsprache = SummeHalbjahre(true);
         fsprache.Add(ap);
         gesErg = getHjLeistung(HjArt.GesErgSprache);
         if (gesErg == null) gesErg = new HjLeistung(schueler.Id, fach, HjArt.GesErgSprache, schueler.getKlasse.Jahrgangsstufe);
@@ -632,7 +693,11 @@ namespace diNo
         else
         {
           hj = getHjLeistung(HjArt.GesErg);
-          if (hj==null) hj = getHjLeistung(HjArt.JN); // behelfsweise, damit man grob den Leistungsstand überprüfen kann
+          if (hj == null)
+          {
+            hj = getHjLeistung(HjArt.JN); // behelfsweise, damit man grob den Leistungsstand überprüfen kann
+            NoteUngueltig = true;
+          }
         }
 
         if (hj == null) return null;

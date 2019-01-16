@@ -595,21 +595,20 @@ namespace diNo
 
       else if (contr.zeitpunkt == Zeitpunkt.ErstePA)
       {
-        if (schueler.AlteFOBOSO() && (n.AnzahlNoten(6) > 1 || (n.AnzahlNoten(6) + n.AnzahlNoten(5)) > 3))
+        if (schueler.AlteFOBOSO())
         {
-          contr.Add(Vorkommnisart.NichtZurPruefungZugelassen, n.Unterpunktungen, true);
-          return;
+          if (schueler.AlteFOBOSO() && (n.AnzahlNoten(6) > 1 || (n.AnzahlNoten(6) + n.AnzahlNoten(5)) > 3))
+            contr.Add(Vorkommnisart.NichtZurPruefungZugelassen, n.Unterpunktungen, true);
+          if (n.AnzahlNoten(6, false) + n.AnzahlNoten(5, false) > 0)
+            contr.Add(null, "Unterpunktet in einem Nichtprüfungsfach " + n.Unterpunktungen, true);
         }
-
+        else
         // nur falls ein Schüler bereits zuviele schlechte Noten in Nichtprüfungsfächer hat
-        if (!schueler.AlteFOBOSO() && (n.AnzahlNoten(6, false) * 2 + n.AnzahlNoten(5, false)) > 2)
+        if (n.AnzahlNoten(6, false) * 2 + n.AnzahlNoten(5, false) > 2)
         {
           contr.Add(Vorkommnisart.NichtZurPruefungZugelassen, n.Unterpunktungen, true);
           return;
-        }
-
-        if (n.AnzahlNoten(6, false) + n.AnzahlNoten(5, false) > 0)
-          contr.Add(null, "Unterpunktet in einem Nichtprüfungsfach " + n.Unterpunktungen, true);
+        }        
       }
 
       else if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
