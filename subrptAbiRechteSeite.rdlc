@@ -279,7 +279,7 @@
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
+                      <FontWeight>Normal</FontWeight>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -323,7 +323,7 @@
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
+                      <FontWeight>Normal</FontWeight>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -494,9 +494,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>4.49474cm</Top>
-            <Height>11.42312cm</Height>
-            <Width>16.43974cm</Width>
+            <Top>4.30953cm</Top>
+            <Height>11.60833cm</Height>
+            <Width>16cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -514,10 +514,10 @@
                 <Value>=First(Fields!Id.Value, "DataSet1")</Value>
               </Parameter>
             </Parameters>
-            <Top>3.13408cm</Top>
+            <Top>3.0988cm</Top>
             <Left>0.03013cm</Left>
             <Height>0.81703cm</Height>
-            <Width>16.40961cm</Width>
+            <Width>16cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -568,7 +568,7 @@
             </Parameters>
             <Left>0.03013cm</Left>
             <Height>1.2438cm</Height>
-            <Width>16.43974cm</Width>
+            <Width>16cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
@@ -576,6 +576,41 @@
               </Border>
             </Style>
           </Subreport>
+          <Textbox Name="Textbox3">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>---</Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox3</rd:DefaultName>
+            <Top>3.13408cm</Top>
+            <Left>0.03013cm</Left>
+            <Height>0.07083cm</Height>
+            <Width>1.33583cm</Width>
+            <ZIndex>4</ZIndex>
+            <Visibility>
+              <Hidden>=First(Fields!IstJahreszeugnis.Value, "DataSet1")</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
         <Height>15.91786cm</Height>
         <Style>
@@ -585,7 +620,7 @@
           </Border>
         </Style>
       </Body>
-      <Width>16.46987cm</Width>
+      <Width>16.03013cm</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>

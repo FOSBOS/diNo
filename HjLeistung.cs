@@ -100,10 +100,10 @@ namespace diNo
   {
     Hj1 = 0, // aktuelles Sj./1
     Hj2 = 1, // aktuelles Sj./2
-    JN = 2, // Jahresnote (stammt aus Excel und gibt unabhängig von den eingebrachten Leistungen den Durchschnitt von Hj1/2 an)    
-    AP = 3,  // Abschlussprüfung-Gesamt
+    AP = 2,  // Abschlussprüfung-Gesamt
+    FR = 3,
     GesErg = 4, // Gesamtergebnis 
-    FR = 5,
+    JN = 5, // Jahresnote (stammt aus Excel und gibt unabhängig von den eingebrachten Leistungen den Durchschnitt von Hj1/2 an)    
     GesErgSprache = 6, // Gesamtergebnis für das Sprachniveau (unabhängig von der Einbringung)
     Sprachenniveau = 7 // keine echte HjLeistung, aber die Datenstruktur passt ganz gut
   }

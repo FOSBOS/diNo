@@ -83,9 +83,10 @@ namespace diNo
           HjLeistung hjLeistung;
 
           var hjLeistungen = new List<HjLeistung>();
+          // HjArt.GetFields().Where(x => x.IsLiteral).Select(x => x.GetValue(null)); TODO: Subset von Enum.HjArt bilden
           foreach (HjArt art in Enum.GetValues(typeof(HjArt))) // 12./13. Klasse
           {
-            if (art == HjArt.GesErg || art == HjArt.JN) continue; // JN, GE dürfen nicht verwendet werden
+            if (art > HjArt.FR) continue; // JN, GE usw. dürfen nicht verwendet werden
             hjLeistung = fachNoten.getHjLeistung(art);
             if (hjLeistung == null)
               continue;

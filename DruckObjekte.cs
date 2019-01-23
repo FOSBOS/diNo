@@ -78,7 +78,7 @@ namespace diNo
       Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
 
       HideHj2 = Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes;
-      HideVorHj = !(jg == 12 && s.Data.Schulart == "F"); // nur bei F12 anzeigen
+      HideVorHj = !s.hatVorHj; // nur bei F12 anzeigen
       HideAbi = jg < 12 || Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.ErstePA;
     }
 
@@ -226,6 +226,7 @@ namespace diNo
         if (jg == 12) ZeugnisArt = "Fachhochschulreife";
         else if (s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife)) ZeugnisArt = "allgemeine Hochschulreife";
         else ZeugnisArt = "fachgebundene Hochschulreife";
+        IstJahreszeugnis = SprachniveauDruck.HatFremdsprachen(s); // verbogen für "---" im Fremdpsrachenblock des Abizeugnisses, falls keine Sprachen da sind
       }
       else
       {
@@ -233,9 +234,9 @@ namespace diNo
         else if (b == Bericht.Zwischenzeugnis) ZeugnisArt = "Zwischenzeugnis";
         else if (b == Bericht.Jahreszeugnis) ZeugnisArt = "Jahreszeugnis";
         ZeugnisArt = ZeugnisArt.ToUpper();
+        IstJahreszeugnis = (b == Bericht.Jahreszeugnis);
       }
-      IstJahreszeugnis = (b == Bericht.Jahreszeugnis);
-
+      
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
       KlasseAR = (b == Bericht.Zwischenzeugnis ? "besucht" : "besuchte") + " im " + Schuljahr;
       KlasseAR += " die " + s.getKlasse.JahrgangsstufeZeugnis + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
@@ -842,17 +843,32 @@ namespace diNo
     public string Stufe { get; private set; }
 
     public SprachniveauDruck(FachSchuelerNoten f)
-    {      
+    {
+      int i;
       fachBez = f.getFach.BezZeugnis;
+      i = fachBez.IndexOf(" ");
+      if (i > 0) fachBez = fachBez.Substring(0,i); 
       Stufe = Fremdsprachen.NiveauText(Fremdsprachen.HjToSprachniveau(f));
+    }
+
+    public static bool HatFremdsprachen(Schueler s)
+    {
+      foreach (var f in s.getNoten.alleSprachen)
+      {
+        if (f.getHjLeistung(HjArt.Sprachenniveau) != null)
+        {
+          return true;
+        }
+      }
+      return false;
     }
 
     public static List<SprachniveauDruck> Create(Schueler s)
     {
       List<SprachniveauDruck> list = new List<SprachniveauDruck>();
-      foreach (var f in s.getNoten.alleFaecher)
+      foreach (var f in s.getNoten.alleSprachen)
       {
-        if (f.getFach.getKursniveau() != Kursniveau.None && f.getHjLeistung(HjArt.Sprachenniveau)!=null)
+        if (f.getHjLeistung(HjArt.Sprachenniveau)!=null)
         {
           list.Add(new SprachniveauDruck(f));
         }

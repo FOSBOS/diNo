@@ -36,6 +36,11 @@ namespace diNo
       dateZeugnis.Value = konstanten.Zeugnisdatum;
       cbNotendruck.SelectedIndex = 0;
       lblStatus.Text = "";
+
+      if (System.Security.Principal.WindowsIdentity.GetCurrent().Name == "ClausPC\\Claus")
+      {
+        cbNotendruck.SelectedIndex = 7;
+      }
     }
 
     public Schueler Schueler

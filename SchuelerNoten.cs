@@ -14,6 +14,7 @@ namespace diNo
     private Schueler schueler;
     public List<FachSchuelerNoten> alleKurse; // enthält nur die aktuell besuchten Kurse
     public List<FachSchuelerNoten> alleFaecher; // enthält alle Fächer, die der S jemals belegt hat
+    public List<FachSchuelerNoten> alleSprachen; // für die Fremdsprachenliste
     public List<FachSchuelerNoten> FaecherOhneKurse; // enthält alle Fächer, die der S aus vorigen JgStufen mitbringt
 
     // die folgendes Array verwaltet die Anzahl der Einser, Zweier, usw., getrennt nach SAP-Fach und Nebenfach
@@ -32,6 +33,7 @@ namespace diNo
       diNoDataSet.KursDataTable kurse = schueler.Kurse; // ermittle alle Kurse, die der S besucht
       alleFaecher = new List<FachSchuelerNoten>();
       alleKurse = new List<FachSchuelerNoten>();
+      alleSprachen = new List<FachSchuelerNoten>();
       FaecherOhneKurse = new List<FachSchuelerNoten>();
 
       foreach (var kurs in kurse)
@@ -39,6 +41,7 @@ namespace diNo
         var fsn = new FachSchuelerNoten(schueler, kurs.Id);
         alleFaecher.Add(fsn);
         alleKurse.Add(fsn);
+        if (fsn.getFach.getKursniveau() != Kursniveau.None) alleSprachen.Add(fsn);
       }
 
       // alle Fächer des Schülers ohne Kurs finden und diese HjLeistungen laden 
@@ -48,6 +51,7 @@ namespace diNo
         Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
         var fsn = new FachSchuelerNoten(schueler, fach);
         alleFaecher.Add(fsn);
+        if (fsn.getFach.getKursniveau() != Kursniveau.None) alleSprachen.Add(fsn);
         FaecherOhneKurse.Add(fsn);
       }
 
@@ -648,16 +652,17 @@ namespace diNo
       if (gesErg == null) gesErg = new HjLeistung(schueler.Id,fach,HjArt.GesErg,schueler.getKlasse.Jahrgangsstufe);
 
       // 4 mögliche Halbjahre:
-      fs = SummeHalbjahre(fach.NichtNC);
-      
-      NimmHj(ap, HjArt.AP, false); // AP        
+      fs = SummeHalbjahre(fach.NichtNC); // Nicht-NC-Fächer ausrechnen, aber nicht verbuchen
 
       // Verbuchen auf die richtige Gesamt-Punktesumme (über alle Fächer)
       if (fach.Kuerzel=="FpA") p.Add(PunktesummeArt.FPA, fs);
-      else p.Add(PunktesummeArt.HjLeistungen, fs);               
+      else if (!fach.NichtNC) p.Add(PunktesummeArt.HjLeistungen, fs);
+
+      // AP
+      NimmHj(ap, HjArt.AP, false); 
       p.Add(PunktesummeArt.AP, ap);
 
-      // Gesamtergebnis berechnen
+      // Gesamtergebnis berechnen (dazu das AP-Ergebnis mitnehmen)
       fs.Add(ap);
       fs.SaveGesErg(gesErg);
 
