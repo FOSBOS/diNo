@@ -76,11 +76,15 @@ namespace diNo
         alleNotenchecks.Add(new AbiergebnisChecker(this));
         alleNotenchecks.Add(new EliteChecker(this));
       }
+      if ((azeitpunkt == Zeitpunkt.ErstePA || azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
+      {
+        alleNotenchecks.Add(new EinbringungsChecker(this));
+      }
       if (azeitpunkt == Zeitpunkt.DrittePA && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         alleNotenchecks.Add(new MAPChecker(this));
 
       // Folgende Vorkommnisse ggf. löschen, bzw. neu erzeugen bei 2./3.PA
-      if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) )
+      if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) && modus == NotenCheckModus.KonferenzVorbereiten)
       {
         VorkommnisTableAdapter ta = new VorkommnisTableAdapter();
         ta.DeleteVorkommnis((int)Vorkommnisart.bisherNichtBestandenMAPmoeglich);

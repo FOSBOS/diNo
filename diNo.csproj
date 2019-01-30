@@ -300,6 +300,7 @@
     <EmbeddedResource Include="subrptAbiergebnisseAlt.rdlc" />
     <EmbeddedResource Include="subrptAbiLinkeSeite.rdlc" />
     <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />
+    <EmbeddedResource Include="subrptPunktesummeNB.rdlc" />
     <EmbeddedResource Include="subrptPunktesumme.rdlc" />
     <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptEinbringung.rdlc" />

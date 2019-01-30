@@ -104,7 +104,7 @@ namespace diNo
         {
           e.DataSources.Add(new ReportDataSource("DataSetFPANoten", schueler.FPANotenDruck()));
         }
-        else if (subrpt == "subrptPunktesumme")
+        else if (subrpt.Substring(0,17) == "subrptPunktesumme")
         {
           e.DataSources.Add(new ReportDataSource("DataSet1", PunkteSummeDruck.Create(schueler)));
         }

@@ -218,6 +218,25 @@ namespace diNo
       else return anzahlNoten[note,0];
     }
 
+    private void NimmNote(byte relevanteNote, int istSAP, string kuerzel)
+    {
+      if (relevanteNote == 0)
+      {
+        anzahlNoten[6, istSAP]++;
+        if (kuerzel == "D") hatDeutsch6 = true; // nur AlteFOBOSO
+      }
+      else if (relevanteNote < 4) anzahlNoten[5, istSAP]++;
+      else if (relevanteNote >= 13) anzahlNoten[1, istSAP]++;
+      else if (relevanteNote >= 10) anzahlNoten[2, istSAP]++;
+      else if (relevanteNote >= 7) anzahlNoten[3, istSAP]++;
+      else anzahlNoten[4, istSAP]++;
+
+      if (relevanteNote == 4) anz4P++; // nur 4P für Gefährdungsmitteilung
+
+      if (relevanteNote < 4 || relevanteNote == 4 && zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+        Unterpunktungen += kuerzel + "(" + relevanteNote + ") ";
+    }
+
     private void InitAnzahlNoten()
     {      
       string kuerzel;
@@ -238,22 +257,8 @@ namespace diNo
         if (relevanteNote != null)
         {
           Punktesumme += relevanteNote.GetValueOrDefault();
-          AnzahlFaecher++;                       
-          if (relevanteNote == 0)
-          {
-            anzahlNoten[6,istSAP]++;
-            if (kuerzel=="D") hatDeutsch6=true; // nur AlteFOBOSO
-          }
-          else if (relevanteNote < 4) anzahlNoten[5,istSAP]++;          
-          else if (relevanteNote >=13) anzahlNoten[1,istSAP]++;
-          else if (relevanteNote >= 10) anzahlNoten[2,istSAP]++;
-          else if (relevanteNote >= 7) anzahlNoten[3,istSAP]++;
-          else anzahlNoten[4,istSAP]++; 
-
-          if (relevanteNote==4) anz4P++; // nur 4P für Gefährdungsmitteilung
-
-          if (relevanteNote <4 || relevanteNote == 4 && zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
-            Unterpunktungen += fachNoten.getFach.Kuerzel + "(" + relevanteNote +") ";
+          AnzahlFaecher++;
+          NimmNote(relevanteNote.GetValueOrDefault(), istSAP, kuerzel);
         }
         if (istSAP==1 && (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA))
         {
@@ -261,20 +266,18 @@ namespace diNo
         }
       }
 
+      foreach (var f in schueler.Fachreferat)
+      {
+        NimmNote(f.Punkte, 0, "FR"); 
+      }
+
       // TODO: in alleFaecher integrieren
       if (!schueler.Seminarfachnote.IsGesamtnoteNull())
       {
-        int relevanteNote = schueler.Seminarfachnote.Gesamtnote;
+        byte relevanteNote = (byte)schueler.Seminarfachnote.Gesamtnote;
         Punktesumme += relevanteNote;
         AnzahlFaecher++;
-
-        if (relevanteNote == 0) anzahlNoten[6,0]++;          
-        else if (relevanteNote < 4) anzahlNoten[5,0]++;
-        else if (relevanteNote >=13) anzahlNoten[1,0]++;
-        else if (relevanteNote >= 10) anzahlNoten[2,0]++;        
-
-        if (relevanteNote <4)
-          Unterpunktungen += "Sem (" + relevanteNote +") ";
+        NimmNote(relevanteNote, 0, "Sem");
       }
 
       // Punkteschnitt berechnen
@@ -283,10 +286,12 @@ namespace diNo
         Punktesumme = schueler.punktesumme.Summe(PunktesummeArt.Gesamt);
         AnzahlFaecher = schueler.punktesumme.Anzahl(PunktesummeArt.Gesamt);
       }
-      Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2, MidpointRounding.AwayFromZero);
-
-      if (Unterpunktungen != "" && !schueler.AlteFOBOSO() && !(zeitpunkt==Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse))
-        Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
+      if (AnzahlFaecher > 0)
+      {
+        Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2, MidpointRounding.AwayFromZero);
+        if (Unterpunktungen != "" && !schueler.AlteFOBOSO() && !(zeitpunkt == Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse))
+          Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
+      }
     }
 
     private void InitAbiNoten(FachSchuelerNoten f)

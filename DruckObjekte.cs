@@ -460,7 +460,7 @@ namespace diNo
     public NotenDruck(FachSchuelerNoten s, Bericht b)
     {
       fachBez = s.getFach.Bezeichnung;
-      if ((b == Bericht.Einbringung || b == Bericht.Abiergebnisse) && s.getFach.NichtNC) fachBez += " *";
+      if ((b == Bericht.Einbringung || b == Bericht.Abiergebnisse) && s.getFach.NichtNC) fachBez += "*";
       if (b == Bericht.Notenbogen && fachBez.Contains("irtschafts")) // Fachbezeichnung sind zu lang für Notenbogen
       {
         string kuerzel = s.getFach.Kuerzel;

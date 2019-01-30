@@ -712,6 +712,28 @@ namespace diNo
     }
   }
 
+
+  // Prüft, ob die richtige Anzahl an HjLeistungen eingebracht wurden
+  public class EinbringungsChecker : NotenCheck
+  {
+    public EinbringungsChecker(NotenCheckController contr) : base(contr)
+    { }
+
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
+    {
+      return jahrgangsstufe == Jahrgangsstufe.Zwoelf; // AlteFOBOSO noch nicht
+    }
+
+    public override void Check(Schueler schueler)
+    {
+      int notw = schueler.hatVorHj ? 25 : 17;
+      int eing = schueler.punktesumme.Anzahl(PunktesummeArt.HjLeistungen);
+      if (eing > 0 && notw != eing) 
+        contr.Add(null, "Es wurden " + eing + " statt " + notw + " Halbjahresleistungen eingebracht.");
+    }
+  }
+
+
   // Ermittelt bei 2./3.PA, ob ein Schüler für die Eliteförderung in Frage kommt.
   public class EliteChecker : NotenCheck
   {

@@ -306,6 +306,8 @@ namespace diNo
       var obj = getSelectedObjects();
       var b = new Berechnungen(Zeitpunkt.None);
       b.aufgaben.Add(b.BerechneGesErg);
+      b.aufgaben.Add(b.BerechneDNote);
+      b.aufgaben.Add(b.BestimmeSprachniveau);
       foreach (var s in obj)
         b.BerechneSchueler(s);
       RefreshNotenbogen();

@@ -17,19 +17,23 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="fachBez">
-          <DataField>fachBez</DataField>
+        <Field Name="InWorten">
+          <DataField>InWorten</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Stufe">
-          <DataField>Stufe</DataField>
+        <Field Name="Punkte">
+          <DataField>Punkte</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Text">
+          <DataField>Text</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>diNo</rd:DataSetName>
-        <rd:TableName>SprachniveauDruck</rd:TableName>
-        <rd:ObjectDataSourceType>diNo.SprachniveauDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>PunkteSummeDruck</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.PunkteSummeDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -41,25 +45,25 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>3.23146cm</Width>
+                  <Width>1.2cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.66452cm</Height>
+                  <Height>0.5cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="Textbox37">
+                        <Textbox Name="Punkte">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Niveaustufe*</Value>
+                                  <Value>=Fields!Punkte.Value</Value>
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -68,63 +72,14 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>Textbox37</rd:DefaultName>
+                          <rd:DefaultName>Punkte</rd:DefaultName>
+                          <Visibility>
+                            <Hidden>=(Fields!Punkte.Value="")</Hidden>
+                          </Visibility>
                           <Style>
                             <Border>
-                              <Style>Solid</Style>
-                            </Border>
-                            <TopBorder>
-                              <Width>1.7pt</Width>
-                            </TopBorder>
-                            <RightBorder>
-                              <Width>1.7pt</Width>
-                            </RightBorder>
-                            <BackgroundColor>#ebebeb</BackgroundColor>
-                            <VerticalAlign>Middle</VerticalAlign>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.62645cm</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox3">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!Stufe.Value</Value>
-                                  <Style>
-                                    <FontFamily>Gadugi</FontFamily>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style>
-                                <TextAlign>Center</TextAlign>
-                              </Style>
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox3</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Style>Solid</Style>
-                            </Border>
-                            <TopBorder>
                               <Style>None</Style>
-                            </TopBorder>
-                            <BottomBorder>
-                              <Width>1.5pt</Width>
-                            </BottomBorder>
+                            </Border>
                             <RightBorder>
                               <Width>1.7pt</Width>
                             </RightBorder>
@@ -149,40 +104,32 @@
             <TablixRowHierarchy>
               <TablixMembers>
                 <TablixMember>
+                  <Group Name="Group1" />
                   <TablixHeader>
-                    <Size>8.70193cm</Size>
+                    <Size>11.5cm</Size>
                     <CellContents>
-                      <Textbox Name="Textbox10">
+                      <Textbox Name="Group1">
                         <CanGrow>true</CanGrow>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
                             <TextRuns>
                               <TextRun>
-                                <Value>Fremdsprachen</Value>
-                                <Style>
-                                  <FontFamily>Gadugi</FontFamily>
-                                </Style>
+                                <Value>=Fields!Text.Value</Value>
+                                <Style />
                               </TextRun>
                             </TextRuns>
                             <Style />
                           </Paragraph>
                         </Paragraphs>
-                        <rd:DefaultName>Textbox10</rd:DefaultName>
+                        <rd:DefaultName>Group1</rd:DefaultName>
                         <Style>
                           <Border>
-                            <Style>Solid</Style>
+                            <Style>None</Style>
                           </Border>
-                          <TopBorder>
-                            <Width>1.7pt</Width>
-                          </TopBorder>
-                          <BottomBorder>
-                            <Width>1pt</Width>
-                          </BottomBorder>
                           <LeftBorder>
                             <Width>1.7pt</Width>
                           </LeftBorder>
-                          <BackgroundColor>#ebebeb</BackgroundColor>
                           <VerticalAlign>Middle</VerticalAlign>
                           <PaddingLeft>5pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
@@ -196,84 +143,37 @@
                     <TablixMember />
                   </TablixMembers>
                 </TablixMember>
-                <TablixMember>
-                  <Group Name="Group1" />
-                  <TablixHeader>
-                    <Size>8.70193cm</Size>
-                    <CellContents>
-                      <Textbox Name="Group1">
-                        <CanGrow>true</CanGrow>
-                        <KeepTogether>true</KeepTogether>
-                        <Paragraphs>
-                          <Paragraph>
-                            <TextRuns>
-                              <TextRun>
-                                <Value>=Fields!fachBez.Value</Value>
-                                <Style>
-                                  <FontFamily>Gadugi</FontFamily>
-                                </Style>
-                              </TextRun>
-                            </TextRuns>
-                            <Style />
-                          </Paragraph>
-                        </Paragraphs>
-                        <rd:DefaultName>Group1</rd:DefaultName>
-                        <Style>
-                          <Border>
-                            <Style>Solid</Style>
-                          </Border>
-                          <TopBorder>
-                            <Style>None</Style>
-                          </TopBorder>
-                          <BottomBorder>
-                            <Width>1.5pt</Width>
-                          </BottomBorder>
-                          <LeftBorder>
-                            <Width>1.7pt</Width>
-                          </LeftBorder>
-                          <VerticalAlign>Middle</VerticalAlign>
-                          <PaddingLeft>5pt</PaddingLeft>
-                          <PaddingRight>2pt</PaddingRight>
-                          <PaddingTop>2pt</PaddingTop>
-                          <PaddingBottom>2pt</PaddingBottom>
-                        </Style>
-                      </Textbox>
-                      <rd:Selected>true</rd:Selected>
-                    </CellContents>
-                  </TablixHeader>
-                </TablixMember>
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
-            <Height>1.29097cm</Height>
-            <Width>11.93339cm</Width>
+            <Top>0.59537cm</Top>
+            <Height>0.5cm</Height>
+            <Width>12.7cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
               </Border>
             </Style>
           </Tablix>
-          <Textbox Name="Textbox1">
+          <Textbox Name="Textbox4">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
             <Paragraphs>
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>* Nach dem Gemeinsamen Europäischen Referenzrahmen für Sprachen (GER)</Value>
+                    <Value>Punktesumme</Value>
                     <Style>
-                      <FontFamily>gadugi</FontFamily>
-                      <FontSize>9pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
                 </TextRuns>
                 <Style />
               </Paragraph>
             </Paragraphs>
-            <rd:DefaultName>Textbox1</rd:DefaultName>
-            <Top>1.39681cm</Top>
-            <Height>0.6cm</Height>
-            <Width>11.93339cm</Width>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Height>0.56009cm</Height>
+            <Width>12.7cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -286,7 +186,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>0.91607in</Height>
+        <Height>0.46597in</Height>
         <Style>
           <Border>
             <Color>White</Color>
@@ -294,7 +194,7 @@
           </Border>
         </Style>
       </Body>
-      <Width>4.69819in</Width>
+      <Width>5.05151in</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>

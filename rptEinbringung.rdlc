@@ -6,7 +6,7 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>16.36542cm</Width>
+              <Width>16.9cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -142,7 +142,29 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>2.08167cm</Height>
+              <Height>0.6cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Subreport Name="subrptPunktesummeNB">
+                      <ReportName>subrptPunktesummeNB</ReportName>
+                      <Parameters>
+                        <Parameter Name="SId">
+                          <Value>=Fields!Id.Value</Value>
+                        </Parameter>
+                      </Parameters>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Subreport>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>3.61625cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -177,6 +199,33 @@
                           </TextRuns>
                           <Style />
                         </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Hinweis: Eine Änderung der gestrichenen Halbjahresleistungen ist nach der Prüfung nicht mehr möglich.</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Eine Nachjustierung ist nur dann zugelassen, wenn die Prüfung aufgrund ungünstiger Streichungen nicht bestanden wurde.</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox1</rd:DefaultName>
                       <Style>
@@ -194,186 +243,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.6cm</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox6">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>-------------------------------------------- </Value>
-                              <Style>
-                                <FontSize>12pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>hier abschneiden</Value>
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value> ---------------------------------------------</Value>
-                              <Style>
-                                <FontSize>12pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox6</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>None</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
-            <TablixRow>
-              <Height>2.23188cm</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox5">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Einbringungsvorschlag für die Halbjahresleistungen</Value>
-                              <Style>
-                                <FontSize>12pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>6pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!Klasse.Value</Value>
-                              <Style>
-                                <FontSize>12pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Left</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>=Fields!Nachname.Value</Value>
-                              <Style>
-                                <FontSize>12pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>, </Value>
-                              <Style>
-                                <FontSize>12pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>=Fields!Rufname.Value</Value>
-                              <Style>
-                                <FontSize>12pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox5</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>None</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
-            <TablixRow>
-              <Height>1.26146cm</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Subreport Name="subrptEinbringung2">
-                      <ReportName>subrptEinbringung</ReportName>
-                      <Parameters>
-                        <Parameter Name="SId">
-                          <Value>=Fields!Id.Value</Value>
-                        </Parameter>
-                        <Parameter Name="Jg">
-                          <Value>=Fields!jg.Value</Value>
-                        </Parameter>
-                        <Parameter Name="HideHj2">
-                          <Value>=Fields!HideHj2.Value</Value>
-                        </Parameter>
-                        <Parameter Name="HideVorHj">
-                          <Value>=Fields!HideVorHj.Value</Value>
-                        </Parameter>
-                        <Parameter Name="HideAbi">
-                          <Value>=Fields!HideAbi.Value</Value>
-                        </Parameter>
-                        <Parameter Name="JgKurz">
-                          <Value>=Fields!JgKurz.Value</Value>
-                        </Parameter>
-                      </Parameters>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                      </Style>
-                    </Subreport>
-                  </CellContents>
-                </TablixCell>
-              </TablixCells>
-            </TablixRow>
-            <TablixRow>
-              <Height>3.26317cm</Height>
+              <Height>4.03046cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -384,8 +254,20 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
-                              <Style />
+                              <Value>□</Value>
+                              <Style>
+                                <FontStyle>Normal</FontStyle>
+                                <FontSize>16pt</FontSize>
+                                <FontWeight>Normal</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>  Ich nehme den obigen Einbringungsvorschlag an.</Value>
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -393,8 +275,42 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Ich bestätige, dass ich mit dem Einbringungsvorschlag einverstanden bin. Evtl. Änderungswünsche habe ich markiert.</Value>
-                              <Style />
+                              <Value>□</Value>
+                              <Style>
+                                <FontStyle>Normal</FontStyle>
+                                <FontSize>16pt</FontSize>
+                                <FontWeight>Normal</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                                <Color>#000000</Color>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>  Der Einbringungsvorschlag wurde von mir geändert.</Value>
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style>
+                                <FontSize>9pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -499,12 +415,6 @@
                 <TablixMember>
                   <KeepWithGroup>Before</KeepWithGroup>
                 </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>Before</KeepWithGroup>
-                </TablixMember>
-                <TablixMember>
-                  <KeepWithGroup>Before</KeepWithGroup>
-                </TablixMember>
               </TablixMembers>
               <KeepTogether>true</KeepTogether>
             </TablixMember>
@@ -514,8 +424,8 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>12.88334cm</Height>
-        <Width>16.36542cm</Width>
+        <Height>11.69189cm</Height>
+        <Width>16.9cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -525,15 +435,15 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>12.88334cm</Height>
+    <Height>11.69189cm</Height>
     <Style />
   </Body>
-  <Width>16.36542cm</Width>
+  <Width>16.9cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>1.5cm</LeftMargin>
-    <RightMargin>1.5cm</RightMargin>
+    <LeftMargin>2cm</LeftMargin>
+    <RightMargin>2cm</RightMargin>
     <TopMargin>1.5cm</TopMargin>
     <BottomMargin>1.5cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
