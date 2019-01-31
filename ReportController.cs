@@ -7,46 +7,48 @@ using Microsoft.Reporting.WinForms;
 using log4net;
 using System.Data;
 using System.Collections;
+using System.Windows.Forms;
 
 namespace diNo
 {
 
     public abstract class ReportController    
     {
-        protected static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        protected ReportForm rpt;
+      protected static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+      protected ReportForm rpt;
        
-        public ReportController()
-        {
-            rpt = new ReportForm();                                 
-        }
+      public ReportController()
+      {
+        rpt = new ReportForm();                                 
+      }
         
-        public abstract void Init();
+      public abstract void Init();
      
-        public void Show()
-        {
-          Init();
-          rpt.reportViewer.RefreshReport();
-          rpt.reportViewer.SetDisplayMode( DisplayMode.PrintLayout ); // Darstellung sofort im Seitenlayout
-          rpt.reportViewer.ZoomMode = ZoomMode.Percent;
-          rpt.reportViewer.ZoomPercent = 100;
-          rpt.Show();                    
-        }            
+      public void Show()
+      {          
+        Init();
+        if (rpt == null) return;
+        rpt.reportViewer.RefreshReport();
+        rpt.reportViewer.SetDisplayMode( DisplayMode.PrintLayout ); // Darstellung sofort im Seitenlayout
+        rpt.reportViewer.ZoomMode = ZoomMode.Percent;
+        rpt.reportViewer.ZoomPercent = 100;
+        rpt.Show();                    
+      }            
     }
 
     public class ReportNotencheck : ReportController
     {
-        private NotenCheckResults bindingDataSource;
-        public ReportNotencheck(NotenCheckResults dataSource) : base()
-        {
-          bindingDataSource = dataSource;
-        }
+      private NotenCheckResults bindingDataSource;
+      public ReportNotencheck(NotenCheckResults dataSource) : base()
+      {
+        bindingDataSource = dataSource;
+      }
 
-        public override void Init()
-        {            
-            rpt.BerichtBindingSource.DataSource = bindingDataSource.list;
-            rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenCheck.rdlc";            
-        }
+      public override void Init()
+      {            
+        rpt.BerichtBindingSource.DataSource = bindingDataSource.list;
+        rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenCheck.rdlc";            
+      }
     }
   
   
@@ -58,11 +60,16 @@ namespace diNo
     private Bericht rptTyp;
 
     public ReportSchuelerdruck(List<Schueler> dataSource, Bericht b, UnterschriftZeugnis u=UnterschriftZeugnis.SL) : base()
-    {      
+    {
       foreach (Schueler s in dataSource)
       {
+        if (dataSource.Count > 1 && (
+              b == Bericht.Zwischenzeugnis && !s.hatVorkommnis(Vorkommnisart.Zwischenzeugnis) ||
+              b == Bericht.Jahreszeugnis && !s.hatVorkommnis(Vorkommnisart.Jahreszeugnis) ||
+              b == Bericht.Abiturzeugnis && !(s.hatVorkommnis(Vorkommnisart.Fachabiturzeugnis) || s.hatVorkommnis(Vorkommnisart.fachgebundeneHochschulreife) || s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife))
+              )) continue;
         bindingDataSource.Add(SchuelerDruck.CreateSchuelerDruck(s, b, u));
-      }
+      }      
 
       rptTyp = b;
       rptName = SchuelerDruck.GetBerichtsname(b);
@@ -76,6 +83,12 @@ namespace diNo
        
     public override void Init()
     {
+      if (bindingDataSource.Count == 0)
+      {
+        MessageBox.Show("Keiner der ausgewählten Schüler hat das nötige Vorkommnis, um dieses Zeugnis zu drucken.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        rpt = null;
+        return;
+      }
       rpt.BerichtBindingSource.DataSource = bindingDataSource;
       rpt.reportViewer.LocalReport.ReportEmbeddedResource = rptName;
 
@@ -104,7 +117,7 @@ namespace diNo
         {
           e.DataSources.Add(new ReportDataSource("DataSetFPANoten", schueler.FPANotenDruck()));
         }
-        else if (subrpt.Substring(0,17) == "subrptPunktesumme")
+        else if (subrpt == "subrptPunktesumme" || subrpt == "subrptPunktesummeNB")
         {
           e.DataSources.Add(new ReportDataSource("DataSet1", PunkteSummeDruck.Create(schueler)));
         }
