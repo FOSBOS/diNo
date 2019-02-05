@@ -587,7 +587,7 @@ namespace diNo
           if (!schueler.Data.IsProbezeitBisNull() && (schueler.Data.ProbezeitBis > DateTime.Parse("01.02." + (Zugriff.Instance.Schuljahr + 1))))
             contr.Add(null, "<b>Probezeit nicht bestanden</b> " + n.Unterpunktungen, true);
         }
-        else if (n.anz4P > 1 || n.AnzahlNoten(5) > 0)
+        else if (n.anz4P > 1 || n.AnzahlNoten(5) > 0 || n.AnzahlNoten(6) > 0)
         {
           contr.Add(Vorkommnisart.BeiWeiteremAbsinken, n.Unterpunktungen, true);
         }
