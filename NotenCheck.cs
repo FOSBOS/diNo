@@ -352,7 +352,7 @@ namespace diNo
             contr.Add(kurs, toText(kurzarbeitenCount, "", "Kurzarbeite"));
           }
 
-          if ((!kurs.schreibtKA && muendlicheCount < 3) || muendlicheCount == 0)
+          if ((!kurs.schreibtKA && muendlicheCount < (kurs.getFach.NichtNC ? 2: 3)) || muendlicheCount == 0)
           {
             contr.Add(kurs, toText(muendlicheCount, "mündliche", "Note"));
           }

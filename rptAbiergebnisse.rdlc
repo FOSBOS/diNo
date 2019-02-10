@@ -6,12 +6,12 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>16.9cm</Width>
+              <Width>17.34438cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>2.08575cm</Height>
+              <Height>0.60408cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -22,10 +22,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Einbringungsvorschlag für die Halbjahresleistungen</Value>
+                              <Value>Prüfungsergebnisse</Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -33,19 +32,32 @@
                             <TextAlign>Left</TextAlign>
                           </Style>
                         </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>6pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Left</TextAlign>
-                          </Style>
-                        </Paragraph>
+                      </Paragraphs>
+                      <rd:DefaultName>Textbox13</rd:DefaultName>
+                      <ZIndex>1</ZIndex>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                        <VerticalAlign>Top</VerticalAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingBottom>2pt</PaddingBottom>
+                      </Style>
+                    </Textbox>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>1.34025cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Textbox Name="Textbox11">
+                      <CanGrow>true</CanGrow>
+                      <KeepTogether>true</KeepTogether>
+                      <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
@@ -56,9 +68,7 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style>
-                            <TextAlign>Left</TextAlign>
-                          </Style>
+                          <Style />
                         </Paragraph>
                         <Paragraph>
                           <TextRuns>
@@ -86,14 +96,21 @@
                           </TextRuns>
                           <Style />
                         </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox13</rd:DefaultName>
-                      <ZIndex>1</ZIndex>
+                      <rd:DefaultName>Textbox11</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
                         </Border>
-                        <VerticalAlign>Middle</VerticalAlign>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -105,7 +122,29 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>1.35942cm</Height>
+              <Height>0.49675cm</Height>
+              <TablixCells>
+                <TablixCell>
+                  <CellContents>
+                    <Subreport Name="subrptAbiVorkommnis">
+                      <ReportName>subrptAbiVorkommnis</ReportName>
+                      <Parameters>
+                        <Parameter Name="SId">
+                          <Value>=Fields!Id.Value</Value>
+                        </Parameter>
+                      </Parameters>
+                      <Style>
+                        <Border>
+                          <Style>None</Style>
+                        </Border>
+                      </Style>
+                    </Subreport>
+                  </CellContents>
+                </TablixCell>
+              </TablixCells>
+            </TablixRow>
+            <TablixRow>
+              <Height>1.7358cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -164,67 +203,65 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>2.92833cm</Height>
+              <Height>3.16646cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox1">
+                    <Textbox Name="Textbox2">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
+                              <Value>Sie können sich in </Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
+                              <Value>höchstens zwei Fächern der schriftlichen Prüfung</Value>
                               <Style>
-                                <FontSize>4pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value> (außer Englisch) einer freiwilligen mündlichen Prüfung unterziehen. Beachten Sie bei Ihrer Entscheidung, dass durch die mündliche Prüfung auch eine Notenverschlechterung eintreten kann.</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Ein Rücktritt von der freiwilligen mündlichen Prüfung ist möglich. </Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
+                              <Value>Spätestens eine Stunde</Value>
+                              <Style>
+                                <FontWeight>Bold</FontWeight>
+                                <TextDecoration>None</TextDecoration>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value> vor dem angesetzten Prüfungstermin muss der Schule eine schriftliche Rücktrittserklärung vorliegen. Erfolgt keine rechtzeitige Abmeldung, so wird die mündliche Prüfung mit 0 Punkten bewertet.</Value>
+                              <Style>
+                                <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Im errechneten Vorschlag wurden grundsätzlich die schwächsten Halbjahresleistungen gestrichen und Unterpunktungen im Gesamtergebnis vermieden, sofern möglich.</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Hinweis: Eine Änderung der gestrichenen Halbjahresleistungen ist nach der Prüfung nicht mehr möglich.</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Eine Nachjustierung ist nur dann zugelassen, wenn die Prüfung aufgrund ungünstiger Streichungen nicht bestanden wurde.</Value>
-                              <Style />
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox1</rd:DefaultName>
+                      <rd:DefaultName>Textbox2</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
                         </Border>
+                        <BottomBorder>
+                          <Style>Solid</Style>
+                        </BottomBorder>
                         <PaddingLeft>2pt</PaddingLeft>
                         <PaddingRight>2pt</PaddingRight>
                         <PaddingTop>2pt</PaddingTop>
@@ -236,28 +273,56 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>4.03046cm</Height>
+              <Height>5.91813cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox7">
+                    <Textbox Name="Textbox4">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
+                              <Value>Bitte hier abtrennen und über die Klassenleiterin / den Klassenleiter im Direktorat abgeben!</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
                               <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontSize>16pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                                <TextDecoration>None</TextDecoration>
-                                <Color>#000000</Color>
+                                <FontSize>6pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Name: </Value>
+                              <Style>
+                                <FontSize>12pt</FontSize>
                               </Style>
                             </TextRun>
                             <TextRun>
-                              <Value>  Ich nehme den obigen Einbringungsvorschlag an.</Value>
+                              <Value>=Fields!Nachname.Value</Value>
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>, </Value>
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!Rufname.Value</Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
                               </Style>
@@ -268,17 +333,13 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
+                              <Value>Klasse: </Value>
                               <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontSize>16pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                                <TextDecoration>None</TextDecoration>
-                                <Color>#000000</Color>
+                                <FontSize>12pt</FontSize>
                               </Style>
                             </TextRun>
                             <TextRun>
-                              <Value>  Der Einbringungsvorschlag wurde von mir geändert.</Value>
+                              <Value>=Fields!Klasse.Value</Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
                               </Style>
@@ -291,7 +352,7 @@
                             <TextRun>
                               <Value />
                               <Style>
-                                <FontSize>9pt</FontSize>
+                                <FontSize>6pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -300,18 +361,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>9pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
+                              <Value>Freiwillige Meldung in die mündliche Abschlussprüfung in folgenden Fächern:</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -329,7 +379,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Kempten, den ____________________________              ______________________________</Value>
+                              <Value>1. Fach:  _____________________________________  Fachlehrer: ____________________________</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -338,14 +388,59 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>                                                                                                      (Unterschrift)</Value>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>2. Fach:  _____________________________________  Fachlehrer: ____________________________</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Kempten, den _____________                     _____________________________________</Value>
+                              <Style />
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>                                                                      Unterschrift der Schülerin / des Schülers</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox7</rd:DefaultName>
+                      <rd:DefaultName>Textbox4</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -375,7 +470,7 @@
                   <GroupExpression>=Fields!Id.Value</GroupExpression>
                 </GroupExpressions>
                 <PageBreak>
-                  <BreakLocation>Between</BreakLocation>
+                  <BreakLocation>Start</BreakLocation>
                 </PageBreak>
               </Group>
               <SortExpressions>
@@ -394,7 +489,11 @@
                   <Group Name="Details" />
                   <TablixMembers>
                     <TablixMember />
+                    <TablixMember />
                   </TablixMembers>
+                </TablixMember>
+                <TablixMember>
+                  <KeepWithGroup>Before</KeepWithGroup>
                 </TablixMember>
                 <TablixMember>
                   <KeepWithGroup>Before</KeepWithGroup>
@@ -417,8 +516,8 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>11.00396cm</Height>
-        <Width>16.9cm</Width>
+        <Height>13.86146cm</Height>
+        <Width>17.34438cm</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -428,17 +527,17 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>11.00396cm</Height>
+    <Height>14.1525cm</Height>
     <Style />
   </Body>
-  <Width>16.9cm</Width>
+  <Width>17.34438cm</Width>
   <Page>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>1.5cm</TopMargin>
-    <BottomMargin>1.5cm</BottomMargin>
+    <LeftMargin>1.75cm</LeftMargin>
+    <RightMargin>1.75cm</RightMargin>
+    <TopMargin>1.25cm</TopMargin>
+    <BottomMargin>0cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
@@ -456,7 +555,7 @@
         <DataProvider>System.Data.DataSet</DataProvider>
         <ConnectString>/* Local Connection */</ConnectString>
       </ConnectionProperties>
-      <rd:DataSourceID>d58c224a-8645-47a7-a45d-069133bbf2cc</rd:DataSourceID>
+      <rd:DataSourceID>822a10b8-77bf-4d4c-89c6-821f2f8d20d9</rd:DataSourceID>
     </DataSource>
   </DataSources>
   <DataSets>

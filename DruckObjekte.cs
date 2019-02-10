@@ -629,25 +629,13 @@ namespace diNo
   }
 
   // Abiergebnisse
-  public class NotenAbiDruck : NotenDruck
+  public class NotenAbiDruck : NotenHjDruck
   {
-    public string SAP { get; private set; }
-    public string MAP { get; private set; }
-    public string APG { get; private set; }
-    public string S { get; private set; } // Gesamtschnitt    
     public string MAP1P { get; private set; }
     public string MAP4P { get; private set; }
 
     public NotenAbiDruck(FachSchuelerNoten s) : base(s, Bericht.Abiergebnisse)
-    {
-      SAP = getFirst(s.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich));
-      MAP = getFirst(s.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich));
-      APG = putHj(s, HjArt.AP);
-      var ge = s.getHjLeistung(HjArt.GesErg);
-      if (ge != null)
-      {
-        S = ge.Punkte2Dez == null ? "" : String.Format("{0:f2}", ge.Punkte2Dez);        
-      }
+    {      
       //MAP4P = NotwendigeNoteInMAP(s,4);
       //MAP1P = NotwendigeNoteInMAP(s,1);
     }

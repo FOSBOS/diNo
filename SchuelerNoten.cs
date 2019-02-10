@@ -469,7 +469,7 @@ namespace diNo
     {
       if (schueler.Data.Schulart != "B" || schueler.getKlasse.Jahrgangsstufe != Jahrgangsstufe.Zwoelf) return false;
 
-      foreach (var f in alleKurse)
+      foreach (var f in alleKurse) // auch Nicht-NC-Fächer
       {
         var jn = f.getHjLeistung(HjArt.JN);
         if (jn ==null || jn.Punkte < 4)
