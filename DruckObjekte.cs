@@ -266,7 +266,7 @@ namespace diNo
       }
    
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
-      if (jg == 11)
+      if (jg == 11 && b==Bericht.Jahreszeugnis)
         Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.<br><br>Bemerkungen:";
       else if (b!=Bericht.Abiturzeugnis)
         Bemerkung = "Bemerkungen:";
