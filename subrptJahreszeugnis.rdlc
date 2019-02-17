@@ -1350,7 +1350,7 @@
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingTop>0.5pt</PaddingTop>
                             <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
@@ -1462,7 +1462,7 @@
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingTop>0.5pt</PaddingTop>
                             <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
@@ -1686,7 +1686,7 @@
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>1pt</PaddingTop>
+                            <PaddingTop>0.5pt</PaddingTop>
                             <PaddingBottom>1pt</PaddingBottom>
                           </Style>
                         </Textbox>
@@ -2856,7 +2856,7 @@
                                   <VerticalAlign>Middle</VerticalAlign>
                                   <PaddingLeft>5pt</PaddingLeft>
                                   <PaddingRight>4pt</PaddingRight>
-                                  <PaddingTop>1pt</PaddingTop>
+                                  <PaddingTop>0.5pt</PaddingTop>
                                   <PaddingBottom>1pt</PaddingBottom>
                                 </Style>
                               </Textbox>

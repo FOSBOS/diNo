@@ -17,6 +17,7 @@ namespace diNo
     protected List<int> sidList = new List<int>(); // enthält die SIDs der Schüler, in der Reihenfolge wie im Excel
     protected Kurs kurs;
     protected List<string> hinweise = new List<String>();
+    protected List<string> warnungen = new List<String>();
 
     public BasisLeseNotenAusExcel(string fileName, StatusChanged StatusChangedMethod)
     {
@@ -69,12 +70,25 @@ namespace diNo
     protected void HinweiseAusgeben(BasisNotendatei xls)
     {
       string s = "";
-      foreach (var h in hinweise)
+      if (hinweise.Count > 0)
       {
-        s += h + "\n";
+        foreach (var h in hinweise)
+        {
+          s += h + "\n";
+        }
+        if (MessageBox.Show(s + "\nSollen obige Änderungen in Ihre Notendatei übernommen werden.", Path.GetFileNameWithoutExtension(fileName), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+          xls.workbook.Save();
       }
-      if (MessageBox.Show(s + "\nSollen obige Änderungen in Ihre Notendatei übernommen werden.", Path.GetFileNameWithoutExtension(fileName), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-        xls.workbook.Save();
+
+      if (warnungen.Count > 0)
+      {
+        s = "";
+        foreach (var h in warnungen)
+        {
+          s += h + "\n";
+        }
+        MessageBox.Show(s + "\nÜberprüfen Sie Ihre Notendatei oder wenden Sie sich an einen Administrator.", Path.GetFileNameWithoutExtension(fileName), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+      }
     }
 
     /// <summary>
@@ -111,8 +125,7 @@ namespace diNo
       DeleteAlteNoten();
       UebertrageNoten();
 
-      if (hinweise.Count > 0) // es sind Meldungen aufgetreten
-        HinweiseAusgeben(xls);
+      HinweiseAusgeben(xls);
 
       xls.Dispose();
       xls = null;
@@ -258,7 +271,7 @@ namespace diNo
             Note dieSAPNote = SucheAPNote(ta, sid, kurs.Id, Notentyp.APSchriftlich);
             if (dieSAPNote != null && dieSAPNote.Punktwert != sapNote)
             {
-              hinweise.Add(sid + ": Die Punktzahl der SAP wurde verändert (alt: " + dieSAPNote.Punktwert + ", neu: " + sapNote + ").");              
+              warnungen.Add(sid + ": Die Punktzahl der SAP wurde verändert (alt: " + dieSAPNote.Punktwert + ", neu: " + sapNote + ").");              
             }
           }
 
@@ -289,8 +302,8 @@ namespace diNo
           if (l.getFach.Id != kurs.getFach.Id)
           {
             Schueler derSchueler = Zugriff.Instance.SchuelerRep.Find(sid);
-            hinweise.Add("Sie haben ein vorhandenes Fachreferat von " + derSchueler.NameVorname + " im Fach " + l.getFach.Bezeichnung + " überschrieben.");
-            hinweise.Add("Bitte prüfen Sie ggf. mit der Lehrkraft des Faches die Korrektheit der Fachreferat-Eintragungen!");
+            warnungen.Add("Sie haben ein vorhandenes Fachreferat von " + derSchueler.NameVorname + " im Fach " + l.getFach.Bezeichnung + " überschrieben.");
+            warnungen.Add("Bitte prüfen Sie ggf. mit der Lehrkraft des Faches die Korrektheit der Fachreferat-Eintragungen!");
             l.getFach = kurs.getFach;
           }
           l.Punkte = (byte)fachreferat;
@@ -322,7 +335,7 @@ namespace diNo
           HjLeistung hjNote1 = FindHjLeistung(sid, ada, HjArt.Hj1, jg);
           if (hjNote1 != null && hjNote1.Punkte != zeugnisnoteHJ1)
           {            
-            hinweise.Add(s.NameVorname + ": Die Punktzahl im 1. Halbjahr wurde verändert (alt: " + hjNote1.Punkte + ", neu: "+ zeugnisnoteHJ1 + ").");
+            warnungen.Add(s.NameVorname + ": Die Punktzahl im 1. Halbjahr wurde verändert (alt: " + hjNote1.Punkte + ", neu: "+ zeugnisnoteHJ1 + ").");
           }
         }
       }
@@ -336,8 +349,8 @@ namespace diNo
         {
           HjLeistung hjNote2 = FindHjLeistung(sid, ada, HjArt.Hj2, jg);
           if (hjNote2 != null && hjNote2.Punkte != zeugnisnoteHJ2)
-          {            
-            hinweise.Add(s.NameVorname + ": Die Punktzahl im 2. Halbjahr wurde verändert (alt: " + hjNote2.Punkte + ", neu: " + zeugnisnoteHJ2 + ").");
+          {
+            warnungen.Add(s.NameVorname + ": Die Punktzahl im 2. Halbjahr wurde verändert (alt: " + hjNote2.Punkte + ", neu: " + zeugnisnoteHJ2 + ").");
           }
         }
       }
@@ -349,15 +362,15 @@ namespace diNo
         byte? SAPxls = xls.ReadNote("G" + i, xls.AP);
         if (SAPxls != null)
         {
-          byte? SAPdb = s.getNoten.FindeFach() kursid;
+          byte? SAPdb = s.getNoten.FindeFach() kursid; // die müsste man erst mal finden
 
           if (SAPdb != null && SAPdb != SAPxls)
           {
             hinweise.Add(s.NameVorname + ": Die Punktzahl der SAP wurde verändert (alt: " + SAPdb + ", neu: " + SAPxls + ").");
           }
         }
-      }
-      */
+      }*/
+
     }
 
     /// <summary>
@@ -492,8 +505,7 @@ namespace diNo
       DeleteAlteNoten();
       UebertrageNoten();
 
-      if (hinweise.Count > 0) // es sind Meldungen aufgetreten
-        HinweiseAusgeben(xls);
+      HinweiseAusgeben(xls);
 
       xls.Dispose();
       xls = null;
