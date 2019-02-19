@@ -21,8 +21,7 @@ namespace diNo
     private diNoDataSet.FpaDataTable fpaDT; // wird zum Speichern benötigt: FPA-Halbjahr 1 und 2
     private diNoDataSet.SeminarfachnoteRow seminar;
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
-    public Zweig Zweig;
-    public List<HjLeistung> Fachreferat = new List<HjLeistung>(); // sollte i.d.R. nur einelementig sein, aber wegen irrtümlicher Doppelvergabe
+    public Zweig Zweig;    
     public Punktesumme punktesumme;
 
 
@@ -416,6 +415,11 @@ namespace diNo
 
         return noten;
       }
+    }
+
+    public List<HjLeistung> Fachreferat
+    {
+      get { return getNoten.Fachreferat; }
     }
 
     public Schuelerstatus Status

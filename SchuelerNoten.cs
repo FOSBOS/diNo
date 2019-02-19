@@ -26,6 +26,7 @@ namespace diNo
     public bool hatDeutsch6 = false; // kann nicht ausgeglichen werden
     public int anz4P=0;
     public double Punkteschnitt = 0;
+    public List<HjLeistung> Fachreferat = new List<HjLeistung>(); // sollte i.d.R. nur einelementig sein, aber wegen irrtümlicher Doppelvergabe
 
     public SchuelerNoten(Schueler s)
     {
@@ -38,7 +39,7 @@ namespace diNo
 
       foreach (var kurs in kurse)
       {
-        var fsn = new FachSchuelerNoten(schueler, kurs.Id);
+        var fsn = new FachSchuelerNoten(schueler, kurs.Id, this);
         alleFaecher.Add(fsn);
         alleKurse.Add(fsn);
         if (fsn.getFach.getKursniveau() != Kursniveau.None) alleSprachen.Add(fsn);
@@ -49,7 +50,7 @@ namespace diNo
       foreach (var fachR in fDT)
       {
         Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
-        var fsn = new FachSchuelerNoten(schueler, fach);
+        var fsn = new FachSchuelerNoten(schueler, fach, this);
         alleFaecher.Add(fsn);
         if (fsn.getFach.getKursniveau() != Kursniveau.None) alleSprachen.Add(fsn);
         FaecherOhneKurse.Add(fsn);
@@ -135,7 +136,7 @@ namespace diNo
       {               
         liste.Add(NotenDruck.CreateNotenDruck(f,rptName));
       }
-      foreach (var f in schueler.Fachreferat)
+      foreach (var f in Fachreferat)
       {
         liste.Add(new NotenHjDruck(f));
       }
@@ -179,7 +180,7 @@ namespace diNo
           liste.Add(new NotenZeugnisDruck(f, rptName));
       }
 
-      foreach (var f in schueler.Fachreferat)
+      foreach (var f in Fachreferat)
       {
         liste.Add(new NotenZeugnisDruck(f, "Fachreferat in " + f.getFach.BezZeugnis));
       }
@@ -266,7 +267,7 @@ namespace diNo
         }
       }
 
-      foreach (var f in schueler.Fachreferat)
+      foreach (var f in Fachreferat)
       {
         NimmNote(f.Punkte, 0, "FR"); 
       }
@@ -484,7 +485,8 @@ namespace diNo
   /// </summary>
   public class FachSchuelerNoten
     {
-        public Schueler schueler;        
+        public Schueler schueler;
+        private SchuelerNoten schuelernoten;
         private Fach fach=null;
         public bool NoteUngueltig = false;
         public int kursId
@@ -501,11 +503,12 @@ namespace diNo
         private HjLeistung[] hjLeistung = new HjLeistung[Enum.GetValues(typeof(HjArt)).Length];
         private HjLeistung[] vorHjLeistung = new HjLeistung[2]; // enthält nur 11/1 und 11/2
 
-        public FachSchuelerNoten(Schueler aschueler, int akursid)
+        public FachSchuelerNoten(Schueler aschueler, int akursid, SchuelerNoten aschuelernoten)
         {
             kursId = akursid;        
             schueler = aschueler;
-            
+            schuelernoten = aschuelernoten;
+      
             foreach (Halbjahr hj in Enum.GetValues(typeof(Halbjahr)))
             {
                 // erstmal leere Notenlisten anlegen
@@ -518,19 +521,21 @@ namespace diNo
         }
 
         // Kursunabhängige HjLeistungen (z.B. abgelegte Fächer oder Seminararbeit) können hier erzeugt werden
-        public FachSchuelerNoten(Schueler aschueler, Fach aFach)
+        public FachSchuelerNoten(Schueler aschueler, Fach aFach, SchuelerNoten aschuelernoten)
         {
           fach = aFach;
           kursId = 0;
           schueler = aschueler;
-                            
+          schuelernoten = aschuelernoten;
+
           LeseNotenAusDB();
         }
 
     // HjLeistungen, die als eigenes Fach behandelt werden, aber aus andere Quelle kommen (FR, FpA, Seminar)
-    public FachSchuelerNoten(Schueler aschueler, List<HjLeistung> hjList)
+    public FachSchuelerNoten(Schueler aschueler, List<HjLeistung> hjList, SchuelerNoten aschuelernoten)
     {
       fach = hjList[0].getFach;
+      schuelernoten = aschuelernoten;
       foreach (var hj in hjList)
       {
         hjLeistung[(int)(hj.Art)] = hj;
@@ -567,7 +572,7 @@ namespace diNo
         hjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
         if ((HjArt)hjR.Art == HjArt.FR)
         {
-          schueler.Fachreferat.Add(hjLeistung[(int)(hjR.Art)]);              
+          schuelernoten.Fachreferat.Add(hjLeistung[(int)(hjR.Art)]);              
         }        
       }
 

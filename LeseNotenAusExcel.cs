@@ -202,11 +202,12 @@ namespace diNo
         ta.DeleteByKursAndHalbjahr(kurs.Id, (byte)Halbjahr.Zweites);
       }
 
+      HjArt art = GetAktuellesHalbjahr();
       foreach (int sid in sidList)
       {
-        HjArt art = GetAktuellesHalbjahr();
+        Schueler schueler = Zugriff.Instance.SchuelerRep.Find(sid);
         Jahrgangsstufe jg;
-        Klasse klasse = (Zugriff.Instance.SchuelerRep.Find(sid)).getKlasse;
+        Klasse klasse = schueler.getKlasse;
         // WPFs werden Jg-Übergreifend angeboten, Klasse des Schülers verwenden, IntVk teilweise gemischt mit anderen JgStufen
         if (kurs.getFach.Typ == FachTyp.WPF && klasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf || klasse.Jahrgangsstufe==Jahrgangsstufe.IntVk) 
           jg = klasse.Jahrgangsstufe;
@@ -295,20 +296,33 @@ namespace diNo
           }
         }
 
-        byte? fachreferat = xls.ReadNote("S" + i, xls.notenbogen2);
-        if (fachreferat != null)
+        // Fachreferat
+        if (jg == Jahrgangsstufe.Zwoelf)
         {
-          HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.FR, jg);
-          if (l.getFach.Id != kurs.getFach.Id)
+          HjLeistung hjlFR = null;
+          byte? xlsFR = xls.ReadNote("S" + i, xls.notenbogen2);
+          foreach (var fr in schueler.Fachreferat)
+            if (fr.getFach.Id == kurs.getFach.Id) // schon mal übertragen
+              hjlFR = fr;
+
+          // jetzt steht in hjlFR das FR der Datenbank und in xlsFR das FR der Exceldatei 
+          if (hjlFR == null && xlsFR != null) // neu anlegen (aktuelles Fach nicht gefunden)
           {
-            Schueler derSchueler = Zugriff.Instance.SchuelerRep.Find(sid);
-            warnungen.Add("Sie haben ein vorhandenes Fachreferat von " + derSchueler.NameVorname + " im Fach " + l.getFach.Bezeichnung + " überschrieben.");
-            warnungen.Add("Bitte prüfen Sie ggf. mit der Lehrkraft des Faches die Korrektheit der Fachreferat-Eintragungen!");
-            l.getFach = kurs.getFach;
+            if (schueler.Fachreferat.Count > 0)
+              warnungen.Add(schueler.NameVorname + " hat bereits ein anderes Fachreferat eingetragen.");
+
+            hjlFR = new HjLeistung(sid, kurs.getFach, HjArt.FR, jg);
           }
-          l.Punkte = (byte)fachreferat;
-          l.Punkte2Dez = Convert.ToDecimal((byte)fachreferat);
-          l.WriteToDB();
+          if (xlsFR != null) // FR übertragen (überschreiben oder neu anlegen)
+          { 
+            hjlFR.Punkte = (byte)xlsFR;
+            hjlFR.Punkte2Dez = Convert.ToDecimal((byte)xlsFR);
+            hjlFR.WriteToDB();
+          }
+          else if (hjlFR != null) // FR wurde in dieser Exceldatei gelöscht
+          {
+            hjlFR.Delete();
+          }            
         }
 
         i++;
