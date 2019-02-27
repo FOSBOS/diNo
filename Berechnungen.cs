@@ -217,6 +217,7 @@ namespace diNo
         p.Add(PunktesummeArt.FR, f.Punkte);
 
       p.WriteToDB();
+      s.Refresh();
     }
 
     public void BerechneDNote(Schueler s)

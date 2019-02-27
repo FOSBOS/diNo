@@ -61,10 +61,11 @@ namespace diNo
         throw new InvalidOperationException("Konstruktor Schueler: Ungültige ID=" + Id);
       }
 
-      this.klasse = null;
-      this.kurse = null;
-      this.noten = null;
-      this.vorkommnisse = null;
+      klasse = null;
+      kurse = null;
+      noten = null;
+      vorkommnisse = null;
+      punktesumme = new Punktesumme(this);
       Zweig = Faecherkanon.GetZweig(data.Ausbildungsrichtung);
     }
 
@@ -473,6 +474,14 @@ namespace diNo
 
         return kurse;
       }
+    }
+
+    public bool BesuchtKurs(int id)
+    {
+      foreach (var k in Kurse)
+        if (k.Id == id) return true;
+
+      return false;
     }
 
     public void RemoveVorkommnis(int vorkommnisId)

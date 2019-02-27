@@ -613,6 +613,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScroll = true;
       this.Controls.Add(this.groupBoxReparatur);
       this.Controls.Add(this.groupboxTest);
       this.Controls.Add(this.lblStatus);

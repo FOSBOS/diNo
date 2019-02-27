@@ -404,6 +404,7 @@
     <None Include="Properties\DataSources\FPADruck.datasource" />
     <None Include="Properties\DataSources\Klasse.datasource" />
     <None Include="Properties\DataSources\LehrerRolleDruck.datasource" />
+    <None Include="Properties\DataSources\NotenAbiDruck.datasource" />
     <None Include="Properties\DataSources\NotenbogenDruck.datasource" />
     <None Include="Properties\DataSources\NotenCheckResult.datasource" />
     <None Include="Properties\DataSources\NotenHjDruck.datasource" />

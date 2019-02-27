@@ -164,7 +164,7 @@
                           <Value>=Fields!HideVorHj.Value</Value>
                         </Parameter>
                         <Parameter Name="HideAbi">
-                          <Value>=Fields!HideAbi.Value</Value>
+                          <Value>False</Value>
                         </Parameter>
                         <Parameter Name="JgKurz">
                           <Value>=Fields!JgKurz.Value</Value>
@@ -214,6 +214,10 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
+                              <Value>=Fields!Bemerkung.Value</Value>
+                              <Style />
+                            </TextRun>
+                            <TextRun>
                               <Value>Sie können sich in </Value>
                               <Style />
                             </TextRun>
@@ -246,6 +250,17 @@
                             </TextRun>
                             <TextRun>
                               <Value> vor dem angesetzten Prüfungstermin muss der Schule eine schriftliche Rücktrittserklärung vorliegen. Erfolgt keine rechtzeitige Abmeldung, so wird die mündliche Prüfung mit 0 Punkten bewertet.</Value>
+                              <Style>
+                                <TextDecoration>None</TextDecoration>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
                               <Style>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
@@ -516,7 +531,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>13.86146cm</Height>
+        <Height>13.86147cm</Height>
         <Width>17.34438cm</Width>
         <Style>
           <Border>
@@ -571,14 +586,6 @@
         </Field>
         <Field Name="Bemerkung">
           <DataField>Bemerkung</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="DNote">
-          <DataField>DNote</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FPAText">
-          <DataField>FPAText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="HideAbi">
@@ -640,8 +647,8 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>diNo</rd:DataSetName>
-        <rd:TableName>NotenmitteilungDruck</rd:TableName>
-        <rd:ObjectDataSourceType>diNo.NotenmitteilungDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>SchuelerDruck</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.SchuelerDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

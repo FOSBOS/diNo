@@ -18,6 +18,7 @@ namespace diNo
     public Jahrgangsstufe JgStufe;
     public decimal? Punkte2Dez=null;
     public decimal? SchnittMdl=null;
+    public static HjLeistungTableAdapter ta = new HjLeistungTableAdapter();
 
     public HjLeistung(int SchuelerId,Fach afach,HjArt aart, Jahrgangsstufe jg)
     {
@@ -53,8 +54,7 @@ namespace diNo
     }
 
     public void WriteToDB()
-    {
-      var ta = new HjLeistungTableAdapter();
+    {    
       if (data==null) // neue HjLeistung -->INSERT
       {        
         ta.Insert(schuelerId,getFach.Id,(byte)Art,Punkte,Punkte2Dez,SchnittMdl,(int)JgStufe,(byte)Status);
@@ -72,8 +72,7 @@ namespace diNo
     public void Delete()
     {
       if (data != null)
-      {
-        var ta = new HjLeistungTableAdapter();        
+      {              
         ta.Delete1(data.Id);
       }        
     }
@@ -93,7 +92,30 @@ namespace diNo
       return Color.White;
     }
 
-    
+    public static void CreateOrUpdate(HjLeistung hjl, int sid, HjArt art, Fach fach, Jahrgangsstufe jg, byte? punkte, decimal? punkte2Dez = null, decimal? schnittMdl = null)
+    {      
+      if (hjl == null && punkte != null) // neu anlegen (nicht gefunden)
+      {
+        hjl = new HjLeistung(sid, fach, art, jg);
+      }
+      Update(hjl, punkte, punkte2Dez, schnittMdl);
+    }
+
+    public static void Update(HjLeistung hjl, byte? punkte, decimal? punkte2Dez = null, decimal? schnittMdl = null)
+    { 
+      if (punkte != null) // überschreiben
+      {
+        hjl.Punkte = (byte)punkte;
+        hjl.Punkte2Dez = punkte2Dez;
+        hjl.SchnittMdl = schnittMdl;
+        hjl.WriteToDB();
+      }
+      else if (hjl != null) // HjLeistung wurde in dieser Exceldatei gelöscht
+      {
+        hjl.Delete();
+      }
+    }
+
   }
 
   public enum HjArt

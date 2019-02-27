@@ -184,15 +184,16 @@ namespace diNo
     private void UebertrageNoten()
     {
       int i = 4;
-      int indexAP = CellConstant.APZeileErsterSchueler;
-      HjLeistungTableAdapter ada = new HjLeistungTableAdapter();
+      int indexAP = CellConstant.APZeileErsterSchueler;      
       NoteTableAdapter ta = new NoteTableAdapter();
+      bool alles = Zugriff.Instance.Lesemodus == LesemodusExcel.Vollstaendig;
 
       //ermittle erst mal welche Teile jetzt eingelesen werden sollen
-      bool liesErstesHJ = (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ProbezeitBOS || (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS;
-      bool liesZweitesHJ = ErmittleObHJ2GelesenWird();
-      bool liesSAP = kurs.IstSAPKurs && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ZweitePA; // nur in Prüfungsklassen zur 2.PA
-      bool liesMAP = kurs.IstSAPKurs && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.DrittePA;
+      bool liesErstesHJ = alles || (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ProbezeitBOS || (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS;
+      bool liesZweitesHJ = alles || ErmittleObHJ2GelesenWird();
+      bool liesSAP = alles || kurs.IstSAPKurs && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ZweitePA; // nur in Prüfungsklassen zur 2.PA
+      bool liesMAP = alles || kurs.IstSAPKurs && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.DrittePA ||
+          kurs.getFach.getKursniveau() == Kursniveau.Englisch && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt >= Zeitpunkt.ErstePA;
       if (liesErstesHJ)
       {
         ta.DeleteByKursAndHalbjahr(kurs.Id, (byte)Halbjahr.Erstes);
@@ -206,6 +207,10 @@ namespace diNo
       foreach (int sid in sidList)
       {
         Schueler schueler = Zugriff.Instance.SchuelerRep.Find(sid);
+        bool aktiverKurs = schueler.BesuchtKurs(kurs.Id);
+        //if (!aktiverKurs) continue; // ausgetretene Schüler gar nicht mehr ??
+
+        FachSchuelerNoten fsn = schueler.getNoten.getFach(kurs.Id); // die aktuell gespeicherten Noten        
         Jahrgangsstufe jg;
         Klasse klasse = schueler.getKlasse;
         // WPFs werden Jg-Übergreifend angeboten, Klasse des Schülers verwenden, IntVk teilweise gemischt mit anderen JgStufen
@@ -214,90 +219,76 @@ namespace diNo
         else  // Kurs hängt an Klasse (alte Noten werden weiterhin dieser Klasse zugeordnet)
           jg = kurs.JgStufe;
 
-        PruefeAlteNoten(i, ada, sid, jg);
-
-
+        if (aktiverKurs && !alles)
+          PruefeAlteNoten(i, fsn);
+        
         if (liesErstesHJ)
         {
-          LiesHalbjahr(xls.notenbogen, Halbjahr.Erstes, i, ada, sid, jg);
+          LiesHalbjahr(xls.notenbogen, fsn, Halbjahr.Erstes, i, sid, jg);
         }
 
         if (liesZweitesHJ)
         {
-          LiesHalbjahr(xls.notenbogen2, Halbjahr.Zweites, i, ada, sid, jg);
+          LiesHalbjahr(xls.notenbogen2, fsn, Halbjahr.Zweites, i, sid, jg);
 
-          byte? jahresnote = xls.ReadNote("R" + i, xls.notenbogen2);
-          if (jahresnote != null)
+          if (aktiverKurs)
           {
-            HjLeistung l = FindOrCreateHjLeistung(sid, ada, HjArt.JN, jg);
-            l.Punkte = (byte)jahresnote;
-            l.WriteToDB();
+            byte? jahresnote = xls.ReadNote("R" + i, xls.notenbogen2);
+            HjLeistung.CreateOrUpdate(fsn.getHjLeistung(HjArt.JN), sid, HjArt.JN, kurs.getFach, jg, jahresnote);
           }
         }
 
-        if (liesSAP)
+        // Abitur
+        if (aktiverKurs && (liesSAP || liesMAP))
         {
-          byte? note = xls.ReadNote("G" + (i + 2), xls.AP);
-          if (note != null)
-          {
-            HjLeistung sap = FindOrCreateHjLeistung(sid, ada, HjArt.AP, jg);
-            sap.Punkte = (byte)note;
-            sap.Punkte2Dez = note;
-            sap.Status = HjStatus.Einbringen;
-            sap.WriteToDB();
+          byte? sapNote = xls.ReadNote("G" + (i + 2), xls.AP); // xls
+          byte? mapNote = xls.ReadNote("H" + (i + 2), xls.AP);
 
+          if (liesSAP && sapNote != null)
+          {
             Note dieSAPNote = SucheAPNote(ta, sid, kurs.Id, Notentyp.APSchriftlich);
             if (dieSAPNote == null)
             {
-              dieSAPNote = ErzeugeAPNote(sid, kurs.Id, Notentyp.APSchriftlich, (byte)note, "G" + (i + 2));
+              dieSAPNote = ErzeugeAPNote(sid, kurs.Id, Notentyp.APSchriftlich, (byte)sapNote, "G" + (i + 2));
             }
             else
             {
-              dieSAPNote.Punktwert = (byte)note;
+              dieSAPNote.Punktwert = (byte)sapNote;
               dieSAPNote.writeToDB();
             }
           }
-        }
 
-        if (liesMAP)
-        {
-          HjLeistung ap = FindOrCreateHjLeistung(sid, ada, HjArt.AP, jg);
-          byte? sapNote = xls.ReadNote("G" + (i + 2), xls.AP);
-          byte? mapNote = xls.ReadNote("H" + (i + 2), xls.AP);
+          if (liesMAP)
+          {
+            int? sap = fsn.getNote(Halbjahr.Zweites, Notentyp.APSchriftlich); // DB            
+            if (!liesSAP && sapNote != null && sap != null && sap != sapNote)
+            {
+              warnungen.Add(schueler.NameVorname + ": Die Punktzahl der SAP wurde verändert (alt: " + sap + ", neu: " + sapNote + ").");
+            }
+
+            if (mapNote != null)
+            {
+              Note dieMAPNote = SucheAPNote(ta, sid, kurs.Id, Notentyp.APMuendlich);
+              if (dieMAPNote == null)
+              {
+                dieMAPNote = ErzeugeAPNote(sid, kurs.Id, Notentyp.APMuendlich, (byte)mapNote, "H" + (i + 2));
+              }
+              else
+              {
+                dieMAPNote.Punktwert = (byte)mapNote;
+                dieMAPNote.writeToDB();
+              }
+            }
+          }
+        
+          // AP-Gesamtleistung        
           decimal? kommaAP = xls.ReadKommanote("I" + (i + 2), xls.AP);
           byte? apGesamt = xls.ReadNote("J" + (i + 2), xls.AP);
-
-          if (sapNote != null)
-          {
-            Note dieSAPNote = SucheAPNote(ta, sid, kurs.Id, Notentyp.APSchriftlich);
-            if (dieSAPNote != null && dieSAPNote.Punktwert != sapNote)
-            {
-              warnungen.Add(sid + ": Die Punktzahl der SAP wurde verändert (alt: " + dieSAPNote.Punktwert + ", neu: " + sapNote + ").");              
-            }
-          }
-
-          if (mapNote != null)
-          {
-            Note dieMAPNote = SucheAPNote(ta, sid, kurs.Id, Notentyp.APSchriftlich);
-            if (dieMAPNote == null)
-            {
-              dieMAPNote = ErzeugeAPNote(sid, kurs.Id, Notentyp.APSchriftlich, (byte)mapNote, "H" + (i + 2));
-            }
-            else
-            {
-              dieMAPNote.Punktwert = (byte)mapNote;
-              dieMAPNote.writeToDB();
-            }
-
-            ap.Punkte = (byte)apGesamt;
-            ap.SchnittMdl = mapNote;
-            ap.Punkte2Dez = (byte)kommaAP;
-            ap.WriteToDB();
-          }
+          HjLeistung.CreateOrUpdate(fsn.getHjLeistung(HjArt.AP), sid, HjArt.AP, kurs.getFach, jg, apGesamt,kommaAP);
         }
 
         // Fachreferat
-        if (jg == Jahrgangsstufe.Zwoelf)
+        if (aktiverKurs && jg == Jahrgangsstufe.Zwoelf)
         {
           HjLeistung hjlFR = null;
           byte? xlsFR = xls.ReadNote("S" + i, xls.notenbogen2);
@@ -334,19 +325,18 @@ namespace diNo
     /// Prüft ob die Noten, die nicht mehr verändert werden dürfen auch wirklich noch unverändert sind.
     /// </summary>
     /// <param name="i">Der wie vielte Schüler der Datei.</param>
-    /// <param name="ada">Table Adapter für Halbjahresleistungen.</param>
-    /// <param name="sid">Die SchülerId des Schülers.</param>
+    /// <param name="f">Noten dieses Faches.</param>
     /// <param name="jg">Die Jahrgangsstufe des Schülers.</param>
-    private void PruefeAlteNoten(int i, HjLeistungTableAdapter ada, int sid, Jahrgangsstufe jg)
+    private void PruefeAlteNoten(int i, FachSchuelerNoten f)
     {
-      Schueler s = Zugriff.Instance.SchuelerRep.Find(sid);
+      Schueler s = f.schueler;
       if ((Zeitpunkt)Zugriff.Instance.aktZeitpunkt > Zeitpunkt.HalbjahrUndProbezeitFOS)
       {
         byte? zeugnisnoteHJ1 = xls.ReadNote("O" + i, xls.notenbogen);
         if (zeugnisnoteHJ1 != null)
         {
           // Prüfe, ob die Gesamtnote aus dem ersten Halbjahr unverändert ist          
-          HjLeistung hjNote1 = FindHjLeistung(sid, ada, HjArt.Hj1, jg);
+          HjLeistung hjNote1 = f.getHjLeistung(HjArt.Hj1);
           if (hjNote1 != null && hjNote1.Punkte != zeugnisnoteHJ1)
           {            
             warnungen.Add(s.NameVorname + ": Die Punktzahl im 1. Halbjahr wurde verändert (alt: " + hjNote1.Punkte + ", neu: "+ zeugnisnoteHJ1 + ").");
@@ -361,7 +351,7 @@ namespace diNo
         byte? zeugnisnoteHJ2 = xls.ReadNote("O" + i, xls.notenbogen2);
         if (zeugnisnoteHJ2 != null)
         {
-          HjLeistung hjNote2 = FindHjLeistung(sid, ada, HjArt.Hj2, jg);
+          HjLeistung hjNote2 = f.getHjLeistung(HjArt.Hj2);
           if (hjNote2 != null && hjNote2.Punkte != zeugnisnoteHJ2)
           {
             warnungen.Add(s.NameVorname + ": Die Punktzahl im 2. Halbjahr wurde verändert (alt: " + hjNote2.Punkte + ", neu: " + zeugnisnoteHJ2 + ").");
@@ -369,22 +359,19 @@ namespace diNo
         }
       }
 
-      /*
       if ((Zeitpunkt)Zugriff.Instance.aktZeitpunkt > Zeitpunkt.ZweitePA && (int)s.getKlasse.Jahrgangsstufe > 11)
       {
         // prüfe, ob sich die Noten der schriftlichen AP noch im richtigen Zustand befinden
         byte? SAPxls = xls.ReadNote("G" + i, xls.AP);
         if (SAPxls != null)
         {
-          byte? SAPdb = s.getNoten.FindeFach() kursid; // die müsste man erst mal finden
-
-          if (SAPdb != null && SAPdb != SAPxls)
+          var SAPdb = f.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich);
+          if (SAPdb.Count > 0 && SAPdb.First() != SAPxls)
           {
-            hinweise.Add(s.NameVorname + ": Die Punktzahl der SAP wurde verändert (alt: " + SAPdb + ", neu: " + SAPxls + ").");
+            hinweise.Add(s.NameVorname + ": Die Punktzahl der SAP wurde verändert (alt: " + SAPdb.First() + ", neu: " + SAPxls + ").");
           }
         }
-      }*/
-
+      }
     }
 
     /// <summary>
@@ -413,20 +400,19 @@ namespace diNo
     /// <param name="ada">Table Adapter für Halbjahresleistungen.</param>
     /// <param name="sid">Die SchülerId des Schülers.</param>
     /// <param name="jg">Die Jahrgangsstufe des Schülers.</param>
-    private void LiesHalbjahr(Microsoft.Office.Interop.Excel.Worksheet sheet, Halbjahr hj, int i, HjLeistungTableAdapter ada, int sid, Jahrgangsstufe jg)
+    private void LiesHalbjahr(Microsoft.Office.Interop.Excel.Worksheet sheet, FachSchuelerNoten f, Halbjahr hj, int i, int sid, Jahrgangsstufe jg)
     {
       ErzeugeNoten(sheet, i, sid, new string[] { "C", "D" }, hj, Notentyp.Kurzarbeit);
       ErzeugeNoten(sheet, i, sid, new string[] { "E", "F", "G" }, hj, Notentyp.Ex);
       ErzeugeNoten(sheet, i, sid, new string[] { "H", "I", "J" }, hj, Notentyp.EchteMuendliche);
       ErzeugeNoten(sheet, i, sid, new string[] { "L", "M" }, hj, Notentyp.Schulaufgabe);
       byte? zeugnisnote = xls.ReadNote("O" + i, sheet);
-      if (zeugnisnote != null)
+      if (zeugnisnote != null && f!=null)
       {
-        HjLeistung l = FindOrCreateHjLeistung(sid, ada, hj == Halbjahr.Erstes ? HjArt.Hj1 : HjArt.Hj2, jg);
-        l.Punkte = (byte)zeugnisnote;
-        l.Punkte2Dez = xls.ReadKommanote("N" + i, sheet);
-        l.SchnittMdl = xls.ReadKommanote("K" + i, sheet);
-        l.WriteToDB();
+        decimal? Punkte2Dez = xls.ReadKommanote("N" + i, sheet);
+        decimal? SchnittMdl = xls.ReadKommanote("K" + i, sheet);
+        HjArt art = hj == Halbjahr.Erstes ? HjArt.Hj1 : HjArt.Hj2;
+        HjLeistung.CreateOrUpdate(f.getHjLeistung(art), sid,art, kurs.getFach, jg, zeugnisnote, Punkte2Dez, SchnittMdl);
       }
     }
 
@@ -452,7 +438,7 @@ namespace diNo
     private Note ErzeugeAPNote(int sid, int kursId, Notentyp typ, byte punktwert, string zelle)
     {
       Note note = new Note(kurs.Id, sid);
-      note.Halbjahr = Halbjahr.Ohne;
+      note.Halbjahr = Halbjahr.Zweites;
       note.Typ = typ;
       note.Zelle = zelle;
       note.Punktwert = (byte)punktwert;

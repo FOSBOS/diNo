@@ -39,7 +39,7 @@ namespace diNo
 
       if (System.Security.Principal.WindowsIdentity.GetCurrent().Name == "ClausPC\\Claus")
       {
-        cbNotendruck.SelectedIndex = 7;
+        cbNotendruck.SelectedIndex = 3;
       }
     }
 
@@ -271,14 +271,22 @@ namespace diNo
 
     private void btnEinbringung_Click(object sender, EventArgs e)
     {
-      var obj = getSelectedObjects();
-      var b = new Berechnungen(Zeitpunkt.None);
-      b.aufgaben.Add(b.BerechneEinbringung);
-      foreach (var s in obj)
-        b.BerechneSchueler(s);
+      try
+      {
+        Cursor = Cursors.WaitCursor;
+        var obj = getSelectedObjects();
+        var b = new Berechnungen(Zeitpunkt.None);
+        b.aufgaben.Add(b.BerechneEinbringung);
+        foreach (var s in obj)
+          b.BerechneSchueler(s);
 
-      RefreshNotenbogen();
-    }
+        RefreshNotenbogen();
+      }      
+      finally
+      {
+        Cursor = Cursors.Default;
+      }
+}
 
     private void DelEinbr(HjLeistung hj)
     {
@@ -303,14 +311,22 @@ namespace diNo
 
     private void btnGesErg_Click(object sender, EventArgs e)
     {
-      var obj = getSelectedObjects();
-      var b = new Berechnungen(Zeitpunkt.None);
-      b.aufgaben.Add(b.BerechneGesErg);
-      b.aufgaben.Add(b.BerechneDNote);
-      b.aufgaben.Add(b.BestimmeSprachniveau);
-      foreach (var s in obj)
-        b.BerechneSchueler(s);
-      RefreshNotenbogen();
+      try
+      {
+        Cursor = Cursors.WaitCursor;
+        var obj = getSelectedObjects();
+        var b = new Berechnungen(Zeitpunkt.None);
+        b.aufgaben.Add(b.BerechneGesErg);
+        b.aufgaben.Add(b.BerechneDNote);
+        b.aufgaben.Add(b.BestimmeSprachniveau);
+        foreach (var s in obj)
+          b.BerechneSchueler(s);
+        RefreshNotenbogen();
+      }
+      finally
+      {
+        Cursor = Cursors.Default;
+      }
     }
 
     private void RefreshNotenbogen()

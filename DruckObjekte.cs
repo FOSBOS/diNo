@@ -52,7 +52,7 @@ namespace diNo
     public byte jg { get; private set; }
     public string JgKurz { get; private set; }
 
-    public SchuelerDruck(Schueler s, Bericht Berichtsname)
+    public SchuelerDruck(Schueler s, Bericht b)
     {
       jg = (byte)s.getKlasse.Jahrgangsstufe;
       if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.IntVk) JgKurz = "IV";
@@ -80,6 +80,15 @@ namespace diNo
       HideHj2 = Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes;
       HideVorHj = !s.hatVorHj; // nur bei F12 anzeigen
       HideAbi = jg < 12 || Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.ErstePA;
+
+      if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6) // TODO: Soll das so kommen?
+      {
+        int anzProbleme = s.getNoten.AnzahlProbleme();
+        Bemerkung = "Sie benötigen bei " + (anzProbleme > 2 ? 2 : anzProbleme) + " Gesamtergebnissen unter 4 Punkten mindestens " + s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 : 5) + " Punkte, um zu bestehen.";
+        int fehlP = s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 :5) - s.punktesumme.Summe(PunktesummeArt.Gesamt);
+        int fehlAP = (int)Math.Ceiling(fehlP / (decimal)(s.APFaktor));
+        Bemerkung += "\nDazu müssen Sie Ihre Prüfungsgesamtergebnisse um mindestens " + fehlAP + " Punkte erhöhen.\n";
+      }        
     }
 
     public static string GetBerichtsname(Bericht b)
@@ -112,7 +121,6 @@ namespace diNo
         case Bericht.Jahreszeugnis:
         case Bericht.Abiturzeugnis:
         case Bericht.Gefaehrdung: return new ZeugnisDruck(s, b, u);
-        case Bericht.Abiergebnisse:
         case Bericht.EinserAbi:
         case Bericht.Notenmitteilung: return new NotenmitteilungDruck(s, b);
         default: return new SchuelerDruck(s, b);
@@ -397,8 +405,8 @@ namespace diNo
 
       if (rpt == Bericht.Abiergebnisse && MAP == "")
       {
-        MAP4P = s.NotwendigeNoteInMAP(4);
-        MAP1P = s.NotwendigeNoteInMAP(1);
+        MAP4P = s.NotwendigeNoteInMAPalt(4);
+        MAP1P = s.NotwendigeNoteInMAPalt(1);
       }
     }
 
@@ -635,20 +643,17 @@ namespace diNo
     public string MAP4P { get; private set; }
 
     public NotenAbiDruck(FachSchuelerNoten s) : base(s, Bericht.Abiergebnisse)
-    {      
-      //MAP4P = NotwendigeNoteInMAP(s,4);
-      //MAP1P = NotwendigeNoteInMAP(s,1);
-    }
-
-    // TODO:
-    private string NotwendigeNoteInMAP(FachSchuelerNoten s, int Zielpunkte)
     {
-      return "";
+      MAP4P = s.NotwendigeNoteInMAP(3.5);
+      MAP1P = s.NotwendigeNoteInMAP(1.0);
+    }
+    public NotenAbiDruck(HjLeistung h) : base(h)
+    {
     }
   }
 
   public class NotenZeugnisDruck : NotenDruck
-  {
+    {
     public string fachGruppe { get; private set; }
     public string JN { get; set; } // Jahresnote oder Gesamtergebnis
     public string JNText { get; set; }

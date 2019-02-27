@@ -80,7 +80,8 @@ namespace diNo
       {
         if (f.kursId == kursid) return f;
       }
-      throw new IndexOutOfRangeException("FachSchuelerNoten.getFach: falsche kursid");            
+      return null;
+      //throw new IndexOutOfRangeException("FachSchuelerNoten.getFach: falsche kursid");            
   }
 
     /// <summary>
@@ -138,7 +139,10 @@ namespace diNo
       }
       foreach (var f in Fachreferat)
       {
-        liste.Add(new NotenHjDruck(f));
+        if (rptName==Bericht.Abiergebnisse)
+          liste.Add(new NotenAbiDruck(f));
+        else
+          liste.Add(new NotenHjDruck(f));
       }
 
       /*
@@ -204,6 +208,11 @@ namespace diNo
         zeitpunkt = z;
         InitAnzahlNoten();        
       }
+    }
+
+    public int AnzahlProbleme()
+    {
+      return AnzahlNoten(5) + 2*AnzahlNoten(6);
     }
     
     // liefert Anzahl der Sechser, Fünfer, ..., egal ob Prüfungsfach oder nicht
@@ -586,10 +595,19 @@ namespace diNo
       }
     }
 
-        /// <summary>
-        /// Liefert alle Noten eines Schülers in einem Fach von diesem Typ
-        /// </summary>
-        public IList<int> getNoten(Halbjahr hj,Notentyp typ)
+    /// <summary>
+    /// Liefert die erste Note eines Schülers in einem Fach von diesem Typ
+    /// </summary>
+    public int? getNote(Halbjahr hj, Notentyp typ)
+    {
+      var n = noten[(int)hj, (int)typ];
+      return n.Count == 0 ? null : (int?)n.First();
+    }
+
+    /// <summary>
+    /// Liefert alle Noten eines Schülers in einem Fach von diesem Typ
+    /// </summary>
+    public IList<int> getNoten(Halbjahr hj,Notentyp typ)
         {          
             return noten[(int)hj,(int)typ]; // klappt der Cast immer???
         }
@@ -831,10 +849,31 @@ namespace diNo
       }        
     }
 
-    public string NotwendigeNoteInMAP(int Zielpunkte)
+    public string NotwendigeNoteInMAP(double Zielpunkte)
     {
-      int? zeugnis = getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;  
-      if (!zeugnis.HasValue || zeugnis>=Zielpunkte) return ""; // Ziel schon erreicht
+      if (getFach.Kuerzel == "E" || !getFach.IstSAPFach(schueler.Zweig)) return ""; // in Nebenfächern gibt es keine MAP
+      if (getHjLeistung(HjArt.GesErg) == null) return "";
+      int zeugnis = getHjLeistung(HjArt.GesErg).Punkte;
+      if (zeugnis >= Zielpunkte) return ""; // Ziel schon erreicht
+      
+      Fachsumme fs = SummeHalbjahre();
+      int faktor = schueler.APFaktor;
+      int apg = (int)Math.Ceiling((Zielpunkte*(fs.anz+faktor)-fs.sum)/(double)faktor); // diese Note müsste im Abigesamt stehen
+      var sapL = getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich);
+      int sap = sapL.Count == 0 ? 0 : sapL[0]; // sollte nur im Test passieren.
+
+      sap = getHjLeistung(HjArt.AP).Punkte; // raus: nur zum Test!
+
+      int map = 3 * apg - 2 * sap - 1;
+
+      if (map>15) return "nicht möglich";
+      else return map.ToString();
+    }
+
+    public string NotwendigeNoteInMAPalt(int Zielpunkte)
+    {
+      int? zeugnis = getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
+      if (!zeugnis.HasValue || zeugnis >= Zielpunkte) return ""; // Ziel schon erreicht
 
       string kuerzel = getFach.Kuerzel;
       decimal? jf = getSchnitt(Halbjahr.Zweites).JahresfortgangMitKomma;
@@ -843,20 +882,20 @@ namespace diNo
       int map;
       if (!getFach.IstSAPFach(schueler.Zweig)) // Nebenfächer
       {
-        map = (int)Math.Ceiling((decimal)(6.99)-jf.GetValueOrDefault());
+        map = (int)Math.Ceiling((decimal)(6.99) - jf.GetValueOrDefault());
         return map.ToString();
       }
 
       // Prüfungsfächer
-      if (getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich).Count==0) return "";
-      int sap = getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich)[0];
-       map=sap+1; // Mündliche muss größer als schriftliche sein, sonst bringt es nichts.
-      while (map<=15 && Notentools.BerechneZeugnisnote(jf,sap,map)<Zielpunkte)
+      if (getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich).Count == 0) return "";
+      int sap = getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich)[0];
+      map = sap + 1; // Mündliche muss größer als schriftliche sein, sonst bringt es nichts.
+      while (map <= 15 && Notentools.BerechneZeugnisnote(jf, sap, map) < Zielpunkte)
         map++;
 
-      if (map>15) return "nicht möglich";
+      if (map > 15) return "nicht möglich";
       else return map.ToString();
-    } 
+    }
   }
 
 }

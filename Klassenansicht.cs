@@ -38,8 +38,52 @@ namespace diNo
 
     public void RefreshTabs()
     {
-      userControlSchueleransicht1.Schueler = null;
-      treeListView1_SelectedIndexChanged(this, null);
+      SetSchueler();
+      //userControlSchueleransicht1.Schueler = null;
+      //treeListView1_SelectedIndexChanged(this, null);
+    }
+
+    private void SetSchueler()
+    {
+      userControlSchueleransicht1.Schueler = schueler;
+      userControlVorkommnisse1.Schueler = schueler;
+      userControlFPAundSeminar1.Schueler = schueler;
+
+      if (schueler.AlteFOBOSO())
+      {
+        if (!zeigeAlteFOSBOSO)
+        {
+          tabControl1.Controls.Remove(tabPageNotenbogen);
+          tabControl1.TabPages.Insert(1, tabPageNoten);
+          zeigeAlteFOSBOSO = true;
+        }
+        notenbogen1.Schueler = schueler;
+      }
+      else
+      {
+        if (zeigeAlteFOSBOSO)
+        {
+          tabControl1.Controls.Remove(tabPageNoten);
+          tabControl1.TabPages.Insert(1, tabPageNotenbogen);
+          zeigeAlteFOSBOSO = false;
+        }
+        userControlNotenbogen1.Schueler = schueler;
+      }
+
+      nameLabel.Text = schueler.NameVorname;
+      klasseLabel.Text = schueler.KlassenBezeichnung;
+      Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
+      pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
+      btnBrief.Enabled = true;
+
+      labelHinweise.Text = (schueler.IsLegastheniker ? "Legasthenie" : "");
+      labelHinweise.ForeColor = Color.Red;
+
+      if (Zugriff.Instance.HatVerwaltungsrechte)
+      {
+        userControlKurszuordnungen1.Schueler = schueler;
+        userControlAdministration1.Schueler = schueler;
+      }
     }
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -54,45 +98,7 @@ namespace diNo
         // davon einmal mit dem alten Schüler (sinnloser Refresh, sollte verhindert werden?)
         if (this.userControlSchueleransicht1.Schueler == null || this.userControlSchueleransicht1.Schueler.Id != schueler.Id)
         {
-          this.userControlSchueleransicht1.Schueler = schueler;
-          this.userControlVorkommnisse1.Schueler = schueler;
-          this.userControlFPAundSeminar1.Schueler = schueler;
-          
-          if (schueler.AlteFOBOSO())
-          {
-            if (!zeigeAlteFOSBOSO)
-            {              
-              tabControl1.Controls.Remove(tabPageNotenbogen);
-              tabControl1.TabPages.Insert(1,tabPageNoten);
-              zeigeAlteFOSBOSO = true;
-            }
-            notenbogen1.Schueler = schueler;
-          }
-          else
-          {
-            if (zeigeAlteFOSBOSO)
-            {
-              tabControl1.Controls.Remove(tabPageNoten);
-              tabControl1.TabPages.Insert(1, tabPageNotenbogen);
-              zeigeAlteFOSBOSO = false;
-            }
-            userControlNotenbogen1.Schueler = schueler;
-          }
-
-          nameLabel.Text = schueler.NameVorname;
-          klasseLabel.Text = schueler.KlassenBezeichnung;
-          Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
-          pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
-          btnBrief.Enabled = true;
-
-          labelHinweise.Text = (schueler.IsLegastheniker ? "Legasthenie" : "");
-          labelHinweise.ForeColor = Color.Red;
-
-          if (Zugriff.Instance.HatVerwaltungsrechte)
-          {
-            userControlKurszuordnungen1.Schueler = schueler;
-            userControlAdministration1.Schueler = schueler;
-          }          
+          SetSchueler();
         }
       }
 

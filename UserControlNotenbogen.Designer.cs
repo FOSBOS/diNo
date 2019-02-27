@@ -440,13 +440,14 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.AutoScroll = true;
       this.Controls.Add(this.dataGridPunktesumme);
       this.Controls.Add(this.chkShowAbi);
       this.Controls.Add(this.chkShowHj2);
       this.Controls.Add(this.chkShowHj1);
       this.Controls.Add(this.dataGridNoten);
       this.Name = "UserControlNotenbogen";
-      this.Size = new System.Drawing.Size(1149, 578);
+      this.Size = new System.Drawing.Size(1132, 561);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).EndInit();
       this.contextMenu.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridPunktesumme)).EndInit();

@@ -125,7 +125,7 @@
                           <Value>=Fields!HideVorHj.Value</Value>
                         </Parameter>
                         <Parameter Name="HideAbi">
-                          <Value>=Fields!HideAbi.Value</Value>
+                          <Value>True</Value>
                         </Parameter>
                         <Parameter Name="JgKurz">
                           <Value>=Fields!JgKurz.Value</Value>
@@ -164,7 +164,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>2.92833cm</Height>
+              <Height>3.03416cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -338,7 +338,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>                                                                                                      (Unterschrift)</Value>
+                              <Value>                                                                                                           (Unterschrift)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -417,7 +417,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>11.00396cm</Height>
+        <Height>11.10979cm</Height>
         <Width>16.9cm</Width>
         <Style>
           <Border>
@@ -428,7 +428,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>11.00396cm</Height>
+    <Height>11.10979cm</Height>
     <Style />
   </Body>
   <Width>16.9cm</Width>

@@ -25,10 +25,6 @@
           <DataField>fachBez</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="FR">
-          <DataField>FR</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="GE">
           <DataField>GE</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -47,6 +43,14 @@
         </Field>
         <Field Name="MAP">
           <DataField>MAP</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MAP1P">
+          <DataField>MAP1P</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MAP4P">
+          <DataField>MAP4P</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="S">
@@ -84,8 +88,8 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>diNo</rd:DataSetName>
-        <rd:TableName>NotenHjDruck</rd:TableName>
-        <rd:ObjectDataSourceType>diNo.NotenHjDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+        <rd:TableName>NotenAbiDruck</rd:TableName>
+        <rd:ObjectDataSourceType>diNo.NotenAbiDruck, diNo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>
@@ -97,31 +101,37 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.2cm</Width>
+                  <Width>1.1cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.2cm</Width>
+                  <Width>1.1cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.2cm</Width>
+                  <Width>1.1cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.2cm</Width>
+                  <Width>1.1cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.2cm</Width>
+                  <Width>1.1cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.2cm</Width>
+                  <Width>1.1cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.2cm</Width>
+                  <Width>1.1cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.2cm</Width>
+                  <Width>1.1cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.2cm</Width>
+                  <Width>1.1cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.1cm</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>1.1cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -153,6 +163,9 @@
                             <Border>
                               <Style>Solid</Style>
                             </Border>
+                            <TopBorder>
+                              <Width>1.5pt</Width>
+                            </TopBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -187,6 +200,9 @@
                             <Border>
                               <Style>Solid</Style>
                             </Border>
+                            <TopBorder>
+                              <Width>1.5pt</Width>
+                            </TopBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -227,6 +243,9 @@
                             <Border>
                               <Style>Solid</Style>
                             </Border>
+                            <TopBorder>
+                              <Width>1.5pt</Width>
+                            </TopBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -267,6 +286,9 @@
                             <Border>
                               <Style>Solid</Style>
                             </Border>
+                            <TopBorder>
+                              <Width>1.5pt</Width>
+                            </TopBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -301,8 +323,11 @@
                             <Border>
                               <Style>Solid</Style>
                             </Border>
+                            <TopBorder>
+                              <Width>1.5pt</Width>
+                            </TopBorder>
                             <LeftBorder>
-                              <Width>1.7pt</Width>
+                              <Width>1.5pt</Width>
                             </LeftBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -338,6 +363,9 @@
                             <Border>
                               <Style>Solid</Style>
                             </Border>
+                            <TopBorder>
+                              <Width>1.5pt</Width>
+                            </TopBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -372,6 +400,9 @@
                             <Border>
                               <Style>Solid</Style>
                             </Border>
+                            <TopBorder>
+                              <Width>1.5pt</Width>
+                            </TopBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
@@ -406,8 +437,11 @@
                             <Border>
                               <Style>Solid</Style>
                             </Border>
+                            <TopBorder>
+                              <Width>1.5pt</Width>
+                            </TopBorder>
                             <LeftBorder>
-                              <Width>1.7pt</Width>
+                              <Width>1.5pt</Width>
                             </LeftBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -420,6 +454,80 @@
                       </CellContents>
                     </TablixCell>
                     <TablixCell />
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox10">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>4P</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox4</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Width>1.5pt</Width>
+                            </TopBorder>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox5">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>1P</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox4</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <TopBorder>
+                              <Width>1.5pt</Width>
+                            </TopBorder>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
@@ -587,7 +695,7 @@
                               <Style>Solid</Style>
                             </Border>
                             <LeftBorder>
-                              <Width>1.7pt</Width>
+                              <Width>1.4pt</Width>
                             </LeftBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -692,7 +800,7 @@
                               <Style>Solid</Style>
                             </Border>
                             <LeftBorder>
-                              <Width>1.7pt</Width>
+                              <Width>1.4pt</Width>
                             </LeftBorder>
                             <VerticalAlign>Middle</VerticalAlign>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -725,6 +833,74 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>GE1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="MAP4P">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!MAP4P.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>MAP4P</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>Solid</Style>
+                            </Border>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="MAP1P">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!MAP1P.Value</Value>
+                                  <Style>
+                                    <FontSize>8pt</FontSize>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style>
+                                <TextAlign>Center</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>MAP1P</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -773,6 +949,16 @@
                 </TablixMember>
                 <TablixMember />
                 <TablixMember />
+                <TablixMember>
+                  <Visibility>
+                    <Hidden>=Parameters!HideAbi.Value</Hidden>
+                  </Visibility>
+                </TablixMember>
+                <TablixMember>
+                  <Visibility>
+                    <Hidden>=Parameters!HideAbi.Value</Hidden>
+                  </Visibility>
+                </TablixMember>
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -802,6 +988,12 @@
                           <Border>
                             <Style>Solid</Style>
                           </Border>
+                          <TopBorder>
+                            <Width>1.5pt</Width>
+                          </TopBorder>
+                          <LeftBorder>
+                            <Width>1.5pt</Width>
+                          </LeftBorder>
                           <VerticalAlign>Middle</VerticalAlign>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
@@ -843,6 +1035,9 @@
                           <Border>
                             <Style>Solid</Style>
                           </Border>
+                          <LeftBorder>
+                            <Width>1.5pt</Width>
+                          </LeftBorder>
                           <VerticalAlign>Middle</VerticalAlign>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
@@ -850,7 +1045,6 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
-                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>
@@ -866,7 +1060,7 @@
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
             <Height>1.31167cm</Height>
-            <Width>15.6cm</Width>
+            <Width>16.9cm</Width>
             <Style>
               <Border>
                 <Style>Solid</Style>
@@ -899,22 +1093,11 @@
                 </TextRuns>
                 <Style />
               </Paragraph>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>SAP/MAP=schriftl./mdl. Abschlussprüfung, APG=Abitur gesamt, GE=Gesamtergebnis</Value>
-                    <Style>
-                      <FontSize>7pt</FontSize>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox60</rd:DefaultName>
             <Top>1.59389cm</Top>
             <Left>0.01387cm</Left>
-            <Height>1.17254cm</Height>
+            <Height>0.74921cm</Height>
             <Width>15.58613cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -927,8 +1110,54 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Textbox Name="Textbox61">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>SAP/MAP=schriftl./mdl. Abschlussprüfung, APG=Abitur gesamt, GE=Gesamtergebnis,</Value>
+                    <Style>
+                      <FontSize>7pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>4P/1P = nötige Punktzahl in einer mündlichen Prüfung, um im Gesamtergebnis auf 4 Punkte bzw. 1 Punkt zu kommen.</Value>
+                    <Style>
+                      <FontSize>7pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox60</rd:DefaultName>
+            <Top>2.3431cm</Top>
+            <Left>0.01387cm</Left>
+            <Height>0.80212cm</Height>
+            <Width>15.58613cm</Width>
+            <ZIndex>2</ZIndex>
+            <Visibility>
+              <Hidden>=Parameters!HideAbi.Value</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
-        <Height>1.08915in</Height>
+        <Height>1.23828in</Height>
         <Style>
           <Border>
             <Color>White</Color>
@@ -936,7 +1165,7 @@
           </Border>
         </Style>
       </Body>
-      <Width>6.14173in</Width>
+      <Width>6.65354in</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
