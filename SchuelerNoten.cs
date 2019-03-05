@@ -46,7 +46,7 @@ namespace diNo
       }
 
       // alle Fächer des Schülers ohne Kurs finden und diese HjLeistungen laden 
-      diNoDataSet.FachDataTable fDT = (new FachTableAdapter()).GetFaecherOhneKurseBySchuelerId(schueler.Id);
+      diNoDataSet.FachDataTable fDT = (new FachTableAdapter()).GetFaecherOhneKurseBySchuelerId(schueler.Id,(int)schueler.getKlasse.Jahrgangsstufe);
       foreach (var fachR in fDT)
       {
         Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);

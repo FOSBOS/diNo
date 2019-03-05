@@ -117,10 +117,12 @@ namespace diNo
       this.treeListView1.Roots = Zugriff.Instance.Klassen;
       this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
       this.treeListView1.ChildrenGetter = delegate (object x) { return ((Klasse)x).eigeneSchueler; };
+      /*
       nameLabel.Text = "";
       klasseLabel.Text = "";
       pictureBoxImage.Image = null; 
-      toolStripStatusLabel1.Text = "";
+      */
+      toolStripStatusLabel1.Text = "";     
     }
 
     private void btnNotenabgeben_Click(object sender, EventArgs e)
@@ -152,6 +154,11 @@ namespace diNo
         }
 
         RefreshTreeView(); // Noten neu laden
+        if (schueler != null)
+        {
+          schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); // neues Objekt setzen
+          SetSchueler();
+        }
         MessageBox.Show("Die Notendateien wurden übertragen.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
         toolStripStatusLabel1.Text = "";
         Cursor.Current = Cursors.Default;

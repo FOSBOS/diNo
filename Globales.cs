@@ -12,6 +12,11 @@ namespace diNo
 
     public GlobaleStringsContainer()
     {
+      Refresh();
+    }
+
+    public void Refresh()
+    {
       dic = new Dictionary<int, string>();
       var ta = new GlobaleStringsTableAdapter();
       var dt = ta.GetData();

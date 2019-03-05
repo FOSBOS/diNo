@@ -38,6 +38,7 @@ namespace diNo
     {
       q.Wert = edWert.Text;                  
       ta.Update(q);
+      Zugriff.Instance.RefreshGlobalesStrings();
     }
   }
 }

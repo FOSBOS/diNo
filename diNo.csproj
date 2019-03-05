@@ -225,7 +225,6 @@
     </Compile>
     <Compile Include="Schueler.cs" />
     <Compile Include="SchuelerNoten.cs" />
-    <Compile Include="TrueCryptHelper.cs" />
     <Compile Include="UnterrichtExcelReader.cs" />
     <Compile Include="UserControlFPAundSeminar.cs">
       <SubType>UserControl</SubType>

@@ -358,20 +358,6 @@ namespace diNo
           }
         }
       }
-
-      if ((Zeitpunkt)Zugriff.Instance.aktZeitpunkt > Zeitpunkt.ZweitePA && (int)s.getKlasse.Jahrgangsstufe > 11)
-      {
-        // prüfe, ob sich die Noten der schriftlichen AP noch im richtigen Zustand befinden
-        byte? SAPxls = xls.ReadNote("G" + i, xls.AP);
-        if (SAPxls != null)
-        {
-          var SAPdb = f.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich);
-          if (SAPdb.Count > 0 && SAPdb.First() != SAPxls)
-          {
-            hinweise.Add(s.NameVorname + ": Die Punktzahl der SAP wurde verändert (alt: " + SAPdb.First() + ", neu: " + SAPxls + ").");
-          }
-        }
-      }
     }
 
     /// <summary>

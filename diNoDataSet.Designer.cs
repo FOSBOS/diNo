@@ -14260,6 +14260,7 @@ SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, NichtNC, Kursnivea
 FROM Fach, HjLeistung
 Where HjLeistung.FachId = Fach.Id AND
 HjLeistung.SchuelerId = @SchuelerId AND
+HjLeistung.JgStufe<= @JgStufe AND
 Fach.Id not in (
 select distinct
 	kurs.FachId 
@@ -14269,6 +14270,7 @@ select distinct
 ";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@JgStufe", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "JgStufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14332,9 +14334,10 @@ select distinct
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.FachDataTable GetFaecherOhneKurseBySchuelerId(int SchuelerId) {
+        public virtual diNoDataSet.FachDataTable GetFaecherOhneKurseBySchuelerId(int SchuelerId, int JgStufe) {
             this.Adapter.SelectCommand = this.CommandCollection[4];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(SchuelerId));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(JgStufe));
             diNoDataSet.FachDataTable dataTable = new diNoDataSet.FachDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;

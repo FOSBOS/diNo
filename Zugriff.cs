@@ -189,6 +189,10 @@ namespace diNo
       return globaleStrings.getString(g);
     }
 
+    public void RefreshGlobalesStrings()
+    {
+      globaleStrings.Refresh();
+    }
 
     public bool HatRolle(Rolle typ)
     {
