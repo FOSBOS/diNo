@@ -48,7 +48,7 @@ namespace diNo
       userControlSchueleransicht1.Schueler = schueler;
       userControlVorkommnisse1.Schueler = schueler;
       userControlFPAundSeminar1.Schueler = schueler;
-
+      if (schueler == null) return;
       if (schueler.AlteFOBOSO())
       {
         if (!zeigeAlteFOSBOSO)

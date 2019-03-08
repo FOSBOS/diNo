@@ -118,9 +118,15 @@ namespace diNo
       if (anz == 0) return; // nichts speichern
 
       gesErg.Punkte2Dez = sum / (decimal)anz;
-      if (gesErg.Punkte2Dez < (decimal)1.0) gesErg.Punkte = 0;
-      else gesErg.Punkte = (byte)Math.Round((double)gesErg.Punkte2Dez, MidpointRounding.AwayFromZero);
+      gesErg.Punkte = GesErg();
       gesErg.WriteToDB();
+    }
+
+    public byte GesErg()
+    {
+      decimal Punkte2Dez = sum / (decimal)anz;
+      if (Punkte2Dez < (decimal)1.0) return 0;
+      return (byte)Math.Round((double)Punkte2Dez, MidpointRounding.AwayFromZero);
     }
 
     // Addiert eine andere Fachsumme dazu

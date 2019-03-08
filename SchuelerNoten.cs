@@ -372,14 +372,13 @@ namespace diNo
     { // überall mindestens eine 3
       return AnzahlNoten(6) == 0 && AnzahlNoten(5) == 0 && AnzahlNoten(4) == 0;
     }
-    
+
     public bool MAPmoeglich()
     {
-      // Anzahl 5er und 6er nach einen MAP mit "bestmöglichem" Ergebnis
-      int anz5 = 0;
-      int anz6 = 0;
-      int AnzMAP=0; // max. 2 MAP in den Prüfungsfächern möglich
-      
+      if (schueler.AlteFOBOSO()) return MAPmoeglichAlt();
+
+      GEVariante[] gev = new GEVariante[3]; // aus 3 Fächern kann die MAP ausgewählt werden
+      byte index = 0; 
 
       foreach (var f in alleKurse)
       {
@@ -390,35 +389,36 @@ namespace diNo
         byte note = hj.Punkte;
 
         // nur in Abifächern außer E kann man MAP machen
-        if (f.getFach.IstSAPFach(schueler.Zweig) && kuerzel != "E" && note < 4 && AnzMAP < 2)
-        {
-          if (f.getNotenanzahl(Halbjahr.Zweites, Notentyp.APSchriftlich) == 0) // Note liegt ggf. noch nicht vor.
-            return true;                                                    // Meldung über NotenanzahlChecker
-          
-          int sap = f.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich)[0];
+        if (f.getFach.IstSAPFach(schueler.Zweig) && kuerzel != "E")
+        {        
+          int? sap = f.getNote(Halbjahr.Zweites, Notentyp.APSchriftlich);
+          if (sap == null) sap = f.getHjLeistung(HjArt.AP).Punkte; // für Testzwecke  Meldung über Notenanzahlchecker
+          gev[index] = new GEVariante(hj);
+
           Fachsumme fs = f.SummeHalbjahre();
-          int ap = Notentools.BerechneAbiGes(sap, 15);
-          if (schueler.hatVorHj)
-            fs.Add(ap, 3);
-          else
-            fs.Add(ap, 2);
-
-          byte noteMoegl = (byte)Math.Round(fs.sum / (double)fs.anz, MidpointRounding.AwayFromZero);                    
-          if (noteMoegl >= 4 || note == 0) // wenn er auf dem 5er bleibt, soll er lieber ein anderes Fach nehmen
-          {
-            note = noteMoegl;
-            AnzMAP++;
-          }          
+          gev[index].AP = Notentools.BerechneAbiGes(sap.GetValueOrDefault(), 15); // AP-Gesamtergebnis bei MAP=15
+          fs.Add(gev[index].AP, schueler.APFaktor);
+          gev[index].GE = fs.GesErg(); //GE in diesem Fach, wenn optimaler MAP
+          gev[index].CalcDiff(schueler.APFaktor); // berechnen, wie sich die Gesamtsumme dadurch verbessert
+          index++;
         }
-        if (note == 0) anz6++;
-        else if (note < 4) anz5++;       
       }
+      if (index != 3) throw new Exception(schueler.benutzterVorname + " kann nicht aus 3 Fächern die MAP auswählen.");
 
-      return (anz6 == 0 && anz5 <= 1); // dann hätte er bestanden
-
-      // TODO: fehlt Schnitt aus neuer Punktesumme (es kann sich aber nur die Abisumme ändern!)
+      return CheckVariante(gev[0], gev[1]) || CheckVariante(gev[0], gev[2]) || CheckVariante(gev[1], gev[2]);
     }
   
+    // ergibt true, wenn er bei dieser Variante besteht
+    private bool CheckVariante(GEVariante v1, GEVariante v2)
+    {
+      Punktesumme ps = schueler.punktesumme;
+      int probl = AnzahlProbleme() + v1.ProblemDiff + v2.ProblemDiff; // ProblemDiff ist idR negativ
+      int sum = ps.Summe(PunktesummeArt.Gesamt) + v1.PunkteDiff + v2.PunkteDiff;
+      return (probl <= 0 ||
+          probl == 1 && sum >= 5 * ps.Anzahl(PunktesummeArt.Gesamt) ||
+          probl == 2 && sum >= 6 * ps.Anzahl(PunktesummeArt.Gesamt));
+    }
+
     public bool MAPmoeglichAlt()
     {
       // Anzahl 5er und 6er nach einen MAP mit "bestmöglichem" Ergebnis
@@ -897,5 +897,29 @@ namespace diNo
       else return map.ToString();
     }
   }
+  
+  // Verwaltet die Gesamtergebnis-Varianten, um zu überprüfen, ob ein Schüler noch in die MAP darf
+  public class GEVariante
+  {
+    public int AP,GE,PunkteDiff,ProblemDiff;
+    private HjLeistung hj;
 
+    public GEVariante(HjLeistung hjl)
+    {
+      hj = hjl;
+    }
+
+    public void CalcDiff(int faktor)
+    {
+      PunkteDiff = (GE - hj.Punkte) * faktor;
+      ProblemDiff = ProblemLevel(GE) - ProblemLevel(hj.Punkte);
+    }
+
+    private int ProblemLevel(int ge)
+    {
+      if (ge == 0) return 2;
+      else if (ge < 4) return 1;
+      else return 0;
+    }
+  }
 }
