@@ -300,7 +300,11 @@ namespace diNo
       {
         Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2, MidpointRounding.AwayFromZero);
         if (Unterpunktungen != "" && !schueler.AlteFOBOSO() && !(zeitpunkt == Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse))
+        { 
           Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
+          if (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
+            Unterpunktungen += "; " + Punktesumme + " P.";
+        }
       }
     }
 
@@ -315,7 +319,7 @@ namespace diNo
       {
         HjLeistung hj = f.getHjLeistung(HjArt.AP);
         if (hj!=null)
-          apg = hj.Punkte2Dez;
+          apg = hj.Punkte;
       }
 
       if (apg != null && apg < (decimal)3.5)
@@ -328,7 +332,11 @@ namespace diNo
 
     public bool HatAbiNichtBestanden()
     {
-      return (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && abi6er > 0 || abi6er * 2 + abi5er > 2);
+      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+        return (abi6er > 0 || abi5er > 2);
+      else
+        return (2 * abi6er + abi5er > 2);
+
     }
 
     public bool HatNichtBestanden()
@@ -386,20 +394,19 @@ namespace diNo
 
         HjLeistung hj = f.getHjLeistung(HjArt.GesErg);
         if (hj == null) continue; // sollte natürlich nicht passieren!
-        byte note = hj.Punkte;
-
+        
         // nur in Abifächern außer E kann man MAP machen
         if (f.getFach.IstSAPFach(schueler.Zweig) && kuerzel != "E")
         {        
           int? sap = f.getNote(Halbjahr.Zweites, Notentyp.APSchriftlich);
-          if (sap == null) sap = f.getHjLeistung(HjArt.AP).Punkte; // für Testzwecke  Meldung über Notenanzahlchecker
-          gev[index] = new GEVariante(hj);
+          if (sap == null) sap = f.getHjLeistung(HjArt.AP).Punkte; // für Testzwecke Meldung über Notenanzahlchecker
+          gev[index] = new GEVariante();
 
           Fachsumme fs = f.SummeHalbjahre();
           gev[index].AP = Notentools.BerechneAbiGes(sap.GetValueOrDefault(), 15); // AP-Gesamtergebnis bei MAP=15
           fs.Add(gev[index].AP, schueler.APFaktor);
           gev[index].GE = fs.GesErg(); //GE in diesem Fach, wenn optimaler MAP
-          gev[index].CalcDiff(schueler.APFaktor); // berechnen, wie sich die Gesamtsumme dadurch verbessert
+          gev[index].CalcDiff(sap.GetValueOrDefault(), hj.Punkte, schueler.APFaktor); // berechnen, wie sich die Gesamtsumme dadurch verbessert
           index++;
         }
       }
@@ -414,9 +421,10 @@ namespace diNo
       Punktesumme ps = schueler.punktesumme;
       int probl = AnzahlProbleme() + v1.ProblemDiff + v2.ProblemDiff; // ProblemDiff ist idR negativ
       int sum = ps.Summe(PunktesummeArt.Gesamt) + v1.PunkteDiff + v2.PunkteDiff;
-      return (probl <= 0 ||
+      bool erg = (probl <= 0 ||
           probl == 1 && sum >= 5 * ps.Anzahl(PunktesummeArt.Gesamt) ||
           probl == 2 && sum >= 6 * ps.Anzahl(PunktesummeArt.Gesamt));
+      return erg;
     }
 
     public bool MAPmoeglichAlt()
@@ -902,17 +910,11 @@ namespace diNo
   public class GEVariante
   {
     public int AP,GE,PunkteDiff,ProblemDiff;
-    private HjLeistung hj;
-
-    public GEVariante(HjLeistung hjl)
+    
+    public void CalcDiff(int APalt, int GEalt, int faktor)
     {
-      hj = hjl;
-    }
-
-    public void CalcDiff(int faktor)
-    {
-      PunkteDiff = (GE - hj.Punkte) * faktor;
-      ProblemDiff = ProblemLevel(GE) - ProblemLevel(hj.Punkte);
+      PunkteDiff = (AP - APalt) * faktor;
+      ProblemDiff = ProblemLevel(GE) - ProblemLevel(GEalt);
     }
 
     private int ProblemLevel(int ge)

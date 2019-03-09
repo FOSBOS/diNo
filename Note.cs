@@ -347,7 +347,7 @@ namespace diNo
 
     public static byte BerechneAbiGes(int sap, int map)
     {
-      return RundeJF((2 * sap+ map) / 3);
+      return RundeJF((2 * sap+ map) / (decimal)3);
     }
   }
 }
