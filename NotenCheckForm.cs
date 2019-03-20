@@ -97,7 +97,10 @@ namespace diNo
       if (contr.res.list.Count==0)
         MessageBox.Show("Es traten keine Fehler auf.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
       else
-        new ReportNotencheck(contr.res).Show();                                    
+        new ReportNotencheck(contr.res).Show();
+
+      if ((NotenCheckModus)comboBoxCheckModus.SelectedValue == NotenCheckModus.KonferenzVorbereiten)
+        Zugriff.Instance.SchuelerRep.Clear(); // Berechnungsdaten neu laden
     }
     
     private Zeitpunkt GetZeitpunkt()

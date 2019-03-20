@@ -334,7 +334,7 @@ namespace diNo
       ta.DeleteBySchuelerIdAndArt(s.Id, (byte)HjArt.Sprachenniveau); // vorher löschen, falls Stufe inzwischen nicht mehr erreicht wird
 
       HjLeistung ge,hj2,ap;
-      foreach (var f in s.getNoten.alleFaecher)
+      foreach (var f in s.getNoten.alleSprachen)
       {
         Kursniveau n = f.getFach.getKursniveau();        
         if (n!=Kursniveau.None)

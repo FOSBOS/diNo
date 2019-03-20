@@ -3865,7 +3865,26 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Halbjahresergebnisse, die nicht in das Gesamtergebnis eingehen, sind in Klammern gesetzt.</Value>
+                    <Value>Halbjahresergebnisse in Klammern gehen weder in das Gesamtergebnis des Faches noch in das Abschlussergebnis ein. Das Prüfungsergebnis geht in das Gesamtergebnis </Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontWeight>Normal</FontWeight>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=IIf(Parameters!HideVorHj.Value, "zweifach","dreifach")</Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value xml:space="preserve"> </Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>ein.</Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontWeight>Normal</FontWeight>

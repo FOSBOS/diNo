@@ -252,7 +252,8 @@ namespace diNo
       string kuerzel;
       int Punktesumme = 0;
       int AnzahlFaecher = 0;
-      Unterpunktungen="";
+      Unterpunktungen = "";
+      UnterpunktungenAbi = "";
 
       List<FachSchuelerNoten> zuAnalysierendeNoten; // zum Abi werden alle Fächer betrachtet
       zuAnalysierendeNoten = (zeitpunkt >= Zeitpunkt.ErstePA && zeitpunkt <= Zeitpunkt.DrittePA ? alleFaecher : alleKurse);
