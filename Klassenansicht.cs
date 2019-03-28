@@ -33,6 +33,7 @@ namespace diNo
       { 
         tabControl1.Controls.Remove(tabPageKurszuordnungen); // man kann die Seite nicht unsichtbar machen, nur entfernen
         tabControl1.Controls.Remove(tabPageAdministration);
+        tabControl1.Controls.Remove(tabPageSekretariat);
       }
     }
 
@@ -83,6 +84,7 @@ namespace diNo
       {
         userControlKurszuordnungen1.Schueler = schueler;
         userControlAdministration1.Schueler = schueler;
+        userControlSekretariat1.Schueler = schueler;
       }
     }
 

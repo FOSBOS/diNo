@@ -244,6 +244,12 @@
     <Compile Include="UserControlSchueleransicht.Designer.cs">
       <DependentUpon>UserControlSchueleransicht.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControlSekretariat.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlSekretariat.Designer.cs">
+      <DependentUpon>UserControlSekretariat.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControlVorkommnisse.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -351,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlSchueleransicht.resx">
       <DependentUpon>UserControlSchueleransicht.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControlSekretariat.resx">
+      <DependentUpon>UserControlSekretariat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlVorkommnisse.resx">
       <DependentUpon>UserControlVorkommnisse.cs</DependentUpon>
