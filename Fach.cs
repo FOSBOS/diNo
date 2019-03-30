@@ -79,6 +79,17 @@ namespace diNo
        get { return this.data.Kuerzel; }
     }
 
+    public string PlatzInMBStatistik
+    {
+      get
+      {
+        if (this.data.IsPlatzInMBStatistikNull())
+          return "";
+        else
+          return data.PlatzInMBStatistik;
+      }
+    }
+
     // ab neuer FOBOSO: SA pro Halbjahr
     public int AnzahlSA(Zweig zweig, Jahrgangsstufe jg)
     {

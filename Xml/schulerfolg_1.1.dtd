@@ -1,0 +1,63 @@
+﻿<!ELEMENT schulerfolg (schule)+>
+
+	<!ELEMENT schule (jahrgangsstufe11?,jahrgangsstufe12?,jahrgangsstufe13?)>
+	<!ATTLIST schule
+		art (FOS|BOS) #REQUIRED
+		nummer CDATA #REQUIRED>
+
+		<!ELEMENT jahrgangsstufe11 (klasse)+>
+		<!ELEMENT jahrgangsstufe12 (klasse)+>
+		<!ELEMENT jahrgangsstufe13 (klasse)+>
+		
+		
+				<!ELEMENT klasse (schueler)+>
+				<!ATTLIST klasse
+							nummer CDATA #REQUIRED
+							ausbildungsrichtung (ABU|GA|GH|IW|S|T|W) #REQUIRED>
+					
+					<!ELEMENT schueler (grunddaten)>
+					<!ATTLIST schueler
+								nummer CDATA #REQUIRED>
+							
+					<!ELEMENT grunddaten (pz_bis?,ausgetreten_am?)>
+					<!ATTLIST grunddaten
+								geschlecht (m|w) #REQUIRED
+								pruefung CDATA #IMPLIED								
+								pz_bestanden (ja|nein) #IMPLIED
+								jgst_bestanden (ja|nein) #REQUIRED>			
+																										
+						<!ELEMENT pz_bis (#PCDATA)>
+						<!ELEMENT ausgetreten_am (#PCDATA)><!-- z.B. 15.12.2018 -->
+						
+							
+
+					
+					
+					
+						
+							
+					
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
