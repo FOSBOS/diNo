@@ -76,6 +76,7 @@
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
+      this.btnMBStatistik = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -248,6 +249,7 @@
       // 
       // groupBoxExport
       // 
+      this.groupBoxExport.Controls.Add(this.btnMBStatistik);
       this.groupBoxExport.Controls.Add(this.btnExportSchuelerZeugnisprogramm);
       this.groupBoxExport.Controls.Add(this.btnNotenNachWinSV);
       this.groupBoxExport.Controls.Add(this.btnSendExcelFiles);
@@ -609,6 +611,16 @@
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
       // 
+      // btnMBStatistik
+      // 
+      this.btnMBStatistik.Location = new System.Drawing.Point(6, 163);
+      this.btnMBStatistik.Name = "btnMBStatistik";
+      this.btnMBStatistik.Size = new System.Drawing.Size(182, 23);
+      this.btnMBStatistik.TabIndex = 7;
+      this.btnMBStatistik.Text = "MB-Statistik erstellen";
+      this.btnMBStatistik.UseVisualStyleBackColor = true;
+      this.btnMBStatistik.Click += new System.EventHandler(this.btnMBStatistik_Click);
+      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -694,5 +706,6 @@
     private System.Windows.Forms.Button btnEinbringung;
     private System.Windows.Forms.Button btnDelEinbringung;
     private System.Windows.Forms.Button btnGesErg;
+    private System.Windows.Forms.Button btnMBStatistik;
   }
 }

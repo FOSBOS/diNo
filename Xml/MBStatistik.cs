@@ -27,13 +27,15 @@ namespace diNo.Xml
 
       foreach (Klasse k in Zugriff.Instance.Klassen)
       {
+        // TODO: Mischklassen (erkennbar an Zweig.None= aufspalten !
+
         klasse xmlKlasse = new klasse
         {
           nummer = k.GetId().ToString()
         };
         switch (k.Zweig)
         {
-          case Zweig.Sozial: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.ABU; break;
+          case Zweig.Sozial: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.S; break;
           case Zweig.Technik: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.T; break;
           case Zweig.Umwelt: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.ABU; break;
           case Zweig.Wirtschaft: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.W; break;
@@ -72,57 +74,38 @@ namespace diNo.Xml
             nummer = unserSchueler.Id.ToString(),
             grunddaten = new grunddaten()
           };
-          xmlSchueler.grunddaten.geschlecht = unserSchueler.Data.Geschlecht == "m" ? grunddatenGeschlecht.m : grunddatenGeschlecht.w;
-          xmlSchueler.grunddaten.herkunftsschule = unserSchueler.Data.EintrittAusSchulnummer.ToString();
-          xmlSchueler.grunddaten.ausgetreten_am = unserSchueler.Data.Austrittsdatum.ToString("dd.mm.yyyy");
-          xmlSchueler.grunddaten.durchschnittsnote = unserSchueler.Data.DNote.ToString();
-          xmlSchueler.grunddaten.wdh_jgst = ErmittleWiederholungskennzahl(unserSchueler, xmlSchueler);
-          xmlSchueler.grunddaten.wdh_jgstSpecified = xmlSchueler.grunddaten.wdh_jgst != grunddatenWdh_jgst.Item0;
-          xmlSchueler.grunddaten.vorbildung = new vorbildung
-          {
-            besuchte_schulart_vor_eintritt = ErmittleVorherBesuchteSchulart(unserSchueler),
-            msa_erworben_an_schulart = ErmittleSchulartDerMittlerenReife(unserSchueler),
-            m_deutsch = unserSchueler.Data.MittlereReifeDeutschnote.ToString(),
-            m_englisch = unserSchueler.Data.MittlereReifeEnglischnote.ToString(),
-            m_mathematik = unserSchueler.Data.MittlereReifeMathenote.ToString()
-          };
+
+          FuelleGrunddaten(unserSchueler, xmlSchueler);
+
           if (unserSchueler.Fachreferat != null && unserSchueler.Fachreferat.Count > 0)
           {
             xmlSchueler.fachreferat = new fachreferat() { fach = unserSchueler.Fachreferat[0].getFach.Kuerzel, punkte = unserSchueler.Fachreferat[0].Punkte.ToString() };
           }
-          if (unserSchueler.Seminarfachnote != null)
+          if (unserSchueler.Seminarfachnote != null && !unserSchueler.Seminarfachnote.IsGesamtnoteNull())
           {
             xmlSchueler.seminar = new seminar() { punkte = unserSchueler.Seminarfachnote.Gesamtnote.ToString() };
           }
           xmlSchueler.zweite_fremdsprache = getSprache(unserSchueler);
 
-          xmlSchueler.abschlusspruefung = new abschlusspruefung(); //TODO
-          // xmlSchueler.abschlusspruefung.Item
-
-
+          FuelleAPGrunddaten(unserSchueler, xmlSchueler);
 
           halbjahresergebnisse hjErg = new halbjahresergebnisse();
           xmlSchueler.Item = hjErg;
+          FuelleFpA(unserSchueler, hjErg);
+
+          hjErg.allgemeinbildende_faecher = new allgemeinbildende_faecher();
+          hjErg.profilfaecher = new profilfaecher();
+          hjErg.wahlpflichtfaecher = new wahlpflichtfaecher();
 
           foreach (var fach in unserSchueler.getNoten.alleFaecher)
           {
-            object xmlFachObject = GetXMLFachObject(hjErg, fach.getFach);
+            FuelleAPWennVorhanden(unserSchueler, xmlSchueler, fach);
+            var xmlFachObject = SucheRichtigenXMLKnoten(hjErg, fach);
             if (xmlFachObject != null)
             {
-              List<object> halbjahre = new List<object>();
-              AddHJ(halbjahre, fach.getVorHjLeistung(HjArt.Hj1));
-              AddHJ(halbjahre, fach.getVorHjLeistung(HjArt.Hj2));
-              AddHJ(halbjahre, fach.getHjLeistung(HjArt.Hj1));
-              AddHJ(halbjahre, fach.getHjLeistung(HjArt.Hj2));
-              xmlFachObject.GetType().GetProperty("Items").SetValue(xmlFachObject, halbjahre.ToArray());
-            } 
+              FuelleHalbjahre(fach, xmlFachObject);
+            }
           }
-          
-          // AP = 2,  // Abschlussprüfung-Gesamt
-          // GesErg = 4, // Gesamtergebnis 
-          // JN = 5, // Jahresnote (stammt aus Excel und gibt unabhängig von den eingebrachten Leistungen den Durchschnitt von Hj1/2 an)    
-
-
         }
       }
 
@@ -138,42 +121,235 @@ namespace diNo.Xml
       }
     }
 
-    /// <summary>
-    /// Diese Methode macht ziemlich viel Magie. Hoffentlich klappt es auch.
-    /// Mittels Reflection wird aus dem Pfad des Faches in der MB-Statistik das passende Objekt
-    /// in der MB-Statistik erzeugt und zurückgegeben.
-    /// </summary>
-    /// <param name="hjErg">MB-Statistik-Objekt "halbjahresergebnisse".</param>
-    /// <param name="fach">Das Fach aus unserer Fach-Datenbank.</param>
-    /// <returns>Das gesuchte Objekt, in welches die Noten eingetragen werden können.</returns>
-    private static object GetXMLFachObject(halbjahresergebnisse hjErg, Fach fach)
+    private static object SucheRichtigenXMLKnoten(halbjahresergebnisse hjErg, FachSchuelerNoten fach)
+    {
+      switch (fach.getFach.Typ)
+      {
+        case FachTyp.Allgemein: return CreateXMLFachObject(hjErg.allgemeinbildende_faecher, fach.getFach);
+        case FachTyp.Profilfach: return CreateXMLFachObject(hjErg.profilfaecher, fach.getFach);
+        case FachTyp.WPF: return CreateXMLFachObject(hjErg.wahlpflichtfaecher, fach.getFach);
+      }
+
+      return null;
+    }
+
+    private static void FuelleHalbjahre(FachSchuelerNoten fach, object xmlFachObject)
+    {
+      List<HjLeistung> leistungen = new List<HjLeistung>();
+      leistungen.Add(fach.getVorHjLeistung(HjArt.Hj1));
+      leistungen.Add(fach.getVorHjLeistung(HjArt.Hj2));
+      leistungen.Add(fach.getHjLeistung(HjArt.Hj1));
+      leistungen.Add(fach.getHjLeistung(HjArt.Hj2));
+
+      List<object> unzuordenbareHalbjahre = new List<object>();
+
+      foreach (var hj in leistungen)
+      {
+        if (hj == null) { continue; }
+
+        if (hj.JgStufe == Jahrgangsstufe.Elf && hj.Art == HjArt.Hj1)
+        {
+          SucheProperty("hj_11_1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml);
+        }
+        if (hj.JgStufe == Jahrgangsstufe.Elf && hj.Art == HjArt.Hj2)
+        {
+          SucheProperty("hj_11_2", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml);
+        }
+        if (hj.JgStufe == Jahrgangsstufe.Zwoelf && hj.Art == HjArt.Hj1)
+        {
+          SucheProperty("hj_12_1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml);
+        }
+        if (hj.JgStufe == Jahrgangsstufe.Zwoelf && hj.Art == HjArt.Hj2)
+        {
+          SucheProperty("hj_12_2", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml);
+        }
+        if (hj.JgStufe == Jahrgangsstufe.Dreizehn && hj.Art == HjArt.Hj1)
+        {
+          SucheProperty("hj_13_1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml);
+        }
+        if (hj.JgStufe == Jahrgangsstufe.Elf && hj.Art == HjArt.Hj2)
+        {
+          SucheProperty("hj_13_2", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml);
+        }
+      }
+
+      if (unzuordenbareHalbjahre.Count > 0 && xmlFachObject.GetType().GetProperty("Items") != null)
+      {
+        List<object> halbjahre = new List<object>();
+        AddHJ(unzuordenbareHalbjahre, fach.getHjLeistung(HjArt.Hj1));
+        AddHJ(unzuordenbareHalbjahre, fach.getHjLeistung(HjArt.Hj2));
+        xmlFachObject.GetType().GetProperty("Items").SetValue(xmlFachObject, unzuordenbareHalbjahre.ToArray());
+      }
+    }
+
+    private static void SucheProperty(string propertyName, object xmlFachObject, List<object> unzuordenbareHalbjahre, HjLeistung hj, Func<HjLeistung, object> createFunc )
+    {
+      var property = xmlFachObject.GetType().GetProperty(propertyName);
+      if (property != null)
+      {
+        property.SetValue(xmlFachObject, createFunc(hj));
+      }
+      else
+      {
+        unzuordenbareHalbjahre.Add(createFunc(hj));
+      }
+    }
+
+    private static void FuelleAPWennVorhanden(Schueler unserSchueler, schueler xmlSchueler, FachSchuelerNoten fach)
+    {
+      // erst Mal nach Abschlussprüfung gucken
+      var apGesamt = fach.getHjLeistung(HjArt.AP);
+      var apmuendlich = fach.getNote(Halbjahr.Zweites, Notentyp.APMuendlich);
+      var apschriftlich = fach.getNote(Halbjahr.Zweites, Notentyp.APSchriftlich);
+      if (apGesamt != null && apmuendlich != null && apschriftlich != null)
+      {
+        // nur, wenn alle Noten vorhanden sind
+        var apObject = CreateXMLAPObject(xmlSchueler.abschlusspruefung, fach.getFach, unserSchueler);
+        apObject.GetType().GetProperty("muendlich").SetValue(apObject, apmuendlich.Value);
+        apObject.GetType().GetProperty("schriftlich").SetValue(apObject, apschriftlich.Value);
+        apObject.GetType().GetProperty("gesamt").SetValue(apObject, apGesamt.Punkte);
+      }
+    }
+
+    private static void FuelleFpA(Schueler unserSchueler, halbjahresergebnisse hjErg)
+    {
+      var fpaNoten = unserSchueler.getNoten.FindeFach("FpA", false);
+      if (fpaNoten != null)
+      {
+        var fpa1 = fpaNoten.getVorHjLeistung(HjArt.Hj1);
+        var fpa2 = fpaNoten.getVorHjLeistung(HjArt.Hj2);
+        if (fpa1 != null && fpa2 != null)
+        {
+          hjErg.fachpraktische_ausbildung = new fachpraktische_ausbildung
+          {
+            hj_11_1 = (hj_11_1)GetHJ1Xml(fpa1), //new hj_11_1() { eingebracht = hj_11_1Eingebracht.ja, punkte = fpa1.Punkte.ToString() },
+            hj_11_2 = (hj_11_2)GetHJ2Xml(fpa1) //{ eingebracht = hj_11_2Eingebracht.ja, punkte = fpa2.Punkte.ToString() }
+          };
+        }
+      }
+    }
+
+    private static void FuelleAPGrunddaten(Schueler unserSchueler, schueler xmlSchueler)
+    {
+      xmlSchueler.abschlusspruefung = new abschlusspruefung();
+      if (unserSchueler.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
+      {
+        if (unserSchueler.hatVorkommnis(Vorkommnisart.ErhaeltNachtermin))
+        {
+          xmlSchueler.abschlusspruefung.abgelegt = abschlusspruefungAbgelegt.Item1; // abgebrochen - erhaelt nachprüfung
+        }
+        else
+        {
+          xmlSchueler.abschlusspruefung.abgelegt = abschlusspruefungAbgelegt.Item2; // abgebrochen - selbst schuld
+        }
+      }
+      else
+      {
+        xmlSchueler.abschlusspruefung.abgelegt = abschlusspruefungAbgelegt.Item0; // vollständig abgelegt
+      }
+
+      xmlSchueler.abschlusspruefung.bestanden = unserSchueler.hatVorkommnis(Vorkommnisart.PruefungNichtBestanden) ? abschlusspruefungBestanden.nein : abschlusspruefungBestanden.ja;
+      xmlSchueler.abschlusspruefung.bestandenSpecified = true;
+    }
+
+    private static void FuelleGrunddaten(Schueler unserSchueler, schueler xmlSchueler)
+    {
+      xmlSchueler.grunddaten.geschlecht = unserSchueler.Data.Geschlecht == "m" ? grunddatenGeschlecht.m : grunddatenGeschlecht.w;
+      xmlSchueler.grunddaten.herkunftsschule = unserSchueler.Data.IsEintrittAusSchulnummerNull() ? "" : unserSchueler.Data.EintrittAusSchulnummer.ToString();
+      xmlSchueler.grunddaten.ausgetreten_am = unserSchueler.Data.IsAustrittsdatumNull() ? "" : unserSchueler.Data.Austrittsdatum.ToString("dd.mm.yyyy");
+      xmlSchueler.grunddaten.durchschnittsnote = unserSchueler.Data.IsDNoteNull() ? "" : unserSchueler.Data.DNote.ToString();
+      xmlSchueler.grunddaten.wdh_jgst = ErmittleWiederholungskennzahl(unserSchueler, xmlSchueler);
+      xmlSchueler.grunddaten.wdh_jgstSpecified = true;
+      xmlSchueler.grunddaten.vorbildung = new vorbildung
+      {
+        besuchte_schulart_vor_eintritt = ErmittleVorherBesuchteSchulart(unserSchueler),
+        msa_erworben_an_schulart = ErmittleSchulartDerMittlerenReife(unserSchueler),
+        m_deutsch = unserSchueler.Data.IsMittlereReifeDeutschnoteNull() ? "" : unserSchueler.Data.MittlereReifeDeutschnote.ToString(),
+        m_englisch = unserSchueler.Data.IsMittlereReifeEnglischnoteNull() ? "" : unserSchueler.Data.MittlereReifeEnglischnote.ToString(),
+        m_mathematik = unserSchueler.Data.IsMittlereReifeMathenoteNull() ? "" : unserSchueler.Data.MittlereReifeMathenote.ToString()
+      };
+    }
+
+    private static object CreateXMLAPObject (abschlusspruefung parent, Fach fach, Schueler schueler)
     {
       if (string.IsNullOrEmpty(fach.PlatzInMBStatistik))
       {
         return null; // fach hat laut datenbank keine verbindung zur MB-Statistik
       }
 
-      object currentPfadObject = hjErg;
-      string[] pfadBestandteile = fach.PlatzInMBStatistik.Split('.');
-      foreach (string aPfadBestandteil in pfadBestandteile)
+      string[] pfadBestandteile = fach.PlatzInMBStatistik.Split(':');
+
+      if (fach.Typ == FachTyp.Profilfach)
       {
-        var property = currentPfadObject.GetType().GetProperty(aPfadBestandteil);
-        if (property != null)
-        {
-          if (property.GetValue(currentPfadObject) == null)
-          {
-            //TODO: Die Profilfaecher brauchen hier ein ganzes Array, z.B. biologie[] ?!?!
-
-            // erzeuge ein neues Objekt vom gesuchten Typ mittels des Standardkonstruktors - hoffentlich haben das alle
-            property.SetValue(currentPfadObject, property.PropertyType.GetConstructor(new Type[] { }).Invoke(new object[] { }));
-          }
-
-          currentPfadObject = property.GetValue(currentPfadObject);
-        }
+        // An dieser Stelle heißen die Profilfächer nicht wie sie heißen sondern nur "Profilfach1" usw...
+        int profilfachNr = fach.Sortierung(schueler.Zweig) - 100;
+        pfadBestandteile[0] = "profilfach" + profilfachNr;
       }
 
-      // der ganze Pfad in der MB-Statistik wurde durchlaufen und in currentPfadObject steht hoffentlich der gesuchte Eintrag
-      return currentPfadObject;
+      // in der AP heißt das, was in den normalen HJ-Leistungen "Item1" heißt nur "Item" !?!
+      // und das, was in den HJ-Leistungen "Item" heißt ist hier als eigene Fächer aufgeführt
+      if (pfadBestandteile[0] == "Item")
+      {
+        pfadBestandteile[0] = pfadBestandteile[1]; // klappt für Reli und Ethik
+      }
+      if (pfadBestandteile[0] == "Item1")
+      {
+        pfadBestandteile[0] = "Item"; // für Englisch
+      }
+
+      var property = parent.GetType().GetProperty(pfadBestandteile[0]);
+      if (property == null)
+      {
+        throw new InvalidOperationException("Unbekannte Eigenschaft in MB-Statistik: " + pfadBestandteile[0]);
+      }
+
+      // erzeuge ein neues Objekt vom gesuchten Typ mittels des Standardkonstruktors - hoffentlich haben das alle
+      string neededTypeName = pfadBestandteile.Length == 1 ? pfadBestandteile[0] : pfadBestandteile[1];
+      Type neededType = Type.GetType("diNo.Xml.Mbstatistik." + neededTypeName, true);
+      object newObject = neededType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+      property.SetValue(parent, newObject);
+      return newObject;
+    }
+
+    /// <summary>
+    /// Diese Methode macht ziemlich viel Magie. Hoffentlich klappt es auch.
+    /// Mittels Reflection wird aus dem Pfad des Faches in der MB-Statistik das passende Objekt
+    /// in der MB-Statistik erzeugt und zurückgegeben.
+    /// </summary>
+    /// <param name="hjErg">MB-Statistik-Objekt als einstieg, z.B. "wahlpflichtfaecher".</param>
+    /// <param name="fach">Das Fach aus unserer Fach-Datenbank.</param>
+    /// <returns>Das gesuchte Objekt, in welches die Noten eingetragen werden können.</returns>
+    private static object CreateXMLFachObject(object parent, Fach fach)
+    {
+      if (string.IsNullOrEmpty(fach.PlatzInMBStatistik))
+      {
+        return null; // fach hat laut datenbank keine verbindung zur MB-Statistik
+      }
+
+      string[] pfadBestandteile = fach.PlatzInMBStatistik.Split(':');
+
+      var property = parent.GetType().GetProperty(pfadBestandteile[0]);
+      if (property == null)
+      {
+        throw new InvalidOperationException("Unbekannte Eigenschaft in MB-Statistik: " + pfadBestandteile[0]);
+      }
+
+      // erzeuge ein neues Objekt vom gesuchten Typ mittels des Standardkonstruktors - hoffentlich haben das alle
+      string neededTypeName = pfadBestandteile.Length == 1 ? pfadBestandteile[0] : pfadBestandteile[1];
+      Type neededType = Type.GetType("diNo.Xml.Mbstatistik."+neededTypeName, true);
+      object newObject = neededType.GetConstructor(new Type[] { }).Invoke(new object[] { });
+      if (property.PropertyType.IsArray)
+      {
+        var array = Array.CreateInstance(neededType, 1);
+        array.SetValue(newObject, 0);
+        property.SetValue(parent, array); // mal gucken ob das gut geht...
+      }
+      else
+      {
+        property.SetValue(parent, newObject);
+      }
+
+      return newObject;
 
       /*
       switch (fach.Kuerzel)
@@ -265,42 +441,49 @@ namespace diNo.Xml
       {
         return;
       }
-
-      if (hj.Art == HjArt.Hj1)
+      else if (hj.Art == HjArt.Hj1)
       {
-        AddHJ1(halbjahre, hj);
+        var hjXml = GetHJ1Xml(hj);
+        if (hjXml != null)
+        {
+          halbjahre.Add(hjXml);
+        }
       }
       else if (hj.Art == HjArt.Hj2)
       {
-        AddHJ2(halbjahre, hj);
+        var hjXml = GetHJ2Xml(hj);
+        if (hjXml != null)
+        {
+          halbjahre.Add(hjXml);
+        }
       }
     }
 
-    private static void AddHJ1(List<object> halbjahre, HjLeistung hj1)
+    private static object GetHJ1Xml(HjLeistung hj1)
     {
       switch (hj1.JgStufe)
       {
-        case Jahrgangsstufe.Elf: halbjahre.Add(new hj_11_1() { punkte = hj1.Punkte.ToString(), eingebracht = (hj1.Status == HjStatus.Einbringen) ? hj_11_1Eingebracht.ja : hj_11_1Eingebracht.nein }); break;
-        case Jahrgangsstufe.Zwoelf: halbjahre.Add(new hj_12_1() { punkte = hj1.Punkte.ToString(), eingebracht = (hj1.Status == HjStatus.Einbringen) ? hj_12_1Eingebracht.ja : hj_12_1Eingebracht.nein }); break;
-        case Jahrgangsstufe.Dreizehn: halbjahre.Add(new hj_13_1() { punkte = hj1.Punkte.ToString(), eingebracht = (hj1.Status == HjStatus.Einbringen) ? hj_13_1Eingebracht.ja : hj_13_1Eingebracht.nein }); break;
-          // andere Jahrgangsstufen werden ignoriert
+        case Jahrgangsstufe.Elf: return new hj_11_1() { punkte = hj1.Punkte.ToString(), eingebracht = (hj1.Status == HjStatus.Einbringen) ? hj_11_1Eingebracht.ja : hj_11_1Eingebracht.nein };
+        case Jahrgangsstufe.Zwoelf: return new hj_12_1() { punkte = hj1.Punkte.ToString(), eingebracht = (hj1.Status == HjStatus.Einbringen) ? hj_12_1Eingebracht.ja : hj_12_1Eingebracht.nein };
+        case Jahrgangsstufe.Dreizehn: return  new hj_13_1() { punkte = hj1.Punkte.ToString(), eingebracht = (hj1.Status == HjStatus.Einbringen) ? hj_13_1Eingebracht.ja : hj_13_1Eingebracht.nein };
+        default: return null;   // andere Jahrgangsstufen werden ignoriert
       }
     }
 
-    private static void AddHJ2(List<object> halbjahre, HjLeistung hj2)
+    private static object GetHJ2Xml(HjLeistung hj2)
     {
       switch (hj2.JgStufe)
       {
-        case Jahrgangsstufe.Elf: halbjahre.Add(new hj_11_2() { punkte = hj2.Punkte.ToString(), eingebracht = (hj2.Status == HjStatus.Einbringen) ? hj_11_2Eingebracht.ja : hj_11_2Eingebracht.nein }); break;
-        case Jahrgangsstufe.Zwoelf: halbjahre.Add(new hj_12_2() { punkte = hj2.Punkte.ToString(), eingebracht = (hj2.Status == HjStatus.Einbringen) ? hj_12_2Eingebracht.ja : hj_12_2Eingebracht.nein }); break;
-        case Jahrgangsstufe.Dreizehn: halbjahre.Add(new hj_13_2() { punkte = hj2.Punkte.ToString(), eingebracht = (hj2.Status == HjStatus.Einbringen) ? hj_13_2Eingebracht.ja : hj_13_2Eingebracht.nein }); break;
-          // andere Jahrgangsstufen werden ignoriert
+        case Jahrgangsstufe.Elf: return new hj_11_2() { punkte = hj2.Punkte.ToString(), eingebracht = (hj2.Status == HjStatus.Einbringen) ? hj_11_2Eingebracht.ja : hj_11_2Eingebracht.nein };
+        case Jahrgangsstufe.Zwoelf: return new hj_12_2() { punkte = hj2.Punkte.ToString(), eingebracht = (hj2.Status == HjStatus.Einbringen) ? hj_12_2Eingebracht.ja : hj_12_2Eingebracht.nein };
+        case Jahrgangsstufe.Dreizehn: return new hj_13_2() { punkte = hj2.Punkte.ToString(), eingebracht = (hj2.Status == HjStatus.Einbringen) ? hj_13_2Eingebracht.ja : hj_13_2Eingebracht.nein };
+        default: return null;  // andere Jahrgangsstufen werden ignoriert
       }
     }
 
     private static zweite_fremdsprache getSprache(Schueler schueler)
     {
-      if (string.IsNullOrEmpty(schueler.Fremdsprache2))
+      if (schueler.Data.IsAndereFremdspr2TextNull() || schueler.Data.IsAndereFremdspr2NoteNull())
       {
         return null;
       }
@@ -321,6 +504,11 @@ namespace diNo.Xml
 
     private static vorbildungMsa_erworben_an_schulart ErmittleSchulartDerMittlerenReife(Schueler unserSchueler)
     {
+      if (unserSchueler.Data.IsEintrittAusSchulartNull() || string.IsNullOrEmpty(unserSchueler.Data.EintrittAusSchulart))
+      {
+        return vorbildungMsa_erworben_an_schulart.SO;
+      }
+
       switch (unserSchueler.Data.EintrittAusSchulart)
       {
         case "GY": return vorbildungMsa_erworben_an_schulart.GY;
@@ -363,6 +551,11 @@ namespace diNo.Xml
 
     private static vorbildungBesuchte_schulart_vor_eintritt ErmittleVorherBesuchteSchulart(Schueler unserSchueler)
     {
+      if (unserSchueler.Data.IsSchulischeVorbildungNull() || string.IsNullOrEmpty(unserSchueler.Data.SchulischeVorbildung))
+      {
+        return vorbildungBesuchte_schulart_vor_eintritt.SO;
+      }
+
       vorbildungBesuchte_schulart_vor_eintritt vorherBesuchteSchulart = vorbildungBesuchte_schulart_vor_eintritt.SO;
       switch (unserSchueler.Data.SchulischeVorbildung)
       {

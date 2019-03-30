@@ -333,6 +333,16 @@ namespace diNo
     {
       ((Klassenansicht)(Parent.Parent.Parent)).RefreshTabs();
     }
+
+    private void btnMBStatistik_Click(object sender, EventArgs e)
+    {
+      SaveFileDialog dia = new SaveFileDialog();
+      dia.Title = "Dateiname wählen";
+      if (dia.ShowDialog() == DialogResult.OK)
+      {
+        Xml.MBStatistik.Serialize(dia.FileName);
+      }
+    }
   }
 }
 

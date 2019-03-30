@@ -76,6 +76,7 @@ namespace diNo
     VorrueckenBOS13moeglich = 25,
     PruefungNichtBestanden = 26,
     PruefungAbgebrochen = 27,
+    ErhaeltNachtermin = 28,
 
     // Jahresende
     NichtBestanden = 31,
