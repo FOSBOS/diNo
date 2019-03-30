@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/schulerfolg_1.1" elementFormDefault="qualified" targetNamespace="http://tempuri.org/schulerfolg_1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="schulerfolg">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="schule" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="schule">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="jahrgangsstufe11" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="jahrgangsstufe12" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="jahrgangsstufe13" />
+      </xs:sequence>
+      <xs:attribute name="art" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="FOS" />
+            <xs:enumeration value="BOS" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="nummer" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="jahrgangsstufe11">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="klasse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="jahrgangsstufe12">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="klasse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="jahrgangsstufe13">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="klasse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="klasse">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="schueler" />
+      </xs:sequence>
+      <xs:attribute name="nummer" type="xs:string" use="required" />
+      <xs:attribute name="ausbildungsrichtung" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="ABU" />
+            <xs:enumeration value="GA" />
+            <xs:enumeration value="GH" />
+            <xs:enumeration value="IW" />
+            <xs:enumeration value="S" />
+            <xs:enumeration value="T" />
+            <xs:enumeration value="W" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="schueler">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="grunddaten" />
+      </xs:sequence>
+      <xs:attribute name="nummer" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="grunddaten">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="pz_bis" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ausgetreten_am" />
+      </xs:sequence>
+      <xs:attribute name="geschlecht" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="m" />
+            <xs:enumeration value="w" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="pruefung" type="xs:string" />
+      <xs:attribute name="pz_bestanden">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="ja" />
+            <xs:enumeration value="nein" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="jgst_bestanden" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="ja" />
+            <xs:enumeration value="nein" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="pz_bis" type="xs:string" />
+  <xs:element name="ausgetreten_am" type="xs:string" />
+</xs:schema>

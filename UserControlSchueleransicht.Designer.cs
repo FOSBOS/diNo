@@ -38,14 +38,8 @@ namespace diNo
       this.textBoxGeburtsdatum = new System.Windows.Forms.TextBox();
       this.lblGeburtsort = new System.Windows.Forms.Label();
       this.textBoxGeburtsort = new System.Windows.Forms.TextBox();
-      this.lblSchulischeVorbildung = new System.Windows.Forms.Label();
-      this.textBoxSchulischeVorbildung = new System.Windows.Forms.TextBox();
-      this.labelBeruflicheVorbildung = new System.Windows.Forms.Label();
-      this.textBoxBeruflicheVorbildung = new System.Windows.Forms.TextBox();
       this.labelWiederholungen = new System.Windows.Forms.Label();
       this.textBoxWiederholungen = new System.Windows.Forms.TextBox();
-      this.labelVorigeSchule = new System.Windows.Forms.Label();
-      this.textBoxVorigeSchule = new System.Windows.Forms.TextBox();
       this.labelAdresseEltern = new System.Windows.Forms.Label();
       this.textBoxAdresseEltern = new System.Windows.Forms.TextBox();
       this.labelProbezeitBis = new System.Windows.Forms.Label();
@@ -69,10 +63,6 @@ namespace diNo
       this.label11 = new System.Windows.Forms.Label();
       this.textBoxDNote = new System.Windows.Forms.TextBox();
       this.label12 = new System.Windows.Forms.Label();
-      this.label13 = new System.Windows.Forms.Label();
-      this.label14 = new System.Windows.Forms.Label();
-      this.textBoxAndereFremdspr2Text = new System.Windows.Forms.TextBox();
-      this.label15 = new System.Windows.Forms.Label();
       this.label16 = new System.Windows.Forms.Label();
       this.textBoxDNoteAllg = new System.Windows.Forms.TextBox();
       this.label17 = new System.Windows.Forms.Label();
@@ -94,12 +84,12 @@ namespace diNo
       this.label7 = new System.Windows.Forms.Label();
       this.btnResetProbezeit = new System.Windows.Forms.Button();
       this.labelAustrittHinweis = new System.Windows.Forms.Label();
-      this.textBoxZeugnisbemerkung = new System.Windows.Forms.TextBox();
-      this.labelZeugnisbemerkung = new System.Windows.Forms.Label();
-      this.numAndereFremdspr2Note = new diNo.NumericUpDownNullable();
+      this.textBoxVorigeSchule = new System.Windows.Forms.TextBox();
+      this.labelVorigeSchule = new System.Windows.Forms.Label();
+      this.textBoxBeruflicheVorbildung = new System.Windows.Forms.TextBox();
+      this.labelBeruflicheVorbildung = new System.Windows.Forms.Label();
       this.panelSekretariat.SuspendLayout();
       this.pnlAdmin.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
       this.SuspendLayout();
       // 
       // lblAdresse
@@ -176,44 +166,6 @@ namespace diNo
       this.textBoxGeburtsort.Size = new System.Drawing.Size(149, 20);
       this.textBoxGeburtsort.TabIndex = 7;
       // 
-      // lblSchulischeVorbildung
-      // 
-      this.lblSchulischeVorbildung.AutoSize = true;
-      this.lblSchulischeVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lblSchulischeVorbildung.Location = new System.Drawing.Point(318, 197);
-      this.lblSchulischeVorbildung.Name = "lblSchulischeVorbildung";
-      this.lblSchulischeVorbildung.Size = new System.Drawing.Size(110, 13);
-      this.lblSchulischeVorbildung.TabIndex = 15;
-      this.lblSchulischeVorbildung.Text = "schulische Vorbildung";
-      // 
-      // textBoxSchulischeVorbildung
-      // 
-      this.textBoxSchulischeVorbildung.Enabled = false;
-      this.textBoxSchulischeVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxSchulischeVorbildung.Location = new System.Drawing.Point(318, 213);
-      this.textBoxSchulischeVorbildung.Name = "textBoxSchulischeVorbildung";
-      this.textBoxSchulischeVorbildung.Size = new System.Drawing.Size(240, 20);
-      this.textBoxSchulischeVorbildung.TabIndex = 19;
-      // 
-      // labelBeruflicheVorbildung
-      // 
-      this.labelBeruflicheVorbildung.AutoSize = true;
-      this.labelBeruflicheVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelBeruflicheVorbildung.Location = new System.Drawing.Point(318, 236);
-      this.labelBeruflicheVorbildung.Name = "labelBeruflicheVorbildung";
-      this.labelBeruflicheVorbildung.Size = new System.Drawing.Size(106, 13);
-      this.labelBeruflicheVorbildung.TabIndex = 17;
-      this.labelBeruflicheVorbildung.Text = "berufliche Vorbildung";
-      // 
-      // textBoxBeruflicheVorbildung
-      // 
-      this.textBoxBeruflicheVorbildung.Enabled = false;
-      this.textBoxBeruflicheVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxBeruflicheVorbildung.Location = new System.Drawing.Point(318, 252);
-      this.textBoxBeruflicheVorbildung.Name = "textBoxBeruflicheVorbildung";
-      this.textBoxBeruflicheVorbildung.Size = new System.Drawing.Size(240, 20);
-      this.textBoxBeruflicheVorbildung.TabIndex = 20;
-      // 
       // labelWiederholungen
       // 
       this.labelWiederholungen.AutoSize = true;
@@ -232,26 +184,6 @@ namespace diNo
       this.textBoxWiederholungen.Name = "textBoxWiederholungen";
       this.textBoxWiederholungen.Size = new System.Drawing.Size(240, 20);
       this.textBoxWiederholungen.TabIndex = 18;
-      // 
-      // labelVorigeSchule
-      // 
-      this.labelVorigeSchule.AutoSize = true;
-      this.labelVorigeSchule.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelVorigeSchule.Location = new System.Drawing.Point(318, 275);
-      this.labelVorigeSchule.Name = "labelVorigeSchule";
-      this.labelVorigeSchule.Size = new System.Drawing.Size(72, 13);
-      this.labelVorigeSchule.TabIndex = 25;
-      this.labelVorigeSchule.Text = "vorige Schule";
-      // 
-      // textBoxVorigeSchule
-      // 
-      this.textBoxVorigeSchule.Enabled = false;
-      this.textBoxVorigeSchule.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxVorigeSchule.Location = new System.Drawing.Point(318, 291);
-      this.textBoxVorigeSchule.Multiline = true;
-      this.textBoxVorigeSchule.Name = "textBoxVorigeSchule";
-      this.textBoxVorigeSchule.Size = new System.Drawing.Size(240, 34);
-      this.textBoxVorigeSchule.TabIndex = 21;
       // 
       // labelAdresseEltern
       // 
@@ -432,7 +364,7 @@ namespace diNo
       this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.label10.Location = new System.Drawing.Point(450, 62);
       this.label10.Name = "label10";
-      this.label10.Size = new System.Drawing.Size(85, 13);
+      this.label10.Size = new System.Drawing.Size(90, 13);
       this.label10.TabIndex = 53;
       this.label10.Text = "in Jahrgangsstufe";
       // 
@@ -473,44 +405,6 @@ namespace diNo
       this.label12.Size = new System.Drawing.Size(99, 13);
       this.label12.TabIndex = 55;
       this.label12.Text = "Durchschnittsnoten";
-      // 
-      // label13
-      // 
-      this.label13.AutoSize = true;
-      this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label13.Location = new System.Drawing.Point(318, 421);
-      this.label13.Name = "label13";
-      this.label13.Size = new System.Drawing.Size(139, 13);
-      this.label13.TabIndex = 57;
-      this.label13.Text = "Alternative 2. Fremdsprache";
-      // 
-      // label14
-      // 
-      this.label14.AutoSize = true;
-      this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label14.Location = new System.Drawing.Point(318, 437);
-      this.label14.Name = "label14";
-      this.label14.Size = new System.Drawing.Size(69, 13);
-      this.label14.TabIndex = 59;
-      this.label14.Text = "Notenpunkte";
-      // 
-      // textBoxAndereFremdspr2Text
-      // 
-      this.textBoxAndereFremdspr2Text.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxAndereFremdspr2Text.Location = new System.Drawing.Point(393, 453);
-      this.textBoxAndereFremdspr2Text.Name = "textBoxAndereFremdspr2Text";
-      this.textBoxAndereFremdspr2Text.Size = new System.Drawing.Size(165, 20);
-      this.textBoxAndereFremdspr2Text.TabIndex = 25;
-      // 
-      // label15
-      // 
-      this.label15.AutoSize = true;
-      this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label15.Location = new System.Drawing.Point(390, 437);
-      this.label15.Name = "label15";
-      this.label15.Size = new System.Drawing.Size(61, 13);
-      this.label15.TabIndex = 61;
-      this.label15.Text = "Erläuterung";
       // 
       // label16
       // 
@@ -724,45 +618,54 @@ namespace diNo
       this.labelAustrittHinweis.Text = "Bei Austritt erst Status ändern!";
       this.labelAustrittHinweis.Visible = false;
       // 
-      // textBoxZeugnisbemerkung
+      // textBoxVorigeSchule
       // 
-      this.textBoxZeugnisbemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxZeugnisbemerkung.Location = new System.Drawing.Point(318, 344);
-      this.textBoxZeugnisbemerkung.Name = "textBoxZeugnisbemerkung";
-      this.textBoxZeugnisbemerkung.Size = new System.Drawing.Size(240, 20);
-      this.textBoxZeugnisbemerkung.TabIndex = 76;
+      this.textBoxVorigeSchule.Enabled = false;
+      this.textBoxVorigeSchule.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxVorigeSchule.Location = new System.Drawing.Point(321, 252);
+      this.textBoxVorigeSchule.Multiline = true;
+      this.textBoxVorigeSchule.Name = "textBoxVorigeSchule";
+      this.textBoxVorigeSchule.Size = new System.Drawing.Size(240, 34);
+      this.textBoxVorigeSchule.TabIndex = 85;
       // 
-      // labelZeugnisbemerkung
+      // labelVorigeSchule
       // 
-      this.labelZeugnisbemerkung.AutoSize = true;
-      this.labelZeugnisbemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelZeugnisbemerkung.Location = new System.Drawing.Point(318, 328);
-      this.labelZeugnisbemerkung.Name = "labelZeugnisbemerkung";
-      this.labelZeugnisbemerkung.Size = new System.Drawing.Size(153, 13);
-      this.labelZeugnisbemerkung.TabIndex = 75;
-      this.labelZeugnisbemerkung.Text = "zusätzliche Zeugnisbemerkung";
+      this.labelVorigeSchule.AutoSize = true;
+      this.labelVorigeSchule.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.labelVorigeSchule.Location = new System.Drawing.Point(321, 236);
+      this.labelVorigeSchule.Name = "labelVorigeSchule";
+      this.labelVorigeSchule.Size = new System.Drawing.Size(72, 13);
+      this.labelVorigeSchule.TabIndex = 86;
+      this.labelVorigeSchule.Text = "vorige Schule";
       // 
-      // numAndereFremdspr2Note
+      // textBoxBeruflicheVorbildung
       // 
-      this.numAndereFremdspr2Note.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numAndereFremdspr2Note.Location = new System.Drawing.Point(321, 453);
-      this.numAndereFremdspr2Note.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numAndereFremdspr2Note.Name = "numAndereFremdspr2Note";
-      this.numAndereFremdspr2Note.Size = new System.Drawing.Size(63, 23);
-      this.numAndereFremdspr2Note.TabIndex = 24;
-      this.numAndereFremdspr2Note.Value = null;
+      this.textBoxBeruflicheVorbildung.Enabled = false;
+      this.textBoxBeruflicheVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxBeruflicheVorbildung.Location = new System.Drawing.Point(321, 213);
+      this.textBoxBeruflicheVorbildung.Name = "textBoxBeruflicheVorbildung";
+      this.textBoxBeruflicheVorbildung.Size = new System.Drawing.Size(240, 20);
+      this.textBoxBeruflicheVorbildung.TabIndex = 84;
+      // 
+      // labelBeruflicheVorbildung
+      // 
+      this.labelBeruflicheVorbildung.AutoSize = true;
+      this.labelBeruflicheVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.labelBeruflicheVorbildung.Location = new System.Drawing.Point(321, 197);
+      this.labelBeruflicheVorbildung.Name = "labelBeruflicheVorbildung";
+      this.labelBeruflicheVorbildung.Size = new System.Drawing.Size(106, 13);
+      this.labelBeruflicheVorbildung.TabIndex = 83;
+      this.labelBeruflicheVorbildung.Text = "berufliche Vorbildung";
       // 
       // UserControlSchueleransicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
-      this.Controls.Add(this.textBoxZeugnisbemerkung);
-      this.Controls.Add(this.labelZeugnisbemerkung);
+      this.Controls.Add(this.textBoxVorigeSchule);
+      this.Controls.Add(this.labelVorigeSchule);
+      this.Controls.Add(this.textBoxBeruflicheVorbildung);
+      this.Controls.Add(this.labelBeruflicheVorbildung);
       this.Controls.Add(this.labelAustrittHinweis);
       this.Controls.Add(this.btnResetProbezeit);
       this.Controls.Add(this.panelSekretariat);
@@ -772,11 +675,6 @@ namespace diNo
       this.Controls.Add(this.label17);
       this.Controls.Add(this.textBoxDNoteAllg);
       this.Controls.Add(this.label16);
-      this.Controls.Add(this.textBoxAndereFremdspr2Text);
-      this.Controls.Add(this.label15);
-      this.Controls.Add(this.label14);
-      this.Controls.Add(this.numAndereFremdspr2Note);
-      this.Controls.Add(this.label13);
       this.Controls.Add(this.textBoxDNote);
       this.Controls.Add(this.label12);
       this.Controls.Add(this.textBoxJahrgangsstufe);
@@ -800,14 +698,8 @@ namespace diNo
       this.Controls.Add(this.labelProbezeitBis);
       this.Controls.Add(this.textBoxAdresseEltern);
       this.Controls.Add(this.labelAdresseEltern);
-      this.Controls.Add(this.textBoxVorigeSchule);
-      this.Controls.Add(this.labelVorigeSchule);
       this.Controls.Add(this.textBoxWiederholungen);
       this.Controls.Add(this.labelWiederholungen);
-      this.Controls.Add(this.textBoxBeruflicheVorbildung);
-      this.Controls.Add(this.labelBeruflicheVorbildung);
-      this.Controls.Add(this.textBoxSchulischeVorbildung);
-      this.Controls.Add(this.lblSchulischeVorbildung);
       this.Controls.Add(this.textBoxGeburtsort);
       this.Controls.Add(this.lblGeburtsort);
       this.Controls.Add(this.textBoxGeburtsdatum);
@@ -822,7 +714,6 @@ namespace diNo
       this.panelSekretariat.PerformLayout();
       this.pnlAdmin.ResumeLayout(false);
       this.pnlAdmin.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -837,14 +728,8 @@ namespace diNo
     private System.Windows.Forms.TextBox textBoxGeburtsdatum;
     private System.Windows.Forms.Label lblGeburtsort;
     private System.Windows.Forms.TextBox textBoxGeburtsort;
-    private System.Windows.Forms.Label lblSchulischeVorbildung;
-    private System.Windows.Forms.TextBox textBoxSchulischeVorbildung;
-    private System.Windows.Forms.Label labelBeruflicheVorbildung;
-    private System.Windows.Forms.TextBox textBoxBeruflicheVorbildung;
     private System.Windows.Forms.Label labelWiederholungen;
     private System.Windows.Forms.TextBox textBoxWiederholungen;
-    private System.Windows.Forms.Label labelVorigeSchule;
-    private System.Windows.Forms.TextBox textBoxVorigeSchule;
     private System.Windows.Forms.Label labelAdresseEltern;
     private System.Windows.Forms.TextBox textBoxAdresseEltern;
     private System.Windows.Forms.Label labelProbezeitBis;
@@ -868,11 +753,6 @@ namespace diNo
     private System.Windows.Forms.Label label11;
     private System.Windows.Forms.TextBox textBoxDNote;
     private System.Windows.Forms.Label label12;
-    private System.Windows.Forms.Label label13;
-    private NumericUpDownNullable numAndereFremdspr2Note;
-    private System.Windows.Forms.Label label14;
-    private System.Windows.Forms.TextBox textBoxAndereFremdspr2Text;
-    private System.Windows.Forms.Label label15;
     private System.Windows.Forms.Label label16;
     private System.Windows.Forms.TextBox textBoxDNoteAllg;
     private System.Windows.Forms.Label label17;
@@ -894,7 +774,9 @@ namespace diNo
     private System.Windows.Forms.Label label20;
     private System.Windows.Forms.TextBox textBoxID;
     private System.Windows.Forms.Label labelID;
-    private System.Windows.Forms.TextBox textBoxZeugnisbemerkung;
-    private System.Windows.Forms.Label labelZeugnisbemerkung;
+    private System.Windows.Forms.TextBox textBoxVorigeSchule;
+    private System.Windows.Forms.Label labelVorigeSchule;
+    private System.Windows.Forms.TextBox textBoxBeruflicheVorbildung;
+    private System.Windows.Forms.Label labelBeruflicheVorbildung;
   }
 }

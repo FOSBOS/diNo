@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Globalization;
 
 namespace diNo
 {
@@ -46,12 +39,12 @@ namespace diNo
           textBoxID.Text = schueler.Id.ToString();
           textBoxGeburtsdatum.Text = schueler.Data.IsGeburtsdatumNull() ? "" : schueler.Data.Geburtsdatum.ToString("dd.MM.yyyy");
           textBoxGeburtsort.Text = schueler.Data.Geburtsort;
-          textBoxBeruflicheVorbildung.Text = schueler.Data.BeruflicheVorbildung;
-          textBoxSchulischeVorbildung.Text = schueler.Data.SchulischeVorbildung;
           textBoxWiederholungen.Text = schueler.getWiederholungen();
+          textBoxBeruflicheVorbildung.Text = schueler.Data.BeruflicheVorbildung;
+          textBoxVorigeSchule.Text = schueler.EintrittAusSchulname;
+
           textBoxJahrgangsstufe.Text = schueler.EintrittInJahrgangsstufe;
           textBoxEintrittAm.Text = schueler.EintrittAm == null ? "" : schueler.EintrittAm.Value.ToString("dd.MM.yyyy");
-          textBoxVorigeSchule.Text = schueler.EintrittAusSchulname;
           string kontaktEltern = schueler.Data.VornameEltern1 + " " + schueler.Data.NachnameEltern1;
           kontaktEltern += string.IsNullOrEmpty(schueler.Data.VornameEltern2) ? "" : "\n" + schueler.Data.VornameEltern2 + " " + schueler.Data.NachnameEltern2;
           textBoxAdresseEltern.Lines = kontaktEltern.Split('\n');
@@ -63,11 +56,8 @@ namespace diNo
           dateTimeAustritt.Value = schueler.Data.IsAustrittsdatumNull() ? dateTimeAustritt.MinDate : schueler.Data.Austrittsdatum;
           textBoxEmail.Text = schueler.Data.Email;
           cbStatus.SelectedIndex = schueler.Data.Status;
-          textBoxZeugnisbemerkung.Text = schueler.Data.IsZeugnisbemerkungNull() ? "" : schueler.Data.Zeugnisbemerkung;
           textBoxDNote.Text = schueler.Data.IsDNoteNull() ? "" : string.Format("{0:F1}", schueler.Data.DNote);
           textBoxDNoteAllg.Text = schueler.Data.IsDNoteAllgNull() ? "" : string.Format("{0:F1}", schueler.Data.DNoteAllg);
-          numAndereFremdspr2Note.Value = schueler.Data.IsAndereFremdspr2NoteNull() ? null : (decimal?) schueler.Data.AndereFremdspr2Note;
-          textBoxAndereFremdspr2Text.Text = schueler.Data.IsAndereFremdspr2TextNull() ? "" : schueler.Data.AndereFremdspr2Text;
 
           textBoxNachname.Text = schueler.Data.Name;
           textBoxVorname.Text = schueler.Data.Vorname;
@@ -117,13 +107,6 @@ namespace diNo
 
       schueler.Data.Email = textBoxEmail.Text;
       schueler.Data.Status = cbStatus.SelectedIndex;
-      if (numAndereFremdspr2Note.Value==null) schueler.Data.SetAndereFremdspr2NoteNull();
-        else schueler.Data.AndereFremdspr2Note = (int) numAndereFremdspr2Note.Value.GetValueOrDefault();            
-      if (textBoxAndereFremdspr2Text.Text=="") schueler.Data.SetAndereFremdspr2TextNull();
-        else schueler.Data.AndereFremdspr2Text = textBoxAndereFremdspr2Text.Text;
-
-      if (textBoxZeugnisbemerkung.Text == "") schueler.Data.SetZeugnisbemerkungNull();
-      else schueler.Data.Zeugnisbemerkung = textBoxZeugnisbemerkung.Text;
     
       schueler.Data.Name = textBoxNachname.Text;
       schueler.Data.Vorname = textBoxVorname.Text;

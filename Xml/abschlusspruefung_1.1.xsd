@@ -1,0 +1,1644 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://tempuri.org/abschlusspruefung_1.1" elementFormDefault="qualified" targetNamespace="http://tempuri.org/abschlusspruefung_1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="abschlusspruefungsstatistik">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="schule" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="schule">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="jahrgangsstufe12" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="jahrgangsstufe13" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="dbfh" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="anderebewerber_12" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="anderebewerber_13" />
+      </xs:sequence>
+      <xs:attribute name="art" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="FOS" />
+            <xs:enumeration value="BOS" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="nummer" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="jahrgangsstufe12">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="klasse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="jahrgangsstufe13">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="klasse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="klasse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="anderebewerber_12">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="klasse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="anderebewerber_13">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="klasse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="klasse">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="schueler" />
+      </xs:sequence>
+      <xs:attribute name="nummer" type="xs:string" use="required" />
+      <xs:attribute name="ausbildungsrichtung" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="ABU" />
+            <xs:enumeration value="GA" />
+            <xs:enumeration value="GH" />
+            <xs:enumeration value="IW" />
+            <xs:enumeration value="S" />
+            <xs:enumeration value="T" />
+            <xs:enumeration value="W" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="schueler">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="grunddaten" />
+        <xs:element ref="abschlusspruefung" />
+        <xs:choice minOccurs="0" maxOccurs="1">
+          <xs:element ref="halbjahresergebnisse" />
+          <xs:element ref="ausbildungsabschnitte" />
+        </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="1" ref="fachreferat" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="seminar" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="zweite_fremdsprache" />
+      </xs:sequence>
+      <xs:attribute name="nummer" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="grunddaten">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="durchschnittsnote" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ausgetreten_am" />
+        <xs:element ref="vorbildung" />
+      </xs:sequence>
+      <xs:attribute name="geschlecht" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="m" />
+            <xs:enumeration value="w" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="wdh_jgst">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="0" />
+            <xs:enumeration value="1" />
+            <xs:enumeration value="2" />
+            <xs:enumeration value="3" />
+            <xs:enumeration value="4" />
+            <xs:enumeration value="5" />
+            <xs:enumeration value="6" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="herkunftsschule" type="xs:string" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="durchschnittsnote" type="xs:string" />
+  <xs:element name="ausgetreten_am" type="xs:string" />
+  <xs:element name="vorbildung">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="m_deutsch" />
+        <xs:element ref="m_mathematik" />
+        <xs:element ref="m_englisch" />
+      </xs:sequence>
+      <xs:attribute name="msa_erworben_an_schulart" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="GY" />
+            <xs:enumeration value="RS" />
+            <xs:enumeration value="MS" />
+            <xs:enumeration value="BS" />
+            <xs:enumeration value="WS" />
+            <xs:enumeration value="BO" />
+            <xs:enumeration value="SO" />
+            <xs:enumeration value="KS" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="besuchte_schulart_vor_eintritt" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="GY" />
+            <xs:enumeration value="RS" />
+            <xs:enumeration value="MS" />
+            <xs:enumeration value="BS" />
+            <xs:enumeration value="WS" />
+            <xs:enumeration value="BO" />
+            <xs:enumeration value="SO" />
+            <xs:enumeration value="KS" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="m_deutsch" type="xs:string" />
+  <xs:element name="m_mathematik" type="xs:string" />
+  <xs:element name="m_englisch" type="xs:string" />
+  <xs:element name="abschlusspruefung">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_deutsch" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_mathematik" />
+        <xs:choice minOccurs="0" maxOccurs="1">
+          <xs:element ref="ap_englisch" />
+          <xs:element ref="ap_ersatzfremdsprache" />
+        </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_profilfach1" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_geschichte_sozialkunde" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_sozialkunde" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_profilfach2" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_profilfach3" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_geschichte" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_profilfach4" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_ethik" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_rechtslehre" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_chemie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_religionslehre_ev" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ap_religionslehre_rk" />
+      </xs:sequence>
+      <xs:attribute name="bestanden">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="ja" />
+            <xs:enumeration value="nein" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="abgelegt" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="0" />
+            <xs:enumeration value="1" />
+            <xs:enumeration value="2" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_deutsch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="schriftlich" type="xs:string" />
+  <xs:element name="muendlich" type="xs:string" />
+  <xs:element name="gesamt" type="xs:string" />
+  <xs:element name="ap_mathematik">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_englisch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_ersatzfremdsprache">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+      <xs:attribute name="sprache" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_profilfach1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_profilfach2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_profilfach3">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_profilfach4">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_sozialkunde">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_geschichte">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_rechtslehre">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_religionslehre_ev">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_religionslehre_rk">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_ethik">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_chemie">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ap_geschichte_sozialkunde">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="halbjahresergebnisse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="allgemeinbildende_faecher" />
+        <xs:element ref="profilfaecher" />
+        <xs:element ref="wahlpflichtfaecher" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="fachpraktische_ausbildung" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="allgemeinbildende_faecher">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="religionslehre_rk" />
+          <xs:element ref="religionslehre_ev" />
+          <xs:element ref="ethik" />
+        </xs:choice>
+        <xs:element ref="deutsch" />
+        <xs:choice>
+          <xs:element ref="englisch" />
+          <xs:element ref="ersatzfremdsprache" />
+        </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="1" ref="geschichte" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="sozialkunde" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="geschichte_sozialkunde" />
+        <xs:element ref="mathematik" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="sport" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_allgemeinbildende_faecher">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="dbfh_religionslehre_rk" />
+          <xs:element ref="dbfh_religionslehre_ev" />
+          <xs:element ref="dbfh_ethik" />
+        </xs:choice>
+        <xs:element ref="dbfh_deutsch" />
+        <xs:element ref="dbfh_englisch" />
+        <xs:element ref="dbfh_sozialkunde" />
+        <xs:element ref="dbfh_geschichte" />
+        <xs:element ref="dbfh_mathematik" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="religionslehre_rk">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_13_1" />
+        </xs:choice>
+        <xs:choice>
+          <xs:element ref="hj_12_2" />
+          <xs:element ref="hj_13_2" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_religionslehre_rk">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_religionslehre_ev">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_ethik">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_sozialkunde">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_geschichte">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+        <xs:element ref="a3_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_deutsch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+        <xs:element ref="a3_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_englisch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+        <xs:element ref="a3_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_mathematik">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+        <xs:element ref="a3_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_mathematik_additum">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+        <xs:element ref="a3_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_physik">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+        <xs:element ref="a3_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_chemie">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+        <xs:element ref="a3_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_informatik">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+        <xs:element ref="a3_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_naturwissenschaften">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+        <xs:element ref="a3_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_bwr">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+        <xs:element ref="a3_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_volkswirtschaftslehre">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="a2_3_1" />
+        <xs:element ref="a3_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="a2_3_1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="punkte" />
+      </xs:sequence>
+      <xs:attribute name="eingebracht" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="0" />
+            <xs:enumeration value="1" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="a3_2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="punkte" />
+      </xs:sequence>
+      <xs:attribute name="eingebracht" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="0" />
+            <xs:enumeration value="1" />
+            <xs:enumeration value="2" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="hj_12_1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="punkte" />
+      </xs:sequence>
+      <xs:attribute name="eingebracht" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="ja" />
+            <xs:enumeration value="nein" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="punkte" type="xs:string" />
+  <xs:element name="hj_12_2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="punkte" />
+      </xs:sequence>
+      <xs:attribute name="eingebracht" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="ja" />
+            <xs:enumeration value="nein" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="hj_13_1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="punkte" />
+      </xs:sequence>
+      <xs:attribute name="eingebracht" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="ja" />
+            <xs:enumeration value="nein" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="hj_13_2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="punkte" />
+      </xs:sequence>
+      <xs:attribute name="eingebracht" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="ja" />
+            <xs:enumeration value="nein" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="religionslehre_ev">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_13_1" />
+        </xs:choice>
+        <xs:choice>
+          <xs:element ref="hj_12_2" />
+          <xs:element ref="hj_13_2" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="deutsch">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="hj_11_1">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="punkte" />
+      </xs:sequence>
+      <xs:attribute name="eingebracht" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="ja" />
+            <xs:enumeration value="nein" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="hj_11_2">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="punkte" />
+      </xs:sequence>
+      <xs:attribute name="eingebracht" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="ja" />
+            <xs:enumeration value="nein" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ethik">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_13_1" />
+        </xs:choice>
+        <xs:choice>
+          <xs:element ref="hj_12_2" />
+          <xs:element ref="hj_13_2" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="englisch">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element ref="hj_11_1" />
+          <xs:element ref="hj_11_2" />
+        </xs:sequence>
+        <xs:choice>
+          <xs:sequence>
+            <xs:element ref="hj_12_1" />
+            <xs:element ref="hj_12_2" />
+          </xs:sequence>
+          <xs:sequence>
+            <xs:element ref="hj_13_1" />
+            <xs:element ref="hj_13_2" />
+          </xs:sequence>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ersatzfremdsprache">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element ref="hj_11_1" />
+          <xs:element ref="hj_11_2" />
+        </xs:sequence>
+        <xs:choice>
+          <xs:sequence>
+            <xs:element ref="hj_12_1" />
+            <xs:element ref="hj_12_2" />
+          </xs:sequence>
+          <xs:sequence>
+            <xs:element ref="hj_13_1" />
+            <xs:element ref="hj_13_2" />
+          </xs:sequence>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mathematik">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element ref="hj_11_1" />
+          <xs:element ref="hj_11_2" />
+        </xs:sequence>
+        <xs:choice>
+          <xs:sequence>
+            <xs:element ref="hj_12_1" />
+            <xs:element ref="hj_12_2" />
+          </xs:sequence>
+          <xs:sequence>
+            <xs:element ref="hj_13_1" />
+            <xs:element ref="hj_13_2" />
+          </xs:sequence>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="geschichte">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hj_11_1" />
+        <xs:element ref="hj_11_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sozialkunde">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hj_12_1" />
+        <xs:element ref="hj_12_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="geschichte_sozialkunde">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sport">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fachpraktische_ausbildung">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hj_11_1" />
+        <xs:element ref="hj_11_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="profilfaecher">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="1" ref="physik" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="technologie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="chemie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mathematik_additum_t" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="biologie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="bwr" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="volkswirtschaftslehre" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="rechtslehre" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="naturwissenschaften" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="informatik" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="ibv" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="franzoesisch" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="franzoesisch_fortgefuehrt" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="spanisch" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="spanisch_fortgefuehrt" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="international_business_studies" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="paedagogik_psychologie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="sozialwirtschaft_und_recht" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="gesundheitswissenschaften" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="kommunikation_und_interaktion" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="gestaltung_praxis" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="gestaltung_theorie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="medien" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="gestaltung" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="soziologie" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dbfh_profilfaecher">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="1" ref="dbfh_physik" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="dbfh_chemie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="dbfh_mathematik_additum" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="dbfh_bwr" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="dbfh_volkswirtschaftslehre" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="dbfh_naturwissenschaften" />
+        <xs:element ref="dbfh_informatik" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="physik">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="technologie">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="chemie">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_12_1" />
+            <xs:element ref="hj_12_2" />
+          </xs:sequence>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mathematik_additum_t">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hj_12_1" />
+        <xs:element ref="hj_12_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="biologie">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="bwr">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="volkswirtschaftslehre">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="rechtslehre">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hj_11_1" />
+        <xs:element ref="hj_11_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="naturwissenschaften">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_13_1" />
+        </xs:choice>
+        <xs:choice>
+          <xs:element ref="hj_12_2" />
+          <xs:element ref="hj_13_2" />
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="informatik">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ibv">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="franzoesisch">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="franzoesisch_fortgefuehrt">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="spanisch">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="spanisch_fortgefuehrt">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="international_business_studies">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="paedagogik_psychologie">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sozialwirtschaft_und_recht">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="gesundheitswissenschaften">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="kommunikation_und_interaktion">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="gestaltung_praxis">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hj_11_1" />
+        <xs:element ref="hj_11_2" />
+        <xs:element ref="hj_12_1" />
+        <xs:element ref="hj_12_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="gestaltung_theorie">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hj_11_1" />
+        <xs:element ref="hj_11_2" />
+        <xs:element ref="hj_12_1" />
+        <xs:element ref="hj_12_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="medien">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_11_1" />
+          <xs:element ref="hj_11_2" />
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="gestaltung">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hj_13_1" />
+        <xs:element ref="hj_13_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="soziologie">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fachreferat">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="fach" />
+        <xs:element ref="punkte" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fach" type="xs:string" />
+  <xs:element name="ausbildungsabschnitte">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="dbfh_allgemeinbildende_faecher" />
+        <xs:element ref="dbfh_profilfaecher" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="seminar">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="punkte" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="zweite_fremdsprache">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="note" />
+      </xs:sequence>
+      <xs:attribute name="sprache" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="Spanisch" />
+            <xs:enumeration value="Italienisch" />
+            <xs:enumeration value="Russisch" />
+            <xs:enumeration value="Franzoesisch" />
+            <xs:enumeration value="Latein" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="art" use="required">
+        <xs:simpleType>
+          <xs:restriction base="xs:NMTOKEN">
+            <xs:enumeration value="EP" />
+            <xs:enumeration value="VN" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="note">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="1" ref="schriftlich" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="muendlich" />
+        <xs:element ref="gesamt" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="wahlpflichtfaecher">
+    <xs:complexType>
+      <xs:sequence minOccurs="1" maxOccurs="unbounded">
+        <xs:element minOccurs="0" maxOccurs="1" ref="informatik" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="biotechnologie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="wirtschaft_aktuell" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="sozialpsychologie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="experimentelles_gestalten" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="spektrum_der_gesundheit" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="franzoesisch_fortgefuehrt" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="spanisch_fortgefuehrt" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="mathematik_additum" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="physik_additum" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="aspekte_der_physik" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="aspekte_der_chemie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="sport" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="english_book_club" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="internationale_politik" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="aspekte_der_biologie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="wirtschaft_und_recht" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="aspekte_der_psychologie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="soziologie" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="gesundheitswirtschaft_und_recht" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="studier_und_arbeitstechniken" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="kunst" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="musik" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="szenisches_gestalten" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="italienisch" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="latein" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="russisch" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="spanisch" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="franzoesisch" />
+        <xs:element minOccurs="0" maxOccurs="1" ref="international_business_studies" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="biotechnologie">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="wirtschaft_aktuell">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sozialpsychologie">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="experimentelles_gestalten">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="spektrum_der_gesundheit">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mathematik_additum">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="physik_additum">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hj_13_1" />
+        <xs:element ref="hj_13_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="aspekte_der_physik">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="aspekte_der_chemie">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="english_book_club">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="internationale_politik">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="aspekte_der_biologie">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="wirtschaft_und_recht">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="aspekte_der_psychologie">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="gesundheitswirtschaft_und_recht">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="studier_und_arbeitstechniken">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="hj_12_1" />
+        <xs:element ref="hj_12_2" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="kunst">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="musik">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="szenisches_gestalten">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="italienisch">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="latein">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="russisch">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="hj_12_1" />
+          <xs:element ref="hj_12_2" />
+        </xs:sequence>
+        <xs:sequence>
+          <xs:element ref="hj_13_1" />
+          <xs:element ref="hj_13_2" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
