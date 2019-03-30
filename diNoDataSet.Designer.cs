@@ -1192,6 +1192,8 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnKursniveau;
             
+            private global::System.Data.DataColumn columnPlatzInMBStatistik;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public FachDataTable() {
@@ -1291,6 +1293,14 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn PlatzInMBStatistikColumn {
+                get {
+                    return this.columnPlatzInMBStatistik;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1326,7 +1336,7 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public FachRow AddFachRow(string Bezeichnung, string Kuerzel, int Sortierung, byte Typ, string BezZeugnis, bool NichtNC, byte Kursniveau) {
+            public FachRow AddFachRow(string Bezeichnung, string Kuerzel, int Sortierung, byte Typ, string BezZeugnis, bool NichtNC, byte Kursniveau, string PlatzInMBStatistik) {
                 FachRow rowFachRow = ((FachRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1336,7 +1346,8 @@ namespace diNo {
                         Typ,
                         BezZeugnis,
                         NichtNC,
-                        Kursniveau};
+                        Kursniveau,
+                        PlatzInMBStatistik};
                 rowFachRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowFachRow);
                 return rowFachRow;
@@ -1374,6 +1385,7 @@ namespace diNo {
                 this.columnBezZeugnis = base.Columns["BezZeugnis"];
                 this.columnNichtNC = base.Columns["NichtNC"];
                 this.columnKursniveau = base.Columns["Kursniveau"];
+                this.columnPlatzInMBStatistik = base.Columns["PlatzInMBStatistik"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1395,6 +1407,8 @@ namespace diNo {
                 base.Columns.Add(this.columnNichtNC);
                 this.columnKursniveau = new global::System.Data.DataColumn("Kursniveau", typeof(byte), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnKursniveau);
+                this.columnPlatzInMBStatistik = new global::System.Data.DataColumn("PlatzInMBStatistik", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPlatzInMBStatistik);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AutoIncrement = true;
@@ -9280,6 +9294,22 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string PlatzInMBStatistik {
+                get {
+                    try {
+                        return ((string)(this[this.tableFach.PlatzInMBStatistikColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte PlatzInMBStatistik in Tabelle Fach ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFach.PlatzInMBStatistikColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsSortierungNull() {
                 return this.IsNull(this.tableFach.SortierungColumn);
             }
@@ -9324,6 +9354,18 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetNichtNCNull() {
                 this[this.tableFach.NichtNCColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsPlatzInMBStatistikNull() {
+                return this.IsNull(this.tableFach.PlatzInMBStatistikColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetPlatzInMBStatistikNull() {
+                this[this.tableFach.PlatzInMBStatistikColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14338,6 +14380,7 @@ namespace diNo.diNoDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("BezZeugnis", "BezZeugnis");
             tableMapping.ColumnMappings.Add("NichtNC", "NichtNC");
             tableMapping.ColumnMappings.Add("Kursniveau", "Kursniveau");
+            tableMapping.ColumnMappings.Add("PlatzInMBStatistik", "PlatzInMBStatistik");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
