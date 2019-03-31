@@ -610,7 +610,7 @@ namespace diNo
     public int? getNote(Halbjahr hj, Notentyp typ)
     {
       var n = noten[(int)hj, (int)typ];
-      return n.Count == 0 ? null : (int?)n.First();
+      return n == null || n.Count == 0 ? null : (int?)n.First();
     }
 
     /// <summary>

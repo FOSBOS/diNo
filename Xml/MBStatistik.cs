@@ -15,6 +15,12 @@ namespace diNo.Xml
     {
       abschlusspruefungsstatistik ap = new abschlusspruefungsstatistik();
 
+      int hoechsteKlassenId = 0;
+      foreach (Klasse k in Zugriff.Instance.Klassen)
+      {
+        hoechsteKlassenId = k.GetId() > hoechsteKlassenId ? k.GetId() : hoechsteKlassenId;
+      }
+
       // hier wird die Abschlusspruefungsstatistik zusammengebaut
       schule fos = new schule() { art = schuleArt.FOS, nummer = "0871" };
       schule bos = new schule() { art = schuleArt.BOS, nummer = "0841" };
@@ -27,42 +33,51 @@ namespace diNo.Xml
 
       foreach (Klasse k in Zugriff.Instance.Klassen)
       {
-        // TODO: Mischklassen (erkennbar an Zweig.None= aufspalten !
-
-        klasse xmlKlasse = new klasse
+        if (k.Jahrgangsstufe != Jahrgangsstufe.Zwoelf && k.Jahrgangsstufe != Jahrgangsstufe.Dreizehn)
         {
-          nummer = k.GetId().ToString()
-        };
-        switch (k.Zweig)
-        {
-          case Zweig.Sozial: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.S; break;
-          case Zweig.Technik: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.T; break;
-          case Zweig.Umwelt: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.ABU; break;
-          case Zweig.Wirtschaft: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.W; break;
-          default: throw new InvalidOperationException("klasse ohne Ausbildungsrichtung geht so nicht");
+          continue; // in MB-Statistik nur 12te und 13te Klassen
         }
 
-        // betrachte nur zwölfte und dreizehnte Klassen
+        Dictionary<Zweig, klasse> xmlKlassen = new Dictionary<Zweig, klasse>();
+        Dictionary<Zweig, List<schueler>> schuelerDict = new Dictionary<Zweig, List<schueler>>();
+        foreach (var s in k.getSchueler)
+        {
+          Schueler schueler = new Schueler(s);
+          if (!xmlKlassen.ContainsKey(schueler.Zweig))
+          {
+            //die erste Teilklasse erhält einfach die Id der Klasse. Nur bei Mischklassen künstliche Ids.
+            int id = k.GetId();
+            if (xmlKlassen.Count > 0)
+            {
+              hoechsteKlassenId++;
+              id = hoechsteKlassenId;
+            }
+
+            xmlKlassen.Add(schueler.Zweig, CreateXMLKlasse(id, schueler.Zweig));
+            schuelerDict.Add(schueler.Zweig, new List<schueler>());
+          }
+        }
+
         if (k.Schulart == Schulart.FOS)
         {
           if (k.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
           {
-            fosKlassen12.Add(xmlKlasse);
+            fosKlassen12.AddRange(xmlKlassen.Values);
           }
           else if (k.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
           {
-            fosKlassen13.Add(xmlKlasse);
+            fosKlassen13.AddRange(xmlKlassen.Values);
           }
         }
         else if (k.Schulart == Schulart.BOS)
         {
           if (k.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
           {
-            bosKlassen12.Add(xmlKlasse);
+            bosKlassen12.AddRange(xmlKlassen.Values);
           }
           else if (k.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
           {
-            bosKlassen13.Add(xmlKlasse);
+            bosKlassen13.AddRange(xmlKlassen.Values);
           }
         }
 
@@ -75,6 +90,7 @@ namespace diNo.Xml
             grunddaten = new grunddaten()
           };
 
+          schuelerDict[unserSchueler.Zweig].Add(xmlSchueler);
           FuelleGrunddaten(unserSchueler, xmlSchueler);
 
           if (unserSchueler.Fachreferat != null && unserSchueler.Fachreferat.Count > 0)
@@ -107,6 +123,12 @@ namespace diNo.Xml
             }
           }
         }
+
+        foreach (var kvp in xmlKlassen)
+        {
+          // weise das Schueler-Array der richtigen xml-Klasse zu
+          kvp.Value.schueler = schuelerDict[kvp.Key].ToArray();
+        }
       }
 
       fos.jahrgangsstufe12 = new jahrgangsstufe12 { klasse = fosKlassen12.ToArray() };
@@ -119,6 +141,24 @@ namespace diNo.Xml
         XmlSerializer ser = new XmlSerializer(typeof(abschlusspruefungsstatistik));
         ser.Serialize(stream, ap);
       }
+    }
+
+    private static klasse CreateXMLKlasse(int id, Zweig zweig)
+    {
+      klasse xmlKlasse = new klasse
+      {
+        nummer = id.ToString()
+      };
+      switch (zweig)
+      {
+        case Zweig.Sozial: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.S; break;
+        case Zweig.Technik: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.T; break;
+        case Zweig.Umwelt: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.ABU; break;
+        case Zweig.Wirtschaft: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.W; break;
+        default: throw new InvalidOperationException("klasse ohne Ausbildungsrichtung geht so nicht");
+      }
+
+      return xmlKlasse;
     }
 
     private static object SucheRichtigenXMLKnoten(halbjahresergebnisse hjErg, FachSchuelerNoten fach)
@@ -167,7 +207,7 @@ namespace diNo.Xml
         {
           SucheProperty("hj_13_1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml);
         }
-        if (hj.JgStufe == Jahrgangsstufe.Elf && hj.Art == HjArt.Hj2)
+        if (hj.JgStufe == Jahrgangsstufe.Dreizehn && hj.Art == HjArt.Hj2)
         {
           SucheProperty("hj_13_2", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml);
         }
@@ -175,9 +215,6 @@ namespace diNo.Xml
 
       if (unzuordenbareHalbjahre.Count > 0 && xmlFachObject.GetType().GetProperty("Items") != null)
       {
-        List<object> halbjahre = new List<object>();
-        AddHJ(unzuordenbareHalbjahre, fach.getHjLeistung(HjArt.Hj1));
-        AddHJ(unzuordenbareHalbjahre, fach.getHjLeistung(HjArt.Hj2));
         xmlFachObject.GetType().GetProperty("Items").SetValue(xmlFachObject, unzuordenbareHalbjahre.ToArray());
       }
     }
@@ -350,88 +387,6 @@ namespace diNo.Xml
       }
 
       return newObject;
-
-      /*
-      switch (fach.Kuerzel)
-      {
-        case "D":
-          if (hjErg.allgemeinbildende_faecher.deutsch == null)
-          {
-            hjErg.allgemeinbildende_faecher.deutsch = new deutsch();
-          }
-          return hjErg.allgemeinbildende_faecher.deutsch;
-        case "G":
-          if (hjErg.allgemeinbildende_faecher.geschichte == null)
-          {
-            hjErg.allgemeinbildende_faecher.geschichte = new geschichte();
-          }
-          return hjErg.allgemeinbildende_faecher.geschichte;
-        case "GSk":
-          if (hjErg.allgemeinbildende_faecher.geschichte_sozialkunde == null)
-          {
-            hjErg.allgemeinbildende_faecher.geschichte_sozialkunde = new geschichte_sozialkunde();
-          }
-          return hjErg.allgemeinbildende_faecher.geschichte_sozialkunde;
-        case "M":
-          if (hjErg.allgemeinbildende_faecher.mathematik == null)
-          {
-            hjErg.allgemeinbildende_faecher.mathematik = new mathematik();
-          }
-          return hjErg.allgemeinbildende_faecher.mathematik;
-        case "Sk":
-          if (hjErg.allgemeinbildende_faecher.sozialkunde == null)
-          {
-            hjErg.allgemeinbildende_faecher.sozialkunde = new sozialkunde();
-          }
-          return hjErg.allgemeinbildende_faecher.sozialkunde;
-        case "Sm":
-        case "Sw":
-        case "Smw":
-          if (hjErg.allgemeinbildende_faecher.sport == null)
-          {
-            hjErg.allgemeinbildende_faecher.sport = new sport();
-          }
-          return hjErg.allgemeinbildende_faecher.sport;
-        case "B":
-          if (hjErg.profilfaecher.biologie == null)
-          {
-            hjErg.profilfaecher.biologie = new biologie[1] { new biologie() };
-          }
-          return hjErg.profilfaecher.biologie[0];
-        case "BWr":
-          if (hjErg.profilfaecher.bwr == null)
-          {
-            hjErg.profilfaecher.bwr = new bwr[1] { new bwr() };
-          }
-          return hjErg.profilfaecher.bwr[0];
-        case "Ch":
-          if (hjErg.profilfaecher.chemie == null)
-          {
-            hjErg.profilfaecher.chemie = new chemie[1] { new chemie() };
-          }
-          return hjErg.profilfaecher.chemie[0];
-        case "F":
-          if (hjErg.profilfaecher.franzoesisch == null)
-          {
-            hjErg.profilfaecher.franzoesisch = new franzoesisch[1] { new franzoesisch() };
-          }
-          return hjErg.profilfaecher.franzoesisch[0];
-        case "Frz":
-          if (hjErg.profilfaecher.franzoesisch_fortgefuehrt == null)
-          {
-            hjErg.profilfaecher.franzoesisch_fortgefuehrt = new franzoesisch_fortgefuehrt[1] { new franzoesisch_fortgefuehrt() };
-          }
-          return hjErg.profilfaecher.franzoesisch_fortgefuehrt[0];
-        // wir ignorieren gestaltung, gestaltung_praxis, gestaltung_theorie, gesundsheitswissenschaften, ibv
-        case "Inf":
-          if (hjErg.profilfaecher.informatik == null)
-          {
-            hjErg.profilfaecher.informatik = new informatik[1] { new informatik() };
-          }
-          return hjErg.profilfaecher.informatik[0];
-      }
-
-      return null;*/
     }
 
 
