@@ -27,7 +27,8 @@ namespace diNo
     private Schueler aktSchueler;
     private bool UnterpunktungGedruckt;
     private ProgressBar progressBar;
-    private Berechnungen berechnungen = null; 
+    private Berechnungen berechnungen = null;
+    public int FehlendeBerechnung = 0; // gibt einen Überblick, ob Gesamtergebnisse schon bestimmt sind.
 
     public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus, ProgressBar aprogressBar)
     {
@@ -251,6 +252,22 @@ namespace diNo
           res.list.Add(new NotenCheckResult(r.Value.schueler, r.Value.kurs, r.Value.meldung));
         }
       }
+    }
+
+    public void ShowResults()
+    {
+      if (FehlendeBerechnung > 0)
+      {
+        string s = (Zugriff.Instance.HatVerwaltungsrechte ? " (" + FehlendeBerechnung + " HjL) " : "");
+        MessageBox.Show("Die Gesamtergebnisse " + s + "sind noch nicht bei allen Schülern berechnet.\nEine aussagekräftige Notenprüfung kann erst durchgeführt werden, wenn die Einbringung vorliegt.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+      }
+
+      if (res.list.Count == 0)
+        MessageBox.Show("Es traten keine Fehler auf.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      else
+        new ReportNotencheck(res).Show();
+
+      if (berechnungen != null) berechnungen.ShowFehler();
     }
   }
 

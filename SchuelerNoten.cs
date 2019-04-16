@@ -506,6 +506,7 @@ namespace diNo
         public Schueler schueler;
         private SchuelerNoten schuelernoten;
         private Fach fach=null;
+        public bool BerechnungFehlt = false;
         public bool NoteUngueltig = false;
         public int kursId
         {
@@ -738,7 +739,7 @@ namespace diNo
           if (hj == null)
           {
             hj = getHjLeistung(HjArt.JN); // behelfsweise, damit man grob den Leistungsstand überprüfen kann
-            NoteUngueltig = true;
+            BerechnungFehlt = true;
           }
         }
 

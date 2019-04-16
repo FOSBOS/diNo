@@ -299,6 +299,10 @@ namespace diNo
           contr.Add(kurs, "Die Gesamtnote ist ungültig.");
           continue;
         }
+        else if (fachNoten.BerechnungFehlt)
+        {
+          contr.FehlendeBerechnung++;
+        }
 
         if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
         {

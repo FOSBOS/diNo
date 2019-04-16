@@ -14,6 +14,7 @@ namespace diNo
     private Zeitpunkt zeitpunkt;    
     public delegate void Aufgabe(Schueler s);
     public List<Aufgabe> aufgaben; // speichert alle zu erledigenden Berechnungsaufgaben eines Schülers
+    public List<String> fehler = new List<String>();
 
     public Berechnungen(Zeitpunkt azeitpunkt)
     {
@@ -71,8 +72,7 @@ namespace diNo
       var sowiesoPflicht = new List<HjLeistung>(); // zählen nicht zu den 25 bzw. 17 HjLeistungen
       var einbringen = new List<HjLeistung>(); // enthält alle "weiteren" HjErgebnisse (außer FR, FPA, AP)
       var streichen = new List<HjLeistung>();
-      var unbedingtStreichen = new List<HjLeistung>();
-
+      var unbedingtStreichen = new List<HjLeistung>();      
 
       foreach (var fachNoten in s.getNoten.alleFaecher)
       {
@@ -131,8 +131,9 @@ namespace diNo
         }
         else // Nicht NC
         {
-          fachNoten.getHjLeistung(HjArt.Hj1).SetStatus(HjStatus.NichtEinbringen);
-          fachNoten.getHjLeistung(HjArt.Hj2).SetStatus(HjStatus.NichtEinbringen);
+          HjLeistung hj;
+          if ((hj = fachNoten.getHjLeistung(HjArt.Hj1))!=null) hj.SetStatus(HjStatus.NichtEinbringen);
+          if ((hj = fachNoten.getHjLeistung(HjArt.Hj2)) != null) hj.SetStatus(HjStatus.NichtEinbringen);
         }
       }
 
@@ -148,7 +149,7 @@ namespace diNo
           einbringen.AddRange(unbedingtStreichen);
           unbedingtStreichen.Clear();
           fehlend -= streichen.Count;
-          System.Windows.Forms.MessageBox.Show("Es fehlen " + fehlend +" HjLeistungen bei Schüler " + s.NameVorname + ", " + s.getKlasse.Bezeichnung, "diNo", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+          fehler.Add(s.getKlasse.Bezeichnung + ", " + s.NameVorname + ": Es fehlen " + fehlend +" gültige HjLeistungen für die Einbringung." );
         }
         else
         {
@@ -173,7 +174,7 @@ namespace diNo
       {
         hjLeistung.Status = HjStatus.NichtEinbringen;
         hjLeistung.WriteToDB();
-      }    
+      }      
     }
 
     // liefert wahr, wenn sich ohne Streichung zusätzlich eine 5 (oder 6) ergeben würde
@@ -199,6 +200,11 @@ namespace diNo
       return 25; //FOS11
     }
 
+    public void ShowFehler()
+    {
+      if (fehler.Count > 0)
+        (new ListeForm(fehler)).Show();
+    }
 
     /// <summary>
     /// Berechnet das Gesamtergebnis aller Fächer, sowie die Punktesumme

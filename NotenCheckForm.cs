@@ -94,10 +94,8 @@ namespace diNo
       }
                      
       Close();
-      if (contr.res.list.Count==0)
-        MessageBox.Show("Es traten keine Fehler auf.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
-      else
-        new ReportNotencheck(contr.res).Show();
+      contr.ShowResults();
+      
 
       if ((NotenCheckModus)comboBoxCheckModus.SelectedValue == NotenCheckModus.KonferenzVorbereiten)
         Zugriff.Instance.SchuelerRep.Clear(); // Berechnungsdaten neu laden

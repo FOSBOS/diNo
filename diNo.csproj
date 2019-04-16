@@ -92,6 +92,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ListeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListeForm.Designer.cs">
+      <DependentUpon>ListeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Xml\abschlusspruefung_1_1.cs" />
     <Compile Include="BasisForm.cs">
       <SubType>Form</SubType>
@@ -288,6 +294,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LehrerForm.resx">
       <DependentUpon>LehrerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListeForm.resx">
+      <DependentUpon>ListeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
     <EmbeddedResource Include="rptLehrerRolle.rdlc" />
