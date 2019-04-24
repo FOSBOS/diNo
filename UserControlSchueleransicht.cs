@@ -12,11 +12,9 @@ namespace diNo
       InitializeComponent();
       SchuelerverwaltungController.InitDateTimePicker(this.dateTimeProbezeit);
       SchuelerverwaltungController.InitDateTimePicker(this.dateTimeAustritt);
-      btnSave.Visible = Zugriff.Instance.HatVerwaltungsrechte;
-      panelSekretariat.Visible = btnSave.Visible;
+      btnSave.Visible = Zugriff.Instance.HatVerwaltungsrechte;      
       btnResetProbezeit.Visible = btnSave.Visible;
       labelAustrittHinweis.Visible = btnSave.Visible;
-      pnlAdmin.Visible = Zugriff.Instance.HatRolle(Rolle.Admin);
     }
 
     public Schueler Schueler
@@ -35,8 +33,7 @@ namespace diNo
           textBoxOrt.Text = schueler.Data.AnschriftOrt;
           textBoxTelefonnummer.Text = schueler.Data.AnschriftTelefonnummer;
           textBoxNotfalltelefonnummer.Text = schueler.Data.Notfalltelefonnummer;
-
-          textBoxID.Text = schueler.Id.ToString();
+          
           textBoxGeburtsdatum.Text = schueler.Data.IsGeburtsdatumNull() ? "" : schueler.Data.Geburtsdatum.ToString("dd.MM.yyyy");
           textBoxGeburtsort.Text = schueler.Data.Geburtsort;
           textBoxWiederholungen.Text = schueler.getWiederholungen();
@@ -48,21 +45,14 @@ namespace diNo
           string kontaktEltern = schueler.Data.VornameEltern1 + " " + schueler.Data.NachnameEltern1;
           kontaktEltern += string.IsNullOrEmpty(schueler.Data.VornameEltern2) ? "" : "\n" + schueler.Data.VornameEltern2 + " " + schueler.Data.NachnameEltern2;
           textBoxAdresseEltern.Lines = kontaktEltern.Split('\n');
-          textBoxBekenntnis.Text = schueler.Data.Bekenntnis;          
-          checkBoxLegasthenie.Checked = schueler.IsLegastheniker;
-          
-          //this.dateTimePicker1.Value = !schueler.Data.IsAustrittsdatumNull() ? schueler.Data.Austrittsdatum : this.dateTimePicker1.MinDate;
+          textBoxBekenntnis.Text = schueler.Data.Bekenntnis;                    
+                    
           dateTimeProbezeit.Value = schueler.Data.IsProbezeitBisNull() ? dateTimeProbezeit.MinDate : schueler.Data.ProbezeitBis;          
           dateTimeAustritt.Value = schueler.Data.IsAustrittsdatumNull() ? dateTimeAustritt.MinDate : schueler.Data.Austrittsdatum;
           textBoxEmail.Text = schueler.Data.Email;
           cbStatus.SelectedIndex = schueler.Data.Status;
           textBoxDNote.Text = schueler.Data.IsDNoteNull() ? "" : string.Format("{0:F1}", schueler.Data.DNote);
           textBoxDNoteAllg.Text = schueler.Data.IsDNoteAllgNull() ? "" : string.Format("{0:F1}", schueler.Data.DNoteAllg);
-
-          textBoxNachname.Text = schueler.Data.Name;
-          textBoxVorname.Text = schueler.Data.Vorname;
-          textBoxRufname.Text = schueler.Data.Rufname;
-          textBoxAR.Text = schueler.Data.Ausbildungsrichtung;
         }
         /*
         else
@@ -98,8 +88,6 @@ namespace diNo
       schueler.Data.Bekenntnis = textBoxBekenntnis.Text;      
       // ReliUnterricht via Kurszuordnung wird automatisch gesetzt!       
 
-      schueler.IsLegastheniker = checkBoxLegasthenie.Checked;
-
       if (dateTimeProbezeit.Value==dateTimeProbezeit.MinDate) schueler.Data.SetProbezeitBisNull();
         else schueler.Data.ProbezeitBis = dateTimeProbezeit.Value;
       if (dateTimeAustritt.Value==dateTimeAustritt.MinDate) schueler.Data.SetAustrittsdatumNull();
@@ -108,11 +96,6 @@ namespace diNo
       schueler.Data.Email = textBoxEmail.Text;
       schueler.Data.Status = cbStatus.SelectedIndex;
     
-      schueler.Data.Name = textBoxNachname.Text;
-      schueler.Data.Vorname = textBoxVorname.Text;
-      schueler.Data.Rufname = textBoxRufname.Text;
-      schueler.Data.Ausbildungsrichtung = textBoxAR.Text;
-
       schueler.Save();
     }
 

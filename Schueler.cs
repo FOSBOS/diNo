@@ -783,6 +783,21 @@ namespace diNo
       return Zeitpunkt.None;
     }
 
+    public int GetAnzahlEinbringung()
+    {
+      if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      {
+        return 16;
+      }
+      if (!hatVorHj)
+      {
+        return 17;
+      }
+
+      return 25; //FOS11
+    }
+
+
     public bool AlteFOBOSO()
     {
       return getKlasse.AlteFOBOSO();

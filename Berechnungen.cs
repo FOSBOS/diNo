@@ -14,7 +14,6 @@ namespace diNo
     private Zeitpunkt zeitpunkt;    
     public delegate void Aufgabe(Schueler s);
     public List<Aufgabe> aufgaben; // speichert alle zu erledigenden Berechnungsaufgaben eines Schülers
-    public List<String> fehler = new List<String>();
 
     public Berechnungen(Zeitpunkt azeitpunkt)
     {
@@ -72,7 +71,10 @@ namespace diNo
       var sowiesoPflicht = new List<HjLeistung>(); // zählen nicht zu den 25 bzw. 17 HjLeistungen
       var einbringen = new List<HjLeistung>(); // enthält alle "weiteren" HjErgebnisse (außer FR, FPA, AP)
       var streichen = new List<HjLeistung>();
-      var unbedingtStreichen = new List<HjLeistung>();      
+      var unbedingtStreichen = new List<HjLeistung>();
+
+      // eine vorhandene Einbringung darf nicht überschrieben werden!
+      if (s.Data.Berechungsstatus >= (byte)Berechnungsstatus.Einbringung) return;
 
       foreach (var fachNoten in s.getNoten.alleFaecher)
       {
@@ -137,19 +139,19 @@ namespace diNo
         }
       }
 
-      int fehlend = GetNoetigeAnzahl(s) - einbringen.Count;
+      int fehlend = s.GetAnzahlEinbringung() - einbringen.Count;
 
       if (fehlend > streichen.Count) // nicht genügend vorhanden ==> ggf. aus unbedingtStreichen holen
       {
         einbringen.AddRange(streichen);
         streichen.Clear();
         fehlend -= streichen.Count;
-        if (fehlend > unbedingtStreichen.Count)
+        if (fehlend > unbedingtStreichen.Count) // nicht mal da sind genügend vorhanden ==> S hat insgesamt zu wenige HjL
         {
           einbringen.AddRange(unbedingtStreichen);
           unbedingtStreichen.Clear();
           fehlend -= streichen.Count;
-          fehler.Add(s.getKlasse.Bezeichnung + ", " + s.NameVorname + ": Es fehlen " + fehlend +" gültige HjLeistungen für die Einbringung." );
+          s.Data.Berechungsstatus = (byte)Berechnungsstatus.ZuWenigeHjLeistungen;          
         }
         else
         {
@@ -174,7 +176,9 @@ namespace diNo
       {
         hjLeistung.Status = HjStatus.NichtEinbringen;
         hjLeistung.WriteToDB();
-      }      
+      }
+
+      s.Data.Berechungsstatus = (byte)Berechnungsstatus.Einbringung;
     }
 
     // liefert wahr, wenn sich ohne Streichung zusätzlich eine 5 (oder 6) ergeben würde
@@ -186,26 +190,7 @@ namespace diNo
       return (s1 >= 3.5 && s < 3.5 || s1 >= 1.0 && s < 1.0);
     }
 
-    private int GetNoetigeAnzahl(Schueler s)
-    {
-      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
-      {
-        return 16;
-      }
-      if (!s.hatVorHj)
-      {
-        return 17;
-      }
-
-      return 25; //FOS11
-    }
-
-    public void ShowFehler()
-    {
-      if (fehler.Count > 0)
-        (new ListeForm(fehler)).Show();
-    }
-
+    
     /// <summary>
     /// Berechnet das Gesamtergebnis aller Fächer, sowie die Punktesumme
     /// </summary>
@@ -222,7 +207,7 @@ namespace diNo
       foreach (var f in s.Fachreferat)
         p.Add(PunktesummeArt.FR, f.Punkte);
 
-      p.WriteToDB();
+      p.WriteToDB();      
       s.Refresh();
     }
 
@@ -237,7 +222,7 @@ namespace diNo
       }
 
       int anz = s.punktesumme.Anzahl(PunktesummeArt.Gesamt);
-      if (anz>0)
+      if (anz>0 && s.Data.Berechungsstatus != (byte)Berechnungsstatus.ZuWenigeHjLeistungen)
       {
         //decimal erg = 17/ (decimal)3.0 - 5 * (decimal)s.punktesumme.Summe(PunktesummeArt.Gesamt) / (15*anz);
         decimal erg = (17 - (decimal)s.punktesumme.Summe(PunktesummeArt.Gesamt) / anz) / 3;
@@ -250,6 +235,7 @@ namespace diNo
           erg = Math.Floor(erg * 10) / 10; // auf 1 NK abrunden
         }
         s.Data.DNote = erg;
+        s.Data.Berechungsstatus = (byte)Berechnungsstatus.Gesamtergebnis;
       }
       else
       {
@@ -362,5 +348,13 @@ namespace diNo
       }
 
     }
+  }
+
+  public enum Berechnungsstatus
+  {
+    Unberechnet = 0,
+    ZuWenigeHjLeistungen,
+    Einbringung,    
+    Gesamtergebnis
   }
 }

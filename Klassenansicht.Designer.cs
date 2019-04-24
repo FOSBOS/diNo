@@ -47,6 +47,7 @@
       this.tabPageAdministration = new System.Windows.Forms.TabPage();
       this.userControlAdministration1 = new diNo.UserControlAdministration();
       this.tabPageSekretariat = new System.Windows.Forms.TabPage();
+      this.userControlSekretariat1 = new diNo.UserControlSekretariat();
       this.klasseLabel = new System.Windows.Forms.Label();
       this.nameLabel = new System.Windows.Forms.Label();
       this.treeListView1 = new BrightIdeasSoftware.TreeListView();
@@ -62,7 +63,6 @@
       this.multiImageRenderer1 = new BrightIdeasSoftware.MultiImageRenderer();
       this.chkNurAktive = new System.Windows.Forms.CheckBox();
       this.btnRefresh = new System.Windows.Forms.Button();
-      this.userControlSekretariat1 = new diNo.UserControlSekretariat();
       this.tabControl1.SuspendLayout();
       this.tabPageStammdaten.SuspendLayout();
       this.tabPageNoten.SuspendLayout();
@@ -100,8 +100,8 @@
       this.tabControl1.Controls.Add(this.tabPageFPASeminar);
       this.tabControl1.Controls.Add(this.tabPageVorkommnisse);
       this.tabControl1.Controls.Add(this.tabPageKurszuordnungen);
-      this.tabControl1.Controls.Add(this.tabPageAdministration);
       this.tabControl1.Controls.Add(this.tabPageSekretariat);
+      this.tabControl1.Controls.Add(this.tabPageAdministration);
       this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.tabControl1.Location = new System.Drawing.Point(275, 133);
       this.tabControl1.Name = "tabControl1";
@@ -282,6 +282,16 @@
       this.tabPageSekretariat.Text = "Sekretariat";
       this.tabPageSekretariat.UseVisualStyleBackColor = true;
       // 
+      // userControlSekretariat1
+      // 
+      this.userControlSekretariat1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.userControlSekretariat1.Location = new System.Drawing.Point(3, 3);
+      this.userControlSekretariat1.Margin = new System.Windows.Forms.Padding(4);
+      this.userControlSekretariat1.Name = "userControlSekretariat1";
+      this.userControlSekretariat1.Schueler = null;
+      this.userControlSekretariat1.Size = new System.Drawing.Size(884, 444);
+      this.userControlSekretariat1.TabIndex = 0;
+      // 
       // klasseLabel
       // 
       this.klasseLabel.AutoSize = true;
@@ -440,16 +450,6 @@
       this.toolTipButtons.SetToolTip(this.btnRefresh, "Daten neu laden");
       this.btnRefresh.UseVisualStyleBackColor = true;
       this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
-      // 
-      // userControlSekretariat1
-      // 
-      this.userControlSekretariat1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.userControlSekretariat1.Location = new System.Drawing.Point(3, 3);
-      this.userControlSekretariat1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-      this.userControlSekretariat1.Name = "userControlSekretariat1";
-      this.userControlSekretariat1.Schueler = null;
-      this.userControlSekretariat1.Size = new System.Drawing.Size(884, 444);
-      this.userControlSekretariat1.TabIndex = 0;
       // 
       // Klassenansicht
       // 

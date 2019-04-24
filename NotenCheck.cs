@@ -725,15 +725,18 @@ namespace diNo
 
     public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
     {
-      return jahrgangsstufe == Jahrgangsstufe.Zwoelf; // AlteFOBOSO noch nicht
+      return true;
     }
 
     public override void Check(Schueler schueler)
     {
-      int notw = schueler.hatVorHj ? 25 : 17;
+      if (schueler.Data.Berechungsstatus == (byte)Berechnungsstatus.Unberechnet) return;
+      int notw = schueler.GetAnzahlEinbringung();
       int eing = schueler.punktesumme.Anzahl(PunktesummeArt.HjLeistungen);
       if (eing > 0 && notw != eing) 
         contr.Add(null, "Es wurden " + eing + " statt " + notw + " Halbjahresleistungen eingebracht.");
+      else if (schueler.Data.Berechungsstatus==(byte)Berechnungsstatus.ZuWenigeHjLeistungen)
+        contr.Add(null, "Es wurden zu wenige Halbjahresleistungen eingebracht.");
     }
   }
 

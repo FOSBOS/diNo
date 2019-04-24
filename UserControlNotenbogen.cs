@@ -26,7 +26,11 @@ namespace diNo
       chkShowAbi_CheckedChanged(this,null);
 
       if (Zugriff.Instance.HatRolle(Rolle.Admin)) // bearbeiten von Punktewerten
+      {
         dataGridNoten.CellDoubleClick += dataGridNoten_CellDoubleClick;
+        lbBerechnungsstatus.Visible = true;
+        comboBoxBerechnungsstatus.Visible = true;
+      }
     }
   
     public Schueler Schueler
@@ -135,6 +139,10 @@ namespace diNo
           }
         }
       }
+
+      lbHinweise.Visible = schueler.Data.Berechungsstatus > (byte)Berechnungsstatus.Unberechnet
+        && schueler.punktesumme.Anzahl(PunktesummeArt.HjLeistungen) != schueler.GetAnzahlEinbringung();
+      comboBoxBerechnungsstatus.SelectedIndex = schueler.Data.Berechungsstatus;
     }
 
     private void SetBackgroundColor(HjLeistung hj, DataGridViewCell cell)
@@ -199,7 +207,10 @@ namespace diNo
     {
       HjLeistung hj = (HjLeistung) dataGridNoten.SelectedCells[0].Tag;
       hj.SetStatus(status);      
-      SetBackgroundColor(hj, dataGridNoten.SelectedCells[0]);
+      //SetBackgroundColor(hj, dataGridNoten.SelectedCells[0]);
+      var berechnungen = new Berechnungen((Zeitpunkt)Zugriff.Instance.aktZeitpunkt);
+      berechnungen.BerechneSchueler(schueler);
+      Init();
     }
 
     private void contextMenu_Opening(object sender, CancelEventArgs e)

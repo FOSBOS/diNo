@@ -25,5 +25,17 @@
     private System.Windows.Forms.Label labelZeugnisbemerkung;
     private System.Windows.Forms.ListBox listBoxZuletztBesuchteSchulart;
     private System.Windows.Forms.Label lblSchulischeVorbildung;
+    private System.Windows.Forms.Panel panelSekretariat;
+    private System.Windows.Forms.TextBox textBoxAR;
+    private System.Windows.Forms.Label label20;
+    private System.Windows.Forms.TextBox textBoxID;
+    private System.Windows.Forms.Label labelID;
+    private System.Windows.Forms.CheckBox checkBoxLegasthenie;
+    private System.Windows.Forms.TextBox textBoxRufname;
+    private System.Windows.Forms.Label label19;
+    private System.Windows.Forms.TextBox textBoxVorname;
+    private System.Windows.Forms.Label label18;
+    private System.Windows.Forms.TextBox textBoxNachname;
+    private System.Windows.Forms.Label label7;
   }
 }

@@ -47,9 +47,10 @@ namespace diNo
 
     private byte Wuerfeln(FachSchuelerNoten f, HjArt a)
     {
-      if (f.getHjLeistung(a) == null)
+      HjLeistung hj = f.getHjLeistung(a);
+      if (hj == null)
       {
-        HjLeistung hj = new HjLeistung(f.schueler.Id, f.getFach, a, f.schueler.getKlasse.Jahrgangsstufe);
+        hj = new HjLeistung(f.schueler.Id, f.getFach, a, f.schueler.getKlasse.Jahrgangsstufe);
         hj.Punkte = (byte)r.Next(16);
         hj.SchnittMdl = 20; // sinnloser Wert, um gewürfelte Noten zu erkennen.
         hj.WriteToDB();

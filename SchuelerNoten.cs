@@ -400,7 +400,7 @@ namespace diNo
         if (f.getFach.IstSAPFach(schueler.Zweig) && kuerzel != "E")
         {        
           int? sap = f.getNote(Halbjahr.Zweites, Notentyp.APSchriftlich);
-          if (sap == null) sap = f.getHjLeistung(HjArt.AP).Punkte; // für Testzwecke Meldung über Notenanzahlchecker
+          if (sap == null && f.getHjLeistung(HjArt.AP)!=null) sap = f.getHjLeistung(HjArt.AP).Punkte; // für Testzwecke Meldung über Notenanzahlchecker
           gev[index] = new GEVariante();
 
           Fachsumme fs = f.SummeHalbjahre();
@@ -652,7 +652,7 @@ namespace diNo
       if (vorJahr) hj = getVorHjLeistung(a);
       else hj = getHjLeistung(a);
 
-      if (hj!=null && (hj.Status!=HjStatus.NichtEinbringen || ignoreEinbringung))
+      if (hj!=null && hj.Status != HjStatus.Ungueltig && (hj.Status!=HjStatus.NichtEinbringen || ignoreEinbringung))
       {
         if (a==HjArt.AP)
         {

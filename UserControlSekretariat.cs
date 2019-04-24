@@ -34,6 +34,14 @@ namespace diNo
           numericUpDownDeutsch.Value = schueler.Data.IsMittlereReifeDeutschnoteNull() ? null : (decimal?)schueler.Data.MittlereReifeDeutschnote;
           numericUpDownEnglisch.Value = schueler.Data.IsMittlereReifeEnglischnoteNull() ? null : (decimal?)schueler.Data.MittlereReifeEnglischnote;
           numericUpDownMathe.Value = schueler.Data.IsMittlereReifeMathenoteNull() ? null : (decimal?)schueler.Data.MittlereReifeMathenote;
+
+          textBoxID.Text = schueler.Id.ToString();
+          checkBoxLegasthenie.Checked = schueler.IsLegastheniker;
+          textBoxNachname.Text = schueler.Data.Name;
+          textBoxVorname.Text = schueler.Data.Vorname;
+          textBoxRufname.Text = schueler.Data.Rufname;
+          textBoxAR.Text = schueler.Data.Ausbildungsrichtung;
+
         }
       }
     }
@@ -58,6 +66,12 @@ namespace diNo
       if (numericUpDownMathe.Value == null) schueler.Data.SetMittlereReifeMathenoteNull();
       else schueler.Data.MittlereReifeMathenote = (int)numericUpDownMathe.Value.GetValueOrDefault();
 
+      schueler.IsLegastheniker = checkBoxLegasthenie.Checked;
+      schueler.Data.Name = textBoxNachname.Text;
+      schueler.Data.Vorname = textBoxVorname.Text;
+      schueler.Data.Rufname = textBoxRufname.Text;
+      schueler.Data.Ausbildungsrichtung = textBoxAR.Text;
+
       schueler.Save();
     }
 
@@ -66,6 +80,11 @@ namespace diNo
       this.listBoxMittlereReifeSchulart = new System.Windows.Forms.ListBox();
       this.btnSave = new System.Windows.Forms.Button();
       this.groupBoxMittlereReife = new System.Windows.Forms.GroupBox();
+      this.listBoxZuletztBesuchteSchulart = new System.Windows.Forms.ListBox();
+      this.numericUpDownMathe = new diNo.NumericUpDownNullable();
+      this.numericUpDownEnglisch = new diNo.NumericUpDownNullable();
+      this.numericUpDownDeutsch = new diNo.NumericUpDownNullable();
+      this.lblSchulischeVorbildung = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
@@ -74,20 +93,28 @@ namespace diNo
       this.textBoxAndereFremdspr2Text = new System.Windows.Forms.TextBox();
       this.label15 = new System.Windows.Forms.Label();
       this.label14 = new System.Windows.Forms.Label();
+      this.numAndereFremdspr2Note = new diNo.NumericUpDownNullable();
       this.textBoxZeugnisbemerkung = new System.Windows.Forms.TextBox();
       this.labelZeugnisbemerkung = new System.Windows.Forms.Label();
-      this.lblSchulischeVorbildung = new System.Windows.Forms.Label();
-      this.listBoxZuletztBesuchteSchulart = new System.Windows.Forms.ListBox();
-      this.numAndereFremdspr2Note = new diNo.NumericUpDownNullable();
-      this.numericUpDownMathe = new diNo.NumericUpDownNullable();
-      this.numericUpDownEnglisch = new diNo.NumericUpDownNullable();
-      this.numericUpDownDeutsch = new diNo.NumericUpDownNullable();
+      this.panelSekretariat = new System.Windows.Forms.Panel();
+      this.checkBoxLegasthenie = new System.Windows.Forms.CheckBox();
+      this.textBoxRufname = new System.Windows.Forms.TextBox();
+      this.label19 = new System.Windows.Forms.Label();
+      this.textBoxVorname = new System.Windows.Forms.TextBox();
+      this.label18 = new System.Windows.Forms.Label();
+      this.textBoxNachname = new System.Windows.Forms.TextBox();
+      this.label7 = new System.Windows.Forms.Label();
+      this.textBoxAR = new System.Windows.Forms.TextBox();
+      this.label20 = new System.Windows.Forms.Label();
+      this.textBoxID = new System.Windows.Forms.TextBox();
+      this.labelID = new System.Windows.Forms.Label();
       this.groupBoxMittlereReife.SuspendLayout();
-      this.groupBox1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMathe)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEnglisch)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDeutsch)).BeginInit();
+      this.groupBox1.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
+      this.panelSekretariat.SuspendLayout();
       this.SuspendLayout();
       // 
       // listBoxMittlereReifeSchulart
@@ -130,12 +157,93 @@ namespace diNo
       this.groupBoxMittlereReife.Controls.Add(this.label2);
       this.groupBoxMittlereReife.Controls.Add(this.label1);
       this.groupBoxMittlereReife.Controls.Add(this.listBoxMittlereReifeSchulart);
-      this.groupBoxMittlereReife.Location = new System.Drawing.Point(3, 3);
+      this.groupBoxMittlereReife.Location = new System.Drawing.Point(3, 190);
       this.groupBoxMittlereReife.Name = "groupBoxMittlereReife";
       this.groupBoxMittlereReife.Size = new System.Drawing.Size(258, 272);
       this.groupBoxMittlereReife.TabIndex = 28;
       this.groupBoxMittlereReife.TabStop = false;
       this.groupBoxMittlereReife.Text = "mittlere Reife";
+      // 
+      // listBoxZuletztBesuchteSchulart
+      // 
+      this.listBoxZuletztBesuchteSchulart.FormattingEnabled = true;
+      this.listBoxZuletztBesuchteSchulart.Items.AddRange(new object[] {
+            "",
+            "BFo",
+            "BFS",
+            "BP",
+            "BS",
+            "BSo",
+            "F10",
+            "FAo",
+            "GY0",
+            "GY1",
+            "H",
+            "HSo",
+            "HSq",
+            "M",
+            "QB",
+            "R3a",
+            "R3b",
+            "RS",
+            "RS1",
+            "RS2",
+            "RS3",
+            "SoM",
+            "VSo",
+            "WS",
+            "WSH",
+            "WSM"});
+      this.listBoxZuletztBesuchteSchulart.Location = new System.Drawing.Point(6, 184);
+      this.listBoxZuletztBesuchteSchulart.Name = "listBoxZuletztBesuchteSchulart";
+      this.listBoxZuletztBesuchteSchulart.Size = new System.Drawing.Size(118, 82);
+      this.listBoxZuletztBesuchteSchulart.TabIndex = 85;
+      // 
+      // numericUpDownMathe
+      // 
+      this.numericUpDownMathe.Location = new System.Drawing.Point(199, 93);
+      this.numericUpDownMathe.Name = "numericUpDownMathe";
+      this.numericUpDownMathe.Size = new System.Drawing.Size(49, 20);
+      this.numericUpDownMathe.TabIndex = 7;
+      this.numericUpDownMathe.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+      // 
+      // numericUpDownEnglisch
+      // 
+      this.numericUpDownEnglisch.Location = new System.Drawing.Point(199, 69);
+      this.numericUpDownEnglisch.Name = "numericUpDownEnglisch";
+      this.numericUpDownEnglisch.Size = new System.Drawing.Size(49, 20);
+      this.numericUpDownEnglisch.TabIndex = 6;
+      this.numericUpDownEnglisch.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+      // 
+      // numericUpDownDeutsch
+      // 
+      this.numericUpDownDeutsch.Location = new System.Drawing.Point(199, 43);
+      this.numericUpDownDeutsch.Name = "numericUpDownDeutsch";
+      this.numericUpDownDeutsch.Size = new System.Drawing.Size(49, 20);
+      this.numericUpDownDeutsch.TabIndex = 5;
+      this.numericUpDownDeutsch.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+      // 
+      // lblSchulischeVorbildung
+      // 
+      this.lblSchulischeVorbildung.AutoSize = true;
+      this.lblSchulischeVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lblSchulischeVorbildung.Location = new System.Drawing.Point(6, 168);
+      this.lblSchulischeVorbildung.Name = "lblSchulischeVorbildung";
+      this.lblSchulischeVorbildung.Size = new System.Drawing.Size(126, 13);
+      this.lblSchulischeVorbildung.TabIndex = 77;
+      this.lblSchulischeVorbildung.Text = "zuletzt besuchte Schulart";
       // 
       // label4
       // 
@@ -179,7 +287,7 @@ namespace diNo
       this.groupBox1.Controls.Add(this.label15);
       this.groupBox1.Controls.Add(this.label14);
       this.groupBox1.Controls.Add(this.numAndereFremdspr2Note);
-      this.groupBox1.Location = new System.Drawing.Point(282, 3);
+      this.groupBox1.Location = new System.Drawing.Point(296, 22);
       this.groupBox1.Name = "groupBox1";
       this.groupBox1.Size = new System.Drawing.Size(285, 75);
       this.groupBox1.TabIndex = 67;
@@ -214,69 +322,6 @@ namespace diNo
       this.label14.TabIndex = 69;
       this.label14.Text = "Notenpunkte";
       // 
-      // textBoxZeugnisbemerkung
-      // 
-      this.textBoxZeugnisbemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxZeugnisbemerkung.Location = new System.Drawing.Point(285, 103);
-      this.textBoxZeugnisbemerkung.Name = "textBoxZeugnisbemerkung";
-      this.textBoxZeugnisbemerkung.Size = new System.Drawing.Size(276, 20);
-      this.textBoxZeugnisbemerkung.TabIndex = 84;
-      // 
-      // labelZeugnisbemerkung
-      // 
-      this.labelZeugnisbemerkung.AutoSize = true;
-      this.labelZeugnisbemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelZeugnisbemerkung.Location = new System.Drawing.Point(282, 87);
-      this.labelZeugnisbemerkung.Name = "labelZeugnisbemerkung";
-      this.labelZeugnisbemerkung.Size = new System.Drawing.Size(153, 13);
-      this.labelZeugnisbemerkung.TabIndex = 83;
-      this.labelZeugnisbemerkung.Text = "zusätzliche Zeugnisbemerkung";
-      // 
-      // lblSchulischeVorbildung
-      // 
-      this.lblSchulischeVorbildung.AutoSize = true;
-      this.lblSchulischeVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lblSchulischeVorbildung.Location = new System.Drawing.Point(6, 168);
-      this.lblSchulischeVorbildung.Name = "lblSchulischeVorbildung";
-      this.lblSchulischeVorbildung.Size = new System.Drawing.Size(126, 13);
-      this.lblSchulischeVorbildung.TabIndex = 77;
-      this.lblSchulischeVorbildung.Text = "zuletzt besuchte Schulart";
-      // 
-      // listBoxZuletztBesuchteSchulart
-      // 
-      this.listBoxZuletztBesuchteSchulart.FormattingEnabled = true;
-      this.listBoxZuletztBesuchteSchulart.Items.AddRange(new object[] {
-            "",
-            "BFo",
-            "BFS",
-            "BP",
-            "BS",
-            "BSo",
-            "F10",
-            "FAo",
-            "GY0",
-            "GY1",
-            "H",
-            "HSo",
-            "HSq",
-            "M",
-            "QB",
-            "R3a",
-            "R3b",
-            "RS",
-            "RS1",
-            "RS2",
-            "RS3",
-            "SoM",
-            "VSo",
-            "WS",
-            "WSH",
-            "WSM"});
-      this.listBoxZuletztBesuchteSchulart.Location = new System.Drawing.Point(6, 184);
-      this.listBoxZuletztBesuchteSchulart.Name = "listBoxZuletztBesuchteSchulart";
-      this.listBoxZuletztBesuchteSchulart.Size = new System.Drawing.Size(118, 82);
-      this.listBoxZuletztBesuchteSchulart.TabIndex = 85;
-      // 
       // numAndereFremdspr2Note
       // 
       this.numAndereFremdspr2Note.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -291,46 +336,151 @@ namespace diNo
       this.numAndereFremdspr2Note.TabIndex = 67;
       this.numAndereFremdspr2Note.Value = null;
       // 
-      // numericUpDownMathe
+      // textBoxZeugnisbemerkung
       // 
-      this.numericUpDownMathe.Location = new System.Drawing.Point(199, 93);
-      this.numericUpDownMathe.Name = "numericUpDownMathe";
-      this.numericUpDownMathe.Size = new System.Drawing.Size(49, 20);
-      this.numericUpDownMathe.TabIndex = 7;
-      this.numericUpDownMathe.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+      this.textBoxZeugnisbemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxZeugnisbemerkung.Location = new System.Drawing.Point(299, 117);
+      this.textBoxZeugnisbemerkung.Name = "textBoxZeugnisbemerkung";
+      this.textBoxZeugnisbemerkung.Size = new System.Drawing.Size(276, 20);
+      this.textBoxZeugnisbemerkung.TabIndex = 84;
       // 
-      // numericUpDownEnglisch
+      // labelZeugnisbemerkung
       // 
-      this.numericUpDownEnglisch.Location = new System.Drawing.Point(199, 69);
-      this.numericUpDownEnglisch.Name = "numericUpDownEnglisch";
-      this.numericUpDownEnglisch.Size = new System.Drawing.Size(49, 20);
-      this.numericUpDownEnglisch.TabIndex = 6;
-      this.numericUpDownEnglisch.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+      this.labelZeugnisbemerkung.AutoSize = true;
+      this.labelZeugnisbemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.labelZeugnisbemerkung.Location = new System.Drawing.Point(296, 101);
+      this.labelZeugnisbemerkung.Name = "labelZeugnisbemerkung";
+      this.labelZeugnisbemerkung.Size = new System.Drawing.Size(153, 13);
+      this.labelZeugnisbemerkung.TabIndex = 83;
+      this.labelZeugnisbemerkung.Text = "zusätzliche Zeugnisbemerkung";
       // 
-      // numericUpDownDeutsch
+      // panelSekretariat
       // 
-      this.numericUpDownDeutsch.Location = new System.Drawing.Point(199, 43);
-      this.numericUpDownDeutsch.Name = "numericUpDownDeutsch";
-      this.numericUpDownDeutsch.Size = new System.Drawing.Size(49, 20);
-      this.numericUpDownDeutsch.TabIndex = 5;
-      this.numericUpDownDeutsch.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
+      this.panelSekretariat.Controls.Add(this.textBoxAR);
+      this.panelSekretariat.Controls.Add(this.label20);
+      this.panelSekretariat.Controls.Add(this.textBoxID);
+      this.panelSekretariat.Controls.Add(this.labelID);
+      this.panelSekretariat.Controls.Add(this.checkBoxLegasthenie);
+      this.panelSekretariat.Controls.Add(this.textBoxRufname);
+      this.panelSekretariat.Controls.Add(this.label19);
+      this.panelSekretariat.Controls.Add(this.textBoxVorname);
+      this.panelSekretariat.Controls.Add(this.label18);
+      this.panelSekretariat.Controls.Add(this.textBoxNachname);
+      this.panelSekretariat.Controls.Add(this.label7);
+      this.panelSekretariat.Location = new System.Drawing.Point(9, 22);
+      this.panelSekretariat.Name = "panelSekretariat";
+      this.panelSekretariat.Size = new System.Drawing.Size(260, 140);
+      this.panelSekretariat.TabIndex = 85;
+      // 
+      // checkBoxLegasthenie
+      // 
+      this.checkBoxLegasthenie.AutoSize = true;
+      this.checkBoxLegasthenie.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.checkBoxLegasthenie.Location = new System.Drawing.Point(149, 19);
+      this.checkBoxLegasthenie.Name = "checkBoxLegasthenie";
+      this.checkBoxLegasthenie.Size = new System.Drawing.Size(93, 17);
+      this.checkBoxLegasthenie.TabIndex = 80;
+      this.checkBoxLegasthenie.Text = "Legasthenie   ";
+      this.checkBoxLegasthenie.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+      this.checkBoxLegasthenie.UseVisualStyleBackColor = true;
+      // 
+      // textBoxRufname
+      // 
+      this.textBoxRufname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxRufname.Location = new System.Drawing.Point(2, 96);
+      this.textBoxRufname.Name = "textBoxRufname";
+      this.textBoxRufname.Size = new System.Drawing.Size(116, 20);
+      this.textBoxRufname.TabIndex = 78;
+      // 
+      // label19
+      // 
+      this.label19.AutoSize = true;
+      this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label19.Location = new System.Drawing.Point(-1, 82);
+      this.label19.Name = "label19";
+      this.label19.Size = new System.Drawing.Size(50, 13);
+      this.label19.TabIndex = 79;
+      this.label19.Text = "Rufname";
+      // 
+      // textBoxVorname
+      // 
+      this.textBoxVorname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxVorname.Location = new System.Drawing.Point(2, 59);
+      this.textBoxVorname.Name = "textBoxVorname";
+      this.textBoxVorname.Size = new System.Drawing.Size(116, 20);
+      this.textBoxVorname.TabIndex = 76;
+      // 
+      // label18
+      // 
+      this.label18.AutoSize = true;
+      this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label18.Location = new System.Drawing.Point(-1, 45);
+      this.label18.Name = "label18";
+      this.label18.Size = new System.Drawing.Size(49, 13);
+      this.label18.TabIndex = 77;
+      this.label18.Text = "Vorname";
+      // 
+      // textBoxNachname
+      // 
+      this.textBoxNachname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxNachname.Location = new System.Drawing.Point(2, 19);
+      this.textBoxNachname.Name = "textBoxNachname";
+      this.textBoxNachname.Size = new System.Drawing.Size(116, 20);
+      this.textBoxNachname.TabIndex = 74;
+      // 
+      // label7
+      // 
+      this.label7.AutoSize = true;
+      this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label7.Location = new System.Drawing.Point(-1, 5);
+      this.label7.Name = "label7";
+      this.label7.Size = new System.Drawing.Size(59, 13);
+      this.label7.TabIndex = 75;
+      this.label7.Text = "Nachname";
+      // 
+      // textBoxAR
+      // 
+      this.textBoxAR.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxAR.Location = new System.Drawing.Point(153, 58);
+      this.textBoxAR.MaxLength = 1;
+      this.textBoxAR.Name = "textBoxAR";
+      this.textBoxAR.Size = new System.Drawing.Size(88, 20);
+      this.textBoxAR.TabIndex = 89;
+      // 
+      // label20
+      // 
+      this.label20.AutoSize = true;
+      this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label20.Location = new System.Drawing.Point(150, 44);
+      this.label20.Name = "label20";
+      this.label20.Size = new System.Drawing.Size(102, 13);
+      this.label20.TabIndex = 90;
+      this.label20.Text = "Ausbildungsrichtung";
+      // 
+      // textBoxID
+      // 
+      this.textBoxID.Enabled = false;
+      this.textBoxID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxID.Location = new System.Drawing.Point(153, 95);
+      this.textBoxID.Name = "textBoxID";
+      this.textBoxID.Size = new System.Drawing.Size(88, 20);
+      this.textBoxID.TabIndex = 87;
+      // 
+      // labelID
+      // 
+      this.labelID.AutoSize = true;
+      this.labelID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.labelID.Location = new System.Drawing.Point(150, 81);
+      this.labelID.Name = "labelID";
+      this.labelID.Size = new System.Drawing.Size(57, 13);
+      this.labelID.TabIndex = 88;
+      this.labelID.Text = "Schüler-ID";
       // 
       // UserControlSekretariat
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      this.Controls.Add(this.panelSekretariat);
       this.Controls.Add(this.textBoxZeugnisbemerkung);
       this.Controls.Add(this.labelZeugnisbemerkung);
       this.Controls.Add(this.groupBox1);
@@ -340,12 +490,14 @@ namespace diNo
       this.Size = new System.Drawing.Size(621, 479);
       this.groupBoxMittlereReife.ResumeLayout(false);
       this.groupBoxMittlereReife.PerformLayout();
-      this.groupBox1.ResumeLayout(false);
-      this.groupBox1.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMathe)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEnglisch)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDeutsch)).EndInit();
+      this.groupBox1.ResumeLayout(false);
+      this.groupBox1.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).EndInit();
+      this.panelSekretariat.ResumeLayout(false);
+      this.panelSekretariat.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 

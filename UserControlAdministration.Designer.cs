@@ -43,6 +43,7 @@
       this.btnAttestpflicht = new System.Windows.Forms.Button();
       this.btnNotendruck = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
+      this.btnMBStatistik = new System.Windows.Forms.Button();
       this.btnExportSchuelerZeugnisprogramm = new System.Windows.Forms.Button();
       this.btnNotenNachWinSV = new System.Windows.Forms.Button();
       this.btnSendExcelFiles = new System.Windows.Forms.Button();
@@ -76,7 +77,6 @@
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
-      this.btnMBStatistik = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -95,7 +95,7 @@
       this.groupBoxAnalyse.Controls.Add(this.btnSelect);
       this.groupBoxAnalyse.Location = new System.Drawing.Point(19, 268);
       this.groupBoxAnalyse.Name = "groupBoxAnalyse";
-      this.groupBoxAnalyse.Size = new System.Drawing.Size(250, 226);
+      this.groupBoxAnalyse.Size = new System.Drawing.Size(241, 226);
       this.groupBoxAnalyse.TabIndex = 4;
       this.groupBoxAnalyse.TabStop = false;
       this.groupBoxAnalyse.Text = "Datenanalyse";
@@ -131,7 +131,7 @@
       this.groupBoxDrucken.Controls.Add(this.btnNotendruck);
       this.groupBoxDrucken.Location = new System.Drawing.Point(19, 28);
       this.groupBoxDrucken.Name = "groupBoxDrucken";
-      this.groupBoxDrucken.Size = new System.Drawing.Size(250, 233);
+      this.groupBoxDrucken.Size = new System.Drawing.Size(241, 233);
       this.groupBoxDrucken.TabIndex = 3;
       this.groupBoxDrucken.TabStop = false;
       this.groupBoxDrucken.Text = "Drucken";
@@ -255,16 +255,26 @@
       this.groupBoxExport.Controls.Add(this.btnSendExcelFiles);
       this.groupBoxExport.Controls.Add(this.btnCreateExcels);
       this.groupBoxExport.Controls.Add(this.exportNoten);
-      this.groupBoxExport.Location = new System.Drawing.Point(287, 267);
+      this.groupBoxExport.Location = new System.Drawing.Point(504, 267);
       this.groupBoxExport.Name = "groupBoxExport";
-      this.groupBoxExport.Size = new System.Drawing.Size(250, 226);
+      this.groupBoxExport.Size = new System.Drawing.Size(220, 226);
       this.groupBoxExport.TabIndex = 4;
       this.groupBoxExport.TabStop = false;
       this.groupBoxExport.Text = "Export";
       // 
+      // btnMBStatistik
+      // 
+      this.btnMBStatistik.Location = new System.Drawing.Point(20, 163);
+      this.btnMBStatistik.Name = "btnMBStatistik";
+      this.btnMBStatistik.Size = new System.Drawing.Size(182, 23);
+      this.btnMBStatistik.TabIndex = 7;
+      this.btnMBStatistik.Text = "MB-Statistik erstellen";
+      this.btnMBStatistik.UseVisualStyleBackColor = true;
+      this.btnMBStatistik.Click += new System.EventHandler(this.btnMBStatistik_Click);
+      // 
       // btnExportSchuelerZeugnisprogramm
       // 
-      this.btnExportSchuelerZeugnisprogramm.Location = new System.Drawing.Point(6, 134);
+      this.btnExportSchuelerZeugnisprogramm.Location = new System.Drawing.Point(20, 134);
       this.btnExportSchuelerZeugnisprogramm.Name = "btnExportSchuelerZeugnisprogramm";
       this.btnExportSchuelerZeugnisprogramm.Size = new System.Drawing.Size(182, 23);
       this.btnExportSchuelerZeugnisprogramm.TabIndex = 6;
@@ -274,7 +284,7 @@
       // 
       // btnNotenNachWinSV
       // 
-      this.btnNotenNachWinSV.Location = new System.Drawing.Point(6, 106);
+      this.btnNotenNachWinSV.Location = new System.Drawing.Point(20, 106);
       this.btnNotenNachWinSV.Name = "btnNotenNachWinSV";
       this.btnNotenNachWinSV.Size = new System.Drawing.Size(182, 23);
       this.btnNotenNachWinSV.TabIndex = 5;
@@ -284,7 +294,7 @@
       // 
       // btnSendExcelFiles
       // 
-      this.btnSendExcelFiles.Location = new System.Drawing.Point(6, 77);
+      this.btnSendExcelFiles.Location = new System.Drawing.Point(20, 77);
       this.btnSendExcelFiles.Name = "btnSendExcelFiles";
       this.btnSendExcelFiles.Size = new System.Drawing.Size(182, 23);
       this.btnSendExcelFiles.TabIndex = 4;
@@ -294,7 +304,7 @@
       // 
       // btnCreateExcels
       // 
-      this.btnCreateExcels.Location = new System.Drawing.Point(6, 48);
+      this.btnCreateExcels.Location = new System.Drawing.Point(20, 48);
       this.btnCreateExcels.Name = "btnCreateExcels";
       this.btnCreateExcels.Size = new System.Drawing.Size(182, 23);
       this.btnCreateExcels.TabIndex = 3;
@@ -304,7 +314,7 @@
       // 
       // exportNoten
       // 
-      this.exportNoten.Location = new System.Drawing.Point(6, 19);
+      this.exportNoten.Location = new System.Drawing.Point(20, 19);
       this.exportNoten.Name = "exportNoten";
       this.exportNoten.Size = new System.Drawing.Size(182, 23);
       this.exportNoten.TabIndex = 2;
@@ -319,16 +329,16 @@
       this.groupBoxImport.Controls.Add(this.btnImportSchueler);
       this.groupBoxImport.Controls.Add(this.btnImportUnterricht);
       this.groupBoxImport.Controls.Add(this.importNoten);
-      this.groupBoxImport.Location = new System.Drawing.Point(287, 28);
+      this.groupBoxImport.Location = new System.Drawing.Point(504, 28);
       this.groupBoxImport.Name = "groupBoxImport";
-      this.groupBoxImport.Size = new System.Drawing.Size(250, 233);
+      this.groupBoxImport.Size = new System.Drawing.Size(220, 233);
       this.groupBoxImport.TabIndex = 3;
       this.groupBoxImport.TabStop = false;
       this.groupBoxImport.Text = "Import";
       // 
       // btnReadWahlpflichtfaecher
       // 
-      this.btnReadWahlpflichtfaecher.Location = new System.Drawing.Point(6, 135);
+      this.btnReadWahlpflichtfaecher.Location = new System.Drawing.Point(20, 138);
       this.btnReadWahlpflichtfaecher.Name = "btnReadWahlpflichtfaecher";
       this.btnReadWahlpflichtfaecher.Size = new System.Drawing.Size(182, 23);
       this.btnReadWahlpflichtfaecher.TabIndex = 7;
@@ -338,7 +348,7 @@
       // 
       // btnImportKlassenleiter
       // 
-      this.btnImportKlassenleiter.Location = new System.Drawing.Point(6, 106);
+      this.btnImportKlassenleiter.Location = new System.Drawing.Point(20, 109);
       this.btnImportKlassenleiter.Name = "btnImportKlassenleiter";
       this.btnImportKlassenleiter.Size = new System.Drawing.Size(182, 23);
       this.btnImportKlassenleiter.TabIndex = 6;
@@ -348,7 +358,7 @@
       // 
       // btnImportSchueler
       // 
-      this.btnImportSchueler.Location = new System.Drawing.Point(6, 77);
+      this.btnImportSchueler.Location = new System.Drawing.Point(20, 80);
       this.btnImportSchueler.Name = "btnImportSchueler";
       this.btnImportSchueler.Size = new System.Drawing.Size(182, 23);
       this.btnImportSchueler.TabIndex = 5;
@@ -358,7 +368,7 @@
       // 
       // btnImportUnterricht
       // 
-      this.btnImportUnterricht.Location = new System.Drawing.Point(6, 48);
+      this.btnImportUnterricht.Location = new System.Drawing.Point(20, 51);
       this.btnImportUnterricht.Name = "btnImportUnterricht";
       this.btnImportUnterricht.Size = new System.Drawing.Size(182, 23);
       this.btnImportUnterricht.TabIndex = 4;
@@ -368,7 +378,7 @@
       // 
       // importNoten
       // 
-      this.importNoten.Location = new System.Drawing.Point(6, 20);
+      this.importNoten.Location = new System.Drawing.Point(20, 23);
       this.importNoten.Name = "importNoten";
       this.importNoten.Size = new System.Drawing.Size(182, 23);
       this.importNoten.TabIndex = 3;
@@ -382,9 +392,9 @@
       this.groupBoxStammdaten.Controls.Add(this.btnGlobales);
       this.groupBoxStammdaten.Controls.Add(this.btnLehrer);
       this.groupBoxStammdaten.Controls.Add(this.btnKurse);
-      this.groupBoxStammdaten.Location = new System.Drawing.Point(543, 277);
+      this.groupBoxStammdaten.Location = new System.Drawing.Point(275, 267);
       this.groupBoxStammdaten.Name = "groupBoxStammdaten";
-      this.groupBoxStammdaten.Size = new System.Drawing.Size(211, 217);
+      this.groupBoxStammdaten.Size = new System.Drawing.Size(211, 227);
       this.groupBoxStammdaten.TabIndex = 5;
       this.groupBoxStammdaten.TabStop = false;
       this.groupBoxStammdaten.Text = "Stammdaten";
@@ -393,7 +403,7 @@
       // 
       this.btnBerechtigungen.Location = new System.Drawing.Point(18, 153);
       this.btnBerechtigungen.Name = "btnBerechtigungen";
-      this.btnBerechtigungen.Size = new System.Drawing.Size(163, 23);
+      this.btnBerechtigungen.Size = new System.Drawing.Size(173, 23);
       this.btnBerechtigungen.TabIndex = 5;
       this.btnBerechtigungen.Text = "Berechtigungen";
       this.btnBerechtigungen.UseVisualStyleBackColor = true;
@@ -403,7 +413,7 @@
       // 
       this.btnGlobales.Location = new System.Drawing.Point(18, 124);
       this.btnGlobales.Name = "btnGlobales";
-      this.btnGlobales.Size = new System.Drawing.Size(163, 23);
+      this.btnGlobales.Size = new System.Drawing.Size(173, 23);
       this.btnGlobales.TabIndex = 3;
       this.btnGlobales.Text = "Globale Texte";
       this.btnGlobales.UseVisualStyleBackColor = true;
@@ -413,7 +423,7 @@
       // 
       this.btnLehrer.Location = new System.Drawing.Point(16, 27);
       this.btnLehrer.Name = "btnLehrer";
-      this.btnLehrer.Size = new System.Drawing.Size(164, 23);
+      this.btnLehrer.Size = new System.Drawing.Size(174, 23);
       this.btnLehrer.TabIndex = 2;
       this.btnLehrer.Text = "Lehrer";
       this.btnLehrer.UseVisualStyleBackColor = true;
@@ -423,7 +433,7 @@
       // 
       this.btnKurse.Location = new System.Drawing.Point(17, 56);
       this.btnKurse.Name = "btnKurse";
-      this.btnKurse.Size = new System.Drawing.Size(164, 23);
+      this.btnKurse.Size = new System.Drawing.Size(174, 23);
       this.btnKurse.TabIndex = 0;
       this.btnKurse.Text = "Kurse";
       this.btnKurse.UseVisualStyleBackColor = true;
@@ -438,7 +448,7 @@
       this.groupBoxEinstellungen.Controls.Add(this.edSchuljahr);
       this.groupBoxEinstellungen.Controls.Add(this.btnSave);
       this.groupBoxEinstellungen.Controls.Add(this.chkSperre);
-      this.groupBoxEinstellungen.Location = new System.Drawing.Point(543, 28);
+      this.groupBoxEinstellungen.Location = new System.Drawing.Point(275, 28);
       this.groupBoxEinstellungen.Name = "groupBoxEinstellungen";
       this.groupBoxEinstellungen.Size = new System.Drawing.Size(211, 233);
       this.groupBoxEinstellungen.TabIndex = 6;
@@ -451,7 +461,7 @@
       this.gbLeseModusExcel.Controls.Add(this.opNurAktuelleNoten);
       this.gbLeseModusExcel.Location = new System.Drawing.Point(16, 127);
       this.gbLeseModusExcel.Name = "gbLeseModusExcel";
-      this.gbLeseModusExcel.Size = new System.Drawing.Size(144, 61);
+      this.gbLeseModusExcel.Size = new System.Drawing.Size(174, 61);
       this.gbLeseModusExcel.TabIndex = 15;
       this.gbLeseModusExcel.TabStop = false;
       this.gbLeseModusExcel.Text = "Lesemodus Exceldateien";
@@ -524,7 +534,7 @@
       // 
       this.btnSave.Location = new System.Drawing.Point(16, 195);
       this.btnSave.Name = "btnSave";
-      this.btnSave.Size = new System.Drawing.Size(100, 23);
+      this.btnSave.Size = new System.Drawing.Size(175, 23);
       this.btnSave.TabIndex = 1;
       this.btnSave.Text = "Übernehmen";
       this.btnSave.UseVisualStyleBackColor = true;
@@ -562,7 +572,7 @@
       // groupboxTest
       // 
       this.groupboxTest.Controls.Add(this.btnHjLeistungenWuerfeln);
-      this.groupboxTest.Location = new System.Drawing.Point(781, 277);
+      this.groupboxTest.Location = new System.Drawing.Point(746, 277);
       this.groupboxTest.Name = "groupboxTest";
       this.groupboxTest.Size = new System.Drawing.Size(198, 217);
       this.groupboxTest.TabIndex = 8;
@@ -574,7 +584,7 @@
       this.groupBoxReparatur.Controls.Add(this.btnGesErg);
       this.groupBoxReparatur.Controls.Add(this.btnDelEinbringung);
       this.groupBoxReparatur.Controls.Add(this.btnEinbringung);
-      this.groupBoxReparatur.Location = new System.Drawing.Point(781, 28);
+      this.groupBoxReparatur.Location = new System.Drawing.Point(746, 28);
       this.groupBoxReparatur.Name = "groupBoxReparatur";
       this.groupBoxReparatur.Size = new System.Drawing.Size(198, 233);
       this.groupBoxReparatur.TabIndex = 9;
@@ -611,16 +621,6 @@
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
       // 
-      // btnMBStatistik
-      // 
-      this.btnMBStatistik.Location = new System.Drawing.Point(6, 163);
-      this.btnMBStatistik.Name = "btnMBStatistik";
-      this.btnMBStatistik.Size = new System.Drawing.Size(182, 23);
-      this.btnMBStatistik.TabIndex = 7;
-      this.btnMBStatistik.Text = "MB-Statistik erstellen";
-      this.btnMBStatistik.UseVisualStyleBackColor = true;
-      this.btnMBStatistik.Click += new System.EventHandler(this.btnMBStatistik_Click);
-      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -636,7 +636,7 @@
       this.Controls.Add(this.groupBoxAnalyse);
       this.Controls.Add(this.groupBoxDrucken);
       this.Name = "UserControlAdministration";
-      this.Size = new System.Drawing.Size(1039, 530);
+      this.Size = new System.Drawing.Size(957, 530);
       this.groupBoxAnalyse.ResumeLayout(false);
       this.groupBoxDrucken.ResumeLayout(false);
       this.groupBoxDrucken.PerformLayout();

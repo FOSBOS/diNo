@@ -266,8 +266,6 @@ namespace diNo
         MessageBox.Show("Es traten keine Fehler auf.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       else
         new ReportNotencheck(res).Show();
-
-      if (berechnungen != null) berechnungen.ShowFehler();
     }
   }
 

@@ -115,10 +115,15 @@ namespace diNo
 
     public void SaveGesErg(HjLeistung gesErg)
     {
-      if (anz == 0) return; // nichts speichern
+      if (anz == 0) // z.B. weil schon beide HjLeistungen ungültig waren
+      {
+        gesErg.SetStatus(HjStatus.Ungueltig);
+        return;
+      }
 
       gesErg.Punkte2Dez = sum / (decimal)anz;
       gesErg.Punkte = GesErg();
+      gesErg.Status = HjStatus.None;
       gesErg.WriteToDB();
     }
 

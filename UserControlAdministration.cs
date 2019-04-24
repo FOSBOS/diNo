@@ -267,6 +267,7 @@ namespace diNo
       foreach (var s in obj)
         t.ZufallHjLeistung(s);
 
+      Zugriff.Instance.SchuelerRep.Clear();
     }
 
     private void btnEinbringung_Click(object sender, EventArgs e)
@@ -290,7 +291,7 @@ namespace diNo
 
     private void DelEinbr(HjLeistung hj)
     {
-      if (hj != null) hj.SetStatus(HjStatus.None);
+      if (hj != null && hj.Status != HjStatus.Ungueltig) hj.SetStatus(HjStatus.None);
     }
 
     private void btnDelEinbringung_Click(object sender, EventArgs e)
@@ -305,6 +306,8 @@ namespace diNo
           DelEinbr(f.getVorHjLeistung(HjArt.Hj1));
           DelEinbr(f.getVorHjLeistung(HjArt.Hj2));
         }
+        s.Data.Berechungsstatus = (byte)Berechnungsstatus.Unberechnet;
+        s.Save();
       }
       RefreshNotenbogen();
     }
