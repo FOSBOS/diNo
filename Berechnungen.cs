@@ -10,15 +10,15 @@ namespace diNo
   /// Verwaltet durchzuführenden Berechnung am übergebenen Zeitpunkt
   /// </summary>
   public class Berechnungen
-  {
-    private Zeitpunkt zeitpunkt;    
+  {      
     public delegate void Aufgabe(Schueler s);
-    public List<Aufgabe> aufgaben; // speichert alle zu erledigenden Berechnungsaufgaben eines Schülers
+    public List<Aufgabe> aufgaben = new List<Aufgabe>();    // speichert alle zu erledigenden Berechnungsaufgaben eines Schülers
 
-    public Berechnungen(Zeitpunkt azeitpunkt)
-    {
-      zeitpunkt = azeitpunkt;
-      aufgaben = new List<Aufgabe>();
+    public Berechnungen()
+    { }
+
+    public Berechnungen(Zeitpunkt zeitpunkt)
+    {      
       if (zeitpunkt == Zeitpunkt.ErstePA)
         aufgaben.Add(BerechneEinbringung);
 
@@ -42,6 +42,7 @@ namespace diNo
         a(s);
       }
       s.Save();
+      s.Refresh();
     }
 
     /*
@@ -74,8 +75,9 @@ namespace diNo
       var unbedingtStreichen = new List<HjLeistung>();
 
       // eine vorhandene Einbringung darf nicht überschrieben werden!
-      if (s.Data.Berechungsstatus >= (byte)Berechnungsstatus.Einbringung) return;
+      if (s.AlteFOBOSO() || s.Data.Berechungsstatus >= (byte)Berechnungsstatus.Einbringung) return;
 
+      s.Data.Berechungsstatus = (byte)Berechnungsstatus.Einbringung; // wird ggf. überschrieben, wenn zu wenige da sind
       foreach (var fachNoten in s.getNoten.alleFaecher)
       {
         // Fachweise nicht die Punkte suchen        
@@ -144,8 +146,8 @@ namespace diNo
       if (fehlend > streichen.Count) // nicht genügend vorhanden ==> ggf. aus unbedingtStreichen holen
       {
         einbringen.AddRange(streichen);
-        streichen.Clear();
         fehlend -= streichen.Count;
+        streichen.Clear();        
         if (fehlend > unbedingtStreichen.Count) // nicht mal da sind genügend vorhanden ==> S hat insgesamt zu wenige HjL
         {
           einbringen.AddRange(unbedingtStreichen);
@@ -176,9 +178,7 @@ namespace diNo
       {
         hjLeistung.Status = HjStatus.NichtEinbringen;
         hjLeistung.WriteToDB();
-      }
-
-      s.Data.Berechungsstatus = (byte)Berechnungsstatus.Einbringung;
+      }      
     }
 
     // liefert wahr, wenn sich ohne Streichung zusätzlich eine 5 (oder 6) ergeben würde
@@ -196,6 +196,8 @@ namespace diNo
     /// </summary>
     public void BerechneGesErg(Schueler s)
     {
+      if (s.AlteFOBOSO()) return;
+
       Punktesumme p = new Punktesumme(s);
       p.Clear();
       
@@ -207,8 +209,7 @@ namespace diNo
       foreach (var f in s.Fachreferat)
         p.Add(PunktesummeArt.FR, f.Punkte);
 
-      p.WriteToDB();      
-      s.Refresh();
+      p.WriteToDB();            
     }
 
     public void BerechneDNote(Schueler s)
@@ -322,6 +323,7 @@ namespace diNo
 
     public void BestimmeSprachniveau(Schueler s)
     {
+      if (s.AlteFOBOSO()) return;
       var ta = new HjLeistungTableAdapter();
       ta.DeleteBySchuelerIdAndArt(s.Id, (byte)HjArt.Sprachenniveau); // vorher löschen, falls Stufe inzwischen nicht mehr erreicht wird
 

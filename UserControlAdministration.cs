@@ -276,7 +276,7 @@ namespace diNo
       {
         Cursor = Cursors.WaitCursor;
         var obj = getSelectedObjects();
-        var b = new Berechnungen(Zeitpunkt.None);
+        var b = new Berechnungen();
         b.aufgaben.Add(b.BerechneEinbringung);
         foreach (var s in obj)
           b.BerechneSchueler(s);
