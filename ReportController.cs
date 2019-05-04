@@ -119,7 +119,7 @@ namespace diNo
         }
         else if (subrpt == "subrptPunktesumme" || subrpt == "subrptPunktesummeNB")
         {
-          e.DataSources.Add(new ReportDataSource("DataSet1", PunkteSummeDruck.Create(schueler)));
+          e.DataSources.Add(new ReportDataSource("DataSet1", PunkteSummeDruck.Create(schueler, rptTyp)));
         }
         else if (subrpt == "subrptFremdsprachen")
         {

@@ -247,17 +247,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontSize>16pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                                <TextDecoration>None</TextDecoration>
-                                <Color>#000000</Color>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>  Ich nehme den obigen Einbringungsvorschlag an.</Value>
+                              <Value>Den obigen Einbringungsvorschlag habe ich zur Kenntnis genommen.</Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
                               </Style>
@@ -268,30 +258,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>□</Value>
-                              <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontSize>16pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                                <TextDecoration>None</TextDecoration>
-                                <Color>#000000</Color>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>  Der Einbringungsvorschlag wurde von mir geändert.</Value>
+                              <Value>Evtl. Einbringungsänderungen habe ich oben bereits farbig markiert oder werde ich der Schulleitung bis spätestens 10:20 Uhr am Donnerstag vor den schriftlichen Abschlussprüfungen mitteilen.</Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>9pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>

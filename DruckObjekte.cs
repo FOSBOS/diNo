@@ -772,7 +772,7 @@ namespace diNo
       InWorten = inWorten;
     }
 
-    public static List<PunkteSummeDruck> Create(Schueler s)
+    public static List<PunkteSummeDruck> Create(Schueler s, Bericht b)
     {
       List<PunkteSummeDruck> list = new List<PunkteSummeDruck>();
       Punktesumme p = s.punktesumme;
@@ -783,7 +783,7 @@ namespace diNo
           list.Add(new PunkteSummeDruck(ArtToText(a, p, s), p.Summe(a).ToString(), ""));
         }
       }
-      if (!s.Data.IsDNoteNull())
+      if (!s.Data.IsDNoteNull() && b!=Bericht.Einbringung)
       {
         list.Add(new PunkteSummeDruck("", "", "")); // Leerzeile
         list.Add(new PunkteSummeDruck("Durchschnittsnote", string.Format("{0:F1}", s.Data.DNote), ZahlToText(s.Data.DNote)));
