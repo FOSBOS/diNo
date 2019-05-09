@@ -124,7 +124,9 @@ namespace diNo
       b.Inhalt += "Versäumnisse nicht hinreichend geprüft werden.<br><br>Gemäß § 20 (2) FOBOSO wird hiermit eine " + lnwart + " Ersatzprüfung angesetzt.<br><br>";
       b.Inhalt += "Prüfungsstoff wird sein: <br>" + edInhalt.Text + "<br><br>";
       b.Inhalt += "Die " + lnwart + " Ersatzprüfung findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr" + erzeugeRaum() + ".<br><br>";
-      b.Inhalt += "Wird an der Ersatzprüfung wegen Erkrankung nicht teilgenommen, so muss die Erkrankung durch ärztliches Attest nachgewiesen werden; ohne ausreichende Entschuldigung wird die Note 6 (0 Punkte) erteilt.<br><br>";
+      b.Inhalt += "Wird an der Ersatzprüfung wegen Erkrankung nicht teilgenommen, so muss die Erkrankung durch ärztliches Attest nachgewiesen werden. " +
+        "In diesem Fall gilt die Halbjahresleistung als nicht erbracht und mindert eines Ihrer Streichergebnisse. " +
+        "Ohne ausreichende Entschuldigung wird die Note 6 (0 Punkte) erteilt.<br><br>";
       b.Inhalt += "Freundliche Grüße";
     }
 
