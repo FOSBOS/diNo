@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using diNo.diNoDataSetTableAdapters;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace diNo
 {
@@ -36,6 +37,7 @@ namespace diNo
     public LesemodusExcel Lesemodus { get { return (LesemodusExcel)globaleKonstanten.LeseModusExcel ; } }
     public bool SiehtAlles{ get; private set; }
     public bool HatVerwaltungsrechte{ get; private set; }
+    public bool IsTestDB { get; private set; }
 
     private Zugriff()
     {
@@ -57,6 +59,9 @@ namespace diNo
         Username = Username.ToLower();
         Username = Username.Replace("fosbos\\", "");
         Username = Username.Replace("vw\\", "");
+
+        string con = ConfigurationManager.ConnectionStrings[1].ConnectionString;
+        IsTestDB = con.Contains("localhost");
 
         var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
         if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);

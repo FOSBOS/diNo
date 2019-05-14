@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Configuration;
 
 namespace diNo
 {
@@ -37,8 +36,7 @@ namespace diNo
         tabControl1.Controls.Remove(tabPageSekretariat);
       }
 
-      string con = ConfigurationManager.ConnectionStrings[1].ConnectionString;
-      lbTest.Visible = con.Contains("localhost");
+      lbTest.Visible = Zugriff.Instance.IsTestDB;
     }
 
     public void RefreshTabs()
