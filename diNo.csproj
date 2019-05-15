@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="Xml\MBStatistik.cs" />
     <Compile Include="Xml\schulerfolg_1_1.cs" />
+	<Compile Include="Xml\Schulerfolgsstatistik.cs" />
     <Compile Include="Stammdaten.cs">
       <SubType>Form</SubType>
     </Compile>
