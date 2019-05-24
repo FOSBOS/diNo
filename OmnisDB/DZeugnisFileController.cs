@@ -37,7 +37,7 @@ namespace diNo.OmnisDB
           }
           
           Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-          if (BrauchtZeugnis(schueler, zeitpunkt) && schueler.Status == Schuelerstatus.Aktiv)
+          if (BrauchtZeugnis(schueler, zeitpunkt) && schueler.Status == Schuelerstatus.Aktiv && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn) // Nur noch 13te Klasse in WinSV
           {
             if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf || (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf && (zeitpunkt == Zeitpunkt.DrittePA || zeitpunkt == Zeitpunkt.Jahresende)))
             {
@@ -148,7 +148,7 @@ namespace diNo.OmnisDB
 
     private bool BrauchtZeugnis(Schueler schueler, Zeitpunkt zeitpunkt)
     {
-      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
       {
         // andere Schüler brauchen zwar auch Zeugnisse, aber nicht mehr aus diesem Export
 
@@ -160,7 +160,7 @@ namespace diNo.OmnisDB
         // zu den PA-Sitzungen werden nur für die 12. und 13. Jahrgangsstufe Zeugnisse übertragen
         if (zeitpunkt == Zeitpunkt.ErstePA || zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
         {
-          return schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf;
+          return schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn;
         }
 
         if (zeitpunkt == Zeitpunkt.Jahresende)
