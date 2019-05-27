@@ -420,7 +420,7 @@
               <TablixCells>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox2">
+                    <Textbox Name="OrtDatum">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -440,36 +440,9 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="Kempten, den " + Today()</Value>
+                              <Value>=Fields!OrtDatum.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Left</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontFamily>Tahoma</FontFamily>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style>
-                            <TextAlign>Left</TextAlign>
-                          </Style>
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value xml:space="preserve">                                                                                                                                                  </Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -478,7 +451,7 @@
                           </Style>
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox2</rd:DefaultName>
+                      <rd:DefaultName>OrtDatum</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -533,7 +506,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Helga Traut, OStDin</Value>
+                              <Value>=Fields!Schulleiter.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -544,7 +517,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Schulleiterin</Value>
+                              <Value>=Fields!SchulleiterText.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -833,6 +806,10 @@
           <DataField>Nachname</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="OrtDatum">
+          <DataField>OrtDatum</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Rufname">
           <DataField>Rufname</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -843,6 +820,14 @@
         </Field>
         <Field Name="Schuljahr">
           <DataField>Schuljahr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Schulleiter">
+          <DataField>Schulleiter</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SchulleiterText">
+          <DataField>SchulleiterText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Telefon">

@@ -40,6 +40,8 @@ namespace diNo
 
     public string Klassenleiter { get; private set; }
     public string KlassenleiterText { get; private set; }
+    public string Schulleiter { get; protected set; }
+    public string SchulleiterText { get; protected set; }
     public string Schuljahr { get; private set; }
     public string Schulart { get; private set; }
 
@@ -71,9 +73,9 @@ namespace diNo
       KlassenleiterText = KL.KLString;
 
       if (s.Data.Schulart == "B")
-        Schulart = "Staatliche Berufsoberschule Kempten (Allgäu)";
+        Schulart = Zugriff.Instance.getString(GlobaleStrings.BOSName);
       else
-        Schulart = "Staatliche Fachoberschule Kempten (Allgäu)";
+        Schulart = Zugriff.Instance.getString(GlobaleStrings.FOSName);
 
       Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
 
@@ -135,6 +137,8 @@ namespace diNo
     public string GeborenInAm { get; private set; }
     public string KlasseMitZweig { get; private set; }
     public string Laufbahn { get; private set; }
+    public string OrtDatum { get; private set; }
+
 
     public NotenbogenDruck(Schueler s) : base(s, Bericht.Notenbogen)
     {
@@ -142,6 +146,11 @@ namespace diNo
       Telefon = s.Data.AnschriftTelefonnummer;
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
       KlasseMitZweig = s.KlassenBezeichnung;
+      OrtDatum = Zugriff.Instance.getString(GlobaleStrings.SchulOrt) + ", den " + DateTime.Today.ToString("dd.MM.yyyy");
+
+      // TODO: Könnte man aus dem Notenbogen ruhig rausnehmen....
+      Schulleiter = Zugriff.Instance.getString(GlobaleStrings.Schulleiter);
+      SchulleiterText = Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
 
       Laufbahn = "Bekenntnis: " + s.Data.Bekenntnis;
       Laufbahn += "<br>Eintritt in Jgst. " + s.Data.EintrittJahrgangsstufe + " am " + s.Data.EintrittAm.ToString("dd.MM.yyyy");
@@ -215,8 +224,6 @@ namespace diNo
     public string GeborenInAm { get; private set; }    
     public string ZeugnisArt { get; private set; }
     public string DatumZeugnis { get; private set; }
-    public string Schulleiter { get; private set; }
-    public string SchulleiterText { get; private set; }
     public bool ShowKenntnisGenommen { get; private set; } // Minderjährige beim Zwischenzeugnis
     public bool ShowGezSL { get; private set; } // statt eigenhändige Unterschrift erscheint gez. Helga Traut
     public bool ShowFOBOSOHinweis { get; private set; } // Diesem Zeungnis liegt die Schulordnung ...

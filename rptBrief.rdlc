@@ -95,7 +95,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>="Kempten, den " + Today()</Value>
+                <Value>=Fields!OrtDatum.Value</Value>
                 <Style>
                   <FontFamily>Tahoma</FontFamily>
                   <FontSize>11pt</FontSize>
@@ -498,6 +498,10 @@
         </Field>
         <Field Name="Name">
           <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="OrtDatum">
+          <DataField>OrtDatum</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Telefon">

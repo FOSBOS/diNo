@@ -90,12 +90,12 @@ namespace diNo
       if (verschaerft)
       {
         b.Betreff = "Verschärfter Verweis";
-        b.Unterschrift = "Helga Traut, OStDin\nSchulleiterin";
+        b.Unterschrift = Zugriff.Instance.getString(GlobaleStrings.Schulleiter) + "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
       }
       else
       {
         b.Betreff = "Verweis";
-        b.Unterschrift2 = "Helga Traut, OStDin\nSchulleiterin";
+        b.Unterschrift2 = Zugriff.Instance.getString(GlobaleStrings.Schulleiter) + ", " + Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
       }
       b.Inhalt = "Hiermit wird " + s.getHerrnFrau() + s.VornameName + " gemäß Art. 86 (2) BayEUG ein ";
       b.Inhalt += (verschaerft ? "verschärfter Verweis durch die Schulleiterin" : "Verweis") + " erteilt.<br><br>";
@@ -157,7 +157,8 @@ namespace diNo
     public string Unterschrift { get; set; }
     public string Unterschrift2 { get; set; }
     public string UnterschriftsText { get; set; }
-    public bool IstU18 { get; private set; }
+    public bool IstU18 { get; set; }
+    public string OrtDatum { get; set; }
     public string Logo { get; private set; }
 
     public BriefDaten(Schueler s, BriefTyp typ)
@@ -178,9 +179,12 @@ namespace diNo
       Name = s.Name;
       VornameName = s.VornameName;
       Klasse = s.getKlasse.Bezeichnung;
+      OrtDatum = Zugriff.Instance.getString(GlobaleStrings.SchulOrt) + ", den " + DateTime.Today.ToString("dd.MM.yyyy");
 
       if (UnterschriftKL)
-        lehrer = s.getKlasse.Klassenleiter;
+      {
+        lehrer = s.getKlasse.Klassenleiter;        
+      }
       else
         lehrer = Zugriff.Instance.lehrer;
 

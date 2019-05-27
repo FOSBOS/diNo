@@ -25,7 +25,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Berufliche Oberschule · Kotterner Str. 41 · 87435 Kempten</Value>
+                              <Value>=Fields!Absenderzeile.Value</Value>
                               <Style>
                                 <FontStyle>Normal</FontStyle>
                                 <FontFamily>Tahoma</FontFamily>
@@ -77,7 +77,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>="Kempten, den " + Today()</Value>
+                              <Value>=Fields!OrtDatum.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>11pt</FontSize>
@@ -243,7 +243,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>2.39917cm</Height>
+              <Height>2.1875cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -299,7 +299,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>                   Helga Traut, OStDin</Value>
+                              <Value>=Fields!Unterschrift2.Value</Value>
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -311,7 +311,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>                   Schulleiterin</Value>
+                              <Value />
                               <Style>
                                 <FontFamily>Tahoma</FontFamily>
                                 <FontSize>8pt</FontSize>
@@ -778,7 +778,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>19.91568cm</Height>
+        <Height>19.70401cm</Height>
         <Width>16.96042cm</Width>
         <Style>
           <Border>
@@ -827,6 +827,14 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="Absender">
+          <DataField>Absender</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Absenderzeile">
+          <DataField>Absenderzeile</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Adressfeld">
           <DataField>Adressfeld</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -847,12 +855,28 @@
           <DataField>Inhalt2</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="IstU18">
+          <DataField>IstU18</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
         <Field Name="Klasse">
           <DataField>Klasse</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="Logo">
+          <DataField>Logo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Name">
           <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="OrtDatum">
+          <DataField>OrtDatum</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Telefon">
+          <DataField>Telefon</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Unterschrift">

@@ -236,7 +236,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>4.03046cm</Height>
+              <Height>4.42734cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -298,7 +298,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Kempten, den ____________________________              ______________________________</Value>
+                              <Value>______________________________________              ______________________________</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -307,7 +307,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>                                                                                                           (Unterschrift)</Value>
+                              <Value>Ort, Datum                                                                                            (Unterschrift)</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -315,6 +315,7 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox7</rd:DefaultName>
+                      <ZIndex>1</ZIndex>
                       <Style>
                         <Border>
                           <Style>None</Style>
@@ -386,7 +387,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>11.10979cm</Height>
+        <Height>11.50667cm</Height>
         <Width>16.9cm</Width>
         <Style>
           <Border>
@@ -397,7 +398,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>11.10979cm</Height>
+    <Height>11.50667cm</Height>
     <Style />
   </Body>
   <Width>16.9cm</Width>
@@ -501,6 +502,14 @@
         </Field>
         <Field Name="Schuljahr">
           <DataField>Schuljahr</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Schulleiter">
+          <DataField>Schulleiter</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SchulleiterText">
+          <DataField>SchulleiterText</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Vorname">

@@ -870,9 +870,10 @@ namespace diNo
       int faktor = schueler.APFaktor;
       int apg = (int)Math.Ceiling((Zielpunkte*(fs.anz+faktor)-fs.sum)/(double)faktor); // diese Note müsste im Abigesamt stehen
       var sapL = getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich);
-      int sap = sapL.Count == 0 ? 0 : sapL[0]; // sollte nur im Test passieren.
-
-      sap = getHjLeistung(HjArt.AP).Punkte; // raus: nur zum Test!
+      int sap;
+      if (sapL.Count > 0) sap = sapL[0];
+      else if (getHjLeistung(HjArt.AP) != null) sap = getHjLeistung(HjArt.AP).Punkte; // sollte nur im Test passieren.
+      else return "";
 
       int map = 3 * apg - 2 * sap - 1;
 

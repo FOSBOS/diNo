@@ -439,7 +439,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Kempten, den _____________                     _____________________________________</Value>
+                              <Value>________________________________                     _____________________________________</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
@@ -448,7 +448,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>                                                                      Unterschrift der Schülerin / des Schülers</Value>
+                              <Value>Ort, Datum                                                                   Unterschrift der Schülerin / des Schülers</Value>
                               <Style />
                             </TextRun>
                           </TextRuns>
