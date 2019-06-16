@@ -7,6 +7,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using static System.Windows.Forms.CheckedListBox;
 
 namespace diNo
 {
@@ -43,6 +44,11 @@ namespace diNo
       alleFaecher = Zugriff.Instance.FachRep.getList();
       alleFaecher.Sort((x, y) => x.Bezeichnung.CompareTo(y.Bezeichnung));
       cbFach.DataSource = alleFaecher;
+
+      foreach (Klasse k in Zugriff.Instance.Klassen)
+      {
+        checkedListBoxKlassen.Items.Add(k, false);
+      }
     }
 
     private void listLehrer_SelectedValueChanged(object sender, EventArgs e)
@@ -63,6 +69,11 @@ namespace diNo
 
       cbLehrer.SelectedValue = q.getLehrer.Id; // in der ComboBox muss als ValueMember Id stehen!!
       cbFach.SelectedValue = q.getFach.Id;
+
+      for (int i = 0; i < checkedListBoxKlassen.Items.Count; i++)
+      {
+        checkedListBoxKlassen.SetItemChecked(i, q.Klassen.Contains(checkedListBoxKlassen.Items[i]));
+      }
     }
 
     private string F(TextBox t)
@@ -86,7 +97,14 @@ namespace diNo
         q.Data.FachId = (int)cbFach.SelectedValue;
         q.SetLehrerNull();
         q.SetFachNull();
-        ta.Update(q.Data);        
+        ta.Update(q.Data);
+
+        q.KlassenZuordnungen.Clear();
+        foreach(Klasse klasse in checkedListBoxKlassen.CheckedItems)
+        {
+          q.KlassenZuordnungen.AddKlasseKursRow(klasse.Data, q.Data);
+        }
+        q.SaveKlassenzuordnung();
       }
       else
       {        

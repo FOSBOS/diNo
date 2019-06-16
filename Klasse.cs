@@ -173,6 +173,11 @@ namespace diNo
       }
     }
 
+    public override string ToString()
+    {
+      return this.Bezeichnung;
+    }
+
     // alle Kurse, die in dieser Klasse angeboten werden
     public IList<Kurs> Kurse
     {
@@ -217,11 +222,11 @@ namespace diNo
   {
     private diNoDataSet.KursRow data;
     private diNoDataSet.SchuelerDataTable schueler;
+    private diNoDataSet.KlasseKursDataTable klassenZuordnungen;
     private Fach fach;
     private Lehrer lehrer;
     public Jahrgangsstufe JgStufe;
     public bool schreibtKA;
-
 
     public Kurs(int id)
     {
@@ -284,6 +289,45 @@ namespace diNo
 
         return schueler;
       }
+    }
+
+    /// <summary>
+    /// Die Liste der Klassen dieser Kurses
+    /// </summary>
+    public diNoDataSet.KlasseKursDataTable KlassenZuordnungen
+    {
+      get
+      {
+        if (klassenZuordnungen == null)
+        {
+          KlasseKursTableAdapter kka = new KlasseKursTableAdapter();
+          klassenZuordnungen = kka.GetDataByKursId(this.Id);
+        }
+
+        return klassenZuordnungen;
+      }
+    }
+
+    public IList<Klasse> Klassen
+    {
+      get
+      {
+        IList<Klasse> result = new List<Klasse>();
+        foreach (var klasse in KlassenZuordnungen)
+        {
+          result.Add(Zugriff.Instance.KlassenRep.Find(klasse.KlasseId));
+        }
+        return result;
+      }
+    }
+
+    /// <summary>
+    /// Speichert die aktuelle Klassenzuordnung in die Datenbank.
+    /// </summary>
+    public void SaveKlassenzuordnung()
+    {
+      KlasseKursTableAdapter kka = new KlasseKursTableAdapter();
+      kka.Update(this.KlassenZuordnungen);
     }
 
     /// <summary>
