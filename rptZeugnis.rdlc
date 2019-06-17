@@ -563,7 +563,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -756,7 +755,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>1.35364cm</Height>
+              <Height>1.11552cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1058,7 +1057,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>15.46985cm</Height>
+        <Height>15.23172cm</Height>
         <Width>16.44979cm</Width>
         <Style>
           <Border>
@@ -1069,13 +1068,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>15.60242cm</Height>
+    <Height>15.23172cm</Height>
     <Style />
   </Body>
   <Width>16.5cm</Width>
   <Page>
     <PageFooter>
-      <Height>2.17385cm</Height>
+      <Height>1.9cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
