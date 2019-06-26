@@ -710,8 +710,7 @@ namespace diNo
       {         
         if (fach.getFach.Kuerzel!="E" && fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APMuendlich)>0)
         {
-          contr.Add(null,"MAP in " + fach.getFach.Kuerzel + " mit " + fach.getNoten(Halbjahr.Zweites,Notentyp.APMuendlich)[0]
-            + " Punkten ergibt im Zeugnis: " + fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis.GetValueOrDefault());
+          contr.Add(null,"MAP in " + fach.getFach.Kuerzel + " mit " + fach.getNoten(Halbjahr.Zweites,Notentyp.APMuendlich)[0]+ " P.");
         }
       } 
     }
