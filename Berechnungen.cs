@@ -217,7 +217,7 @@ namespace diNo
       if (s.AlteFOBOSO())
       {
         berechneDNoteAlt(s, false);
-        if (s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife))
+        if (s.getKlasse.Jahrgangsstufe== Jahrgangsstufe.Dreizehn)
           berechneDNoteAlt(s, true);
         return;
       }
@@ -267,7 +267,7 @@ namespace diNo
           continue;
 
         // liegen die Voraussetzungen für allg. HSR vor?
-        if (allgHSR && (fk == "F-Wi" || fk == "F" && note.GetValueOrDefault() > 3))
+        if (allgHSR && (fk == "Frz" || fk == "F" && note.GetValueOrDefault() > 3))
           FranzVorhanden = true;
 
         if (note == 0)

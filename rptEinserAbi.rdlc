@@ -332,7 +332,6 @@
                   <Group Name="Klasse">
                     <GroupExpressions>
                       <GroupExpression>=Fields!Klasse.Value</GroupExpression>
-                      <GroupExpression>=Fields!Nachname.Value</GroupExpression>
                     </GroupExpressions>
                   </Group>
                   <SortExpressions>
@@ -346,6 +345,14 @@
                     </TablixMember>
                     <TablixMember>
                       <Group Name="Details" />
+                      <SortExpressions>
+                        <SortExpression>
+                          <Value>=Fields!DNote.Value</Value>
+                        </SortExpression>
+                        <SortExpression>
+                          <Value>=Fields!Nachname.Value</Value>
+                        </SortExpression>
+                      </SortExpressions>
                       <TablixMembers>
                         <TablixMember />
                       </TablixMembers>

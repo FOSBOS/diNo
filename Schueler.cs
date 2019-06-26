@@ -547,6 +547,19 @@ namespace diNo
       return false;
     }
 
+    public bool HatZweiteFremdsprache()
+    {
+      if (!Data.IsAndereFremdspr2NoteNull()) return true; // die werden doch nicht Noten eintragen schlechter als 4
+      foreach (var f in getNoten.alleSprachen)
+      {
+        if (f.getFach.Kuerzel == "E") continue;
+                
+        if (f.getHjLeistung(HjArt.JN).Punkte > 3) return true;
+      }
+
+      return false;
+    }
+
     public Vorkommnisart Zeugnisart(Zeitpunkt zeitpunkt)
     {
       if (zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
@@ -559,7 +572,7 @@ namespace diNo
         else if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
           return Vorkommnisart.Fachabiturzeugnis;
         else if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
-          return (Data.IsDNoteAllgNull() ? Vorkommnisart.fachgebundeneHochschulreife : Vorkommnisart.allgemeineHochschulreife);
+          return (!Data.IsDNoteAllgNull() /*AlteFOBOSO! neu: HatZweiteFremdsprache()*/ ? Vorkommnisart.allgemeineHochschulreife : Vorkommnisart.fachgebundeneHochschulreife);
       }
       else if (zeitpunkt == Zeitpunkt.Jahresende && getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
         return Vorkommnisart.Jahreszeugnis;
