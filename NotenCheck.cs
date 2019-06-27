@@ -632,16 +632,17 @@ namespace diNo
 
       else if (contr.zeitpunkt == Zeitpunkt.DrittePA)
       {
-        if (n.HatNichtBestanden())
+        bool nb = n.HatNichtBestanden();
+        if (nb)
         {
           if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich möglich: " + n.Unterpunktungen, true);
           else
           {
-            contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
-            if (n.DarfInBOS13())
-              contr.Add(Vorkommnisart.VorrueckenBOS13moeglich, "");
+            contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);            
           }
         }
+        if ((nb || n.HatAbiNichtBestanden()) && n.DarfInBOS13())
+          contr.Add(Vorkommnisart.VorrueckenBOS13moeglich, "");
       }
       else // Jahresende
       {
