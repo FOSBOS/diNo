@@ -263,7 +263,7 @@ namespace diNo
         var fk = fach.getFach.Kuerzel;
         byte? note = fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
 
-        if (note == null || fk == "Ku" || fk == "Smw" || fk == "Sw" || fk == "Sm" || (fk == "F" && !allgHSR))
+        if (note == null || fk == "Ku" || fk == "Smw" || fk == "Sw" || fk == "Sm" || ((fk == "F" || fk == "Frz" ) && !allgHSR))
           continue;
 
         // liegen die Voraussetzungen für allg. HSR vor?
