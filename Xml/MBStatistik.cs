@@ -334,9 +334,10 @@ namespace diNo.Xml
       {
         besuchte_schulart_vor_eintritt = ErmittleVorherBesuchteSchulart(unserSchueler),
         msa_erworben_an_schulart = ErmittleSchulartDerMittlerenReife(unserSchueler),
-        m_deutsch = unserSchueler.Data.IsMittlereReifeDeutschnoteNull() ? "" : unserSchueler.Data.MittlereReifeDeutschnote.ToString(),
-        m_englisch = unserSchueler.Data.IsMittlereReifeEnglischnoteNull() ? "" : unserSchueler.Data.MittlereReifeEnglischnote.ToString(),
-        m_mathematik = unserSchueler.Data.IsMittlereReifeMathenoteNull() ? "" : unserSchueler.Data.MittlereReifeMathenote.ToString()
+        // wenn ein Schüler keine Vornote mitbringt ist doch 5 eine gute Schätzung
+        m_deutsch = unserSchueler.Data.IsMittlereReifeDeutschnoteNull() ? "5" : unserSchueler.Data.MittlereReifeDeutschnote.ToString(),
+        m_englisch = unserSchueler.Data.IsMittlereReifeEnglischnoteNull() ? "5" : unserSchueler.Data.MittlereReifeEnglischnote.ToString(),
+        m_mathematik = unserSchueler.Data.IsMittlereReifeMathenoteNull() ? "5" : unserSchueler.Data.MittlereReifeMathenote.ToString()
       };
     }
 
