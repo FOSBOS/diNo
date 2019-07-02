@@ -1,0 +1,238 @@
+﻿<!ELEMENT abschlusspruefungsstatistik (schule)+>
+
+	<!ELEMENT schule (jahrgangsstufe12?,jahrgangsstufe13?, dbfh?,anderebewerber_12?,anderebewerber_13?)>
+	<!ATTLIST schule
+		art (FOS|BOS) #REQUIRED
+		nummer CDATA #REQUIRED>
+
+		<!ELEMENT jahrgangsstufe12 (klasse)+>
+		<!ELEMENT jahrgangsstufe13 (klasse)+>
+		<!ELEMENT dbfh (klasse)+>
+		<!ELEMENT anderebewerber_12 (klasse)+>
+		<!ELEMENT anderebewerber_13 (klasse)+>
+		
+				<!ELEMENT klasse (schueler)+>
+				<!ATTLIST klasse
+							nummer CDATA #REQUIRED
+							ausbildungsrichtung (ABU|GA|GH|IW|S|T|W) #REQUIRED>
+							<!-- GA: Gestaltung -->
+							<!-- GH: Gesundheit -->
+					
+					<!ELEMENT schueler (grunddaten,abschlusspruefung,(halbjahresergebnisse|ausbildungsabschnitte)?,fachreferat?,seminar?,zweite_fremdsprache?)>
+					<!ATTLIST schueler
+								nummer CDATA #REQUIRED>
+							
+					<!ELEMENT grunddaten (durchschnittsnote?,ausgetreten_am?,vorbildung)>
+					<!ATTLIST grunddaten
+								geschlecht (m|w) #REQUIRED								
+								wdh_jgst (0|1|2|3|4|5|6) #IMPLIED 
+								herkunftsschule CDATA #IMPLIED> 
+								<!-- Kommentar zu Attribut wdh_jgst: -->
+								<!-- Wiederholung von...
+								O: keiner Jgst
+								1: 11. Jgst
+								2: 12. Jgst  
+								3: 13. Jgst
+								4: 11. und 12. Jgst
+								5: 11. und 13. Jgst
+								6: 12. und 13. Jgst
+								-->			
+																										
+						<!ELEMENT durchschnittsnote (#PCDATA)>
+						<!ELEMENT ausgetreten_am (#PCDATA)><!-- z.B. 15.12.2018 -->
+						<!ELEMENT vorbildung (m_deutsch,m_mathematik,m_englisch)>
+						<!ATTLIST vorbildung
+									msa_erworben_an_schulart (GY|RS|MS|BS|WS|BO|SO|KS) #REQUIRED
+									besuchte_schulart_vor_eintritt (GY|RS|MS|BS|WS|BO|SO|KS|AL) #REQUIRED>
+									<!-- GY: Gymnasium RS: Realschule MS: Mittelschule BS: Berufsschule WS: Wirtschaftsschule BO: Berufliche Oberschule (Vorklasse) SO: sonstige -->
+									
+							<!ELEMENT m_deutsch (#PCDATA)>
+							<!ELEMENT m_mathematik (#PCDATA)>
+							<!ELEMENT m_englisch (#PCDATA)>
+							
+
+					<!ELEMENT abschlusspruefung (ap_deutsch?,ap_mathematik?,(ap_englisch | ap_ersatzfremdsprache)?,ap_profilfach1?, ap_geschichte_sozialkunde?,ap_sozialkunde?, ap_profilfach2?, ap_profilfach3?, ap_geschichte?,ap_profilfach4?,ap_ethik?,ap_rechtslehre?,ap_chemie?, ap_religionslehre_ev?, ap_religionslehre_rk?)>
+						<!ATTLIST abschlusspruefung									
+									bestanden (ja|nein) #IMPLIED 
+									abgelegt (0|1|2) #REQUIRED> <!--0: vollabgelegt 1: teilweise oder vollständig nicht abgelegt aus vom Schüler nicht zu vertretendem Grund 2: teilweise oder vollständig nicht abgelegt aus vom Schüler zu vertretendem Grund -->
+									
+						<!ELEMENT ap_deutsch (schriftlich,muendlich?, gesamt)>
+							<!ELEMENT schriftlich (#PCDATA)>
+							<!ELEMENT muendlich (#PCDATA)>
+							<!ELEMENT gesamt (#PCDATA)>
+						<!ELEMENT ap_mathematik (schriftlich,muendlich?, gesamt)>							
+						<!ELEMENT ap_englisch (schriftlich?,muendlich?, gesamt?)>							
+						<!ELEMENT ap_ersatzfremdsprache (schriftlich,muendlich?, gesamt)>
+						<!ATTLIST ap_ersatzfremdsprache
+									sprache CDATA #REQUIRED>
+									
+						<!ELEMENT ap_profilfach1 (schriftlich,muendlich?, gesamt)>
+						<!ELEMENT ap_profilfach2 (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_profilfach3 (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_profilfach4 (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_sozialkunde (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_geschichte (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_rechtslehre (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_religionslehre_ev (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_religionslehre_rk (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_ethik (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_chemie (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_geschichte_sozialkunde (schriftlich?,muendlich?, gesamt)>
+					
+					<!ELEMENT halbjahresergebnisse (allgemeinbildende_faecher, profilfaecher, wahlpflichtfaecher, fachpraktische_ausbildung?)>
+						<!ELEMENT allgemeinbildende_faecher ((religionslehre_rk|religionslehre_ev|ethik),deutsch,(englisch|ersatzfremdsprache), geschichte?,sozialkunde?,geschichte_sozialkunde?,mathematik,sport? )>
+						<!ELEMENT dbfh_allgemeinbildende_faecher ((dbfh_religionslehre_rk|dbfh_religionslehre_ev|dbfh_ethik),dbfh_deutsch,dbfh_englisch ,dbfh_sozialkunde,dbfh_geschichte,dbfh_mathematik )>
+							<!ELEMENT religionslehre_rk ((hj_12_1|hj_13_1),(hj_12_2|hj_13_2))>
+							
+							<!ELEMENT dbfh_religionslehre_rk (a2_3_1)>
+							<!ELEMENT dbfh_religionslehre_ev (a2_3_1)>
+							<!ELEMENT dbfh_ethik (a2_3_1)>
+							<!ELEMENT dbfh_sozialkunde (a2_3_1)>
+							<!ELEMENT dbfh_geschichte (a2_3_1,a3_2)>
+							<!ELEMENT dbfh_deutsch (a2_3_1,a3_2)>
+							<!ELEMENT dbfh_englisch (a2_3_1,a3_2)>
+							<!ELEMENT dbfh_mathematik (a2_3_1,a3_2)>
+							<!ELEMENT dbfh_mathematik_additum (a2_3_1,a3_2)>
+							<!ELEMENT dbfh_physik (a2_3_1,a3_2)>
+							<!ELEMENT dbfh_chemie (a2_3_1,a3_2)>
+							<!ELEMENT dbfh_informatik (a2_3_1,a3_2)>
+							<!ELEMENT dbfh_naturwissenschaften (a2_3_1,a3_2)>
+							<!ELEMENT dbfh_bwr (a2_3_1,a3_2)>
+							<!ELEMENT dbfh_volkswirtschaftslehre (a2_3_1,a3_2)>
+							
+								<!ELEMENT a2_3_1 (punkte)>
+									<!ATTLIST a2_3_1
+									eingebracht (0|1) #REQUIRED> <!-- 0: nicht eingebracht 1: eingebracht mit einfacher Gewichtung -->
+									
+								<!ELEMENT a3_2 (punkte)>
+									<!ATTLIST a3_2
+									eingebracht (0|1|2) #REQUIRED> <!-- 0: nicht eingebracht 1: eingebracht mit einfacher Gewichtung 2: eingebracht mit zweifacher Gewichtung -->
+								
+								<!ELEMENT hj_12_1 (punkte)>
+								<!ATTLIST hj_12_1
+									eingebracht (ja|nein) #REQUIRED><!-- Bei nicht einbringungsfähigen Fächer muss hier nein eingetragen werden. -->
+									
+									<!ELEMENT punkte (#PCDATA)>								
+								<!ELEMENT hj_12_2 (punkte)>
+								<!ATTLIST hj_12_2
+									eingebracht (ja|nein) #REQUIRED><!-- Bei nicht einbringungsfähigen Fächer muss hier nein eingetragen werden. -->
+								<!ELEMENT hj_13_1 (punkte)>
+								<!ATTLIST hj_13_1
+									eingebracht (ja|nein) #REQUIRED><!-- Bei nicht einbringungsfähigen Fächer muss hier nein eingetragen werden. -->
+								<!ELEMENT hj_13_2 (punkte)>
+								<!ATTLIST hj_13_2
+									eingebracht (ja|nein) #REQUIRED><!-- Bei nicht einbringungsfähigen Fächer muss hier nein eingetragen werden. -->
+							<!ELEMENT religionslehre_ev ((hj_12_1|hj_13_1),(hj_12_2|hj_13_2))>
+							<!ELEMENT deutsch (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+								<!ELEMENT hj_11_1 (punkte)>
+								<!ATTLIST hj_11_1
+									eingebracht (ja|nein) #REQUIRED>
+								<!ELEMENT hj_11_2 (punkte)>
+								<!ATTLIST hj_11_2
+									eingebracht (ja|nein) #REQUIRED>
+							<!ELEMENT ethik ((hj_12_1|hj_13_1),(hj_12_2|hj_13_2))>
+							<!ELEMENT englisch ((hj_11_1,hj_11_2)?,((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2)))>
+							<!ELEMENT ersatzfremdsprache ((hj_11_1,hj_11_2)?,((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2)))>
+							<!ELEMENT mathematik ((hj_11_1,hj_11_2)?,((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2)))>
+							<!ELEMENT geschichte (hj_11_1,hj_11_2)>
+							<!ELEMENT sozialkunde (hj_12_1,hj_12_2)>
+							<!ELEMENT geschichte_sozialkunde ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT sport ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+						<!ELEMENT fachpraktische_ausbildung (hj_11_1,hj_11_2)>
+							
+						<!ELEMENT profilfaecher (physik?, technologie?, chemie?, mathematik_additum_t?, biologie?, bwr?,volkswirtschaftslehre?, rechtslehre?, naturwissenschaften?, 
+							informatik?, ibv?, franzoesisch?, franzoesisch_fortgefuehrt?, spanisch?, spanisch_fortgefuehrt?, international_business_studies?, paedagogik_psychologie?,
+								sozialwirtschaft_und_recht?, gesundheitswissenschaften?, kommunikation_und_interaktion?,gestaltung_praxis?, gestaltung_theorie?, medien?, gestaltung?, soziologie?)+>
+								
+						<!ELEMENT dbfh_profilfaecher (dbfh_physik?,dbfh_chemie?, dbfh_mathematik_additum?, dbfh_bwr?,dbfh_volkswirtschaftslehre?, dbfh_naturwissenschaften?, dbfh_informatik)+>
+								
+							<!ELEMENT physik (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT technologie (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT chemie (((hj_11_1,hj_11_2)?,(hj_12_1,hj_12_2)?)|(hj_13_1,hj_13_2))>
+							<!ELEMENT mathematik_additum_t (hj_12_1,hj_12_2)>
+							<!ELEMENT biologie (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT bwr (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT volkswirtschaftslehre (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT rechtslehre (hj_11_1,hj_11_2)>
+							<!ELEMENT naturwissenschaften ((hj_12_1|hj_13_1),(hj_12_2|hj_13_2))>
+							<!ELEMENT informatik ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT ibv (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT franzoesisch (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT franzoesisch_fortgefuehrt (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT spanisch (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT spanisch_fortgefuehrt (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT international_business_studies ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT paedagogik_psychologie (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT sozialwirtschaft_und_recht (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT gesundheitswissenschaften (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT kommunikation_und_interaktion (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT gestaltung_praxis ((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)>
+							<!ELEMENT gestaltung_theorie ((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)>
+							<!ELEMENT medien (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT gestaltung (hj_13_1,hj_13_2)>
+							<!ELEMENT soziologie ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							
+					<!ELEMENT fachreferat (fach, punkte)>
+						<!ELEMENT fach (#PCDATA)> 
+						
+					<!ELEMENT ausbildungsabschnitte (dbfh_allgemeinbildende_faecher, dbfh_profilfaecher)>	
+						
+					<!ELEMENT seminar (punkte)>
+					<!ELEMENT zweite_fremdsprache (note)>
+					<!ATTLIST zweite_fremdsprache
+									sprache (Spanisch|Italienisch|Russisch|Franzoesisch|Latein) #REQUIRED
+									art (EP|VN) #REQUIRED> <!-- EP:Ergänzungsprüfung VN:Vornote -->
+						<!ELEMENT note (schriftlich?,muendlich?, gesamt)>
+							
+						
+					<!ELEMENT wahlpflichtfaecher (informatik?, biotechnologie?, wirtschaft_aktuell?, sozialpsychologie?, experimentelles_gestalten?, spektrum_der_gesundheit?,
+						franzoesisch_fortgefuehrt?, spanisch_fortgefuehrt?, mathematik_additum?, physik_additum?, aspekte_der_physik?, aspekte_der_chemie?, sport?, english_book_club?,
+								internationale_politik?, aspekte_der_biologie?,wirtschaft_und_recht?, aspekte_der_psychologie?, soziologie?, gesundheitswirtschaft_und_recht?, studier_und_arbeitstechniken?,
+								kunst?, musik?, szenisches_gestalten?, italienisch?,latein?, russisch?,spanisch?,franzoesisch?,international_business_studies?)+>
+							<!ELEMENT biotechnologie ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT wirtschaft_aktuell ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT sozialpsychologie ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT experimentelles_gestalten ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT spektrum_der_gesundheit ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT mathematik_additum ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT physik_additum (hj_13_1,hj_13_2)>
+							<!ELEMENT aspekte_der_physik ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT aspekte_der_chemie ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT english_book_club ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT internationale_politik ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT aspekte_der_biologie ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT wirtschaft_und_recht ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT aspekte_der_psychologie ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT gesundheitswirtschaft_und_recht ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT studier_und_arbeitstechniken (hj_12_1,hj_12_2)>
+							<!ELEMENT kunst ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT musik ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT szenisches_gestalten ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT italienisch ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT latein ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT russisch ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							

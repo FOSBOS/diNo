@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns="http://tempuri.org/abschlusspruefung_1.1" elementFormDefault="qualified" targetNamespace="http://tempuri.org/abschlusspruefung_1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns="http://tempuri.org/abschlusspruefung_1.3" elementFormDefault="qualified" targetNamespace="http://tempuri.org/abschlusspruefung_1.3" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:element name="abschlusspruefungsstatistik">
     <xs:complexType>
       <xs:sequence minOccurs="1" maxOccurs="unbounded">
@@ -164,6 +164,7 @@
             <xs:enumeration value="BO" />
             <xs:enumeration value="SO" />
             <xs:enumeration value="KS" />
+            <xs:enumeration value="AL" />
           </xs:restriction>
         </xs:simpleType>
       </xs:attribute>
@@ -1195,8 +1196,10 @@
   <xs:element name="gestaltung_praxis">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="hj_11_1" />
-        <xs:element ref="hj_11_2" />
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element ref="hj_11_1" />
+          <xs:element ref="hj_11_2" />
+        </xs:sequence>
         <xs:element ref="hj_12_1" />
         <xs:element ref="hj_12_2" />
       </xs:sequence>
@@ -1205,8 +1208,10 @@
   <xs:element name="gestaltung_theorie">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="hj_11_1" />
-        <xs:element ref="hj_11_2" />
+        <xs:sequence minOccurs="0" maxOccurs="1">
+          <xs:element ref="hj_11_1" />
+          <xs:element ref="hj_11_2" />
+        </xs:sequence>
         <xs:element ref="hj_12_1" />
         <xs:element ref="hj_12_2" />
       </xs:sequence>
@@ -1216,8 +1221,10 @@
     <xs:complexType>
       <xs:choice>
         <xs:sequence>
-          <xs:element ref="hj_11_1" />
-          <xs:element ref="hj_11_2" />
+          <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:element ref="hj_11_1" />
+            <xs:element ref="hj_11_2" />
+          </xs:sequence>
           <xs:element ref="hj_12_1" />
           <xs:element ref="hj_12_2" />
         </xs:sequence>

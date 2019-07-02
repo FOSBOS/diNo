@@ -33,7 +33,7 @@ namespace diNo.Xml
 
       foreach (Klasse k in Zugriff.Instance.Klassen)
       {
-        if (k.Jahrgangsstufe != Jahrgangsstufe.Zwoelf && k.Jahrgangsstufe != Jahrgangsstufe.Dreizehn)
+        if (k.Jahrgangsstufe != Jahrgangsstufe.Zwoelf /*&& k.Jahrgangsstufe != Jahrgangsstufe.Dreizehn*/)
         {
           continue; // in MB-Statistik nur 12te und 13te Klassen
         }
@@ -84,42 +84,51 @@ namespace diNo.Xml
         foreach (diNoDataSet.SchuelerRow s in k.getSchueler)
         {
           Schueler unserSchueler = new Schueler(s);
-          schueler xmlSchueler = new schueler
+
+          if (unserSchueler.Status == Schuelerstatus.Aktiv && !unserSchueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen) && !unserSchueler.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
           {
-            nummer = unserSchueler.Id.ToString(),
-            grunddaten = new grunddaten()
-          };
+            // nur Schüler in MB-Statistik, die die Prüfung vollständig abgelegt haben
 
-          schuelerDict[unserSchueler.Zweig].Add(xmlSchueler);
-          FuelleGrunddaten(unserSchueler, xmlSchueler);
-
-          if (unserSchueler.Fachreferat != null && unserSchueler.Fachreferat.Count > 0)
-          {
-            xmlSchueler.fachreferat = new fachreferat() { fach = unserSchueler.Fachreferat[0].getFach.Kuerzel, punkte = unserSchueler.Fachreferat[0].Punkte.ToString() };
-          }
-          if (unserSchueler.Seminarfachnote != null && !unserSchueler.Seminarfachnote.IsGesamtnoteNull())
-          {
-            xmlSchueler.seminar = new seminar() { punkte = unserSchueler.Seminarfachnote.Gesamtnote.ToString() };
-          }
-          xmlSchueler.zweite_fremdsprache = getSprache(unserSchueler);
-
-          FuelleAPGrunddaten(unserSchueler, xmlSchueler);
-
-          halbjahresergebnisse hjErg = new halbjahresergebnisse();
-          xmlSchueler.Item = hjErg;
-          FuelleFpA(unserSchueler, hjErg);
-
-          hjErg.allgemeinbildende_faecher = new allgemeinbildende_faecher();
-          hjErg.profilfaecher = new profilfaecher();
-          hjErg.wahlpflichtfaecher = new wahlpflichtfaecher();
-
-          foreach (var fach in unserSchueler.getNoten.alleFaecher)
-          {
-            FuelleAPWennVorhanden(unserSchueler, xmlSchueler, fach);
-            var xmlFachObject = SucheRichtigenXMLKnoten(hjErg, fach);
-            if (xmlFachObject != null)
+            schueler xmlSchueler = new schueler
             {
-              FuelleHalbjahre(fach, xmlFachObject);
+              nummer = unserSchueler.Id.ToString(),
+              grunddaten = new grunddaten()
+            };
+
+            schuelerDict[unserSchueler.Zweig].Add(xmlSchueler);
+            FuelleGrunddaten(unserSchueler, xmlSchueler);
+
+            if (unserSchueler.Fachreferat != null && unserSchueler.Fachreferat.Count > 0)
+            {
+              xmlSchueler.fachreferat = new fachreferat() { fach = unserSchueler.Fachreferat[0].getFach.Kuerzel, punkte = unserSchueler.Fachreferat[0].Punkte.ToString() };
+            }
+            if (unserSchueler.Seminarfachnote != null && !unserSchueler.Seminarfachnote.IsGesamtnoteNull())
+            {
+              xmlSchueler.seminar = new seminar() { punkte = unserSchueler.Seminarfachnote.Gesamtnote.ToString() };
+            }
+            xmlSchueler.zweite_fremdsprache = getSprache(unserSchueler);
+
+            FuelleAPGrunddaten(unserSchueler, xmlSchueler);
+
+            halbjahresergebnisse hjErg = new halbjahresergebnisse();
+            xmlSchueler.Item = hjErg;
+            FuelleFpA(unserSchueler, hjErg);
+
+            hjErg.allgemeinbildende_faecher = new allgemeinbildende_faecher();
+            hjErg.profilfaecher = new profilfaecher();
+            hjErg.wahlpflichtfaecher = new wahlpflichtfaecher();
+
+            foreach (var fach in unserSchueler.getNoten.alleFaecher)
+            {
+              if (fach.getFach.PlatzInMBStatistik == "sport" && unserSchueler.hatVorkommnis(Vorkommnisart.Sportbefreiung))
+                continue;
+
+              FuelleAPWennVorhanden(unserSchueler, xmlSchueler, fach);
+              var xmlFachObject = SucheRichtigenXMLKnoten(hjErg, fach);
+              if (xmlFachObject != null)
+              {
+                FuelleHalbjahre(fach, xmlFachObject);
+              }
             }
           }
         }
@@ -189,46 +198,67 @@ namespace diNo.Xml
 
         if (hj.JgStufe == Jahrgangsstufe.Elf && hj.Art == HjArt.Hj1)
         {
-          SucheProperty("hj_11_1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml);
+          SucheProperty("hj_11_1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml, true);
         }
         if (hj.JgStufe == Jahrgangsstufe.Elf && hj.Art == HjArt.Hj2)
         {
-          SucheProperty("hj_11_2", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml);
+          SucheProperty("hj_11_2", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml, true);
         }
         if (hj.JgStufe == Jahrgangsstufe.Zwoelf && hj.Art == HjArt.Hj1)
         {
-          SucheProperty("hj_12_1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml);
+          if (!SucheProperty("hj_12_1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml, true))
+          {
+            SucheProperty("Item", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml, false);
+          }
         }
         if (hj.JgStufe == Jahrgangsstufe.Zwoelf && hj.Art == HjArt.Hj2)
         {
-          SucheProperty("hj_12_2", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml);
+          if (!SucheProperty("hj_12_2", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml, true))
+          {
+            SucheProperty("Item1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml, false);
+          }
         }
         if (hj.JgStufe == Jahrgangsstufe.Dreizehn && hj.Art == HjArt.Hj1)
         {
-          SucheProperty("hj_13_1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml);
+          if (!SucheProperty("hj_13_1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml, true))
+          {
+            SucheProperty("Item", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ1Xml, false);
+          }
         }
         if (hj.JgStufe == Jahrgangsstufe.Dreizehn && hj.Art == HjArt.Hj2)
         {
-          SucheProperty("hj_13_2", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml);
+          if (!SucheProperty("hj_13_2", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml, true))
+          {
+            SucheProperty("Item1", xmlFachObject, unzuordenbareHalbjahre, hj, GetHJ2Xml, false);
+          }
         }
       }
 
-      if (unzuordenbareHalbjahre.Count > 0 && xmlFachObject.GetType().GetProperty("Items") != null)
+      if (unzuordenbareHalbjahre.Count > 0)
       {
-        xmlFachObject.GetType().GetProperty("Items").SetValue(xmlFachObject, unzuordenbareHalbjahre.ToArray());
+        if (xmlFachObject.GetType().GetProperty("Items") != null)
+        {
+          xmlFachObject.GetType().GetProperty("Items").SetValue(xmlFachObject, unzuordenbareHalbjahre.ToArray());
+        }
       }
     }
 
-    private static void SucheProperty(string propertyName, object xmlFachObject, List<object> unzuordenbareHalbjahre, HjLeistung hj, Func<HjLeistung, object> createFunc )
+    private static bool SucheProperty(string propertyName, object xmlFachObject, List<object> unzuordenbareHalbjahre, HjLeistung hj, Func<HjLeistung, object> createFunc, bool addToUnzuordenbare )
     {
       var property = xmlFachObject.GetType().GetProperty(propertyName);
       if (property != null)
       {
         property.SetValue(xmlFachObject, createFunc(hj));
+        return true;
       }
       else
       {
-        unzuordenbareHalbjahre.Add(createFunc(hj));
+        if (addToUnzuordenbare)
+        {
+          unzuordenbareHalbjahre.Add(createFunc(hj));
+        }
+
+        return false;
       }
     }
 
@@ -238,13 +268,16 @@ namespace diNo.Xml
       var apGesamt = fach.getHjLeistung(HjArt.AP);
       var apmuendlich = fach.getNote(Halbjahr.Zweites, Notentyp.APMuendlich);
       var apschriftlich = fach.getNote(Halbjahr.Zweites, Notentyp.APSchriftlich);
-      if (apGesamt != null && apmuendlich != null && apschriftlich != null)
+      if (apGesamt != null)
       {
         // nur, wenn alle Noten vorhanden sind
         var apObject = CreateXMLAPObject(xmlSchueler.abschlusspruefung, fach.getFach, unserSchueler);
-        apObject.GetType().GetProperty("muendlich").SetValue(apObject, apmuendlich.Value);
-        apObject.GetType().GetProperty("schriftlich").SetValue(apObject, apschriftlich.Value);
-        apObject.GetType().GetProperty("gesamt").SetValue(apObject, apGesamt.Punkte);
+        if (apmuendlich != null)
+        {
+          apObject.GetType().GetProperty("muendlich").SetValue(apObject, apmuendlich.Value.ToString());
+        }
+        apObject.GetType().GetProperty("schriftlich").SetValue(apObject, apschriftlich.Value.ToString());
+        apObject.GetType().GetProperty("gesamt").SetValue(apObject, apGesamt.Punkte.ToString());
       }
     }
 
@@ -337,11 +370,16 @@ namespace diNo.Xml
       var property = parent.GetType().GetProperty(pfadBestandteile[0]);
       if (property == null)
       {
-        throw new InvalidOperationException("Unbekannte Eigenschaft in MB-Statistik: " + pfadBestandteile[0]);
+        // suche nach der Property mit "ap_"-Präfix
+        property = parent.GetType().GetProperty("ap_" + pfadBestandteile[0]);
+        if (property == null)
+        {
+          throw new InvalidOperationException("Unbekannte Eigenschaft in MB-Statistik: " + pfadBestandteile[0]);
+        }
       }
 
       // erzeuge ein neues Objekt vom gesuchten Typ mittels des Standardkonstruktors - hoffentlich haben das alle
-      string neededTypeName = pfadBestandteile.Length == 1 ? pfadBestandteile[0] : pfadBestandteile[1];
+      string neededTypeName = "ap_"+(pfadBestandteile.Length == 1 ? pfadBestandteile[0] : pfadBestandteile[1]);
       Type neededType = Type.GetType("diNo.Xml.Mbstatistik." + neededTypeName, true);
       object newObject = neededType.GetConstructor(new Type[] { }).Invoke(new object[] { });
       property.SetValue(parent, newObject);

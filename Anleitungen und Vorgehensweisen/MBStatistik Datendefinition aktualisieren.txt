@@ -1,0 +1,8 @@
+Anleitung zum Aktualisieren der MB-Statistik-Dateien (XML-Schema)
+
+1. Neue dtd-Schemadefinition besorgen (bfbn-Seite)
+2. In VisualStudio einbinden (Unterordner XML)
+3. In VisualStudio öffnen und im Menü XML-Schema erzeugen anklicken. Die entstehende xsd auch in diesen Ordner abspeichern
+4. Unter C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools gibt es ein Tool xsd.exe, welches C#-Code aus der xsd erzeugen kann
+   Der korrekte Aufruf ist per Eingabeaufforderung xsd /n:diNo.Xml.Mbstatistik /c "c:\projects\dino\xml\abschlusspruefung_1.3.xsd"
+5. In diesem NetFX Verzeichnis liegen dann C#-Klassen, die wiederum in VisualStudio eingebunden werden können
