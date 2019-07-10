@@ -646,7 +646,7 @@ namespace diNo
       }
       else // Jahresende
       {
-        if (schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Elf)
+        if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
         {
           if (n.HatNichtBestanden()) // Jgstufe 11
           {
@@ -662,7 +662,7 @@ namespace diNo
           else if (schueler.Data.Schulart == "B")
             contr.Add(Vorkommnisart.MittlereReife, "");
 
-          if (n.HatIn12KeinePZ())
+          if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && n.HatIn12KeinePZ())
             contr.Add(Vorkommnisart.KeineProbezeitNaechstesSJ, "");
         }        
       }
