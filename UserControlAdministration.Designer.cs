@@ -43,6 +43,7 @@
       this.btnAttestpflicht = new System.Windows.Forms.Button();
       this.btnNotendruck = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
+      this.btnSeStatistik = new System.Windows.Forms.Button();
       this.btnMBStatistik = new System.Windows.Forms.Button();
       this.btnExportSchuelerZeugnisprogramm = new System.Windows.Forms.Button();
       this.btnNotenNachWinSV = new System.Windows.Forms.Button();
@@ -249,6 +250,7 @@
       // 
       // groupBoxExport
       // 
+      this.groupBoxExport.Controls.Add(this.btnSeStatistik);
       this.groupBoxExport.Controls.Add(this.btnMBStatistik);
       this.groupBoxExport.Controls.Add(this.btnExportSchuelerZeugnisprogramm);
       this.groupBoxExport.Controls.Add(this.btnNotenNachWinSV);
@@ -261,6 +263,16 @@
       this.groupBoxExport.TabIndex = 4;
       this.groupBoxExport.TabStop = false;
       this.groupBoxExport.Text = "Export";
+      // 
+      // btnSeStatistik
+      // 
+      this.btnSeStatistik.Location = new System.Drawing.Point(20, 192);
+      this.btnSeStatistik.Name = "btnSeStatistik";
+      this.btnSeStatistik.Size = new System.Drawing.Size(182, 23);
+      this.btnSeStatistik.TabIndex = 8;
+      this.btnSeStatistik.Text = "Schulerfolgsstatistik erstellen";
+      this.btnSeStatistik.UseVisualStyleBackColor = true;
+      this.btnSeStatistik.Click += new System.EventHandler(this.btnSeStatistik_Click);
       // 
       // btnMBStatistik
       // 
@@ -707,5 +719,6 @@
     private System.Windows.Forms.Button btnDelEinbringung;
     private System.Windows.Forms.Button btnGesErg;
     private System.Windows.Forms.Button btnMBStatistik;
+    private System.Windows.Forms.Button btnSeStatistik;
   }
 }

@@ -340,6 +340,16 @@ namespace diNo
         Xml.MBStatistik.Serialize(dia.FileName);
       }
     }
+
+    private void btnSeStatistik_Click(object sender, EventArgs e)
+    {
+      SaveFileDialog dia = new SaveFileDialog();
+      dia.Title = "Dateiname wählen";
+      if (dia.ShowDialog() == DialogResult.OK)
+      {
+        Xml.SEStatistik.Serialize(dia.FileName);
+      }
+    }
   }
 }
 
