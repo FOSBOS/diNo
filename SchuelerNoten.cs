@@ -104,29 +104,6 @@ namespace diNo
       return null;
     }
 
-    public IList<FachSchuelerNotenDruckAlt> SchuelerNotenDruckAlt(Bericht rptName)
-    {
-      IList<FachSchuelerNotenDruckAlt> liste = new List<FachSchuelerNotenDruckAlt>();
-      foreach (FachSchuelerNoten f in alleKurse)
-      {                
-        liste.Add(new FachSchuelerNotenDruckAlt(f, f.getFach.IstSAFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe), rptName));
-      }
-      
-      if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Dreizehn)
-      {
-        if (!schueler.Data.IsAndereFremdspr2NoteNull())
-        {
-          liste.Add(new FachSchuelerNotenDruckAlt(
-            (schueler.Data.IsAndereFremdspr2TextNull() ? "Andere 2. Fremdsprache" :  schueler.Data.AndereFremdspr2Text ),
-            schueler.Data.AndereFremdspr2Note));
-        }
-        liste.Add(new FachSchuelerNotenDruckAlt(schueler.Seminarfachnote));
-      }
-
-      return liste;
-    }
-
-
     /// <summary>
     /// Liefert eine Liste in der je Fach alle Noten in druckbarer Form vorliegen.
     /// </summary>

@@ -41,6 +41,16 @@ namespace diNo
 
     private Zugriff()
     {
+      try // macht ggf. Ärger im Designer
+      {
+        string con = ConfigurationManager.ConnectionStrings[1].ConnectionString;
+        IsTestDB = con.Contains("localhost");
+      }
+      catch
+      {
+        IsTestDB = false;
+      }
+
       try
       {
         Klassen = new List<Klasse>();
@@ -59,9 +69,6 @@ namespace diNo
         Username = Username.ToLower();
         Username = Username.Replace("fosbos\\", "");
         Username = Username.Replace("vw\\", "");
-
-        string con = ConfigurationManager.ConnectionStrings[1].ConnectionString;
-        IsTestDB = con.Contains("localhost");
 
         var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
         if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);

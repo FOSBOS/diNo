@@ -202,12 +202,6 @@
     <Compile Include="LehrerFileReader.cs" />
     <Compile Include="LeseNotenAusExcel.cs" />
     <Compile Include="Note.cs" />
-    <Compile Include="Notenbogen.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Notenbogen.Designer.cs">
-      <DependentUpon>Notenbogen.cs</DependentUpon>
-    </Compile>
     <Compile Include="NotenCheckController.cs" />
     <Compile Include="NotenCheckForm.cs">
       <SubType>Form</SubType>
@@ -310,23 +304,19 @@
     <EmbeddedResource Include="rptKlassenliste.rdlc" />
     <EmbeddedResource Include="rptNotenbogen.rdlc" />
     <EmbeddedResource Include="rptNotenmitteilung.rdlc" />
-    <EmbeddedResource Include="rptNotenmitteilungAlt.rdlc" />
     <EmbeddedResource Include="GlobalesForm.resx">
       <DependentUpon>GlobalesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Stammdaten.resx">
       <DependentUpon>Stammdaten.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="subrptAbiergebnisseAlt.rdlc" />
     <EmbeddedResource Include="subrptAbiLinkeSeite.rdlc" />
     <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />
     <EmbeddedResource Include="subrptPunktesummeNB.rdlc" />
     <EmbeddedResource Include="subrptPunktesumme.rdlc" />
-    <EmbeddedResource Include="subrptFachSchuelerNoten.rdlc" />
     <EmbeddedResource Include="subrptEinbringung.rdlc" />
     <EmbeddedResource Include="subrptAbiturzeugnis.rdlc" />
     <EmbeddedResource Include="subrptNoten.rdlc" />
-    <EmbeddedResource Include="subrptNotenSjAlt.rdlc" />
     <EmbeddedResource Include="subrptFPANoten.rdlc" />
     <EmbeddedResource Include="subrptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="subrptNotenSj.rdlc" />
@@ -339,9 +329,6 @@
     <EmbeddedResource Include="UserControlKurszuordnungen.resx">
       <DependentUpon>UserControlKurszuordnungen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Notenbogen.resx">
-      <DependentUpon>Notenbogen.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="NotenCheckForm.resx">
       <DependentUpon>NotenCheckForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -353,12 +340,10 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="rptAbiergebnisseAlt.rdlc" />
     <EmbeddedResource Include="rptBrief.rdlc" />
     <EmbeddedResource Include="ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="rptNotenbogenAlt.rdlc" />
     <EmbeddedResource Include="rptNotenCheck.rdlc" />
     <EmbeddedResource Include="subrptKurs.rdlc" />
     <EmbeddedResource Include="subrptAbiVorkommnis.rdlc" />
