@@ -83,13 +83,10 @@ namespace diNo
       HideVorHj = !s.hatVorHj; // nur bei F12 anzeigen
       HideAbi = jg < 12 || Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.ErstePA;
 
-      if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6) // TODO: Soll das so kommen?
+      if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6)
       {
         int anzProbleme = s.getNoten.AnzahlProbleme();
         Bemerkung = "Sie benötigen bei " + (anzProbleme > 2 ? 2 : anzProbleme) + " Gesamtergebnissen unter 4 Punkten mindestens " + s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 : 5) + " Punkte, um zu bestehen.";
-        int fehlP = s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 :5) - s.punktesumme.Summe(PunktesummeArt.Gesamt);
-        int fehlAP = (int)Math.Ceiling(fehlP / (decimal)(s.APFaktor));
-        Bemerkung += "\nDazu müssen Sie Ihre Prüfungsgesamtergebnisse um mindestens " + fehlAP + " Punkte erhöhen.\n";
       }        
     }
 
@@ -294,6 +291,16 @@ namespace diNo
         Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet. In den Fremdsprachen wurden die mündlichen Leistungen stärker gewichtet.";
       if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
         Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
+
+      bool hatIPo = s.getNoten.FindeFach("IPo", false) != null;
+      bool hatIBS = s.getNoten.FindeFach("IBS", false) != null;
+      if (hatIBS && hatIPo)
+        Bemerkung += "<br>Die Fächer International Business Studies und Internationale Politik wurden bilingual unterrichtet.";
+      else if (hatIBS)
+        Bemerkung += "<br>Das Fach International Business Studies wurde bilingual unterrichtet.";
+      else if (hatIPo)
+        Bemerkung += "<br>Das Fach Internationale Politik wurde bilingual unterrichtet.";
+    
       if (s.hatVorkommnis(Vorkommnisart.MittlereReife))
         Bemerkung += "<br><b>Dieses Zeugnis verleiht den mittleren Schulabschluss gemäß Art. 25 Abs. 1 Satz 2 Nr. 6 BayEUG.</b>";
       if (jg == 11 && b == Bericht.Jahreszeugnis)

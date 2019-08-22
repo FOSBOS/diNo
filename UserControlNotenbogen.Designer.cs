@@ -29,21 +29,21 @@
     private void InitializeComponent()
     {
       this.components = new System.ComponentModel.Container();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
       System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
       this.dataGridNoten = new System.Windows.Forms.DataGridView();
       this.cFach = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.c11_1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,6 +78,10 @@
       this.lbBerechnungsstatus = new System.Windows.Forms.Label();
       this.comboBoxBerechnungsstatus = new System.Windows.Forms.ComboBox();
       this.lbHinweise = new System.Windows.Forms.Label();
+      this.textBoxDNoteAllg = new System.Windows.Forms.TextBox();
+      this.labelFf = new System.Windows.Forms.Label();
+      this.textBoxDNote = new System.Windows.Forms.TextBox();
+      this.label12 = new System.Windows.Forms.Label();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).BeginInit();
       this.contextMenu.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridPunktesumme)).BeginInit();
@@ -87,14 +91,14 @@
       // 
       this.dataGridNoten.AllowUserToAddRows = false;
       this.dataGridNoten.AllowUserToDeleteRows = false;
-      dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
-      dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
-      dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-      dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-      dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-      this.dataGridNoten.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+      dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+      dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+      dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+      dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+      dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+      this.dataGridNoten.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
       this.dataGridNoten.ColumnHeadersHeight = 30;
       this.dataGridNoten.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
       this.dataGridNoten.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -122,14 +126,14 @@
       this.dataGridNoten.ReadOnly = true;
       this.dataGridNoten.RowHeadersVisible = false;
       this.dataGridNoten.RowHeadersWidth = 70;
-      this.dataGridNoten.Size = new System.Drawing.Size(1149, 409);
+      this.dataGridNoten.Size = new System.Drawing.Size(1149, 385);
       this.dataGridNoten.TabIndex = 1;
       this.dataGridNoten.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridNoten_CellMouseDown);
       // 
       // cFach
       // 
-      dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      this.cFach.DefaultCellStyle = dataGridViewCellStyle17;
+      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.cFach.DefaultCellStyle = dataGridViewCellStyle2;
       this.cFach.DividerWidth = 5;
       this.cFach.Frozen = true;
       this.cFach.HeaderText = "Fach";
@@ -203,8 +207,8 @@
       // 
       // csLHj1
       // 
-      dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      this.csLHj1.DefaultCellStyle = dataGridViewCellStyle18;
+      dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.csLHj1.DefaultCellStyle = dataGridViewCellStyle3;
       this.csLHj1.Frozen = true;
       this.csLHj1.HeaderText = "sL";
       this.csLHj1.Name = "csLHj1";
@@ -214,8 +218,8 @@
       // 
       // cSchnittMdl1
       // 
-      dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cSchnittMdl1.DefaultCellStyle = dataGridViewCellStyle19;
+      dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cSchnittMdl1.DefaultCellStyle = dataGridViewCellStyle4;
       this.cSchnittMdl1.Frozen = true;
       this.cSchnittMdl1.HeaderText = "Ø sL";
       this.cSchnittMdl1.Name = "cSchnittMdl1";
@@ -225,8 +229,8 @@
       // 
       // cSAHj1
       // 
-      dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      this.cSAHj1.DefaultCellStyle = dataGridViewCellStyle20;
+      dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.cSAHj1.DefaultCellStyle = dataGridViewCellStyle5;
       this.cSAHj1.Frozen = true;
       this.cSAHj1.HeaderText = "SA";
       this.cSAHj1.Name = "cSAHj1";
@@ -236,8 +240,8 @@
       // 
       // cPunkte2DezHj1
       // 
-      dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cPunkte2DezHj1.DefaultCellStyle = dataGridViewCellStyle21;
+      dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cPunkte2DezHj1.DefaultCellStyle = dataGridViewCellStyle6;
       this.cPunkte2DezHj1.Frozen = true;
       this.cPunkte2DezHj1.HeaderText = "Ø";
       this.cPunkte2DezHj1.Name = "cPunkte2DezHj1";
@@ -248,9 +252,9 @@
       // cHj1
       // 
       this.cHj1.ContextMenuStrip = this.contextMenu;
-      dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      dataGridViewCellStyle22.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.cHj1.DefaultCellStyle = dataGridViewCellStyle22;
+      dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.cHj1.DefaultCellStyle = dataGridViewCellStyle7;
       this.cHj1.DividerWidth = 5;
       this.cHj1.Frozen = true;
       this.cHj1.HeaderText = "1. Hj";
@@ -261,8 +265,8 @@
       // 
       // csLHj2
       // 
-      dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      this.csLHj2.DefaultCellStyle = dataGridViewCellStyle7;
+      dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.csLHj2.DefaultCellStyle = dataGridViewCellStyle8;
       this.csLHj2.Frozen = true;
       this.csLHj2.HeaderText = "sL";
       this.csLHj2.Name = "csLHj2";
@@ -272,8 +276,8 @@
       // 
       // cSchnittMdl2
       // 
-      dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cSchnittMdl2.DefaultCellStyle = dataGridViewCellStyle23;
+      dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cSchnittMdl2.DefaultCellStyle = dataGridViewCellStyle9;
       this.cSchnittMdl2.Frozen = true;
       this.cSchnittMdl2.HeaderText = "Ø sL";
       this.cSchnittMdl2.Name = "cSchnittMdl2";
@@ -283,8 +287,8 @@
       // 
       // cSAHj2
       // 
-      dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-      this.cSAHj2.DefaultCellStyle = dataGridViewCellStyle24;
+      dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+      this.cSAHj2.DefaultCellStyle = dataGridViewCellStyle10;
       this.cSAHj2.Frozen = true;
       this.cSAHj2.HeaderText = "SA";
       this.cSAHj2.Name = "cSAHj2";
@@ -294,8 +298,8 @@
       // 
       // cPunkte2DezHj2
       // 
-      dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cPunkte2DezHj2.DefaultCellStyle = dataGridViewCellStyle25;
+      dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cPunkte2DezHj2.DefaultCellStyle = dataGridViewCellStyle11;
       this.cPunkte2DezHj2.Frozen = true;
       this.cPunkte2DezHj2.HeaderText = "Ø";
       this.cPunkte2DezHj2.Name = "cPunkte2DezHj2";
@@ -306,9 +310,9 @@
       // cHj2
       // 
       this.cHj2.ContextMenuStrip = this.contextMenu;
-      dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.cHj2.DefaultCellStyle = dataGridViewCellStyle26;
+      dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.cHj2.DefaultCellStyle = dataGridViewCellStyle12;
       this.cHj2.DividerWidth = 5;
       this.cHj2.Frozen = true;
       this.cHj2.HeaderText = "2. Hj";
@@ -345,8 +349,8 @@
       // cJN
       // 
       this.cJN.ContextMenuStrip = this.contextMenu;
-      dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cJN.DefaultCellStyle = dataGridViewCellStyle12;
+      dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cJN.DefaultCellStyle = dataGridViewCellStyle13;
       this.cJN.DividerWidth = 2;
       this.cJN.Frozen = true;
       this.cJN.HeaderText = "JN";
@@ -409,7 +413,7 @@
             this.cText,
             this.cSumme,
             this.cAnzahl});
-      this.dataGridPunktesumme.Location = new System.Drawing.Point(3, 504);
+      this.dataGridPunktesumme.Location = new System.Drawing.Point(3, 479);
       this.dataGridPunktesumme.Name = "dataGridPunktesumme";
       this.dataGridPunktesumme.ReadOnly = true;
       this.dataGridPunktesumme.RowHeadersVisible = false;
@@ -425,16 +429,16 @@
       // 
       // cSumme
       // 
-      dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cSumme.DefaultCellStyle = dataGridViewCellStyle13;
+      dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cSumme.DefaultCellStyle = dataGridViewCellStyle14;
       this.cSumme.HeaderText = "Punkte";
       this.cSumme.Name = "cSumme";
       this.cSumme.ReadOnly = true;
       // 
       // cAnzahl
       // 
-      dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.cAnzahl.DefaultCellStyle = dataGridViewCellStyle27;
+      dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.cAnzahl.DefaultCellStyle = dataGridViewCellStyle15;
       this.cAnzahl.HeaderText = "Faktor";
       this.cAnzahl.Name = "cAnzahl";
       this.cAnzahl.ReadOnly = true;
@@ -478,11 +482,53 @@
       this.lbHinweise.Text = "Es wurde eine ungültige Zahl an Halbjahresleistungen eingebracht.";
       this.lbHinweise.Visible = false;
       // 
+      // textBoxDNoteAllg
+      // 
+      this.textBoxDNoteAllg.Enabled = false;
+      this.textBoxDNoteAllg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxDNoteAllg.Location = new System.Drawing.Point(471, 569);
+      this.textBoxDNoteAllg.Name = "textBoxDNoteAllg";
+      this.textBoxDNoteAllg.Size = new System.Drawing.Size(47, 20);
+      this.textBoxDNoteAllg.TabIndex = 65;
+      // 
+      // labelFf
+      // 
+      this.labelFf.AutoSize = true;
+      this.labelFf.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.labelFf.Location = new System.Drawing.Point(468, 553);
+      this.labelFf.Name = "labelFf";
+      this.labelFf.Size = new System.Drawing.Size(299, 13);
+      this.labelFf.TabIndex = 67;
+      this.labelFf.Text = "Sonderfall 2. Fremdsprache nur in 12 oder Ergänzungsprüfung";
+      // 
+      // textBoxDNote
+      // 
+      this.textBoxDNote.Enabled = false;
+      this.textBoxDNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxDNote.Location = new System.Drawing.Point(471, 499);
+      this.textBoxDNote.Name = "textBoxDNote";
+      this.textBoxDNote.Size = new System.Drawing.Size(47, 20);
+      this.textBoxDNote.TabIndex = 64;
+      // 
+      // label12
+      // 
+      this.label12.AutoSize = true;
+      this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label12.Location = new System.Drawing.Point(468, 483);
+      this.label12.Name = "label12";
+      this.label12.Size = new System.Drawing.Size(93, 13);
+      this.label12.TabIndex = 66;
+      this.label12.Text = "Durchschnittsnote";
+      // 
       // UserControlNotenbogen
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
+      this.Controls.Add(this.textBoxDNoteAllg);
+      this.Controls.Add(this.labelFf);
+      this.Controls.Add(this.textBoxDNote);
+      this.Controls.Add(this.label12);
       this.Controls.Add(this.lbHinweise);
       this.Controls.Add(this.lbBerechnungsstatus);
       this.Controls.Add(this.comboBoxBerechnungsstatus);
@@ -492,7 +538,7 @@
       this.Controls.Add(this.chkShowHj1);
       this.Controls.Add(this.dataGridNoten);
       this.Name = "UserControlNotenbogen";
-      this.Size = new System.Drawing.Size(1115, 544);
+      this.Size = new System.Drawing.Size(1098, 527);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).EndInit();
       this.contextMenu.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridPunktesumme)).EndInit();
@@ -537,5 +583,9 @@
     private System.Windows.Forms.Label lbBerechnungsstatus;
     private System.Windows.Forms.ComboBox comboBoxBerechnungsstatus;
     private System.Windows.Forms.Label lbHinweise;
+    private System.Windows.Forms.TextBox textBoxDNoteAllg;
+    private System.Windows.Forms.Label labelFf;
+    private System.Windows.Forms.TextBox textBoxDNote;
+    private System.Windows.Forms.Label label12;
   }
 }

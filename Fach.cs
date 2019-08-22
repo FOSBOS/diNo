@@ -103,10 +103,6 @@ namespace diNo
       {
         if (IstSAPFach(zweig)) z=1;            
       }
-      else if (jg == Jahrgangsstufe.Dreizehn) // 13. Klasse nach AlteFOBOSO
-      {
-        if (IstSAPFach(zweig) || Kuerzel=="F" || Kuerzel == "Frz" || Kuerzel == "TeIn" || Kuerzel == "B" || Kuerzel == "VWL") z=2;
-      }
       else
       {
         if (IstSAPFach(zweig) || Kuerzel == "F"  || sort[(byte)zweig] == 2) z = 1; // Prüfungsfächer, Französisch und Profilfach 2

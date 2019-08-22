@@ -572,7 +572,7 @@ namespace diNo
         else if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
           return Vorkommnisart.Fachabiturzeugnis;
         else if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
-          return (!Data.IsDNoteAllgNull() /*AlteFOBOSO! neu: HatZweiteFremdsprache()*/ ? Vorkommnisart.allgemeineHochschulreife : Vorkommnisart.fachgebundeneHochschulreife);
+          return (HatZweiteFremdsprache() ? Vorkommnisart.allgemeineHochschulreife : Vorkommnisart.fachgebundeneHochschulreife);
       }
       else if (zeitpunkt == Zeitpunkt.Jahresende && getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
         return Vorkommnisart.Jahreszeugnis;
@@ -810,12 +810,6 @@ namespace diNo
       return 25; //FOS11
     }
 
-
-    public bool AlteFOBOSO()
-    {
-      return getKlasse.AlteFOBOSO();
-    }
-
     public int Alter()
     {      
       return Alter(DateTime.Now);
@@ -934,9 +928,7 @@ namespace diNo
   public enum Schuelerstatus
   {
     Aktiv = 0,
-    Abgemeldet = 1,
-    NichtZurSAPZugelassen = 2,
-    SAPabgebrochen = 3
+    Abgemeldet = 1
   }
 
 }

@@ -156,11 +156,27 @@ namespace diNo
         if (berechnungen!=null)
           berechnungen.BerechneSchueler(s);
 
-        if (s.Status == Schuelerstatus.SAPabgebrochen && zeitpunkt == Zeitpunkt.ZweitePA)
-          Add(Vorkommnisart.PruefungAbgebrochen,"");
-
-        if ((s.Status == Schuelerstatus.SAPabgebrochen || s.Status == Schuelerstatus.NichtZurSAPZugelassen) && zeitpunkt > Zeitpunkt.ErstePA) // nicht zugelassene raus
-          return;
+        // In memoriam: Schüler, die draußen sind
+        if (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
+        {
+          bool weg = false;
+          if (s.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen))
+          {
+            weg = true;
+            Add(null, "War nicht zur Prüfung zugelassen.");            
+          }
+          if (s.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
+          {
+            weg = true;
+            Add(null, "Hat die Prüfung abgebrochen.");
+          }
+          if (weg)
+          { 
+            if (modus == NotenCheckModus.KonferenzVorbereiten && zeitpunkt == Zeitpunkt.DrittePA && !s.hatVorkommnis(Vorkommnisart.keinJahreszeugnis))
+              s.AddVorkommnis(Vorkommnisart.Jahreszeugnis, Zugriff.Instance.Zeugnisdatum, "");
+            return;
+          }          
+        }
 
         foreach (var ch in alleNotenchecks)
         {

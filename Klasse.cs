@@ -149,11 +149,6 @@ namespace diNo
       }
     }
            
-    public bool AlteFOBOSO()
-    {
-        return (Jahrgangsstufe >= Jahrgangsstufe.Dreizehn);
-    }
-   
     public int KlassenleiterId
     {
       get { return Data.IsKlassenleiterIdNull() ? 0 : Data.KlassenleiterId;  }

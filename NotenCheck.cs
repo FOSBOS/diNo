@@ -220,8 +220,8 @@ namespace diNo
   /// </summary>
   public class NotenanzahlChecker : NotenCheck
   {
-    public NotenanzahlChecker(NotenCheckController contr) :base (contr)
-        { }
+    public NotenanzahlChecker(NotenCheckController contr) : base(contr)
+    { }
     /// <summary>
     /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
     /// </summary>
@@ -242,12 +242,7 @@ namespace diNo
     public override void Check(Schueler schueler)
     {
       base.Check(schueler);
-      if (schueler.AlteFOBOSO())
-      {
-        CheckAlt(schueler);
-        return;
-      }
-      
+
       foreach (var fachNoten in noten.alleKurse)
       {
         Kurs kurs = Zugriff.Instance.KursRep.Find(fachNoten.kursId);
@@ -265,7 +260,7 @@ namespace diNo
           {
             contr.Add(kurs, "Es liegt keine Note in der Gruppenprüfung vor.");
           }
-          
+
           continue;
         }
 
@@ -285,7 +280,7 @@ namespace diNo
 
         // die Prüfung unterscheidet wie der bisherige Notenbogen nicht, ob die Note aus einer Ex oder echt mündlich ist - das verantwortet der Lehrer
         int kurzarbeitenCount = fachNoten.getNotenanzahl(hj, Notentyp.Kurzarbeit);
-        int muendlicheCount = fachNoten.getNotenanzahl(hj, Notentyp.Ex) + fachNoten.getNotenanzahl(hj, Notentyp.EchteMuendliche) + fachNoten.getNotenanzahl(hj, Notentyp.Fachreferat);
+        int muendlicheCount = fachNoten.getNotenanzahl(hj, Notentyp.Ex) + fachNoten.getNotenanzahl(hj, Notentyp.EchteMuendliche);
         int schulaufgabenCount = fachNoten.getNotenanzahl(hj, Notentyp.Schulaufgabe);
         bool hatErsatzpruefung = fachNoten.getNotenanzahl(hj, Notentyp.Ersatzprüfung) > 0;
 
@@ -308,7 +303,7 @@ namespace diNo
         if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
         {
           // zur Probezeit BOS muss eine SA vorliegen, wenn 2 SA pro Hj (Vorklasse) oder ein SAP-Fach (mit SA, nicht Vk!) vorliegt
-          if (schulaufgabenCount == 0 && ((istSAPFach && noetigeAnzahlSchulaufgaben==1) || noetigeAnzahlSchulaufgaben > 1))
+          if (schulaufgabenCount == 0 && ((istSAPFach && noetigeAnzahlSchulaufgaben == 1) || noetigeAnzahlSchulaufgaben > 1))
           {
             contr.Add(kurs, toText(schulaufgabenCount, "", "Schulaufgabe", hj));
           }
@@ -316,13 +311,13 @@ namespace diNo
           if (hatErsatzpruefung) continue;
 
           // Schreibt der Lehrer KA, dann muss sie bei allen Schülern vorliegen
-          if (kurs.schreibtKA && kurzarbeitenCount==0)
+          if (kurs.schreibtKA && kurzarbeitenCount == 0)
           {
             contr.Add(kurs, toText(kurzarbeitenCount, "", "Kurzarbeite", hj));
           }
 
           // Profilfach 2: mind. 2 Noten
-          if (istSAFach && !istSAPFach && schulaufgabenCount + kurzarbeitenCount + muendlicheCount <2)
+          if (istSAFach && !istSAPFach && schulaufgabenCount + kurzarbeitenCount + muendlicheCount < 2)
           {
             contr.Add(kurs, toText(schulaufgabenCount + kurzarbeitenCount + muendlicheCount, "", "Note", hj));
             continue;
@@ -352,197 +347,20 @@ namespace diNo
           }
           if (hatErsatzpruefung) continue;
 
-          if (kurs.schreibtKA && kurzarbeitenCount ==0)
+          if (kurs.schreibtKA && kurzarbeitenCount == 0)
           {
             contr.Add(kurs, toText(kurzarbeitenCount, "", "Kurzarbeite"));
           }
 
-          if ((!kurs.schreibtKA && muendlicheCount < (kurs.getFach.NichtNC ? 2: 3)) || muendlicheCount == 0)
+          if ((!kurs.schreibtKA && muendlicheCount < (kurs.getFach.NichtNC ? 2 : 3)) || muendlicheCount == 0)
           {
             contr.Add(kurs, toText(muendlicheCount, "mündliche", "Note"));
           }
         }
       }
     }
-
-
-
-  private void CheckAlt(Schueler schueler)
-    { 
-      //List<string> faecherOhneNoten = new List<string>(); 
-      foreach (var fachNoten in noten.alleKurse)
-      {
-        Kurs kurs = Zugriff.Instance.KursRep.Find(fachNoten.kursId);
-        if (contr.modus == NotenCheckModus.EigeneNotenVollstaendigkeit && (kurs.getLehrer == null || Zugriff.Instance.lehrer.Id != kurs.getLehrer.Id))
-          continue;
-
-        // Zweite PA: nur Vorliegen der Prüfungsnoten prüfen
-        // -------------------------------------------------
-        if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
-        {
-          if (fachNoten.getFach.IstSAPFach(schueler.Zweig) && fachNoten.getNotenanzahl(Notentyp.APSchriftlich) == 0)
-          {
-            contr.Add(kurs, "Es liegt keine Note in der schriftlichen Abschlussprüfung vor.");
-            if (fachNoten.getFach.Kuerzel == "E" && fachNoten.getNotenanzahl(Notentyp.APMuendlich) == 0)
-            {
-              contr.Add(kurs, "Es liegt keine Note in der Gruppenprüfung vor.");
-            }
-          }
-          continue;
-        }
-
-        // Grunddaten dieses Fachs
-        // -----------------------
-        int noetigeAnzahlSchulaufgaben = fachNoten.getFach.AnzahlSA(schueler.Zweig,schueler.getKlasse.Jahrgangsstufe);
-        bool istSAFach = noetigeAnzahlSchulaufgaben>0;
-        bool einstuendig = fachNoten.getFach.IstEinstuendig(schueler.getKlasse.Jahrgangsstufe,schueler.getKlasse.Schulart);
-        int noetigeAnzahlEchteMdl = (einstuendig ? 1 : 2);
-        bool meldungKA=false, meldungMdl=false, meldungSA=false;
-        Kurs derKurs = Zugriff.Instance.KursRep.Find(fachNoten.kursId);
-        if (derKurs.getLehrer == null)
-        {
-          // vermutlich ein Dummy-Kurs, der aus der elften Klasse übernommen wurde. Prüfe nur Jahresfortgang und Zeugnisnote
-          byte? relevanteNote = fachNoten.getRelevanteNote(contr.zeitpunkt);
-          if (relevanteNote == null)
-          {
-            contr.Add(kurs, "Es liegt keine Note aus der 11. Klasse vor.");
-          }
-
-          continue; // in diesen Kursen nicht weiter nach Notenanzahl prüfen
-        }
-
-
-        // Halbjahresprüfung
-        // -----------------
-        Halbjahr hj = Halbjahr.Zweites;
-        if (contr.zeitpunkt==Zeitpunkt.ProbezeitBOS || contr.zeitpunkt==Zeitpunkt.HalbjahrUndProbezeitFOS)
-          hj = Halbjahr.Erstes;
-
-        // die Prüfung unterscheidet wie der bisherige Notenbogen nicht, ob die Note aus einer Ex oder echt mündlich ist - das verantwortet der Lehrer
-        int kurzarbeitenCount = fachNoten.getNotenanzahl(hj,Notentyp.Kurzarbeit);
-        int muendlicheCount = fachNoten.getNotenanzahl(hj,Notentyp.Ex) + fachNoten.getNotenanzahl(hj,Notentyp.EchteMuendliche) + fachNoten.getNotenanzahl(hj,Notentyp.Fachreferat);
-        int schulaufgabenCount = fachNoten.getNotenanzahl(hj,Notentyp.Schulaufgabe);
-        bool hatErsatzpruefung = fachNoten.getNotenanzahl(hj,Notentyp.Ersatzprüfung)>0;
-
-        // wenn gar nichts da ist...
-        if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0 && !hatErsatzpruefung)
-        {
-          contr.Add(kurs, toText(0,"","Note",hj));
-          continue;
-        }
-
-        // zur Probezeit BOS muss noch keine SA vorliegen, wenn nur pro HJ eine geschrieben wird        
-        if (istSAFach && schulaufgabenCount == 0)      
-          if (!(contr.zeitpunkt == Zeitpunkt.ProbezeitBOS && noetigeAnzahlSchulaufgaben <= 2))
-          {
-            contr.Add(kurs, toText(schulaufgabenCount,"","Schulaufgabe",hj));              
-            meldungSA=true;
-          }
-
-        // Ist eine Ersatzprüfung da, erübrigen sich KA, mdl. Noten
-        if (!hatErsatzpruefung)
-        {
-          if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
-          {
-            if (!AnzahlMuendlicheNotenOKProbezeitBOS(schulaufgabenCount,kurzarbeitenCount,muendlicheCount,fachNoten))
-            {
-              contr.Add( kurs, toText(muendlicheCount,"mündliche","Note"));
-            }
-            continue;
-          }
-
-          if (kurs.schreibtKA && kurzarbeitenCount == 0)
-          {
-            contr.Add( kurs, toText(kurzarbeitenCount,"","Kurzarbeite",hj));        
-            meldungKA=true;
-          }
-
-          // mündliche Noten (bei einstündigen Fächern reicht 1 Note im Schuljahr (also hier nicht prüfen)
-          if (!einstuendig && (kurs.schreibtKA && muendlicheCount == 0 || !kurs.schreibtKA && muendlicheCount < 2))
-          {
-            contr.Add( kurs, toText(muendlicheCount,"mündliche","Note",hj));
-            meldungMdl=true;
-          }
-        }
-
-        if (hj == Halbjahr.Erstes) continue; // Gesamtjahr nur prüfen, wenn auch das zweite vorliegt
-
-        // Gesamtjahresprüfung
-        // -------------------
-        kurzarbeitenCount = fachNoten.getNotenanzahl(Notentyp.Kurzarbeit);
-        muendlicheCount = fachNoten.getNotenanzahl(Notentyp.Ex) + fachNoten.getNotenanzahl(Notentyp.EchteMuendliche) + fachNoten.getNotenanzahl(Notentyp.Fachreferat);
-        schulaufgabenCount = fachNoten.getNotenanzahl(Notentyp.Schulaufgabe);
-        hatErsatzpruefung = fachNoten.getNotenanzahl(Notentyp.Ersatzprüfung)>0;
-       
-        if (!hatErsatzpruefung)
-        {                 
-          if (schulaufgabenCount < noetigeAnzahlSchulaufgaben && !meldungSA)
-          {
-            contr.Add(kurs, toText(schulaufgabenCount,"","Schulaufgabe"));
-          }
-
-          if (kurs.schreibtKA && kurzarbeitenCount < 2 && !meldungKA)
-          {
-            contr.Add( kurs, toText(kurzarbeitenCount,"","Kurzarbeit"));
-          }
-
-          // wenn Exen geschrieben werden, reichen 2 Exen + 2 mdl. pro Schüler (weil ja eine nicht mitgeschrieben werden muss)
-          if (((!kurs.schreibtKA && muendlicheCount < 2+noetigeAnzahlEchteMdl) || muendlicheCount < noetigeAnzahlEchteMdl)  && !meldungMdl)
-          {
-            contr.Add( kurs,toText(muendlicheCount,"mündliche","Note"));
-          }
-        }
-      }      
-    }
-
-    private bool AnzahlMuendlicheNotenOKProbezeitBOS(int schulaufgabenCount, int kurzarbeitenCount, int muendlicheCount, FachSchuelerNoten noten)
-    {
-      // TODO: Wenn 1 SA und 1 mdl. vorliegt, muss das doch auch reichen?
-      if (kurzarbeitenCount > 1 || noten.getNotenanzahl(Halbjahr.Erstes,Notentyp.Ersatzprüfung)>0)
-      {
-        return true; // mehr als 1 Kurzabeit oder min. 2 mündliche Noten sind auf jeden Fall OK
-      }
-
-      if (kurzarbeitenCount == 1)
-      {
-        if (muendlicheCount > 0 || schulaufgabenCount > 0)
-        {
-          return true; // wenn nur 1 Kurzarbeit vorliegt, braucht man im Normalfall noch eine andere Note. Dann ist es OK.
-        }
-        else
-        {
-          // wir akzeptieren eine Kurzarbeit als einzelne Note, wenn sie bei min. 6 Punkten liegt (somit kann der Schüler in diesem Fach nicht mehr unterpunkten)
-          var kurzarbeitNote = noten.getNoten(Halbjahr.Erstes, Notentyp.Kurzarbeit)[0];
-          return (kurzarbeitNote >= 6);
-        }
-      }
-
-      //ansonsten ist keine Kurzarbeit vorhanden. 
-      if (muendlicheCount >= 2)
-      {
-        return true; // wenn min. 2 mündliche vorliegen, ist das ok.
-      }
-      
-      //in allen anderen Fällen sind es zu wenig Noten
-      return false;
-    }
-
-    private static int GetAnzahlSchulaufgaben(Schulaufgabenwertung wertung)
-    {
-      int noetigeAnzahlSchulaufgaben = 0;
-      if (wertung == Schulaufgabenwertung.EinsZuEins)
-      {
-        noetigeAnzahlSchulaufgaben = 2;
-      }
-      if (wertung == Schulaufgabenwertung.ZweiZuEins)
-      {
-        noetigeAnzahlSchulaufgaben = 3;
-      }
-
-      return noetigeAnzahlSchulaufgaben;
-    }
   }
-
+  
   public class UnterpunktungChecker : NotenCheck
   {
     public UnterpunktungChecker(NotenCheckController contr) :base (contr)
@@ -599,20 +417,11 @@ namespace diNo
       }
 
       else if (contr.zeitpunkt == Zeitpunkt.ErstePA)
-      {
-        if (schueler.AlteFOBOSO())
-        {
-          if (schueler.AlteFOBOSO() && (n.AnzahlNoten(6) > 1 || (n.AnzahlNoten(6) + n.AnzahlNoten(5)) > 3))
-            contr.Add(Vorkommnisart.NichtZurPruefungZugelassen, n.Unterpunktungen, true);
-          if (n.AnzahlNoten(6, false) + n.AnzahlNoten(5, false) > 0)
-            contr.Add(null, "Unterpunktet in einem Nichtprüfungsfach " + n.Unterpunktungen, true);
-        }
-        else
+      {        
         // nur falls ein Schüler bereits zuviele schlechte Noten in Nichtprüfungsfächer hat
         if (n.AnzahlNoten(6, false) * 2 + n.AnzahlNoten(5, false) > 2)
         {
-          contr.Add(Vorkommnisart.NichtZurPruefungZugelassen, n.Unterpunktungen, true);
-          return;
+          contr.Add(Vorkommnisart.NichtZurPruefungZugelassen, n.Unterpunktungen, true);          
         }        
       }
 
@@ -624,8 +433,6 @@ namespace diNo
             contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich, n.Unterpunktungen, true);
           else
             contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen, n.Unterpunktungen, true);
-          if (n.KannAusgleichen())
-            contr.Add(null, "Notenausgleich möglich");
         }
         return;
       }
@@ -635,11 +442,7 @@ namespace diNo
         bool nb = n.HatNichtBestanden();
         if (nb)
         {
-          if (n.KannAusgleichen()) contr.Add(null, "Nicht bestanden, Notenausgleich möglich: " + n.Unterpunktungen, true);
-          else
-          {
-            contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);            
-          }
+          contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);            
         }
         if ((nb || n.HatAbiNichtBestanden()) && n.DarfInBOS13())
           contr.Add(Vorkommnisart.VorrueckenBOS13moeglich, "");

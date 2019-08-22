@@ -37,5 +37,6 @@
     private System.Windows.Forms.Label label18;
     private System.Windows.Forms.TextBox textBoxNachname;
     private System.Windows.Forms.Label label7;
+    private System.Windows.Forms.CheckBox checkBoxSonderfall2Hj;
   }
 }

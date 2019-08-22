@@ -143,6 +143,8 @@ namespace diNo
       lbHinweise.Visible = schueler.Data.Berechungsstatus > (byte)Berechnungsstatus.Unberechnet
         && schueler.punktesumme.Anzahl(PunktesummeArt.HjLeistungen) != schueler.GetAnzahlEinbringung();
       comboBoxBerechnungsstatus.SelectedIndex = schueler.Data.Berechungsstatus;
+      textBoxDNote.Text = schueler.Data.IsDNoteNull() ? "" : string.Format("{0:F1}", schueler.Data.DNote);
+      textBoxDNoteAllg.Text = schueler.Data.IsDNoteAllgNull() ? "" : string.Format("{0:F1}", schueler.Data.DNoteAllg);
     }
 
     private void SetBackgroundColor(HjLeistung hj, DataGridViewCell cell)

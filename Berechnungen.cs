@@ -75,7 +75,7 @@ namespace diNo
       var unbedingtStreichen = new List<HjLeistung>();
 
       // eine vorhandene Einbringung darf nicht überschrieben werden!
-      if (s.AlteFOBOSO() || s.Data.Berechungsstatus >= (byte)Berechnungsstatus.Einbringung) return;
+      if (s.Data.Berechungsstatus >= (byte)Berechnungsstatus.Einbringung) return;
 
       s.Data.Berechungsstatus = (byte)Berechnungsstatus.Einbringung; // wird ggf. überschrieben, wenn zu wenige da sind
       foreach (var fachNoten in s.getNoten.alleFaecher)
@@ -196,8 +196,6 @@ namespace diNo
     /// </summary>
     public void BerechneGesErg(Schueler s)
     {
-      if (s.AlteFOBOSO()) return;
-
       Punktesumme p = new Punktesumme(s);
       p.Clear();
       
@@ -213,15 +211,7 @@ namespace diNo
     }
 
     public void BerechneDNote(Schueler s)
-    {
-      if (s.AlteFOBOSO())
-      {
-        berechneDNoteAlt(s, false);
-        if (s.getKlasse.Jahrgangsstufe== Jahrgangsstufe.Dreizehn)
-          berechneDNoteAlt(s, true);
-        return;
-      }
-
+    {      
       int anz = s.punktesumme.Anzahl(PunktesummeArt.Gesamt);
       if (anz>0 && s.Data.Berechungsstatus != (byte)Berechnungsstatus.ZuWenigeHjLeistungen)
       {
@@ -244,86 +234,8 @@ namespace diNo
       }    
     }
 
-    private void berechneDNoteAlt(Schueler s, bool allgHSR)
-    {
-      int summe = 0, anz = 0;
-      decimal erg;
-      var faecher = s.getNoten.alleKurse;
-      bool FranzVorhanden = !s.Data.IsAndereFremdspr2NoteNull();
-
-      // Französisch wird nur in der 13. Klasse gewertet, wenn der Kurs belegt ist und
-      // der Schüler nicht nur fachgebundene HSR bekommt (z.B. wegen Note 5 in F)
-      // F-Wi zählt immer (auch 12. Klasse), weil es WIn ersetzt
-      // eine andere eingetragene 2. Fremdsprache zählt auch immer (in der 13.); dies kann eine RS-Note, Ergänzungspr.,
-      // aber auch bei fortgeführtem Franz. die Note der 11./12. oder 13. Klasse sein. Dadurch kann F-Wi sogar doppelt zählen!
-
-      foreach (var fach in faecher)
-      {
-        // alle Fächer außer Sport und Kunst, Franz. nur in der 13. 
-        var fk = fach.getFach.Kuerzel;
-        byte? note = fach.getSchnitt(Halbjahr.Zweites).Abschlusszeugnis;
-
-        if (note == null || fk == "Ku" || fk == "Smw" || fk == "Sw" || fk == "Sm" || ((fk == "F" || fk == "Frz" ) && !allgHSR))
-          continue;
-
-        // liegen die Voraussetzungen für allg. HSR vor?
-        if (allgHSR && (fk == "Frz" || fk == "F" && note.GetValueOrDefault() > 3))
-          FranzVorhanden = true;
-
-        if (note == 0)
-        {
-          summe--; // Punktwert 0 wird als -1 gezählt
-        }
-        else
-        {
-          summe += note.GetValueOrDefault();
-        }
-        anz++;
-      }
-
-      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
-      {
-        if (!s.Seminarfachnote.IsGesamtnoteNull())
-        {
-          summe += s.Seminarfachnote.Gesamtnote;
-          anz++;
-        }
-
-        // Alternative 2. Fremdsprache für die allgemeine Hochschulreife
-        if (allgHSR && !s.Data.IsAndereFremdspr2NoteNull())
-        {
-          summe += s.Data.AndereFremdspr2Note;
-          anz++;
-        }
-      }
-
-      if (allgHSR && !FranzVorhanden)
-        s.Data.SetDNoteAllgNull();
-      else if (anz > 0)
-      {
-        erg = (17 - (decimal)summe / anz) / 3;
-        if (erg < 1)
-        {
-          erg = 1;
-        }
-        else
-        {
-          erg = Math.Floor(erg * 10) / 10; // auf 1 NK abrunden
-        }
-        if (allgHSR)
-          s.Data.DNoteAllg = erg;
-        else
-          s.Data.DNote = erg;
-      }
-      else
-      {
-        s.Data.SetDNoteNull();
-      }
-    }
-
     public void BestimmeSprachniveau(Schueler s)
     {
-      if (s.AlteFOBOSO()) return;
       var ta = new HjLeistungTableAdapter();
       ta.DeleteBySchuelerIdAndArt(s.Id, (byte)HjArt.Sprachenniveau); // vorher löschen, falls Stufe inzwischen nicht mehr erreicht wird
 
