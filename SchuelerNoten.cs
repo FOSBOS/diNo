@@ -20,7 +20,7 @@ namespace diNo
     // die folgendes Array verwaltet die Anzahl der Einser, Zweier, usw., getrennt nach SAP-Fach und Nebenfach
     // anzahlNoten[6,1] ergibt z.B. die Anzahl der Sechser in SAP-Fächern, anzahlNoten[5,0] die Anzahl der Fünfer in Nebenfächern
     private int[,] anzahlNoten;
-    private int abi5er=0,abi6er=0; // Anzahl 5er und 6 im Abi
+    private int abi5er=0,abi6er=0,abiE=0; // Anzahl 5er und 6 im Abi, Abi-Note in Englisch
     private Zeitpunkt zeitpunkt = (Zeitpunkt)Zugriff.Instance.aktZeitpunkt;
     public string Unterpunktungen, UnterpunktungenAbi;
     public int anz4P=0;
@@ -265,6 +265,7 @@ namespace diNo
       if (hj == null) return;
 
       byte apg = hj.Punkte;
+      if (f.getFach.Kuerzel == "E") abiE = apg;
       if (apg < 4)
       {
         UnterpunktungenAbi += f.getFach.Kuerzel + "-Abi(" + apg + ") ";
@@ -279,6 +280,25 @@ namespace diNo
       else
         return (2 * abi6er + abi5er > 2);
     }
+
+    // kann nicht mal mehr das Abi bestehen, weil zu viele 0er da sind
+    // 2 Noten können durch MAP bereinigt werden.
+    public bool WegenAbiNichtZurMAPZugelassen()
+    {      
+      int nachMAP6er = abi6er;
+      int nachMAP5er = abi5er;
+      for (byte i=0; i<2;i++) // zwei MAP möglich
+      {
+        if (abiE == 0 && nachMAP6er > 1) nachMAP6er--; 
+        else if (nachMAP6er > 0) nachMAP6er--;
+        else if (nachMAP5er > 0) nachMAP5er--;
+      }
+      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+        return (nachMAP6er > 0 || nachMAP5er > 2);
+      else
+        return (2 * nachMAP6er + nachMAP5er > 2);
+    }
+
 
     public bool HatNichtBestanden()
     {
@@ -381,7 +401,6 @@ namespace diNo
     // das Array wird über das Halbjahr und den Notentyp indiziert, 
     // jedes Arrayelement enthält eine Liste mit Noten dieses Typs.
     private IList<int>[,] noten = new List<int>[Enum.GetValues(typeof(Halbjahr)).Length, Enum.GetValues(typeof(Notentyp)).Length];
-    private BerechneteNote[] schnitte = new BerechneteNote[Enum.GetValues(typeof(Halbjahr)).Length];
     private HjLeistung[] hjLeistung = new HjLeistung[Enum.GetValues(typeof(HjArt)).Length];
     private HjLeistung[] vorHjLeistung = new HjLeistung[2]; // enthält nur 11/1 und 11/2
 
@@ -434,16 +453,6 @@ namespace diNo
         {
           noten[noteR.Halbjahr, noteR.Notenart].Add(noteR.Punktwert);
         }
-
-        // Schnitte werden direkt gelesen
-        diNoDataSet.BerechneteNoteDataTable bnotenDT;
-        // liefert max. 2 Datensätze (einen für 1. und 2. Hj.), historische Stände werden nicht geliefert
-        bnotenDT = new BerechneteNoteTableAdapter().GetDataBySchuelerAndKurs(kursId, schueler.Id);
-        foreach (var bnoteR in bnotenDT)
-        {
-          schnitte[(int)(bnoteR.ErstesHalbjahr ? Halbjahr.Erstes : Halbjahr.Zweites)] =
-                    new BerechneteNote(kursId, schueler.Id, bnoteR);
-        }
       }
       // HjLeistungen          
       // nur die HjLeistungen holen, die der aktuellen JgStufe entsprechen
@@ -484,17 +493,7 @@ namespace diNo
     {
       return noten[(int)hj, (int)typ]; // klappt der Cast immer???
     }
-
-    /// <summary>
-    /// Liefert die Notenschnitte
-    /// </summary>
-    public BerechneteNote getSchnitt(Halbjahr hj)
-    {
-      var s = schnitte[(int)hj];
-      if (s == null) return new BerechneteNote(kursId, schueler.Id); // gibt leere Berechnungstabelle zurück
-      return s;
-    }
-
+   
     /// <summary>
     /// Liefert die Halbjahresleistungen
     /// </summary>

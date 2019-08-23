@@ -427,24 +427,39 @@ namespace diNo
 
       else if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
       {
+        bool nb = false, nz = false;
+        if (n.HatAbiNichtBestanden())
+        {
+          contr.Add(Vorkommnisart.PruefungNichtBestanden, n.UnterpunktungenAbi);
+          nz = n.WegenAbiNichtZurMAPZugelassen();
+        }
         if (n.HatNichtBestanden())
         {
-          if (n.MAPmoeglich())
-            contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich, n.Unterpunktungen, true);
-          else
-            contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen, n.Unterpunktungen, true);
+          nb = true;
+          nz = nz || !n.MAPmoeglich();
         }
+        if (nz)
+          contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen, n.Unterpunktungen, true);
+        else if (nb)
+          contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich, n.Unterpunktungen, true);                    
+        
         return;
       }
 
       else if (contr.zeitpunkt == Zeitpunkt.DrittePA)
       {
-        bool nb = n.HatNichtBestanden();
-        if (nb)
+        bool nb = false;
+        if (n.HatAbiNichtBestanden())
         {
+          nb = true;
+          contr.Add(Vorkommnisart.PruefungNichtBestanden, n.UnterpunktungenAbi);
+        }
+        if (n.HatNichtBestanden())
+        {
+          nb = true;
           contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);            
         }
-        if ((nb || n.HatAbiNichtBestanden()) && n.DarfInBOS13())
+        if (nb && n.DarfInBOS13())
           contr.Add(Vorkommnisart.VorrueckenBOS13moeglich, "");
       }
       else // Jahresende
@@ -473,6 +488,7 @@ namespace diNo
   }
 
   // Prüft, ob die Abiergebnisse zum Bestehen ausreichen
+  /*
   public class AbiergebnisChecker : NotenCheck
   {
     public AbiergebnisChecker(NotenCheckController contr) :base (contr)
@@ -490,10 +506,11 @@ namespace diNo
       
       if (n.HatAbiNichtBestanden())
       {        
-        contr.Add(Vorkommnisart.PruefungNichtBestanden, n.UnterpunktungenAbi);
+        contr.Add(Vorkommnisart.PruefungNichtBestanden, n.UnterpunktungenAbi);        
       }
     }
   }
+  */
 
   // Gibt nur die Ergebnisse der MAP für die 3. PA aus
   public class MAPChecker : NotenCheck
@@ -562,9 +579,7 @@ namespace diNo
       int noteSAP;
       base.Check(schueler);
       decimal DNote;
-      if (!schueler.Data.IsDNoteAllgNull())
-        DNote = schueler.Data.DNoteAllg;
-      else if (!schueler.Data.IsDNoteNull())
+      if (!schueler.Data.IsDNoteNull())
         DNote = schueler.Data.DNote;
       else return;
 
@@ -578,9 +593,13 @@ namespace diNo
         noteSAP = fach.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich)[0];
         if (noteSAP<10) return; // keine SAP-Note darf einstellig sein.
         sumSAP += noteSAP;
-      } 
-      if (sumSAP>=50) // Schnitt aller SAP muss mindestens 12,5 Punkte sein
-        contr.Add(null,"ggf. Vorschlag für Eliteförderung, Durchschnitt: " + DNote);
+      }
+      if (sumSAP >= 50) // Schnitt aller SAP muss mindestens 12,5 Punkte sein
+      {
+        decimal erg = (17 - (decimal)schueler.punktesumme.Summe(PunktesummeArt.Gesamt) / schueler.punktesumme.Anzahl(PunktesummeArt.Gesamt)) / 3;
+        contr.Add(null, "V" +
+          "orschlag für Eliteförderung, Durchschnitt: " + String.Format("{0:0.0000}",erg));
+      }
       else
         contr.Add(null, "Durchschnitt: " + DNote + ", aber Prüfung zu 'schlecht'.");
     }

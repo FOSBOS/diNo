@@ -62,8 +62,6 @@ namespace diNo
       // Durchzuführende Prüfungen
       if (azeitpunkt != Zeitpunkt.DrittePA)
         alleNotenchecks.Add(new NotenanzahlChecker(this));
-      if (modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
-        alleNotenchecks.Add(new UnterpunktungChecker(this));
       if (azeitpunkt == Zeitpunkt.ErstePA && modus != NotenCheckModus.EigeneNotenVollstaendigkeit) // nur dort FR prüfen
       {
         alleNotenchecks.Add(new FachreferatChecker(this));
@@ -74,13 +72,15 @@ namespace diNo
         alleNotenchecks.Add(new FpABestandenChecker(this));
       if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
       {
-        alleNotenchecks.Add(new AbiergebnisChecker(this));
+        //alleNotenchecks.Add(new AbiergebnisChecker(this));
         alleNotenchecks.Add(new EliteChecker(this));
       }
       if ((azeitpunkt == Zeitpunkt.ErstePA || azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
       {
         alleNotenchecks.Add(new EinbringungsChecker(this));
       }
+      if (modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
+        alleNotenchecks.Add(new UnterpunktungChecker(this));
       if (azeitpunkt == Zeitpunkt.DrittePA && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         alleNotenchecks.Add(new MAPChecker(this));
 

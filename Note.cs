@@ -52,39 +52,7 @@ namespace diNo
         /// </summary>
         APMuendlich = 9
     }
-
-    public enum BerechneteNotentyp
-    {
-        /// <summary>
-        /// Durchschnittsnote der Schulaufgaben.
-        /// </summary>
-        SchnittSA = 1,
-        /// <summary>
-        /// Durchschnittsnote aller mündlichen und Exen.
-        /// </summary>
-        Schnittmuendlich = 2,
-        /// <summary>
-        /// Jahresfortgang mit 2 Nachkommastellen.
-        /// </summary>
-        JahresfortgangMitNKS = 3,
-        /// <summary>
-        /// Jahresfortgang (ganzzahlig).
-        /// </summary>
-        Jahresfortgang = 4,
-        /// <summary>
-        /// Gesamtnote Abschlussprüfung.
-        /// </summary>
-        APGesamt = 5,
-        /// <summary>
-        /// Endnote (Jahresfortgang und Abschlussprüfung) mit 2 Nachkommastellen.
-        /// </summary>
-        EndnoteMitNKS = 6,
-        /// <summary>
-        /// Note im Abschlusszeugnis (ganzzahlig).
-        /// </summary>
-        Abschlusszeugnis = 7
-    }
-
+  
     /// <summary>
     /// Enumeration fuer Halbjahre. Bitte Nummern nicht ändern (die werden so in die Datenbank als int gecasted).
     /// </summary>
@@ -120,101 +88,6 @@ namespace diNo
         DrittePA = 5,
         Jahresende = 6
     }
-
-    public class BerechneteNote
-    {
-        public decimal? SchnittMuendlich
-        {
-            get;
-            set;
-        }
-
-        public decimal? SchnittSchulaufgaben
-        {
-            get;
-            set;
-        }
-
-        public byte? JahresfortgangGanzzahlig
-        {
-            get;
-            set;
-        }
-
-        public decimal? JahresfortgangMitKomma
-        {
-            get;
-            set;
-        }
-
-        public decimal? PruefungGesamt
-        {
-            get;
-            set;
-        }
-
-        public decimal? SchnittFortgangUndPruefung
-        {
-            get;
-            set;
-        }
-
-        private byte? _Abschlusszeugnis=null; 
-
-        // gibt es keinen eigenen Wert im Zeugnis wird der JF übernommen.
-        public byte? Abschlusszeugnis
-        {
-           get { if (_Abschlusszeugnis!=null) return _Abschlusszeugnis;  else return JahresfortgangGanzzahlig; } 
-           set { _Abschlusszeugnis=value; } 
-        }
-
-        public bool ErstesHalbjahr { get; set; }
-
-        public Zeitpunkt StandNr
-        {
-            get;
-            private set;
-        }
-
-        private int kursid, schuelerid;
-
-        public BerechneteNote(int aKursId, int aSchuelerId)
-        {
-            kursid = aKursId;
-            schuelerid = aSchuelerId;
-            StandNr = Zeitpunkt.None;
-        }
-
-        public BerechneteNote(int aKursId, int aSchuelerId, diNoDataSet.BerechneteNoteRow d)
-        {
-            kursid = aKursId;
-            schuelerid = aSchuelerId;
-
-            //SchnittSchulaufgaben = d.IsSchnittSchulaufgabenNull() ? null :  d.SchnittSchulaufgaben;  // frisst er nicht!!?
-            if (d.IsSchnittSchulaufgabenNull()) SchnittSchulaufgaben = null; else SchnittSchulaufgaben = d.SchnittSchulaufgaben;
-            if (d.IsSchnittMuendlichNull()) SchnittMuendlich = null; else SchnittMuendlich = d.SchnittMuendlich;
-            if (d.IsJahresfortgangMitKommaNull()) JahresfortgangMitKomma = null; else JahresfortgangMitKomma = d.JahresfortgangMitKomma;
-            if (d.IsJahresfortgangGanzzahligNull()) JahresfortgangGanzzahlig = null; else JahresfortgangGanzzahlig = d.JahresfortgangGanzzahlig;
-            if (d.IsPruefungGesamtNull()) PruefungGesamt= null; else PruefungGesamt = d.PruefungGesamt;
-            if (d.IsSchnittFortgangUndPruefungNull()) SchnittFortgangUndPruefung = null; else SchnittFortgangUndPruefung = d.SchnittFortgangUndPruefung;
-            if (d.IsAbschlusszeugnisNull()) Abschlusszeugnis = null; else Abschlusszeugnis = d.Abschlusszeugnis;
-            StandNr = (Zeitpunkt)d.StandNr;
-            ErstesHalbjahr = d.ErstesHalbjahr;
-        }
-
-        public void writeToDB()
-        {
-            BerechneteNoteTableAdapter na = new BerechneteNoteTableAdapter();
-            na.Insert(SchnittMuendlich, SchnittSchulaufgaben, JahresfortgangMitKomma, JahresfortgangGanzzahlig,
-                    PruefungGesamt, SchnittFortgangUndPruefung, Abschlusszeugnis, 0, false, schuelerid, kursid, ErstesHalbjahr);
-        }
-    
-        public void RundeJFNote()
-        {
-          if (JahresfortgangMitKomma !=null)
-            JahresfortgangGanzzahlig = Notentools.RundeJF(JahresfortgangMitKomma.GetValueOrDefault());
-        }
-      }
 
   /// <summary>
   /// Eine Note.
