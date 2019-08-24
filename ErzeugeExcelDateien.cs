@@ -272,7 +272,7 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
       xls.WriteValue(xls.notenbogen, "E1", kurs.getFach.Bezeichnung);
       xls.WriteValueProtectedCell(xls.notenbogen, "I1", GetLehrerOderLehrerin(kurs));
       xls.WriteValue(xls.notenbogen, "K1", kurs.getLehrer.Name);
-      xls.WriteValueProtectedCell(xls.AP, "B1", "Abschlussprüfung " + Konstanten.Schuljahr);
+      xls.WriteValueProtectedCell(xls.AP, "B1", "Abschlussprüfung " +  (Zugriff.Instance.Schuljahr+1));
       xls.WriteValueProtectedCell(xls.sid, "F2", kurs.Id.ToString());
 
       int zeile = 4;
@@ -290,7 +290,7 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
         // Schüler in die Exceldatei schreiben
         xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name+", "+ schueler.benutzterVorname);
         xls.WriteValueProtectedCell(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
-        xls.WriteValueProtectedCell(xls.sid, CellConstant.Regelung + zeileFuerSId, schueler.hatVorHj ? "FOS" : "BOS");
+        //xls.WriteValueProtectedCell(xls.sid, CellConstant.Regelung + zeileFuerSId, schueler.hatVorHj ? "FOS" : "BOS");
 
         zeile ++;
         zeileFuerSId++;
@@ -320,9 +320,9 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
       if (kurs.getLehrer != null)
       {
         if (kurs.getLehrer.Data.Geschlecht=="W")
-           return "Lehrerin";
+           return "Lehrerin:";
       }
-      return "Lehrer";
+      return "Lehrer:";
     }
 
     /// <summary>
@@ -473,7 +473,7 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
       xls.WriteValue(xls.notenbogen, CellConstant.Wertungsart, GetWertungsString(wertung));
       xls.WriteValue(xls.notenbogen, CellConstant.Fachbezeichnung, kurs.getFach.Bezeichnung);
       xls.WriteValue(xls.notenbogen, CellConstant.Lehrer, kurs.getLehrer.Name);
-      xls.WriteValue(xls.notenbogen, CellConstant.Schuljahr, Konstanten.Schuljahr);
+      //xls.WriteValue(xls.notenbogen, CellConstant.Schuljahr, Konstanten.Schuljahr);
       xls.WriteValueProtectedCell(xls.sid, CellConstant.KursId, kurs.Id.ToString());
 
       int zeile = 5;
