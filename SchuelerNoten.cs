@@ -691,10 +691,24 @@ namespace diNo
       else if (getHjLeistung(HjArt.AP) != null) sap = getHjLeistung(HjArt.AP).Punkte; // sollte nur im Test passieren.
       else return "";
 
-      int map = 3 * apg - 2 * sap - 1;
+      int map = Math.Max(3 * apg - 2 * sap - 1, 3); // mind. 3P, sonst wird auf 0 abgerundet.
 
       if (map > 15) return "nicht möglich";
       else return map.ToString();
+    }
+
+    public string NotwendigeNoteAPG()
+    {
+      if (getFach.Kuerzel == "E" || !getFach.IstSAPFach(schueler.Zweig)) return ""; // in Nebenfächern gibt es keine MAP
+      var sapL = getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich);
+      int sap;
+      if (sapL.Count > 0) sap = sapL[0];
+      else if (getHjLeistung(HjArt.AP) != null) sap = getHjLeistung(HjArt.AP).Punkte; // sollte nur im Test passieren.
+      else return "";
+
+      if (sap > 3) return "";
+      int map = 11 - 2 * sap;
+      return map.ToString();
     }
   }
   

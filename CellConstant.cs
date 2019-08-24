@@ -57,6 +57,7 @@ namespace diNo
 
     public static string ProzentFuenfUntergrenze = "H34";
     public static string ProzentFuenfObergrenze = "H35";
+    public static string EingabeUeber = "H3";
 
     #endregion
 

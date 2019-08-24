@@ -86,7 +86,7 @@ namespace diNo
       if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6)
       {
         int anzProbleme = s.getNoten.AnzahlProbleme();
-        Bemerkung = "Sie benötigen bei " + (anzProbleme > 2 ? 2 : anzProbleme) + " Gesamtergebnissen unter 4 Punkten mindestens " + s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 : 5) + " Punkte, um zu bestehen.";
+        Bemerkung = "Sie benötigen bei " + (anzProbleme > 2 ? 2 : anzProbleme) + " Gesamtergebnissen unter 4 Punkten mindestens " + s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 : 5) + " Punkte, um zu bestehen. ";
       }        
     }
 
@@ -548,13 +548,13 @@ namespace diNo
   // Abiergebnisse
   public class NotenAbiDruck : NotenHjDruck
   {
-    public string MAP1P { get; private set; }
-    public string MAP4P { get; private set; }
+    public string MAP4GE { get; private set; }
+    public string MAP4APG { get; private set; }
 
     public NotenAbiDruck(FachSchuelerNoten s) : base(s, Bericht.Abiergebnisse)
     {
-      MAP4P = s.NotwendigeNoteInMAP(3.5);
-      MAP1P = s.NotwendigeNoteInMAP(1.0);
+      MAP4GE = s.NotwendigeNoteInMAP(3.5);
+      MAP4APG = s.NotwendigeNoteAPG();
     }
     public NotenAbiDruck(HjLeistung h) : base(h)
     {

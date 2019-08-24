@@ -330,7 +330,8 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
     /// </summary>
     private void SwitchNotenschluessel()
     {
-      string schluessel, ug, og;
+      string schluessel, ug, og, eingabe="BE";
+
       switch (kurs.getFach.Kuerzel)
       {
         case "E":
@@ -354,6 +355,14 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
           ug = "30";
           og = "44";
           break;
+        case "D":
+        case "PP":
+          schluessel = "M";
+          ug = "20";
+          og = "40";
+          eingabe = "Punkte";
+          xls.WriteValue(xls.AP, "E42", eingabe); // Sonderfall AP in D und PP
+          break;
         default:
           schluessel = "M";
           ug = "20";
@@ -368,6 +377,7 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
         xls.WriteValue(pruefungssheet, CellConstant.SchluesselArt, schluessel);
         xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfUntergrenze, ug);
         xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfObergrenze, og);
+        xls.WriteValue(pruefungssheet, CellConstant.EingabeUeber, eingabe);
       }
     }
   }
