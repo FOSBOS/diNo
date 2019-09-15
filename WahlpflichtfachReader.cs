@@ -48,7 +48,7 @@ namespace diNo
           }
 
           string nameVorname = array[0].Trim(trimchar); // nur zur Kontrolle
-          int kursId = int.Parse(array[1]); // Untis-KursId. Leider nicht identisch zu diNo da IDs bereits belegt.
+          int kursId = int.Parse(array[1]); // Untis-KursId. Identisch zu diNo da IDs bereits belegt.
           string kursKuerzel = array[2].Trim(trimchar); // Untis-Kursname. Der ist identisch zu diNo.
           // was in array[3] steht weiß ich nicht - es scheint immer leer zu sein
           string klasse = array[4].Trim(trimchar); // nur zur Kontrolle
@@ -57,7 +57,7 @@ namespace diNo
           // weiter hinten kommen noch Infos zu Parallelklassen o. Ä.
 
           Schueler schueler = new Schueler(schuelerId); // wirft Exception wenn nicht vorhanden. Das ist gut so.
-          var kurse = kursTableAdapter.GetDataByBezeichnung(kursKuerzel);
+          var kurse = kursTableAdapter.GetDataById(kursId);
           if (kurse.Count != 1)
           {
             throw new InvalidOperationException("Kurs " + kursKuerzel + " nicht gefunden oder nicht eindeutig!");

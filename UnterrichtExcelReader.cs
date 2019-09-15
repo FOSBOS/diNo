@@ -42,10 +42,16 @@ namespace diNo
       int lastRow = sheet.get_Range("A" + sheet.Rows.Count, "B" + sheet.Rows.Count).get_End(Excel.XlDirection.xlUp).Row;
       for (int zeile = 5; zeile <= lastRow; zeile++)
       {
+        string kursId = ReadValue(sheet, "A" + zeile);
         string lehrer = ReadValue(sheet, "E" + zeile);
         string fach = ReadValue(sheet, "F" + zeile);
         string klassenString = ReadValue(sheet, "G" + zeile);
 
+        if (string.IsNullOrEmpty(kursId))
+        {
+          log.Debug("Unterricht Ohne KursId wird ignoriert in Zeile " + zeile);
+          continue;
+        }
         if (string.IsNullOrEmpty(lehrer))
         {
           log.Debug("Unterricht Ohne Lehrer wird ignoriert in Zeile " + zeile);
@@ -101,7 +107,7 @@ namespace diNo
 
         //bei Wahlpflichtfächern muss unbedingt das Fach aus der Untis-Datei erhalten bleiben, sonst finden wir es später nicht wieder
         string bezeichnung = dbFach.Typ == (byte)FachTyp.WPF ? fach : dbFach.Bezeichnung.Trim() + " " + klassenString;
-        var kurs = FindOrCreateKurs(bezeichnung, dblehrer.Id, fach, zweig);
+        var kurs = FindOrCreateKurs(kursId, bezeichnung, dblehrer.Id, fach, zweig);
 
         foreach (var klasseKvp in unterschiedlicheKlassen)
         {
@@ -190,17 +196,19 @@ namespace diNo
     /// <summary>
     /// Sucht den Kurs in der Datenbank. Falls nicht vorhanden, wird er neu angelegt.
     /// </summary>
+    /// <param name="kursId">Die Id des Kurses aus Untis.</param>
     /// <param name="aKursBezeichung">Die Bezeichnung des Kurses.</param>
     /// <param name="aLehrerId">Die Id des Lehrers.</param>
     /// <param name="aFach">Das Fach.</param>
     /// <param name="aZweig">Der Zweig, für welchen der Kurs gilt.</param>
     /// <returns>Die Zurszeile in der Datenbank.</returns>
-    public static diNoDataSet.KursRow FindOrCreateKurs(string aKursBezeichung, int aLehrerId, string aFach, string aZweig)
+    public static diNoDataSet.KursRow FindOrCreateKurs(string kursId, string aKursBezeichung, int aLehrerId, string aFach, string aZweig)
     {
       using (var kursAdapter = new KursTableAdapter())
       {
+        int kursIdInt = int.Parse(kursId);
         // suche den Kurs in der Datenbank. Wenn neu => anlegen
-        var kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);
+        var kurse = kursAdapter.GetDataById(kursIdInt);
         if (kurse.Count == 0)
         {
           // suche Fach in der Datenbank
@@ -208,7 +216,7 @@ namespace diNo
           string geschlecht = null;
           if (fach.Kuerzel == "Sw") geschlecht = "W";
           if (fach.Kuerzel == "Sm") geschlecht = "M";
-          kursAdapter.Insert(aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht);
+          kursAdapter.Insert(kursIdInt, aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht);
         }
 
         kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);

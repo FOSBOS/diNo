@@ -109,8 +109,8 @@ namespace diNo
       else
       {        
         try
-        {          
-          ta.Insert(F(edBezeichnung), (int)cbLehrer.SelectedValue, (int)cbFach.SelectedValue, F(edZweig), (opUndef.Checked ? null : (opMaennlich.Checked ? "M" : "W")));          
+        {       
+          ta.InsertWithoutId(F(edBezeichnung), (int)cbLehrer.SelectedValue, (int)cbFach.SelectedValue, F(edZweig), (opUndef.Checked ? null : (opMaennlich.Checked ? "M" : "W")));          
           Init();         
         }
         catch
