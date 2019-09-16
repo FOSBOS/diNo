@@ -1,11 +1,14 @@
 use [diNo]
 
+-- nächste Jahr raus:
+drop table BerechneteNote
+SET IDENTITY_INSERT Kurs ON
+
+
 -- Lehrer manuell korrigieren
 
 update GlobaleKonstanten set Schuljahr=YEAR(CURRENT_TIMESTAMP), aktZeitpunkt=1, Sperre=0
 
-delete from BerechneteNote
-DBCC CHECKIDENT (BerechneteNote, RESEED, 0); -- AutoIncrement zurücksetzen
 
 delete from Fpa
 

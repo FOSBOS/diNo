@@ -208,7 +208,7 @@ namespace diNo
       {
         int kursIdInt = int.Parse(kursId);
         // suche den Kurs in der Datenbank. Wenn neu => anlegen
-        var kurse = kursAdapter.GetDataById(kursIdInt);
+        var kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);
         if (kurse.Count == 0)
         {
           // suche Fach in der Datenbank
@@ -216,7 +216,8 @@ namespace diNo
           string geschlecht = null;
           if (fach.Kuerzel == "Sw") geschlecht = "W";
           if (fach.Kuerzel == "Sm") geschlecht = "M";
-          kursAdapter.Insert(kursIdInt, aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht);
+          Lehrer lehrer = Zugriff.Instance.LehrerRep.Find(aLehrerId);
+          kursAdapter.Insert(aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht, aFach + "_" + lehrer.Kuerzel + kursIdInt );
         }
 
         kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);

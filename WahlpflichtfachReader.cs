@@ -27,6 +27,31 @@ namespace diNo
   /// <param name="fileName">Der Dateiname.</param>
   public static void Read(string fileName)
     {
+      IDictionary<string, int> anmeldenameZuID = new Dictionary<string, int>();
+      using (StreamReader reader = new StreamReader("D:\\Rohdaten\\schuelerUntis.txt", Encoding.GetEncoding("iso-8859-1")))
+      {
+        while (!reader.EndOfStream)
+        {
+          string line = reader.ReadLine();
+          if (string.IsNullOrEmpty(line))
+          {
+            log.Debug("Ignoriere Leerzeile");
+            continue;
+          }
+          string[] array = line.Split(new string[] { ";" }, StringSplitOptions.None);
+
+          if (array.Count() == 0 || string.IsNullOrEmpty(array[0]))
+          {
+            log.Debug("Ignoriere unvollständige Zeile");
+            continue;
+          }
+
+          int id = int.Parse(array[0]);
+          string anmeldename = array[4];
+          anmeldenameZuID.Add(anmeldename, id);
+        }
+      }
+
       using (StreamReader reader = new StreamReader(fileName, Encoding.GetEncoding("iso-8859-1")))
       using (KursTableAdapter kursTableAdapter = new KursTableAdapter())
       {
@@ -48,7 +73,7 @@ namespace diNo
           }
 
           string nameVorname = array[0].Trim(trimchar); // nur zur Kontrolle
-          int kursId = int.Parse(array[1]); // Untis-KursId. Identisch zu diNo da IDs bereits belegt.
+          int kursId = int.Parse(array[1]); // Untis-KursId. NICHT Identisch zu diNo da IDs bereits belegt.
           string kursKuerzel = array[2].Trim(trimchar); // Untis-Kursname. Der ist identisch zu diNo.
           // was in array[3] steht weiß ich nicht - es scheint immer leer zu sein
           string klasse = array[4].Trim(trimchar); // nur zur Kontrolle
@@ -56,15 +81,18 @@ namespace diNo
           int schuelerId = int.Parse(array[6].Trim(trimchar));
           // weiter hinten kommen noch Infos zu Parallelklassen o. Ä.
 
-          Schueler schueler = new Schueler(schuelerId); // wirft Exception wenn nicht vorhanden. Das ist gut so.
-          var kurse = kursTableAdapter.GetDataById(kursId);
+          Schueler schueler = new Schueler(anmeldenameZuID[nameVorname]); // wirft Exception wenn nicht vorhanden. Das ist gut so.
+          var kurse = kursTableAdapter.GetDataByBezeichnung(kursKuerzel);
           if (kurse.Count != 1)
           {
-            throw new InvalidOperationException("Kurs " + kursKuerzel + " nicht gefunden oder nicht eindeutig!");
+            log.Error("Kurs " + kursKuerzel + " nicht gefunden oder nicht eindeutig!");
+            // throw new InvalidOperationException("Kurs " + kursKuerzel + " nicht gefunden oder nicht eindeutig!");
           }
-
-          Kurs kurs = new Kurs(kurse[0]);
-          schueler.MeldeAn(kurs);
+          else
+          {
+            Kurs kurs = new Kurs(kurse[0]);
+            schueler.MeldeAn(kurs);
+          }
         }
       }
     }
