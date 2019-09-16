@@ -47,11 +47,6 @@ namespace diNo
         string fach = ReadValue(sheet, "F" + zeile);
         string klassenString = ReadValue(sheet, "G" + zeile);
 
-        if (string.IsNullOrEmpty(kursId))
-        {
-          log.Debug("Unterricht Ohne KursId wird ignoriert in Zeile " + zeile);
-          continue;
-        }
         if (string.IsNullOrEmpty(lehrer))
         {
           log.Debug("Unterricht Ohne Lehrer wird ignoriert in Zeile " + zeile);
@@ -206,7 +201,6 @@ namespace diNo
     {
       using (var kursAdapter = new KursTableAdapter())
       {
-        int kursIdInt = int.Parse(kursId);
         // suche den Kurs in der Datenbank. Wenn neu => anlegen
         var kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);
         if (kurse.Count == 0)
@@ -217,7 +211,7 @@ namespace diNo
           if (fach.Kuerzel == "Sw") geschlecht = "W";
           if (fach.Kuerzel == "Sm") geschlecht = "M";
           Lehrer lehrer = Zugriff.Instance.LehrerRep.Find(aLehrerId);
-          kursAdapter.Insert(aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht, aFach + "_" + lehrer.Kuerzel + kursIdInt );
+          kursAdapter.Insert(aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht, aFach + "_" + lehrer.Kuerzel + kursId);
         }
 
         kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);
