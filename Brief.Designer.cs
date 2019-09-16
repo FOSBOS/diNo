@@ -53,6 +53,7 @@
       this.pnlInhalt = new System.Windows.Forms.Panel();
       this.labelInhalt = new System.Windows.Forms.Label();
       this.edInhalt = new System.Windows.Forms.TextBox();
+      this.opAttestpflicht = new System.Windows.Forms.RadioButton();
       this.boxAuswahl.SuspendLayout();
       this.pnlNachterminAm.SuspendLayout();
       this.pnlVersaeumtAm.SuspendLayout();
@@ -61,7 +62,7 @@
       // 
       // btnOK
       // 
-      this.btnOK.Location = new System.Drawing.Point(416, 395);
+      this.btnOK.Location = new System.Drawing.Point(416, 437);
       this.btnOK.Name = "btnOK";
       this.btnOK.Size = new System.Drawing.Size(123, 38);
       this.btnOK.TabIndex = 4;
@@ -72,7 +73,7 @@
       // btnEsc
       // 
       this.btnEsc.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-      this.btnEsc.Location = new System.Drawing.Point(548, 395);
+      this.btnEsc.Location = new System.Drawing.Point(548, 437);
       this.btnEsc.Name = "btnEsc";
       this.btnEsc.Size = new System.Drawing.Size(123, 38);
       this.btnEsc.TabIndex = 5;
@@ -82,6 +83,7 @@
       // 
       // boxAuswahl
       // 
+      this.boxAuswahl.Controls.Add(this.opAttestpflicht);
       this.boxAuswahl.Controls.Add(this.opVerschVerweis);
       this.boxAuswahl.Controls.Add(this.opNacharbeit);
       this.boxAuswahl.Controls.Add(this.opVerweis);
@@ -90,9 +92,9 @@
       this.boxAuswahl.Controls.Add(this.opKA);
       this.boxAuswahl.Controls.Add(this.opSA);
       this.boxAuswahl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.boxAuswahl.Location = new System.Drawing.Point(39, 36);
+      this.boxAuswahl.Location = new System.Drawing.Point(39, 38);
       this.boxAuswahl.Name = "boxAuswahl";
-      this.boxAuswahl.Size = new System.Drawing.Size(193, 187);
+      this.boxAuswahl.Size = new System.Drawing.Size(193, 213);
       this.boxAuswahl.TabIndex = 0;
       this.boxAuswahl.TabStop = false;
       // 
@@ -299,7 +301,7 @@
       // 
       this.pnlInhalt.Controls.Add(this.labelInhalt);
       this.pnlInhalt.Controls.Add(this.edInhalt);
-      this.pnlInhalt.Location = new System.Drawing.Point(22, 245);
+      this.pnlInhalt.Location = new System.Drawing.Point(22, 277);
       this.pnlInhalt.Name = "pnlInhalt";
       this.pnlInhalt.Size = new System.Drawing.Size(663, 135);
       this.pnlInhalt.TabIndex = 3;
@@ -323,13 +325,23 @@
       this.edInhalt.Size = new System.Drawing.Size(632, 104);
       this.edInhalt.TabIndex = 5;
       // 
+      // opAttestpflicht
+      // 
+      this.opAttestpflicht.AutoSize = true;
+      this.opAttestpflicht.Location = new System.Drawing.Point(16, 176);
+      this.opAttestpflicht.Name = "opAttestpflicht";
+      this.opAttestpflicht.Size = new System.Drawing.Size(99, 21);
+      this.opAttestpflicht.TabIndex = 9;
+      this.opAttestpflicht.Text = "Attestpflicht";
+      this.opAttestpflicht.UseVisualStyleBackColor = true;
+      // 
       // Brief
       // 
       this.AcceptButton = this.btnOK;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnEsc;
-      this.ClientSize = new System.Drawing.Size(697, 445);
+      this.ClientSize = new System.Drawing.Size(697, 487);
       this.Controls.Add(this.pnlInhalt);
       this.Controls.Add(this.pnlVersaeumtAm);
       this.Controls.Add(this.pnlNachterminAm);
@@ -377,5 +389,6 @@
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TextBox edRaum;
     private System.Windows.Forms.RadioButton opVerschVerweis;
+    private System.Windows.Forms.RadioButton opAttestpflicht;
   }
 }

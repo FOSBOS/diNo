@@ -29,12 +29,14 @@ namespace diNo
         cbFach.Items.Add(f.Bezeichnung);
       }
       //cbFach.SelectedIndex = 0;
-      //opVerschVerweis.Enabled = Zugriff.Instance.HatRolle(Rolle.Schulleitung);
+      //opVerschVerweis.Enabled = Zugriff.Instance.HatRolle(Rolle.Schulleitung);      
     }
 
     public void Anzeigen(Schueler schueler)
     {
       s = schueler;
+      opAttestpflicht.Enabled = s.getKlasse.KlassenleiterId == Zugriff.Instance.lehrer.Id;
+      if (!opAttestpflicht.Enabled && opAttestpflicht.Checked) opSA.Checked = true;
       Show();
     }
 
@@ -48,10 +50,12 @@ namespace diNo
       BriefTyp typ=BriefTyp.Standard;
       if (opVerweis.Checked || opVerschVerweis.Checked) typ = BriefTyp.Verweis;
       else if (opMEP.Checked || opSEP.Checked) typ = BriefTyp.Ersatzpruefung;
+      else if (opAttestpflicht.Checked) typ = BriefTyp.Attestpflicht;
       b = new BriefDaten(s, typ);
       if (typ == BriefTyp.Verweis) VerweisText(opVerschVerweis.Checked);
       else if (opSA.Checked || opKA.Checked) NachterminText();
       else if (typ == BriefTyp.Ersatzpruefung) ErsatzprText();
+      else if (typ == BriefTyp.Attestpflicht) AttestpflichtText();
       else NacharbeitText();
 
       Hide();
@@ -74,7 +78,7 @@ namespace diNo
     private void radioButton_CheckedChanged(object sender, EventArgs e)
     {
       pnlVersaeumtAm.Enabled = opSA.Checked || opKA.Checked;
-      pnlNachterminAm.Enabled = !(opVerweis.Checked || opVerschVerweis.Checked);
+      pnlNachterminAm.Enabled = !(opVerweis.Checked || opVerschVerweis.Checked || opAttestpflicht.Checked);
       pnlInhalt.Enabled = opVerweis.Checked || opVerschVerweis.Checked || opNacharbeit.Checked || opSEP.Checked || opMEP.Checked;
       labelInhalt.Text = (opSEP.Checked || opMEP.Checked) ? "Prüfungsstoff" : "Grund";
     }
@@ -138,6 +142,20 @@ namespace diNo
       b.Inhalt += "<br><br>Die Nacharbeit findet statt am " + datTermin.Text + " um " + datZeit.Text + " Uhr" + erzeugeRaum() + ".<br><br>";
       b.Inhalt += "Wird die Nacharbeit wegen Erkrankung nicht ausgeführt, so muss die Erkrankung durch ärztliches Attest nachgewiesen werden.<br><br>";
       b.Inhalt += "Freundliche Grüße";
+    }
+
+    public void AttestpflichtText()
+    {      
+      b.Betreff = "Attestpflicht";
+      b.Inhalt += "da sich im laufenden Schuljahr bei ";
+      if (b.IstU18) b.Inhalt += (s.Data.Geschlecht == "M" ? "Ihrem Sohn " : "Ihrer Tochter ") + s.VornameName;
+      else b.Inhalt += "Ihnen";
+      b.Inhalt += " die krankheitsbedingten Schulversäumnisse häufen, werden Sie gemäß § 20 (2) BaySchO dazu verpflichtet, künftig jede weitere krankheitsbedingte Abwesenheit ";
+      b.Inhalt += "durch ein aktuelles ärztliches Zeugnis (Schulunfähigkeitsbescheinigung) zu belegen.<br><br>";
+      b.Inhalt += "Wird das Zeugnis nicht unverzüglich vorgelegt, so gilt das Fernbleiben als unentschuldigt.";
+      //b.Unterschrift2 = Zugriff.Instance.getString(GlobaleStrings.Schulleiter) + "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
+
+      s.AddVorkommnis(Vorkommnisart.Attestpflicht, "", false);
     }
   }
 

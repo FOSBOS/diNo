@@ -109,21 +109,7 @@ namespace diNo
     
     private void btnAttestpflicht_Click(object sender, EventArgs e)
     {      
-      if (schueler != null)
-      {        
-        var b = new BriefDaten(schueler, BriefTyp.Attestpflicht);
-        b.Betreff = "Attestpflicht";
-        b.Inhalt += "da sich im laufenden Schuljahr bei ";
-        if (b.IstU18) b.Inhalt += (schueler.Data.Geschlecht == "M" ? "Ihrem Sohn " : "Ihrer Tochter ") + schueler.VornameName;
-        else b.Inhalt += "Ihnen";
-        b.Inhalt += " die krankheitsbedingten Schulversäumnisse häufen, werden Sie gemäß § 20 (2) BaySchO dazu verpflichtet, künftig jede weitere krankheitsbedingte Abwesenheit ";
-        b.Inhalt += "durch ein aktuelles ärztliches Zeugnis (Schulunfähigkeitsbescheinigung) zu belegen.<br><br>";
-        b.Inhalt += "Wird das Zeugnis nicht unverzüglich vorgelegt, so gilt das Fernbleiben als unentschuldigt.";                        
-        b.Unterschrift2 = Zugriff.Instance.getString(GlobaleStrings.Schulleiter) + "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
-        new ReportBrief(b).Show();
-
-        schueler.AddVorkommnis(Vorkommnisart.Attestpflicht,"", false);
-      }
+      
     }
 
     private void btnSave_Click(object sender, EventArgs e)

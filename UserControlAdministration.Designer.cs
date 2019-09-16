@@ -40,7 +40,6 @@
       this.dateZeugnis = new System.Windows.Forms.DateTimePicker();
       this.cbNotendruck = new System.Windows.Forms.ComboBox();
       this.btnKlassenliste = new System.Windows.Forms.Button();
-      this.btnAttestpflicht = new System.Windows.Forms.Button();
       this.btnNotendruck = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
       this.btnSeStatistik = new System.Windows.Forms.Button();
@@ -128,7 +127,6 @@
       this.groupBoxDrucken.Controls.Add(this.dateZeugnis);
       this.groupBoxDrucken.Controls.Add(this.cbNotendruck);
       this.groupBoxDrucken.Controls.Add(this.btnKlassenliste);
-      this.groupBoxDrucken.Controls.Add(this.btnAttestpflicht);
       this.groupBoxDrucken.Controls.Add(this.btnNotendruck);
       this.groupBoxDrucken.Location = new System.Drawing.Point(19, 28);
       this.groupBoxDrucken.Name = "groupBoxDrucken";
@@ -227,16 +225,6 @@
       this.btnKlassenliste.Text = "Klassenliste";
       this.btnKlassenliste.UseVisualStyleBackColor = true;
       this.btnKlassenliste.Click += new System.EventHandler(this.btnKlassenliste_Click);
-      // 
-      // btnAttestpflicht
-      // 
-      this.btnAttestpflicht.Location = new System.Drawing.Point(21, 195);
-      this.btnAttestpflicht.Name = "btnAttestpflicht";
-      this.btnAttestpflicht.Size = new System.Drawing.Size(132, 23);
-      this.btnAttestpflicht.TabIndex = 5;
-      this.btnAttestpflicht.Text = "Attestpflicht";
-      this.btnAttestpflicht.UseVisualStyleBackColor = true;
-      this.btnAttestpflicht.Click += new System.EventHandler(this.btnAttestpflicht_Click);
       // 
       // btnNotendruck
       // 
@@ -681,7 +669,6 @@
     private System.Windows.Forms.Button btnImportKlassenleiter;
     private System.Windows.Forms.GroupBox groupBoxStammdaten;
     private System.Windows.Forms.Button btnKurse;
-    private System.Windows.Forms.Button btnAttestpflicht;
     private System.Windows.Forms.GroupBox groupBoxEinstellungen;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TextBox edSchuljahr;
