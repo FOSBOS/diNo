@@ -110,7 +110,7 @@ namespace diNo
       {        
         try
         {       
-          ta.Insert(F(edBezeichnung), (int)cbLehrer.SelectedValue, (int)cbFach.SelectedValue, F(edZweig), (opUndef.Checked ? null : (opMaennlich.Checked ? "M" : "W")), edKurzbez.Text);          
+          ta.Insert(int.Parse(edId.Text), F(edBezeichnung), (int)cbLehrer.SelectedValue, (int)cbFach.SelectedValue, F(edZweig), (opUndef.Checked ? null : (opMaennlich.Checked ? "M" : "W")), edKurzbez.Text);
           Init();         
         }
         catch

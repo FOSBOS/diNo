@@ -27,8 +27,9 @@ namespace diNo
   /// <param name="fileName">Der Dateiname.</param>
   public static void Read(string fileName)
     {
+      // TODO: Notbehelf, weil die IDs nicht in Untis gespeichert sind
       IDictionary<string, int> anmeldenameZuID = new Dictionary<string, int>();
-      using (StreamReader reader = new StreamReader("D:\\Rohdaten\\schuelerUntis.txt", Encoding.GetEncoding("iso-8859-1")))
+      using (StreamReader reader = new StreamReader("F:\\Notenverwaltung\\Rohdaten\\schuelerUntis.txt", Encoding.GetEncoding("iso-8859-1")))
       {
         while (!reader.EndOfStream)
         {
@@ -73,7 +74,7 @@ namespace diNo
           }
 
           string nameVorname = array[0].Trim(trimchar); // nur zur Kontrolle
-          int kursId = int.Parse(array[1]); // Untis-KursId. NICHT Identisch zu diNo da IDs bereits belegt.
+          int kursId = int.Parse(array[1]); // Untis-KursId.
           string kursKuerzel = array[2].Trim(trimchar); // Untis-Kursname. Der ist identisch zu diNo.
           // was in array[3] steht weiß ich nicht - es scheint immer leer zu sein
           string klasse = array[4].Trim(trimchar); // nur zur Kontrolle
@@ -81,7 +82,25 @@ namespace diNo
           int schuelerId = int.Parse(array[6].Trim(trimchar));
           // weiter hinten kommen noch Infos zu Parallelklassen o. Ä.
 
-          Schueler schueler = new Schueler(anmeldenameZuID[nameVorname]); // wirft Exception wenn nicht vorhanden. Das ist gut so.
+          Schueler schueler=null;
+          if (schuelerId > 0) // externe Id konnte geladen werden
+          {
+            schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
+          }
+          else      // Zuordnungstabelle verwenden
+          {
+            try
+            {
+              schueler = new Schueler(anmeldenameZuID[nameVorname]); // wirft Exception wenn nicht vorhanden. Das ist gut so.
+            }
+            catch
+            {
+              log.Error("Schüler " + nameVorname + " in der Zuordnungstabelle nicht gefunden.");
+              continue;
+            }
+          }
+                                                                   
+          /*
           var kurse = kursTableAdapter.GetDataByBezeichnung(kursKuerzel);
           if (kurse.Count != 1)
           {
@@ -89,10 +108,13 @@ namespace diNo
             // throw new InvalidOperationException("Kurs " + kursKuerzel + " nicht gefunden oder nicht eindeutig!");
           }
           else
-          {
-            Kurs kurs = new Kurs(kurse[0]);
-            schueler.MeldeAn(kurs);
-          }
+          {*/
+
+          //Kurs kurs = new Kurs(kurse[0]);
+
+          Kurs kurs = Zugriff.Instance.KursRep.Find(kursId);
+          schueler.MeldeAn(kurs);
+          //}
         }
       }
     }

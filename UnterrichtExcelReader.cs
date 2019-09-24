@@ -38,7 +38,6 @@ namespace diNo
       {
         throw new InvalidOperationException("kein Sheet mit dem Namen \"Tabelle1\" gefunden");
       }
-
       int lastRow = sheet.get_Range("A" + sheet.Rows.Count, "B" + sheet.Rows.Count).get_End(Excel.XlDirection.xlUp).Row;
       for (int zeile = 5; zeile <= lastRow; zeile++)
       {
@@ -57,7 +56,7 @@ namespace diNo
           log.Debug("Unterricht Ohne Fach wird ignoriert in Zeile " + zeile);
           continue;
         }
-        if ((new string[] { "SSl", "SNT", "SWi", "FPU", "FPA", "FPB", "TZ-Fö", "GK_BF", "M-Fö", "E-Fö", "Ph-Fö", "AWU", "Me", "SL", "SF" }).Contains(fach))
+        if ((new string[] { "SSl", "SNT", "SWi", "FPU", "FPA", "FPB", "TZ-Fö", "GK_", "AWU", "Me", "SL", "SF" , "Fahrt" , "Prak", "_Ü", "ChÜ", "Proj" }).Contains(fach))
         {
           log.Debug("Ignoriere Förderunterricht, Ergänzungsunterricht, Seminarfach und diversen anderen Unfug - kein selbstständiger Unterricht");
           continue;
@@ -102,25 +101,30 @@ namespace diNo
 
         //bei Wahlpflichtfächern muss unbedingt das Fach aus der Untis-Datei erhalten bleiben, sonst finden wir es später nicht wieder
         string bezeichnung = dbFach.Typ == (byte)FachTyp.WPF ? fach : dbFach.Bezeichnung.Trim() + " " + klassenString;
-        var kurs = FindOrCreateKurs(kursId, bezeichnung, dblehrer.Id, fach, zweig);
-
+        if (!CreateKurs(kursId, bezeichnung, dblehrer.Id, fach, zweig)) continue;
+        int kursid = int.Parse(kursId);
         foreach (var klasseKvp in unterschiedlicheKlassen)
-        {
+        {          
           // nur die eigentliche Klasse als Klasse erzeugen, nicht die Klassenteile
           var dbKlasse = FindOrCreateKlasse(klasseKvp.Key, true);
 
-          if (klasseKursAdapter.ScalarQueryCountByKlasseAndKurs(dbKlasse.Id, kurs.Id) == 0)
+          if (klasseKursAdapter.ScalarQueryCountByKlasseAndKurs(dbKlasse.Id, kursid) == 0)
           {
-            klasseKursAdapter.Insert(dbKlasse.Id, kurs.Id);
-          }
-
-          // AddSchuelerToKurs(kurs, dbKlasse, kursSelector); Das machen wir beim Einlesen der Schüler
+            klasseKursAdapter.Insert(dbKlasse.Id, kursid);
+          }          
         }
       }
 
       workbook.Close(false, fileName, Type.Missing);
       Marshal.ReleaseComObject(workbook);
       excelApp.Quit();
+
+      // nochmal alle Klasse mit ihren Schülern durchgehen: Die Kurse werden nun zugewiesen.
+      foreach ( Klasse k in Zugriff.Instance.Klassen)
+      {
+        foreach (Schueler s in k.eigeneSchueler)
+          s.WechsleKlasse(k);
+      }      
     }
 
     /// <summary>
@@ -196,13 +200,15 @@ namespace diNo
     /// <param name="aLehrerId">Die Id des Lehrers.</param>
     /// <param name="aFach">Das Fach.</param>
     /// <param name="aZweig">Der Zweig, für welchen der Kurs gilt.</param>
-    /// <returns>Die Zurszeile in der Datenbank.</returns>
-    public static diNoDataSet.KursRow FindOrCreateKurs(string kursId, string aKursBezeichung, int aLehrerId, string aFach, string aZweig)
+    /// <returns>Kurs wurde neu angelegt</returns>
+    public static bool CreateKurs(string kursId, string aKursBezeichung, int aLehrerId, string aFach, string aZweig)
     {
       using (var kursAdapter = new KursTableAdapter())
       {
         // suche den Kurs in der Datenbank. Wenn neu => anlegen
-        var kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);
+        var kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung); // teilweise gibt es einen Kurs als mehrfachen Eintrag, z.B. bei unterschiedlichen Räumen
+        int kursid = int.Parse(kursId);
+        
         if (kurse.Count == 0)
         {
           // suche Fach in der Datenbank
@@ -211,11 +217,12 @@ namespace diNo
           if (fach.Kuerzel == "Sw") geschlecht = "W";
           if (fach.Kuerzel == "Sm") geschlecht = "M";
           Lehrer lehrer = Zugriff.Instance.LehrerRep.Find(aLehrerId);
-          kursAdapter.Insert(aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht, aFach + "_" + lehrer.Kuerzel + kursId);
+          kursAdapter.Insert(kursid, aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht, aFach + " (" + lehrer.Kuerzel + ")");
+          return true;
         }
 
-        kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);
-        return kurse[0];
+        //kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);
+        return false;
       }
     }
 

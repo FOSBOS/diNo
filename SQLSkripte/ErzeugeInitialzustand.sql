@@ -2,7 +2,6 @@ use [diNo]
 
 -- nächste Jahr raus:
 drop table BerechneteNote
-SET IDENTITY_INSERT Kurs ON
 
 
 -- Lehrer manuell korrigieren

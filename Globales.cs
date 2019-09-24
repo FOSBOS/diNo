@@ -52,7 +52,11 @@ namespace diNo
     SchulTel,
     SchulFax,
     SchulWeb,
-    SchulMail
+    SchulMail,
+    SMTP,
+    Port,
+    SendExcelViaMail,
+    MailPasswort
   }
   
 }

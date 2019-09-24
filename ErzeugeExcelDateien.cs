@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -36,11 +37,8 @@ namespace diNo
 
         if (!kurs.IsLehrerIdNull())
         {
-          if (statusChangedHandler != null)
-          {
-            statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = "Erzeuge Datei " + count + " von " + kurse.Count });
-          }
-
+          statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = "Erzeuge Datei " + count + " von " + kurse.Count });
+          count++;
           var alleSchueler = derKurs.getSchueler(true); // sind bereits via SQL nach Klasse und Namen sortiert
           Jahrgangsstufe jgStufe = Jahrgangsstufe.Elf;
           if (alleSchueler.Count > 0)
@@ -49,24 +47,11 @@ namespace diNo
             jgStufe = ersterSchueler.getKlasse.Jahrgangsstufe;
           }
 
-          if (jgStufe == Jahrgangsstufe.Dreizehn)
-          {
-            new ErzeugeAlteExcelDatei(kurs);
-          }
-          else
-          {
-            new ErzeugeNeueExcelDatei(kurs);
-          }
-
-
-          count++;
+          new ErzeugeNeueExcelDatei(kurs);
         }
       }
 
-      if (statusChangedHandler != null)
-      {
-        statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = count + " Dateien erfolgreich erzeugt" });
-      }
+      statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = count + " Dateien erfolgreich erzeugt" });      
     }
   }
 
@@ -76,6 +61,9 @@ namespace diNo
   public class SendExcelMails
   {
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    private string bodyText;
+    private MailAddress from = new MailAddress(Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail), "Digitale Notenverwaltung");
+    private SmtpClient mailServer;
 
     /// <summary>
     /// Konstruktor.
@@ -83,11 +71,37 @@ namespace diNo
     /// <param name="statusChangedHandler">Handler für Statusmeldungen. Kann auch null sein.</param>
     public SendExcelMails(StatusChanged statusChangedHandler)
     {
+      try
+      {
+        mailServer = new SmtpClient(Zugriff.Instance.getString(GlobaleStrings.SMTP), int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port)));
+        mailServer.EnableSsl = true;
+        mailServer.UseDefaultCredentials = false;
+        mailServer.Credentials = new System.Net.NetworkCredential(Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail), Zugriff.Instance.getString(GlobaleStrings.MailPasswort));        
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+      }
+
+
+      /*
+      OpenFileDialog dia = new OpenFileDialog();
+      dia.Title = "Textdatei wählen, die Nachrichtentext enthält";
+      if (dia.ShowDialog() != DialogResult.OK) return;
+
+      dia.FileName // auslesen 
+      bodyText = ;
+      */
+
       LehrerTableAdapter ada = new LehrerTableAdapter();
       var rows = ada.GetData();
       int count = 0;
       foreach (diNoDataSet.LehrerRow row in rows)
-      {
+      {        
+        count++;
+        statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = count + " von " + rows.Count + " gesendet: " + row.Kuerzel });
+
         string directoryName = Konstanten.ExcelPfad + row.Kuerzel;
         if (!Directory.Exists(directoryName) || Directory.GetFiles(directoryName).Count() == 0)
         {
@@ -97,32 +111,23 @@ namespace diNo
         }
 
         string dienstlicheMailAdresse = row.IsEMailNull() ? "" : row.EMail;
-        if (statusChangedHandler != null)
-        {
-          statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = count + " von " + rows.Count + " gesendet" });
-        }
-
         if (!string.IsNullOrEmpty(dienstlicheMailAdresse))
         {
-          //SendMail("markus.siegel@fosbos-kempten.de", dienstlicheMailAdresse, Directory.GetFiles(directoryName));
-          SendMail("siegelma@arcor.de", dienstlicheMailAdresse, Directory.GetFiles(directoryName));
+          SendMail(dienstlicheMailAdresse, Directory.GetFiles(directoryName));
         }
-
-        count++;
       }
     }
 
     /// <summary>
     /// Schickt eine Mail mit den übergebenen Excel-Files.
     /// </summary>
-    /// <param name="from">Der Absender.</param>
     /// <param name="to">Der Empfänger.</param>
     /// <param name="fileNames">Die Dateinamen.</param>
-    private static void SendMail(string from, string to, IEnumerable<string> fileNames)
+    private void SendMail(string to, IEnumerable<string> fileNames)
     {
       try
       {
-        string subject = "Mail von der digitalen Notenverwaltung (diNo)";
+        string subject = "Notentabellen";
         string body =
 @"Liebe Kolleginnen und Kollegen,
  
@@ -130,35 +135,24 @@ diese Nachricht wurde maschinell von unserer digitalen Notenverwaltung diNo erze
 
 Im Anhang finden Sie die Excel-Notenlisten für das kommende Schuljahr. Ich habe die Dateien stichprobenhaft auf Plausibilität geprüft.
 Prüfen Sie dennoch bitte 
-- ob es sich um Ihre Kurse handelt und die Schülerliste vollständig ist
+- ob es sich um Ihre Kurse handelt und die Schülerliste vollständig ist (insbesondere bei Wahlpflichtfächern, Religionskursen und Mischklassen)
 - ob die Einstellungen in der Datei korrekt sind (z. B. Lehrername, Schulaufgabenwertung und ähnliche Eintragungen)
 - ob sich sonstige offensichtliche Fehler, z. B. beim Notenschlüssel eingeschlichen haben
-- ob für alle 11. und Vorklassen Dateien für die Notengebung nach neuer Schulordnung erstellt wurden
 
-Bei Problemen oder Fragen bitte ich um eine Nachricht an markus.siegel@fosbos-kempten.de.          
+Bei Problemen oder Fragen bitte ich um eine Nachricht.          
 
-Verwenden Sie die Dateien mit gebotener Skepsis und Vorsicht. Dies gilt insbesondere die neu erstellten Dateien nach der neuen Schulordnung. Zwei Schulordnungen in einem Programm zu vereinen ist doch eine technische Herausforderung, bei der das ein- oder andere Problem auftreten kann.
-Auch diejenigen, die sich etwas abseits der gewohnten Pfade bewegen (Integrationsvorklasse, Mischklassen, ABU, Französisch, Religion, Ethik, ...) bitte ich wie immer um erhöhte Aufmerksamkeit.
-Wie schon in den letzten Jahren gilt: Die Note gibt auch künftig immer der Lehrer, das Programm hilft hier bestenfalls mit!
-
-Bei allen Kursen, die von Tandems unterrichtet werden (v. a. Vorklassen, Integrationsvorklasse) ist der Kurs momentan dem ersten Lehrer aus UNTIS zugeordnet. Meistens ist das auch die/derjenige mit den meisten Stunden, aber leider nicht immer.
+Bei allen Kursen, die von Tandems unterrichtet werden (v. a. Vorklassen) ist der Kurs momentan dem ersten Lehrer aus UNTIS zugeordnet. Meistens ist das auch die/derjenige mit den meisten Stunden, aber leider nicht immer.
 Dieser Lehrkraft werden auch die Notendateien übersandt. Sollten Sie hierbei eine Änderung wünschen bitte ich um eine kurze Rückmeldung.
 
-Am Montag werde ich die neue Datenbank einspielen und die Programmdaten aktualisieren, so dass ab Dienstag diNo zur Verfügung stehen sollte.
 Die neuen Kolleginnen und Kollegen würde ich bitten, sich in den nächsten Tagen mal anzumelden und somit ihren Zugang zu testen.
 
-Viele Grüße und schönes Wochenende.
-Markus Siegel
+Viele Grüße
+Claus Konrad und Markus Siegel";
 
-PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.siegel@fosbos-kempten.de
-(das automatisierte Senden von meiner Dienstadresse funktioniert nicht, darum nehme ich meine private)";
-        //SmtpClient mailServer = new SmtpClient("mail.fosbos-kempten.de", 587);
-        SmtpClient mailServer = new SmtpClient("mail.arcor.de", 587);
-        mailServer.EnableSsl = false;
-        mailServer.UseDefaultCredentials = false;
 
-        mailServer.Credentials = new System.Net.NetworkCredential(from, "passwort");
-        MailMessage msg = new MailMessage(from, to);
+        MailMessage msg = new MailMessage();
+        msg.From = from;
+        msg.To.Add(new MailAddress(to));
         msg.Subject = subject;
         msg.Body = body;
         foreach (string fileName in fileNames)
@@ -170,8 +164,8 @@ PS: Antworten Sie bitte nicht an meine private Mail-Adresse sondern an markus.si
       }
       catch (Exception ex)
       {
-        log.Fatal("Unable to send email. Error : " + ex);
-        throw;
+        if (MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+          throw;
       }
     }
   }
