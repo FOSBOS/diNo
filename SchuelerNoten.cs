@@ -29,14 +29,13 @@ namespace diNo
 
     public SchuelerNoten(Schueler s)
     {
-      schueler = s;
-      diNoDataSet.KursDataTable kurse = schueler.Kurse; // ermittle alle Kurse, die der S besucht
+      schueler = s;     
       alleFaecher = new List<FachSchuelerNoten>();
       alleKurse = new List<FachSchuelerNoten>();
       alleSprachen = new List<FachSchuelerNoten>();
       FaecherOhneKurse = new List<FachSchuelerNoten>();
 
-      foreach (var kurs in kurse)
+      foreach (var kurs in schueler.Kurse)
       {
         var fsn = new FachSchuelerNoten(schueler, kurs.Id, this);
         alleFaecher.Add(fsn);

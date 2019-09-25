@@ -56,7 +56,8 @@ namespace diNo
     SMTP,
     Port,
     SendExcelViaMail,
-    MailPasswort
+    MailPasswort,
+    VerzeichnisExceldateien
   }
   
 }

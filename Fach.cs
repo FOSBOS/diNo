@@ -147,31 +147,21 @@ namespace diNo
       }
       else return false;
     }
+      
+    public bool IstEinstuendig(Jahrgangsstufe jg,Schulart sa)
+    {
+      return ((sa==Schulart.BOS || jg==Jahrgangsstufe.Dreizehn) && (Kuerzel=="K" || Kuerzel=="Ev" || Kuerzel=="Eth"));
+        // || ggf. Kunst im S-Zweig, und Wl in A-Zweig in der 11. Klasse
+    }
 
-        // Ermittelt die SA-Wertung für diesen Kurs
-        public Schulaufgabenwertung GetSchulaufgabenwertung(Zweig zweig,Jahrgangsstufe jg)
-        {
-          int z=0;
-          z = AnzahlSA(zweig,jg);
-          if (z==0) return Schulaufgabenwertung.KurzarbeitenUndExen;
-          else if (z<=2) return Schulaufgabenwertung.EinsZuEins;
-          else return Schulaufgabenwertung.ZweiZuEins;
-        }
-
-        public bool IstEinstuendig(Jahrgangsstufe jg,Schulart sa)
-        {
-          return ((sa==Schulart.BOS || jg==Jahrgangsstufe.Dreizehn) && (Kuerzel=="K" || Kuerzel=="Ev" || Kuerzel=="Eth"));
-            // || ggf. Kunst im S-Zweig, und Wl in A-Zweig in der 11. Klasse
-        }
-
-        public bool NichtNC
-        {
-          get 
-          { 
-            return data.NichtNC; 
-          }     
-        } 
-     }
+    public bool NichtNC
+    {
+      get 
+      { 
+        return data.NichtNC; 
+      }     
+    } 
+  }
 
 
 ///  <summary>

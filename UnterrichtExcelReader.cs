@@ -56,18 +56,12 @@ namespace diNo
           log.Debug("Unterricht Ohne Fach wird ignoriert in Zeile " + zeile);
           continue;
         }
-        if ((new string[] { "SSl", "SNT", "SWi", "FPU", "FPA", "FPB", "TZ-Fö", "GK_", "AWU", "Me", "SL", "SF" , "Fahrt" , "Prak", "_Ü", "ChÜ", "Proj" }).Contains(fach))
+        if ((new string[] { "SSl", "SNT", "SWi", "FPU", "FPA", "FPB", "PFV", "TZ-Fö", "GK_", "KL", "AWU", "Me", "SL", "SF" , "Fahrt" , "Prak", "_Ü", "ChÜ", "Proj", "Media", "PP_FA" }).Contains(fach))
         {
-          log.Debug("Ignoriere Förderunterricht, Ergänzungsunterricht, Seminarfach und diversen anderen Unfug - kein selbstständiger Unterricht");
+          log.Debug("Ignoriere Fach " + fach);
           continue;
         }
-
-        if (fach.ToUpper().Contains("FPV"))
-        {
-          // ignoriere Fachpraktische Vertiefung, die läuft anders
-          continue;
-        }
-
+        
         if (string.IsNullOrEmpty(klassenString))
         {
           log.Debug("Unterricht Ohne Klassen wird ignoriert in Zeile " + zeile);
@@ -100,8 +94,9 @@ namespace diNo
         string zweig = GetZweig(unterschiedlicheKlassen);
 
         //bei Wahlpflichtfächern muss unbedingt das Fach aus der Untis-Datei erhalten bleiben, sonst finden wir es später nicht wieder
-        string bezeichnung = dbFach.Typ == (byte)FachTyp.WPF ? fach : dbFach.Bezeichnung.Trim() + " " + klassenString;
-        if (!CreateKurs(kursId, bezeichnung, dblehrer.Id, fach, zweig)) continue;
+        bool isWPF = dbFach.Typ == (byte)FachTyp.WPF;
+        string bezeichnung = isWPF ? fach : dbFach.Bezeichnung.Trim() + " " + klassenString;
+        if (!CreateKurs(kursId, bezeichnung, dblehrer.Id, fach, zweig, isWPF)) continue;
         int kursid = int.Parse(kursId);
         foreach (var klasseKvp in unterschiedlicheKlassen)
         {          
@@ -201,13 +196,17 @@ namespace diNo
     /// <param name="aFach">Das Fach.</param>
     /// <param name="aZweig">Der Zweig, für welchen der Kurs gilt.</param>
     /// <returns>Kurs wurde neu angelegt</returns>
-    public static bool CreateKurs(string kursId, string aKursBezeichung, int aLehrerId, string aFach, string aZweig)
+    public static bool CreateKurs(string kursId, string aKursBezeichung, int aLehrerId, string aFach, string aZweig, bool isWPF)
     {
       using (var kursAdapter = new KursTableAdapter())
       {
         // suche den Kurs in der Datenbank. Wenn neu => anlegen
-        var kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung); // teilweise gibt es einen Kurs als mehrfachen Eintrag, z.B. bei unterschiedlichen Räumen
         int kursid = int.Parse(kursId);
+        diNoDataSet.KursDataTable kurse;
+        if (isWPF)
+          kurse = kursAdapter.GetDataById(kursid); // WPF gibt es immer nur 1x in der Liste (ID ist eindeutig)
+        else
+          kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung); // teilweise gibt es einen Kurs als mehrfachen Eintrag, z.B. bei unterschiedlichen Räumen      
         
         if (kurse.Count == 0)
         {
@@ -220,8 +219,7 @@ namespace diNo
           kursAdapter.Insert(kursid, aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht, aFach + " (" + lehrer.Kuerzel + ")");
           return true;
         }
-
-        //kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung);
+        
         return false;
       }
     }

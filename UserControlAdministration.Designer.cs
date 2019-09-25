@@ -77,6 +77,7 @@
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
+      this.btnWPF = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -91,6 +92,7 @@
       // 
       // groupBoxAnalyse
       // 
+      this.groupBoxAnalyse.Controls.Add(this.btnWPF);
       this.groupBoxAnalyse.Controls.Add(this.btnEinserAbi);
       this.groupBoxAnalyse.Controls.Add(this.btnSelect);
       this.groupBoxAnalyse.Location = new System.Drawing.Point(19, 268);
@@ -621,6 +623,16 @@
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
       // 
+      // btnWPF
+      // 
+      this.btnWPF.Location = new System.Drawing.Point(21, 81);
+      this.btnWPF.Name = "btnWPF";
+      this.btnWPF.Size = new System.Drawing.Size(132, 23);
+      this.btnWPF.TabIndex = 2;
+      this.btnWPF.Text = "Fehlende WPF";
+      this.btnWPF.UseVisualStyleBackColor = true;
+      this.btnWPF.Click += new System.EventHandler(this.btnWPF_Click);
+      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -707,5 +719,6 @@
     private System.Windows.Forms.Button btnGesErg;
     private System.Windows.Forms.Button btnMBStatistik;
     private System.Windows.Forms.Button btnSeStatistik;
+    private System.Windows.Forms.Button btnWPF;
   }
 }
