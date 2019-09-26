@@ -37,9 +37,14 @@ namespace diNo
           foreach (var fachNoten in schueler.getNoten.alleFaecher)
           {
             // Exportiert werden erst mal alle Halbjahres-Leistungen aller Schüler
-            foreach (HjArt hjArt in Enum.GetValues(typeof(HjArt)))
+            foreach (HjArt hjArt in new[] { HjArt.Hj1, HjArt.Hj2 })
             {
-              HjLeistung note = fachNoten.getHjLeistung(hjArt);
+              HjLeistung note=null;
+              if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
+                note = fachNoten.getHjLeistung(hjArt);
+              else if(schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
+                note = fachNoten.getVorHjLeistung(hjArt);
+              
               if (note != null)
               {
                 // Erzeugt eine Zeile mit 9 durch ; getrennten Werten
@@ -69,7 +74,8 @@ namespace diNo
                 // Erzeugt eine Zeile mit mind. 12 durch ; getrennten Werten (kann mehr sein, falls in der Bemerkung auch ;e enthalten sind)
                 writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + FpAKennzeichen + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Halbjahr + Separator + jahresPunkte + Separator + fpaZeile.Vertiefung + Separator + vertiefung1 + Separator + vertiefung2 + Separator + fpaZeile.Anleitung + Separator + fpaZeile.Betrieb + Separator + stelle + Separator + bemerkung);
                 // dasselbe als Hj-Leistung abspeichern: trage hierbei Gesamt auch als mdl. und Note2Dez ein (ist richtiger als leer lassen)
-                writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + FpAKuerzel + Separator + "11" + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Halbjahr + Separator + 0);
+                if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
+                  writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + FpAKuerzel + Separator + "11" + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Gesamt + Separator + fpaZeile.Halbjahr + Separator + 0);
               }
             }
           }
