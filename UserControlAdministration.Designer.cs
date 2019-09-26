@@ -40,9 +40,9 @@
       this.dateZeugnis = new System.Windows.Forms.DateTimePicker();
       this.cbNotendruck = new System.Windows.Forms.ComboBox();
       this.btnKlassenliste = new System.Windows.Forms.Button();
-      this.btnAttestpflicht = new System.Windows.Forms.Button();
       this.btnNotendruck = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
+      this.btnSeStatistik = new System.Windows.Forms.Button();
       this.btnMBStatistik = new System.Windows.Forms.Button();
       this.btnExportSchuelerZeugnisprogramm = new System.Windows.Forms.Button();
       this.btnNotenNachWinSV = new System.Windows.Forms.Button();
@@ -77,6 +77,7 @@
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
+      this.btnWPF = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -91,6 +92,7 @@
       // 
       // groupBoxAnalyse
       // 
+      this.groupBoxAnalyse.Controls.Add(this.btnWPF);
       this.groupBoxAnalyse.Controls.Add(this.btnEinserAbi);
       this.groupBoxAnalyse.Controls.Add(this.btnSelect);
       this.groupBoxAnalyse.Location = new System.Drawing.Point(19, 268);
@@ -127,7 +129,6 @@
       this.groupBoxDrucken.Controls.Add(this.dateZeugnis);
       this.groupBoxDrucken.Controls.Add(this.cbNotendruck);
       this.groupBoxDrucken.Controls.Add(this.btnKlassenliste);
-      this.groupBoxDrucken.Controls.Add(this.btnAttestpflicht);
       this.groupBoxDrucken.Controls.Add(this.btnNotendruck);
       this.groupBoxDrucken.Location = new System.Drawing.Point(19, 28);
       this.groupBoxDrucken.Name = "groupBoxDrucken";
@@ -227,16 +228,6 @@
       this.btnKlassenliste.UseVisualStyleBackColor = true;
       this.btnKlassenliste.Click += new System.EventHandler(this.btnKlassenliste_Click);
       // 
-      // btnAttestpflicht
-      // 
-      this.btnAttestpflicht.Location = new System.Drawing.Point(21, 195);
-      this.btnAttestpflicht.Name = "btnAttestpflicht";
-      this.btnAttestpflicht.Size = new System.Drawing.Size(132, 23);
-      this.btnAttestpflicht.TabIndex = 5;
-      this.btnAttestpflicht.Text = "Attestpflicht";
-      this.btnAttestpflicht.UseVisualStyleBackColor = true;
-      this.btnAttestpflicht.Click += new System.EventHandler(this.btnAttestpflicht_Click);
-      // 
       // btnNotendruck
       // 
       this.btnNotendruck.Location = new System.Drawing.Point(159, 102);
@@ -249,6 +240,7 @@
       // 
       // groupBoxExport
       // 
+      this.groupBoxExport.Controls.Add(this.btnSeStatistik);
       this.groupBoxExport.Controls.Add(this.btnMBStatistik);
       this.groupBoxExport.Controls.Add(this.btnExportSchuelerZeugnisprogramm);
       this.groupBoxExport.Controls.Add(this.btnNotenNachWinSV);
@@ -261,6 +253,16 @@
       this.groupBoxExport.TabIndex = 4;
       this.groupBoxExport.TabStop = false;
       this.groupBoxExport.Text = "Export";
+      // 
+      // btnSeStatistik
+      // 
+      this.btnSeStatistik.Location = new System.Drawing.Point(20, 192);
+      this.btnSeStatistik.Name = "btnSeStatistik";
+      this.btnSeStatistik.Size = new System.Drawing.Size(182, 23);
+      this.btnSeStatistik.TabIndex = 8;
+      this.btnSeStatistik.Text = "Schulerfolgsstatistik erstellen";
+      this.btnSeStatistik.UseVisualStyleBackColor = true;
+      this.btnSeStatistik.Click += new System.EventHandler(this.btnSeStatistik_Click);
       // 
       // btnMBStatistik
       // 
@@ -621,6 +623,16 @@
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
       // 
+      // btnWPF
+      // 
+      this.btnWPF.Location = new System.Drawing.Point(21, 81);
+      this.btnWPF.Name = "btnWPF";
+      this.btnWPF.Size = new System.Drawing.Size(132, 23);
+      this.btnWPF.TabIndex = 2;
+      this.btnWPF.Text = "Fehlende WPF";
+      this.btnWPF.UseVisualStyleBackColor = true;
+      this.btnWPF.Click += new System.EventHandler(this.btnWPF_Click);
+      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -669,7 +681,6 @@
     private System.Windows.Forms.Button btnImportKlassenleiter;
     private System.Windows.Forms.GroupBox groupBoxStammdaten;
     private System.Windows.Forms.Button btnKurse;
-    private System.Windows.Forms.Button btnAttestpflicht;
     private System.Windows.Forms.GroupBox groupBoxEinstellungen;
     private System.Windows.Forms.Label label1;
     private System.Windows.Forms.TextBox edSchuljahr;
@@ -707,5 +718,7 @@
     private System.Windows.Forms.Button btnDelEinbringung;
     private System.Windows.Forms.Button btnGesErg;
     private System.Windows.Forms.Button btnMBStatistik;
+    private System.Windows.Forms.Button btnSeStatistik;
+    private System.Windows.Forms.Button btnWPF;
   }
 }

@@ -59,37 +59,6 @@ namespace diNo.OmnisDB
       return omnis.SucheFach(faecherspiegel, index, schulart);
     }
 
-    public string FindeJahresfortgangsNoten(string faecherspiegel, int index, Schulart schulart, Schueler schueler, Zeitpunkt zeitpunkt)
-    {
-      string faecherKuerzel = SucheFach(faecherspiegel, index, schulart); // hier nur zur Anzeige etwaiger Fehlermeldungen benötigt
-      if (string.IsNullOrEmpty(faecherKuerzel))
-      {
-        return "-";
-      }
-
-      var noten = FindeFachNoten(faecherKuerzel, schueler);
-      if (noten == null)
-      {
-        return "-";
-      }
-
-      BerechneteNote note = noten.getSchnitt(Halbjahr.Zweites);
-      // wenn alle Noten leer sind => Note liegt nicht vor. Entwerte Fach in WinSV.
-      if (note.JahresfortgangMitKomma == null && note.JahresfortgangGanzzahlig == null)
-      {
-        return "-";
-      }
-      // wenn der Jahresfortgang(Komma) leer ist aber eine Gesamtnote existiert, dann nimm diese (vermutlich G, TZ usw.)
-      decimal? nimmNote = note.JahresfortgangMitKomma != null ? note.JahresfortgangMitKomma : note.JahresfortgangGanzzahlig;
-      if (nimmNote == null)
-      {
-        log.Warn("nicht vorliegende Note im Fach "+faecherKuerzel + " bei Schüler "+schueler.NameVorname);
-        return "-";
-      }
-
-      return string.Format(CultureInfo.CurrentCulture, "{0:00.00}", nimmNote);
-    }
-
     public string FindeAPSchriftlichNoten(string faecherspiegel, int index, Schulart schulart, Schueler schueler, Zeitpunkt zeitpunkt)
     {
       string faecherKuerzel = omnis.SucheFach(faecherspiegel, index, schulart); // hier nur zur Anzeige etwaiger Fehlermeldungen benötigt

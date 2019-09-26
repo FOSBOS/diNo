@@ -62,8 +62,6 @@ namespace diNo
       // Durchzuführende Prüfungen
       if (azeitpunkt != Zeitpunkt.DrittePA)
         alleNotenchecks.Add(new NotenanzahlChecker(this));
-      if (modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
-        alleNotenchecks.Add(new UnterpunktungChecker(this));
       if (azeitpunkt == Zeitpunkt.ErstePA && modus != NotenCheckModus.EigeneNotenVollstaendigkeit) // nur dort FR prüfen
       {
         alleNotenchecks.Add(new FachreferatChecker(this));
@@ -74,13 +72,15 @@ namespace diNo
         alleNotenchecks.Add(new FpABestandenChecker(this));
       if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
       {
-        alleNotenchecks.Add(new AbiergebnisChecker(this));
+        //alleNotenchecks.Add(new AbiergebnisChecker(this));
         alleNotenchecks.Add(new EliteChecker(this));
       }
       if ((azeitpunkt == Zeitpunkt.ErstePA || azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
       {
         alleNotenchecks.Add(new EinbringungsChecker(this));
       }
+      if (modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
+        alleNotenchecks.Add(new UnterpunktungChecker(this));
       if (azeitpunkt == Zeitpunkt.DrittePA && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         alleNotenchecks.Add(new MAPChecker(this));
 
@@ -156,11 +156,27 @@ namespace diNo
         if (berechnungen!=null)
           berechnungen.BerechneSchueler(s);
 
-        if (s.Status == Schuelerstatus.SAPabgebrochen && zeitpunkt == Zeitpunkt.ZweitePA)
-          Add(Vorkommnisart.PruefungAbgebrochen,"");
-
-        if ((s.Status == Schuelerstatus.SAPabgebrochen || s.Status == Schuelerstatus.NichtZurSAPZugelassen) && zeitpunkt > Zeitpunkt.ErstePA) // nicht zugelassene raus
-          return;
+        // In memoriam: Schüler, die draußen sind
+        if (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
+        {
+          bool weg = false;
+          if (s.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen))
+          {
+            weg = true;
+            Add(null, "War nicht zur Prüfung zugelassen.");            
+          }
+          if (s.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
+          {
+            weg = true;
+            Add(null, "Hat die Prüfung abgebrochen.");
+          }
+          if (weg)
+          { 
+            if (modus == NotenCheckModus.KonferenzVorbereiten && zeitpunkt == Zeitpunkt.DrittePA && !s.hatVorkommnis(Vorkommnisart.keinJahreszeugnis))
+              s.AddVorkommnis(Vorkommnisart.Jahreszeugnis, Zugriff.Instance.Zeugnisdatum, "");
+            return;
+          }          
+        }
 
         foreach (var ch in alleNotenchecks)
         {

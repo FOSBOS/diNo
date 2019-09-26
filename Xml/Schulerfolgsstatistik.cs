@@ -110,6 +110,7 @@ namespace diNo.Xml
         bos.jahrgangsstufe12 = new jahrgangsstufe12 { klasse = bosKlassen12.ToArray() };
         bos.jahrgangsstufe13 = new jahrgangsstufe13 { klasse = bosKlassen13.ToArray() };
 
+ 
       }
 
       using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
@@ -131,6 +132,7 @@ namespace diNo.Xml
         case Zweig.Technik: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.T; break;
         case Zweig.Umwelt: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.ABU; break;
         case Zweig.Wirtschaft: xmlKlasse.ausbildungsrichtung = klasseAusbildungsrichtung.W; break;
+        case Zweig.None: break; // IV hat keine Ausbildungsrichtung
         default: throw new InvalidOperationException("klasse ohne Ausbildungsrichtung geht so nicht");
       }
 

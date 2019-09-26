@@ -72,13 +72,7 @@ namespace diNo
       }      
 
       rptTyp = b;
-      rptName = SchuelerDruck.GetBerichtsname(b);
-      if ((b == Bericht.Notenbogen || b == Bericht.Notenmitteilung || b == Bericht.Abiergebnisse)
-            && dataSource[0].getKlasse.AlteFOBOSO())
-      {
-        rptName += "Alt"; // für diese Typen müssen noch Bericht nach alter FOBOSO verwendet werden.
-      }
-      rptName = "diNo." + rptName + ".rdlc";
+      rptName = "diNo." + SchuelerDruck.GetBerichtsname(b) + ".rdlc";      
     }         
        
     public override void Init()
@@ -131,12 +125,7 @@ namespace diNo
           var l = new List<SchuelerDruck>();
           l.Add(z);
           e.DataSources.Add(new ReportDataSource("DataSet1", l));
-        }
-        else if (subrpt == "subrptNotenSjAlt" || subrpt == "subrptAbiergebnisseAlt" || subrpt == "subrptFachSchuelerNoten")
-        {
-          var d = schueler.getNoten.SchuelerNotenDruckAlt(rptTyp);          
-          e.DataSources.Add(new ReportDataSource("DataSet1", d));
-        }
+        }        
         else if (subrpt == "subrptVorkommnis" || subrpt == "subrptAbiVorkommnis")
         {
           diNoDataSet.vwVorkommnisDataTable vorkommnisse = new diNoDataSet.vwVorkommnisDataTable();
@@ -192,12 +181,9 @@ namespace diNo
             if (s.hatVorkommnis(Vorkommnisart.GefahrDerAbweisung))
               b.Inhalt += "\nDie Jahrgangsstufe darf nicht mehr wiederholt werden.";
 
-            b.Inhalt2 = s.VornameName + " hat ";
-            if (!s.AlteFOBOSO()) b.Inhalt2 += "bei einem Punktedurchschnitt von " + String.Format("{0:0.00}", s.getNoten.Punkteschnitt) + " ";
-            b.Inhalt2 += "in den folgenden Fächern nur die angeführten Leistungen erzielt:";
+            b.Inhalt2 = s.VornameName + " hat bei einem Punktedurchschnitt von " + String.Format("{0:0.00}", s.getNoten.Punkteschnitt) + " in den folgenden Fächern nur die angeführten Leistungen erzielt:";
             bindingDataSource.Add(b);
           }
-
         }
 
       rpt.BerichtBindingSource.DataSource = bindingDataSource;

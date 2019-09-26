@@ -109,21 +109,7 @@ namespace diNo
     
     private void btnAttestpflicht_Click(object sender, EventArgs e)
     {      
-      if (schueler != null)
-      {        
-        var b = new BriefDaten(schueler, BriefTyp.Attestpflicht);
-        b.Betreff = "Attestpflicht";
-        b.Inhalt += "da sich im laufenden Schuljahr bei ";
-        if (b.IstU18) b.Inhalt += (schueler.Data.Geschlecht == "M" ? "Ihrem Sohn " : "Ihrer Tochter ") + schueler.VornameName;
-        else b.Inhalt += "Ihnen";
-        b.Inhalt += " die krankheitsbedingten Schulversäumnisse häufen, werden Sie gemäß § 20 (2) BaySchO dazu verpflichtet, künftig jede weitere krankheitsbedingte Abwesenheit ";
-        b.Inhalt += "durch ein aktuelles ärztliches Zeugnis (Schulunfähigkeitsbescheinigung) zu belegen.<br><br>";
-        b.Inhalt += "Wird das Zeugnis nicht unverzüglich vorgelegt, so gilt das Fernbleiben als unentschuldigt.";                        
-        b.Unterschrift2 = Zugriff.Instance.getString(GlobaleStrings.Schulleiter) + "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
-        new ReportBrief(b).Show();
-
-        schueler.AddVorkommnis(Vorkommnisart.Attestpflicht,"", false);
-      }
+      
     }
 
     private void btnSave_Click(object sender, EventArgs e)
@@ -339,6 +325,40 @@ namespace diNo
       {
         Xml.MBStatistik.Serialize(dia.FileName);
       }
+    }
+
+    private void btnSeStatistik_Click(object sender, EventArgs e)
+    {
+      SaveFileDialog dia = new SaveFileDialog();
+      dia.Title = "Dateiname wählen";
+      if (dia.ShowDialog() == DialogResult.OK)
+      {
+        Xml.SEStatistik.Serialize(dia.FileName);
+      }
+    }
+
+    private void btnWPF_Click(object sender, EventArgs e)
+    {
+      List<Schueler> alle = Zugriff.Instance.SchuelerRep.getList();
+      List<Schueler> liste = new List<Schueler>();
+
+      foreach (var s in alle)
+      {
+        Jahrgangsstufe jg = s.getKlasse.Jahrgangsstufe;
+        if (jg < Jahrgangsstufe.Zwoelf) continue;
+        byte notw = 1;
+        if (jg == Jahrgangsstufe.Zwoelf && s.Data.Schulart == "F") // FOS 12
+          notw = 2;
+
+        byte anz = 0;
+        foreach (var k in s.Kurse)
+        {
+          if (k.getFach.Typ == FachTyp.WPF) anz++;
+        }
+        if (anz < notw) liste.Add(s);
+      }
+      if (liste.Count == 0) MessageBox.Show("Alles in Ordnung.", "diNo", MessageBoxButtons.OK);
+      else new ReportSchuelerdruck(liste, Bericht.Klassenliste).Show();
     }
   }
 }

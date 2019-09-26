@@ -37,6 +37,7 @@ namespace diNo
 
           textBoxID.Text = schueler.Id.ToString();
           checkBoxLegasthenie.Checked = schueler.IsLegastheniker;
+          checkBoxSonderfall2Hj.Checked = schueler.Data.SonderfallNur2Hj;
           textBoxNachname.Text = schueler.Data.Name;
           textBoxVorname.Text = schueler.Data.Vorname;
           textBoxRufname.Text = schueler.Data.Rufname;
@@ -67,6 +68,7 @@ namespace diNo
       else schueler.Data.MittlereReifeMathenote = (int)numericUpDownMathe.Value.GetValueOrDefault();
 
       schueler.IsLegastheniker = checkBoxLegasthenie.Checked;
+      schueler.Data.SonderfallNur2Hj = checkBoxSonderfall2Hj.Checked;
       schueler.Data.Name = textBoxNachname.Text;
       schueler.Data.Vorname = textBoxVorname.Text;
       schueler.Data.Rufname = textBoxRufname.Text;
@@ -97,6 +99,11 @@ namespace diNo
       this.textBoxZeugnisbemerkung = new System.Windows.Forms.TextBox();
       this.labelZeugnisbemerkung = new System.Windows.Forms.Label();
       this.panelSekretariat = new System.Windows.Forms.Panel();
+      this.checkBoxSonderfall2Hj = new System.Windows.Forms.CheckBox();
+      this.textBoxAR = new System.Windows.Forms.TextBox();
+      this.label20 = new System.Windows.Forms.Label();
+      this.textBoxID = new System.Windows.Forms.TextBox();
+      this.labelID = new System.Windows.Forms.Label();
       this.checkBoxLegasthenie = new System.Windows.Forms.CheckBox();
       this.textBoxRufname = new System.Windows.Forms.TextBox();
       this.label19 = new System.Windows.Forms.Label();
@@ -104,10 +111,6 @@ namespace diNo
       this.label18 = new System.Windows.Forms.Label();
       this.textBoxNachname = new System.Windows.Forms.TextBox();
       this.label7 = new System.Windows.Forms.Label();
-      this.textBoxAR = new System.Windows.Forms.TextBox();
-      this.label20 = new System.Windows.Forms.Label();
-      this.textBoxID = new System.Windows.Forms.TextBox();
-      this.labelID = new System.Windows.Forms.Label();
       this.groupBoxMittlereReife.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMathe)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEnglisch)).BeginInit();
@@ -340,8 +343,9 @@ namespace diNo
       // 
       this.textBoxZeugnisbemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxZeugnisbemerkung.Location = new System.Drawing.Point(299, 117);
+      this.textBoxZeugnisbemerkung.Multiline = true;
       this.textBoxZeugnisbemerkung.Name = "textBoxZeugnisbemerkung";
-      this.textBoxZeugnisbemerkung.Size = new System.Drawing.Size(276, 20);
+      this.textBoxZeugnisbemerkung.Size = new System.Drawing.Size(276, 71);
       this.textBoxZeugnisbemerkung.TabIndex = 84;
       // 
       // labelZeugnisbemerkung
@@ -356,6 +360,7 @@ namespace diNo
       // 
       // panelSekretariat
       // 
+      this.panelSekretariat.Controls.Add(this.checkBoxSonderfall2Hj);
       this.panelSekretariat.Controls.Add(this.textBoxAR);
       this.panelSekretariat.Controls.Add(this.label20);
       this.panelSekretariat.Controls.Add(this.textBoxID);
@@ -369,14 +374,64 @@ namespace diNo
       this.panelSekretariat.Controls.Add(this.label7);
       this.panelSekretariat.Location = new System.Drawing.Point(9, 22);
       this.panelSekretariat.Name = "panelSekretariat";
-      this.panelSekretariat.Size = new System.Drawing.Size(260, 140);
+      this.panelSekretariat.Size = new System.Drawing.Size(260, 166);
       this.panelSekretariat.TabIndex = 85;
+      // 
+      // checkBoxSonderfall2Hj
+      // 
+      this.checkBoxSonderfall2Hj.AutoSize = true;
+      this.checkBoxSonderfall2Hj.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+      this.checkBoxSonderfall2Hj.Location = new System.Drawing.Point(128, 130);
+      this.checkBoxSonderfall2Hj.Name = "checkBoxSonderfall2Hj";
+      this.checkBoxSonderfall2Hj.Size = new System.Drawing.Size(113, 17);
+      this.checkBoxSonderfall2Hj.TabIndex = 91;
+      this.checkBoxSonderfall2Hj.Text = "Sonderfall nur 2 Hj";
+      this.checkBoxSonderfall2Hj.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+      this.checkBoxSonderfall2Hj.UseVisualStyleBackColor = true;
+      // 
+      // textBoxAR
+      // 
+      this.textBoxAR.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxAR.Location = new System.Drawing.Point(153, 58);
+      this.textBoxAR.MaxLength = 1;
+      this.textBoxAR.Name = "textBoxAR";
+      this.textBoxAR.Size = new System.Drawing.Size(88, 20);
+      this.textBoxAR.TabIndex = 89;
+      // 
+      // label20
+      // 
+      this.label20.AutoSize = true;
+      this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label20.Location = new System.Drawing.Point(150, 44);
+      this.label20.Name = "label20";
+      this.label20.Size = new System.Drawing.Size(102, 13);
+      this.label20.TabIndex = 90;
+      this.label20.Text = "Ausbildungsrichtung";
+      // 
+      // textBoxID
+      // 
+      this.textBoxID.Enabled = false;
+      this.textBoxID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxID.Location = new System.Drawing.Point(153, 18);
+      this.textBoxID.Name = "textBoxID";
+      this.textBoxID.Size = new System.Drawing.Size(88, 20);
+      this.textBoxID.TabIndex = 87;
+      // 
+      // labelID
+      // 
+      this.labelID.AutoSize = true;
+      this.labelID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.labelID.Location = new System.Drawing.Point(150, 5);
+      this.labelID.Name = "labelID";
+      this.labelID.Size = new System.Drawing.Size(57, 13);
+      this.labelID.TabIndex = 88;
+      this.labelID.Text = "Schüler-ID";
       // 
       // checkBoxLegasthenie
       // 
       this.checkBoxLegasthenie.AutoSize = true;
       this.checkBoxLegasthenie.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.checkBoxLegasthenie.Location = new System.Drawing.Point(149, 19);
+      this.checkBoxLegasthenie.Location = new System.Drawing.Point(148, 107);
       this.checkBoxLegasthenie.Name = "checkBoxLegasthenie";
       this.checkBoxLegasthenie.Size = new System.Drawing.Size(93, 17);
       this.checkBoxLegasthenie.TabIndex = 80;
@@ -437,44 +492,6 @@ namespace diNo
       this.label7.Size = new System.Drawing.Size(59, 13);
       this.label7.TabIndex = 75;
       this.label7.Text = "Nachname";
-      // 
-      // textBoxAR
-      // 
-      this.textBoxAR.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxAR.Location = new System.Drawing.Point(153, 58);
-      this.textBoxAR.MaxLength = 1;
-      this.textBoxAR.Name = "textBoxAR";
-      this.textBoxAR.Size = new System.Drawing.Size(88, 20);
-      this.textBoxAR.TabIndex = 89;
-      // 
-      // label20
-      // 
-      this.label20.AutoSize = true;
-      this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label20.Location = new System.Drawing.Point(150, 44);
-      this.label20.Name = "label20";
-      this.label20.Size = new System.Drawing.Size(102, 13);
-      this.label20.TabIndex = 90;
-      this.label20.Text = "Ausbildungsrichtung";
-      // 
-      // textBoxID
-      // 
-      this.textBoxID.Enabled = false;
-      this.textBoxID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxID.Location = new System.Drawing.Point(153, 95);
-      this.textBoxID.Name = "textBoxID";
-      this.textBoxID.Size = new System.Drawing.Size(88, 20);
-      this.textBoxID.TabIndex = 87;
-      // 
-      // labelID
-      // 
-      this.labelID.AutoSize = true;
-      this.labelID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelID.Location = new System.Drawing.Point(150, 81);
-      this.labelID.Name = "labelID";
-      this.labelID.Size = new System.Drawing.Size(57, 13);
-      this.labelID.TabIndex = 88;
-      this.labelID.Text = "Schüler-ID";
       // 
       // UserControlSekretariat
       // 

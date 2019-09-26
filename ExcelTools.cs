@@ -374,7 +374,7 @@ namespace diNo
 
       int zeileFuerSId = GetErsteFreieZeile(sid);
       int zeile = GetNotenbogenZeileForSidZeile(zeileFuerSId);
-      
+
       WriteValueProtectedCell(notenbogen, CellConstant.Nachname + zeile, aSchueler.Name);
       WriteValueProtectedCell(notenbogen, CellConstant.Vorname + (zeile + 1), "   " + aSchueler.Rufname);
       WriteValueProtectedCell(sid, CellConstant.SId + zeileFuerSId, aSchueler.Id.ToString());
@@ -457,43 +457,11 @@ namespace diNo
       int indexSchueler = sidZeile - 4; // Beginnend mit dem Nullten
       return 2 * indexSchueler + 5;
     }
-    
+
     public byte? ReadNote(Notentyp typ, string zelle)
     {
       string v;
       if (typ == Notentyp.APMuendlich || typ == Notentyp.APSchriftlich)
-        v = ReadValue(AP, zelle);
-      else
-        v = ReadValue(notenbogen, zelle);
-
-      return !string.IsNullOrEmpty(v) ? Convert.ToByte(v, CultureInfo.CurrentUICulture) : (byte?)null;
-    }
-
-    public decimal? ReadSchnitt(BerechneteNotentyp typ, Halbjahr hj, int zeile)
-    {
-      string zelle = CellConstant.getSchnittZelle(typ, hj, zeile);
-      if (zelle == null)
-        return null;
-
-      string v;
-      if (typ == BerechneteNotentyp.APGesamt || typ == BerechneteNotentyp.EndnoteMitNKS)
-        v = ReadValue(AP, zelle);
-      else
-        v = ReadValue(notenbogen, zelle);
-
-      var zahlenwert = !string.IsNullOrEmpty(v) ? Convert.ToDecimal(v, CultureInfo.CurrentUICulture) : (decimal?)null;
-      return (zahlenwert >= 0) ? zahlenwert : (decimal?)null; // diese Zeile unterdrückt einen Fehler bei der AP Englisch.
-      // Solange die AP noch nicht vorliegt, berechnet das Excel-Sheet in der Englisch-AP einen negativen Wert
-    }
-
-    public byte? ReadSchnittGanzzahlig(BerechneteNotentyp typ, Halbjahr hj, int zeile)
-    {
-      string zelle = CellConstant.getSchnittZelle(typ, hj, zeile);
-      if (zelle == null)
-        return null;
-
-      string v;
-      if (typ == BerechneteNotentyp.Abschlusszeugnis)
         v = ReadValue(AP, zelle);
       else
         v = ReadValue(notenbogen, zelle);

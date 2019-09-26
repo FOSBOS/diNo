@@ -77,7 +77,7 @@ namespace diNo.OmnisDB
               for (int i = 0; i < 20; i++)
               {
                 // Wenn schon Jahresfortgangsnoten drinstehen, nicht anfassen!!!
-                string jahresfortgang = faecher.FindeJahresfortgangsNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
+                string jahresfortgang = "";//faecher.FindeJahresfortgangsNoten(faecherspiegel, i, schueler.getKlasse.Schulart, schueler, zeitpunkt);
                 if (zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != "" && zeile[Konstanten.jahresfortgangPflichtfach1Col + i] != jahresfortgang)
                 {
                   string faecherKuerzel = faecher.SucheFach(faecherspiegel, i, schueler.getKlasse.Schulart); // nur zur Anzeige der Warnung

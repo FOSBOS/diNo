@@ -57,6 +57,7 @@ namespace diNo
 
     public static string ProzentFuenfUntergrenze = "H34";
     public static string ProzentFuenfObergrenze = "H35";
+    public static string EingabeUeber = "H3";
 
     #endregion
 
@@ -106,42 +107,7 @@ namespace diNo
       return s; // ggf. eine leere Liste, falls diese Kombi nicht zulässig ist
     }
 
-        /// <summary>
-        /// liefert zum angegeben Notentyp und Halbjahr die Spalte im Excelsheet. Zusammen mit der Zeile (=obere Zeile) 
-        /// des Schülers wird die Zelle generiert.
-        /// </summary>
-        public static string getSchnittZelle(BerechneteNotentyp typ, Halbjahr hj, int zeile)
-        {
-            string s=null;
-
-            if (hj == Halbjahr.Erstes)
-            {                
-                switch (typ)
-                {
-                    case BerechneteNotentyp.SchnittSA: s = "M"; zeile++; break;
-                    case BerechneteNotentyp.Schnittmuendlich: s = "N"; zeile++; break;
-                    case BerechneteNotentyp.JahresfortgangMitNKS: s = "O"; zeile++;break;
-                    case BerechneteNotentyp.Jahresfortgang: s = "O"; break;
-                }
-            }
-
-            if (hj == Halbjahr.Zweites)
-            {                
-                switch (typ)
-                {
-                    case BerechneteNotentyp.SchnittSA: s = "Y"; zeile++; break;
-                    case BerechneteNotentyp.Schnittmuendlich: s = "Z";zeile++; break;
-                    case BerechneteNotentyp.JahresfortgangMitNKS: s = "AA"; zeile++; break;
-                    case BerechneteNotentyp.Jahresfortgang: s = "AA"; break;
-                    case BerechneteNotentyp.APGesamt: s = "G"; break;
-                    case BerechneteNotentyp.EndnoteMitNKS: s = "H"; break;
-                    case BerechneteNotentyp.Abschlusszeugnis: s ="I"; break;
-                }
-            }
-            if (s != null) s = s + zeile;
-            return s; // ggf. ein null String, falls diese Kombi nicht zulässig ist
-        }
-
+        
     }
 
 }

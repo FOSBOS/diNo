@@ -61,11 +61,6 @@ namespace diNo
       this.label10 = new System.Windows.Forms.Label();
       this.textBoxEintrittAm = new System.Windows.Forms.TextBox();
       this.label11 = new System.Windows.Forms.Label();
-      this.textBoxDNote = new System.Windows.Forms.TextBox();
-      this.label12 = new System.Windows.Forms.Label();
-      this.label16 = new System.Windows.Forms.Label();
-      this.textBoxDNoteAllg = new System.Windows.Forms.TextBox();
-      this.label17 = new System.Windows.Forms.Label();
       this.btnSave = new System.Windows.Forms.Button();
       this.dateTimeAustritt = new System.Windows.Forms.DateTimePicker();
       this.dateTimeProbezeit = new System.Windows.Forms.DateTimePicker();
@@ -224,9 +219,7 @@ namespace diNo
       this.cbStatus.FormattingEnabled = true;
       this.cbStatus.Items.AddRange(new object[] {
             "Aktiv",
-            "Abgemeldet",
-            "Nicht zur Prüfung zugelassen",
-            "Prüfung abgebrochen"});
+            "Abgemeldet"});
       this.cbStatus.Location = new System.Drawing.Point(318, 38);
       this.cbStatus.Name = "cbStatus";
       this.cbStatus.Size = new System.Drawing.Size(240, 21);
@@ -372,54 +365,6 @@ namespace diNo
       this.label11.TabIndex = 51;
       this.label11.Text = "Eintritt am";
       // 
-      // textBoxDNote
-      // 
-      this.textBoxDNote.Enabled = false;
-      this.textBoxDNote.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxDNote.Location = new System.Drawing.Point(318, 331);
-      this.textBoxDNote.Name = "textBoxDNote";
-      this.textBoxDNote.Size = new System.Drawing.Size(47, 20);
-      this.textBoxDNote.TabIndex = 22;
-      // 
-      // label12
-      // 
-      this.label12.AutoSize = true;
-      this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label12.Location = new System.Drawing.Point(314, 300);
-      this.label12.Name = "label12";
-      this.label12.Size = new System.Drawing.Size(99, 13);
-      this.label12.TabIndex = 55;
-      this.label12.Text = "Durchschnittsnoten";
-      // 
-      // label16
-      // 
-      this.label16.AutoSize = true;
-      this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label16.Location = new System.Drawing.Point(374, 315);
-      this.label16.Name = "label16";
-      this.label16.Size = new System.Drawing.Size(52, 13);
-      this.label16.TabIndex = 63;
-      this.label16.Text = "allg. HSR";
-      // 
-      // textBoxDNoteAllg
-      // 
-      this.textBoxDNoteAllg.Enabled = false;
-      this.textBoxDNoteAllg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxDNoteAllg.Location = new System.Drawing.Point(377, 331);
-      this.textBoxDNoteAllg.Name = "textBoxDNoteAllg";
-      this.textBoxDNoteAllg.Size = new System.Drawing.Size(47, 20);
-      this.textBoxDNoteAllg.TabIndex = 23;
-      // 
-      // label17
-      // 
-      this.label17.AutoSize = true;
-      this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label17.Location = new System.Drawing.Point(315, 315);
-      this.label17.Name = "label17";
-      this.label17.Size = new System.Drawing.Size(49, 13);
-      this.label17.TabIndex = 65;
-      this.label17.Text = "fachgeb.";
-      // 
       // btnSave
       // 
       this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -524,11 +469,6 @@ namespace diNo
       this.Controls.Add(this.dateTimeProbezeit);
       this.Controls.Add(this.dateTimeAustritt);
       this.Controls.Add(this.btnSave);
-      this.Controls.Add(this.label17);
-      this.Controls.Add(this.textBoxDNoteAllg);
-      this.Controls.Add(this.label16);
-      this.Controls.Add(this.textBoxDNote);
-      this.Controls.Add(this.label12);
       this.Controls.Add(this.textBoxJahrgangsstufe);
       this.Controls.Add(this.label10);
       this.Controls.Add(this.textBoxEintrittAm);
@@ -599,11 +539,6 @@ namespace diNo
     private System.Windows.Forms.Label label10;
     private System.Windows.Forms.TextBox textBoxEintrittAm;
     private System.Windows.Forms.Label label11;
-    private System.Windows.Forms.TextBox textBoxDNote;
-    private System.Windows.Forms.Label label12;
-    private System.Windows.Forms.Label label16;
-    private System.Windows.Forms.TextBox textBoxDNoteAllg;
-    private System.Windows.Forms.Label label17;
     private System.Windows.Forms.Button btnSave;
     private System.Windows.Forms.DateTimePicker dateTimeAustritt;
     private System.Windows.Forms.DateTimePicker dateTimeProbezeit;

@@ -51,8 +51,6 @@ namespace diNo
           dateTimeAustritt.Value = schueler.Data.IsAustrittsdatumNull() ? dateTimeAustritt.MinDate : schueler.Data.Austrittsdatum;
           textBoxEmail.Text = schueler.Data.Email;
           cbStatus.SelectedIndex = schueler.Data.Status;
-          textBoxDNote.Text = schueler.Data.IsDNoteNull() ? "" : string.Format("{0:F1}", schueler.Data.DNote);
-          textBoxDNoteAllg.Text = schueler.Data.IsDNoteAllgNull() ? "" : string.Format("{0:F1}", schueler.Data.DNoteAllg);
         }
         /*
         else

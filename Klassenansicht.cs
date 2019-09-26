@@ -11,14 +11,11 @@ namespace diNo
     private Schueler schueler=null;
     private SchuelerverwaltungController verwaltungController;
     private Brief frmBrief=null;
-    private bool zeigeAlteFOSBOSO = false;    
 
     public Klassenansicht()
     {
       InitializeComponent();
       this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
-
-      tabControl1.Controls.Remove(tabPageNoten); // Start mit neuer FOBOSO          
 
       // Verwaltungsreiter
       if (Zugriff.Instance.HatVerwaltungsrechte)
@@ -52,26 +49,7 @@ namespace diNo
       userControlVorkommnisse1.Schueler = schueler;
       userControlFPAundSeminar1.Schueler = schueler;
       if (schueler == null) return;
-      if (schueler.AlteFOBOSO())
-      {
-        if (!zeigeAlteFOSBOSO)
-        {
-          tabControl1.Controls.Remove(tabPageNotenbogen);
-          tabControl1.TabPages.Insert(1, tabPageNoten);
-          zeigeAlteFOSBOSO = true;
-        }
-        notenbogen1.Schueler = schueler;
-      }
-      else
-      {
-        if (zeigeAlteFOSBOSO)
-        {
-          tabControl1.Controls.Remove(tabPageNoten);
-          tabControl1.TabPages.Insert(1, tabPageNotenbogen);
-          zeigeAlteFOSBOSO = false;
-        }
         userControlNotenbogen1.Schueler = schueler;
-      }
 
       nameLabel.Text = schueler.NameVorname;
       klasseLabel.Text = schueler.KlassenBezeichnung;
@@ -143,18 +121,7 @@ namespace diNo
         Cursor.Current = Cursors.WaitCursor;
         foreach (string fileName in fileDialog.FileNames)
         {
-          var xls = new OpenAlteNotendatei(fileName);
-          bool alt = xls.IsAlteSchulordnung();
-          xls.Dispose(); // dies schließt die Datei gleich wieder
-
-          if (alt)
-          {
-            new LeseNotenAusExcelAlt(fileName, notenReader_OnStatusChange);
-          }
-          else
-          {
-            new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
-          }
+          new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
         }
 
         RefreshTreeView(); // Noten neu laden

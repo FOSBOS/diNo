@@ -69,7 +69,7 @@ namespace diNo
       Klasse = s.getKlasse.Bezeichnung;
 
       var KL = s.getKlasse.Klassenleiter;
-      Klassenleiter = KL.NameDienstbezeichnung; // + (s.AlteFOBOSO() && Berichtsname == Bericht.Notenbogen ? "" : "\n" + KL.KLString);
+      Klassenleiter = KL.NameDienstbezeichnung;
       KlassenleiterText = KL.KLString;
 
       if (s.Data.Schulart == "B")
@@ -83,13 +83,10 @@ namespace diNo
       HideVorHj = !s.hatVorHj; // nur bei F12 anzeigen
       HideAbi = jg < 12 || Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.ErstePA;
 
-      if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6) // TODO: Soll das so kommen?
+      if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6)
       {
         int anzProbleme = s.getNoten.AnzahlProbleme();
-        Bemerkung = "Sie benötigen bei " + (anzProbleme > 2 ? 2 : anzProbleme) + " Gesamtergebnissen unter 4 Punkten mindestens " + s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 : 5) + " Punkte, um zu bestehen.";
-        int fehlP = s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 :5) - s.punktesumme.Summe(PunktesummeArt.Gesamt);
-        int fehlAP = (int)Math.Ceiling(fehlP / (decimal)(s.APFaktor));
-        Bemerkung += "\nDazu müssen Sie Ihre Prüfungsgesamtergebnisse um mindestens " + fehlAP + " Punkte erhöhen.\n";
+        Bemerkung = "Sie benötigen bei " + (anzProbleme > 2 ? 2 : anzProbleme) + " Gesamtergebnissen unter 4 Punkten mindestens " + s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 : 5) + " Punkte, um zu bestehen. ";
       }        
     }
 
@@ -294,6 +291,16 @@ namespace diNo
         Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet. In den Fremdsprachen wurden die mündlichen Leistungen stärker gewichtet.";
       if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
         Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
+
+      bool hatIPo = s.getNoten.FindeFach("IPo", false) != null;
+      bool hatIBS = s.getNoten.FindeFach("IBS", false) != null;
+      if (hatIBS && hatIPo)
+        Bemerkung += "<br>Die Fächer International Business Studies und Internationale Politik wurden bilingual unterrichtet.";
+      else if (hatIBS)
+        Bemerkung += "<br>Das Fach International Business Studies wurde bilingual unterrichtet.";
+      else if (hatIPo)
+        Bemerkung += "<br>Das Fach Internationale Politik wurde bilingual unterrichtet.";
+    
       if (s.hatVorkommnis(Vorkommnisart.MittlereReife))
         Bemerkung += "<br><b>Dieses Zeugnis verleiht den mittleren Schulabschluss gemäß Art. 25 Abs. 1 Satz 2 Nr. 6 BayEUG.</b>";
       if (jg == 11 && b == Bericht.Jahreszeugnis)
@@ -349,116 +356,6 @@ namespace diNo
     }
   }
 
-  public class FachSchuelerNotenDruckAlt
-  {
-    // Arrays können in Bericht leider nicht gedruckt werden, daher einzeln:
-    // für SA / sL wird je ein Datensatz erzeugt
-    // JF und DGes wird nur bei sL mitgeschickt
-    public string fachBez { get; private set; }
-    public string Art { get; private set; } // gibt den Text SA oder sL aus
-    public string N1 { get; private set; }  // Einzelnoten
-    public string D1 { get; private set; }  // Durchschnitt 1. Hj.
-    public string DGes1 { get; private set; } // Schnitt Gesamt im 1. Hj.
-    public string JF1 { get; private set; }
-    public string N2 { get; private set; }
-    public string D2 { get; private set; }
-    public string DGes2 { get; private set; }
-    public string JF2 { get; private set; }
-    public string SAP { get; private set; }
-    public string MAP { get; private set; }
-    public string APG { get; private set; }
-    public string GesZ { get; private set; } // SchnittFortgangUndPruefung
-    public string Z { get; private set; }
-    public string MAP4P { get; private set; } // nötige Punktzahl in einer mündlichen Prüfung um auf 4 im Zeugnis zu kommen
-    public string MAP1P { get; private set; }
-
-    public FachSchuelerNotenDruckAlt(FachSchuelerNoten s, bool evalSA, Bericht rpt)
-    {
-      fachBez = s.getFach.Bezeichnung;
-      if (rpt == Bericht.Notenbogen && fachBez.Contains("irtschafts")) // Fachbezeichnung sind zu lang für Notenbogen
-      {
-        string kuerzel = s.getFach.Kuerzel;
-        if (kuerzel == "BwR") fachBez = "Betriebswirt-schaftslehre";
-        else if (kuerzel == "VWL") fachBez = "Volkswirt-schaftslehre";
-        else if (kuerzel == "WIn") fachBez = "Wirtschafts-informatik";
-      }
-
-      Art = ""; N1 = ""; D1 = ""; N2 = ""; D2 = "";
-      var d1 = s.getSchnitt(Halbjahr.Erstes);
-      var d2 = s.getSchnitt(Halbjahr.Zweites);
-
-      if (rpt != Bericht.Abiergebnisse)
-      {
-        if (evalSA)
-        {
-          Art = "SA\n";
-          N1 = s.SA(Halbjahr.Erstes) + "\n";
-          N2 = s.SA(Halbjahr.Zweites) + "\n";
-          D1 = String.Format("{0:f2}", d1.SchnittSchulaufgaben) + "\n";
-          D2 = String.Format("{0:f2}", d2.SchnittSchulaufgaben) + "\n";
-        }
-        Art += "sL";
-        N1 += s.sL(Halbjahr.Erstes);
-        N2 += s.sL(Halbjahr.Zweites);
-        D1 += String.Format("{0:f2}", d1.SchnittMuendlich);
-        D2 += String.Format("{0:f2}", d2.SchnittMuendlich);
-        DGes1 = String.Format("{0:f2}", d1.JahresfortgangMitKomma);
-        JF1 = d1.JahresfortgangGanzzahlig.ToString();
-        JF2 = d2.JahresfortgangGanzzahlig.ToString();
-      }
-      DGes2 = String.Format("{0:f2}", d2.JahresfortgangMitKomma);
-
-      SAP = put(s.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich), 0);
-      MAP = put(s.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich), 0);
-      APG = String.Format("{0:f2}", d2.PruefungGesamt);
-      GesZ = String.Format("{0:f2}", d2.SchnittFortgangUndPruefung);
-      Z = d2.Abschlusszeugnis.ToString();
-
-      if (rpt == Bericht.Abiergebnisse && MAP == "")
-      {
-        MAP4P = s.NotwendigeNoteInMAPalt(4);
-        MAP1P = s.NotwendigeNoteInMAPalt(1);
-      }
-    }
-
-    public FachSchuelerNotenDruckAlt(string fach, int note)
-    {
-      fachBez = fach;
-      Z = note.ToString();
-      JF2 = Z;
-    }
-
-    public FachSchuelerNotenDruckAlt(diNoDataSet.SeminarfachnoteRow s)
-    {
-      fachBez = "Seminararbeit";
-      if (!s.IsGesamtnoteNull())
-      {
-        Z = s.Gesamtnote.ToString();
-        JF2 = Z;
-      }
-    }
-
-    private string put(IList<int> n, int index)
-    {
-      if (index < n.Count)
-        return n[index].ToString();
-      else
-        return "";
-    }
-
-    // ausnahmsweise kopiert, weil es nächstes Jahr eh rausfällt:
-    private string ErfolgText(int note)
-    {
-      switch (note)
-      {
-        case 1: return "mit sehr gutem Erfolg";
-        case 2: return "mit gutem Erfolg";
-        case 3: return "mit Erfolg";
-        default: return "ohne Erfolg";
-      }
-    }
-  }
-
   // Basisklasse für die Noten eines Faches
   public abstract class NotenDruck
   {
@@ -480,13 +377,14 @@ namespace diNo
     {
       fachBez = s.getFach.Bezeichnung;
       if ((b == Bericht.Einbringung || b == Bericht.Abiergebnisse) && s.getFach.NichtNC) fachBez += "*";
+      /*
       if (b == Bericht.Notenbogen && fachBez.Contains("irtschafts")) // Fachbezeichnung sind zu lang für Notenbogen
       {
         string kuerzel = s.getFach.Kuerzel;
         if (kuerzel == "BwR") fachBez = "Betriebswirt-schaftslehre";
         else if (kuerzel == "VWL") fachBez = "Volkswirt-schaftslehre";
         else if (kuerzel == "WIn") fachBez = "Wirtschafts-informatik";
-      }
+      }*/
       hj1 = s.getHjLeistung(HjArt.Hj1);
       hj2 = s.getHjLeistung(HjArt.Hj2);
       Hj1 = putHj(hj1);
@@ -650,13 +548,13 @@ namespace diNo
   // Abiergebnisse
   public class NotenAbiDruck : NotenHjDruck
   {
-    public string MAP1P { get; private set; }
-    public string MAP4P { get; private set; }
+    public string MAP4GE { get; private set; }
+    public string MAP4APG { get; private set; }
 
     public NotenAbiDruck(FachSchuelerNoten s) : base(s, Bericht.Abiergebnisse)
     {
-      MAP4P = s.NotwendigeNoteInMAP(3.5);
-      MAP1P = s.NotwendigeNoteInMAP(1.0);
+      MAP4GE = s.NotwendigeNoteInMAP(3.5);
+      MAP4APG = s.NotwendigeNoteAPG();
     }
     public NotenAbiDruck(HjLeistung h) : base(h)
     {
@@ -682,13 +580,6 @@ namespace diNo
       }
       fachBez = s.getFach.BezZeugnis;
       if (s.getFach.NichtNC && rpt == Bericht.Abiturzeugnis) fachBez += "*";
-
-      if (s.schueler.AlteFOBOSO()) // nur zum Test
-      {
-        Hj1 = relNoteToZeugnis(s.getRelevanteNote(Zeitpunkt.HalbjahrUndProbezeitFOS));
-        Hj2 = relNoteToZeugnis(s.getRelevanteNote(Zeitpunkt.Jahresende));
-        return;
-      }
 
       if (s.schueler.hatVorHj)
       {
@@ -725,12 +616,6 @@ namespace diNo
       fachBez = "<b>" + FachBezeichnung + "</b>";
       Hj2 = HjToZeugnis(f);
       JNToZeugnis(f);
-    }
-
-    private string relNoteToZeugnis(byte? t) // für AlteFOBOSO
-    {
-      if (t == null) return "--";
-      else return t.GetValueOrDefault().ToString("D2");
     }
 
     private string HjToZeugnis(HjLeistung t) // für NeueFOBOSO

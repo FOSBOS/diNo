@@ -133,11 +133,9 @@ namespace diNo
               if (jgstufe == Jahrgangsstufe.Elf && (notenArt == HjArt.Hj1 || notenArt == HjArt.Hj2))
               {
                 byte note = byte.Parse(line[4]);
-                decimal note2Dez = decimal.Parse(line[5]);
-                decimal schnittMdl = decimal.Parse(line[6]);
 
                 HjStatus status = (HjStatus)byte.Parse(line[8]);
-                ada.Insert(schueler.Id, fachId, (byte)notenArt, note, note2Dez, schnittMdl, (int)jgstufe, (byte)status);
+                ada.Insert(schueler.Id, fachId, (byte)notenArt, note, null, null, (int)jgstufe, (byte)status);
               }
             }
 

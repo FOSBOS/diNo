@@ -51,6 +51,7 @@
       // comboBoxZeitpunkt
       // 
       this.comboBoxZeitpunkt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.comboBoxZeitpunkt.Enabled = false;
       this.comboBoxZeitpunkt.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.comboBoxZeitpunkt.FormattingEnabled = true;
       this.comboBoxZeitpunkt.Items.AddRange(new object[] {
@@ -97,9 +98,9 @@
       this.label1.AutoSize = true;
       this.label1.Location = new System.Drawing.Point(22, 64);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(133, 13);
+      this.label1.Size = new System.Drawing.Size(79, 13);
       this.label1.TabIndex = 16;
-      this.label1.Text = "Prüfungsanlass auswählen";
+      this.label1.Text = "Prüfungsanlass";
       // 
       // label2
       // 

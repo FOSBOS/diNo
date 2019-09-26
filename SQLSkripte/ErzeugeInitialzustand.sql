@@ -1,14 +1,15 @@
 use [diNo]
 
+-- nächste Jahr raus:
+drop table BerechneteNote
+
+
 -- Lehrer manuell korrigieren
 
 update GlobaleKonstanten set Schuljahr=YEAR(CURRENT_TIMESTAMP), aktZeitpunkt=1, Sperre=0
 
-delete from BerechneteNote
-DBCC CHECKIDENT (BerechneteNote, RESEED, 0); -- AutoIncrement zurücksetzen
 
 delete from Fpa
-delete from Fpa12alt
 
 delete from Note
 DBCC CHECKIDENT (Note, RESEED, 0);
@@ -26,6 +27,7 @@ DBCC CHECKIDENT (Vorkommnis, RESEED, 0);
 
 delete from SchuelerKurs
 delete from Seminarfachnote
+delete from Punktesumme
 
 delete from Schueler
 

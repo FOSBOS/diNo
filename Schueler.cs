@@ -15,7 +15,7 @@ namespace diNo
   {
     private diNoDataSet.SchuelerRow data;   // nimmt SchülerRecordset auf
     private Klasse klasse;                  // Objektverweis zur Klasse dieses Schülers
-    private diNoDataSet.KursDataTable kurse; // Recordset-Menge aller Kurse dieses Schülers
+    private List<Kurs> kurse; // Recordset-Menge aller Kurse dieses Schülers
     private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
     private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler    
     private diNoDataSet.FpaDataTable fpaDT; // wird zum Speichern benötigt: FPA-Halbjahr 1 und 2
@@ -463,13 +463,16 @@ namespace diNo
       get { return this.data; }
     }
 
-    public diNoDataSet.KursDataTable Kurse
+    public List<Kurs> Kurse
     {
       get
       {
         if (kurse == null)
         {
-          kurse = new KursTableAdapter().GetDataBySchulerId(this.Id);
+          kurse = new List<Kurs>();
+          var kursDT = new KursTableAdapter().GetDataBySchulerId(this.Id);
+          foreach (var k in kursDT)
+            kurse.Add(Zugriff.Instance.KursRep.Find(k.Id));
         }
 
         return kurse;
@@ -572,7 +575,7 @@ namespace diNo
         else if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
           return Vorkommnisart.Fachabiturzeugnis;
         else if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
-          return (!Data.IsDNoteAllgNull() /*AlteFOBOSO! neu: HatZweiteFremdsprache()*/ ? Vorkommnisart.allgemeineHochschulreife : Vorkommnisart.fachgebundeneHochschulreife);
+          return (HatZweiteFremdsprache() ? Vorkommnisart.allgemeineHochschulreife : Vorkommnisart.fachgebundeneHochschulreife);
       }
       else if (zeitpunkt == Zeitpunkt.Jahresende && getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
         return Vorkommnisart.Jahreszeugnis;
@@ -591,7 +594,7 @@ namespace diNo
       // melde den Schüler aus allen Kursen ab.
       foreach (var kurs in this.Kurse)
       {
-        MeldeAb(new Kurs(kurs));
+        MeldeAb(kurs);
       }
 
       data.KlasseId = nachKlasse.Data.Id;
@@ -634,14 +637,12 @@ namespace diNo
     }
 
     public void MeldeAb(string vonFachKuerzel)
-    {
-      FachTableAdapter ada = new FachTableAdapter();
+    {      
       foreach (var kurs in this.Kurse)
-      {
-        var fach = ada.GetDataById(kurs.FachId)[0];
-        if (fach.Kuerzel == vonFachKuerzel)
+      {        
+        if (kurs.getFach.Kuerzel == vonFachKuerzel)
         {
-          MeldeAb(new Kurs(kurs));
+          MeldeAb(kurs);
         }
       }
     }
@@ -810,12 +811,6 @@ namespace diNo
       return 25; //FOS11
     }
 
-
-    public bool AlteFOBOSO()
-    {
-      return getKlasse.AlteFOBOSO();
-    }
-
     public int Alter()
     {      
       return Alter(DateTime.Now);
@@ -934,9 +929,7 @@ namespace diNo
   public enum Schuelerstatus
   {
     Aktiv = 0,
-    Abgemeldet = 1,
-    NichtZurSAPZugelassen = 2,
-    SAPabgebrochen = 3
+    Abgemeldet = 1
   }
 
 }

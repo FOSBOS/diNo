@@ -38,20 +38,21 @@ namespace diNo
         this.objectListView2.SetObjects(new List<Kurs>());
         return;
       }
-
+      /*
       List<Kurs> aktuelleKurse = new List<Kurs>();
       foreach (var aKurs in schueler.Kurse)
       {
-        aktuelleKurse.Add(new Kurs(aKurs));
+        aktuelleKurse.Add(aKurs);
       }
-
       this.objectListView1.SetObjects(aktuelleKurse);
+      */
+      objectListView1.SetObjects(schueler.Kurse);
 
       var kurseDerKlasse = schueler.AlleMoeglichenKurse();
       IList<Kurs> moeglicheNeueKurse = new List<Kurs>();
       foreach (var aKurs in kurseDerKlasse)
       {
-        if (!aktuelleKurse.Exists(x => x.Id == aKurs.Id))
+        if (!schueler.Kurse.Exists(x => x.Id == aKurs.Id))
         {
           moeglicheNeueKurse.Add(new Kurs(aKurs.Id));
         }

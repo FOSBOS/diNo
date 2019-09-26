@@ -222,6 +222,7 @@ namespace diNo
       // TODO: Aktuell wird zum Sonderfall (nur 2 Halbjahre trotz FOS) nur, wer die 12te Jahrgangsstufe wiederholt
       // wie kommen hier künftig die Sonderfälle in diNo rein?
       row.SonderfallNur2Hj = (row.Wiederholung1Jahrgangsstufe == "12" || row.Wiederholung2Jahrgangsstufe == "12") && row.Schulart == "F";
+      row.Berechungsstatus = (int)Berechnungsstatus.Unberechnet;
     }
 
     /// <summary>

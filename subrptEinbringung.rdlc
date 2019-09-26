@@ -45,12 +45,12 @@
           <DataField>MAP</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="MAP1P">
-          <DataField>MAP1P</DataField>
+        <Field Name="MAP4APG">
+          <DataField>MAP4APG</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="MAP4P">
-          <DataField>MAP4P</DataField>
+        <Field Name="MAP4GE">
+          <DataField>MAP4GE</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="S">
@@ -463,7 +463,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>4P</Value>
+                                  <Value>APG4P</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -500,7 +500,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>1P</Value>
+                                  <Value>GE4P</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -848,14 +848,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="MAP4P">
+                        <Textbox Name="MAP4APG">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!MAP4P.Value</Value>
+                                  <Value>=Fields!MAP4APG.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -866,7 +866,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>MAP4P</rd:DefaultName>
+                          <rd:DefaultName>MAP4APG</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -882,14 +882,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="MAP1P">
+                        <Textbox Name="MAP4GE">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!MAP1P.Value</Value>
+                                  <Value>=Fields!MAP4GE.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -900,7 +900,7 @@
                               </Style>
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>MAP1P</rd:DefaultName>
+                          <rd:DefaultName>MAP4GE</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>
@@ -1128,7 +1128,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>4P/1P = nötige Punktzahl in einer mündlichen Prüfung, um im Gesamtergebnis auf 4 Punkte bzw. 1 Punkt zu kommen.</Value>
+                    <Value>APG4P/GE4P = nötige Punktzahl in einer mündlichen Prüfung, um in der Abiturprüfung/imGesamtergebnis auf 4 Punkte zu kommen.</Value>
                     <Style>
                       <FontSize>7pt</FontSize>
                     </Style>
