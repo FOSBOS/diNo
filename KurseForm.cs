@@ -99,10 +99,10 @@ namespace diNo
         q.SetFachNull();
         ta.Update(q.Data);
 
-        q.KlassenZuordnungen.Clear();
+        q.Klassen.Clear();
         foreach(Klasse klasse in checkedListBoxKlassen.CheckedItems)
         {
-          q.KlassenZuordnungen.AddKlasseKursRow(klasse.Data, q.Data);
+          q.Klassen.Add(klasse);
         }
         q.SaveKlassenzuordnung();
       }

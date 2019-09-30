@@ -217,7 +217,7 @@ namespace diNo
   {
     private diNoDataSet.KursRow data;
     private diNoDataSet.SchuelerDataTable schueler;
-    private diNoDataSet.KlasseKursDataTable klassenZuordnungen;
+    private List<Klasse> klassen;
     private Fach fach;
     private Lehrer lehrer;
     public Jahrgangsstufe JgStufe;
@@ -289,40 +289,36 @@ namespace diNo
     /// <summary>
     /// Die Liste der Klassen dieser Kurses
     /// </summary>
-    public diNoDataSet.KlasseKursDataTable KlassenZuordnungen
+    public List<Klasse> Klassen
     {
       get
       {
-        if (klassenZuordnungen == null)
+        if (klassen == null)
         {
           KlasseKursTableAdapter kka = new KlasseKursTableAdapter();
-          klassenZuordnungen = kka.GetDataByKursId(this.Id);
+          var klassenZuordnungen = kka.GetDataByKursId(this.Id);
+          klassen = new List<Klasse>();
+          foreach (var klasse in klassenZuordnungen)
+          {
+            klassen.Add(Zugriff.Instance.KlassenRep.Find(klasse.KlasseId));
+          }
         }
 
-        return klassenZuordnungen;
+        return klassen;
       }
     }
-
-    public IList<Klasse> Klassen
-    {
-      get
-      {
-        IList<Klasse> result = new List<Klasse>();
-        foreach (var klasse in KlassenZuordnungen)
-        {
-          result.Add(Zugriff.Instance.KlassenRep.Find(klasse.KlasseId));
-        }
-        return result;
-      }
-    }
-
+    
     /// <summary>
     /// Speichert die aktuelle Klassenzuordnung in die Datenbank.
     /// </summary>
     public void SaveKlassenzuordnung()
     {
       KlasseKursTableAdapter kka = new KlasseKursTableAdapter();
-      kka.Update(this.KlassenZuordnungen);
+      kka.DeleteByKursId(Id);
+      foreach (Klasse k in klassen)
+      {
+        kka.Insert(k.Data.Id, Id);
+      }      
     }
 
     /// <summary>
