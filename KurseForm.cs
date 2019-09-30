@@ -60,7 +60,7 @@ namespace diNo
     {
       q = liste.SelectedItem as Kurs;
       edBezeichnung.Text = q.Data.Bezeichnung;
-      edKurzbez.Text = "";
+      edKurzbez.Text = q.Data.IsKurzbezNull() ? "" :  q.Data.Kurzbez;
       edId.Text = q.Data.Id.ToString();
       edZweig.Text = (q.Data.IsZweigNull() ? "" : q.Data.Zweig);
       opUndef.Checked = q.Data.IsGeschlechtNull();
@@ -110,12 +110,12 @@ namespace diNo
       {        
         try
         {       
-          ta.Insert(int.Parse(edId.Text), F(edBezeichnung), (int)cbLehrer.SelectedValue, (int)cbFach.SelectedValue, F(edZweig), (opUndef.Checked ? null : (opMaennlich.Checked ? "M" : "W")), edKurzbez.Text);
+          ta.Insert(int.Parse(edId.Text), F(edBezeichnung), (int)cbLehrer.SelectedValue, (int)cbFach.SelectedValue, F(edZweig), (opUndef.Checked ? null : (opMaennlich.Checked ? "M" : "W")), (edKurzbez.Text=="" ? null : edKurzbez.Text));
           Init();         
         }
-        catch
+        catch (Exception ex)
         {
-          MessageBox.Show("Dieser Kurs konnte nicht eingefügt werden, weil nicht alle Pflichtfelder ausgefüllt wurden.", "diNo", MessageBoxButtons.OK);
+          MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.OK);
         }
         //groupBoxBerechtigungen.Enabled = true;
       }
