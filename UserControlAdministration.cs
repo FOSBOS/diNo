@@ -68,7 +68,9 @@ namespace diNo
       dia.Title = "Dateiname wählen";
       if (dia.ShowDialog() == DialogResult.OK)
       {
+        Cursor = Cursors.WaitCursor;
         ImportExportJahresnoten.ExportiereHjLeistungen(dia.FileName);
+        Cursor = Cursors.Default;
       }
     }
 
@@ -78,17 +80,22 @@ namespace diNo
       dia.Title = "Dateiname wählen";
       if (dia.ShowDialog() == DialogResult.OK)
       {
+        Cursor = Cursors.WaitCursor;
         ImportExportJahresnoten.ImportierteHJLeistungen(dia.FileName);
+        Cursor = Cursors.Default;
       }
     }
 
     private void btnImportUnterricht_Click(object sender, EventArgs e)
     {
+      if (MessageBox.Show("Die Unterrichtsmatrix muss als Exceldatei in Tabelle1 vorliegen (via Untis-Export).\nBitte kontrollieren, ob Daten ab Zeile 5 vorhanden sind\nund ob Spalte A die Unterrichtsnummer, Spalte E das Lehrerkürzel, Spalte F das Fach und Spalte G alle zugeordneten Klassen enthält.", "Import Unterrichtsmatrix", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       OpenFileDialog dia = new OpenFileDialog();
       dia.Title = "Dateiname wählen";
       if (dia.ShowDialog() == DialogResult.OK)
       {
+        Cursor = Cursors.WaitCursor;
         UnterrichtExcelReader.ReadUnterricht(dia.FileName);
+        Cursor = Cursors.Default;
       }
     }
 
@@ -98,20 +105,18 @@ namespace diNo
       dia.Title = "Dateiname wählen";
       if (dia.ShowDialog() == DialogResult.OK)
       {
+        Cursor = Cursors.WaitCursor;
         WinSVSchuelerReader.ReadSchueler(dia.FileName);
+        Cursor = Cursors.Default;
       }
     }
 
     private void btnImportKlassenleiter_Click(object sender, EventArgs e)
     {
-        new ImportKlassenleiter();
+      if (MessageBox.Show("Die Exceldatei muss folgendes Format haben:\nDaten sind ab Zeile 2 vorhanden.\nSpalte C enthält das Lehrerkürzel, Spalte D die Klasse.", "Import Klassenleiter", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+      new ImportKlassenleiter();
     }
-    
-    private void btnAttestpflicht_Click(object sender, EventArgs e)
-    {      
-      
-    }
-
+       
     private void btnSave_Click(object sender, EventArgs e)
     {
       konstanten.Sperre = chkSperre.Checked ? 1 : 0;
@@ -124,12 +129,15 @@ namespace diNo
 
     private void btnCreateExcelsClick(object sender, EventArgs e)
     {
+      if (MessageBox.Show("Die Dateien werden ins Verzeichnis " + Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + " geschrieben (einstellbar unter globale Texte).\nDort muss auch die Vorlage.xlsx liegen.", "Notendateien erzeugen", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+      Cursor = Cursors.WaitCursor;
       new ErzeugeAlleExcelDateien(this.onStatusChange);
+      Cursor = Cursors.Default;
     }
 
     private void btnSendMail_Click(object sender, EventArgs e)
-    {
-      new SendExcelMails(this.onStatusChange);
+    {      
+      new SendExcelMails(this.onStatusChange);     
     }
 
     private void btnNotenWinSV_Click(object sender, EventArgs e)
@@ -232,11 +240,14 @@ namespace diNo
 
     private void btnReadWahlpflichtfaecher_Click(object sender, EventArgs e)
     {
+      if (MessageBox.Show("Die WPF und ggf. auch die Religionskurse müssen als Textdatei (csv mit ; als Trennzeichen) vorliegen:\nSpalte 2 die Unterrichtsnummer des WPF, Spalte 7 enthält die Schüler-ID, weitere Spalten werden ignoriert.\nIst eine Schüler-ID nicht vorhanden, so kann behelfsmäßig über Spalte 1 (eindeutiger Schülername) importiert werden. Dazu muss vorher eine Zuordnungsdatei im selben Verzeichnis mit dem Namen ZuordnungSchueler.txt abgelegt sein.\nDie Zuordnungsdatei enthält im csv-Format in Spalte 1 die Schüler-ID, in Spalte 5 den eindeutigen Namen wie in der Importdatei.", "Import Wahlpflichtfächer", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       OpenFileDialog dia = new OpenFileDialog();
       dia.Title = "Dateiname wählen";
       if (dia.ShowDialog() == DialogResult.OK)
       {
+        Cursor = Cursors.WaitCursor;
         WahlpflichtfachReader.Read(dia.FileName);
+        Cursor = Cursors.Default;
       }
     }
 

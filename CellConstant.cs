@@ -80,7 +80,7 @@ namespace diNo
           case Notentyp.Ex: s = new[] { "D", "E", "F", "G" }; break;
           case Notentyp.EchteMuendliche: s = new[] { "H", "I", "J" }; break;
           case Notentyp.Fachreferat: s = new[] { "L" }; break;
-          case Notentyp.Ersatzprüfung: s = new[] { "K" }; break;
+          //case Notentyp.Ersatzprüfung: s = new[] { "K" }; break;
         }
       }
 
@@ -93,7 +93,7 @@ namespace diNo
           case Notentyp.Ex: s = new[] { "P", "Q", "R", "S" }; break;
           case Notentyp.EchteMuendliche: s = new[] { "T", "U", "V" }; break;
           case Notentyp.Fachreferat: s = new[] { "X" }; break;
-          case Notentyp.Ersatzprüfung: s = new[] { "W" }; break;
+          //case Notentyp.Ersatzprüfung: s = new[] { "W" }; break;
           case Notentyp.APSchriftlich: s = new[] { "E" }; break;
           case Notentyp.APMuendlich: s = new[] { "F" }; break;
         }

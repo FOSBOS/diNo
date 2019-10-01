@@ -282,10 +282,9 @@ namespace diNo
         int kurzarbeitenCount = fachNoten.getNotenanzahl(hj, Notentyp.Kurzarbeit);
         int muendlicheCount = fachNoten.getNotenanzahl(hj, Notentyp.Ex) + fachNoten.getNotenanzahl(hj, Notentyp.EchteMuendliche);
         int schulaufgabenCount = fachNoten.getNotenanzahl(hj, Notentyp.Schulaufgabe);
-        bool hatErsatzpruefung = fachNoten.getNotenanzahl(hj, Notentyp.Ersatzprüfung) > 0;
-
+        
         // wenn gar nichts da ist...
-        if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0 && !hatErsatzpruefung)
+        if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0 )
         {
           contr.Add(kurs, toText(0, "", "Note", hj));
           continue;
@@ -302,37 +301,25 @@ namespace diNo
 
         if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
         {
-          // zur Probezeit BOS muss eine SA vorliegen, wenn 2 SA pro Hj (Vorklasse) oder ein SAP-Fach (mit SA, nicht Vk!) vorliegt
-          if (schulaufgabenCount == 0 && ((istSAPFach && noetigeAnzahlSchulaufgaben == 1) || noetigeAnzahlSchulaufgaben > 1))
+          // Prüfungsfächer BOS12 und und SA-Fächer Vorklassen: zur Probezeit muss eine SA vorliegen und eine weitere Note
+          if ((istSAPFach && noetigeAnzahlSchulaufgaben == 1) || noetigeAnzahlSchulaufgaben > 1)
           {
-            contr.Add(kurs, toText(schulaufgabenCount, "", "Schulaufgabe", hj));
+            if (schulaufgabenCount == 0)
+              contr.Add(kurs, toText(schulaufgabenCount, "", "Schulaufgabe", hj));
+            if (kurzarbeitenCount==0 && muendlicheCount==0)
+              contr.Add(kurs, "Es liegt keine sonstige Leistung vor.");
           }
-
-          if (hatErsatzpruefung) continue;
-
-          // Schreibt der Lehrer KA, dann muss sie bei allen Schülern vorliegen
-          if (kurs.schreibtKA && kurzarbeitenCount == 0)
+          else if (schulaufgabenCount == 0 && kurzarbeitenCount == 0 && muendlicheCount < 2)
           {
-            contr.Add(kurs, toText(kurzarbeitenCount, "", "Kurzarbeite", hj));
+            contr.Add(kurs, "Es liegen nicht genügend sonstige Leistungen vor.");
           }
-
-          // Profilfach 2: mind. 2 Noten
-          if (istSAFach && !istSAPFach && schulaufgabenCount + kurzarbeitenCount + muendlicheCount < 2)
-          {
-            contr.Add(kurs, toText(schulaufgabenCount + kurzarbeitenCount + muendlicheCount, "", "Note", hj));
-            continue;
-          }
-
+       
           // zusätzliche mdl. Note, falls kritisch (<4 P. im Hj)
-          if (kurs.schreibtKA && muendlicheCount == 0)
+          else if (muendlicheCount == 0)
           {
             byte punktePZ = fachNoten.getHjLeistung(HjArt.Hj1).Punkte;
             if (punktePZ < 4)
               contr.Add(kurs, toText(muendlicheCount, "mündliche", "Note", hj));
-          }
-          else if (!kurs.schreibtKA && muendlicheCount < 2)
-          {
-            contr.Add(kurs, toText(muendlicheCount, "mündliche", "Note", hj));
           }
         }
         else // alles außer PZ-BOS:       
@@ -345,8 +332,7 @@ namespace diNo
           {
             contr.Add(kurs, "Es sind zuviele Schulaufgaben eingetragen.");
           }
-          if (hatErsatzpruefung) continue;
-
+          
           if (kurs.schreibtKA && kurzarbeitenCount == 0)
           {
             contr.Add(kurs, toText(kurzarbeitenCount, "", "Kurzarbeite"));

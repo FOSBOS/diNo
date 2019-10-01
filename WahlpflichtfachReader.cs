@@ -27,30 +27,38 @@ namespace diNo
   /// <param name="fileName">Der Dateiname.</param>
   public static void Read(string fileName)
     {
-      // TODO: Notbehelf, weil die IDs nicht in Untis gespeichert sind
+      // TODO: Notbehelf, weil die IDs nicht in Untis gespeichert sind      
       IDictionary<string, int> anmeldenameZuID = new Dictionary<string, int>();
-      using (StreamReader reader = new StreamReader("F:\\Notenverwaltung\\Rohdaten\\schuelerUntis.txt", Encoding.GetEncoding("iso-8859-1")))
+
+      string directory =  Path.GetDirectoryName(fileName);
+      try
       {
-        while (!reader.EndOfStream)
+        using (StreamReader reader = new StreamReader(directory + "\\ZuordnungSchueler.txt", Encoding.GetEncoding("iso-8859-1")))
         {
-          string line = reader.ReadLine();
-          if (string.IsNullOrEmpty(line))
+          while (!reader.EndOfStream)
           {
-            log.Debug("Ignoriere Leerzeile");
-            continue;
-          }
-          string[] array = line.Split(new string[] { ";" }, StringSplitOptions.None);
+            string line = reader.ReadLine();
+            if (string.IsNullOrEmpty(line))
+            {
+              continue;
+            }
+            string[] array = line.Split(new string[] { ";" }, StringSplitOptions.None);
 
-          if (array.Count() == 0 || string.IsNullOrEmpty(array[0]))
-          {
-            log.Debug("Ignoriere unvollständige Zeile");
-            continue;
-          }
+            if (array.Count() == 0 || string.IsNullOrEmpty(array[0]))
+            {
+              log.Debug("Zuordnungsdatei: Ignoriere unvollständige Zeile");
+              continue;
+            }
 
-          int id = int.Parse(array[0]);
-          string anmeldename = array[4];
-          anmeldenameZuID.Add(anmeldename, id);
+            int id = int.Parse(array[0]);
+            string anmeldename = array[4];
+            anmeldenameZuID.Add(anmeldename, id);
+          }
         }
+      }
+      catch
+      {
+        log.Debug("Keine Zuordnungsdatei gefunden.");
       }
 
       using (StreamReader reader = new StreamReader(fileName, Encoding.GetEncoding("iso-8859-1")))
@@ -60,8 +68,7 @@ namespace diNo
         {
           string line = reader.ReadLine();
           if (string.IsNullOrEmpty(line))
-          {
-            log.Debug("Ignoriere Leerzeile");
+          {            
             continue;
           }
 
@@ -74,24 +81,38 @@ namespace diNo
           }
 
           string nameVorname = array[0].Trim(trimchar); // nur zur Kontrolle
-          int kursId = int.Parse(array[1]); // Untis-KursId.
-          string kursKuerzel = array[2].Trim(trimchar); // Untis-Kursname. Der ist identisch zu diNo.
+          int kursId = 0;
+          try
+          {
+            kursId = int.Parse(array[1]); // Untis-KursId.
+          }
+          catch
+          {
+            log.Warn("Kurs-ID " + array[1] + " bei Schüler " + nameVorname + " konnte nicht konvertiert werden.");
+            continue;
+          }
+
+          // string kursKuerzel = array[2].Trim(trimchar); // Untis-Kursname. Der ist identisch zu diNo.
           // was in array[3] steht weiß ich nicht - es scheint immer leer zu sein
-          string klasse = array[4].Trim(trimchar); // nur zur Kontrolle
+          // string klasse = array[4].Trim(trimchar); // nur zur Kontrolle
           // was in array[5] steht weiß ich nicht - es scheint immer leer zu sein
-          int schuelerId = int.Parse(array[6].Trim(trimchar));
-          // weiter hinten kommen noch Infos zu Parallelklassen o. Ä.
+          int schuelerId = 0;
+          try
+          {
+            schuelerId = int.Parse(array[6].Trim(trimchar));
+          }
+          catch
+          {
+            ;
+            // nichts tun --> hoffentlich klappt es mit der Zuordnungstabelle.
+          }          
 
           Schueler schueler=null;
-          if (schuelerId > 0) // externe Id konnte geladen werden
-          {
-            schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-          }
-          else      // Zuordnungstabelle verwenden
+          if (schuelerId == 0) // externe Id konnte nicht geladen werden ==> Zuordnungstabelle verwenden
           {
             try
             {
-              schueler = new Schueler(anmeldenameZuID[nameVorname]); // wirft Exception wenn nicht vorhanden. Das ist gut so.
+              schuelerId = anmeldenameZuID[nameVorname]; // wirft Exception wenn nicht vorhanden. Das ist gut so.
             }
             catch
             {
@@ -99,22 +120,24 @@ namespace diNo
               continue;
             }
           }
-                                                                   
-          /*
-          var kurse = kursTableAdapter.GetDataByBezeichnung(kursKuerzel);
-          if (kurse.Count != 1)
+          try
           {
-            log.Error("Kurs " + kursKuerzel + " nicht gefunden oder nicht eindeutig!");
-            // throw new InvalidOperationException("Kurs " + kursKuerzel + " nicht gefunden oder nicht eindeutig!");
+            schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);          
           }
-          else
-          {*/
-
-          //Kurs kurs = new Kurs(kurse[0]);
-
-          Kurs kurs = Zugriff.Instance.KursRep.Find(kursId);
-          schueler.MeldeAn(kurs);
-          //}
+          catch
+          {
+            log.Error("Schüler mit ID=" + schuelerId + " nicht in der Datenbank gefunden.");
+            continue;
+          }
+          try
+          {
+            Kurs kurs = Zugriff.Instance.KursRep.Find(kursId);
+            schueler.MeldeAn(kurs);
+          }
+          catch
+          {
+            log.Error("Schüler mit ID=" + schuelerId + " konnte nicht im Kurs " + kursId + " angemeldet werden." );
+          }          
         }
       }
     }

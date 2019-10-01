@@ -56,12 +56,24 @@ namespace diNo
           log.Debug("Unterricht Ohne Fach wird ignoriert in Zeile " + zeile);
           continue;
         }
-        if ((new string[] { "SSl", "SNT", "SWi", "FPU", "FPA", "FPB", "PFV", "TZ-Fö", "GK_", "KL", "AWU", "Me", "SL", "SF" , "Fahrt" , "Prak", "_Ü", "ChÜ", "Proj", "Media", "PP_FA" }).Contains(fach))
+        if (new string[] { "SSl", "SNT", "SWi", "KL", "AWU", "Me" , "SL", "SF", "Fahrt", "ChÜ", "Proj", "Media", "PP_FA" , "Prak", "Proj" }.Contains(fach))
         {
           log.Debug("Ignoriere Fach " + fach);
           continue;
         }
-        
+
+        bool weiter = false;
+        foreach (var substr in new string[] { "FPU", "FPA", "FPB", "PFV", "-Fö", "GK_", "_Ü" })
+        {
+          if (fach.Contains(substr))
+          {
+            log.Debug("Ignoriere Fach " + fach);
+            weiter = true;
+            break; 
+          }
+        }
+        if (weiter) continue; // die äußere for-Schleife weiter!
+
         if (string.IsNullOrEmpty(klassenString))
         {
           log.Debug("Unterricht Ohne Klassen wird ignoriert in Zeile " + zeile);
@@ -85,6 +97,12 @@ namespace diNo
         if (dblehrer == null)
         {
           log.Error("Ignoriere Kurse des unbekannten Lehrers " + lehrer);
+          continue;
+        }
+
+        if (string.IsNullOrEmpty(kursId))
+        {
+          log.Error("Kurs ohne ID kann nicht angelegt werden: " + fach + " " + klassenString);
           continue;
         }
 

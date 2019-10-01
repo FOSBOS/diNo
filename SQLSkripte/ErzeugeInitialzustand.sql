@@ -1,13 +1,7 @@
 use [diNo]
 
--- nächste Jahr raus:
-drop table BerechneteNote
-
-
 -- Lehrer manuell korrigieren
-
 update GlobaleKonstanten set Schuljahr=YEAR(CURRENT_TIMESTAMP), aktZeitpunkt=1, Sperre=0
-
 
 delete from Fpa
 
@@ -20,7 +14,6 @@ DBCC CHECKIDENT (HJLeistung, RESEED, 0);
 delete from KlasseKurs
 delete from SchuelerKurs
 delete from Kurs
-DBCC CHECKIDENT (Kurs, RESEED, 0);
 
 delete from Vorkommnis
 DBCC CHECKIDENT (Vorkommnis, RESEED, 0);

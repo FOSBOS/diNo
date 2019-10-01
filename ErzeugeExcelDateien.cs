@@ -27,8 +27,6 @@ namespace diNo
     /// <param name="statusChangedHandler">Handler für Statusmeldungen. Kann auch null sein.</param>
     public ErzeugeAlleExcelDateien(StatusChanged statusChangedHandler)
     {
-      if (MessageBox.Show("Die Dateien werden ins Verzeichnis " + Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + " geschrieben (einstellbar unter globale Texte).\nDort muss auch die Vorlage.xlsx liegen.", "diNo", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
-
       KursTableAdapter ta = new KursTableAdapter();
       var kurse = ta.GetData();
       int count = 0;
@@ -74,7 +72,7 @@ namespace diNo
     public SendExcelMails(StatusChanged statusChangedHandler)
     {
       string infoFile = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + "Mail.txt";
-      if (MessageBox.Show("Mailservereinstellungen müssen unter globale Texte angegeben werden.\nEin in der Mail zu versendender Infotext kann in der Datei " + infoFile + "Mail.txt abgelegt werden.", "diNo", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+      if (MessageBox.Show("Mailservereinstellungen müssen unter globale Texte angegeben werden.\nEin in der Mail zu versendender Infotext kann in der Datei " + infoFile + " abgelegt werden.", "Notendateien versenden", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       try
       {
         mailServer = new SmtpClient(Zugriff.Instance.getString(GlobaleStrings.SMTP), int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port)));
@@ -87,7 +85,7 @@ namespace diNo
         MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
-      
+     
       if (File.Exists(infoFile))
       {
         bodyText = File.ReadAllText(infoFile);
