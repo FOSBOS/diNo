@@ -50,6 +50,7 @@
       this.btnCreateExcels = new System.Windows.Forms.Button();
       this.exportNoten = new System.Windows.Forms.Button();
       this.groupBoxImport = new System.Windows.Forms.GroupBox();
+      this.label3 = new System.Windows.Forms.Label();
       this.btnReadWahlpflichtfaecher = new System.Windows.Forms.Button();
       this.btnImportKlassenleiter = new System.Windows.Forms.Button();
       this.btnImportSchueler = new System.Windows.Forms.Button();
@@ -77,7 +78,7 @@
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
-      this.label3 = new System.Windows.Forms.Label();
+      this.btnKurseZuweisen = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -338,6 +339,15 @@
       this.groupBoxImport.TabStop = false;
       this.groupBoxImport.Text = "Import (in dieser Reihenfolge)";
       // 
+      // label3
+      // 
+      this.label3.AutoSize = true;
+      this.label3.Location = new System.Drawing.Point(6, 186);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(198, 13);
+      this.label3.TabIndex = 8;
+      this.label3.Text = "Nach jedem Import die Log-Datei prüfen!";
+      // 
       // btnReadWahlpflichtfaecher
       // 
       this.btnReadWahlpflichtfaecher.Location = new System.Drawing.Point(20, 106);
@@ -583,6 +593,7 @@
       // 
       // groupBoxReparatur
       // 
+      this.groupBoxReparatur.Controls.Add(this.btnKurseZuweisen);
       this.groupBoxReparatur.Controls.Add(this.btnGesErg);
       this.groupBoxReparatur.Controls.Add(this.btnDelEinbringung);
       this.groupBoxReparatur.Controls.Add(this.btnEinbringung);
@@ -623,14 +634,15 @@
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
       // 
-      // label3
+      // btnKurseZuweisen
       // 
-      this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(6, 186);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(198, 13);
-      this.label3.TabIndex = 8;
-      this.label3.Text = "Nach jedem Import die Log-Datei prüfen!";
+      this.btnKurseZuweisen.Location = new System.Drawing.Point(15, 197);
+      this.btnKurseZuweisen.Name = "btnKurseZuweisen";
+      this.btnKurseZuweisen.Size = new System.Drawing.Size(163, 23);
+      this.btnKurseZuweisen.TabIndex = 10;
+      this.btnKurseZuweisen.Text = "Kurse neu zuweisen";
+      this.btnKurseZuweisen.UseVisualStyleBackColor = true;
+      this.btnKurseZuweisen.Click += new System.EventHandler(this.btnKurseZuweisen_Click);
       // 
       // UserControlAdministration
       // 
@@ -720,5 +732,6 @@
     private System.Windows.Forms.Button btnSeStatistik;
     private System.Windows.Forms.Button btnWPF;
     private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.Button btnKurseZuweisen;
   }
 }

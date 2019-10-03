@@ -269,6 +269,11 @@ namespace diNo
       get { return data; }
     }
 
+    public string Kurzbezeichnung
+    {
+      get { return data.Kurzbez; }
+    }
+
     /// <summary>
     /// Die Liste der Schüler dieser Kurses (sortiert via SQL)
     /// </summary>

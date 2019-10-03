@@ -39,33 +39,37 @@ namespace diNo
         throw new InvalidOperationException("kein Sheet mit dem Namen \"Tabelle1\" gefunden");
       }
       int lastRow = sheet.get_Range("A" + sheet.Rows.Count, "B" + sheet.Rows.Count).get_End(Excel.XlDirection.xlUp).Row;
+      string lastFach = "";
+      int nextKursId=9001; // für automatisch generierte U-Nr bei Kursen ohne ID
       for (int zeile = 5; zeile <= lastRow; zeile++)
       {
-        string kursId = ReadValue(sheet, "A" + zeile);
+        string kursIdStr = ReadValue(sheet, "A" + zeile);
         string lehrer = ReadValue(sheet, "E" + zeile);
         string fach = ReadValue(sheet, "F" + zeile);
         string klassenString = ReadValue(sheet, "G" + zeile);
+        int kursId;
 
         if (string.IsNullOrEmpty(lehrer))
         {
           log.Debug("Unterricht Ohne Lehrer wird ignoriert in Zeile " + zeile);
           continue;
         }
+        lehrer = lehrer.Trim(new char[] { '.' });
         if (string.IsNullOrEmpty(fach))
         {
           log.Debug("Unterricht Ohne Fach wird ignoriert in Zeile " + zeile);
           continue;
         }
-        if (new string[] { "SSl", "SNT", "SWi", "KL", "AWU", "Me" , "SL", "SF", "Fahrt", "ChÜ", "Proj", "Media", "PP_FA" , "Prak", "Proj" }.Contains(fach))
+        if (new string[] { "SSL", "SNT", "SWI", "KL", "AWU", "ME" , "SL", "SF", "TEAM", "FAHRT", "MEDIA", "PP_FA" ,  "PROJ" }.Contains(fach.ToUpper()))
         {
           log.Debug("Ignoriere Fach " + fach);
           continue;
         }
 
         bool weiter = false;
-        foreach (var substr in new string[] { "FPU", "FPA", "FPB", "PFV", "-Fö", "GK_", "_Ü" })
+        foreach (var substr in new string[] { "FPU", "FPA", "FPB", "FBB", "FPV", "-Fö", "GK_", "GK-", "_Ü" , "-Ü" , "CHÜ", "PRAK" })
         {
-          if (fach.Contains(substr))
+          if (fach.ToUpper().Contains(substr))
           {
             log.Debug("Ignoriere Fach " + fach);
             weiter = true;
@@ -81,13 +85,15 @@ namespace diNo
         }
 
         var dbFach = FindOrCreateFach(fach);
-        if (string.IsNullOrEmpty(dbFach.Bezeichnung.Trim()))
+        /* sonst werden neue Fächer nie verwendet...
+         
+        if (dbFach == null || string.IsNullOrEmpty(dbFach.Bezeichnung.Trim()))
         {
-          log.Debug("Ignoriere Ignoriere Fach ohne Namen : Kürzel " + dbFach.Kuerzel);
+          log.Debug("Ignoriere Fach ohne Datenbankeintrag: " + fach);
           continue;
-        }
+        }*/
 
-        if (dbFach.Typ == (byte)FachTyp.OhneNoten)
+        if (dbFach.Typ == (byte)FachTyp.OhneNoten) // nur in der DB bereits registrierte Fächer 
         {
           log.Debug("Ignoriere Fach, in welchem keine Noten gemacht werden: Kürzel " + dbFach.Kuerzel);
           continue;
@@ -100,10 +106,23 @@ namespace diNo
           continue;
         }
 
-        if (string.IsNullOrEmpty(kursId))
+        if (string.IsNullOrEmpty(kursIdStr))
         {
-          log.Error("Kurs ohne ID kann nicht angelegt werden: " + fach + " " + klassenString);
-          continue;
+          if (lastFach != fach) // i.d.R. Klassenteilung (z.B. Reli, WPF, etc.) ohne eigene U-Nr
+          {
+            kursId = nextKursId;
+            nextKursId++;
+            log.Debug("Kursteilung mit unterschiedlichem Fach wird mit angelegt: ID=" + kursId +" Fach "+ fach + " " + klassenString);
+          }
+          else
+          {
+            log.Debug("Kursteilung mit selbem Fach wird nicht angelegt: " + fach + " " + klassenString);
+            continue;
+          }
+        }
+        else
+        {
+          kursId = int.Parse(kursIdStr);
         }
 
         var klassen = klassenString.Split(',');
@@ -115,17 +134,18 @@ namespace diNo
         bool isWPF = dbFach.Typ == (byte)FachTyp.WPF;
         string bezeichnung = isWPF ? fach : dbFach.Bezeichnung.Trim() + " " + klassenString;
         if (!CreateKurs(kursId, bezeichnung, dblehrer.Id, fach, zweig, isWPF)) continue;
-        int kursid = int.Parse(kursId);
+        
         foreach (var klasseKvp in unterschiedlicheKlassen)
         {          
           // nur die eigentliche Klasse als Klasse erzeugen, nicht die Klassenteile
           var dbKlasse = FindOrCreateKlasse(klasseKvp.Key, true);
 
-          if (klasseKursAdapter.ScalarQueryCountByKlasseAndKurs(dbKlasse.Id, kursid) == 0)
+          if (klasseKursAdapter.ScalarQueryCountByKlasseAndKurs(dbKlasse.Id, kursId) == 0)
           {
-            klasseKursAdapter.Insert(dbKlasse.Id, kursid);
+            klasseKursAdapter.Insert(dbKlasse.Id, kursId);
           }          
         }
+        lastFach = fach;
       }
 
       workbook.Close(false, fileName, Type.Missing);
@@ -214,12 +234,11 @@ namespace diNo
     /// <param name="aFach">Das Fach.</param>
     /// <param name="aZweig">Der Zweig, für welchen der Kurs gilt.</param>
     /// <returns>Kurs wurde neu angelegt</returns>
-    public static bool CreateKurs(string kursId, string aKursBezeichung, int aLehrerId, string aFach, string aZweig, bool isWPF)
+    public static bool CreateKurs(int kursid, string aKursBezeichung, int aLehrerId, string aFach, string aZweig, bool isWPF)
     {
       using (var kursAdapter = new KursTableAdapter())
       {
-        // suche den Kurs in der Datenbank. Wenn neu => anlegen
-        int kursid = int.Parse(kursId);
+        // suche den Kurs in der Datenbank. Wenn neu => anlegen        
         diNoDataSet.KursDataTable kurse;
         if (isWPF)
           kurse = kursAdapter.GetDataById(kursid); // WPF gibt es immer nur 1x in der Liste (ID ist eindeutig)
@@ -296,27 +315,17 @@ namespace diNo
     /// <returns>Die Zeile des Faches in der Datenbank.</returns>
     public static diNoDataSet.FachRow FindOrCreateFach(string aFach)
     {
+      string fachOhneZahl = aFach.Trim(new char[] { '1','2','3','4','5','6','7','8','9','0','_' });
       using (var fachAdapter = new FachTableAdapter())
       {
-        var faecher = fachAdapter.GetDataByKuerzel(aFach);
+        var faecher = fachAdapter.GetDataByKuerzel(fachOhneZahl);
         if (faecher.Count == 0)
         {
-          // letzter Versuch: Ist am Ende eine Zahl versuche es mal ohne diese Zahl
-          if (char.IsNumber(aFach.Last()))
-          {
-            string fachOhneZahl = aFach.Substring(0, aFach.Length - 1);
-            faecher = fachAdapter.GetDataByKuerzel(fachOhneZahl);
-          }
-
-          if (faecher.Count == 0)
-          {
-            // wenn so auch nicht gefunden, dann neu anlegen
-            // Fach voller Name muss in der Datenbank angepasst werden
-            new FachTableAdapter().Insert("", aFach, 999, 9, null, false,0);
-            faecher = new FachTableAdapter().GetDataByKuerzel(aFach);
-          }
+          // wenn so nicht gefunden, dann neu anlegen
+          // Fach voller Name muss in der Datenbank angepasst werden
+          new FachTableAdapter().Insert(fachOhneZahl, fachOhneZahl, 999, 0, null, false,0);
+          faecher = new FachTableAdapter().GetDataByKuerzel(fachOhneZahl);
         }
-
         return faecher[0];
       }
     }

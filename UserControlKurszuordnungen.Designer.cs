@@ -32,10 +32,12 @@
       this.label3 = new System.Windows.Forms.Label();
       this.objectListView1 = new BrightIdeasSoftware.ObjectListView();
       this.olvColumnCurrentId = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-      this.olvColumnCurrentBezeichnung = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.olvColumnKurzbezeichnung = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.olvColumnBezeichnung = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.objectListView2 = new BrightIdeasSoftware.ObjectListView();
       this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.textBoxWahlpflichtfach = new System.Windows.Forms.TextBox();
       this.label1 = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
@@ -43,8 +45,6 @@
       this.label5 = new System.Windows.Forms.Label();
       this.textBoxReliOderEthik = new System.Windows.Forms.TextBox();
       this.label6 = new System.Windows.Forms.Label();
-      this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-      this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       ((System.ComponentModel.ISupportInitialize)(this.objectListView1)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.objectListView2)).BeginInit();
       this.SuspendLayout();
@@ -70,12 +70,12 @@
       // objectListView1
       // 
       this.objectListView1.AllColumns.Add(this.olvColumnCurrentId);
-      this.objectListView1.AllColumns.Add(this.olvColumnCurrentBezeichnung);
-      this.objectListView1.AllColumns.Add(this.olvColumn4);
+      this.objectListView1.AllColumns.Add(this.olvColumnKurzbezeichnung);
+      this.objectListView1.AllColumns.Add(this.olvColumnBezeichnung);
       this.objectListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnCurrentId,
-            this.olvColumnCurrentBezeichnung,
-            this.olvColumn4});
+            this.olvColumnKurzbezeichnung,
+            this.olvColumnBezeichnung});
       this.objectListView1.Location = new System.Drawing.Point(20, 68);
       this.objectListView1.Name = "objectListView1";
       this.objectListView1.Size = new System.Drawing.Size(271, 270);
@@ -90,14 +90,21 @@
       this.olvColumnCurrentId.Groupable = false;
       this.olvColumnCurrentId.IsEditable = false;
       this.olvColumnCurrentId.Text = "Id";
+      this.olvColumnCurrentId.Width = 50;
       // 
-      // olvColumnCurrentBezeichnung
+      // olvColumnKurzbezeichnung
       // 
-      this.olvColumnCurrentBezeichnung.AspectName = "FachBezeichnung";
-      this.olvColumnCurrentBezeichnung.Groupable = false;
-      this.olvColumnCurrentBezeichnung.IsEditable = false;
-      this.olvColumnCurrentBezeichnung.Text = "Bezeichnung";
-      this.olvColumnCurrentBezeichnung.Width = 145;
+      this.olvColumnKurzbezeichnung.AspectName = "Kurzbezeichnung";
+      this.olvColumnKurzbezeichnung.Groupable = false;
+      this.olvColumnKurzbezeichnung.IsEditable = false;
+      this.olvColumnKurzbezeichnung.Text = "Kürzel";
+      this.olvColumnKurzbezeichnung.Width = 85;
+      // 
+      // olvColumnBezeichnung
+      // 
+      this.olvColumnBezeichnung.AspectName = "Kursbezeichnung";
+      this.olvColumnBezeichnung.Text = "Bezeichnung";
+      this.olvColumnBezeichnung.Width = 250;
       // 
       // objectListView2
       // 
@@ -122,14 +129,21 @@
       this.olvColumn1.Groupable = false;
       this.olvColumn1.IsEditable = false;
       this.olvColumn1.Text = "Id";
+      this.olvColumn1.Width = 50;
       // 
       // olvColumn2
       // 
-      this.olvColumn2.AspectName = "FachBezeichnung";
+      this.olvColumn2.AspectName = "Kurzbezeichnung";
       this.olvColumn2.Groupable = false;
       this.olvColumn2.IsEditable = false;
-      this.olvColumn2.Text = "Bezeichnung";
-      this.olvColumn2.Width = 145;
+      this.olvColumn2.Text = "Kürzel";
+      this.olvColumn2.Width = 85;
+      // 
+      // olvColumn3
+      // 
+      this.olvColumn3.AspectName = "Kursbezeichnung";
+      this.olvColumn3.Text = "Bezeichnung";
+      this.olvColumn3.Width = 250;
       // 
       // textBoxWahlpflichtfach
       // 
@@ -192,16 +206,6 @@
       this.label6.TabIndex = 12;
       this.label6.Text = "Um Kurse hinzuzufügen oder wegzunehmen auf die Kursnummer doppelclicken";
       // 
-      // olvColumn3
-      // 
-      this.olvColumn3.AspectName = "Kursbezeichnung";
-      this.olvColumn3.Text = "Bezeichnung2";
-      // 
-      // olvColumn4
-      // 
-      this.olvColumn4.AspectName = "Kursbezeichnung";
-      this.olvColumn4.Text = "Bezeichnung2";
-      // 
       // UserControlKurszuordnungen
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -232,7 +236,7 @@
     private System.Windows.Forms.Label label3;
     private BrightIdeasSoftware.ObjectListView objectListView1;
     private BrightIdeasSoftware.OLVColumn olvColumnCurrentId;
-    private BrightIdeasSoftware.OLVColumn olvColumnCurrentBezeichnung;
+    private BrightIdeasSoftware.OLVColumn olvColumnKurzbezeichnung;
     private BrightIdeasSoftware.ObjectListView objectListView2;
     private BrightIdeasSoftware.OLVColumn olvColumn1;
     private BrightIdeasSoftware.OLVColumn olvColumn2;
@@ -244,6 +248,6 @@
     private System.Windows.Forms.TextBox textBoxReliOderEthik;
     private System.Windows.Forms.Label label6;
     private BrightIdeasSoftware.OLVColumn olvColumn3;
-    private BrightIdeasSoftware.OLVColumn olvColumn4;
+    private BrightIdeasSoftware.OLVColumn olvColumnBezeichnung;
   }
 }

@@ -50,6 +50,7 @@
       this.label4 = new System.Windows.Forms.Label();
       this.cbFach = new System.Windows.Forms.ComboBox();
       this.checkedListBoxKlassen = new System.Windows.Forms.CheckedListBox();
+      this.textBox1 = new System.Windows.Forms.TextBox();
       this.gbGeschlecht.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -272,11 +273,25 @@
       this.checkedListBoxKlassen.Size = new System.Drawing.Size(214, 124);
       this.checkedListBoxKlassen.TabIndex = 36;
       // 
+      // textBox1
+      // 
+      this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.textBox1.Location = new System.Drawing.Point(553, 316);
+      this.textBox1.Multiline = true;
+      this.textBox1.Name = "textBox1";
+      this.textBox1.ReadOnly = true;
+      this.textBox1.Size = new System.Drawing.Size(154, 124);
+      this.textBox1.TabIndex = 38;
+      this.textBox1.Text = "Wenn die Klassenzuordnung geändert wird, werden die Schüler nicht automatisch in " +
+    "diesen Kurse angemeldet. Verwende dazu den Befehl unter Administration/Reparatur" +
+    "en.";
+      // 
       // KurseForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(746, 524);
+      this.Controls.Add(this.textBox1);
       this.Controls.Add(this.checkedListBoxKlassen);
       this.Controls.Add(this.label4);
       this.Controls.Add(this.cbFach);
@@ -326,5 +341,6 @@
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.ComboBox cbFach;
     private System.Windows.Forms.CheckedListBox checkedListBoxKlassen;
+    private System.Windows.Forms.TextBox textBox1;
   }
 }

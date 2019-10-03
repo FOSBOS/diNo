@@ -253,12 +253,14 @@ namespace diNo
 
     private void btnHjLeistungenWuerfeln_Click(object sender, EventArgs e)
     {
+      Cursor = Cursors.WaitCursor;
       var t = new Testdaten();
       var obj = getSelectedObjects();
       foreach (var s in obj)
         t.ZufallHjLeistung(s);
 
       Zugriff.Instance.SchuelerRep.Clear();
+      Cursor = Cursors.Default;
     }
 
     private void btnEinbringung_Click(object sender, EventArgs e)
@@ -370,6 +372,18 @@ namespace diNo
       }
       if (liste.Count == 0) MessageBox.Show("Alles in Ordnung.", "diNo", MessageBoxButtons.OK);
       else new ReportSchuelerdruck(liste, Bericht.Klassenliste).Show();
+    }
+
+    private void btnKurseZuweisen_Click(object sender, EventArgs e)
+    {
+      if (MessageBox.Show("Achtung: Alle Kurszuordnungen der Schüler werden gemäß den Kursdaten neu erstellt. Wahlpflichtfachzuordnungen gehen verloren.", "diNo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel) return;
+      Cursor = Cursors.WaitCursor;
+      foreach (Klasse k in Zugriff.Instance.Klassen)
+      {
+        foreach (Schueler s in k.eigeneSchueler)
+          s.WechsleKlasse(k);
+      }
+      Cursor = Cursors.Default;
     }
   }
 }
