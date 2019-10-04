@@ -54,13 +54,13 @@ namespace diNo
           log.Debug("Unterricht Ohne Lehrer wird ignoriert in Zeile " + zeile);
           continue;
         }
-        lehrer = lehrer.Trim(new char[] { '.' });
+        //lehrer = lehrer.Trim(new char[] { '.' });
         if (string.IsNullOrEmpty(fach))
         {
           log.Debug("Unterricht Ohne Fach wird ignoriert in Zeile " + zeile);
           continue;
         }
-        if (new string[] { "SSL", "SNT", "SWI", "KL", "AWU", "ME" , "SL", "SF", "TEAM", "FAHRT", "MEDIA", "PP_FA" ,  "PROJ" }.Contains(fach.ToUpper()))
+        if (new string[] { "SSL", "SNT", "SWI", "KL", "AWU", "ME" ,"PR", "SL", "SF", "TEAM", "FAHRT", "MEDIA", "PP_FA" ,  "PROJ" }.Contains(fach.ToUpper()))
         {
           log.Debug("Ignoriere Fach " + fach);
           continue;
