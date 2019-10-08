@@ -165,7 +165,6 @@
       // 
       // edId
       // 
-      this.edId.Enabled = false;
       this.edId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.edId.Location = new System.Drawing.Point(319, 279);
       this.edId.Name = "edId";
