@@ -5,12 +5,14 @@ using System.Text;
 using diNo.diNoDataSetTableAdapters;
 using System.Windows.Forms;
 using System.Configuration;
+using log4net;
 
 namespace diNo
 {
   public class Zugriff
   {
     private static Zugriff _Instance = null;
+    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
     public string Username { get; private set; }
     public Lehrer lehrer = null; // angemeldeter Lehrer
@@ -67,9 +69,10 @@ namespace diNo
         }
 
         Username = Username.ToLower();
-        Username = Username.Replace("fosbos\\", "");
-        Username = Username.Replace("vw\\", "");
+        int pos = Username.IndexOf("\\"); // Domänennamen abschneiden     
+        Username = Username.Remove(0,pos+1);
 
+        log.Debug("Anmeldeversuch mit Benutzer=" + Username);
         var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
         if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
         else
@@ -80,11 +83,14 @@ namespace diNo
         }
         SiehtAlles = (this.lehrer.HatRolle(Rolle.Admin) || this.lehrer.HatRolle(Rolle.Sekretariat) || this.lehrer.HatRolle(Rolle.Schulleitung));
         HatVerwaltungsrechte = lehrer.HatRolle(Rolle.Admin) || lehrer.HatRolle(Rolle.Sekretariat);
-
+        log.Debug("Anmeldung fertig.");
         // LoadSchueler(); erst in Klassenansicht, wegen Parameter nurAktive
         LoadFaecher();
+        log.Debug("Fächer geladen.");
         LoadLehrer();
+        log.Debug("Lehrer geladen.");
         LoadGlobaleKonstanten();
+        log.Debug("Globales geladen.");
       }
       catch (Exception e)
       {
@@ -124,7 +130,8 @@ namespace diNo
     }
    
     public void LoadSchueler(bool nurAktive=true)
-    {            
+    {
+      log.Debug("Schüler werden geladen.");
       diNoDataSet.SchuelerDataTable sListe;
       int NotStatus = nurAktive?1:255; // Status=1 bedeutet abgemeldet,
 
@@ -137,6 +144,7 @@ namespace diNo
         sListe = ta.GetDataByLehrerIdFPASem(NotStatus,lehrer.Id); // Lehrer mit erweiterten Rollen
 
       AnzahlSchueler = sListe.Count;
+      log.Debug(AnzahlSchueler + " Schüler gefunden.");
       foreach (var sRow in sListe)
       {
         Klasse k;
@@ -164,6 +172,7 @@ namespace diNo
         klasse.eigeneSchueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
         if (klasse.KlassenleiterId == lehrer.Id) eigeneKlasse = klasse;
       }
+      log.Debug("Schüler geladen.");
     }
 
     private void LoadFaecher()
