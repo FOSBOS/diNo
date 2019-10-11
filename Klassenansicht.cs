@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,9 +12,11 @@ namespace diNo
     private Schueler schueler=null;
     private SchuelerverwaltungController verwaltungController;
     private Brief frmBrief=null;
+    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
     public Klassenansicht()
     {
+      log.Debug("Starte Klassenansicht.");
       InitializeComponent();
       this.olvColumnBezeichnung.AspectGetter = KlassenTreeViewController.SelectValueCol1;
 
@@ -33,7 +36,8 @@ namespace diNo
         tabControl1.Controls.Remove(tabPageSekretariat);
       }
 
-      lbTest.Visible = Zugriff.Instance.IsTestDB;
+      lbTest.Visible = Zugriff.Instance.IsTestDB;    
+      log.Debug("Klassenansicht fertig.");
     }
 
     public void RefreshTabs()

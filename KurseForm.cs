@@ -93,6 +93,7 @@ namespace diNo
         else if (opMaennlich.Checked) q.Data.Geschlecht = "M";
         else q.Data.Geschlecht = "W";
 
+        q.Data.Id = int.Parse(edId.Text);
         q.Data.LehrerId = (int)cbLehrer.SelectedValue;
         q.Data.FachId = (int)cbFach.SelectedValue;
         q.SetLehrerNull();

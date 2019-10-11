@@ -682,7 +682,7 @@ namespace diNo
     {
       string kuerzel = k.getFach.Kuerzel;
       if (k.Data.IsZweigNull()) return true;
-      if (k.Data.Zweig == "F" || k.Data.Zweig == "B")
+      if (k.Data.Zweig == "F" || k.Data.Zweig == "B") // Zweckentfremdung für BOS oder FOS-Kurs bei FB-Mischklassen
       {
         if (Data.IsSchulartNull()) return true;
         return k.Data.Zweig == Data.Schulart;
@@ -717,12 +717,14 @@ namespace diNo
 
       // Ku ist bei uns immer Pflichtfach
       if (kuerzel == "K" || kuerzel == "Ev" || kuerzel == "Eth") return (kuerzel == reli);
+      /* obsolet mit WPF
       else if (kuerzel == "F") return !Data.IsFremdsprache2Null() && (kuerzel == Data.Fremdsprache2);
       else if (kuerzel == "F-Wi" && Data.Wahlpflichtfach == "F-Wi") return true;
       // die Wirtschaftler gehen in Wirtschaftsinformatik, sofern sie nicht franz. fortgeführt als wahlpflichtfach haben
       else if (kuerzel == "WIn" && Zweig == Zweig.Wirtschaft && (Data.IsWahlpflichtfachNull() || Data.Wahlpflichtfach != "F-Wi")) return true; // Standardfall (oft unbelegt)
       // alle anderen Zweige müssen den Franz. oder WInf Kurs schon wählen, damit sie reingehen
       else if (kuerzel == "F-Wi" || kuerzel == "WIn") return (kuerzel == Data.Wahlpflichtfach);
+      */
       else return KursPasstZumZweig(k);
   }
 
