@@ -146,7 +146,11 @@ namespace diNo.Xml
       xmlSchueler.grunddaten.ausgetreten_am = unserSchueler.Data.IsAustrittsdatumNull() ? "" : unserSchueler.Data.Austrittsdatum.ToString("dd.mm.yyyy");
       xmlSchueler.grunddaten.pz_bestanden = unserSchueler.hatVorkommnis(Vorkommnisart.ProbezeitNichtBestanden) ? grunddatenPz_bestanden.nein : grunddatenPz_bestanden.ja;
       xmlSchueler.grunddaten.pz_bestandenSpecified = true;
-      xmlSchueler.grunddaten.jgst_bestanden = unserSchueler.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis) ? grunddatenJgst_bestanden.nein : grunddatenJgst_bestanden.ja;
+      xmlSchueler.grunddaten.jgst_bestanden = grunddatenJgst_bestanden.ja;
+      if (unserSchueler.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis) || unserSchueler.hatVorkommnis(Vorkommnisart.NichtBestanden) || unserSchueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen) || unserSchueler.hatVorkommnis(Vorkommnisart.nichtBestandenMAPnichtZugelassen))
+      {
+        xmlSchueler.grunddaten.jgst_bestanden = grunddatenJgst_bestanden.nein;
+      }
     }
   }
 }
