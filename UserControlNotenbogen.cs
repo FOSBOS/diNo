@@ -72,6 +72,7 @@ namespace diNo
         dataGridNoten.Rows.Add();
         dataGridNoten.Rows[lineCount].Height += 2;
         dataGridNoten.Rows[lineCount].Cells[0].Value = fach.getFach.Bezeichnung;
+        dataGridNoten.Rows[lineCount].Tag = fach.getFach;
 
         if (show11)
         {
@@ -260,7 +261,25 @@ namespace diNo
     private void dataGridNoten_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
       var c = dataGridNoten.Rows[e.RowIndex].Cells[e.ColumnIndex];
-      if (c.Tag!=null)
+      if (c.Tag==null)
+      {
+        HjArt art;
+        switch (e.ColumnIndex)
+        {
+          case 1:
+          case 7: art = HjArt.Hj1; break;
+          case 2:
+          case 12: art = HjArt.Hj2; break;
+          case 15: art = HjArt.AP; break;
+          case 16: art = HjArt.JN; break;
+          default: return;
+        }
+        Jahrgangsstufe jg = (e.ColumnIndex < 3 ? Jahrgangsstufe.Elf : schueler.getKlasse.Jahrgangsstufe);
+        HjLeistung hj = new HjLeistung(schueler.Id, (Fach)dataGridNoten.Rows[e.RowIndex].Tag, art, jg);
+        EditHjLeistung(hj);
+        schueler.ReloadNoten();
+      }
+      else        
         EditHjLeistung((HjLeistung)c.Tag);
       Init();
     }

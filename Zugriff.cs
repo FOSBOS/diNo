@@ -63,7 +63,7 @@ namespace diNo
         {
           Username = "FOSBOS\\msiegel";
         }
-        if (Username == "ClausPC\\Claus")
+        if (Username == "CLAUSPC\\Claus")
         {
           Username = "FOSBOS\\ckonrad";
         }

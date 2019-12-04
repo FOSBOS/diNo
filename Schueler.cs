@@ -413,9 +413,13 @@ namespace diNo
         {
           noten = new SchuelerNoten(this);
         }
-
         return noten;
-      }
+      }      
+    }
+
+    public void ReloadNoten()
+    {
+      noten = null;
     }
 
     public List<HjLeistung> Fachreferat

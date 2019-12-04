@@ -302,7 +302,7 @@ namespace diNo
         if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
         {
           // Prüfungsfächer BOS12 und und SA-Fächer Vorklassen: zur Probezeit muss eine SA vorliegen und eine weitere Note
-          if ((istSAPFach && noetigeAnzahlSchulaufgaben == 1) || noetigeAnzahlSchulaufgaben > 1)
+          if ((istSAPFach && noetigeAnzahlSchulaufgaben == 1 && schueler.getKlasse.Jahrgangsstufe < Jahrgangsstufe.Dreizehn) || noetigeAnzahlSchulaufgaben > 1)
           {
             if (schulaufgabenCount == 0)
               contr.Add(kurs, toText(schulaufgabenCount, "", "Schulaufgabe", hj));
