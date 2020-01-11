@@ -40,15 +40,15 @@ namespace diNo
             foreach (HjArt hjArt in new[] { HjArt.Hj1, HjArt.Hj2 })
             {
               HjLeistung note=null;
-              if (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
-                note = fachNoten.getHjLeistung(hjArt);
+              if (fachNoten.getFach.getKursniveau()==Kursniveau.Fortg || schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
+                note = fachNoten.getHjLeistung(hjArt); // 11. Klasse oder F-f
               else if(schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
-                note = fachNoten.getVorHjLeistung(hjArt);
+                note = fachNoten.getVorHjLeistung(hjArt); // für die Wiederholer
               
-              if (note != null)
+              if (note != null && note.Status!=HjStatus.Ungueltig)
               {
                 // Erzeugt eine Zeile mit 9 durch ; getrennten Werten
-                writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + note.getFach.Kuerzel + Separator + (int)note.JgStufe + Separator + note.Punkte + Separator + note.Punkte2Dez + Separator + note.SchnittMdl + Separator + (byte)note.Art + Separator + (byte)note.Status);
+                writer.WriteLine(schueler.Id + Separator + schueler.NameVorname + Separator + note.getFach.Kuerzel + Separator + (int)note.JgStufe + Separator + note.Punkte + Separator + note.Punkte2Dez + Separator + note.SchnittMdl + Separator + (byte)note.Art + Separator + (byte)HjStatus.None);
               }
             }
           }
