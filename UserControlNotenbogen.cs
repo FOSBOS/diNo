@@ -62,7 +62,7 @@ namespace diNo
       }
 
       // Hj-Leistungen aus 11/1 und 11/2 anzeigen?
-      bool show11 = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf && schueler.Data.Schulart == "F";
+      bool show11 = schueler.hatVorHj;
       dataGridNoten.Columns[1].Visible = show11;
       dataGridNoten.Columns[2].Visible = show11;
 
