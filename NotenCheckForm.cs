@@ -30,7 +30,8 @@ namespace diNo
       NotenCheckModusDict.Add(NotenCheckModus.Gesamtpruefung,"Gesamtprüfung");
       if (Zugriff.Instance.lehrer.HatRolle(Rolle.Admin))
       {
-        NotenCheckModusDict.Add(NotenCheckModus.KonferenzVorbereiten,"Konferenz vorbereiten");        
+        NotenCheckModusDict.Add(NotenCheckModus.KonferenzVorbereiten,"Konferenz vorbereiten");
+        NotenCheckModusDict.Add(NotenCheckModus.Protokolle, "Protokolle Klassenkonferenz");
       }   
       comboBoxCheckModus.BeginUpdate();
       comboBoxCheckModus.DataSource = NotenCheckModusDict.ToList();

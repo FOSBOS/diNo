@@ -103,9 +103,9 @@ namespace diNo
         zeitpunkt == Zeitpunkt.ProbezeitBOS ||
         k.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf && zeitpunkt <= Zeitpunkt.DrittePA ||
         k.Jahrgangsstufe < Jahrgangsstufe.Zwoelf && zeitpunkt == Zeitpunkt.Jahresende)
-      {
-        zuPruefendeKlassen.Add(k);
-        AnzahlSchueler += k.eigeneSchueler.Count;
+      {        
+          zuPruefendeKlassen.Add(k);
+          AnzahlSchueler += k.eigeneSchueler.Count;       
       }
     }
 
@@ -281,7 +281,7 @@ namespace diNo
       if (res.list.Count == 0)
         MessageBox.Show("Es traten keine Fehler auf.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       else
-        new ReportNotencheck(res).Show();
+        new ReportNotencheck(res, modus == NotenCheckModus.Protokolle).Show();
     }
   }
 
@@ -304,6 +304,7 @@ namespace diNo
     public class NotenCheckResult
     {
         public string schueler  { get; private set; }
+        public int klassenId { get; private set; }
         public string klasse { get; private set; } 
         public string lehrer { get; private set; } 
         public string fach { get; private set; } 
@@ -311,20 +312,22 @@ namespace diNo
 
         public NotenCheckResult(Schueler s,Kurs k,string m)
         {
-            schueler = s.NameVorname;
-            klasse = s.getKlasse.Data.Bezeichnung;
-            lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
-            fach =   k!=null ? k.getFach.Kuerzel : "";
-            meldung = m;
+          schueler = s.NameVorname;
+          klassenId = s.getKlasse.Data.Id;
+          klasse = s.getKlasse.Data.Bezeichnung;
+          lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
+          fach =   k!=null ? k.getFach.Kuerzel : "";
+          meldung = m;
         }
 
         public NotenCheckResult(Klasse kl,Kurs k,string m)
         {
-            schueler = "...mehrmals...";
-            klasse = kl.Data.Bezeichnung;
-            lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
-            fach =   k!=null ? k.getFach.Kuerzel : "";
-            meldung = m;
+          schueler = "...mehrmals...";
+          klassenId = kl.Data.Id;
+          klasse = kl.Data.Bezeichnung;
+          lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
+          fach =   k!=null ? k.getFach.Kuerzel : "";
+          meldung = m;
         }
 
         public override string ToString()
@@ -370,6 +373,7 @@ namespace diNo
       EigeneNotenVollstaendigkeit,
       EigeneKlasse, // nur für Klassenleiter
       Gesamtpruefung,
-      KonferenzVorbereiten  // nur Admin
+      KonferenzVorbereiten,  // nur Admin
+      Protokolle
      }
   }

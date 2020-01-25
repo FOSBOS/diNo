@@ -311,6 +311,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="subrptAbiLinkeSeite.rdlc" />
     <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />
+    <EmbeddedResource Include="subrptLehrerDerKlasse.rdlc" />
     <EmbeddedResource Include="subrptPunktesummeNB.rdlc" />
     <EmbeddedResource Include="subrptPunktesumme.rdlc" />
     <EmbeddedResource Include="subrptEinbringung.rdlc" />
@@ -409,6 +410,7 @@
     <None Include="Properties\DataSources\FachSchuelerNotenZeugnisDruck.datasource" />
     <None Include="Properties\DataSources\FPADruck.datasource" />
     <None Include="Properties\DataSources\Klasse.datasource" />
+    <None Include="Properties\DataSources\LehrerDerKlasseDruck.datasource" />
     <None Include="Properties\DataSources\LehrerRolleDruck.datasource" />
     <None Include="Properties\DataSources\NotenAbiDruck.datasource" />
     <None Include="Properties\DataSources\NotenbogenDruck.datasource" />

@@ -787,6 +787,32 @@ namespace diNo
       return liste;
     }
   }
+
+  public class LehrerDerKlasseDruck
+  {    
+    public string LehrerName { get; private set; }
+    public string FachBez { get; private set; }
+
+    public LehrerDerKlasseDruck(string lehrer, string fach)
+    {
+      FachBez = fach;
+      LehrerName = lehrer;
+    }
+
+    public static List<LehrerDerKlasseDruck> CreateLehrerDerKlasseDruck(int klassenId)
+    {
+      List<LehrerDerKlasseDruck> liste = new List<LehrerDerKlasseDruck>();
+      Klasse klasse = Zugriff.Instance.KlassenRep.Find(klassenId);
+
+      foreach (var k in klasse.Kurse)
+      {
+        Fach f = k.getFach;
+        if ((f.Typ == FachTyp.Allgemein && f.Kuerzel != "K" && f.Kuerzel != "Ev" && f.Kuerzel != "Eth" )  || f.Typ == FachTyp.Profilfach)
+          liste.Add(new LehrerDerKlasseDruck(k.getLehrer.Name, k.getFach.Bezeichnung));
+      }
+      return liste;
+    }
+  }
 }
   
 

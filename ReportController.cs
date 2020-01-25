@@ -36,21 +36,40 @@ namespace diNo
       }            
     }
 
-    public class ReportNotencheck : ReportController
+  public class ReportNotencheck : ReportController
+  {
+    private NotenCheckResults bindingDataSource;
+    private bool IsProtokolle;
+    public ReportNotencheck(NotenCheckResults dataSource, bool aProtokolle) : base()
     {
-      private NotenCheckResults bindingDataSource;
-      public ReportNotencheck(NotenCheckResults dataSource) : base()
-      {
-        bindingDataSource = dataSource;
-      }
+      bindingDataSource = dataSource;
+      IsProtokolle = aProtokolle;
+    }
 
-      public override void Init()
-      {            
-        rpt.BerichtBindingSource.DataSource = bindingDataSource.list;
-        rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenCheck.rdlc";            
+    public override void Init()
+    {
+      rpt.BerichtBindingSource.DataSource = bindingDataSource.list;
+      if (IsProtokolle)
+      {
+        rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptKlassenkonferenz.rdlc";
+        rpt.reportViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(subrptEventHandler);
+      }
+      else
+        rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenCheck.rdlc";
+    }
+
+    void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
+    {
+      // ACHTUNG: Der Parameter muss im Haupt- und im Unterbericht definiert werden (mit gleichem Namen)      ;
+      int klassenId;
+      int.TryParse(e.Parameters[0].Values[0], out klassenId);
+      if (klassenId > 0)
+      {
+        IList<LehrerDerKlasseDruck> lehrer = LehrerDerKlasseDruck.CreateLehrerDerKlasseDruck(klassenId);
+        e.DataSources.Add(new ReportDataSource("DataSet1", lehrer));
       }
     }
-  
+  }
   
   // kann diverse Schüler-/Notenberichte drucken, die Grunddaten sind jeweils eine Schülerliste  
   public class ReportSchuelerdruck : ReportController
