@@ -16,11 +16,12 @@ namespace diNo
 {
   public partial class NotenCheckForm : BasisForm
   {
-    private Dictionary<NotenCheckModus,string> NotenCheckModusDict;    
-
-    public NotenCheckForm()
+    private Dictionary<NotenCheckModus,string> NotenCheckModusDict;
+    private List<Klasse> SelObj;
+    public NotenCheckForm(List<Klasse> obj)
     {
       InitializeComponent();
+      SelObj = obj;
       lbStatus.Text = "";
       NotenCheckModusDict = new Dictionary<NotenCheckModus,string>();
       NotenCheckModusDict.Add(NotenCheckModus.EigeneNotenVollstaendigkeit,"eigene Noten vollständig?");
@@ -70,7 +71,7 @@ namespace diNo
 
     private void StarteNotenCheck()
     {                        
-      var contr = new NotenCheckController(GetZeitpunkt(),(NotenCheckModus)comboBoxCheckModus.SelectedValue,progressBarChecks);
+      var contr = new NotenCheckController(GetZeitpunkt(),(NotenCheckModus)comboBoxCheckModus.SelectedValue,progressBarChecks, SelObj);
       progressBarChecks.Maximum = contr.AnzahlSchueler;
       if (contr.zuPruefendeKlassen.Count == 0)
       {

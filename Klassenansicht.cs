@@ -208,7 +208,14 @@ namespace diNo
 
     private void btnCheck_Click(object sender, EventArgs e)
     {
-      var c = new NotenCheckForm();
+      var obj = treeListView1.SelectedObjects;
+      List<Klasse> SelKlassen = new List<Klasse>();
+      if (Zugriff.Instance.HatVerwaltungsrechte && obj.Count > 0 && obj[0] is Klasse)
+      {
+        foreach (Klasse k in obj)
+          SelKlassen.Add(k);
+      }  
+      var c = new NotenCheckForm(SelKlassen);
       c.Show();
       btnPrint.Enabled = btnPrint.Enabled || Zugriff.Instance.HatVerwaltungsrechte;
     }

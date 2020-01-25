@@ -30,7 +30,7 @@ namespace diNo
     private Berechnungen berechnungen = null;
     public int FehlendeBerechnung = 0; // gibt einen Überblick, ob Gesamtergebnisse schon bestimmt sind.
 
-    public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus, ProgressBar aprogressBar)
+    public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus, ProgressBar aprogressBar, List<Klasse> obj)
     {
       zeitpunkt = azeitpunkt;
       modus = amodus;
@@ -38,7 +38,12 @@ namespace diNo
       Zugriff.Instance.markierteSchueler.Clear();
 
       // je nach Modus und Zeitpunkt werden nur bestimmte Klassen ausgewählt
-      if (modus == NotenCheckModus.EigeneKlasse)
+      if (Zugriff.Instance.HatVerwaltungsrechte && obj.Count > 0 && obj[0] is Klasse)
+      {
+        foreach (Klasse k in obj)
+          KlasseInNotenpruefungAufnehmen(k);
+      }
+      else if (modus == NotenCheckModus.EigeneKlasse)
       {
         KlasseInNotenpruefungAufnehmen(Zugriff.Instance.eigeneKlasse);
       }
