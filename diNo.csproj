@@ -294,6 +294,7 @@
       <DependentUpon>ListeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
+    <EmbeddedResource Include="rptKlassenkonferenz.rdlc" />
     <EmbeddedResource Include="rptLehrerRolle.rdlc" />
     <EmbeddedResource Include="rptEinserAbi.rdlc" />
     <EmbeddedResource Include="rptAbiturzeugnis.rdlc" />

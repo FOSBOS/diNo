@@ -57,59 +57,18 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.03409cm</Width>
+                  <Width>1.32513cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>1.26054cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>14.32342cm</Width>
+                  <Width>12.4978cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
                   <Height>0.81167cm</Height>
-                  <TablixCells>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox26">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value />
-                                  <Style>
-                                    <FontSize>16pt</FontSize>
-                                    <FontWeight>SemiBold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox26</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                        <ColSpan>3</ColSpan>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell />
-                    <TablixCell />
-                  </TablixCells>
-                </TablixRow>
-                <TablixRow>
-                  <Height>0.6cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -134,7 +93,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.63968cm</Height>
+                  <Height>0.53385cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -147,7 +106,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!fach.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -178,7 +139,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>=Fields!lehrer.Value</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -210,7 +173,9 @@
                                 <TextRun>
                                   <Value>=Fields!meldung.Value</Value>
                                   <MarkupType>HTML</MarkupType>
-                                  <Style />
+                                  <Style>
+                                    <FontSize>9pt</FontSize>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -247,6 +212,7 @@
                   <Group Name="klasse">
                     <GroupExpressions>
                       <GroupExpression>=Fields!klasse.Value</GroupExpression>
+                      <GroupExpression>=Fields!klassenId.Value</GroupExpression>
                     </GroupExpressions>
                     <PageBreak>
                       <BreakLocation>Between</BreakLocation>
@@ -260,7 +226,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>2.5cm</Size>
+                        <Size>3.05562cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox46">
                             <CanGrow>true</CanGrow>
@@ -298,44 +264,6 @@
                       </TablixMembers>
                     </TablixMember>
                     <TablixMember>
-                      <TablixHeader>
-                        <Size>2.5cm</Size>
-                        <CellContents>
-                          <Textbox Name="Textbox47">
-                            <CanGrow>true</CanGrow>
-                            <KeepTogether>true</KeepTogether>
-                            <Paragraphs>
-                              <Paragraph>
-                                <TextRuns>
-                                  <TextRun>
-                                    <Value />
-                                    <Style>
-                                      <FontSize>8pt</FontSize>
-                                    </Style>
-                                  </TextRun>
-                                </TextRuns>
-                                <Style />
-                              </Paragraph>
-                            </Paragraphs>
-                            <rd:DefaultName>Textbox47</rd:DefaultName>
-                            <Style>
-                              <Border>
-                                <Color>LightGrey</Color>
-                                <Style>Solid</Style>
-                              </Border>
-                              <PaddingLeft>2pt</PaddingLeft>
-                              <PaddingRight>2pt</PaddingRight>
-                              <PaddingTop>2pt</PaddingTop>
-                              <PaddingBottom>2pt</PaddingBottom>
-                            </Style>
-                          </Textbox>
-                        </CellContents>
-                      </TablixHeader>
-                      <TablixMembers>
-                        <TablixMember />
-                      </TablixMembers>
-                    </TablixMember>
-                    <TablixMember>
                       <Group Name="schueler">
                         <GroupExpressions>
                           <GroupExpression>=Fields!schueler.Value</GroupExpression>
@@ -347,7 +275,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>2.5cm</Size>
+                        <Size>3.05562cm</Size>
                         <CellContents>
                           <Textbox Name="schueler">
                             <CanGrow>true</CanGrow>
@@ -357,7 +285,9 @@
                                 <TextRuns>
                                   <TextRun>
                                     <Value>=Fields!schueler.Value</Value>
-                                    <Style />
+                                    <Style>
+                                      <FontSize>9pt</FontSize>
+                                    </Style>
                                   </TextRun>
                                 </TextRuns>
                                 <Style />
@@ -396,8 +326,8 @@
             <DataSetName>DataSet1</DataSetName>
             <Top>0.59973cm</Top>
             <Left>0.22521cm</Left>
-            <Height>2.05135cm</Height>
-            <Width>19.11805cm</Width>
+            <Height>1.34552cm</Height>
+            <Width>18.13909cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -405,14 +335,14 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>1.12869in</Height>
+        <Height>0.76585in</Height>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
         </Style>
       </Body>
-      <Width>7.62587in</Width>
+      <Width>7.23004in</Width>
       <Page>
         <PageHeader>
           <Height>0.97896cm</Height>
@@ -438,7 +368,7 @@
               <rd:DefaultName>Textbox25</rd:DefaultName>
               <Left>0.22521cm</Left>
               <Height>0.6cm</Height>
-              <Width>11.52229cm</Width>
+              <Width>16.99917cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
