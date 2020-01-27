@@ -288,7 +288,7 @@ namespace diNo
       if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse)
         Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden.";
       if (s.IsLegastheniker)
-        Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet. In den Fremdsprachen wurden die mündlichen Leistungen stärker gewichtet.";
+        Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
       if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
         Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
 
