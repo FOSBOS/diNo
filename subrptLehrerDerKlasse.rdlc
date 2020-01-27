@@ -41,18 +41,18 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>4.68313cm</Width>
+                  <Width>5cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.05354cm</Width>
+                  <Width>5cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.86833cm</Width>
+                  <Width>5cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.89958cm</Height>
+                  <Height>0.7cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -64,7 +64,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>Fach</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontStyle>Italic</FontStyle>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -94,7 +96,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>Lehrer</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontStyle>Italic</FontStyle>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -124,7 +128,9 @@
                               <TextRuns>
                                 <TextRun>
                                   <Value>Unterschrift</Value>
-                                  <Style />
+                                  <Style>
+                                    <FontStyle>Italic</FontStyle>
+                                  </Style>
                                 </TextRun>
                               </TextRuns>
                               <Style />
@@ -147,7 +153,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.82021cm</Height>
+                  <Height>0.7cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -261,8 +267,8 @@
               </TablixMembers>
             </TablixRowHierarchy>
             <DataSetName>DataSet1</DataSetName>
-            <Height>1.71979cm</Height>
-            <Width>14.605cm</Width>
+            <Height>1.4cm</Height>
+            <Width>15cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -270,10 +276,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.6875in</Height>
+        <Height>0.67708in</Height>
         <Style />
       </Body>
-      <Width>5.75in</Width>
+      <Width>5.90551in</Width>
       <Page>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
@@ -287,8 +293,9 @@
     </ReportSection>
   </ReportSections>
   <ReportParameters>
-    <ReportParameter Name="KlassenId">
+    <ReportParameter Name="klassenId">
       <DataType>Integer</DataType>
+      <Nullable>true</Nullable>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
   </ReportParameters>
@@ -300,7 +307,7 @@
         <CellDefinition>
           <ColumnIndex>0</ColumnIndex>
           <RowIndex>0</RowIndex>
-          <ParameterName>KlassenId</ParameterName>
+          <ParameterName>klassenId</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

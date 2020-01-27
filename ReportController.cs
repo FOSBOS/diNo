@@ -59,8 +59,7 @@ namespace diNo
     }
 
     void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
-    {
-      // ACHTUNG: Der Parameter muss im Haupt- und im Unterbericht definiert werden (mit gleichem Namen)      ;
+    {      
       int klassenId;
       int.TryParse(e.Parameters[0].Values[0], out klassenId);
       if (klassenId > 0)
