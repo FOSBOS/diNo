@@ -89,6 +89,9 @@ namespace diNo
       if (azeitpunkt == Zeitpunkt.DrittePA && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         alleNotenchecks.Add(new MAPChecker(this));
 
+      if (modus==NotenCheckModus.Protokolle && azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+        alleNotenchecks.Add(new LRSChecker(this));
+
       // Folgende Vorkommnisse ggf. löschen, bzw. neu erzeugen bei 2./3.PA
       if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) && modus == NotenCheckModus.KonferenzVorbereiten)
       {
@@ -303,29 +306,31 @@ namespace diNo
         }
     }
 
-    /// <summary>
-    /// Verwaltet eine Fehlermeldung für einen Schüler
-    /// </summary>
-    public class NotenCheckResult
+  /// <summary>
+  /// Verwaltet eine Fehlermeldung für einen Schüler
+  /// </summary>
+  public class NotenCheckResult
+  {
+    public string schueler  { get; private set; }
+    public int klassenId { get; private set; }
+    public string Klassenleiter { get; private set; }
+    public string klasse { get; private set; } 
+    public string lehrer { get; private set; } 
+    public string fach { get; private set; } 
+    public string meldung { get; set; }
+
+    public NotenCheckResult(Schueler s,Kurs k,string m)
     {
-        public string schueler  { get; private set; }
-        public int klassenId { get; private set; }
-        public string klasse { get; private set; } 
-        public string lehrer { get; private set; } 
-        public string fach { get; private set; } 
-        public string meldung { get; set; }
+      schueler = s.NameVorname;        
+      klasse = s.getKlasse.Data.Bezeichnung;
+      lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
+      fach =   k!=null ? k.getFach.Kuerzel : "";
+      meldung = m;      
+      klassenId = s.getKlasse.Data.Id;
+      Klassenleiter = s.getKlasse.Klassenleiter.NameDienstbezeichnung + ", " + s.getKlasse.Klassenleiter.KLString;
+    }
 
-        public NotenCheckResult(Schueler s,Kurs k,string m)
-        {
-          schueler = s.NameVorname;
-          klassenId = s.getKlasse.Data.Id;
-          klasse = s.getKlasse.Data.Bezeichnung;
-          lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
-          fach =   k!=null ? k.getFach.Kuerzel : "";
-          meldung = m;
-        }
-
-        public NotenCheckResult(Klasse kl,Kurs k,string m)
+    public NotenCheckResult(Klasse kl,Kurs k,string m)
         {
           schueler = "...mehrmals...";
           klassenId = kl.Data.Id;

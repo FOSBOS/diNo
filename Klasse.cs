@@ -190,6 +190,7 @@ namespace diNo
             // Kurse werden normalerweise nur in einer Klasse angeboten, daher hier ins Rep aufnehmen
             Zugriff.Instance.KursRep.Add(k); 
           }
+          kurse.Sort((x, y) => (x.getFach.Sortierung(Zweig)).CompareTo(y.getFach.Sortierung(Zweig)));
         }
         return kurse;
       }

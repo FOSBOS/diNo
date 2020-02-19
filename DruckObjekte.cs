@@ -285,22 +285,25 @@ namespace diNo
 
       if (!s.Data.IsZeugnisbemerkungNull())
         Bemerkung += "<br>" + s.Data.Zeugnisbemerkung;
-      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse)
-        Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden.";
+      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && Zugriff.Instance.getString(GlobaleStrings.SchulPLZ)=="87435")
+        Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden."; // nicht in SF
       if (s.IsLegastheniker)
         Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
       if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
         Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
 
-      bool hatIPo = s.getNoten.FindeFach("IPo", false) != null;
-      bool hatIBS = s.getNoten.FindeFach("IBS", false) != null;
-      if (hatIBS && hatIPo)
-        Bemerkung += "<br>Die Fächer International Business Studies und Internationale Politik wurden bilingual unterrichtet.";
-      else if (hatIBS)
-        Bemerkung += "<br>Das Fach International Business Studies wurde bilingual unterrichtet.";
-      else if (hatIPo)
-        Bemerkung += "<br>Das Fach Internationale Politik wurde bilingual unterrichtet.";
-    
+      if (Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87435")
+      {
+        bool hatIPo = s.getNoten.FindeFach("IPo", false) != null;
+        bool hatIBS = s.getNoten.FindeFach("IBS", false) != null;
+        if (hatIBS && hatIPo)
+          Bemerkung += "<br>Die Fächer International Business Studies und Internationale Politik wurden bilingual unterrichtet.";
+        else if (hatIBS)
+          Bemerkung += "<br>Das Fach International Business Studies wurde bilingual unterrichtet.";
+        else if (hatIPo)
+          Bemerkung += "<br>Das Fach Internationale Politik wurde bilingual unterrichtet.";
+      }
+
       if (s.hatVorkommnis(Vorkommnisart.MittlereReife))
         Bemerkung += "<br><b>Dieses Zeugnis verleiht den mittleren Schulabschluss gemäß Art. 25 Abs. 1 Satz 2 Nr. 6 BayEUG.</b>";
       if (jg == 11 && b == Bericht.Jahreszeugnis)
@@ -810,6 +813,9 @@ namespace diNo
         if ((f.Typ == FachTyp.Allgemein && f.Kuerzel != "K" && f.Kuerzel != "Ev" && f.Kuerzel != "Eth" )  || f.Typ == FachTyp.Profilfach)
           liste.Add(new LehrerDerKlasseDruck(k.getLehrer.Name, k.getFach.Bezeichnung));
       }
+      if (klasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
+        liste.Add(new LehrerDerKlasseDruck("", "FPA"));
+
       return liste;
     }
   }

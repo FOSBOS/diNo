@@ -524,6 +524,28 @@ namespace diNo
   }
 
 
+  // Gibt eine Meldung aus, wenn Legasthenie angehakt
+  public class LRSChecker : NotenCheck
+  {
+    public LRSChecker(NotenCheckController contr) : base(contr)
+    { }
+
+    public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
+    {
+      return true;
+    }
+
+    public override void Check(Schueler schueler)
+    {
+      base.Check(schueler);
+
+      if (schueler.IsLegastheniker)
+      {
+          contr.Add(null, "Die bisherigen Regelungen zum Nachteilsausgleich bleiben bestehen.");
+      }      
+    }
+  }
+
   // Prüft, ob die richtige Anzahl an HjLeistungen eingebracht wurden
   public class EinbringungsChecker : NotenCheck
   {
