@@ -204,6 +204,7 @@ namespace diNo
       }
 
       HjArt art = GetAktuellesHalbjahr();
+      Berechnungen berechner = new Berechnungen();
       foreach (int sid in sidList)
       {
         Schueler schueler = Zugriff.Instance.SchuelerRep.Find(sid);
@@ -315,6 +316,8 @@ namespace diNo
             hjlFR.Delete();
           }            
         }
+
+        berechner.AktualisiereGE(schueler); // damit das GE wird konsistent zum Abi wird
 
         i++;
         indexAP++;

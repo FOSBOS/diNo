@@ -35,7 +35,7 @@ namespace diNo
     public void Anzeigen(Schueler schueler)
     {
       s = schueler;
-      opAttestpflicht.Enabled = s.getKlasse.KlassenleiterId == Zugriff.Instance.lehrer.Id;
+      opAttestpflicht.Enabled = (s.getKlasse.KlassenleiterId == Zugriff.Instance.lehrer.Id) || Zugriff.Instance.HatVerwaltungsrechte;
       if (!opAttestpflicht.Enabled && opAttestpflicht.Checked) opSA.Checked = true;
       Show();
     }

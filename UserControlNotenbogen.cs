@@ -211,8 +211,8 @@ namespace diNo
       HjLeistung hj = (HjLeistung) dataGridNoten.SelectedCells[0].Tag;
       hj.SetStatus(status);      
       //SetBackgroundColor(hj, dataGridNoten.SelectedCells[0]);
-      var berechnungen = new Berechnungen((Zeitpunkt)Zugriff.Instance.aktZeitpunkt);
-      berechnungen.BerechneSchueler(schueler);
+      var berechnungen = new Berechnungen();
+      berechnungen.AktualisiereGE(schueler);
       Init();
     }
 

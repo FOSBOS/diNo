@@ -14,8 +14,7 @@ namespace diNo
     public delegate void Aufgabe(Schueler s);
     public List<Aufgabe> aufgaben = new List<Aufgabe>();    // speichert alle zu erledigenden Berechnungsaufgaben eines Schülers
 
-    public Berechnungen()
-    { }
+    public Berechnungen() { }
 
     public Berechnungen(Zeitpunkt zeitpunkt)
     {      
@@ -85,6 +84,8 @@ namespace diNo
         {
           var kuerzel = fachNoten.getFach.Kuerzel;
           HjLeistung hjLeistung;
+          byte anzUngueltig = 0;
+          byte anzLeer = 0;
 
           var hjLeistungen = new List<HjLeistung>();
           // HjArt.GetFields().Where(x => x.IsLiteral).Select(x => x.GetValue(null)); TODO: Subset von Enum.HjArt bilden
@@ -92,8 +93,19 @@ namespace diNo
           {
             if (art > HjArt.FR) continue; // JN, GE usw. dürfen nicht verwendet werden
             hjLeistung = fachNoten.getHjLeistung(art);
+
+            // sind ungültige dabei?
             if (hjLeistung == null)
-              continue;
+            { 
+              if (art <= HjArt.Hj2) 
+                anzLeer++; 
+              continue; 
+            }
+            if (hjLeistung.Status == HjStatus.Ungueltig) 
+            { 
+              anzUngueltig++; 
+              continue;                       
+            }
 
             if (hjLeistung.Art == HjArt.AP || hjLeistung.Art == HjArt.FR || kuerzel == "FpA" /*TODO: Oder Seminarfach*/)
             {
@@ -104,12 +116,17 @@ namespace diNo
               hjLeistungen.Add(hjLeistung);
             }
           }
+          if (anzLeer == 2) anzLeer = 0; // dann gehen wir von einem Fach aus, das nur in 11 unterrichtet wird
 
           hjLeistung = fachNoten.getVorHjLeistung(HjArt.Hj1); // Leistung aus 11/1
           if (hjLeistung != null)
           {
             if (kuerzel == "FpA") hjLeistung.SetStatus(HjStatus.Einbringen);
-            else if (hjLeistungen.Count == 0) hjLeistungen.Add(hjLeistung); // in 12 nicht vorhanden --> einbringbar
+            else if (hjLeistungen.Count == 0) // in 12 nicht vorhanden --> einbringbar
+            {
+              if (hjLeistung.Status == HjStatus.Ungueltig) anzUngueltig++;
+              else hjLeistungen.Add(hjLeistung); 
+            }
             else hjLeistung.SetStatus(HjStatus.NichtEinbringen); // kann nie eingebracht werden, wenn in 12 vorhanden
           }
 
@@ -117,27 +134,40 @@ namespace diNo
           if (hjLeistung != null)
           {
             if (kuerzel == "FpA") hjLeistung.SetStatus(HjStatus.Einbringen);
+            else if (hjLeistung.Status == HjStatus.Ungueltig) anzUngueltig++;  
             else hjLeistungen.Add(hjLeistung); // 11/2 vorhanden --> einbringbar            
           }
 
           // jetzt stehen alle "normalen" Halbjahresleistungen in hjLeistungen.
+          if (anzUngueltig + anzLeer > 1) // dann brauchen wir nicht weiter machen, keine Zulassung
+          {
+            s.Data.Berechungsstatus = (byte)Berechnungsstatus.ZuWenigeHjLeistungen;
+            return;
+          }
           // Sortieren, nur eine davon kann gestrichen werden
           if (hjLeistungen.Count > 0)
           {
-            hjLeistungen.Sort((x, y) => y.Punkte.CompareTo(x.Punkte));
-            einbringen.AddRange(hjLeistungen.GetRange(0, hjLeistungen.Count - 1)); // bis auf eine müssen eingebracht werden
+            if (anzUngueltig > 0)
+            {
+              einbringen.AddRange(hjLeistungen);
+            }
+            else
+            {
+              hjLeistungen.Sort((x, y) => y.Punkte.CompareTo(x.Punkte));
+              einbringen.AddRange(hjLeistungen.GetRange(0, hjLeistungen.Count - 1)); // bis auf eine müssen eingebracht werden
 
-            // rutscht man mit allen unter 4, obwohl das bei einer Streichung nicht passiert, lassen wir den auf jeden Fall weg
-            if (UnbedingtStreichen(hjLeistungen))
-              unbedingtStreichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
-            else streichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
+              // rutscht man mit allen unter 4, obwohl das bei einer Streichung nicht passiert, lassen wir den auf jeden Fall weg
+              if (UnbedingtStreichen(hjLeistungen))
+                unbedingtStreichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
+              else streichen.Add(hjLeistungen[hjLeistungen.Count - 1]);
+            }
           }
         }
         else // Nicht NC
         {
           HjLeistung hj;
-          if ((hj = fachNoten.getHjLeistung(HjArt.Hj1))!=null) hj.SetStatus(HjStatus.NichtEinbringen);
-          if ((hj = fachNoten.getHjLeistung(HjArt.Hj2)) != null) hj.SetStatus(HjStatus.NichtEinbringen);
+          if ((hj = fachNoten.getHjLeistung(HjArt.Hj1))!=null && hj.Status!=HjStatus.Ungueltig) hj.SetStatus(HjStatus.NichtEinbringen);
+          if ((hj = fachNoten.getHjLeistung(HjArt.Hj2)) != null && hj.Status != HjStatus.Ungueltig) hj.SetStatus(HjStatus.NichtEinbringen);
         }
       }
 
@@ -210,6 +240,15 @@ namespace diNo
       p.WriteToDB();            
     }
 
+    /// <summary>
+    /// Aktualisiert das GE nur, wenn der Berechnungsstatus dafür gesetzt ist
+    /// </summary>
+    public void AktualisiereGE(Schueler s)
+    {
+      if (s.Data.Berechungsstatus >= (byte)Berechnungsstatus.Einbringung)
+        BerechneGesErg(s);
+    }
+
     public void BerechneDNote(Schueler s)
     {      
       int anz = s.punktesumme.Anzahl(PunktesummeArt.Gesamt);
@@ -268,7 +307,7 @@ namespace diNo
   {
     Unberechnet = 0,
     ZuWenigeHjLeistungen,
-    Einbringung,    
-    Gesamtergebnis
+    Einbringung,    // GE liegt aber auch schon provisorisch vor (noch keine D-Note)
+    Gesamtergebnis  // Abi ist da und die Durchschnittsnote ist berechnet
   }
 }

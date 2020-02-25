@@ -17,7 +17,6 @@
     private NumericUpDownNullable numericUpDownEnglisch;
     private NumericUpDownNullable numericUpDownDeutsch;
     private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.TextBox textBoxAndereFremdspr2Text;
     private System.Windows.Forms.Label label15;
     private System.Windows.Forms.Label label14;
     private NumericUpDownNullable numAndereFremdspr2Note;
@@ -38,5 +37,6 @@
     private System.Windows.Forms.TextBox textBoxNachname;
     private System.Windows.Forms.Label label7;
     private System.Windows.Forms.CheckBox checkBoxSonderfall2Hj;
+    private System.Windows.Forms.ComboBox cbAndereFremdspr2Text;
   }
 }

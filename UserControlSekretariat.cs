@@ -26,7 +26,7 @@ namespace diNo
         if (schueler != null)
         {
           numAndereFremdspr2Note.Value = schueler.Data.IsAndereFremdspr2NoteNull() ? null : (decimal?)schueler.Data.AndereFremdspr2Note;
-          textBoxAndereFremdspr2Text.Text = schueler.Data.IsAndereFremdspr2TextNull() ? "" : schueler.Data.AndereFremdspr2Text;
+          cbAndereFremdspr2Text.Text = schueler.Data.IsAndereFremdspr2TextNull() ? "" : schueler.Data.AndereFremdspr2Text;
           listBoxZuletztBesuchteSchulart.SelectedItem = schueler.Data.IsSchulischeVorbildungNull() ? null : schueler.Data.SchulischeVorbildung;
           textBoxZeugnisbemerkung.Text = schueler.Data.IsZeugnisbemerkungNull() ? "" : schueler.Data.Zeugnisbemerkung;
 
@@ -51,8 +51,8 @@ namespace diNo
     {
       if (numAndereFremdspr2Note.Value == null) schueler.Data.SetAndereFremdspr2NoteNull();
       else schueler.Data.AndereFremdspr2Note = (int)numAndereFremdspr2Note.Value.GetValueOrDefault();
-      if (textBoxAndereFremdspr2Text.Text == "") schueler.Data.SetAndereFremdspr2TextNull();
-      else schueler.Data.AndereFremdspr2Text = textBoxAndereFremdspr2Text.Text;
+      if (cbAndereFremdspr2Text.Text == "") schueler.Data.SetAndereFremdspr2TextNull();
+      else schueler.Data.AndereFremdspr2Text = cbAndereFremdspr2Text.Text;
 
       if (textBoxZeugnisbemerkung.Text == "") schueler.Data.SetZeugnisbemerkungNull();
       else schueler.Data.Zeugnisbemerkung = textBoxZeugnisbemerkung.Text;
@@ -92,7 +92,7 @@ namespace diNo
       this.label2 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
-      this.textBoxAndereFremdspr2Text = new System.Windows.Forms.TextBox();
+      this.cbAndereFremdspr2Text = new System.Windows.Forms.ComboBox();
       this.label15 = new System.Windows.Forms.Label();
       this.label14 = new System.Windows.Forms.Label();
       this.numAndereFremdspr2Note = new diNo.NumericUpDownNullable();
@@ -286,7 +286,7 @@ namespace diNo
       // 
       // groupBox1
       // 
-      this.groupBox1.Controls.Add(this.textBoxAndereFremdspr2Text);
+      this.groupBox1.Controls.Add(this.cbAndereFremdspr2Text);
       this.groupBox1.Controls.Add(this.label15);
       this.groupBox1.Controls.Add(this.label14);
       this.groupBox1.Controls.Add(this.numAndereFremdspr2Note);
@@ -295,15 +295,21 @@ namespace diNo
       this.groupBox1.Size = new System.Drawing.Size(285, 75);
       this.groupBox1.TabIndex = 67;
       this.groupBox1.TabStop = false;
-      this.groupBox1.Text = "Alternative 2. Fremdsprache";
+      this.groupBox1.Text = "Ergänzungsprüfung 2. Fremdsprache";
       // 
-      // textBoxAndereFremdspr2Text
+      // cbAndereFremdspr2Text
       // 
-      this.textBoxAndereFremdspr2Text.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxAndereFremdspr2Text.Location = new System.Drawing.Point(86, 41);
-      this.textBoxAndereFremdspr2Text.Name = "textBoxAndereFremdspr2Text";
-      this.textBoxAndereFremdspr2Text.Size = new System.Drawing.Size(193, 20);
-      this.textBoxAndereFremdspr2Text.TabIndex = 68;
+      this.cbAndereFremdspr2Text.FormattingEnabled = true;
+      this.cbAndereFremdspr2Text.Items.AddRange(new object[] {
+            "Französisch",
+            "Spanisch",
+            "Italienisch",
+            "Latein",
+            "Russisch"});
+      this.cbAndereFremdspr2Text.Location = new System.Drawing.Point(86, 41);
+      this.cbAndereFremdspr2Text.Name = "cbAndereFremdspr2Text";
+      this.cbAndereFremdspr2Text.Size = new System.Drawing.Size(185, 21);
+      this.cbAndereFremdspr2Text.TabIndex = 87;
       // 
       // label15
       // 
@@ -311,9 +317,9 @@ namespace diNo
       this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.label15.Location = new System.Drawing.Point(83, 25);
       this.label15.Name = "label15";
-      this.label15.Size = new System.Drawing.Size(61, 13);
+      this.label15.Size = new System.Drawing.Size(47, 13);
       this.label15.TabIndex = 70;
-      this.label15.Text = "Erläuterung";
+      this.label15.Text = "Sprache";
       // 
       // label14
       // 
