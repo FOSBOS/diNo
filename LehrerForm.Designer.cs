@@ -48,17 +48,8 @@
       this.gbGeschlecht = new System.Windows.Forms.GroupBox();
       this.opWeiblich = new System.Windows.Forms.RadioButton();
       this.opMaennlich = new System.Windows.Forms.RadioButton();
-      this.groupBoxBerechtigungen = new System.Windows.Forms.GroupBox();
-      this.checkBoxIsFpAUmwelt = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsFpATechnik = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsFpASozial = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsFpAWirtschaft = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsSeminarfach = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsSekretariat = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsSchulleitung = new System.Windows.Forms.CheckBox();
-      this.checkBoxIsAdmin = new System.Windows.Forms.CheckBox();
+      this.listBoxBerechtigungen = new System.Windows.Forms.CheckedListBox();
       this.gbGeschlecht.SuspendLayout();
-      this.groupBoxBerechtigungen.SuspendLayout();
       this.SuspendLayout();
       // 
       // imageList1
@@ -257,109 +248,21 @@
       this.opMaennlich.Text = "männlich";
       this.opMaennlich.UseVisualStyleBackColor = true;
       // 
-      // groupBoxBerechtigungen
+      // listBoxBerechtigungen
       // 
-      this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsFpAUmwelt);
-      this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsFpATechnik);
-      this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsFpASozial);
-      this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsFpAWirtschaft);
-      this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsSeminarfach);
-      this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsSekretariat);
-      this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsSchulleitung);
-      this.groupBoxBerechtigungen.Controls.Add(this.checkBoxIsAdmin);
-      this.groupBoxBerechtigungen.Location = new System.Drawing.Point(244, 332);
-      this.groupBoxBerechtigungen.Name = "groupBoxBerechtigungen";
-      this.groupBoxBerechtigungen.Size = new System.Drawing.Size(240, 115);
-      this.groupBoxBerechtigungen.TabIndex = 28;
-      this.groupBoxBerechtigungen.TabStop = false;
-      this.groupBoxBerechtigungen.Text = "Berechtigungen";
-      // 
-      // checkBoxIsFpAUmwelt
-      // 
-      this.checkBoxIsFpAUmwelt.AutoSize = true;
-      this.checkBoxIsFpAUmwelt.Location = new System.Drawing.Point(139, 88);
-      this.checkBoxIsFpAUmwelt.Name = "checkBoxIsFpAUmwelt";
-      this.checkBoxIsFpAUmwelt.Size = new System.Drawing.Size(83, 17);
-      this.checkBoxIsFpAUmwelt.TabIndex = 9;
-      this.checkBoxIsFpAUmwelt.Text = "FpA Umwelt";
-      this.checkBoxIsFpAUmwelt.UseVisualStyleBackColor = true;
-      // 
-      // checkBoxIsFpATechnik
-      // 
-      this.checkBoxIsFpATechnik.AutoSize = true;
-      this.checkBoxIsFpATechnik.Location = new System.Drawing.Point(139, 65);
-      this.checkBoxIsFpATechnik.Name = "checkBoxIsFpATechnik";
-      this.checkBoxIsFpATechnik.Size = new System.Drawing.Size(87, 17);
-      this.checkBoxIsFpATechnik.TabIndex = 8;
-      this.checkBoxIsFpATechnik.Text = "FpA Technik";
-      this.checkBoxIsFpATechnik.UseVisualStyleBackColor = true;
-      // 
-      // checkBoxIsFpASozial
-      // 
-      this.checkBoxIsFpASozial.AutoSize = true;
-      this.checkBoxIsFpASozial.Location = new System.Drawing.Point(139, 42);
-      this.checkBoxIsFpASozial.Name = "checkBoxIsFpASozial";
-      this.checkBoxIsFpASozial.Size = new System.Drawing.Size(76, 17);
-      this.checkBoxIsFpASozial.TabIndex = 7;
-      this.checkBoxIsFpASozial.Text = "FpA Sozial";
-      this.checkBoxIsFpASozial.UseVisualStyleBackColor = true;
-      // 
-      // checkBoxIsFpAWirtschaft
-      // 
-      this.checkBoxIsFpAWirtschaft.AutoSize = true;
-      this.checkBoxIsFpAWirtschaft.Location = new System.Drawing.Point(139, 19);
-      this.checkBoxIsFpAWirtschaft.Name = "checkBoxIsFpAWirtschaft";
-      this.checkBoxIsFpAWirtschaft.Size = new System.Drawing.Size(96, 17);
-      this.checkBoxIsFpAWirtschaft.TabIndex = 6;
-      this.checkBoxIsFpAWirtschaft.Text = "FpA Wirtschaft";
-      this.checkBoxIsFpAWirtschaft.UseVisualStyleBackColor = true;
-      // 
-      // checkBoxIsSeminarfach
-      // 
-      this.checkBoxIsSeminarfach.AutoSize = true;
-      this.checkBoxIsSeminarfach.Location = new System.Drawing.Point(6, 88);
-      this.checkBoxIsSeminarfach.Name = "checkBoxIsSeminarfach";
-      this.checkBoxIsSeminarfach.Size = new System.Drawing.Size(85, 17);
-      this.checkBoxIsSeminarfach.TabIndex = 5;
-      this.checkBoxIsSeminarfach.Text = "Seminarfach";
-      this.checkBoxIsSeminarfach.UseVisualStyleBackColor = true;
-      // 
-      // checkBoxIsSekretariat
-      // 
-      this.checkBoxIsSekretariat.AutoSize = true;
-      this.checkBoxIsSekretariat.Location = new System.Drawing.Point(6, 65);
-      this.checkBoxIsSekretariat.Name = "checkBoxIsSekretariat";
-      this.checkBoxIsSekretariat.Size = new System.Drawing.Size(77, 17);
-      this.checkBoxIsSekretariat.TabIndex = 4;
-      this.checkBoxIsSekretariat.Text = "Sekretariat";
-      this.checkBoxIsSekretariat.UseVisualStyleBackColor = true;
-      // 
-      // checkBoxIsSchulleitung
-      // 
-      this.checkBoxIsSchulleitung.AutoSize = true;
-      this.checkBoxIsSchulleitung.Location = new System.Drawing.Point(6, 42);
-      this.checkBoxIsSchulleitung.Name = "checkBoxIsSchulleitung";
-      this.checkBoxIsSchulleitung.Size = new System.Drawing.Size(84, 17);
-      this.checkBoxIsSchulleitung.TabIndex = 3;
-      this.checkBoxIsSchulleitung.Text = "Schulleitung";
-      this.checkBoxIsSchulleitung.UseVisualStyleBackColor = true;
-      // 
-      // checkBoxIsAdmin
-      // 
-      this.checkBoxIsAdmin.AutoSize = true;
-      this.checkBoxIsAdmin.Location = new System.Drawing.Point(6, 19);
-      this.checkBoxIsAdmin.Name = "checkBoxIsAdmin";
-      this.checkBoxIsAdmin.Size = new System.Drawing.Size(86, 17);
-      this.checkBoxIsAdmin.TabIndex = 2;
-      this.checkBoxIsAdmin.Text = "Administrator";
-      this.checkBoxIsAdmin.UseVisualStyleBackColor = true;
+      this.listBoxBerechtigungen.CheckOnClick = true;
+      this.listBoxBerechtigungen.FormattingEnabled = true;
+      this.listBoxBerechtigungen.Location = new System.Drawing.Point(244, 317);
+      this.listBoxBerechtigungen.Name = "listBoxBerechtigungen";
+      this.listBoxBerechtigungen.Size = new System.Drawing.Size(240, 124);
+      this.listBoxBerechtigungen.TabIndex = 29;
       // 
       // LehrerForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(528, 524);
-      this.Controls.Add(this.groupBoxBerechtigungen);
+      this.Controls.Add(this.listBoxBerechtigungen);
       this.Controls.Add(this.gbGeschlecht);
       this.Controls.Add(this.btnSave);
       this.Controls.Add(this.btnDel);
@@ -381,8 +284,6 @@
       this.Text = "Lehrer";
       this.gbGeschlecht.ResumeLayout(false);
       this.gbGeschlecht.PerformLayout();
-      this.groupBoxBerechtigungen.ResumeLayout(false);
-      this.groupBoxBerechtigungen.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -408,14 +309,6 @@
     private System.Windows.Forms.GroupBox gbGeschlecht;
     private System.Windows.Forms.RadioButton opWeiblich;
     private System.Windows.Forms.RadioButton opMaennlich;
-    private System.Windows.Forms.GroupBox groupBoxBerechtigungen;
-    private System.Windows.Forms.CheckBox checkBoxIsFpAUmwelt;
-    private System.Windows.Forms.CheckBox checkBoxIsFpATechnik;
-    private System.Windows.Forms.CheckBox checkBoxIsFpASozial;
-    private System.Windows.Forms.CheckBox checkBoxIsFpAWirtschaft;
-    private System.Windows.Forms.CheckBox checkBoxIsSeminarfach;
-    private System.Windows.Forms.CheckBox checkBoxIsSekretariat;
-    private System.Windows.Forms.CheckBox checkBoxIsSchulleitung;
-    private System.Windows.Forms.CheckBox checkBoxIsAdmin;
+    private System.Windows.Forms.CheckedListBox listBoxBerechtigungen;
   }
 }

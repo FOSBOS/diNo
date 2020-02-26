@@ -15,6 +15,7 @@ namespace diNo
     private Lehrer q;
     private List<Lehrer> t;
     private LehrerTableAdapter ta = new LehrerTableAdapter();
+    private List<diNoDataSet.RolleRow> rollen = new List<diNoDataSet.RolleRow>();
     
     public LehrerForm()
     {
@@ -24,6 +25,16 @@ namespace diNo
 
     private void Init()
     {
+      RolleTableAdapter rta = new RolleTableAdapter();
+      foreach (var row in rta.GetData())
+      {
+        rollen.Add(row);
+      }
+      foreach (var rolle in rollen)
+      {
+        listBoxBerechtigungen.Items.Add(rolle.Bezeichnung, false);
+      }
+
       t = Zugriff.Instance.LehrerRep.getList();
       t.Sort((x, y) => x.KompletterName.CompareTo(y.KompletterName));
       listLehrer.DataSource = t;
@@ -39,16 +50,12 @@ namespace diNo
       edWindowsname.Text = q.Data.Windowsname;
       edMail.Text = (q.Data.IsEMailNull() ? "" : q.Data.EMail);
       opMaennlich.Checked = q.Data.Geschlecht == "M";
-      opWeiblich.Checked = q.Data.Geschlecht == "W";    
+      opWeiblich.Checked = q.Data.Geschlecht == "W";
 
-      checkBoxIsAdmin.Checked = q.HatRolle(Rolle.Admin);
-      checkBoxIsSchulleitung.Checked = q.HatRolle(Rolle.Schulleitung);
-      checkBoxIsSekretariat.Checked = q.HatRolle(Rolle.Sekretariat);
-      checkBoxIsSeminarfach.Checked = q.HatRolle(Rolle.Seminarfach);
-      checkBoxIsFpAWirtschaft.Checked = q.HatRolle(Rolle.FpAWirtschaft);
-      checkBoxIsFpASozial.Checked = q.HatRolle(Rolle.FpASozial);
-      checkBoxIsFpATechnik.Checked = q.HatRolle(Rolle.FpATechnik);
-      checkBoxIsFpAUmwelt.Checked = q.HatRolle(Rolle.FpAUmwelt);
+      foreach (var rolle in rollen)
+      {
+        listBoxBerechtigungen.SetItemChecked(listBoxBerechtigungen.Items.IndexOf(rolle.Bezeichnung), q.HatRolle(rolle.Id));
+      }
     }
 
     private string F(TextBox t)
@@ -70,6 +77,12 @@ namespace diNo
         q.Data.Geschlecht = (opMaennlich.Checked ? "M":"W");
         ta.Update(q.Data);
 
+
+        foreach (var rolle in rollen)
+        {
+          SetBerechtigung(rolle.Id, listBoxBerechtigungen.GetItemChecked(listBoxBerechtigungen.Items.IndexOf(rolle.Bezeichnung)));
+        }
+        /*
         SetBerechtigung(Rolle.Admin, checkBoxIsAdmin.Checked);
         SetBerechtigung(Rolle.Schulleitung, checkBoxIsSchulleitung.Checked);
         SetBerechtigung(Rolle.Sekretariat, checkBoxIsSekretariat.Checked);
@@ -78,6 +91,7 @@ namespace diNo
         SetBerechtigung(Rolle.FpASozial, checkBoxIsFpASozial.Checked);
         SetBerechtigung(Rolle.FpATechnik, checkBoxIsFpATechnik.Checked);
         SetBerechtigung(Rolle.FpAUmwelt, checkBoxIsFpAUmwelt.Checked);
+        */
       }
       else
       {        
@@ -93,11 +107,12 @@ namespace diNo
         {
           MessageBox.Show("Dieser Lehrer konnte nicht eingefügt werden, weil nicht alle Pflichtfelder ausgefüllt wurden.", "diNo", MessageBoxButtons.OK);
         }
-        groupBoxBerechtigungen.Enabled = true;
+
+        listBoxBerechtigungen.Enabled = true;
       }
     }
 
-    private void SetBerechtigung(Rolle rolle, bool newValue)
+    private void SetBerechtigung(int rolle, bool newValue)
     {      
       if (q != null)
       {
@@ -146,16 +161,12 @@ namespace diNo
       opMaennlich.Checked = true;
       opWeiblich.Checked = false;
 
-      checkBoxIsAdmin.Checked = false;
-      checkBoxIsSchulleitung.Checked = false;
-      checkBoxIsSekretariat.Checked = false;
-      checkBoxIsSeminarfach.Checked = false;
-      checkBoxIsFpAWirtschaft.Checked = false;
-      checkBoxIsFpASozial.Checked = false;
-      checkBoxIsFpATechnik.Checked = false;
-      checkBoxIsFpAUmwelt.Checked = false;
+      for (int  i = 0; i < listBoxBerechtigungen.Items.Count; i++)
+      { 
+        listBoxBerechtigungen.SetItemChecked(i, false);
+      }
 
-      groupBoxBerechtigungen.Enabled = false;
+      listBoxBerechtigungen.Enabled = false;
     }
   }
 }

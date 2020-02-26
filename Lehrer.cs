@@ -11,7 +11,7 @@ namespace diNo
     private diNoDataSet.LehrerRow data;
     private bool KlassenleiterAbfragen=true;
     private Klasse klassenleiterVon=null;
-    public IList<Rolle> rollen;
+    public IList<int> rollen;
 
     public Lehrer(int id)
     {
@@ -75,39 +75,60 @@ namespace diNo
       SetRollen();
     }
 
-    public void AddRolle(Rolle aRolle)
+
+    public void AddRolle (int aRolle)
     {
       LehrerRolleTableAdapter ada = new LehrerRolleTableAdapter();
       if (!this.HatRolle(aRolle))
       {
         ada.Insert(this.Id, (int)aRolle);
-        this.rollen.Add(aRolle);
+        this.rollen.Add((int)aRolle);
       }
+    }
+
+    public void AddRolle(Rolle aRolle)
+    {
+      AddRolle((int)aRolle);
     }
 
     public void RemoveRolle(Rolle aRolle)
     {
+      RemoveRolle((int)aRolle);
+    }
+
+    public void RemoveRolle(int aRolle)
+    {
       LehrerRolleTableAdapter ada = new LehrerRolleTableAdapter();
       if (this.HatRolle(aRolle))
       {
-        ada.Delete(this.Id, (int)aRolle);
+        ada.Delete(this.Id, aRolle);
         this.rollen.Remove(aRolle);
       }
     }
 
     private void SetRollen()
     {
-      rollen = new List<Rolle>();
+      rollen = new List<int>();
       var lehrerRolleTA = new LehrerRolleTableAdapter();
       foreach (var rolle in lehrerRolleTA.GetDataByLehrerId(this.Id))
       {
-        this.rollen.Add((Rolle)rolle.RolleId);
+        this.rollen.Add(rolle.RolleId);
       }
     }
 
     public bool HatRolle(Rolle rolle)
     {
-      if (rolle == Rolle.Lehrer)
+      return HatRolle((int)rolle);
+    }
+
+    /// <summary>
+    /// Prüft das Vorliegen von Berechtigungs-Rollen. Schwierig: Manche Rollen existieren im Quellcode, andere nur in der DB (dynamisch)
+    /// </summary>
+    /// <param name="rolle">Die Rollen-Id.</param>
+    /// <returns>Ob der Lehrer diese Rolle besitzt.</returns>
+    public bool HatRolle(int rolle)
+    {
+      if (rolle == (int)Rolle.Lehrer)
       {
         return true; // jeder Nutzer bekommt automatisch die Rolle Lehrer. Dann muss das nicht in der DB immer eingetragen werden.
       }
