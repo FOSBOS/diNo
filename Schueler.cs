@@ -271,19 +271,6 @@ namespace diNo
       return wh;
     }
 
-    public OmnisDB.Abweisung GefahrDerAbweisung
-    {
-      get
-      {
-        if (Wiederholt())
-        {
-          return getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf || getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn ? OmnisDB.Abweisung.Art54BayEUG : OmnisDB.Abweisung.Art53BayEUG;
-        }
-
-        return OmnisDB.Abweisung.Nein;
-      }
-    }
-
     /// <summary>
     /// Liefert entweder
     /// F für Wahlfach Französisch

@@ -45,7 +45,6 @@
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
       this.btnSeStatistik = new System.Windows.Forms.Button();
       this.btnMBStatistik = new System.Windows.Forms.Button();
-      this.btnExportSchuelerZeugnisprogramm = new System.Windows.Forms.Button();
       this.btnSendExcelFiles = new System.Windows.Forms.Button();
       this.btnCreateExcels = new System.Windows.Forms.Button();
       this.exportNoten = new System.Windows.Forms.Button();
@@ -75,10 +74,10 @@
       this.btnHjLeistungenWuerfeln = new System.Windows.Forms.Button();
       this.groupboxTest = new System.Windows.Forms.GroupBox();
       this.groupBoxReparatur = new System.Windows.Forms.GroupBox();
+      this.btnKurseZuweisen = new System.Windows.Forms.Button();
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
-      this.btnKurseZuweisen = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -253,7 +252,6 @@
       // 
       this.groupBoxExport.Controls.Add(this.btnSeStatistik);
       this.groupBoxExport.Controls.Add(this.btnMBStatistik);
-      this.groupBoxExport.Controls.Add(this.btnExportSchuelerZeugnisprogramm);
       this.groupBoxExport.Controls.Add(this.btnSendExcelFiles);
       this.groupBoxExport.Controls.Add(this.btnCreateExcels);
       this.groupBoxExport.Controls.Add(this.exportNoten);
@@ -283,16 +281,6 @@
       this.btnMBStatistik.Text = "MB-Statistik erstellen";
       this.btnMBStatistik.UseVisualStyleBackColor = true;
       this.btnMBStatistik.Click += new System.EventHandler(this.btnMBStatistik_Click);
-      // 
-      // btnExportSchuelerZeugnisprogramm
-      // 
-      this.btnExportSchuelerZeugnisprogramm.Location = new System.Drawing.Point(20, 134);
-      this.btnExportSchuelerZeugnisprogramm.Name = "btnExportSchuelerZeugnisprogramm";
-      this.btnExportSchuelerZeugnisprogramm.Size = new System.Drawing.Size(182, 23);
-      this.btnExportSchuelerZeugnisprogramm.TabIndex = 6;
-      this.btnExportSchuelerZeugnisprogramm.Text = "Schüler an Zeugnisprogramm";
-      this.btnExportSchuelerZeugnisprogramm.UseVisualStyleBackColor = true;
-      this.btnExportSchuelerZeugnisprogramm.Click += new System.EventHandler(this.btnExportSchuelerZeugnisprogramm_Click);
       // 
       // btnSendExcelFiles
       // 
@@ -604,6 +592,16 @@
       this.groupBoxReparatur.TabStop = false;
       this.groupBoxReparatur.Text = "Reparaturen";
       // 
+      // btnKurseZuweisen
+      // 
+      this.btnKurseZuweisen.Location = new System.Drawing.Point(15, 197);
+      this.btnKurseZuweisen.Name = "btnKurseZuweisen";
+      this.btnKurseZuweisen.Size = new System.Drawing.Size(163, 23);
+      this.btnKurseZuweisen.TabIndex = 10;
+      this.btnKurseZuweisen.Text = "Kurse neu zuweisen";
+      this.btnKurseZuweisen.UseVisualStyleBackColor = true;
+      this.btnKurseZuweisen.Click += new System.EventHandler(this.btnKurseZuweisen_Click);
+      // 
       // btnGesErg
       // 
       this.btnGesErg.Location = new System.Drawing.Point(15, 77);
@@ -633,16 +631,6 @@
       this.btnEinbringung.Text = "Einbringung berechnen";
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
-      // 
-      // btnKurseZuweisen
-      // 
-      this.btnKurseZuweisen.Location = new System.Drawing.Point(15, 197);
-      this.btnKurseZuweisen.Name = "btnKurseZuweisen";
-      this.btnKurseZuweisen.Size = new System.Drawing.Size(163, 23);
-      this.btnKurseZuweisen.TabIndex = 10;
-      this.btnKurseZuweisen.Text = "Kurse neu zuweisen";
-      this.btnKurseZuweisen.UseVisualStyleBackColor = true;
-      this.btnKurseZuweisen.Click += new System.EventHandler(this.btnKurseZuweisen_Click);
       // 
       // UserControlAdministration
       // 
@@ -705,7 +693,6 @@
     private System.Windows.Forms.Button btnSendExcelFiles;
     private System.Windows.Forms.Button btnKlassenliste;
     private System.Windows.Forms.Button btnSelect;
-    private System.Windows.Forms.Button btnExportSchuelerZeugnisprogramm;
     private System.Windows.Forms.ComboBox cbNotendruck;
     private System.Windows.Forms.Button btnNotendruck;
     private System.Windows.Forms.Label lbZeugnis;

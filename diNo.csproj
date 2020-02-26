@@ -174,7 +174,6 @@
     </Compile>
     <Compile Include="Lehrer.cs" />
     <Compile Include="Berechnungen.cs" />
-    <Compile Include="OmnisDB\DatenabgleichWinSV.cs" />
     <Compile Include="CellConstant.cs" />
     <Compile Include="diNoDataSet.cs">
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
@@ -198,7 +197,6 @@
     </Compile>
     <Compile Include="KlassenTreeViewController.cs" />
     <Compile Include="KursplanReader.cs" />
-    <Compile Include="LehrerFileReader.cs" />
     <Compile Include="LeseNotenAusExcel.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="NotenCheckController.cs" />
@@ -214,10 +212,6 @@
     <Compile Include="NumericUpDownNullable.Designer.cs">
       <DependentUpon>NumericUpDownNullable.cs</DependentUpon>
     </Compile>
-    <Compile Include="OmnisDB\DZeugnisFileController.cs" />
-    <Compile Include="OmnisDB\Faecherspiegel.cs" />
-    <Compile Include="OmnisDB\Konstanten.cs" />
-    <Compile Include="OmnisDB\OmnisConnection.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportController.cs" />
@@ -269,7 +263,6 @@
     <Compile Include="Vorkommnis.cs" />
     <Compile Include="WahlpflichtfachReader.cs" />
     <Compile Include="WinSVSchuelerReader.cs" />
-    <Compile Include="Zeugnisprogramm\ExportSchueler.cs" />
     <Compile Include="Zugriff.cs" />
     <EmbeddedResource Include="BasisForm.resx">
       <DependentUpon>BasisForm.cs</DependentUpon>

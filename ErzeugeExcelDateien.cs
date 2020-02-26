@@ -58,7 +58,7 @@ namespace diNo
   /// <summary>
   /// Klasse zum automatisierten verschicken der Excel-Dateien an alle Lehrer.
   /// </summary>
-  public class SendExcelMails
+  public class SendExcelMails : IDisposable
   {
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
     private string bodyText ="";
@@ -112,6 +112,15 @@ namespace diNo
       }
     }
 
+    public void Dispose()
+    {
+      if (mailServer != null)
+      {
+        mailServer.Dispose();
+        mailServer = null;
+      }
+    }
+
     /// <summary>
     /// Schickt eine Mail mit den übergebenen Excel-Files.
     /// </summary>
@@ -146,7 +155,7 @@ namespace diNo
   /// <summary>
   /// Legt eine neue Exceldatei zum übergebenen Kurs an.
   /// </summary>
-  public class ErzeugeNeueExcelDatei
+  public class ErzeugeNeueExcelDatei : IDisposable
   {
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
     private OpenNotendatei xls;
@@ -200,6 +209,15 @@ namespace diNo
       xls.workbook.Save();
       xls.Dispose(); // Destruktor aufrufen
       xls = null;
+    }
+
+    public void Dispose()
+    {
+      if (xls != null)
+      {
+        xls.Dispose();
+        xls = null;
+      }
     }
 
     /// <summary>

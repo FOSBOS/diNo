@@ -108,7 +108,7 @@ namespace diNo
     }
   }
 
-  public class LeseNotenAusExcel : BasisLeseNotenAusExcel
+  public class LeseNotenAusExcel : BasisLeseNotenAusExcel, IDisposable
   {
     private OpenNotendatei xls;
 
@@ -470,6 +470,15 @@ namespace diNo
           note.Punktwert = (byte)p;
           note.writeToDB();
         }
+      }
+    }
+
+    public void Dispose()
+    {
+      if (xls != null)
+      {
+        xls.Dispose();
+        xls = null;
       }
     }
   }
