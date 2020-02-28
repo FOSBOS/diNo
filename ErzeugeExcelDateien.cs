@@ -37,21 +37,13 @@ namespace diNo
 
         if (!kurs.IsLehrerIdNull())
         {
-          statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = "Erzeuge Datei " + count + " von " + kurse.Count });
+          statusChangedHandler?.Invoke(this, new StatusChangedEventArgs() { Meldung = "Erzeuge Datei " + count + " von " + kurse.Count });
+          new ErzeugeNeueExcelDatei(derKurs.Data);
           count++;
-          var alleSchueler = derKurs.getSchueler(true); // sind bereits via SQL nach Klasse und Namen sortiert
-          Jahrgangsstufe jgStufe = Jahrgangsstufe.Elf;
-          if (alleSchueler.Count > 0)
-          {
-            Schueler ersterSchueler = new Schueler(alleSchueler[0]);
-            jgStufe = ersterSchueler.getKlasse.Jahrgangsstufe;
-          }
-
-          new ErzeugeNeueExcelDatei(kurs);
         }
       }
 
-      statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = count + " Dateien erfolgreich erzeugt" });      
+      statusChangedHandler?.Invoke(this, new StatusChangedEventArgs() { Meldung = count + " Dateien erfolgreich erzeugt" });      
     }
   }
 
