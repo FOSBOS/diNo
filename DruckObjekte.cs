@@ -171,9 +171,9 @@ namespace diNo
       if (!s.Data.IsDNoteNull() && !s.hatVorkommnis(Vorkommnisart.NichtBestanden))
       {
         Bemerkung += "<b>Durchschnittsnote (" + (jg == 12 ? "Fachhochschulreife" : "fachgebundene Hochschulreife") + "): " + s.Data.DNote + "</b><br>";
-        if (!s.Data.IsDNoteAllgNull())
+        if (!s.Data.IsDNoteFachgebHSRNull())
         {
-          Bemerkung += "<b>Durchschnittsnote (allgemeine Hochschulreife): " + s.Data.DNoteAllg + "</b><br>";
+          Bemerkung += "<b>Durchschnittsnote (fachgebundene Hochschulreife): " + s.Data.DNoteFachgebHSR + "</b><br>";
         }
       }
     }
@@ -207,9 +207,9 @@ namespace diNo
         if (Bemerkung != "") Bemerkung += "<br>";
         DNote = (b == Bericht.EinserAbi ? "" : "Durchschnittsnote*: ") + String.Format("{0:0.0}", s.Data.DNote);
 
-        if (!s.Data.IsDNoteAllgNull())
+        if (!s.Data.IsDNoteFachgebHSRNull())
         {
-          DNote += " (allg. HSR: " + String.Format("{0:0.0}", s.Data.DNoteAllg) + ")";
+          DNote += " (fachgeb. HSR: " + String.Format("{0:0.0}", s.Data.DNoteFachgebHSR) + ")";
         }
       }
     }
@@ -431,7 +431,7 @@ namespace diNo
     protected string putHj(HjLeistung hjl)
     {
       if (hjl == null || hjl.Status == HjStatus.Ungueltig) return "";
-      if (hjl.Status == HjStatus.NichtEinbringen) return "(" + hjl.Punkte.ToString() + ")";
+      if (hjl.Status == HjStatus.NichtEinbringen || hjl.Status == HjStatus.AlternativeEinbr) return "(" + hjl.Punkte.ToString() + ")";
       return hjl.Punkte.ToString();      
     }
 
@@ -623,8 +623,10 @@ namespace diNo
 
     private string HjToZeugnis(HjLeistung t) // für NeueFOBOSO
     {
-      if (t == null || t.Status == HjStatus.Ungueltig) return rpt == Bericht.Abiturzeugnis ? "" : "--";
-      else if (rpt == Bericht.Abiturzeugnis && t.Status == HjStatus.NichtEinbringen) return "(" + t.Punkte.ToString("D2") + ")";
+      if (t == null) return rpt == Bericht.Abiturzeugnis ? "" : "--";
+      else if (t.Status == HjStatus.Ungueltig) return "--";
+      else if (rpt == Bericht.Abiturzeugnis && (t.Status == HjStatus.NichtEinbringen || t.Status == HjStatus.AlternativeEinbr)) 
+        return "(" + t.Punkte.ToString("D2") + ")";
       else return t.Punkte.ToString("D2");
     }
 
@@ -698,6 +700,9 @@ namespace diNo
         case PunktesummeArt.FPA: return "- Punktesumme der fachpraktischen Ausbildung aus 11/1 und 11/2";
         case PunktesummeArt.FR: return "- Ergebnis des Fachreferats";
         case PunktesummeArt.HjLeistungen: return "- Punktesumme aus " + p.Anzahl(art) + " einzubringenden Halbjahresergebnissen";
+        case PunktesummeArt.Seminar: return "Ergebnis des Seminars (zweifach)";
+        case PunktesummeArt.FremdspracheErgPr: return "Ergebnis der Ergänzungsprüfung (zweifach)";
+        case PunktesummeArt.FremdspracheAus12: return "Punktesumme der zweiten Fremdsprache";
         case PunktesummeArt.Gesamt: return "Summe";
         default: return "";
       }

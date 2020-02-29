@@ -26,6 +26,9 @@ namespace diNo
     public int anz4P=0;
     public double Punkteschnitt = 0;
     public List<HjLeistung> Fachreferat = new List<HjLeistung>(); // sollte i.d.R. nur einelementig sein, aber wegen irrtümlicher Doppelvergabe
+    public FachSchuelerNoten ZweiteFS = null;  // Verweis auf die beiden HjLeistungen in der 2. Fremdsprache (kann auch Kurs aus der 12. enthalten)
+    public HjLeistung AlternatZweiteFS = null; // Verweis auf die schlechtere Leistung in der 2. Fremdsprache in der 13. Klasse (nur befüllt bei aktuellem Kurs in 13)
+    public HjLeistung AlternatEinbr = null;    // Verweis auf eine alternativ einzubringende HjLeistung (fachgeb. HSR)
 
     public SchuelerNoten(Schueler s)
     {
@@ -40,7 +43,7 @@ namespace diNo
         var fsn = new FachSchuelerNoten(schueler, kurs.Id, this);
         alleFaecher.Add(fsn);
         alleKurse.Add(fsn);
-        if (fsn.getFach.getKursniveau() != Kursniveau.None) alleSprachen.Add(fsn);
+        AddSprache(fsn);
       }
 
       // alle Fächer des Schülers ohne Kurs finden und diese HjLeistungen laden 
@@ -49,9 +52,16 @@ namespace diNo
       {
         Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
         var fsn = new FachSchuelerNoten(schueler, fach, this);
-        alleFaecher.Add(fsn);
-        if (fsn.getFach.getKursniveau() != Kursniveau.None) alleSprachen.Add(fsn);
-        FaecherOhneKurse.Add(fsn);
+        if (ZweiteFS == null && fach.getKursniveau() == Kursniveau.Fortg) // Sonderfall F-f aus 12. Klasse
+        {
+          ZweiteFS = fsn; // nicht in die normale Liste aufnehmen, da außerhalb der Noten- und Einbringungsprüfung
+        }
+        else
+        {
+          alleFaecher.Add(fsn);
+          AddSprache(fsn);
+          FaecherOhneKurse.Add(fsn);
+        }
       }
 
       // Fachreferat als eigenes Fach führen --> macht leider auch viele Probleme, deshalb erst mal so lassen
@@ -70,6 +80,43 @@ namespace diNo
       // Schnitt, Unterpunktungen etc. berechnen
       anzahlNoten = new int[7, 2];
       InitAnzahlNoten();
+      InitAlternatEinbr();
+    }
+
+    private void AddSprache(FachSchuelerNoten fsn)
+    {
+      Kursniveau k = fsn.getFach.getKursniveau();
+      if (k != Kursniveau.None) alleSprachen.Add(fsn);
+      if (k > Kursniveau.Englisch)
+      {
+        ZweiteFS = fsn;
+        var hj1 = fsn.getHjLeistung(HjArt.Hj1);
+        var hj2 = fsn.getHjLeistung(HjArt.Hj2);
+        if (hj1 != null && hj2 != null)
+        {
+          AlternatZweiteFS = (hj1.Punkte < hj2.Punkte) ? hj1 : hj2;
+        }
+      }
+    }
+
+    // sucht ggf. alternativ eingebrachte HjLeistung
+    private void InitAlternatEinbr()
+    {
+      if (schueler.getKlasse.Jahrgangsstufe < Jahrgangsstufe.Dreizehn || AlternatZweiteFS == null) return;
+
+      foreach (var f in alleFaecher)
+      {
+        foreach (HjArt hjArt in new[] { HjArt.Hj1, HjArt.Hj2 })
+        {
+          HjLeistung hj;
+          hj = f.getHjLeistung(hjArt);
+          if (hj != null && hj.Status == HjStatus.AlternativeEinbr)
+          {
+            AlternatEinbr = hj;
+            return;
+          }
+        }
+      }
     }
 
     public FachSchuelerNoten getFach(int kursid)
@@ -466,9 +513,10 @@ namespace diNo
         }
       }
 
-      if (schueler.hatVorHj) // suche 11. Klassnoten
+      // suche 11. Klassnoten oder alte Französischnoten
+      if (schueler.hatVorHj || jg==13 && fach.getKursniveau() == Kursniveau.Fortg) 
       {
-        hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == 11 && x.Art < 2);
+        hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == jg-1 && x.Art < 2);
         foreach (var hjR in hjDT)
         {
           vorHjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
@@ -513,7 +561,7 @@ namespace diNo
       if (vorJahr) hj = getVorHjLeistung(a);
       else hj = getHjLeistung(a);
 
-      if (hj != null && hj.Status != HjStatus.Ungueltig && (hj.Status != HjStatus.NichtEinbringen || ignoreEinbringung))
+      if (hj != null && hj.Status != HjStatus.Ungueltig && (hj.Status == HjStatus.Einbringen || ignoreEinbringung))
       {
         if (a == HjArt.AP)
         {

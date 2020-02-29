@@ -78,10 +78,11 @@
       this.lbBerechnungsstatus = new System.Windows.Forms.Label();
       this.comboBoxBerechnungsstatus = new System.Windows.Forms.ComboBox();
       this.lbHinweise = new System.Windows.Forms.Label();
-      this.textBoxDNoteAllg = new System.Windows.Forms.TextBox();
-      this.labelFf = new System.Windows.Forms.Label();
+      this.textBoxDNoteFachgebHSR = new System.Windows.Forms.TextBox();
+      this.labelFachgebHSR = new System.Windows.Forms.Label();
       this.textBoxDNote = new System.Windows.Forms.TextBox();
       this.label12 = new System.Windows.Forms.Label();
+      this.alternatEinbrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).BeginInit();
       this.contextMenu.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridPunktesumme)).BeginInit();
@@ -157,15 +158,16 @@
             this.undefiniertToolStripMenuItem,
             this.einbringenToolStripMenuItem,
             this.nichtEinbringenToolStripMenuItem,
-            this.ungueltigToolStripMenuItem});
+            this.ungueltigToolStripMenuItem,
+            this.alternatEinbrToolStripMenuItem});
       this.contextMenu.Name = "contextMenu";
-      this.contextMenu.Size = new System.Drawing.Size(162, 92);
+      this.contextMenu.Size = new System.Drawing.Size(198, 114);
       this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenu_Opening);
       // 
       // undefiniertToolStripMenuItem
       // 
       this.undefiniertToolStripMenuItem.Name = "undefiniertToolStripMenuItem";
-      this.undefiniertToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+      this.undefiniertToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
       this.undefiniertToolStripMenuItem.Tag = "0";
       this.undefiniertToolStripMenuItem.Text = "undefiniert";
       this.undefiniertToolStripMenuItem.Click += new System.EventHandler(this.undefiniertToolStripMenuItem_Click);
@@ -173,7 +175,7 @@
       // einbringenToolStripMenuItem
       // 
       this.einbringenToolStripMenuItem.Name = "einbringenToolStripMenuItem";
-      this.einbringenToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+      this.einbringenToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
       this.einbringenToolStripMenuItem.Tag = "1";
       this.einbringenToolStripMenuItem.Text = "einbringen";
       this.einbringenToolStripMenuItem.Click += new System.EventHandler(this.einbringenToolStripMenuItem_Click);
@@ -181,7 +183,7 @@
       // nichtEinbringenToolStripMenuItem
       // 
       this.nichtEinbringenToolStripMenuItem.Name = "nichtEinbringenToolStripMenuItem";
-      this.nichtEinbringenToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+      this.nichtEinbringenToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
       this.nichtEinbringenToolStripMenuItem.Tag = "2";
       this.nichtEinbringenToolStripMenuItem.Text = "nicht einbringen";
       this.nichtEinbringenToolStripMenuItem.Click += new System.EventHandler(this.nichtEinbringenToolStripMenuItem_Click);
@@ -189,7 +191,7 @@
       // ungueltigToolStripMenuItem
       // 
       this.ungueltigToolStripMenuItem.Name = "ungueltigToolStripMenuItem";
-      this.ungueltigToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+      this.ungueltigToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
       this.ungueltigToolStripMenuItem.Tag = "3";
       this.ungueltigToolStripMenuItem.Text = "ungültig";
       this.ungueltigToolStripMenuItem.Click += new System.EventHandler(this.ungueltigToolStripMenuItem_Click);
@@ -482,24 +484,24 @@
       this.lbHinweise.Text = "Es wurde eine ungültige Zahl an Halbjahresleistungen eingebracht.";
       this.lbHinweise.Visible = false;
       // 
-      // textBoxDNoteAllg
+      // textBoxDNoteFachgebHSR
       // 
-      this.textBoxDNoteAllg.Enabled = false;
-      this.textBoxDNoteAllg.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxDNoteAllg.Location = new System.Drawing.Point(471, 569);
-      this.textBoxDNoteAllg.Name = "textBoxDNoteAllg";
-      this.textBoxDNoteAllg.Size = new System.Drawing.Size(47, 20);
-      this.textBoxDNoteAllg.TabIndex = 65;
+      this.textBoxDNoteFachgebHSR.Enabled = false;
+      this.textBoxDNoteFachgebHSR.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxDNoteFachgebHSR.Location = new System.Drawing.Point(471, 569);
+      this.textBoxDNoteFachgebHSR.Name = "textBoxDNoteFachgebHSR";
+      this.textBoxDNoteFachgebHSR.Size = new System.Drawing.Size(47, 20);
+      this.textBoxDNoteFachgebHSR.TabIndex = 65;
       // 
-      // labelFf
+      // labelFachgebHSR
       // 
-      this.labelFf.AutoSize = true;
-      this.labelFf.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelFf.Location = new System.Drawing.Point(468, 553);
-      this.labelFf.Name = "labelFf";
-      this.labelFf.Size = new System.Drawing.Size(299, 13);
-      this.labelFf.TabIndex = 67;
-      this.labelFf.Text = "Sonderfall 2. Fremdsprache nur in 12 oder Ergänzungsprüfung";
+      this.labelFachgebHSR.AutoSize = true;
+      this.labelFachgebHSR.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.labelFachgebHSR.Location = new System.Drawing.Point(468, 553);
+      this.labelFachgebHSR.Name = "labelFachgebHSR";
+      this.labelFachgebHSR.Size = new System.Drawing.Size(170, 13);
+      this.labelFachgebHSR.TabIndex = 67;
+      this.labelFachgebHSR.Text = "Durchschnittsnote (fachgeb. HSR)";
       // 
       // textBoxDNote
       // 
@@ -520,13 +522,21 @@
       this.label12.TabIndex = 66;
       this.label12.Text = "Durchschnittsnote";
       // 
+      // alternatEinbrToolStripMenuItem
+      // 
+      this.alternatEinbrToolStripMenuItem.Name = "alternatEinbrToolStripMenuItem";
+      this.alternatEinbrToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+      this.alternatEinbrToolStripMenuItem.Tag = "4";
+      this.alternatEinbrToolStripMenuItem.Text = "alternative Einbringung";
+      this.alternatEinbrToolStripMenuItem.Click += new System.EventHandler(this.alternatEinbrToolStripMenuItem_Click);
+      // 
       // UserControlNotenbogen
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
-      this.Controls.Add(this.textBoxDNoteAllg);
-      this.Controls.Add(this.labelFf);
+      this.Controls.Add(this.textBoxDNoteFachgebHSR);
+      this.Controls.Add(this.labelFachgebHSR);
       this.Controls.Add(this.textBoxDNote);
       this.Controls.Add(this.label12);
       this.Controls.Add(this.lbHinweise);
@@ -538,7 +548,7 @@
       this.Controls.Add(this.chkShowHj1);
       this.Controls.Add(this.dataGridNoten);
       this.Name = "UserControlNotenbogen";
-      this.Size = new System.Drawing.Size(1098, 527);
+      this.Size = new System.Drawing.Size(1064, 493);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridNoten)).EndInit();
       this.contextMenu.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridPunktesumme)).EndInit();
@@ -583,9 +593,10 @@
     private System.Windows.Forms.Label lbBerechnungsstatus;
     private System.Windows.Forms.ComboBox comboBoxBerechnungsstatus;
     private System.Windows.Forms.Label lbHinweise;
-    private System.Windows.Forms.TextBox textBoxDNoteAllg;
-    private System.Windows.Forms.Label labelFf;
+    private System.Windows.Forms.TextBox textBoxDNoteFachgebHSR;
+    private System.Windows.Forms.Label labelFachgebHSR;
     private System.Windows.Forms.TextBox textBoxDNote;
     private System.Windows.Forms.Label label12;
+    private System.Windows.Forms.ToolStripMenuItem alternatEinbrToolStripMenuItem;
   }
 }

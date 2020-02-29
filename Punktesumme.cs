@@ -35,8 +35,13 @@ namespace diNo
       summe = new int[Enum.GetValues(typeof(PunktesummeArt)).Length];      
     }
 
-    public void BerechneGesamtpunktzahl()
+    public void BerechneGesamtpunktzahl(int deltaP)
     {
+      if (!schueler.Seminarfachnote.IsGesamtnoteNull())
+      {
+        Add(PunktesummeArt.Seminar,(byte)schueler.Seminarfachnote.Gesamtnote,2);
+      }
+
       int anz = 0, sum = 0;
       for (int i = 0; i < 5; i++) // bis Seminar
       {
@@ -47,22 +52,30 @@ namespace diNo
         }
       }
       
-      if (anzahl[(int)PunktesummeArt.Fremdsprache] > 0)
+      // für Ergänzungsprüfung oder F-f in 12. Klasse:
+      if (anzahl[(int)PunktesummeArt.FremdspracheErgPr] > 0 || anzahl[(int)PunktesummeArt.FremdspracheAus12] > 0)
       {
         anzahl[(int)PunktesummeArt.GesamtFachgebHSR] = anz;
         summe[(int)PunktesummeArt.GesamtFachgebHSR] = sum;
 
-        anz += anzahl[(int)PunktesummeArt.Fremdsprache];
-        sum += summe[(int)PunktesummeArt.Fremdsprache];
+        anz += anzahl[(int)PunktesummeArt.FremdspracheErgPr] + anzahl[(int)PunktesummeArt.FremdspracheAus12];
+        sum += summe[(int)PunktesummeArt.FremdspracheErgPr] + summe[(int)PunktesummeArt.FremdspracheAus12];
       }
 
       anzahl[(int)PunktesummeArt.Gesamt] = anz;
       summe[(int)PunktesummeArt.Gesamt] = sum;
+
+      if (deltaP > 0) // schließt hoffentlich den obigen Fall mit Fremdsprache > 0 aus!
+      {
+        anzahl[(int)PunktesummeArt.GesamtFachgebHSR] = anz;
+        summe[(int)PunktesummeArt.GesamtFachgebHSR] = sum + deltaP;
+      }
     }
 
-    public void WriteToDB()
+    // deltaP gibt an, um wieviel höher die Punktesumme bei der fachgeb. HSR liegt, wenn eine alternative HjLeistung eingebracht wird
+    public void WriteToDB(int deltaP=0)
     {
-      BerechneGesamtpunktzahl();
+      BerechneGesamtpunktzahl(deltaP);
       var ta = new PunktesummeTableAdapter();
       ta.DeleteBySchuelerId(schueler.Id);
       for (int i=0; i < Enum.GetValues(typeof(PunktesummeArt)).Length; i++)
@@ -79,10 +92,10 @@ namespace diNo
     }
 
     // Addition eines Einzelwertes
-    public void Add(PunktesummeArt art, int punkte)
+    public void Add(PunktesummeArt art, int punkte, int faktor=1)
     {
-      anzahl[(int)art] ++;
-      summe[(int)art] += punkte;
+      anzahl[(int)art] +=faktor;
+      summe[(int)art] += punkte * faktor;
     }
 
     public int Anzahl(PunktesummeArt art)
@@ -103,7 +116,11 @@ namespace diNo
         case PunktesummeArt.FPA: return "FpA";
         case PunktesummeArt.FR: return "Fachreferat";
         case PunktesummeArt.HjLeistungen: return "Halbjahresleistungen";
+        case PunktesummeArt.Seminar: return "Seminar";
+        case PunktesummeArt.FremdspracheErgPr: return "Ergänzungsprüfung";
+        case PunktesummeArt.FremdspracheAus12:return "Fremdsprache der 12. Klasse";
         case PunktesummeArt.Gesamt: return "Summe";
+        case PunktesummeArt.GesamtFachgebHSR: return "Summe (fachgeb. HSR)";
         default: return "";
       }
     }
@@ -156,7 +173,8 @@ namespace diNo
     FR,
     FPA,
     Seminar,
-    Fremdsprache,
+    FremdspracheErgPr,
+    FremdspracheAus12,
     Gesamt,
     GesamtFachgebHSR
   }

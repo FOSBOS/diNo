@@ -23,6 +23,7 @@ namespace diNo
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
     public Zweig Zweig;    
     public Punktesumme punktesumme;
+    bool BekommtAllgHSR = false; // wird true, sobald eine 2. Fremdsprache mit Niveau B1 vorliegt.
 
 
     public Schueler(int id)
@@ -541,14 +542,14 @@ namespace diNo
       return false;
     }
 
+    // nur für 13. Klasse: hat erfolgreich die 2. FS besucht
     public bool HatZweiteFremdsprache()
     {
-      if (!Data.IsAndereFremdspr2NoteNull()) return true; // die werden doch nicht Noten eintragen schlechter als 4
+      if (!Data.IsAndereFremdspr2NoteNull()) return true; // erfolgreiche Ergänzungsprüfung liegt vor
       foreach (var f in getNoten.alleSprachen)
       {
-        if (f.getFach.Kuerzel == "E") continue;
-                
-        if (f.getHjLeistung(HjArt.JN).Punkte > 3) return true;
+        if (f.getFach.getKursniveau() == Kursniveau.Englisch) continue;
+        if (Fremdsprachen.HjToSprachniveau(f) >= Sprachniveau.B1) return true;        
       }
 
       return false;

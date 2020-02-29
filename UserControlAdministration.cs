@@ -204,11 +204,7 @@ namespace diNo
 
       foreach (var s in alle)
       {
-        if (!s.Data.IsDNoteAllgNull())
-        {
-          if ((double)Math.Min(s.Data.DNote,s.Data.DNoteAllg)< 2.0) liste.Add(s);
-        }
-        else if (!s.Data.IsDNoteNull() && (double)s.Data.DNote < 2.0) liste.Add(s);
+        if (!s.Data.IsDNoteNull() && (double)s.Data.DNote < 2.0) liste.Add(s);
       }
       new ReportSchuelerdruck(liste, Bericht.EinserAbi).Show();
     }

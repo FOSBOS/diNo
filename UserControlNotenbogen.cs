@@ -145,7 +145,7 @@ namespace diNo
         && schueler.punktesumme.Anzahl(PunktesummeArt.HjLeistungen) != schueler.GetAnzahlEinbringung();
       comboBoxBerechnungsstatus.SelectedIndex = schueler.Data.Berechungsstatus;
       textBoxDNote.Text = schueler.Data.IsDNoteNull() ? "" : string.Format("{0:F1}", schueler.Data.DNote);
-      textBoxDNoteAllg.Text = schueler.Data.IsDNoteAllgNull() ? "" : string.Format("{0:F1}", schueler.Data.DNoteAllg);
+      textBoxDNoteFachgebHSR.Text = schueler.Data.IsDNoteFachgebHSRNull() ? "" : string.Format("{0:F1}", schueler.Data.DNoteFachgebHSR);
     }
 
     private void SetBackgroundColor(HjLeistung hj, DataGridViewCell cell)
@@ -250,6 +250,11 @@ namespace diNo
       setStatus(HjStatus.Ungueltig);
     }
 
+    private void alternatEinbrToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+      setStatus(HjStatus.AlternativeEinbr);
+    }
+    
     private void dataGridNoten_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
     {
       if (e.ColumnIndex >= 0 && e.RowIndex >= 0)

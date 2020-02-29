@@ -18,7 +18,7 @@ namespace diNo
 
     public void ZufallHjLeistung(Schueler s)
     {
-      bool FR = s.Fachreferat.Count > 0; // FR vorhanden
+      bool FR = s.getKlasse.Jahrgangsstufe != Jahrgangsstufe.Zwoelf || s.Fachreferat.Count > 0; // kein FR mehr nötig
 
       foreach (var f in s.getNoten.alleKurse)
       {

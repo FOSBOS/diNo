@@ -599,7 +599,7 @@ FROM            KlasseKurs</CommandText>
               <Mapping SourceColumn="KursId" DataSetColumn="KursId" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="diNoConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteByKursId" Modifier="Public" Name="DeleteByKursId" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="DeleteByKursId">
+              <DbSource ConnectionRef="diNoConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="DeleteByKursId" Modifier="Public" Name="DeleteByKursId" QueryType="NoData" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="DeleteByKursId">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>DELETE from KlasseKurs
@@ -622,7 +622,7 @@ WHERE        (KursId = @KursId)</CommandText>
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="diNoConnectionString (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="ScalarQueryCountByKlasseAndKurs" Modifier="Public" Name="ScalarQueryCountByKlasseAndKurs" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="ScalarQueryCountByKlasseAndKurs">
+              <DbSource ConnectionRef="diNoConnectionString (Settings)" DbObjectType="Unknown" GenerateShortCommands="true" GeneratorSourceName="ScalarQueryCountByKlasseAndKurs" Modifier="Public" Name="ScalarQueryCountByKlasseAndKurs" QueryType="Scalar" ScalarCallRetval="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="ScalarQueryCountByKlasseAndKurs">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT COUNT(*) FROM KlasseKurs
@@ -1097,7 +1097,7 @@ WHERE SchuelerId = @SchuelerId AND [Art] = 15
                 </DeleteCommand>
                 <InsertCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>INSERT INTO [Schueler] ([Id], [Name], [Vorname], [KlasseId], [Rufname], [Geschlecht], [Geburtsdatum], [Geburtsort], [Bekenntnis], [AnschriftPLZ], [AnschriftOrt], [AnschriftStrasse], [AnschriftTelefonnummer], [Ausbildungsrichtung], [Fremdsprache2], [ReligionOderEthik], [Wahlpflichtfach], [Wahlfach1], [Wahlfach2], [Wahlfach3], [Wahlfach4], [Wiederholung1Jahrgangsstufe], [Wiederholung2Jahrgangsstufe], [Wiederholung1Grund], [Wiederholung2Grund], [ProbezeitBis], [Austrittsdatum], [SchulischeVorbildung], [BeruflicheVorbildung], [LRSStoerung], [NachnameEltern1], [VornameEltern1], [AnredeEltern1], [VerwandtschaftsbezeichnungEltern1], [NachnameEltern2], [VornameEltern2], [AnredeEltern2], [VerwandtschaftsbezeichnungEltern2], [EintrittJahrgangsstufe], [EintrittAm], [EintrittAusSchulnummer], [Email], [Notfalltelefonnummer], [DNote], [Status], [AndereFremdspr2Note], [AndereFremdspr2Text], [DNoteAllg], [Schulart], [Punktesumme], [Bestanden], [SonderfallNur2Hj], [Zeugnisbemerkung], [EintrittAusSchulart], [MittlereReifeMathenote], [MittlereReifeDeutschnote], [MittlereReifeEnglischnote], [Berechungsstatus]) VALUES (@Id, @Name, @Vorname, @KlasseId, @Rufname, @Geschlecht, @Geburtsdatum, @Geburtsort, @Bekenntnis, @AnschriftPLZ, @AnschriftOrt, @AnschriftStrasse, @AnschriftTelefonnummer, @Ausbildungsrichtung, @Fremdsprache2, @ReligionOderEthik, @Wahlpflichtfach, @Wahlfach1, @Wahlfach2, @Wahlfach3, @Wahlfach4, @Wiederholung1Jahrgangsstufe, @Wiederholung2Jahrgangsstufe, @Wiederholung1Grund, @Wiederholung2Grund, @ProbezeitBis, @Austrittsdatum, @SchulischeVorbildung, @BeruflicheVorbildung, @LRSStoerung, @NachnameEltern1, @VornameEltern1, @AnredeEltern1, @VerwandtschaftsbezeichnungEltern1, @NachnameEltern2, @VornameEltern2, @AnredeEltern2, @VerwandtschaftsbezeichnungEltern2, @EintrittJahrgangsstufe, @EintrittAm, @EintrittAusSchulnummer, @Email, @Notfalltelefonnummer, @DNote, @Status, @AndereFremdspr2Note, @AndereFremdspr2Text, @DNoteAllg, @Schulart, @Punktesumme, @Bestanden, @SonderfallNur2Hj, @Zeugnisbemerkung, @EintrittAusSchulart, @MittlereReifeMathenote, @MittlereReifeDeutschnote, @MittlereReifeEnglischnote, @Berechungsstatus)</CommandText>
+                    <CommandText>INSERT INTO [Schueler] ([Id], [Name], [Vorname], [KlasseId], [Rufname], [Geschlecht], [Geburtsdatum], [Geburtsort], [Bekenntnis], [AnschriftPLZ], [AnschriftOrt], [AnschriftStrasse], [AnschriftTelefonnummer], [Ausbildungsrichtung], [Fremdsprache2], [ReligionOderEthik], [Wahlpflichtfach], [Wahlfach1], [Wahlfach2], [Wahlfach3], [Wahlfach4], [Wiederholung1Jahrgangsstufe], [Wiederholung2Jahrgangsstufe], [Wiederholung1Grund], [Wiederholung2Grund], [ProbezeitBis], [Austrittsdatum], [SchulischeVorbildung], [BeruflicheVorbildung], [LRSStoerung], [NachnameEltern1], [VornameEltern1], [AnredeEltern1], [VerwandtschaftsbezeichnungEltern1], [NachnameEltern2], [VornameEltern2], [AnredeEltern2], [VerwandtschaftsbezeichnungEltern2], [EintrittJahrgangsstufe], [EintrittAm], [EintrittAusSchulnummer], [Email], [Notfalltelefonnummer], [DNote], [Status], [AndereFremdspr2Note], [AndereFremdspr2Text], [DNoteFachgebHSR], [Schulart], [SonderfallNur2Hj], [Zeugnisbemerkung], [EintrittAusSchulart], [MittlereReifeMathenote], [MittlereReifeDeutschnote], [MittlereReifeEnglischnote], [Berechungsstatus]) VALUES (@Id, @Name, @Vorname, @KlasseId, @Rufname, @Geschlecht, @Geburtsdatum, @Geburtsort, @Bekenntnis, @AnschriftPLZ, @AnschriftOrt, @AnschriftStrasse, @AnschriftTelefonnummer, @Ausbildungsrichtung, @Fremdsprache2, @ReligionOderEthik, @Wahlpflichtfach, @Wahlfach1, @Wahlfach2, @Wahlfach3, @Wahlfach4, @Wiederholung1Jahrgangsstufe, @Wiederholung2Jahrgangsstufe, @Wiederholung1Grund, @Wiederholung2Grund, @ProbezeitBis, @Austrittsdatum, @SchulischeVorbildung, @BeruflicheVorbildung, @LRSStoerung, @NachnameEltern1, @VornameEltern1, @AnredeEltern1, @VerwandtschaftsbezeichnungEltern1, @NachnameEltern2, @VornameEltern2, @AnredeEltern2, @VerwandtschaftsbezeichnungEltern2, @EintrittJahrgangsstufe, @EintrittAm, @EintrittAusSchulnummer, @Email, @Notfalltelefonnummer, @DNote, @Status, @AndereFremdspr2Note, @AndereFremdspr2Text, @DNoteFachgebHSR, @Schulart, @SonderfallNur2Hj, @Zeugnisbemerkung, @EintrittAusSchulart, @MittlereReifeMathenote, @MittlereReifeDeutschnote, @MittlereReifeEnglischnote, @Berechungsstatus)</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Id" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Name" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Name" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -1146,10 +1146,8 @@ WHERE SchuelerId = @SchuelerId AND [Art] = 15
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Status" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Status" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@AndereFremdspr2Note" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="AndereFremdspr2Note" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@AndereFremdspr2Text" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="AndereFremdspr2Text" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@DNoteAllg" Precision="5" ProviderType="Decimal" Scale="1" Size="0" SourceColumn="DNoteAllg" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@DNoteFachgebHSR" Precision="5" ProviderType="Decimal" Scale="1" Size="0" SourceColumn="DNoteFachgebHSR" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Schulart" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Schulart" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Punktesumme" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Punktesumme" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Bestanden" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Bestanden" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Boolean" Direction="Input" ParameterName="@SonderfallNur2Hj" Precision="0" ProviderType="Bit" Scale="0" Size="0" SourceColumn="SonderfallNur2Hj" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Zeugnisbemerkung" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Zeugnisbemerkung" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@EintrittAusSchulart" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="EintrittAusSchulart" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -1162,9 +1160,8 @@ WHERE SchuelerId = @SchuelerId AND [Art] = 15
                 </InsertCommand>
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT  *
-FROM            Schueler
-WHERE        (Id = @Id)</CommandText>
+                    <CommandText>SELECT
+* FROM Schueler WHERE (Id = @Id)</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="Id" ColumnName="Id" DataSourceName="diNo.dbo.Schueler" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@Id" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="Id" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
@@ -1172,7 +1169,7 @@ WHERE        (Id = @Id)</CommandText>
                 </SelectCommand>
                 <UpdateCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
-                    <CommandText>UPDATE [Schueler] SET [Id] = @Id, [Name] = @Name, [Vorname] = @Vorname, [KlasseId] = @KlasseId, [Rufname] = @Rufname, [Geschlecht] = @Geschlecht, [Geburtsdatum] = @Geburtsdatum, [Geburtsort] = @Geburtsort, [Bekenntnis] = @Bekenntnis, [AnschriftPLZ] = @AnschriftPLZ, [AnschriftOrt] = @AnschriftOrt, [AnschriftStrasse] = @AnschriftStrasse, [AnschriftTelefonnummer] = @AnschriftTelefonnummer, [Ausbildungsrichtung] = @Ausbildungsrichtung, [Fremdsprache2] = @Fremdsprache2, [ReligionOderEthik] = @ReligionOderEthik, [Wahlpflichtfach] = @Wahlpflichtfach, [Wahlfach1] = @Wahlfach1, [Wahlfach2] = @Wahlfach2, [Wahlfach3] = @Wahlfach3, [Wahlfach4] = @Wahlfach4, [Wiederholung1Jahrgangsstufe] = @Wiederholung1Jahrgangsstufe, [Wiederholung2Jahrgangsstufe] = @Wiederholung2Jahrgangsstufe, [Wiederholung1Grund] = @Wiederholung1Grund, [Wiederholung2Grund] = @Wiederholung2Grund, [ProbezeitBis] = @ProbezeitBis, [Austrittsdatum] = @Austrittsdatum, [SchulischeVorbildung] = @SchulischeVorbildung, [BeruflicheVorbildung] = @BeruflicheVorbildung, [LRSStoerung] = @LRSStoerung, [NachnameEltern1] = @NachnameEltern1, [VornameEltern1] = @VornameEltern1, [AnredeEltern1] = @AnredeEltern1, [VerwandtschaftsbezeichnungEltern1] = @VerwandtschaftsbezeichnungEltern1, [NachnameEltern2] = @NachnameEltern2, [VornameEltern2] = @VornameEltern2, [AnredeEltern2] = @AnredeEltern2, [VerwandtschaftsbezeichnungEltern2] = @VerwandtschaftsbezeichnungEltern2, [EintrittJahrgangsstufe] = @EintrittJahrgangsstufe, [EintrittAm] = @EintrittAm, [EintrittAusSchulnummer] = @EintrittAusSchulnummer, [Email] = @Email, [Notfalltelefonnummer] = @Notfalltelefonnummer, [DNote] = @DNote, [Status] = @Status, [AndereFremdspr2Note] = @AndereFremdspr2Note, [AndereFremdspr2Text] = @AndereFremdspr2Text, [DNoteAllg] = @DNoteAllg, [Schulart] = @Schulart, [Punktesumme] = @Punktesumme, [Bestanden] = @Bestanden, [SonderfallNur2Hj] = @SonderfallNur2Hj, [Zeugnisbemerkung] = @Zeugnisbemerkung, [EintrittAusSchulart] = @EintrittAusSchulart, [MittlereReifeMathenote] = @MittlereReifeMathenote, [MittlereReifeDeutschnote] = @MittlereReifeDeutschnote, [MittlereReifeEnglischnote] = @MittlereReifeEnglischnote, [Berechungsstatus] = @Berechungsstatus WHERE (([Id] = @Original_Id))</CommandText>
+                    <CommandText>UPDATE [Schueler] SET [Id] = @Id, [Name] = @Name, [Vorname] = @Vorname, [KlasseId] = @KlasseId, [Rufname] = @Rufname, [Geschlecht] = @Geschlecht, [Geburtsdatum] = @Geburtsdatum, [Geburtsort] = @Geburtsort, [Bekenntnis] = @Bekenntnis, [AnschriftPLZ] = @AnschriftPLZ, [AnschriftOrt] = @AnschriftOrt, [AnschriftStrasse] = @AnschriftStrasse, [AnschriftTelefonnummer] = @AnschriftTelefonnummer, [Ausbildungsrichtung] = @Ausbildungsrichtung, [Fremdsprache2] = @Fremdsprache2, [ReligionOderEthik] = @ReligionOderEthik, [Wahlpflichtfach] = @Wahlpflichtfach, [Wahlfach1] = @Wahlfach1, [Wahlfach2] = @Wahlfach2, [Wahlfach3] = @Wahlfach3, [Wahlfach4] = @Wahlfach4, [Wiederholung1Jahrgangsstufe] = @Wiederholung1Jahrgangsstufe, [Wiederholung2Jahrgangsstufe] = @Wiederholung2Jahrgangsstufe, [Wiederholung1Grund] = @Wiederholung1Grund, [Wiederholung2Grund] = @Wiederholung2Grund, [ProbezeitBis] = @ProbezeitBis, [Austrittsdatum] = @Austrittsdatum, [SchulischeVorbildung] = @SchulischeVorbildung, [BeruflicheVorbildung] = @BeruflicheVorbildung, [LRSStoerung] = @LRSStoerung, [NachnameEltern1] = @NachnameEltern1, [VornameEltern1] = @VornameEltern1, [AnredeEltern1] = @AnredeEltern1, [VerwandtschaftsbezeichnungEltern1] = @VerwandtschaftsbezeichnungEltern1, [NachnameEltern2] = @NachnameEltern2, [VornameEltern2] = @VornameEltern2, [AnredeEltern2] = @AnredeEltern2, [VerwandtschaftsbezeichnungEltern2] = @VerwandtschaftsbezeichnungEltern2, [EintrittJahrgangsstufe] = @EintrittJahrgangsstufe, [EintrittAm] = @EintrittAm, [EintrittAusSchulnummer] = @EintrittAusSchulnummer, [Email] = @Email, [Notfalltelefonnummer] = @Notfalltelefonnummer, [DNote] = @DNote, [Status] = @Status, [AndereFremdspr2Note] = @AndereFremdspr2Note, [AndereFremdspr2Text] = @AndereFremdspr2Text, [DNoteFachgebHSR] = @DNoteFachgebHSR, [Schulart] = @Schulart, [SonderfallNur2Hj] = @SonderfallNur2Hj, [Zeugnisbemerkung] = @Zeugnisbemerkung, [EintrittAusSchulart] = @EintrittAusSchulart, [MittlereReifeMathenote] = @MittlereReifeMathenote, [MittlereReifeDeutschnote] = @MittlereReifeDeutschnote, [MittlereReifeEnglischnote] = @MittlereReifeEnglischnote, [Berechungsstatus] = @Berechungsstatus WHERE (([Id] = @Original_Id))</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Id" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Id" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Name" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Name" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -1221,10 +1218,8 @@ WHERE        (Id = @Id)</CommandText>
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Status" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Status" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@AndereFremdspr2Note" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="AndereFremdspr2Note" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@AndereFremdspr2Text" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="AndereFremdspr2Text" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@DNoteAllg" Precision="5" ProviderType="Decimal" Scale="1" Size="0" SourceColumn="DNoteAllg" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Decimal" Direction="Input" ParameterName="@DNoteFachgebHSR" Precision="5" ProviderType="Decimal" Scale="1" Size="0" SourceColumn="DNoteFachgebHSR" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Schulart" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Schulart" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Punktesumme" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Punktesumme" SourceColumnNullMapping="false" SourceVersion="Current" />
-                      <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="Int32" Direction="Input" ParameterName="@Bestanden" Precision="0" ProviderType="Int" Scale="0" Size="0" SourceColumn="Bestanden" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Boolean" Direction="Input" ParameterName="@SonderfallNur2Hj" Precision="0" ProviderType="Bit" Scale="0" Size="0" SourceColumn="SonderfallNur2Hj" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@Zeugnisbemerkung" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="Zeugnisbemerkung" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@EintrittAusSchulart" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="EintrittAusSchulart" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -1286,10 +1281,8 @@ WHERE        (Id = @Id)</CommandText>
               <Mapping SourceColumn="Status" DataSetColumn="Status" />
               <Mapping SourceColumn="AndereFremdspr2Note" DataSetColumn="AndereFremdspr2Note" />
               <Mapping SourceColumn="AndereFremdspr2Text" DataSetColumn="AndereFremdspr2Text" />
-              <Mapping SourceColumn="DNoteAllg" DataSetColumn="DNoteAllg" />
+              <Mapping SourceColumn="DNoteAllg" DataSetColumn="DNoteFachgebHSR" />
               <Mapping SourceColumn="Schulart" DataSetColumn="Schulart" />
-              <Mapping SourceColumn="Punktesumme" DataSetColumn="Punktesumme" />
-              <Mapping SourceColumn="Bestanden" DataSetColumn="Bestanden" />
               <Mapping SourceColumn="Zeugnisbemerkung" DataSetColumn="Zeugnisbemerkung" />
               <Mapping SourceColumn="SonderfallNur2Hj" DataSetColumn="SonderfallNur2Hj" />
               <Mapping SourceColumn="MittlereReifeMathenote" DataSetColumn="MittlereReifeMathenote" />
@@ -1297,14 +1290,13 @@ WHERE        (Id = @Id)</CommandText>
               <Mapping SourceColumn="MittlereReifeEnglischnote" DataSetColumn="MittlereReifeEnglischnote" />
               <Mapping SourceColumn="EintrittAusSchulart" DataSetColumn="EintrittAusSchulart" />
               <Mapping SourceColumn="Berechungsstatus" DataSetColumn="Berechungsstatus" />
+              <Mapping SourceColumn="DNoteFachgebHSR" DataSetColumn="DNoteFachgebHSR" />
             </Mappings>
             <Sources>
               <DbSource ConnectionRef="diNoConnectionString (Settings)" DbObjectName="diNo.dbo.Schueler" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="FillByKlasse" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByKlasse" GeneratorSourceName="FillByKlasse" GetMethodModifier="Public" GetMethodName="GetDataByKlasse" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByKlasse" UserSourceName="FillByKlasse">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT *
-FROM Schueler 
-WHERE (KlasseId = @KlasseId)</CommandText>
+                    <CommandText>SELECT * FROM Schueler WHERE (KlasseId = @KlasseId)</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="KlasseId" ColumnName="KlasseId" DataSourceName="diNo.dbo.Schueler" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@KlasseId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="KlasseId" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
@@ -1314,8 +1306,7 @@ WHERE (KlasseId = @KlasseId)</CommandText>
               <DbSource ConnectionRef="diNoConnectionString (Settings)" DbObjectName="diNo.dbo.Schueler" DbObjectType="Table" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="GetData">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT *
-FROM Schueler</CommandText>
+                    <CommandText>SELECT * FROM Schueler</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>
@@ -1323,9 +1314,7 @@ FROM Schueler</CommandText>
               <DbSource ConnectionRef="diNoConnectionString (Settings)" DbObjectName="diNo.dbo.Schueler" DbObjectType="Table" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByKlasseUndZweig" GetMethodModifier="Public" GetMethodName="GetDataByKlasseUndZweig" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByKlasseUndZweig" UserSourceName="GetDataByKlasseUndZweig">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT *
-FROM Schueler 
-WHERE (KlasseId = @KlasseId) AND (Ausbildungsrichtung = @Ausbildungsrichtung)</CommandText>
+                    <CommandText>SELECT * FROM Schueler WHERE (KlasseId = @KlasseId) AND (Ausbildungsrichtung = @Ausbildungsrichtung)</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="KlasseId" ColumnName="KlasseId" DataSourceName="diNo.dbo.Schueler" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@KlasseId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="KlasseId" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="true" AutogeneratedName="Ausbildungsrichtung" ColumnName="Ausbildungsrichtung" DataSourceName="diNo.dbo.Schueler" DataTypeServer="nvarchar(50)" DbType="String" Direction="Input" ParameterName="@Ausbildungsrichtung" Precision="0" ProviderType="NVarChar" Scale="0" Size="50" SourceColumn="Ausbildungsrichtung" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -1336,9 +1325,7 @@ WHERE (KlasseId = @KlasseId) AND (Ausbildungsrichtung = @Ausbildungsrichtung)</C
               <DbSource ConnectionRef="diNoConnectionString (Settings)" DbObjectName="diNo.dbo.Schueler" DbObjectType="Table" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByKursId" GetMethodModifier="Public" GetMethodName="GetDataByKursId" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByKursId" UserSourceName="GetDataByKursId">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT Schueler.* 
-FROM Schueler INNER JOIN SchuelerKurs ON Schueler.Id = SchuelerKurs.SchuelerId 
-WHERE (SchuelerKurs.KursId = @KursId) ORDER BY Schueler.KlasseId, Schueler.Name, Schueler.Vorname</CommandText>
+                    <CommandText>SELECT Schueler.* FROM Schueler INNER JOIN SchuelerKurs ON Schueler.Id = SchuelerKurs.SchuelerId WHERE (SchuelerKurs.KursId = @KursId) ORDER BY Schueler.KlasseId, Schueler.Name, Schueler.Vorname</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="KursId" ColumnName="KursId" DataSourceName="diNo.dbo.SchuelerKurs" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@KursId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="KursId" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
@@ -1389,9 +1376,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
               <DbSource ConnectionRef="diNoConnectionString (Settings)" DbObjectName="diNo.dbo.Schueler" DbObjectType="Table" GenerateMethods="Get" GenerateShortCommands="true" GeneratorGetMethodName="GetDataByStatus" GetMethodModifier="Public" GetMethodName="GetDataByStatus" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataByStatus" UserSourceName="GetDataByStatus">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
-                    <CommandText>SELECT *
-FROM Schueler 
-WHERE (Status &lt;&gt; @NotStatus)</CommandText>
+                    <CommandText>SELECT * FROM Schueler WHERE (Status &lt;&gt; @NotStatus)</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="true" AutogeneratedName="NotStatus" ColumnName="Status" DataSourceName="diNo.dbo.Schueler" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@NotStatus" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="Status" SourceColumnNullMapping="false" SourceVersion="Current" />
                     </Parameters>
@@ -1784,10 +1769,11 @@ SELECT Id, SchuelerId, FachId, Art, Punkte, Punkte2Dez, SchnittMdl, JgStufe, Sta
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>DELETE FROM [HjLeistung] 
-WHERE  ([SchuelerId] = @SchuelerId) AND ([Art] = @Art)</CommandText>
+WHERE  ([SchuelerId] = @SchuelerId) AND ([Art] = @Art) AND ([JgStufe]=@JgStufe)</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="SchuelerId" ColumnName="SchuelerId" DataSourceName="diNo.dbo.HjLeistung" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@SchuelerId" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="SchuelerId" SourceColumnNullMapping="false" SourceVersion="Original" />
                       <Parameter AllowDbNull="false" AutogeneratedName="Art" ColumnName="Art" DataSourceName="diNo.dbo.HjLeistung" DataTypeServer="tinyint" DbType="Byte" Direction="Input" ParameterName="@Art" Precision="0" ProviderType="TinyInt" Scale="0" Size="1" SourceColumn="Art" SourceColumnNullMapping="false" SourceVersion="Original" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="JgStufe" ColumnName="JgStufe" DataSourceName="diNo.dbo.HjLeistung" DataTypeServer="int" DbType="Int32" Direction="Input" ParameterName="@JgStufe" Precision="0" ProviderType="Int" Scale="0" Size="4" SourceColumn="JgStufe" SourceColumnNullMapping="false" SourceVersion="Original" />
                     </Parameters>
                   </DbCommand>
                 </DeleteCommand>
@@ -2577,10 +2563,8 @@ Where SchuelerId = @SchuelerId</CommandText>
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="DNoteAllg" msprop:Generator_ColumnVarNameInTable="columnDNoteAllg" msprop:Generator_ColumnPropNameInRow="DNoteAllg" msprop:Generator_ColumnPropNameInTable="DNoteAllgColumn" msprop:Generator_UserColumnName="DNoteAllg" type="xs:decimal" minOccurs="0" />
+              <xs:element name="DNoteFachgebHSR" msprop:Generator_ColumnVarNameInTable="columnDNoteFachgebHSR" msprop:Generator_ColumnPropNameInRow="DNoteFachgebHSR" msprop:Generator_ColumnPropNameInTable="DNoteFachgebHSRColumn" msprop:Generator_UserColumnName="DNoteFachgebHSR" type="xs:decimal" minOccurs="0" />
               <xs:element name="Schulart" msprop:nullValue="_throw" msprop:Generator_ColumnPropNameInRow="Schulart" msprop:Generator_ColumnVarNameInTable="columnSchulart" msprop:Generator_ColumnPropNameInTable="SchulartColumn" msprop:Generator_UserColumnName="Schulart" type="xs:string" minOccurs="0" />
-              <xs:element name="Punktesumme" msprop:Generator_ColumnVarNameInTable="columnPunktesumme" msprop:Generator_ColumnPropNameInRow="Punktesumme" msprop:Generator_ColumnPropNameInTable="PunktesummeColumn" msprop:Generator_UserColumnName="Punktesumme" type="xs:int" minOccurs="0" />
-              <xs:element name="Bestanden" msprop:Generator_ColumnVarNameInTable="columnBestanden" msprop:Generator_ColumnPropNameInRow="Bestanden" msprop:Generator_ColumnPropNameInTable="BestandenColumn" msprop:Generator_UserColumnName="Bestanden" type="xs:int" minOccurs="0" />
               <xs:element name="Zeugnisbemerkung" msprop:nullValue="_null" msprop:Generator_ColumnPropNameInRow="Zeugnisbemerkung" msprop:Generator_ColumnVarNameInTable="columnZeugnisbemerkung" msprop:Generator_ColumnPropNameInTable="ZeugnisbemerkungColumn" msprop:Generator_UserColumnName="Zeugnisbemerkung" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">

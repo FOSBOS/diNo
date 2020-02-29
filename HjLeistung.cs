@@ -87,6 +87,7 @@ namespace diNo
     {
       if (Status == HjStatus.Ungueltig) return Color.Gray;
       if (Status == HjStatus.NichtEinbringen) return Color.LightGray;
+      if (Status == HjStatus.AlternativeEinbr) return Color.LightBlue;
       if (Punkte < 1) return Color.Coral;
       if (Punkte < 3.5) return Color.Khaki;
       return Color.White;
@@ -135,7 +136,8 @@ namespace diNo
     None = 0,
     Einbringen = 1,
     NichtEinbringen = 2,
-    Ungueltig = 3 // z.B. Note steht zwar drin, aber es gibt nur eine Ex --> nicht bewertbar
+    Ungueltig = 3,        // z.B. Note steht zwar drin, aber es gibt nur eine Ex --> nicht bewertbar
+    AlternativeEinbr = 4  // diese HjLeistung wird in der 13. Klasse alternativ zu einem der beiden Französisch-Hj eingebracht (fachgeb. HSR)
   }
 
 }
