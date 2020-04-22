@@ -361,6 +361,25 @@ namespace diNo
       }
       Cursor = Cursors.Default;
     }
+
+    private void btnExportKurswahl_Click(object sender, EventArgs e)
+    {
+      var ek = new ExportKurswahl(getSelectedObjects());
+      SaveFileDialog dia = new SaveFileDialog();
+      dia.Title = "Schüler exportieren";
+      if (dia.ShowDialog() == DialogResult.OK)
+      {
+        ek.ExportSchueler(dia.FileName);
+      }
+      dia = new SaveFileDialog();
+      dia.Title = "Alte Kurse exportieren";
+      if (dia.ShowDialog() == DialogResult.OK)
+      {
+        ek.ExportAlteWPF(dia.FileName);
+      }
+
+
+    }
   }
 }
 

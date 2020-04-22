@@ -5,3 +5,5 @@ ALTER TABLE Schueler DROP COLUMN Bestanden;
 
 EXEC sp_rename 'Schueler.DNoteAllg', 'DNoteFachgebHSR', 'COLUMN';
 
+alter table Fach add WPFid int null;
+

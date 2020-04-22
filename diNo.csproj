@@ -93,6 +93,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExportKurswahl.cs" />
     <Compile Include="ListeForm.cs">
       <SubType>Form</SubType>
     </Compile>

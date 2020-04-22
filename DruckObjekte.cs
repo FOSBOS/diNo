@@ -570,10 +570,13 @@ namespace diNo
     public string JN { get; set; } // Jahresnote oder Gesamtergebnis
     public string JNText { get; set; }
     public string APG { get; private set; }
+    public bool hatNichtNC { get; private set; }
+    public string Seminarthema { get; private set; }
     private Bericht rpt;
 
     public NotenZeugnisDruck(FachSchuelerNoten s, Bericht arpt)
     {
+      hatNichtNC = false;
       rpt = arpt;
       switch (s.getFach.Typ)
       {
@@ -582,8 +585,10 @@ namespace diNo
         default: fachGruppe = "Wahlpflichtfächer"; break;
       }
       fachBez = s.getFach.BezZeugnis;
-      if (s.getFach.NichtNC && rpt == Bericht.Abiturzeugnis) fachBez += "*";
-
+      if (rpt == Bericht.Abiturzeugnis)
+      {
+        if (s.getFach.NichtNC) { fachBez += "*"; hatNichtNC = true; }        
+      }
       if (s.schueler.hatVorHj)
       {
         VorHj1 = HjToZeugnis(s.getVorHjLeistung(HjArt.Hj1));
@@ -619,6 +624,19 @@ namespace diNo
       fachBez = "<b>" + FachBezeichnung + "</b>";
       Hj2 = HjToZeugnis(f);
       JNToZeugnis(f);
+    }
+
+    public NotenZeugnisDruck(diNoDataSet.SeminarfachnoteRow s)
+    {
+      if (!s.IsThemaKurzNull()) Seminarthema = s.ThemaKurz;
+      else Seminarthema = "";
+      fachGruppe = "Wahlpflichtfächer";
+      fachBez = "<b>Seminar</b>";
+      if (!s.IsGesamtnoteNull()) // sollte nicht passieren, sonst kriegt er kein Abi
+      {
+        JN = s.Gesamtnote.ToString("D2");
+        JNToZeugnis((byte)s.Gesamtnote);
+      }            
     }
 
     private string HjToZeugnis(HjLeistung t) // für NeueFOBOSO

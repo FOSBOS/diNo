@@ -78,6 +78,7 @@
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
+      this.btnExportKurswahl = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -250,6 +251,7 @@
       // 
       // groupBoxExport
       // 
+      this.groupBoxExport.Controls.Add(this.btnExportKurswahl);
       this.groupBoxExport.Controls.Add(this.btnSeStatistik);
       this.groupBoxExport.Controls.Add(this.btnMBStatistik);
       this.groupBoxExport.Controls.Add(this.btnSendExcelFiles);
@@ -632,6 +634,16 @@
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
       // 
+      // btnExportKurswahl
+      // 
+      this.btnExportKurswahl.Location = new System.Drawing.Point(20, 106);
+      this.btnExportKurswahl.Name = "btnExportKurswahl";
+      this.btnExportKurswahl.Size = new System.Drawing.Size(182, 23);
+      this.btnExportKurswahl.TabIndex = 9;
+      this.btnExportKurswahl.Text = "Datei für Kurswahl";
+      this.btnExportKurswahl.UseVisualStyleBackColor = true;
+      this.btnExportKurswahl.Click += new System.EventHandler(this.btnExportKurswahl_Click);
+      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -720,5 +732,6 @@
     private System.Windows.Forms.Button btnWPF;
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Button btnKurseZuweisen;
+    private System.Windows.Forms.Button btnExportKurswahl;
   }
 }

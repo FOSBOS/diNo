@@ -79,6 +79,12 @@ namespace diNo
        get { return this.data.Kuerzel; }
     }
 
+    public int? WPFid
+    {      
+      get { if (data.IsWPFidNull()) return null;
+      else return data.WPFid; }
+    }
+
     public string PlatzInMBStatistik
     {
       get

@@ -33,6 +33,10 @@
           <DataField>GE</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="hatNichtNC">
+          <DataField>hatNichtNC</DataField>
+          <rd:TypeName>System.Boolean</rd:TypeName>
+        </Field>
         <Field Name="Hj1">
           <DataField>Hj1</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -47,6 +51,10 @@
         </Field>
         <Field Name="JNText">
           <DataField>JNText</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Seminarthema">
+          <DataField>Seminarthema</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="SGE">
@@ -3787,6 +3795,9 @@
             <Height>0.635cm</Height>
             <Width>17cm</Width>
             <ZIndex>1</ZIndex>
+            <Visibility>
+              <Hidden>=Not(Max(Fields!hatNichtNC.Value))</Hidden>
+            </Visibility>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -3814,7 +3825,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox2</rd:DefaultName>
-            <Top>5.60072cm</Top>
+            <Top>5.97114cm</Top>
             <Left>0.01021cm</Left>
             <Height>1.01451cm</Height>
             <Width>17cm</Width>
@@ -3910,8 +3921,49 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
+          <Textbox Name="Textbox5">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Thema der Seminararbeit: </Value>
+                    <Style>
+                      <FontFamily>gadugi</FontFamily>
+                    </Style>
+                  </TextRun>
+                  <TextRun>
+                    <Value>=Last(Fields!Seminarthema.Value)</Value>
+                    <Style>
+                      <FontFamily>gadugi</FontFamily>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>5.42406cm</Top>
+            <Left>0.01021cm</Left>
+            <Height>0.5118cm</Height>
+            <Width>17cm</Width>
+            <ZIndex>4</ZIndex>
+            <Visibility>
+              <Hidden>=Parameters!JgKurz.Value&lt;13</Hidden>
+            </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
-        <Height>2.60442in</Height>
+        <Height>2.77109in</Height>
         <Style>
           <Border>
             <Color>White</Color>

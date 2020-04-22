@@ -195,7 +195,12 @@ namespace diNo
         NotenZeugnisDruck f = new NotenZeugnisDruck(schueler.FPANoten);          
         liste.Add(f);
       }
-      
+      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      {
+        liste.Add(new NotenZeugnisDruck(schueler.Seminarfachnote));
+      }
+
+
       return liste;
     }
      
