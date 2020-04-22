@@ -108,23 +108,133 @@ namespace diNo
     }
   }
 
+  public class CoronaNoten : LeseNotenAusExcel
+  {
+    public CoronaNoten(String dateiname, StatusChanged statusChanged)
+      : base(dateiname, statusChanged, true)
+    {
+      for (int i = CellConstant.zeileSIdErsterSchueler; i < CellConstant.zeileSIdErsterSchueler + BasisNotendatei.MaxAnzahlSchueler; i++)
+      {
+        int sid = Convert.ToInt32(xls.ReadValue(xls.sid, CellConstant.SId + i));
+        if (sid == 0) break; // wir sind wohl am Ende der Datei
+        Schueler schueler = new Schueler(sid);
+        string schuelername = xls.ReadValue(xls.notenbogen, "B" + i);
+        if (string.IsNullOrEmpty(schuelername)) continue; // dieser Schüler ist wohl ausgetreten. Keine Noten übernehmen.
+
+        int noetigeAnzahlSchulaufgaben = kurs.getFach.AnzahlSA(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe);
+        PruefeZellen(i, new string[] { "L", "M" }, noetigeAnzahlSchulaufgaben); // Schulaufgaben
+
+        int noetigeAnzahlKurzarbeiten = kurs.schreibtKA ? 1 : 0;
+        if (noetigeAnzahlKurzarbeiten > 0)
+        {
+          PruefeZellen(i, new string[] { "C", "D" }, noetigeAnzahlKurzarbeiten);
+        }
+
+        int noetigeAnzahlMuendliche = kurs.schreibtKA ? 1 : 3;
+        PruefeZellen(i, new string[] { "E", "F", "G", "H", "I", "J" }, noetigeAnzahlMuendliche);
+      }
+    }
+
+    private void PruefeZellen(int i, string[] spalten, int minimalZahl)
+    {
+      //finde erstmal raus wie viele Noten der Schüler im ersten Halbjahr hatte
+      var noten1 = GetNoten(i, spalten, xls.notenbogen);
+
+      //dann schaue wie viele Noten im zweiten Halbjahr eingetragen sind
+      var noten2 = GetNoten(i, spalten, xls.notenbogen2);
+
+      int differenz = minimalZahl - noten2.Count; // so viele Noten fehlen
+      while (differenz > 0)
+      {
+        noten1.Sort();
+        noten1.Reverse();
+        // Finde eine freie Zelle und trage die beste aus HJ 1 dort ein
+        foreach (string spalte in spalten)
+        {
+          string wert = xls.ReadValue(xls.notenbogen2, spalte + i);
+          if (string.IsNullOrEmpty(wert))
+          {
+            // freie Zelle gefunden
+            xls.WriteValueProtectedCell(xls.notenbogen2, spalte + i, noten1[noten1.Count - 1].ToString(), true);
+            noten1.RemoveAt(noten1.Count - 1);
+          }
+        }
+        differenz--;
+      }
+    }
+
+    private List<byte> GetNoten(int i, string[] spalten, Microsoft.Office.Interop.Excel.Worksheet sheet)
+    {
+      List<byte> noten1 = new List<byte>();
+      for (int j = 0; j < spalten.Length; j++)
+      {
+        var note = xls.ReadNote(spalten[j] + i, sheet);
+
+        if (note.HasValue)
+        {
+          noten1.Add(note.Value);
+        }
+      }
+      return noten1;
+    }
+
+    #region IDisposable Support
+    private bool disposedValue = false; // Dient zur Erkennung redundanter Aufrufe.
+
+    protected virtual void Dispose(bool disposing)
+    {
+      if (!disposedValue)
+      {
+        if (disposing)
+        {
+          // TODO: verwalteten Zustand (verwaltete Objekte) entsorgen.
+        }
+
+        // TODO: nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer weiter unten überschreiben.
+        // TODO: große Felder auf Null setzen.
+
+        disposedValue = true;
+      }
+    }
+
+    // TODO: Finalizer nur überschreiben, wenn Dispose(bool disposing) weiter oben Code für die Freigabe nicht verwalteter Ressourcen enthält.
+    // ~CoronaNoten()
+    // {
+    //   // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in Dispose(bool disposing) weiter oben ein.
+    //   Dispose(false);
+    // }
+
+    // Dieser Code wird hinzugefügt, um das Dispose-Muster richtig zu implementieren.
+    public void Dispose()
+    {
+      // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in Dispose(bool disposing) weiter oben ein.
+      Dispose(true);
+      // TODO: Auskommentierung der folgenden Zeile aufheben, wenn der Finalizer weiter oben überschrieben wird.
+      // GC.SuppressFinalize(this);
+    }
+    #endregion
+
+  }
+
   public class LeseNotenAusExcel : BasisLeseNotenAusExcel, IDisposable
   {
-    private OpenNotendatei xls;
+    protected OpenNotendatei xls;
 
-    public LeseNotenAusExcel(string afileName, StatusChanged StatusChangedMethod)
+    public LeseNotenAusExcel(string afileName, StatusChanged StatusChangedMethod, bool doNothingModus)
       : base(afileName, StatusChangedMethod)
     {
       xls = new OpenNotendatei(afileName);
       ReadBasisdaten(xls);
 
-      Status("Synchronisiere Datei " + afileName);
-      Synchronize();
+      if (!doNothingModus)
+      {
+        Status("Synchronisiere Datei " + afileName);
+        Synchronize();
 
-      Status("Übertrage Noten aus Datei " + afileName);
-      DeleteAlteNoten();
-      UebertrageNoten();
-
+        Status("Übertrage Noten aus Datei " + afileName);
+        DeleteAlteNoten();
+        UebertrageNoten();
+      }
       HinweiseAusgeben(xls);
 
       xls.Dispose();
