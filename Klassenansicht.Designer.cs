@@ -62,6 +62,7 @@
       this.chkNurAktive = new System.Windows.Forms.CheckBox();
       this.btnRefresh = new System.Windows.Forms.Button();
       this.lbTest = new System.Windows.Forms.Label();
+      this.btnCorona = new System.Windows.Forms.Button();
       this.tabControl1.SuspendLayout();
       this.tabPageStammdaten.SuspendLayout();
       this.tabPageNotenbogen.SuspendLayout();
@@ -86,6 +87,7 @@
       this.imageList1.Images.SetKeyName(5, "Excel.png");
       this.imageList1.Images.SetKeyName(6, "424px-User-admin.png");
       this.imageList1.Images.SetKeyName(7, "Refresh.png");
+      this.imageList1.Images.SetKeyName(8, "Virus.png");
       // 
       // tabControl1
       // 
@@ -296,6 +298,7 @@
       this.treeListView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumnBezeichnung});
       this.treeListView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.treeListView1.HideSelection = false;
       this.treeListView1.Location = new System.Drawing.Point(12, 43);
       this.treeListView1.Name = "treeListView1";
       this.treeListView1.OwnerDraw = true;
@@ -438,12 +441,25 @@
       this.lbTest.Text = "Testdatenbank";
       this.lbTest.Visible = false;
       // 
+      // btnCorona
+      // 
+      this.btnCorona.ImageKey = "Virus.png";
+      this.btnCorona.ImageList = this.imageList1;
+      this.btnCorona.Location = new System.Drawing.Point(512, 89);
+      this.btnCorona.Name = "btnCorona";
+      this.btnCorona.Size = new System.Drawing.Size(40, 40);
+      this.btnCorona.TabIndex = 43;
+      this.toolTipButtons.SetToolTip(this.btnCorona, "Notendateien für Corona vorbereiten");
+      this.btnCorona.UseVisualStyleBackColor = true;
+      this.btnCorona.Click += new System.EventHandler(this.btnCorona_Click);
+      // 
       // Klassenansicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
       this.ClientSize = new System.Drawing.Size(1185, 645);
+      this.Controls.Add(this.btnCorona);
       this.Controls.Add(this.lbTest);
       this.Controls.Add(this.btnRefresh);
       this.Controls.Add(this.chkNurAktive);
@@ -513,5 +529,6 @@
     private System.Windows.Forms.TabPage tabPageSekretariat;
     private UserControlSekretariat userControlSekretariat1;
     private System.Windows.Forms.Label lbTest;
+    private System.Windows.Forms.Button btnCorona;
   }
 }

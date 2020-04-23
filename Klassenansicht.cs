@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace diNo
@@ -233,6 +234,41 @@ namespace diNo
     private void btnRefresh_Click(object sender, EventArgs e)
     {
       RefreshTreeView();
+    }
+
+    private void btnCorona_Click(object sender, EventArgs e)
+    {
+      if (MessageBox.Show("Wähle alle Notendateien aus, bei denen fehlende Halbjahresleistungen automatisch für das Corona-Abitur aus dem 1. Halbjahr übernommen werden sollen.", "diNo", MessageBoxButtons.OKCancel, MessageBoxIcon.Information)!=DialogResult.OK) return;
+
+      var fileDialog = new OpenFileDialog();
+      fileDialog.Filter = "Excel Files|*.xls*";
+      fileDialog.Multiselect = true;
+      // Call the ShowDialog method to show the dialog box.
+      if (fileDialog.ShowDialog() != DialogResult.OK) return;
+
+      Cursor.Current = Cursors.WaitCursor;
+      foreach (string fileName in fileDialog.FileNames)
+      {
+        toolStripStatusLabel1.Text = "Erzeuge Coronadatei für " + fileName;
+        string datei = Path.GetFileName(fileName);
+        string verz = fileName.Substring(0, fileName.LastIndexOf('\\')) + "\\Corona1\\";
+        if (!Directory.Exists(verz))
+          Directory.CreateDirectory(verz);
+        File.Copy(fileName, verz+datei, true);
+
+        //new Corona(verz + datei);
+        //new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
+      }
+
+      RefreshTreeView(); // Noten neu laden
+      if (schueler != null)
+      {
+        schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); // neues Objekt setzen
+        SetSchueler();
+      }
+      MessageBox.Show("Die Notendateien wurden kopiert und auch schon eingelesen, eine Abgabe ist nicht mehr notwendig. Bitte kontrolliere aber die Noten auf Plausibilität.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      toolStripStatusLabel1.Text = "";
+      Cursor.Current = Cursors.Default;
     }
   }
 }
