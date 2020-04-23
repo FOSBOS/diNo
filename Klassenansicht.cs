@@ -251,13 +251,23 @@ namespace diNo
       {
         toolStripStatusLabel1.Text = "Erzeuge Coronadatei für " + fileName;
         string datei = Path.GetFileName(fileName);
-        string verz = fileName.Substring(0, fileName.LastIndexOf('\\')) + "\\Corona1\\";
+        string verz = fileName.Substring(0, fileName.LastIndexOf('\\'));
+        if (verz.Contains("Corona1") || verz.Contains("Corona2"))
+        {
+          MessageBox.Show("Notendateien aus den Corona-Verzeichnissen dienen zur Sicherung. Bitte die Datei aus dem Hauptverzeichnis verwenden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          Cursor.Current = Cursors.Default;
+          return;
+        }
+        verz += "\\Corona1\\";  // nach der ersten Woche: Corona2
         if (!Directory.Exists(verz))
           Directory.CreateDirectory(verz);
         File.Copy(fileName, verz+datei, true);
 
         // dieser Aufruf kopiert die Noten und gibt die neuen Noten dann auch gleich ab.
-        new CoronaNoten(verz + datei, notenReader_OnStatusChange); 
+        new CoronaNoten(verz + datei, notenReader_OnStatusChange);
+
+        // nach der ersten Woche:        
+        // new CoronaNoten(fileName, notenReader_OnStatusChange);
       }
 
       RefreshTreeView(); // Noten neu laden
@@ -266,9 +276,9 @@ namespace diNo
         schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); // neues Objekt setzen
         SetSchueler();
       }
+      Cursor.Current = Cursors.Default;
       MessageBox.Show("Die Notendateien wurden kopiert und auch schon eingelesen, eine Abgabe ist nicht mehr notwendig. Bitte kontrolliere aber die Noten auf Plausibilität.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       toolStripStatusLabel1.Text = "";
-      Cursor.Current = Cursors.Default;
     }
   }
 }

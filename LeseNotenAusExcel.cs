@@ -113,6 +113,8 @@ namespace diNo
     public CoronaNoten(String dateiname, StatusChanged statusChanged)
       : base(dateiname, statusChanged, true)
     {
+      bool keine11 = false;
+
       for (int i = CellConstant.zeileSIdErsterSchueler; i < CellConstant.zeileSIdErsterSchueler + BasisNotendatei.MaxAnzahlSchueler; i++)
       {
         int sid = Convert.ToInt32(xls.ReadValue(xls.sid, CellConstant.SId + i));
@@ -120,6 +122,12 @@ namespace diNo
         Schueler schueler = new Schueler(sid);
         string schuelername = xls.ReadValue(xls.notenbogen, "B" + i);
         if (string.IsNullOrEmpty(schuelername)) continue; // dieser Schüler ist wohl ausgetreten. Keine Noten übernehmen.
+        // verhindern, dass jemand ne 11. Klasse hier abgibt
+        if (schueler.getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
+        {
+          keine11 = true;
+          continue;
+        }
 
         int noetigeAnzahlSchulaufgaben = kurs.getFach.AnzahlSA(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe);
         if (!PruefeZellen(i, new string[] { "L", "M" }, noetigeAnzahlSchulaufgaben))
@@ -127,31 +135,28 @@ namespace diNo
           hinweise.Add("Es gibt nicht genügend Schulaufgaben aus dem ersten Halbjahr. Prüfen Sie bitte die Noten von " + schuelername + " von Hand!");
         }
 
-        int noetigeAnzahlKurzarbeiten = kurs.schreibtKA ? 1 : 0; // funktioniert nur, wenn die Noten vorher ordnungsgemäß abgegeben wurden
-        int noetigeAnzahlMuendliche = kurs.schreibtKA ? 1 : 3;
-        if (noetigeAnzahlKurzarbeiten > 0)
-        {
-          if (!PruefeZellen(i, new string[] { "C", "D" }, noetigeAnzahlKurzarbeiten))
-          {
-            hinweise.Add("Es gibt nicht genügend Kurzarbeiten aus dem ersten Halbjahr. diNo versucht mündliche Noten zu übernehmen. Prüfen Sie bitte die Noten von " + schuelername + " von Hand!");
-            noetigeAnzahlMuendliche = 3; // wenn keine Kurzarbeiten vorliegen, müssen 3 mündliche da sein!
-          }
+        int noetigeAnzahlMuendliche = 1;
+        if (!PruefeZellen(i, new string[] { "C", "D" }, 1)) // Schauen, ob 1 KA übertragen werden kann
+        {          
+          noetigeAnzahlMuendliche = 3; // wenn keine Kurzarbeiten vorliegen, müssen 3 mündliche da sein!
         }
 
         if (!PruefeZellen(i, new string[] { "J", "I", "H", "G", "F", "E" }, noetigeAnzahlMuendliche))
         {
-          hinweise.Add("Es gibt nicht genügend mündliche Noten. Prüfen Sie bitte die Noten von " + schuelername + " von Hand!");
+          hinweise.Add("Es gibt nicht genügend mündliche Noten aus dem 1. Halbjahr. Prüfen Sie bitte die Noten von " + schuelername + " von Hand!");
         }
       }
-
+      
       xls.SetCoronaFile();
 
-      if (hinweise.Count == 0)
-        hinweise.Add("Die Noten aus dem ersten Halbjahr wurden übertragen.");
-      HinweiseAusgeben(xls); // in dieser Methode wird auch das Speichern ausgelöst
+      if (keine11)
+        MessageBox.Show("Für 11. Klassen und Vorklassen gibt es momentan noch keine Regelung.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+
+      else 
+        HinweiseAusgeben(xls); // in dieser Methode wird auch das Speichern ausgelöst
 
       UebertrageNoten();
-
+      xls.workbook.Save();
       xls.Dispose();
       xls = null;
     }
