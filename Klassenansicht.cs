@@ -256,8 +256,8 @@ namespace diNo
           Directory.CreateDirectory(verz);
         File.Copy(fileName, verz+datei, true);
 
-        //new Corona(verz + datei);
-        //new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
+        // dieser Aufruf kopiert die Noten und gibt die neuen Noten dann auch gleich ab.
+        new CoronaNoten(verz + datei, notenReader_OnStatusChange); 
       }
 
       RefreshTreeView(); // Noten neu laden

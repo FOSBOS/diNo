@@ -122,20 +122,39 @@ namespace diNo
         if (string.IsNullOrEmpty(schuelername)) continue; // dieser Schüler ist wohl ausgetreten. Keine Noten übernehmen.
 
         int noetigeAnzahlSchulaufgaben = kurs.getFach.AnzahlSA(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe);
-        PruefeZellen(i, new string[] { "L", "M" }, noetigeAnzahlSchulaufgaben); // Schulaufgaben
-
-        int noetigeAnzahlKurzarbeiten = kurs.schreibtKA ? 1 : 0;
-        if (noetigeAnzahlKurzarbeiten > 0)
+        if (!PruefeZellen(i, new string[] { "L", "M" }, noetigeAnzahlSchulaufgaben))
         {
-          PruefeZellen(i, new string[] { "C", "D" }, noetigeAnzahlKurzarbeiten);
+          hinweise.Add("Es gibt nicht genügend Schulaufgaben aus dem ersten Halbjahr. Prüfen Sie bitte die Noten von " + schuelername + " von Hand!");
         }
 
+        int noetigeAnzahlKurzarbeiten = kurs.schreibtKA ? 1 : 0; // funktioniert nur, wenn die Noten vorher ordnungsgemäß abgegeben wurden
         int noetigeAnzahlMuendliche = kurs.schreibtKA ? 1 : 3;
-        PruefeZellen(i, new string[] { "E", "F", "G", "H", "I", "J" }, noetigeAnzahlMuendliche);
+        if (noetigeAnzahlKurzarbeiten > 0)
+        {
+          if (!PruefeZellen(i, new string[] { "C", "D" }, noetigeAnzahlKurzarbeiten))
+          {
+            hinweise.Add("Es gibt nicht genügend Kurzarbeiten aus dem ersten Halbjahr. diNo versucht mündliche Noten zu übernehmen. Prüfen Sie bitte die Noten von " + schuelername + " von Hand!");
+            noetigeAnzahlMuendliche = 3; // wenn keine Kurzarbeiten vorliegen, müssen 3 mündliche da sein!
+          }
+        }
+
+        if (!PruefeZellen(i, new string[] { "J", "I", "H", "G", "F", "E" }, noetigeAnzahlMuendliche))
+        {
+          hinweise.Add("Es gibt nicht genügend mündliche Noten. Prüfen Sie bitte die Noten von " + schuelername + " von Hand!");
+        }
       }
+
+      if (hinweise.Count == 0)
+        hinweise.Add("Die Noten aus dem ersten Halbjahr wurden übertragen.");
+      HinweiseAusgeben(xls); // in dieser Methode wird auch das Speichern ausgelöst
+
+      UebertrageNoten();
+
+      xls.Dispose();
+      xls = null;
     }
 
-    private void PruefeZellen(int i, string[] spalten, int minimalZahl)
+    private bool PruefeZellen(int i, string[] spalten, int minimalZahl)
     {
       //finde erstmal raus wie viele Noten der Schüler im ersten Halbjahr hatte
       var noten1 = GetNoten(i, spalten, xls.notenbogen);
@@ -146,8 +165,12 @@ namespace diNo
       int differenz = minimalZahl - noten2.Count; // so viele Noten fehlen
       while (differenz > 0)
       {
+        if (noten1.Count == 0)
+        {
+          return false;
+        }
+
         noten1.Sort();
-        noten1.Reverse();
         // Finde eine freie Zelle und trage die beste aus HJ 1 dort ein
         foreach (string spalte in spalten)
         {
@@ -155,12 +178,15 @@ namespace diNo
           if (string.IsNullOrEmpty(wert))
           {
             // freie Zelle gefunden
-            xls.WriteValueProtectedCell(xls.notenbogen2, spalte + i, noten1[noten1.Count - 1].ToString(), true);
+            xls.WriteValueProtectedCell(xls.notenbogen2, spalte + i, noten1[noten1.Count - 1].ToString());
             noten1.RemoveAt(noten1.Count - 1);
+            break;
           }
         }
         differenz--;
       }
+
+      return true;
     }
 
     private List<byte> GetNoten(int i, string[] spalten, Microsoft.Office.Interop.Excel.Worksheet sheet)
@@ -234,12 +260,12 @@ namespace diNo
         Status("Übertrage Noten aus Datei " + afileName);
         DeleteAlteNoten();
         UebertrageNoten();
+
+        HinweiseAusgeben(xls);
+
+        xls.Dispose();
+        xls = null;
       }
-      HinweiseAusgeben(xls);
-
-      xls.Dispose();
-      xls = null;
-
       Status("fertig mit Datei " + afileName);
     }
 
@@ -291,7 +317,7 @@ namespace diNo
     /// <summary>
     /// Trägt die Noten eines Schülers aus Excel in die Datenbank ein.
     /// </summary>
-    private void UebertrageNoten()
+    protected void UebertrageNoten()
     {
       int i = 4;
       int indexAP = CellConstant.APZeileErsterSchueler;      

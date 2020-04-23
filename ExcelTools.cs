@@ -200,27 +200,12 @@ namespace diNo
     /// <param name="sheet">Das Excel Sheet.</param>
     /// <param name="zelle">Die Zelle, z. B. A2.</param>
     /// <param name="value">Den Wert der Zelle als String.</param>
-    public void WriteValueProtectedCell(Excel.Worksheet sheet, string zelle, string value)
-    {
-      WriteValueProtectedCell(sheet, zelle, value, false);
-    }
-
-    /// <summary>
-    /// Schreibt einen Wert in die Zelle des gegebenen Excel-Sheets
-    /// </summary>
-    /// <param name="sheet">Das Excel Sheet.</param>
-    /// <param name="zelle">Die Zelle, z. B. A2.</param>
-    /// <param name="value">Den Wert der Zelle als String.</param>
     /// <param name="setFormelAufNull">Setzt eine etwaige Formel auf Null.</param>
-    public void WriteValueProtectedCell(Excel.Worksheet sheet, string zelle, string value, bool setFormelAufNull)
+    public void WriteValueProtectedCell(Excel.Worksheet sheet, string zelle, string value)
     {
       sheet.Unprotect("1111");
       Excel.Range r = sheet.get_Range(zelle, missing);
       r.Value2 = value;
-      if (setFormelAufNull)
-      {
-        r.Formula = null;
-      }
       sheet.Protect("1111", false, true);
     }
 
