@@ -144,6 +144,8 @@ namespace diNo
         }
       }
 
+      xls.SetCoronaFile();
+
       if (hinweise.Count == 0)
         hinweise.Add("Die Noten aus dem ersten Halbjahr wurden übertragen.");
       HinweiseAusgeben(xls); // in dieser Methode wird auch das Speichern ausgelöst
@@ -251,6 +253,15 @@ namespace diNo
     {
       xls = new OpenNotendatei(afileName);
       ReadBasisdaten(xls);
+      if (xls.IsCoronaFile() && Zugriff.Instance.aktZeitpunkt < (int)Zeitpunkt.ZweitePA)
+      {
+        hinweise.Add("Diese Datei enthält Noten, die wegen Corona aus dem ersten Halbjahr übernommen wurden. Bisher dürfen diese Dateien noch nicht zur Notenabgabe verwendet werden");
+        HinweiseAusgeben(xls);
+
+        xls.Dispose();
+        xls = null;
+        return;
+      }
 
       if (!doNothingModus)
       {

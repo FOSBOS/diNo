@@ -272,9 +272,14 @@ namespace diNo
     /// Prüft, ob die Datei nach der alten Schulordnung ausgelesen werden muss.
     /// </summary>
     /// <returns>true wenn für diese Datei die alte Schulordnung gelten muss.</returns>
-    public bool IsAlteSchulordnung()
+    public bool IsCoronaFile()
     {
-      return ReadValue(sid, "F1") != "Neue";
+      return ReadValue(sid, "F1") == "Corona";
+    }
+
+    public void SetCoronaFile()
+    {
+      WriteValueProtectedCell(sid, "F1", "Corona");
     }
 
     protected int GetErsteFreieZeile(Excel.Worksheet sheet)
