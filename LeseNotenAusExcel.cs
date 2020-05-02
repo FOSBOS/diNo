@@ -22,27 +22,7 @@ namespace diNo
     public BasisLeseNotenAusExcel(string fileName, StatusChanged StatusChangedMethod)
     {
       this.fileName = fileName;
-      this.StatusChanged = StatusChangedMethod;     
-
-      Sichern();
-    }
-
-    private void Sichern()
-    {
-      // Datei sichern
-      string sicherungsverzeichnis = Zugriff.Instance.getString(GlobaleStrings.Backuppfad);
-      if (!string.IsNullOrEmpty(sicherungsverzeichnis))
-      {
-        try
-        {
-          File.Copy(fileName, sicherungsverzeichnis +"\\" + Path.GetFileNameWithoutExtension(fileName) + DateTime.Now.ToString("_yyMMdd_hhmmss") + Path.GetExtension(fileName));
-        }
-        catch
-        {
-          if (Zugriff.Instance.HatRolle(Rolle.Admin))
-            MessageBox.Show("Es konnte keine Sicherungskopie der Exceldatei angelegt werden.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-        }
-      }
+      this.StatusChanged = StatusChangedMethod;          
     }
 
     /// <summary>
@@ -257,9 +237,13 @@ namespace diNo
       : base(afileName, StatusChangedMethod)
     {
       xls = new OpenNotendatei(afileName);
+
       ReadBasisdaten(xls);
+      BackupZiehen();
+
       if (xls.IsCoronaFile() && Zugriff.Instance.aktZeitpunkt < (int)Zeitpunkt.ZweitePA)
       {
+        //TODO: Vor Abi raus!
         hinweise.Add("Diese Datei enthält Noten, die wegen Corona aus dem ersten Halbjahr übernommen wurden. Bisher dürfen diese Dateien noch nicht zur Notenabgabe verwendet werden");
         HinweiseAusgeben(xls);
 
@@ -283,6 +267,27 @@ namespace diNo
         xls = null;
       }
       Status("fertig mit Datei " + afileName);
+    }
+
+    private void BackupZiehen()
+    {
+      // Datei sichern
+      string verz = Zugriff.Instance.getString(GlobaleStrings.Backuppfad);
+      if (!string.IsNullOrEmpty(verz))
+      {
+        try
+        {                
+          verz += "\\" + kurs.getLehrer.Kuerzel + "_" + kurs.Kursbezeichnung + "\\";
+          if (!Directory.Exists(verz))
+            Directory.CreateDirectory(verz);          
+          File.Copy(fileName, verz + Path.GetFileNameWithoutExtension(fileName) + DateTime.Now.ToString("_yyMMdd_hhmmss") + Path.GetExtension(fileName));
+        }
+        catch
+        {
+          if (Zugriff.Instance.HatRolle(Rolle.Admin))
+            MessageBox.Show("Es konnte keine Sicherungskopie der Exceldatei angelegt werden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+      }
     }
 
     /// <summary>

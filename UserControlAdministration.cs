@@ -367,18 +367,19 @@ namespace diNo
       var ek = new ExportKurswahl(getSelectedObjects());
       SaveFileDialog dia = new SaveFileDialog();
       dia.Title = "Schüler exportieren";
+      dia.FileName = "Schueler.txt";
+      dia.Filter = "Textdateien (*.txt)|*.txt";
       if (dia.ShowDialog() == DialogResult.OK)
       {
         ek.ExportSchueler(dia.FileName);
       }
-      dia = new SaveFileDialog();
+      
       dia.Title = "Alte Kurse exportieren";
+      dia.FileName = "AlteKurse.txt";
       if (dia.ShowDialog() == DialogResult.OK)
       {
         ek.ExportAlteWPF(dia.FileName);
       }
-
-
     }
   }
 }

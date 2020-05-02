@@ -238,10 +238,11 @@ namespace diNo
 
     private void btnCorona_Click(object sender, EventArgs e)
     {
-      if (MessageBox.Show("Wähle alle Notendateien aus, bei denen fehlende Halbjahresleistungen automatisch für das Corona-Abitur aus dem 1. Halbjahr übernommen werden sollen.", "diNo", MessageBoxButtons.OKCancel, MessageBoxIcon.Information)!=DialogResult.OK) return;
+      //if (MessageBox.Show("Wähle alle Notendateien aus, bei denen fehlende Halbjahresleistungen automatisch für das Corona-Abitur aus dem 1. Halbjahr übernommen werden sollen.", "diNo", MessageBoxButtons.OKCancel, MessageBoxIcon.Information)!=DialogResult.OK) return;
+      if (MessageBox.Show("Wähle nur die Notendateien aus, bei denen ALLE Ersatzprüfungen vollständig eingetragen worden sind.", "diNo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK) return;
 
       var fileDialog = new OpenFileDialog();
-      fileDialog.Filter = "Excel Files|*.xls*";
+      fileDialog.Filter = "Exceldateien|*.xls*";
       fileDialog.Multiselect = true;
       // Call the ShowDialog method to show the dialog box.
       if (fileDialog.ShowDialog() != DialogResult.OK) return;
@@ -258,16 +259,16 @@ namespace diNo
           Cursor.Current = Cursors.Default;
           return;
         }
-        verz += "\\Corona1\\";  // nach der ersten Woche: Corona2
+        verz += "\\Corona2\\";
         if (!Directory.Exists(verz))
           Directory.CreateDirectory(verz);
         File.Copy(fileName, verz+datei, true);
 
         // dieser Aufruf kopiert die Noten und gibt die neuen Noten dann auch gleich ab.
-        new CoronaNoten(verz + datei, notenReader_OnStatusChange);
+        //new CoronaNoten(verz + datei, notenReader_OnStatusChange);
 
         // nach der ersten Woche:        
-        // new CoronaNoten(fileName, notenReader_OnStatusChange);
+        new CoronaNoten(fileName, notenReader_OnStatusChange);
       }
 
       RefreshTreeView(); // Noten neu laden
