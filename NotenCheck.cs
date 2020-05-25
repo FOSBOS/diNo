@@ -559,16 +559,35 @@ namespace diNo
 
     public override void Check(Schueler schueler)
     {
-      if (schueler.Data.Berechungsstatus == (byte)Berechnungsstatus.Unberechnet) return;
+      if (schueler.Data.Berechungsstatus == (byte)Berechnungsstatus.Unberechnet)
+      {
+        if (contr.zeitpunkt > Zeitpunkt.ErstePA)
+          contr.Add(null,"Die Gesamtergebnisse sind noch nicht berechnet.");
+        return;
+      }
       int notw = schueler.GetAnzahlEinbringung();
       int eing = schueler.punktesumme.Anzahl(PunktesummeArt.HjLeistungen);
-      if (eing > 0 && notw != eing) 
+      if (eing > 0 && notw != eing)
+      {
         contr.Add(null, "Es wurden " + eing + " statt " + notw + " Halbjahresleistungen eingebracht.");
-      else if (schueler.Data.Berechungsstatus==(byte)Berechnungsstatus.ZuWenigeHjLeistungen)
+        return;
+      }
+      if (schueler.Data.Berechungsstatus == (byte)Berechnungsstatus.ZuWenigeHjLeistungen)
+      {
         contr.Add(null, "Es wurden zu wenige Halbjahresleistungen eingebracht.");
+        return;
+      }
+
+      // Kontrolle, ob unterwegs nichts verloren gegangen ist:
+      if (contr.zeitpunkt > Zeitpunkt.ErstePA)
+      {
+        notw = schueler.hatVorHj ? 40 : 26;
+        eing = schueler.punktesumme.Anzahl(PunktesummeArt.Gesamt);
+        if (eing != notw)
+          contr.Add(null, "Einbringungsfaktor " + eing + " statt " + notw);
+      }
     }
   }
-
 
   // Ermittelt bei 2./3.PA, ob ein Schüler für die Eliteförderung in Frage kommt.
   public class EliteChecker : NotenCheck

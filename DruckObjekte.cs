@@ -281,7 +281,7 @@ namespace diNo
       if (jg == 11 && b == Bericht.Jahreszeugnis)
       {
         Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.";
-        // Schuljahr==2019:
+        // Corona Schuljahr==2019:
         Bemerkung += "<br>Im zweiten Halbjahr konnten in den Fächern ... keine Noten erhoben werden.";
         Bemerkung += "<br><br>Bemerkungen:";
       }
@@ -296,6 +296,10 @@ namespace diNo
         Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
       if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
         Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
+
+      // Corona:
+      if (b == Bericht.Abiturzeugnis && s.Fachreferat.Count == 0 && s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
+        Bemerkung += "<br>Das Fachreferat wurde nicht gehalten.";
 
       if (Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87435")
       {

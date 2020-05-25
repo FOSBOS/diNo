@@ -37,7 +37,8 @@ namespace diNo
         tabControl1.Controls.Remove(tabPageSekretariat);
       }
 
-      lbTest.Visible = Zugriff.Instance.IsTestDB;    
+      lbTest.Visible = Zugriff.Instance.IsTestDB;
+      // btnCorona.Visible = Zugriff.Instance.HatVerwaltungsrechte; ab 29.5.2019 aktivieren
       log.Debug("Klassenansicht fertig.");
     }
 
