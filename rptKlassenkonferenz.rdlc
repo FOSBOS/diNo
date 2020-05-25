@@ -124,6 +124,81 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
+                  <Height>0.6cm</Height>
+                  <TablixCells>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Laut KMS VI.6-BS9500-6-7a.34 20 vom 21.04.2020 „Vollzug des Infektionsschutzgesetzes (IFSG) – COVID 19; hier: Hinweise zur Wiederaufnahme des Unterrichts sowie zur Fachabitur- und Abiturprüfung an Fachoberschulen und Berufsoberschulen“:</Value>
+                                  <Style>
+                                    <FontStyle>Normal</FontStyle>
+                                    <FontWeight>Normal</FontWeight>
+                                    <TextDecoration>None</TextDecoration>
+                                    <Color>#000000</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>Abweichend von § 31 Absatz 2 FOBOSO werden </Value>
+                                  <Style>
+                                    <FontStyle>Normal</FontStyle>
+                                    <FontWeight>Normal</FontWeight>
+                                    <TextDecoration>None</TextDecoration>
+                                    <Color>#000000</Color>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>alle Schüler/-innen der Abschlussklassen zur Abschlussprüfung zugelassen</Value>
+                                  <Style>
+                                    <FontStyle>Normal</FontStyle>
+                                    <FontWeight>Bold</FontWeight>
+                                    <TextDecoration>None</TextDecoration>
+                                    <Color>#000000</Color>
+                                  </Style>
+                                </TextRun>
+                                <TextRun>
+                                  <Value>.</Value>
+                                  <Style>
+                                    <FontStyle>Normal</FontStyle>
+                                    <FontWeight>Normal</FontWeight>
+                                    <TextDecoration>None</TextDecoration>
+                                    <Color>#000000</Color>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <LeftIndent>0cm</LeftIndent>
+                              <RightIndent>0cm</RightIndent>
+                              <Style>
+                                <TextAlign>Left</TextAlign>
+                              </Style>
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Style>None</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                  </TablixCells>
+                </TablixRow>
+                <TablixRow>
                   <Height>0.67938cm</Height>
                   <TablixCells>
                     <TablixCell>
@@ -310,6 +385,9 @@
                       <KeepWithGroup>After</KeepWithGroup>
                     </TablixMember>
                     <TablixMember>
+                      <KeepWithGroup>After</KeepWithGroup>
+                    </TablixMember>
+                    <TablixMember>
                       <Group Name="schueler">
                         <GroupExpressions>
                           <GroupExpression>=Fields!schueler.Value</GroupExpression>
@@ -352,7 +430,7 @@
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <DataSetName>DataSet1</DataSetName>
             <Left>0.22521cm</Left>
-            <Height>4.46927cm</Height>
+            <Height>5.06927cm</Height>
             <Width>16.99917cm</Width>
             <Style>
               <Border>
@@ -361,7 +439,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>1.75956in</Height>
+        <Height>1.99578in</Height>
         <Style>
           <Border>
             <Style>None</Style>
@@ -382,7 +460,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Klassenkonferenz vom " + Today()</Value>
+                      <Value>="Klassenkonferenz vom 29.05.2020"</Value>
                       <Style>
                         <FontSize>12pt</FontSize>
                       </Style>

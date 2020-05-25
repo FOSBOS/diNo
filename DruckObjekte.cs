@@ -276,11 +276,16 @@ namespace diNo
         Schulleiter = Zugriff.Instance.getString(GlobaleStrings.Schulleiter);
         SchulleiterText = Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
       }
-   
+
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
-      if (jg == 11 && b==Bericht.Jahreszeugnis)
-        Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.<br><br>Bemerkungen:";
-      else if (b!=Bericht.Abiturzeugnis)
+      if (jg == 11 && b == Bericht.Jahreszeugnis)
+      {
+        Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.";
+        // Schuljahr==2019:
+        Bemerkung += "<br>Im zweiten Halbjahr konnten in den Fächern ... keine Noten erhoben werden.";
+        Bemerkung += "<br><br>Bemerkungen:";
+      }
+      else if (b != Bericht.Abiturzeugnis)
         Bemerkung = "Bemerkungen:";
 
       if (!s.Data.IsZeugnisbemerkungNull())

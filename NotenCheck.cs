@@ -463,7 +463,7 @@ namespace diNo
             contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
 
           // Schüler der BOS-Vk erhalten mittlere Reife, wenn sie bestanden haben:
-          else if (schueler.Data.Schulart == "B")
+          else if (schueler.Data.Schulart == "B" && Zugriff.Instance.globaleKonstanten.Schuljahr!=2019)
             contr.Add(Vorkommnisart.MittlereReife, "");
 
           if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && n.HatIn12KeinePZ())

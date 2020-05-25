@@ -331,21 +331,22 @@ namespace diNo
     }
 
     public NotenCheckResult(Klasse kl,Kurs k,string m)
-        {
-          schueler = "...mehrmals...";
-          klassenId = kl.Data.Id;
-          klasse = kl.Data.Bezeichnung;
-          lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
-          fach =   k!=null ? k.getFach.Kuerzel : "";
-          meldung = m;
-        }
-
-        public override string ToString()
-        {
-             return klasse + ", " + schueler + ", " +
-                    (lehrer=="" ? fach + " (" + lehrer + "): " : "")  + meldung;            
-        }
+    {
+      schueler = "...mehrmals...";
+      klassenId = kl.Data.Id;
+      klasse = kl.Data.Bezeichnung;
+      lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
+      fach =   k!=null ? k.getFach.Kuerzel : "";
+      meldung = m;
+      Klassenleiter = kl.Klassenleiter.NameDienstbezeichnung + ", " + kl.Klassenleiter.KLString;
     }
+
+    public override string ToString()
+    {
+      return klasse + ", " + schueler + ", " +
+            (lehrer=="" ? fach + " (" + lehrer + "): " : "")  + meldung;            
+    }
+  }
 
     // nimmt eine Fehlermeldung zur Zwischenspeicherung auf
     public class NotenCheckContainer
