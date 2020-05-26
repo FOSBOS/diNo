@@ -253,7 +253,7 @@ namespace diNo
       KlasseAR = (b == Bericht.Zwischenzeugnis ? "besucht" : "besuchte") + " im " + Schuljahr;
       KlasseAR += " die " + s.getKlasse.JahrgangsstufeZeugnis + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
       if (b == Bericht.Abiturzeugnis)
-        KlasseAR += " und unterzog sich als Schüler" + (s.Data.Geschlecht == "M" ? "":"in") + " der Klasse " + s.getKlasse.Bezeichnung + " der Fachabiturprüfung in der Ausbildungsrichtung " + Faecherkanon.GetZweigText(s) + ".";
+        KlasseAR += " und unterzog sich als Schüler" + (s.Data.Geschlecht == "M" ? "":"in") + " der Klasse " + s.getKlasse.Bezeichnung + " der " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") +" in der Ausbildungsrichtung " + Faecherkanon.GetZweigText(s) + ".";
       else
       {
         if (s.Data.Ausbildungsrichtung != "V") // IV idR. ohne AR
@@ -700,12 +700,19 @@ namespace diNo
         return;
       }
       JN = p.GetValueOrDefault().ToString("D2");
+      JNText = getJNText(p.GetValueOrDefault());
+    }
+
+    public static string getJNText(int p)
+    {
+      string JNText;
       if (p == 0) JNText = "ungenügend";
       else if (p <= 3) JNText = "mangelhaft";
       else if (p <= 6) JNText = "ausreichend";
       else if (p <= 9) JNText = "befriedigend";
       else if (p <= 12) JNText = "gut";
       else JNText = "sehr gut";
+      return JNText;
     }
   }
 
@@ -728,16 +735,23 @@ namespace diNo
       Punktesumme p = s.punktesumme;
       foreach (PunktesummeArt a in Enum.GetValues(typeof(PunktesummeArt)))
       {
-        if (p.Anzahl(a) > 0)
+        if (p.Anzahl(a) > 0 && a!=PunktesummeArt.GesamtFachgebHSR)
         {
           list.Add(new PunkteSummeDruck(ArtToText(a, p, s), p.Summe(a).ToString(), ""));
         }
       }
-      if (!s.Data.IsDNoteNull() && b!=Bericht.Einbringung)
+      if (!s.Data.IsDNoteNull() && b != Bericht.Einbringung)
       {
-        list.Add(new PunkteSummeDruck("", "", "")); // Leerzeile
-        list.Add(new PunkteSummeDruck("Durchschnittsnote", string.Format("{0:F1}", s.Data.DNote), ZahlToText(s.Data.DNote)));
-      }      
+        list.Add(new PunkteSummeDruck("", "", "")); // Leerzeile      
+
+        if (!s.Data.IsDNoteFachgebHSRNull() && s.Data.DNoteFachgebHSR < s.Data.DNote)
+        {
+          list.Add(new PunkteSummeDruck("Durchschnittsnote allgemeine Hochschulreife", string.Format("{0:F1}", s.Data.DNote), ZahlToText(s.Data.DNote)));
+          list.Add(new PunkteSummeDruck("Durchschnittsnote fachgebundene Hochschulreife", string.Format("{0:F1}", s.Data.DNoteFachgebHSR), ZahlToText(s.Data.DNoteFachgebHSR)));
+        }
+        else
+          list.Add(new PunkteSummeDruck("Durchschnittsnote", string.Format("{0:F1}", s.Data.DNote), ZahlToText(s.Data.DNote)));
+      }
       return list;
     }
 
@@ -823,6 +837,58 @@ namespace diNo
     }
   }
   
+  public class ZusZweiteFSDruck
+  {
+    public bool hideHj { get; private set; }
+    public string JgKurz { get; private set; }
+    public string Kopfzeile { get; private set; }
+    public string fachBez { get; private set; }
+    public string Hj1 { get; set; }
+    public string Hj2 { get; set; }
+    public string JN { get; set; }
+    public string JNText { get; set; }
+
+    public ZusZweiteFSDruck(string fach, int punkte)
+    {      
+      hideHj = true;
+      Kopfzeile = "Ergänzungsprüfung in";
+      fachBez = fach;
+      JN = punkte.ToString("D2");
+      JNText = NotenZeugnisDruck.getJNText(punkte);
+    }
+
+    public ZusZweiteFSDruck(FachSchuelerNoten f)
+    {
+      hideHj = false;
+      int jg = (int)f.getHjLeistung(HjArt.Hj1).JgStufe;
+      JgKurz = jg.ToString();
+      if (jg==13)
+        Kopfzeile = "Übernommen aus früherem Besuch der Jahrgangsstufe 13";
+      else
+        Kopfzeile = "Wahlpflichtunterricht in der Jahrgangsstufe " + JgKurz;
+      fachBez = f.getFach.Bezeichnung;
+      byte jn = f.getHjLeistung(HjArt.Hj1).Punkte;
+      Hj1 = jn.ToString("D2");
+      jn += f.getHjLeistung(HjArt.Hj2).Punkte;
+      Hj2 = f.getHjLeistung(HjArt.Hj2).Punkte.ToString("D2");
+      jn = Notentools.RundeJF((decimal)jn / 2);
+      JN = jn.ToString("D2");
+      JNText = NotenZeugnisDruck.getJNText(jn);
+    }
+
+    public static List<ZusZweiteFSDruck> CreateZusZweiteFSDruck(Schueler s)
+    {
+      List<ZusZweiteFSDruck> list = new List<ZusZweiteFSDruck>();
+      if (s.getNoten.ZweiteFS != null)
+        list.Add(new ZusZweiteFSDruck(s.getNoten.ZweiteFS));
+      if (!s.Data.IsAndereFremdspr2NoteNull()) 
+        list.Add(new ZusZweiteFSDruck(s.Data.AndereFremdspr2Text, s.Data.AndereFremdspr2Note));
+
+      return list;
+    }
+  }
+
+
   public class LehrerRolleDruck
   {
     public string RechteBezeichnung { get; private set; }

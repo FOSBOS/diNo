@@ -125,6 +125,10 @@ namespace diNo
           IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenZeugnisDruck(rptTyp);
           e.DataSources.Add(new ReportDataSource("DataSet1", noten));
         }
+        else if (subrpt == "subrptZusZweiteFS")
+        {
+          e.DataSources.Add(new ReportDataSource("DataSet1", ZusZweiteFSDruck.CreateZusZweiteFSDruck(schueler)));
+        }
         else if (subrpt == "subrptFPANoten")
         {
           e.DataSources.Add(new ReportDataSource("DataSetFPANoten", schueler.FPANotenDruck()));

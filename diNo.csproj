@@ -306,6 +306,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="subrptAbiLinkeSeite.rdlc" />
     <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />
+    <EmbeddedResource Include="subrptZusZweiteFS.rdlc" />
     <EmbeddedResource Include="subrptLehrerDerKlasse.rdlc" />
     <EmbeddedResource Include="subrptPunktesummeNB.rdlc" />
     <EmbeddedResource Include="subrptPunktesumme.rdlc" />
@@ -420,6 +421,7 @@
     <None Include="Properties\DataSources\Schueler.datasource" />
     <None Include="Properties\DataSources\SprachniveauDruck.datasource" />
     <None Include="Properties\DataSources\ZeugnisDruck.datasource" />
+    <None Include="Properties\DataSources\ZusZweiteFSDruck.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

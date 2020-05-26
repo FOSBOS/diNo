@@ -261,10 +261,10 @@ namespace diNo
           p.Add(PunktesummeArt.FremdspracheErgPr, s.Data.AndereFremdspr2Note, 2);
 
         // Frz. fortgeführt aus 12. Klasse
-        else if (fs2!=null && fs2.getVorHjLeistung(HjArt.Hj1) != null && fs2.getVorHjLeistung(HjArt.Hj1) != null)
+        else if (fs2!=null && fs2.getHjLeistung(HjArt.Hj1) != null && fs2.getHjLeistung(HjArt.Hj1) != null)
         {
-          p.Add(PunktesummeArt.FremdspracheAus12, fs2.getVorHjLeistung(HjArt.Hj1).Punkte);
-          p.Add(PunktesummeArt.FremdspracheAus12, fs2.getVorHjLeistung(HjArt.Hj2).Punkte);
+          p.Add(PunktesummeArt.FremdspracheAus12, fs2.getHjLeistung(HjArt.Hj1).Punkte);
+          p.Add(PunktesummeArt.FremdspracheAus12, fs2.getHjLeistung(HjArt.Hj2).Punkte);
         }
       }
 
@@ -285,27 +285,40 @@ namespace diNo
         BerechneDNote(s);
     }
 
+    private decimal FormelDNote(Schueler s, PunktesummeArt a)
+    {
+      int anz = s.punktesumme.Anzahl(a);
+      if (anz == 0) return 0;
+      //decimal erg = 17/ (decimal)3.0 - 5 * (decimal)s.punktesumme.Summe(PunktesummeArt.Gesamt) / (15*anz);
+      decimal erg = (17 - (decimal)s.punktesumme.Summe(a) / anz) / 3;
+      if (erg < 1)
+      {
+        erg = 1;
+      }
+      else
+      {
+        erg = Math.Floor(erg * 10) / 10; // auf 1 NK abrunden
+      }
+      return erg;
+    }
+
     public void BerechneDNote(Schueler s)
     {      
-      int anz = s.punktesumme.Anzahl(PunktesummeArt.Gesamt);
-      if (anz>0 && s.Data.Berechungsstatus != (byte)Berechnungsstatus.ZuWenigeHjLeistungen)
+      if (s.Data.Berechungsstatus != (byte)Berechnungsstatus.ZuWenigeHjLeistungen)
       {
-        //decimal erg = 17/ (decimal)3.0 - 5 * (decimal)s.punktesumme.Summe(PunktesummeArt.Gesamt) / (15*anz);
-        decimal erg = (17 - (decimal)s.punktesumme.Summe(PunktesummeArt.Gesamt) / anz) / 3;
-        if (erg < 1)
-        {
-          erg = 1;
-        }
-        else
-        {
-          erg = Math.Floor(erg * 10) / 10; // auf 1 NK abrunden
-        }
-        s.Data.DNote = erg;
+        decimal d;
+        d = FormelDNote(s, PunktesummeArt.Gesamt);
+        if (d == 0) s.Data.SetDNoteNull(); else s.Data.DNote = d;
+
+        d = FormelDNote(s, PunktesummeArt.GesamtFachgebHSR);
+        if (d == 0) s.Data.SetDNoteFachgebHSRNull(); else s.Data.DNoteFachgebHSR = d;
+        
         s.Data.Berechungsstatus = (byte)Berechnungsstatus.Gesamtergebnis;
       }
       else
       {
         s.Data.SetDNoteNull();
+        s.Data.SetDNoteFachgebHSRNull();
       }    
     }
 

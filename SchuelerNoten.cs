@@ -88,8 +88,7 @@ namespace diNo
       Kursniveau k = fsn.getFach.getKursniveau();
       if (k != Kursniveau.None) alleSprachen.Add(fsn);
       if (k > Kursniveau.Englisch)
-      {
-        ZweiteFS = fsn;
+      {        
         var hj1 = fsn.getHjLeistung(HjArt.Hj1);
         var hj2 = fsn.getHjLeistung(HjArt.Hj2);
         if (hj1 != null && hj2 != null)
@@ -487,7 +486,7 @@ namespace diNo
       schueler = aschueler;
       schuelernoten = aschuelernoten;
 
-      LeseNotenAusDB();
+      LeseNotenAusDB(fach.getKursniveau() == Kursniveau.Fortg);
     }
 
     // HjLeistungen, die als eigenes Fach behandelt werden, aber aus andere Quelle kommen (FR, FpA, Seminar)
@@ -501,7 +500,7 @@ namespace diNo
       }
     }
 
-    private void LeseNotenAusDB()
+    private void LeseNotenAusDB(bool AlteZweiteFS=false)
     {
       if (kursId > 0)
       {
@@ -515,7 +514,13 @@ namespace diNo
       // HjLeistungen          
       // nur die HjLeistungen holen, die der aktuellen JgStufe entsprechen
       int jg = (int)schueler.getKlasse.Jahrgangsstufe;
-      var hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == jg);
+      var ta = new HjLeistungTableAdapter();
+      IEnumerable<diNoDataSet.HjLeistungRow> hjDT;
+      // suche alte Französischnoten
+      if (AlteZweiteFS)      
+        hjDT = ta.GetDataBySchuelerAndFach(schueler.Id, getFach.Id); // kann aus einer früheren 12./13. Klasse kommen
+      else
+        hjDT = ta.GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == jg);
       foreach (var hjR in hjDT)
       {
         hjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
@@ -525,10 +530,9 @@ namespace diNo
         }
       }
 
-      // suche 11. Klassnoten oder alte Französischnoten
-      if (schueler.hatVorHj || jg==13 && fach.getKursniveau() == Kursniveau.Fortg) 
+      if (schueler.hatVorHj) 
       {
-        hjDT = new HjLeistungTableAdapter().GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == jg-1 && x.Art < 2);
+        hjDT = ta.GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == jg-1 && x.Art < 2);
         foreach (var hjR in hjDT)
         {
           vorHjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
