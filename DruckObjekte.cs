@@ -374,7 +374,7 @@ namespace diNo
     public string fachBez { get; protected set; }
     public string Hj1 { get; protected set; }  // Halbjahrespunktzahl 1.Hj
     public string Hj2 { get; protected set; }
-    public string GE { get; private set; } // Gesamtergebnis
+    public string GE { get; protected set; } // Gesamtergebnis
     public string SGE { get; private set; } // Schnitt-Gesamtergebnis (2 Dez)
     protected HjLeistung hj1, hj2;
 
@@ -497,9 +497,22 @@ namespace diNo
       APG = putHj(s, HjArt.AP);
     }
 
-    public NotenHjDruck(HjLeistung h) : base(h)
+    public NotenHjDruck(diNoDataSet.SeminarfachnoteRow s)
+    {      
+      fachBez = "Seminar";
+      if (!s.IsGesamtnoteNull())
+      {
+        GE = s.Gesamtnote.ToString();        
+      }
+    }
+
+    public NotenHjDruck(HjLeistung hj):base(hj)
     {
     }
+    public NotenHjDruck()
+    {
+    }
+
 
     public NotenHjDruck(diNoDataSet.FpaDataTable f)
     {
@@ -570,6 +583,15 @@ namespace diNo
     }
     public NotenAbiDruck(HjLeistung h) : base(h)
     {
+    }
+
+    public NotenAbiDruck(diNoDataSet.SeminarfachnoteRow s): base()
+    {
+      fachBez = "Seminar";
+      if (!s.IsGesamtnoteNull())
+      {
+        GE = s.Gesamtnote.ToString();
+      }
     }
   }
 

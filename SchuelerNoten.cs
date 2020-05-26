@@ -165,7 +165,14 @@ namespace diNo
           liste.Add(new NotenAbiDruck(f));
         else
           liste.Add(new NotenHjDruck(f));
-      }      
+      }
+      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      {
+        if (rptName == Bericht.Abiergebnisse)
+          liste.Add(new NotenAbiDruck(schueler.Seminarfachnote));
+        else
+          liste.Add(new NotenHjDruck(schueler.Seminarfachnote));
+      }
       return liste;      
     }
 
