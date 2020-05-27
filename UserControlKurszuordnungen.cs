@@ -61,8 +61,6 @@ namespace diNo
       this.objectListView2.SetObjects(moeglicheNeueKurse);     
       
       // Kontrollfelder aktualisieren
-      textBoxWahlpflichtfach.Text = schueler.Data.IsWahlpflichtfachNull() ? "" : schueler.Data.Wahlpflichtfach; 
-      textBoxFremdsprache2.Text = schueler.Data.IsFremdsprache2Null() ? "" : schueler.Data.Fremdsprache2; 
       textBoxReliOderEthik.Text = schueler.Data.IsReligionOderEthikNull() ? "" : schueler.Data.ReligionOderEthik; 
     }
 
@@ -72,11 +70,6 @@ namespace diNo
       if (kurs != null)
       {
         this.schueler.MeldeAb(kurs);
-        if(kurs.getFach.Kuerzel=="F") // Abmeldung aus Französisch löscht auch den Fremdsprachenschlüssel
-        { 
-          schueler.Data.SetFremdsprache2Null();
-          schueler.Save();
-        }
         InitKurse();
       }
     }

@@ -280,10 +280,22 @@ namespace diNo
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
       if (jg == 11 && b == Bericht.Jahreszeugnis)
       {
-        Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.";
-        // Corona Schuljahr==2019:
-        Bemerkung += "<br>Im zweiten Halbjahr konnten in den Fächern ... keine Noten erhoben werden.";
+        // Corona
+        Bemerkung = "Die fachpraktische Ausbildung wurde in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.";
+        // Bemerkung steht nächstes Jahr im Abizeugnis!
+        //Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.";
         Bemerkung += "<br><br>Bemerkungen:";
+        // Corona Schuljahr==2019:
+        Bemerkung += "<br>Im zweiten Halbjahr konnten in den Fächern Deutsch, Englisch, Mathematik, ";
+        switch (s.Data.Ausbildungsrichtung)
+        {
+          case "S": Bemerkung += "Pädagogik/Psychologie sowie Sozialwirtschaft und Recht"; break;
+          case "T": Bemerkung += "Physik, Technologie sowie Chemie"; break;
+          case "W": Bemerkung += "Betriebswirtschaftslehre sowie Volkswirtschaftslehre"; break;
+          case "U": Bemerkung += "Biologie, Chemie sowie Physik"; break;
+          default: break;
+        }
+         Bemerkung += " keine Noten erhoben werden.";
       }
       else if (b != Bericht.Abiturzeugnis)
         Bemerkung = "Bemerkungen:";

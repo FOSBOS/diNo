@@ -6,6 +6,7 @@ namespace diNo
   public partial class UserControlSekretariat : UserControl
   {
     private Schueler schueler;
+    private int FS2Art;
 
     public UserControlSekretariat()
     {
@@ -25,8 +26,21 @@ namespace diNo
         this.schueler = value;
         if (schueler != null)
         {
+          FS2Art = schueler.getNoten.ZweiteFS != null ? 2 : schueler.Data.AndereFremdspr2Art;
+          opRS.Checked = FS2Art == 0;
+          opErgPr.Checked = FS2Art == 1;
+          opFFalt.Checked = FS2Art == 2;
+          numAndereFremdspr2Note.Enabled = FS2Art < 2;
           numAndereFremdspr2Note.Value = schueler.Data.IsAndereFremdspr2NoteNull() ? null : (decimal?)schueler.Data.AndereFremdspr2Note;
           cbAndereFremdspr2Text.Text = schueler.Data.IsAndereFremdspr2TextNull() ? "" : schueler.Data.AndereFremdspr2Text;
+          if (FS2Art == 2)
+          {
+            var f = schueler.getNoten.ZweiteFS;
+            lbFFalt.Text = "Hj1 = " + f.getHjLeistung(HjArt.Hj1).Punkte + ", Hj2 = " + f.getHjLeistung(HjArt.Hj2).Punkte + " aus "
+              + f.getFach.Kuerzel + " der Jgst. " + (int)f.getHjLeistung(HjArt.Hj1).JgStufe;
+          }
+          else lbFFalt.Text = "";
+
           listBoxZuletztBesuchteSchulart.SelectedItem = schueler.Data.IsSchulischeVorbildungNull() ? null : schueler.Data.SchulischeVorbildung;
           textBoxZeugnisbemerkung.Text = schueler.Data.IsZeugnisbemerkungNull() ? "" : schueler.Data.Zeugnisbemerkung;
 
@@ -53,6 +67,8 @@ namespace diNo
       else schueler.Data.AndereFremdspr2Note = (int)numAndereFremdspr2Note.Value.GetValueOrDefault();
       if (cbAndereFremdspr2Text.Text == "") schueler.Data.SetAndereFremdspr2TextNull();
       else schueler.Data.AndereFremdspr2Text = cbAndereFremdspr2Text.Text;
+
+      schueler.Data.AndereFremdspr2Art = opErgPr.Checked ? 1 : 0;
 
       if (textBoxZeugnisbemerkung.Text == "") schueler.Data.SetZeugnisbemerkungNull();
       else schueler.Data.Zeugnisbemerkung = textBoxZeugnisbemerkung.Text;
@@ -83,19 +99,20 @@ namespace diNo
       this.btnSave = new System.Windows.Forms.Button();
       this.groupBoxMittlereReife = new System.Windows.Forms.GroupBox();
       this.listBoxZuletztBesuchteSchulart = new System.Windows.Forms.ListBox();
-      this.numericUpDownMathe = new diNo.NumericUpDownNullable();
-      this.numericUpDownEnglisch = new diNo.NumericUpDownNullable();
-      this.numericUpDownDeutsch = new diNo.NumericUpDownNullable();
       this.lblSchulischeVorbildung = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
       this.label3 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.label1 = new System.Windows.Forms.Label();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.lbFFalt = new System.Windows.Forms.Label();
+      this.gbFS2Art = new System.Windows.Forms.GroupBox();
+      this.opFFalt = new System.Windows.Forms.RadioButton();
+      this.opErgPr = new System.Windows.Forms.RadioButton();
+      this.opRS = new System.Windows.Forms.RadioButton();
       this.cbAndereFremdspr2Text = new System.Windows.Forms.ComboBox();
       this.label15 = new System.Windows.Forms.Label();
       this.label14 = new System.Windows.Forms.Label();
-      this.numAndereFremdspr2Note = new diNo.NumericUpDownNullable();
       this.textBoxZeugnisbemerkung = new System.Windows.Forms.TextBox();
       this.labelZeugnisbemerkung = new System.Windows.Forms.Label();
       this.panelSekretariat = new System.Windows.Forms.Panel();
@@ -111,13 +128,18 @@ namespace diNo
       this.label18 = new System.Windows.Forms.Label();
       this.textBoxNachname = new System.Windows.Forms.TextBox();
       this.label7 = new System.Windows.Forms.Label();
+      this.numAndereFremdspr2Note = new diNo.NumericUpDownNullable();
+      this.numericUpDownMathe = new diNo.NumericUpDownNullable();
+      this.numericUpDownEnglisch = new diNo.NumericUpDownNullable();
+      this.numericUpDownDeutsch = new diNo.NumericUpDownNullable();
       this.groupBoxMittlereReife.SuspendLayout();
+      this.groupBox1.SuspendLayout();
+      this.gbFS2Art.SuspendLayout();
+      this.panelSekretariat.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMathe)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEnglisch)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDeutsch)).BeginInit();
-      this.groupBox1.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
-      this.panelSekretariat.SuspendLayout();
       this.SuspendLayout();
       // 
       // listBoxMittlereReifeSchulart
@@ -160,9 +182,9 @@ namespace diNo
       this.groupBoxMittlereReife.Controls.Add(this.label2);
       this.groupBoxMittlereReife.Controls.Add(this.label1);
       this.groupBoxMittlereReife.Controls.Add(this.listBoxMittlereReifeSchulart);
-      this.groupBoxMittlereReife.Location = new System.Drawing.Point(3, 190);
+      this.groupBoxMittlereReife.Location = new System.Drawing.Point(3, 208);
       this.groupBoxMittlereReife.Name = "groupBoxMittlereReife";
-      this.groupBoxMittlereReife.Size = new System.Drawing.Size(258, 272);
+      this.groupBoxMittlereReife.Size = new System.Drawing.Size(258, 271);
       this.groupBoxMittlereReife.TabIndex = 28;
       this.groupBoxMittlereReife.TabStop = false;
       this.groupBoxMittlereReife.Text = "mittlere Reife";
@@ -201,42 +223,6 @@ namespace diNo
       this.listBoxZuletztBesuchteSchulart.Name = "listBoxZuletztBesuchteSchulart";
       this.listBoxZuletztBesuchteSchulart.Size = new System.Drawing.Size(118, 82);
       this.listBoxZuletztBesuchteSchulart.TabIndex = 85;
-      // 
-      // numericUpDownMathe
-      // 
-      this.numericUpDownMathe.Location = new System.Drawing.Point(199, 93);
-      this.numericUpDownMathe.Name = "numericUpDownMathe";
-      this.numericUpDownMathe.Size = new System.Drawing.Size(49, 20);
-      this.numericUpDownMathe.TabIndex = 7;
-      this.numericUpDownMathe.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-      // 
-      // numericUpDownEnglisch
-      // 
-      this.numericUpDownEnglisch.Location = new System.Drawing.Point(199, 69);
-      this.numericUpDownEnglisch.Name = "numericUpDownEnglisch";
-      this.numericUpDownEnglisch.Size = new System.Drawing.Size(49, 20);
-      this.numericUpDownEnglisch.TabIndex = 6;
-      this.numericUpDownEnglisch.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-      // 
-      // numericUpDownDeutsch
-      // 
-      this.numericUpDownDeutsch.Location = new System.Drawing.Point(199, 43);
-      this.numericUpDownDeutsch.Name = "numericUpDownDeutsch";
-      this.numericUpDownDeutsch.Size = new System.Drawing.Size(49, 20);
-      this.numericUpDownDeutsch.TabIndex = 5;
-      this.numericUpDownDeutsch.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
       // 
       // lblSchulischeVorbildung
       // 
@@ -286,16 +272,73 @@ namespace diNo
       // 
       // groupBox1
       // 
+      this.groupBox1.Controls.Add(this.lbFFalt);
+      this.groupBox1.Controls.Add(this.gbFS2Art);
       this.groupBox1.Controls.Add(this.cbAndereFremdspr2Text);
       this.groupBox1.Controls.Add(this.label15);
       this.groupBox1.Controls.Add(this.label14);
       this.groupBox1.Controls.Add(this.numAndereFremdspr2Note);
       this.groupBox1.Location = new System.Drawing.Point(296, 22);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(285, 75);
+      this.groupBox1.Size = new System.Drawing.Size(285, 194);
       this.groupBox1.TabIndex = 67;
       this.groupBox1.TabStop = false;
-      this.groupBox1.Text = "Ergänzungsprüfung 2. Fremdsprache";
+      this.groupBox1.Text = "Andere 2. Fremdsprache";
+      // 
+      // lbFFalt
+      // 
+      this.lbFFalt.AutoSize = true;
+      this.lbFFalt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lbFFalt.Location = new System.Drawing.Point(14, 164);
+      this.lbFFalt.Name = "lbFFalt";
+      this.lbFFalt.Size = new System.Drawing.Size(78, 13);
+      this.lbFFalt.TabIndex = 89;
+      this.lbFFalt.Text = "HjL aus F-f (alt)";
+      // 
+      // gbFS2Art
+      // 
+      this.gbFS2Art.Controls.Add(this.opFFalt);
+      this.gbFS2Art.Controls.Add(this.opErgPr);
+      this.gbFS2Art.Controls.Add(this.opRS);
+      this.gbFS2Art.Location = new System.Drawing.Point(14, 19);
+      this.gbFS2Art.Name = "gbFS2Art";
+      this.gbFS2Art.Size = new System.Drawing.Size(257, 77);
+      this.gbFS2Art.TabIndex = 88;
+      this.gbFS2Art.TabStop = false;
+      // 
+      // opFFalt
+      // 
+      this.opFFalt.AutoSize = true;
+      this.opFFalt.Location = new System.Drawing.Point(14, 52);
+      this.opFFalt.Name = "opFFalt";
+      this.opFFalt.Size = new System.Drawing.Size(174, 17);
+      this.opFFalt.TabIndex = 2;
+      this.opFFalt.TabStop = true;
+      this.opFFalt.Text = "früherer Kurs an unserer Schule";
+      this.opFFalt.UseVisualStyleBackColor = true;
+      // 
+      // opErgPr
+      // 
+      this.opErgPr.AutoSize = true;
+      this.opErgPr.Location = new System.Drawing.Point(14, 34);
+      this.opErgPr.Name = "opErgPr";
+      this.opErgPr.Size = new System.Drawing.Size(117, 17);
+      this.opErgPr.TabIndex = 1;
+      this.opErgPr.TabStop = true;
+      this.opErgPr.Text = "Ergänzungsprüfung";
+      this.opErgPr.UseVisualStyleBackColor = true;
+      // 
+      // opRS
+      // 
+      this.opRS.AutoSize = true;
+      this.opRS.Checked = true;
+      this.opRS.Location = new System.Drawing.Point(14, 16);
+      this.opRS.Name = "opRS";
+      this.opRS.Size = new System.Drawing.Size(113, 17);
+      this.opRS.TabIndex = 0;
+      this.opRS.TabStop = true;
+      this.opRS.Text = "aus voriger Schule";
+      this.opRS.UseVisualStyleBackColor = true;
       // 
       // cbAndereFremdspr2Text
       // 
@@ -306,7 +349,7 @@ namespace diNo
             "Italienisch",
             "Latein",
             "Russisch"});
-      this.cbAndereFremdspr2Text.Location = new System.Drawing.Point(86, 41);
+      this.cbAndereFremdspr2Text.Location = new System.Drawing.Point(17, 124);
       this.cbAndereFremdspr2Text.Name = "cbAndereFremdspr2Text";
       this.cbAndereFremdspr2Text.Size = new System.Drawing.Size(185, 21);
       this.cbAndereFremdspr2Text.TabIndex = 87;
@@ -315,7 +358,7 @@ namespace diNo
       // 
       this.label15.AutoSize = true;
       this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label15.Location = new System.Drawing.Point(83, 25);
+      this.label15.Location = new System.Drawing.Point(14, 110);
       this.label15.Name = "label15";
       this.label15.Size = new System.Drawing.Size(47, 13);
       this.label15.TabIndex = 70;
@@ -325,40 +368,26 @@ namespace diNo
       // 
       this.label14.AutoSize = true;
       this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label14.Location = new System.Drawing.Point(11, 25);
+      this.label14.Location = new System.Drawing.Point(205, 108);
       this.label14.Name = "label14";
       this.label14.Size = new System.Drawing.Size(69, 13);
       this.label14.TabIndex = 69;
       this.label14.Text = "Notenpunkte";
       // 
-      // numAndereFremdspr2Note
-      // 
-      this.numAndereFremdspr2Note.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.numAndereFremdspr2Note.Location = new System.Drawing.Point(14, 41);
-      this.numAndereFremdspr2Note.Maximum = new decimal(new int[] {
-            15,
-            0,
-            0,
-            0});
-      this.numAndereFremdspr2Note.Name = "numAndereFremdspr2Note";
-      this.numAndereFremdspr2Note.Size = new System.Drawing.Size(63, 23);
-      this.numAndereFremdspr2Note.TabIndex = 67;
-      this.numAndereFremdspr2Note.Value = null;
-      // 
       // textBoxZeugnisbemerkung
       // 
       this.textBoxZeugnisbemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxZeugnisbemerkung.Location = new System.Drawing.Point(299, 117);
+      this.textBoxZeugnisbemerkung.Location = new System.Drawing.Point(296, 274);
       this.textBoxZeugnisbemerkung.Multiline = true;
       this.textBoxZeugnisbemerkung.Name = "textBoxZeugnisbemerkung";
-      this.textBoxZeugnisbemerkung.Size = new System.Drawing.Size(276, 71);
+      this.textBoxZeugnisbemerkung.Size = new System.Drawing.Size(285, 89);
       this.textBoxZeugnisbemerkung.TabIndex = 84;
       // 
       // labelZeugnisbemerkung
       // 
       this.labelZeugnisbemerkung.AutoSize = true;
       this.labelZeugnisbemerkung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelZeugnisbemerkung.Location = new System.Drawing.Point(296, 101);
+      this.labelZeugnisbemerkung.Location = new System.Drawing.Point(293, 258);
       this.labelZeugnisbemerkung.Name = "labelZeugnisbemerkung";
       this.labelZeugnisbemerkung.Size = new System.Drawing.Size(153, 13);
       this.labelZeugnisbemerkung.TabIndex = 83;
@@ -499,6 +528,56 @@ namespace diNo
       this.label7.TabIndex = 75;
       this.label7.Text = "Nachname";
       // 
+      // numAndereFremdspr2Note
+      // 
+      this.numAndereFremdspr2Note.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.numAndereFremdspr2Note.Location = new System.Drawing.Point(208, 124);
+      this.numAndereFremdspr2Note.Maximum = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
+      this.numAndereFremdspr2Note.Name = "numAndereFremdspr2Note";
+      this.numAndereFremdspr2Note.Size = new System.Drawing.Size(63, 23);
+      this.numAndereFremdspr2Note.TabIndex = 67;
+      this.numAndereFremdspr2Note.Value = null;
+      // 
+      // numericUpDownMathe
+      // 
+      this.numericUpDownMathe.Location = new System.Drawing.Point(199, 93);
+      this.numericUpDownMathe.Name = "numericUpDownMathe";
+      this.numericUpDownMathe.Size = new System.Drawing.Size(49, 20);
+      this.numericUpDownMathe.TabIndex = 7;
+      this.numericUpDownMathe.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+      // 
+      // numericUpDownEnglisch
+      // 
+      this.numericUpDownEnglisch.Location = new System.Drawing.Point(199, 69);
+      this.numericUpDownEnglisch.Name = "numericUpDownEnglisch";
+      this.numericUpDownEnglisch.Size = new System.Drawing.Size(49, 20);
+      this.numericUpDownEnglisch.TabIndex = 6;
+      this.numericUpDownEnglisch.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+      // 
+      // numericUpDownDeutsch
+      // 
+      this.numericUpDownDeutsch.Location = new System.Drawing.Point(199, 43);
+      this.numericUpDownDeutsch.Name = "numericUpDownDeutsch";
+      this.numericUpDownDeutsch.Size = new System.Drawing.Size(49, 20);
+      this.numericUpDownDeutsch.TabIndex = 5;
+      this.numericUpDownDeutsch.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+      // 
       // UserControlSekretariat
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -510,17 +589,19 @@ namespace diNo
       this.Controls.Add(this.groupBoxMittlereReife);
       this.Controls.Add(this.btnSave);
       this.Name = "UserControlSekretariat";
-      this.Size = new System.Drawing.Size(621, 479);
+      this.Size = new System.Drawing.Size(621, 484);
       this.groupBoxMittlereReife.ResumeLayout(false);
       this.groupBoxMittlereReife.PerformLayout();
+      this.groupBox1.ResumeLayout(false);
+      this.groupBox1.PerformLayout();
+      this.gbFS2Art.ResumeLayout(false);
+      this.gbFS2Art.PerformLayout();
+      this.panelSekretariat.ResumeLayout(false);
+      this.panelSekretariat.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMathe)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEnglisch)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDeutsch)).EndInit();
-      this.groupBox1.ResumeLayout(false);
-      this.groupBox1.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).EndInit();
-      this.panelSekretariat.ResumeLayout(false);
-      this.panelSekretariat.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 

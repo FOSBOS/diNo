@@ -477,6 +477,8 @@ namespace diNo.Xml
 
     private static zweite_fremdsprache getSprache(Schueler schueler)
     {
+      return null;
+      /* TODO: AndereFremdspr2Art abfragen und Sprache aus AndereFremdspr2Text entnehmen!
       if (schueler.Data.IsAndereFremdspr2TextNull() || schueler.Data.IsAndereFremdspr2NoteNull())
       {
         return null;
@@ -493,7 +495,7 @@ namespace diNo.Xml
       }
 
       result.note = new note() { gesamt = schueler.Data.AndereFremdspr2Note.ToString() };
-      return result;
+      return result;*/
     }
 
     private static vorbildungMsa_erworben_an_schulart ErmittleSchulartDerMittlerenReife(Schueler unserSchueler)

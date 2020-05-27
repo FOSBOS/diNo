@@ -38,10 +38,6 @@
       this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-      this.textBoxWahlpflichtfach = new System.Windows.Forms.TextBox();
-      this.label1 = new System.Windows.Forms.Label();
-      this.label4 = new System.Windows.Forms.Label();
-      this.textBoxFremdsprache2 = new System.Windows.Forms.TextBox();
       this.label5 = new System.Windows.Forms.Label();
       this.textBoxReliOderEthik = new System.Windows.Forms.TextBox();
       this.label6 = new System.Windows.Forms.Label();
@@ -76,6 +72,7 @@
             this.olvColumnCurrentId,
             this.olvColumnKurzbezeichnung,
             this.olvColumnBezeichnung});
+      this.objectListView1.HideSelection = false;
       this.objectListView1.Location = new System.Drawing.Point(20, 68);
       this.objectListView1.Name = "objectListView1";
       this.objectListView1.Size = new System.Drawing.Size(271, 270);
@@ -115,6 +112,7 @@
             this.olvColumn1,
             this.olvColumn2,
             this.olvColumn3});
+      this.objectListView2.HideSelection = false;
       this.objectListView2.Location = new System.Drawing.Point(328, 68);
       this.objectListView2.Name = "objectListView2";
       this.objectListView2.Size = new System.Drawing.Size(270, 270);
@@ -145,44 +143,10 @@
       this.olvColumn3.Text = "Bezeichnung";
       this.olvColumn3.Width = 250;
       // 
-      // textBoxWahlpflichtfach
-      // 
-      this.textBoxWahlpflichtfach.Enabled = false;
-      this.textBoxWahlpflichtfach.Location = new System.Drawing.Point(630, 68);
-      this.textBoxWahlpflichtfach.Name = "textBoxWahlpflichtfach";
-      this.textBoxWahlpflichtfach.Size = new System.Drawing.Size(78, 20);
-      this.textBoxWahlpflichtfach.TabIndex = 6;
-      // 
-      // label1
-      // 
-      this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(627, 52);
-      this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(81, 13);
-      this.label1.TabIndex = 7;
-      this.label1.Text = "Wahlpflichtfach";
-      // 
-      // label4
-      // 
-      this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(627, 96);
-      this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(80, 13);
-      this.label4.TabIndex = 9;
-      this.label4.Text = "Fremdsprache2";
-      // 
-      // textBoxFremdsprache2
-      // 
-      this.textBoxFremdsprache2.Enabled = false;
-      this.textBoxFremdsprache2.Location = new System.Drawing.Point(630, 112);
-      this.textBoxFremdsprache2.Name = "textBoxFremdsprache2";
-      this.textBoxFremdsprache2.Size = new System.Drawing.Size(78, 20);
-      this.textBoxFremdsprache2.TabIndex = 8;
-      // 
       // label5
       // 
       this.label5.AutoSize = true;
-      this.label5.Location = new System.Drawing.Point(627, 145);
+      this.label5.Location = new System.Drawing.Point(618, 52);
       this.label5.Name = "label5";
       this.label5.Size = new System.Drawing.Size(94, 13);
       this.label5.TabIndex = 11;
@@ -191,7 +155,7 @@
       // textBoxReliOderEthik
       // 
       this.textBoxReliOderEthik.Enabled = false;
-      this.textBoxReliOderEthik.Location = new System.Drawing.Point(630, 161);
+      this.textBoxReliOderEthik.Location = new System.Drawing.Point(621, 68);
       this.textBoxReliOderEthik.Name = "textBoxReliOderEthik";
       this.textBoxReliOderEthik.Size = new System.Drawing.Size(78, 20);
       this.textBoxReliOderEthik.TabIndex = 10;
@@ -214,10 +178,6 @@
       this.Controls.Add(this.label6);
       this.Controls.Add(this.label5);
       this.Controls.Add(this.textBoxReliOderEthik);
-      this.Controls.Add(this.label4);
-      this.Controls.Add(this.textBoxFremdsprache2);
-      this.Controls.Add(this.label1);
-      this.Controls.Add(this.textBoxWahlpflichtfach);
       this.Controls.Add(this.objectListView2);
       this.Controls.Add(this.objectListView1);
       this.Controls.Add(this.label3);
@@ -240,10 +200,6 @@
     private BrightIdeasSoftware.ObjectListView objectListView2;
     private BrightIdeasSoftware.OLVColumn olvColumn1;
     private BrightIdeasSoftware.OLVColumn olvColumn2;
-    private System.Windows.Forms.TextBox textBoxWahlpflichtfach;
-    private System.Windows.Forms.Label label1;
-    private System.Windows.Forms.Label label4;
-    private System.Windows.Forms.TextBox textBoxFremdsprache2;
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.TextBox textBoxReliOderEthik;
     private System.Windows.Forms.Label label6;

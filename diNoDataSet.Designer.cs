@@ -4113,19 +4113,7 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnAusbildungsrichtung;
             
-            private global::System.Data.DataColumn columnFremdsprache2;
-            
             private global::System.Data.DataColumn columnReligionOderEthik;
-            
-            private global::System.Data.DataColumn columnWahlpflichtfach;
-            
-            private global::System.Data.DataColumn columnWahlfach1;
-            
-            private global::System.Data.DataColumn columnWahlfach2;
-            
-            private global::System.Data.DataColumn columnWahlfach3;
-            
-            private global::System.Data.DataColumn columnWahlfach4;
             
             private global::System.Data.DataColumn columnWiederholung1Jahrgangsstufe;
             
@@ -4196,6 +4184,8 @@ namespace diNo {
             private global::System.Data.DataColumn columnMittlereReifeEnglischnote;
             
             private global::System.Data.DataColumn columnBerechungsstatus;
+            
+            private global::System.Data.DataColumn columnAndereFremdspr2Art;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -4344,57 +4334,9 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Fremdsprache2Column {
-                get {
-                    return this.columnFremdsprache2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public global::System.Data.DataColumn ReligionOderEthikColumn {
                 get {
                     return this.columnReligionOderEthik;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn WahlpflichtfachColumn {
-                get {
-                    return this.columnWahlpflichtfach;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach1Column {
-                get {
-                    return this.columnWahlfach1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach2Column {
-                get {
-                    return this.columnWahlfach2;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach3Column {
-                get {
-                    return this.columnWahlfach3;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn Wahlfach4Column {
-                get {
-                    return this.columnWahlfach4;
                 }
             }
             
@@ -4680,6 +4622,14 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn AndereFremdspr2ArtColumn {
+                get {
+                    return this.columnAndereFremdspr2Art;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -4730,13 +4680,7 @@ namespace diNo {
                         string AnschriftStrasse, 
                         string AnschriftTelefonnummer, 
                         string Ausbildungsrichtung, 
-                        string Fremdsprache2, 
                         string ReligionOderEthik, 
-                        string Wahlpflichtfach, 
-                        string Wahlfach1, 
-                        string Wahlfach2, 
-                        string Wahlfach3, 
-                        string Wahlfach4, 
                         string Wiederholung1Jahrgangsstufe, 
                         string Wiederholung2Jahrgangsstufe, 
                         string Wiederholung1Grund, 
@@ -4771,7 +4715,8 @@ namespace diNo {
                         int MittlereReifeMathenote, 
                         int MittlereReifeDeutschnote, 
                         int MittlereReifeEnglischnote, 
-                        byte Berechungsstatus) {
+                        byte Berechungsstatus, 
+                        int AndereFremdspr2Art) {
                 SchuelerRow rowSchuelerRow = ((SchuelerRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
@@ -4788,13 +4733,7 @@ namespace diNo {
                         AnschriftStrasse,
                         AnschriftTelefonnummer,
                         Ausbildungsrichtung,
-                        Fremdsprache2,
                         ReligionOderEthik,
-                        Wahlpflichtfach,
-                        Wahlfach1,
-                        Wahlfach2,
-                        Wahlfach3,
-                        Wahlfach4,
                         Wiederholung1Jahrgangsstufe,
                         Wiederholung2Jahrgangsstufe,
                         Wiederholung1Grund,
@@ -4829,7 +4768,8 @@ namespace diNo {
                         MittlereReifeMathenote,
                         MittlereReifeDeutschnote,
                         MittlereReifeEnglischnote,
-                        Berechungsstatus};
+                        Berechungsstatus,
+                        AndereFremdspr2Art};
                 if ((parentKlasseRowByFK_Schueler_ToTable != null)) {
                     columnValuesArray[3] = parentKlasseRowByFK_Schueler_ToTable[0];
                 }
@@ -4876,13 +4816,7 @@ namespace diNo {
                 this.columnAnschriftStrasse = base.Columns["AnschriftStrasse"];
                 this.columnAnschriftTelefonnummer = base.Columns["AnschriftTelefonnummer"];
                 this.columnAusbildungsrichtung = base.Columns["Ausbildungsrichtung"];
-                this.columnFremdsprache2 = base.Columns["Fremdsprache2"];
                 this.columnReligionOderEthik = base.Columns["ReligionOderEthik"];
-                this.columnWahlpflichtfach = base.Columns["Wahlpflichtfach"];
-                this.columnWahlfach1 = base.Columns["Wahlfach1"];
-                this.columnWahlfach2 = base.Columns["Wahlfach2"];
-                this.columnWahlfach3 = base.Columns["Wahlfach3"];
-                this.columnWahlfach4 = base.Columns["Wahlfach4"];
                 this.columnWiederholung1Jahrgangsstufe = base.Columns["Wiederholung1Jahrgangsstufe"];
                 this.columnWiederholung2Jahrgangsstufe = base.Columns["Wiederholung2Jahrgangsstufe"];
                 this.columnWiederholung1Grund = base.Columns["Wiederholung1Grund"];
@@ -4918,6 +4852,7 @@ namespace diNo {
                 this.columnMittlereReifeDeutschnote = base.Columns["MittlereReifeDeutschnote"];
                 this.columnMittlereReifeEnglischnote = base.Columns["MittlereReifeEnglischnote"];
                 this.columnBerechungsstatus = base.Columns["Berechungsstatus"];
+                this.columnAndereFremdspr2Art = base.Columns["AndereFremdspr2Art"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4951,20 +4886,8 @@ namespace diNo {
                 base.Columns.Add(this.columnAnschriftTelefonnummer);
                 this.columnAusbildungsrichtung = new global::System.Data.DataColumn("Ausbildungsrichtung", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAusbildungsrichtung);
-                this.columnFremdsprache2 = new global::System.Data.DataColumn("Fremdsprache2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFremdsprache2);
                 this.columnReligionOderEthik = new global::System.Data.DataColumn("ReligionOderEthik", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnReligionOderEthik);
-                this.columnWahlpflichtfach = new global::System.Data.DataColumn("Wahlpflichtfach", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlpflichtfach);
-                this.columnWahlfach1 = new global::System.Data.DataColumn("Wahlfach1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach1);
-                this.columnWahlfach2 = new global::System.Data.DataColumn("Wahlfach2", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach2);
-                this.columnWahlfach3 = new global::System.Data.DataColumn("Wahlfach3", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach3);
-                this.columnWahlfach4 = new global::System.Data.DataColumn("Wahlfach4", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnWahlfach4);
                 this.columnWiederholung1Jahrgangsstufe = new global::System.Data.DataColumn("Wiederholung1Jahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnWiederholung1Jahrgangsstufe);
                 this.columnWiederholung2Jahrgangsstufe = new global::System.Data.DataColumn("Wiederholung2Jahrgangsstufe", typeof(string), null, global::System.Data.MappingType.Element);
@@ -5035,6 +4958,8 @@ namespace diNo {
                 base.Columns.Add(this.columnMittlereReifeEnglischnote);
                 this.columnBerechungsstatus = new global::System.Data.DataColumn("Berechungsstatus", typeof(byte), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBerechungsstatus);
+                this.columnAndereFremdspr2Art = new global::System.Data.DataColumn("AndereFremdspr2Art", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnAndereFremdspr2Art);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AllowDBNull = false;
@@ -5053,13 +4978,7 @@ namespace diNo {
                 this.columnAnschriftStrasse.MaxLength = 256;
                 this.columnAnschriftTelefonnummer.MaxLength = 256;
                 this.columnAusbildungsrichtung.MaxLength = 50;
-                this.columnFremdsprache2.MaxLength = 50;
                 this.columnReligionOderEthik.MaxLength = 50;
-                this.columnWahlpflichtfach.MaxLength = 50;
-                this.columnWahlfach1.MaxLength = 50;
-                this.columnWahlfach2.MaxLength = 50;
-                this.columnWahlfach3.MaxLength = 50;
-                this.columnWahlfach4.MaxLength = 50;
                 this.columnWiederholung1Jahrgangsstufe.MaxLength = 50;
                 this.columnWiederholung2Jahrgangsstufe.MaxLength = 50;
                 this.columnWiederholung1Grund.MaxLength = 256;
@@ -5081,6 +5000,7 @@ namespace diNo {
                 this.columnZeugnisbemerkung.MaxLength = 256;
                 this.columnSonderfallNur2Hj.AllowDBNull = false;
                 this.columnBerechungsstatus.AllowDBNull = false;
+                this.columnAndereFremdspr2Art.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10216,22 +10136,6 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Fremdsprache2 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Fremdsprache2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Fremdsprache2 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Fremdsprache2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public string ReligionOderEthik {
                 get {
                     try {
@@ -10243,86 +10147,6 @@ namespace diNo {
                 }
                 set {
                     this[this.tableSchueler.ReligionOderEthikColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Wahlpflichtfach {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.WahlpflichtfachColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlpflichtfach in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.WahlpflichtfachColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Wahlfach1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wahlfach1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach1 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wahlfach1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Wahlfach2 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wahlfach2Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach2 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wahlfach2Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Wahlfach3 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wahlfach3Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach3 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wahlfach3Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string Wahlfach4 {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.Wahlfach4Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Wahlfach4 in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.Wahlfach4Column] = value;
                 }
             }
             
@@ -10880,6 +10704,17 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public int AndereFremdspr2Art {
+                get {
+                    return ((int)(this[this.tableSchueler.AndereFremdspr2ArtColumn]));
+                }
+                set {
+                    this[this.tableSchueler.AndereFremdspr2ArtColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public KlasseRow KlasseRow {
                 get {
                     return ((KlasseRow)(this.GetParentRow(this.Table.ParentRelations["FK_Schueler_ToTable"])));
@@ -11011,18 +10846,6 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsFremdsprache2Null() {
-                return this.IsNull(this.tableSchueler.Fremdsprache2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetFremdsprache2Null() {
-                this[this.tableSchueler.Fremdsprache2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsReligionOderEthikNull() {
                 return this.IsNull(this.tableSchueler.ReligionOderEthikColumn);
             }
@@ -11031,66 +10854,6 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetReligionOderEthikNull() {
                 this[this.tableSchueler.ReligionOderEthikColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsWahlpflichtfachNull() {
-                return this.IsNull(this.tableSchueler.WahlpflichtfachColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetWahlpflichtfachNull() {
-                this[this.tableSchueler.WahlpflichtfachColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsWahlfach1Null() {
-                return this.IsNull(this.tableSchueler.Wahlfach1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetWahlfach1Null() {
-                this[this.tableSchueler.Wahlfach1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsWahlfach2Null() {
-                return this.IsNull(this.tableSchueler.Wahlfach2Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetWahlfach2Null() {
-                this[this.tableSchueler.Wahlfach2Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsWahlfach3Null() {
-                return this.IsNull(this.tableSchueler.Wahlfach3Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetWahlfach3Null() {
-                this[this.tableSchueler.Wahlfach3Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsWahlfach4Null() {
-                return this.IsNull(this.tableSchueler.Wahlfach4Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetWahlfach4Null() {
-                this[this.tableSchueler.Wahlfach4Column] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -18145,13 +17908,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             tableMapping.ColumnMappings.Add("AnschriftStrasse", "AnschriftStrasse");
             tableMapping.ColumnMappings.Add("AnschriftTelefonnummer", "AnschriftTelefonnummer");
             tableMapping.ColumnMappings.Add("Ausbildungsrichtung", "Ausbildungsrichtung");
-            tableMapping.ColumnMappings.Add("Fremdsprache2", "Fremdsprache2");
             tableMapping.ColumnMappings.Add("ReligionOderEthik", "ReligionOderEthik");
-            tableMapping.ColumnMappings.Add("Wahlpflichtfach", "Wahlpflichtfach");
-            tableMapping.ColumnMappings.Add("Wahlfach1", "Wahlfach1");
-            tableMapping.ColumnMappings.Add("Wahlfach2", "Wahlfach2");
-            tableMapping.ColumnMappings.Add("Wahlfach3", "Wahlfach3");
-            tableMapping.ColumnMappings.Add("Wahlfach4", "Wahlfach4");
             tableMapping.ColumnMappings.Add("Wiederholung1Jahrgangsstufe", "Wiederholung1Jahrgangsstufe");
             tableMapping.ColumnMappings.Add("Wiederholung2Jahrgangsstufe", "Wiederholung2Jahrgangsstufe");
             tableMapping.ColumnMappings.Add("Wiederholung1Grund", "Wiederholung1Grund");
@@ -18188,6 +17945,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             tableMapping.ColumnMappings.Add("EintrittAusSchulart", "EintrittAusSchulart");
             tableMapping.ColumnMappings.Add("Berechungsstatus", "Berechungsstatus");
             tableMapping.ColumnMappings.Add("DNoteFachgebHSR", "DNoteFachgebHSR");
+            tableMapping.ColumnMappings.Add("AndereFremdspr2Art", "AndereFremdspr2Art");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -18198,31 +17956,29 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [Schueler] ([Id], [Name], [Vorname], [KlasseId], [Rufname], [Geschlec" +
                 "ht], [Geburtsdatum], [Geburtsort], [Bekenntnis], [AnschriftPLZ], [AnschriftOrt]," +
-                " [AnschriftStrasse], [AnschriftTelefonnummer], [Ausbildungsrichtung], [Fremdspra" +
-                "che2], [ReligionOderEthik], [Wahlpflichtfach], [Wahlfach1], [Wahlfach2], [Wahlfa" +
-                "ch3], [Wahlfach4], [Wiederholung1Jahrgangsstufe], [Wiederholung2Jahrgangsstufe]," +
-                " [Wiederholung1Grund], [Wiederholung2Grund], [ProbezeitBis], [Austrittsdatum], [" +
-                "SchulischeVorbildung], [BeruflicheVorbildung], [LRSStoerung], [NachnameEltern1]," +
-                " [VornameEltern1], [AnredeEltern1], [VerwandtschaftsbezeichnungEltern1], [Nachna" +
-                "meEltern2], [VornameEltern2], [AnredeEltern2], [VerwandtschaftsbezeichnungEltern" +
-                "2], [EintrittJahrgangsstufe], [EintrittAm], [EintrittAusSchulnummer], [Email], [" +
-                "Notfalltelefonnummer], [DNote], [Status], [AndereFremdspr2Note], [AndereFremdspr" +
-                "2Text], [DNoteFachgebHSR], [Schulart], [SonderfallNur2Hj], [Zeugnisbemerkung], [" +
-                "EintrittAusSchulart], [MittlereReifeMathenote], [MittlereReifeDeutschnote], [Mit" +
-                "tlereReifeEnglischnote], [Berechungsstatus]) VALUES (@Id, @Name, @Vorname, @Klas" +
-                "seId, @Rufname, @Geschlecht, @Geburtsdatum, @Geburtsort, @Bekenntnis, @Anschrift" +
-                "PLZ, @AnschriftOrt, @AnschriftStrasse, @AnschriftTelefonnummer, @Ausbildungsrich" +
-                "tung, @Fremdsprache2, @ReligionOderEthik, @Wahlpflichtfach, @Wahlfach1, @Wahlfac" +
-                "h2, @Wahlfach3, @Wahlfach4, @Wiederholung1Jahrgangsstufe, @Wiederholung2Jahrgang" +
-                "sstufe, @Wiederholung1Grund, @Wiederholung2Grund, @ProbezeitBis, @Austrittsdatum" +
-                ", @SchulischeVorbildung, @BeruflicheVorbildung, @LRSStoerung, @NachnameEltern1, " +
-                "@VornameEltern1, @AnredeEltern1, @VerwandtschaftsbezeichnungEltern1, @NachnameEl" +
-                "tern2, @VornameEltern2, @AnredeEltern2, @VerwandtschaftsbezeichnungEltern2, @Ein" +
-                "trittJahrgangsstufe, @EintrittAm, @EintrittAusSchulnummer, @Email, @Notfalltelef" +
-                "onnummer, @DNote, @Status, @AndereFremdspr2Note, @AndereFremdspr2Text, @DNoteFac" +
-                "hgebHSR, @Schulart, @SonderfallNur2Hj, @Zeugnisbemerkung, @EintrittAusSchulart, " +
-                "@MittlereReifeMathenote, @MittlereReifeDeutschnote, @MittlereReifeEnglischnote, " +
-                "@Berechungsstatus)";
+                " [AnschriftStrasse], [AnschriftTelefonnummer], [Ausbildungsrichtung], [ReligionO" +
+                "derEthik], [Wiederholung1Jahrgangsstufe], [Wiederholung2Jahrgangsstufe], [Wieder" +
+                "holung1Grund], [Wiederholung2Grund], [ProbezeitBis], [Austrittsdatum], [Schulisc" +
+                "heVorbildung], [BeruflicheVorbildung], [LRSStoerung], [NachnameEltern1], [Vornam" +
+                "eEltern1], [AnredeEltern1], [VerwandtschaftsbezeichnungEltern1], [NachnameEltern" +
+                "2], [VornameEltern2], [AnredeEltern2], [VerwandtschaftsbezeichnungEltern2], [Ein" +
+                "trittJahrgangsstufe], [EintrittAm], [EintrittAusSchulnummer], [Email], [Notfallt" +
+                "elefonnummer], [DNote], [Status], [AndereFremdspr2Note], [AndereFremdspr2Text], " +
+                "[DNoteFachgebHSR], [Schulart], [SonderfallNur2Hj], [Zeugnisbemerkung], [Eintritt" +
+                "AusSchulart], [MittlereReifeMathenote], [MittlereReifeDeutschnote], [MittlereRei" +
+                "feEnglischnote], [Berechungsstatus], [AndereFremdspr2Art]) VALUES (@Id, @Name, @" +
+                "Vorname, @KlasseId, @Rufname, @Geschlecht, @Geburtsdatum, @Geburtsort, @Bekenntn" +
+                "is, @AnschriftPLZ, @AnschriftOrt, @AnschriftStrasse, @AnschriftTelefonnummer, @A" +
+                "usbildungsrichtung, @ReligionOderEthik, @Wiederholung1Jahrgangsstufe, @Wiederhol" +
+                "ung2Jahrgangsstufe, @Wiederholung1Grund, @Wiederholung2Grund, @ProbezeitBis, @Au" +
+                "strittsdatum, @SchulischeVorbildung, @BeruflicheVorbildung, @LRSStoerung, @Nachn" +
+                "ameEltern1, @VornameEltern1, @AnredeEltern1, @VerwandtschaftsbezeichnungEltern1," +
+                " @NachnameEltern2, @VornameEltern2, @AnredeEltern2, @VerwandtschaftsbezeichnungE" +
+                "ltern2, @EintrittJahrgangsstufe, @EintrittAm, @EintrittAusSchulnummer, @Email, @" +
+                "Notfalltelefonnummer, @DNote, @Status, @AndereFremdspr2Note, @AndereFremdspr2Tex" +
+                "t, @DNoteFachgebHSR, @Schulart, @SonderfallNur2Hj, @Zeugnisbemerkung, @EintrittA" +
+                "usSchulart, @MittlereReifeMathenote, @MittlereReifeDeutschnote, @MittlereReifeEn" +
+                "glischnote, @Berechungsstatus, @AndereFremdspr2Art)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -18238,13 +17994,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftStrasse", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftStrasse", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftTelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftTelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Fremdsprache2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fremdsprache2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReligionOderEthik", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReligionOderEthik", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlpflichtfach", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlpflichtfach", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach3", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach3", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach4", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach4", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung2Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Grund", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Grund", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -18280,6 +18030,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MittlereReifeDeutschnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MittlereReifeDeutschnote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MittlereReifeEnglischnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MittlereReifeEnglischnote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Berechungsstatus", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Berechungsstatus", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Art", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Art", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [Schueler] SET [Id] = @Id, [Name] = @Name, [Vorname] = @Vorname, [KlasseId" +
@@ -18287,29 +18038,27 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
                 "= @Geburtsdatum, [Geburtsort] = @Geburtsort, [Bekenntnis] = @Bekenntnis, [Anschr" +
                 "iftPLZ] = @AnschriftPLZ, [AnschriftOrt] = @AnschriftOrt, [AnschriftStrasse] = @A" +
                 "nschriftStrasse, [AnschriftTelefonnummer] = @AnschriftTelefonnummer, [Ausbildung" +
-                "srichtung] = @Ausbildungsrichtung, [Fremdsprache2] = @Fremdsprache2, [ReligionOd" +
-                "erEthik] = @ReligionOderEthik, [Wahlpflichtfach] = @Wahlpflichtfach, [Wahlfach1]" +
-                " = @Wahlfach1, [Wahlfach2] = @Wahlfach2, [Wahlfach3] = @Wahlfach3, [Wahlfach4] =" +
-                " @Wahlfach4, [Wiederholung1Jahrgangsstufe] = @Wiederholung1Jahrgangsstufe, [Wied" +
-                "erholung2Jahrgangsstufe] = @Wiederholung2Jahrgangsstufe, [Wiederholung1Grund] = " +
-                "@Wiederholung1Grund, [Wiederholung2Grund] = @Wiederholung2Grund, [ProbezeitBis] " +
-                "= @ProbezeitBis, [Austrittsdatum] = @Austrittsdatum, [SchulischeVorbildung] = @S" +
-                "chulischeVorbildung, [BeruflicheVorbildung] = @BeruflicheVorbildung, [LRSStoerun" +
-                "g] = @LRSStoerung, [NachnameEltern1] = @NachnameEltern1, [VornameEltern1] = @Vor" +
-                "nameEltern1, [AnredeEltern1] = @AnredeEltern1, [VerwandtschaftsbezeichnungEltern" +
-                "1] = @VerwandtschaftsbezeichnungEltern1, [NachnameEltern2] = @NachnameEltern2, [" +
-                "VornameEltern2] = @VornameEltern2, [AnredeEltern2] = @AnredeEltern2, [Verwandtsc" +
-                "haftsbezeichnungEltern2] = @VerwandtschaftsbezeichnungEltern2, [EintrittJahrgang" +
-                "sstufe] = @EintrittJahrgangsstufe, [EintrittAm] = @EintrittAm, [EintrittAusSchul" +
-                "nummer] = @EintrittAusSchulnummer, [Email] = @Email, [Notfalltelefonnummer] = @N" +
-                "otfalltelefonnummer, [DNote] = @DNote, [Status] = @Status, [AndereFremdspr2Note]" +
-                " = @AndereFremdspr2Note, [AndereFremdspr2Text] = @AndereFremdspr2Text, [DNoteFac" +
-                "hgebHSR] = @DNoteFachgebHSR, [Schulart] = @Schulart, [SonderfallNur2Hj] = @Sonde" +
-                "rfallNur2Hj, [Zeugnisbemerkung] = @Zeugnisbemerkung, [EintrittAusSchulart] = @Ei" +
-                "ntrittAusSchulart, [MittlereReifeMathenote] = @MittlereReifeMathenote, [Mittlere" +
-                "ReifeDeutschnote] = @MittlereReifeDeutschnote, [MittlereReifeEnglischnote] = @Mi" +
-                "ttlereReifeEnglischnote, [Berechungsstatus] = @Berechungsstatus WHERE (([Id] = @" +
-                "Original_Id))";
+                "srichtung] = @Ausbildungsrichtung, [ReligionOderEthik] = @ReligionOderEthik, [Wi" +
+                "ederholung1Jahrgangsstufe] = @Wiederholung1Jahrgangsstufe, [Wiederholung2Jahrgan" +
+                "gsstufe] = @Wiederholung2Jahrgangsstufe, [Wiederholung1Grund] = @Wiederholung1Gr" +
+                "und, [Wiederholung2Grund] = @Wiederholung2Grund, [ProbezeitBis] = @ProbezeitBis," +
+                " [Austrittsdatum] = @Austrittsdatum, [SchulischeVorbildung] = @SchulischeVorbild" +
+                "ung, [BeruflicheVorbildung] = @BeruflicheVorbildung, [LRSStoerung] = @LRSStoerun" +
+                "g, [NachnameEltern1] = @NachnameEltern1, [VornameEltern1] = @VornameEltern1, [An" +
+                "redeEltern1] = @AnredeEltern1, [VerwandtschaftsbezeichnungEltern1] = @Verwandtsc" +
+                "haftsbezeichnungEltern1, [NachnameEltern2] = @NachnameEltern2, [VornameEltern2] " +
+                "= @VornameEltern2, [AnredeEltern2] = @AnredeEltern2, [Verwandtschaftsbezeichnung" +
+                "Eltern2] = @VerwandtschaftsbezeichnungEltern2, [EintrittJahrgangsstufe] = @Eintr" +
+                "ittJahrgangsstufe, [EintrittAm] = @EintrittAm, [EintrittAusSchulnummer] = @Eintr" +
+                "ittAusSchulnummer, [Email] = @Email, [Notfalltelefonnummer] = @Notfalltelefonnum" +
+                "mer, [DNote] = @DNote, [Status] = @Status, [AndereFremdspr2Note] = @AndereFremds" +
+                "pr2Note, [AndereFremdspr2Text] = @AndereFremdspr2Text, [DNoteFachgebHSR] = @DNot" +
+                "eFachgebHSR, [Schulart] = @Schulart, [SonderfallNur2Hj] = @SonderfallNur2Hj, [Ze" +
+                "ugnisbemerkung] = @Zeugnisbemerkung, [EintrittAusSchulart] = @EintrittAusSchular" +
+                "t, [MittlereReifeMathenote] = @MittlereReifeMathenote, [MittlereReifeDeutschnote" +
+                "] = @MittlereReifeDeutschnote, [MittlereReifeEnglischnote] = @MittlereReifeEngli" +
+                "schnote, [Berechungsstatus] = @Berechungsstatus, [AndereFremdspr2Art] = @AndereF" +
+                "remdspr2Art WHERE (([Id] = @Original_Id))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -18325,13 +18074,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftStrasse", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftStrasse", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AnschriftTelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AnschriftTelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Fremdsprache2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fremdsprache2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReligionOderEthik", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ReligionOderEthik", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlpflichtfach", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlpflichtfach", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach1", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach2", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach2", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach3", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach3", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wahlfach4", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wahlfach4", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung2Jahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung2Jahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Wiederholung1Grund", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Wiederholung1Grund", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -18367,6 +18110,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MittlereReifeDeutschnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MittlereReifeDeutschnote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MittlereReifeEnglischnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MittlereReifeEnglischnote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Berechungsstatus", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Berechungsstatus", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Art", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Art", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
@@ -18383,17 +18127,17 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[8];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT\r\n* FROM Schueler WHERE (Id = @Id)";
+            this._commandCollection[0].CommandText = "SELECT * FROM Schueler WHERE (Id = @Id)";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT * FROM Schueler WHERE (KlasseId = @KlasseId)";
+            this._commandCollection[1].CommandText = @"SELECT AndereFremdspr2Art, AndereFremdspr2Note, AndereFremdspr2Text, AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, Berechungsstatus, BeruflicheVorbildung, DNote, DNoteFachgebHSR, EintrittAm, EintrittAusSchulart, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSStoerung, MittlereReifeDeutschnote, MittlereReifeEnglischnote, MittlereReifeMathenote, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, SonderfallNur2Hj, Status, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe, Zeugnisbemerkung FROM Schueler WHERE (KlasseId = @KlasseId)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT * FROM Schueler";
+            this._commandCollection[2].CommandText = @"SELECT AndereFremdspr2Art, AndereFremdspr2Note, AndereFremdspr2Text, AnredeEltern1, AnredeEltern2, AnschriftOrt, AnschriftPLZ, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, Berechungsstatus, BeruflicheVorbildung, DNote, DNoteFachgebHSR, EintrittAm, EintrittAusSchulart, EintrittAusSchulnummer, EintrittJahrgangsstufe, Email, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSStoerung, MittlereReifeDeutschnote, MittlereReifeEnglischnote, MittlereReifeMathenote, NachnameEltern1, NachnameEltern2, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, SonderfallNur2Hj, Status, VerwandtschaftsbezeichnungEltern1, VerwandtschaftsbezeichnungEltern2, Vorname, VornameEltern1, VornameEltern2, Wiederholung1Grund, Wiederholung1Jahrgangsstufe, Wiederholung2Grund, Wiederholung2Jahrgangsstufe, Zeugnisbemerkung FROM Schueler";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
@@ -18659,13 +18403,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     string AnschriftStrasse, 
                     string AnschriftTelefonnummer, 
                     string Ausbildungsrichtung, 
-                    string Fremdsprache2, 
                     string ReligionOderEthik, 
-                    string Wahlpflichtfach, 
-                    string Wahlfach1, 
-                    string Wahlfach2, 
-                    string Wahlfach3, 
-                    string Wahlfach4, 
                     string Wiederholung1Jahrgangsstufe, 
                     string Wiederholung2Jahrgangsstufe, 
                     string Wiederholung1Grund, 
@@ -18700,7 +18438,8 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     global::System.Nullable<int> MittlereReifeMathenote, 
                     global::System.Nullable<int> MittlereReifeDeutschnote, 
                     global::System.Nullable<int> MittlereReifeEnglischnote, 
-                    byte Berechungsstatus) {
+                    byte Berechungsstatus, 
+                    int AndereFremdspr2Art) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(Id));
             if ((Name == null)) {
                 throw new global::System.ArgumentNullException("Name");
@@ -18775,248 +18514,213 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             else {
                 this.Adapter.InsertCommand.Parameters[13].Value = ((string)(Ausbildungsrichtung));
             }
-            if ((Fremdsprache2 == null)) {
+            if ((ReligionOderEthik == null)) {
                 this.Adapter.InsertCommand.Parameters[14].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[14].Value = ((string)(Fremdsprache2));
+                this.Adapter.InsertCommand.Parameters[14].Value = ((string)(ReligionOderEthik));
             }
-            if ((ReligionOderEthik == null)) {
+            if ((Wiederholung1Jahrgangsstufe == null)) {
                 this.Adapter.InsertCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[15].Value = ((string)(ReligionOderEthik));
+                this.Adapter.InsertCommand.Parameters[15].Value = ((string)(Wiederholung1Jahrgangsstufe));
             }
-            if ((Wahlpflichtfach == null)) {
+            if ((Wiederholung2Jahrgangsstufe == null)) {
                 this.Adapter.InsertCommand.Parameters[16].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[16].Value = ((string)(Wahlpflichtfach));
+                this.Adapter.InsertCommand.Parameters[16].Value = ((string)(Wiederholung2Jahrgangsstufe));
             }
-            if ((Wahlfach1 == null)) {
+            if ((Wiederholung1Grund == null)) {
                 this.Adapter.InsertCommand.Parameters[17].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[17].Value = ((string)(Wahlfach1));
+                this.Adapter.InsertCommand.Parameters[17].Value = ((string)(Wiederholung1Grund));
             }
-            if ((Wahlfach2 == null)) {
+            if ((Wiederholung2Grund == null)) {
                 this.Adapter.InsertCommand.Parameters[18].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[18].Value = ((string)(Wahlfach2));
+                this.Adapter.InsertCommand.Parameters[18].Value = ((string)(Wiederholung2Grund));
             }
-            if ((Wahlfach3 == null)) {
+            if ((ProbezeitBis.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[19].Value = ((System.DateTime)(ProbezeitBis.Value));
+            }
+            else {
                 this.Adapter.InsertCommand.Parameters[19].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.InsertCommand.Parameters[19].Value = ((string)(Wahlfach3));
+            if ((Austrittsdatum.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[20].Value = ((System.DateTime)(Austrittsdatum.Value));
             }
-            if ((Wahlfach4 == null)) {
+            else {
                 this.Adapter.InsertCommand.Parameters[20].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.InsertCommand.Parameters[20].Value = ((string)(Wahlfach4));
-            }
-            if ((Wiederholung1Jahrgangsstufe == null)) {
+            if ((SchulischeVorbildung == null)) {
                 this.Adapter.InsertCommand.Parameters[21].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[21].Value = ((string)(Wiederholung1Jahrgangsstufe));
+                this.Adapter.InsertCommand.Parameters[21].Value = ((string)(SchulischeVorbildung));
             }
-            if ((Wiederholung2Jahrgangsstufe == null)) {
+            if ((BeruflicheVorbildung == null)) {
                 this.Adapter.InsertCommand.Parameters[22].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[22].Value = ((string)(Wiederholung2Jahrgangsstufe));
+                this.Adapter.InsertCommand.Parameters[22].Value = ((string)(BeruflicheVorbildung));
             }
-            if ((Wiederholung1Grund == null)) {
-                this.Adapter.InsertCommand.Parameters[23].Value = global::System.DBNull.Value;
+            if ((LRSStoerung.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[23].Value = ((bool)(LRSStoerung.Value));
             }
             else {
-                this.Adapter.InsertCommand.Parameters[23].Value = ((string)(Wiederholung1Grund));
+                this.Adapter.InsertCommand.Parameters[23].Value = global::System.DBNull.Value;
             }
-            if ((Wiederholung2Grund == null)) {
+            if ((NachnameEltern1 == null)) {
                 this.Adapter.InsertCommand.Parameters[24].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[24].Value = ((string)(Wiederholung2Grund));
+                this.Adapter.InsertCommand.Parameters[24].Value = ((string)(NachnameEltern1));
             }
-            if ((ProbezeitBis.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[25].Value = ((System.DateTime)(ProbezeitBis.Value));
-            }
-            else {
+            if ((VornameEltern1 == null)) {
                 this.Adapter.InsertCommand.Parameters[25].Value = global::System.DBNull.Value;
             }
-            if ((Austrittsdatum.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[26].Value = ((System.DateTime)(Austrittsdatum.Value));
-            }
             else {
+                this.Adapter.InsertCommand.Parameters[25].Value = ((string)(VornameEltern1));
+            }
+            if ((AnredeEltern1 == null)) {
                 this.Adapter.InsertCommand.Parameters[26].Value = global::System.DBNull.Value;
             }
-            if ((SchulischeVorbildung == null)) {
+            else {
+                this.Adapter.InsertCommand.Parameters[26].Value = ((string)(AnredeEltern1));
+            }
+            if ((VerwandtschaftsbezeichnungEltern1 == null)) {
                 this.Adapter.InsertCommand.Parameters[27].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[27].Value = ((string)(SchulischeVorbildung));
+                this.Adapter.InsertCommand.Parameters[27].Value = ((string)(VerwandtschaftsbezeichnungEltern1));
             }
-            if ((BeruflicheVorbildung == null)) {
+            if ((NachnameEltern2 == null)) {
                 this.Adapter.InsertCommand.Parameters[28].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[28].Value = ((string)(BeruflicheVorbildung));
+                this.Adapter.InsertCommand.Parameters[28].Value = ((string)(NachnameEltern2));
             }
-            if ((LRSStoerung.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[29].Value = ((bool)(LRSStoerung.Value));
-            }
-            else {
+            if ((VornameEltern2 == null)) {
                 this.Adapter.InsertCommand.Parameters[29].Value = global::System.DBNull.Value;
             }
-            if ((NachnameEltern1 == null)) {
+            else {
+                this.Adapter.InsertCommand.Parameters[29].Value = ((string)(VornameEltern2));
+            }
+            if ((AnredeEltern2 == null)) {
                 this.Adapter.InsertCommand.Parameters[30].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[30].Value = ((string)(NachnameEltern1));
+                this.Adapter.InsertCommand.Parameters[30].Value = ((string)(AnredeEltern2));
             }
-            if ((VornameEltern1 == null)) {
+            if ((VerwandtschaftsbezeichnungEltern2 == null)) {
                 this.Adapter.InsertCommand.Parameters[31].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[31].Value = ((string)(VornameEltern1));
+                this.Adapter.InsertCommand.Parameters[31].Value = ((string)(VerwandtschaftsbezeichnungEltern2));
             }
-            if ((AnredeEltern1 == null)) {
+            if ((EintrittJahrgangsstufe == null)) {
                 this.Adapter.InsertCommand.Parameters[32].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[32].Value = ((string)(AnredeEltern1));
+                this.Adapter.InsertCommand.Parameters[32].Value = ((string)(EintrittJahrgangsstufe));
             }
-            if ((VerwandtschaftsbezeichnungEltern1 == null)) {
+            if ((EintrittAm.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[33].Value = ((System.DateTime)(EintrittAm.Value));
+            }
+            else {
                 this.Adapter.InsertCommand.Parameters[33].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.InsertCommand.Parameters[33].Value = ((string)(VerwandtschaftsbezeichnungEltern1));
+            if ((EintrittAusSchulnummer.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[34].Value = ((int)(EintrittAusSchulnummer.Value));
             }
-            if ((NachnameEltern2 == null)) {
+            else {
                 this.Adapter.InsertCommand.Parameters[34].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.InsertCommand.Parameters[34].Value = ((string)(NachnameEltern2));
-            }
-            if ((VornameEltern2 == null)) {
+            if ((Email == null)) {
                 this.Adapter.InsertCommand.Parameters[35].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[35].Value = ((string)(VornameEltern2));
+                this.Adapter.InsertCommand.Parameters[35].Value = ((string)(Email));
             }
-            if ((AnredeEltern2 == null)) {
+            if ((Notfalltelefonnummer == null)) {
                 this.Adapter.InsertCommand.Parameters[36].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[36].Value = ((string)(AnredeEltern2));
+                this.Adapter.InsertCommand.Parameters[36].Value = ((string)(Notfalltelefonnummer));
             }
-            if ((VerwandtschaftsbezeichnungEltern2 == null)) {
+            if ((DNote.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[37].Value = ((decimal)(DNote.Value));
+            }
+            else {
                 this.Adapter.InsertCommand.Parameters[37].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.InsertCommand.Parameters[37].Value = ((string)(VerwandtschaftsbezeichnungEltern2));
+            if ((Status.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[38].Value = ((int)(Status.Value));
             }
-            if ((EintrittJahrgangsstufe == null)) {
+            else {
                 this.Adapter.InsertCommand.Parameters[38].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.InsertCommand.Parameters[38].Value = ((string)(EintrittJahrgangsstufe));
-            }
-            if ((EintrittAm.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[39].Value = ((System.DateTime)(EintrittAm.Value));
+            if ((AndereFremdspr2Note.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[39].Value = ((int)(AndereFremdspr2Note.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[39].Value = global::System.DBNull.Value;
             }
-            if ((EintrittAusSchulnummer.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[40].Value = ((int)(EintrittAusSchulnummer.Value));
-            }
-            else {
+            if ((AndereFremdspr2Text == null)) {
                 this.Adapter.InsertCommand.Parameters[40].Value = global::System.DBNull.Value;
             }
-            if ((Email == null)) {
-                this.Adapter.InsertCommand.Parameters[41].Value = global::System.DBNull.Value;
+            else {
+                this.Adapter.InsertCommand.Parameters[40].Value = ((string)(AndereFremdspr2Text));
+            }
+            if ((DNoteFachgebHSR.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[41].Value = ((decimal)(DNoteFachgebHSR.Value));
             }
             else {
-                this.Adapter.InsertCommand.Parameters[41].Value = ((string)(Email));
+                this.Adapter.InsertCommand.Parameters[41].Value = global::System.DBNull.Value;
             }
-            if ((Notfalltelefonnummer == null)) {
+            if ((Schulart == null)) {
                 this.Adapter.InsertCommand.Parameters[42].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[42].Value = ((string)(Notfalltelefonnummer));
+                this.Adapter.InsertCommand.Parameters[42].Value = ((string)(Schulart));
             }
-            if ((DNote.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[43].Value = ((decimal)(DNote.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[43].Value = global::System.DBNull.Value;
-            }
-            if ((Status.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[44].Value = ((int)(Status.Value));
-            }
-            else {
+            this.Adapter.InsertCommand.Parameters[43].Value = ((bool)(SonderfallNur2Hj));
+            if ((Zeugnisbemerkung == null)) {
                 this.Adapter.InsertCommand.Parameters[44].Value = global::System.DBNull.Value;
             }
-            if ((AndereFremdspr2Note.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[45].Value = ((int)(AndereFremdspr2Note.Value));
-            }
             else {
+                this.Adapter.InsertCommand.Parameters[44].Value = ((string)(Zeugnisbemerkung));
+            }
+            if ((EintrittAusSchulart == null)) {
                 this.Adapter.InsertCommand.Parameters[45].Value = global::System.DBNull.Value;
             }
-            if ((AndereFremdspr2Text == null)) {
-                this.Adapter.InsertCommand.Parameters[46].Value = global::System.DBNull.Value;
+            else {
+                this.Adapter.InsertCommand.Parameters[45].Value = ((string)(EintrittAusSchulart));
+            }
+            if ((MittlereReifeMathenote.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[46].Value = ((int)(MittlereReifeMathenote.Value));
             }
             else {
-                this.Adapter.InsertCommand.Parameters[46].Value = ((string)(AndereFremdspr2Text));
+                this.Adapter.InsertCommand.Parameters[46].Value = global::System.DBNull.Value;
             }
-            if ((DNoteFachgebHSR.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[47].Value = ((decimal)(DNoteFachgebHSR.Value));
+            if ((MittlereReifeDeutschnote.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[47].Value = ((int)(MittlereReifeDeutschnote.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[47].Value = global::System.DBNull.Value;
             }
-            if ((Schulart == null)) {
+            if ((MittlereReifeEnglischnote.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[48].Value = ((int)(MittlereReifeEnglischnote.Value));
+            }
+            else {
                 this.Adapter.InsertCommand.Parameters[48].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.InsertCommand.Parameters[48].Value = ((string)(Schulart));
-            }
-            this.Adapter.InsertCommand.Parameters[49].Value = ((bool)(SonderfallNur2Hj));
-            if ((Zeugnisbemerkung == null)) {
-                this.Adapter.InsertCommand.Parameters[50].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[50].Value = ((string)(Zeugnisbemerkung));
-            }
-            if ((EintrittAusSchulart == null)) {
-                this.Adapter.InsertCommand.Parameters[51].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[51].Value = ((string)(EintrittAusSchulart));
-            }
-            if ((MittlereReifeMathenote.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[52].Value = ((int)(MittlereReifeMathenote.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[52].Value = global::System.DBNull.Value;
-            }
-            if ((MittlereReifeDeutschnote.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[53].Value = ((int)(MittlereReifeDeutschnote.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[53].Value = global::System.DBNull.Value;
-            }
-            if ((MittlereReifeEnglischnote.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[54].Value = ((int)(MittlereReifeEnglischnote.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[54].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.InsertCommand.Parameters[55].Value = ((byte)(Berechungsstatus));
+            this.Adapter.InsertCommand.Parameters[49].Value = ((byte)(Berechungsstatus));
+            this.Adapter.InsertCommand.Parameters[50].Value = ((int)(AndereFremdspr2Art));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -19052,13 +18756,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     string AnschriftStrasse, 
                     string AnschriftTelefonnummer, 
                     string Ausbildungsrichtung, 
-                    string Fremdsprache2, 
                     string ReligionOderEthik, 
-                    string Wahlpflichtfach, 
-                    string Wahlfach1, 
-                    string Wahlfach2, 
-                    string Wahlfach3, 
-                    string Wahlfach4, 
                     string Wiederholung1Jahrgangsstufe, 
                     string Wiederholung2Jahrgangsstufe, 
                     string Wiederholung1Grund, 
@@ -19094,6 +18792,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     global::System.Nullable<int> MittlereReifeDeutschnote, 
                     global::System.Nullable<int> MittlereReifeEnglischnote, 
                     byte Berechungsstatus, 
+                    int AndereFremdspr2Art, 
                     int Original_Id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(Id));
             if ((Name == null)) {
@@ -19169,249 +18868,214 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             else {
                 this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Ausbildungsrichtung));
             }
-            if ((Fremdsprache2 == null)) {
+            if ((ReligionOderEthik == null)) {
                 this.Adapter.UpdateCommand.Parameters[14].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((string)(Fremdsprache2));
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((string)(ReligionOderEthik));
             }
-            if ((ReligionOderEthik == null)) {
+            if ((Wiederholung1Jahrgangsstufe == null)) {
                 this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(ReligionOderEthik));
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(Wiederholung1Jahrgangsstufe));
             }
-            if ((Wahlpflichtfach == null)) {
+            if ((Wiederholung2Jahrgangsstufe == null)) {
                 this.Adapter.UpdateCommand.Parameters[16].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((string)(Wahlpflichtfach));
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((string)(Wiederholung2Jahrgangsstufe));
             }
-            if ((Wahlfach1 == null)) {
+            if ((Wiederholung1Grund == null)) {
                 this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[17].Value = ((string)(Wahlfach1));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((string)(Wiederholung1Grund));
             }
-            if ((Wahlfach2 == null)) {
+            if ((Wiederholung2Grund == null)) {
                 this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((string)(Wahlfach2));
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((string)(Wiederholung2Grund));
             }
-            if ((Wahlfach3 == null)) {
+            if ((ProbezeitBis.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((System.DateTime)(ProbezeitBis.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((string)(Wahlfach3));
+            if ((Austrittsdatum.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((System.DateTime)(Austrittsdatum.Value));
             }
-            if ((Wahlfach4 == null)) {
+            else {
                 this.Adapter.UpdateCommand.Parameters[20].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[20].Value = ((string)(Wahlfach4));
-            }
-            if ((Wiederholung1Jahrgangsstufe == null)) {
+            if ((SchulischeVorbildung == null)) {
                 this.Adapter.UpdateCommand.Parameters[21].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((string)(Wiederholung1Jahrgangsstufe));
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((string)(SchulischeVorbildung));
             }
-            if ((Wiederholung2Jahrgangsstufe == null)) {
+            if ((BeruflicheVorbildung == null)) {
                 this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[22].Value = ((string)(Wiederholung2Jahrgangsstufe));
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((string)(BeruflicheVorbildung));
             }
-            if ((Wiederholung1Grund == null)) {
-                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
+            if ((LRSStoerung.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[23].Value = ((bool)(LRSStoerung.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((string)(Wiederholung1Grund));
+                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
             }
-            if ((Wiederholung2Grund == null)) {
+            if ((NachnameEltern1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((string)(Wiederholung2Grund));
+                this.Adapter.UpdateCommand.Parameters[24].Value = ((string)(NachnameEltern1));
             }
-            if ((ProbezeitBis.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[25].Value = ((System.DateTime)(ProbezeitBis.Value));
-            }
-            else {
+            if ((VornameEltern1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[25].Value = global::System.DBNull.Value;
             }
-            if ((Austrittsdatum.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[26].Value = ((System.DateTime)(Austrittsdatum.Value));
-            }
             else {
+                this.Adapter.UpdateCommand.Parameters[25].Value = ((string)(VornameEltern1));
+            }
+            if ((AnredeEltern1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[26].Value = global::System.DBNull.Value;
             }
-            if ((SchulischeVorbildung == null)) {
+            else {
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((string)(AnredeEltern1));
+            }
+            if ((VerwandtschaftsbezeichnungEltern1 == null)) {
                 this.Adapter.UpdateCommand.Parameters[27].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[27].Value = ((string)(SchulischeVorbildung));
+                this.Adapter.UpdateCommand.Parameters[27].Value = ((string)(VerwandtschaftsbezeichnungEltern1));
             }
-            if ((BeruflicheVorbildung == null)) {
+            if ((NachnameEltern2 == null)) {
                 this.Adapter.UpdateCommand.Parameters[28].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[28].Value = ((string)(BeruflicheVorbildung));
+                this.Adapter.UpdateCommand.Parameters[28].Value = ((string)(NachnameEltern2));
             }
-            if ((LRSStoerung.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[29].Value = ((bool)(LRSStoerung.Value));
-            }
-            else {
+            if ((VornameEltern2 == null)) {
                 this.Adapter.UpdateCommand.Parameters[29].Value = global::System.DBNull.Value;
             }
-            if ((NachnameEltern1 == null)) {
+            else {
+                this.Adapter.UpdateCommand.Parameters[29].Value = ((string)(VornameEltern2));
+            }
+            if ((AnredeEltern2 == null)) {
                 this.Adapter.UpdateCommand.Parameters[30].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[30].Value = ((string)(NachnameEltern1));
+                this.Adapter.UpdateCommand.Parameters[30].Value = ((string)(AnredeEltern2));
             }
-            if ((VornameEltern1 == null)) {
+            if ((VerwandtschaftsbezeichnungEltern2 == null)) {
                 this.Adapter.UpdateCommand.Parameters[31].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[31].Value = ((string)(VornameEltern1));
+                this.Adapter.UpdateCommand.Parameters[31].Value = ((string)(VerwandtschaftsbezeichnungEltern2));
             }
-            if ((AnredeEltern1 == null)) {
+            if ((EintrittJahrgangsstufe == null)) {
                 this.Adapter.UpdateCommand.Parameters[32].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[32].Value = ((string)(AnredeEltern1));
+                this.Adapter.UpdateCommand.Parameters[32].Value = ((string)(EintrittJahrgangsstufe));
             }
-            if ((VerwandtschaftsbezeichnungEltern1 == null)) {
+            if ((EintrittAm.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[33].Value = ((System.DateTime)(EintrittAm.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[33].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[33].Value = ((string)(VerwandtschaftsbezeichnungEltern1));
+            if ((EintrittAusSchulnummer.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[34].Value = ((int)(EintrittAusSchulnummer.Value));
             }
-            if ((NachnameEltern2 == null)) {
+            else {
                 this.Adapter.UpdateCommand.Parameters[34].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[34].Value = ((string)(NachnameEltern2));
-            }
-            if ((VornameEltern2 == null)) {
+            if ((Email == null)) {
                 this.Adapter.UpdateCommand.Parameters[35].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[35].Value = ((string)(VornameEltern2));
+                this.Adapter.UpdateCommand.Parameters[35].Value = ((string)(Email));
             }
-            if ((AnredeEltern2 == null)) {
+            if ((Notfalltelefonnummer == null)) {
                 this.Adapter.UpdateCommand.Parameters[36].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[36].Value = ((string)(AnredeEltern2));
+                this.Adapter.UpdateCommand.Parameters[36].Value = ((string)(Notfalltelefonnummer));
             }
-            if ((VerwandtschaftsbezeichnungEltern2 == null)) {
+            if ((DNote.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[37].Value = ((decimal)(DNote.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[37].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[37].Value = ((string)(VerwandtschaftsbezeichnungEltern2));
+            if ((Status.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[38].Value = ((int)(Status.Value));
             }
-            if ((EintrittJahrgangsstufe == null)) {
+            else {
                 this.Adapter.UpdateCommand.Parameters[38].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[38].Value = ((string)(EintrittJahrgangsstufe));
-            }
-            if ((EintrittAm.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[39].Value = ((System.DateTime)(EintrittAm.Value));
+            if ((AndereFremdspr2Note.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[39].Value = ((int)(AndereFremdspr2Note.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[39].Value = global::System.DBNull.Value;
             }
-            if ((EintrittAusSchulnummer.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[40].Value = ((int)(EintrittAusSchulnummer.Value));
-            }
-            else {
+            if ((AndereFremdspr2Text == null)) {
                 this.Adapter.UpdateCommand.Parameters[40].Value = global::System.DBNull.Value;
             }
-            if ((Email == null)) {
-                this.Adapter.UpdateCommand.Parameters[41].Value = global::System.DBNull.Value;
+            else {
+                this.Adapter.UpdateCommand.Parameters[40].Value = ((string)(AndereFremdspr2Text));
+            }
+            if ((DNoteFachgebHSR.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[41].Value = ((decimal)(DNoteFachgebHSR.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[41].Value = ((string)(Email));
+                this.Adapter.UpdateCommand.Parameters[41].Value = global::System.DBNull.Value;
             }
-            if ((Notfalltelefonnummer == null)) {
+            if ((Schulart == null)) {
                 this.Adapter.UpdateCommand.Parameters[42].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[42].Value = ((string)(Notfalltelefonnummer));
+                this.Adapter.UpdateCommand.Parameters[42].Value = ((string)(Schulart));
             }
-            if ((DNote.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[43].Value = ((decimal)(DNote.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[43].Value = global::System.DBNull.Value;
-            }
-            if ((Status.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[44].Value = ((int)(Status.Value));
-            }
-            else {
+            this.Adapter.UpdateCommand.Parameters[43].Value = ((bool)(SonderfallNur2Hj));
+            if ((Zeugnisbemerkung == null)) {
                 this.Adapter.UpdateCommand.Parameters[44].Value = global::System.DBNull.Value;
             }
-            if ((AndereFremdspr2Note.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[45].Value = ((int)(AndereFremdspr2Note.Value));
-            }
             else {
+                this.Adapter.UpdateCommand.Parameters[44].Value = ((string)(Zeugnisbemerkung));
+            }
+            if ((EintrittAusSchulart == null)) {
                 this.Adapter.UpdateCommand.Parameters[45].Value = global::System.DBNull.Value;
             }
-            if ((AndereFremdspr2Text == null)) {
-                this.Adapter.UpdateCommand.Parameters[46].Value = global::System.DBNull.Value;
+            else {
+                this.Adapter.UpdateCommand.Parameters[45].Value = ((string)(EintrittAusSchulart));
+            }
+            if ((MittlereReifeMathenote.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[46].Value = ((int)(MittlereReifeMathenote.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[46].Value = ((string)(AndereFremdspr2Text));
+                this.Adapter.UpdateCommand.Parameters[46].Value = global::System.DBNull.Value;
             }
-            if ((DNoteFachgebHSR.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[47].Value = ((decimal)(DNoteFachgebHSR.Value));
+            if ((MittlereReifeDeutschnote.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[47].Value = ((int)(MittlereReifeDeutschnote.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[47].Value = global::System.DBNull.Value;
             }
-            if ((Schulart == null)) {
+            if ((MittlereReifeEnglischnote.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[48].Value = ((int)(MittlereReifeEnglischnote.Value));
+            }
+            else {
                 this.Adapter.UpdateCommand.Parameters[48].Value = global::System.DBNull.Value;
             }
-            else {
-                this.Adapter.UpdateCommand.Parameters[48].Value = ((string)(Schulart));
-            }
-            this.Adapter.UpdateCommand.Parameters[49].Value = ((bool)(SonderfallNur2Hj));
-            if ((Zeugnisbemerkung == null)) {
-                this.Adapter.UpdateCommand.Parameters[50].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[50].Value = ((string)(Zeugnisbemerkung));
-            }
-            if ((EintrittAusSchulart == null)) {
-                this.Adapter.UpdateCommand.Parameters[51].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[51].Value = ((string)(EintrittAusSchulart));
-            }
-            if ((MittlereReifeMathenote.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[52].Value = ((int)(MittlereReifeMathenote.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[52].Value = global::System.DBNull.Value;
-            }
-            if ((MittlereReifeDeutschnote.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[53].Value = ((int)(MittlereReifeDeutschnote.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[53].Value = global::System.DBNull.Value;
-            }
-            if ((MittlereReifeEnglischnote.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[54].Value = ((int)(MittlereReifeEnglischnote.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[54].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[55].Value = ((byte)(Berechungsstatus));
-            this.Adapter.UpdateCommand.Parameters[56].Value = ((int)(Original_Id));
+            this.Adapter.UpdateCommand.Parameters[49].Value = ((byte)(Berechungsstatus));
+            this.Adapter.UpdateCommand.Parameters[50].Value = ((int)(AndereFremdspr2Art));
+            this.Adapter.UpdateCommand.Parameters[51].Value = ((int)(Original_Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -19446,13 +19110,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     string AnschriftStrasse, 
                     string AnschriftTelefonnummer, 
                     string Ausbildungsrichtung, 
-                    string Fremdsprache2, 
                     string ReligionOderEthik, 
-                    string Wahlpflichtfach, 
-                    string Wahlfach1, 
-                    string Wahlfach2, 
-                    string Wahlfach3, 
-                    string Wahlfach4, 
                     string Wiederholung1Jahrgangsstufe, 
                     string Wiederholung2Jahrgangsstufe, 
                     string Wiederholung1Grund, 
@@ -19488,8 +19146,9 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     global::System.Nullable<int> MittlereReifeDeutschnote, 
                     global::System.Nullable<int> MittlereReifeEnglischnote, 
                     byte Berechungsstatus, 
+                    int AndereFremdspr2Art, 
                     int Original_Id) {
-            return this.Update(Original_Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, AnschriftPLZ, AnschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, Fremdsprache2, ReligionOderEthik, Wahlpflichtfach, Wahlfach1, Wahlfach2, Wahlfach3, Wahlfach4, Wiederholung1Jahrgangsstufe, Wiederholung2Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, NachnameEltern1, VornameEltern1, AnredeEltern1, VerwandtschaftsbezeichnungEltern1, NachnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2, EintrittJahrgangsstufe, EintrittAm, EintrittAusSchulnummer, Email, Notfalltelefonnummer, DNote, Status, AndereFremdspr2Note, AndereFremdspr2Text, DNoteFachgebHSR, Schulart, SonderfallNur2Hj, Zeugnisbemerkung, EintrittAusSchulart, MittlereReifeMathenote, MittlereReifeDeutschnote, MittlereReifeEnglischnote, Berechungsstatus, Original_Id);
+            return this.Update(Original_Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, AnschriftPLZ, AnschriftOrt, AnschriftStrasse, AnschriftTelefonnummer, Ausbildungsrichtung, ReligionOderEthik, Wiederholung1Jahrgangsstufe, Wiederholung2Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Grund, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, NachnameEltern1, VornameEltern1, AnredeEltern1, VerwandtschaftsbezeichnungEltern1, NachnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2, EintrittJahrgangsstufe, EintrittAm, EintrittAusSchulnummer, Email, Notfalltelefonnummer, DNote, Status, AndereFremdspr2Note, AndereFremdspr2Text, DNoteFachgebHSR, Schulart, SonderfallNur2Hj, Zeugnisbemerkung, EintrittAusSchulart, MittlereReifeMathenote, MittlereReifeDeutschnote, MittlereReifeEnglischnote, Berechungsstatus, AndereFremdspr2Art, Original_Id);
         }
     }
     

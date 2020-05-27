@@ -38,5 +38,10 @@
     private System.Windows.Forms.Label label7;
     private System.Windows.Forms.CheckBox checkBoxSonderfall2Hj;
     private System.Windows.Forms.ComboBox cbAndereFremdspr2Text;
+    private System.Windows.Forms.Label lbFFalt;
+    private System.Windows.Forms.GroupBox gbFS2Art;
+    private System.Windows.Forms.RadioButton opFFalt;
+    private System.Windows.Forms.RadioButton opErgPr;
+    private System.Windows.Forms.RadioButton opRS;
   }
 }

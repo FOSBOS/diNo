@@ -272,53 +272,7 @@ namespace diNo
       return wh;
     }
 
-    /// <summary>
-    /// Liefert entweder
-    /// F für Wahlfach Französisch
-    /// F-Wi für fortgeführtes Französisch
-    /// einen Leerstring für Schüler die gar kein Französisch haben
-    /// 
-    /// Achtung: Beim Setzen wird auch gleich der Kurs umgemeldet!
-    /// </summary>
-    [OLVColumn(Title = "Wahlpflichtfach", Width = 100)]
-    public string Wahlpflichtfach
-    {
-      get
-      {
-        return this.Data.IsWahlpflichtfachNull() ? "" : this.Data.Wahlpflichtfach;
-      }
-      set
-      {
-        if (!this.Data.IsWahlpflichtfachNull())
-          MeldeAb(this.Data.Wahlpflichtfach);
-        MeldeAn(value);
-        this.Data.Wahlpflichtfach = value;
-        Save();
-      }
-    }
-
-    /// <summary>
-    /// Liefert oder setzt den Fremdsprache2-Eintrag.
-    /// 
-    /// Achtung: Beim Setzen wird auch gleich der Kurs umgemeldet!
-    /// </summary>
-    [OLVColumn(Title = "Fremdsprache2", Width = 100)]
-    public string Fremdsprache2
-    {
-      get
-      {
-        return this.Data.IsFremdsprache2Null() ? "" : this.Data.Fremdsprache2;
-      }
-      set
-      {
-        if (!this.Data.IsFremdsprache2Null())
-          MeldeAb(this.Data.Fremdsprache2);
-        MeldeAn(value);
-        this.Data.Fremdsprache2 = value;
-        Save();
-      }
-    }
-
+    
     /// <summary>
     /// Liefert entweder
     /// K falls der Schüler in kath. Religionslehre geht
@@ -756,16 +710,13 @@ namespace diNo
     }
 
     // wenn dem Schüler ein neuer Kurs hinzugefügt wird, z.B. kath. Religion, dann wird automatisch das
-    // Feld ReligionOderEthik angepasst, anlog für Französisch etc.
+    // Feld ReligionOderEthik angepasst
     public void PasseWahlfachschluesselAn(Kurs k)
     {
       string kuerzel = k.getFach.Kuerzel;
       if (kuerzel == "K") Data.ReligionOderEthik = "RK";
       else if (kuerzel == "Ev") Data.ReligionOderEthik = "EV";
       else if (kuerzel == "Eth") Data.ReligionOderEthik = "Eth";
-      else if (kuerzel == "F") Data.Fremdsprache2 = "F";
-      else if (kuerzel == "F-Wi" || kuerzel == "WIn" || kuerzel == "Ku")
-        Data.Wahlpflichtfach = kuerzel;
     }
 
 

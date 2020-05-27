@@ -148,24 +148,8 @@ namespace diNo
       row.AnschriftStrasse = cleanArray[anschr1StrasseSpalte];
       row.AnschriftTelefonnummer = cleanArray[anschr1TelefonSpalte];
       row.Ausbildungsrichtung = ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]);
-      row.Fremdsprache2 = cleanArray[fremdsprache2Spalte];
       row.ReligionOderEthik = cleanArray[reliOderEthikSpalte];
-
-      if (cleanArray[wahlpflichtfachSpalte] == "F")
-      {
-        // normales Französisch wird als Fremdsprache2 importiert, aber nicht als Wahlpflichtfach
-        row.Fremdsprache2 = "F";
-        row.Wahlpflichtfach = "";
-      }
-      else 
-      {
-        row.Wahlpflichtfach = ChangeFranz(cleanArray[wahlpflichtfachSpalte]);
-      }
-
-      row.Wahlfach1 = ChangeFranz(cleanArray[wahlfach1Spalte]);
-      row.Wahlfach2 = ChangeFranz(cleanArray[wahlfach2Spalte]);
-      row.Wahlfach3 = ChangeFranz(cleanArray[wahlfach3Spalte]);
-      row.Wahlfach4 = ChangeFranz(cleanArray[wahlfach4Spalte]);
+      
       row.Wiederholung1Jahrgangsstufe = cleanArray[wdh1JahrgangsstufeSpalte];
       row.Wiederholung2Jahrgangsstufe = cleanArray[wdh2JahrgangsstufeSpalte];
       row.Wiederholung1Grund = cleanArray[wdh1GrundSpalte];
@@ -221,16 +205,6 @@ namespace diNo
 
       row.SonderfallNur2Hj = false;
       row.Berechungsstatus = (int)Berechnungsstatus.Unberechnet;
-    }
-
-    /// <summary>
-    /// Ändert Fachbezeichnungen beim Import. Zur Zeit: F3 wird zu F-Wi.
-    /// </summary>
-    /// <param name="aFachString">Der alte Fachstring.</param>
-    /// <returns>Der neue Fachstring.</returns>
-    private static string ChangeFranz(string aFachString)
-    {
-      return aFachString == "F3" ? "F-Wi" : aFachString;
     }
 
     /// <summary>
