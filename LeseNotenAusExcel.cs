@@ -241,17 +241,6 @@ namespace diNo
       ReadBasisdaten(xls);
       BackupZiehen();
 
-      if (xls.IsCoronaFile() && Zugriff.Instance.aktZeitpunkt < (int)Zeitpunkt.ZweitePA)
-      {
-        //TODO: Vor Abi raus!
-        hinweise.Add("Diese Datei enthält Noten, die wegen Corona aus dem ersten Halbjahr übernommen wurden. Bisher dürfen diese Dateien noch nicht zur Notenabgabe verwendet werden");
-        HinweiseAusgeben(xls);
-
-        xls.Dispose();
-        xls = null;
-        return;
-      }
-
       if (!doNothingModus)
       {
         Status("Synchronisiere Datei " + afileName);
@@ -276,10 +265,11 @@ namespace diNo
       if (!string.IsNullOrEmpty(verz))
       {
         try
-        {                
+        {
           verz += "\\" + kurs.getLehrer.Kuerzel + "_" + kurs.Kursbezeichnung + "\\";
           if (!Directory.Exists(verz))
-            Directory.CreateDirectory(verz);          
+            Directory.CreateDirectory(verz);
+
           File.Copy(fileName, verz + Path.GetFileNameWithoutExtension(fileName) + DateTime.Now.ToString("_yyMMdd_hhmmss") + Path.GetExtension(fileName));
         }
         catch

@@ -38,7 +38,7 @@ namespace diNo
       }
 
       lbTest.Visible = Zugriff.Instance.IsTestDB;
-      // btnCorona.Visible = Zugriff.Instance.HatVerwaltungsrechte; ab 29.5.2019 aktivieren
+      btnCorona.Visible = Zugriff.Instance.HatVerwaltungsrechte;
       log.Debug("Klassenansicht fertig.");
     }
 
