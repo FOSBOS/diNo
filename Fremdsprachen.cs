@@ -69,4 +69,11 @@ namespace diNo
     B2 = 4,
     B2p = 5,
   }
+
+  public enum ZweiteFSArt
+  {
+    RS = 0,
+    ErgPr = 1,
+    FFAlt = 2
+  }
 }

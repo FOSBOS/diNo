@@ -499,7 +499,6 @@ namespace diNo
     // nur für 13. Klasse: hat erfolgreich die 2. FS besucht
     public bool HatZweiteFremdsprache()
     {
-      if (!Data.IsAndereFremdspr2NoteNull()) return true; // erfolgreiche Ergänzungsprüfung liegt vor
       foreach (var f in getNoten.alleSprachen)
       {
         if (f.getFach.getKursniveau() == Kursniveau.Englisch) continue;
@@ -675,8 +674,6 @@ namespace diNo
   }
 
 
-
-
     // wandelt das beim Schüler gespeicherte Bekenntnis in das Fachkürzel um
     public string getReliKuerzel()
     {
@@ -757,6 +754,11 @@ namespace diNo
       }
 
       return 25 + corr; //FOS11
+    }
+
+    public ZweiteFSArt getZweiteFSArt()
+    {
+      return (ZweiteFSArt) (getNoten.ZweiteFSalt != null ? 2 : Data.AndereFremdspr2Art);
     }
 
     public int Alter()

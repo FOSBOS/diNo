@@ -64,6 +64,7 @@ namespace diNo
         data.Punkte=Punkte;
         data.Status = (byte)Status;
         data.FachId = getFach.Id;
+        data.JgStufe = (byte)JgStufe;
         if (Punkte2Dez==null) data.SetPunkte2DezNull(); else data.Punkte2Dez = Punkte2Dez.GetValueOrDefault();
         if (SchnittMdl==null) data.SetSchnittMdlNull(); else data.SchnittMdl = SchnittMdl.GetValueOrDefault();
         ta.Update(data);
@@ -117,6 +118,15 @@ namespace diNo
       }
     }
 
+    // aktualisiert das Sprachniveau (sollte im jeweiligen Fach als HjLeistung stehen) oder legt es neu an
+    public static void CreateOrUpdateSprachniveau(HjLeistung niveau, int sid, Fach fach, Jahrgangsstufe jg, Sprachniveau sn)
+    {      
+      if (niveau == null) niveau = new HjLeistung(sid, fach, HjArt.Sprachenniveau, jg);
+      else niveau.JgStufe = jg;
+
+      niveau.Punkte = (byte)sn;
+      niveau.WriteToDB();
+    }
   }
 
   public enum HjArt

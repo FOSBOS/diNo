@@ -227,6 +227,7 @@ namespace diNo
     public string Siegel { get; private set; } // (Siegel) andrucken
     public bool IstJahreszeugnis { get; private set; }
     public string BestandenText { get; private set; } // nur für Abizeugnis
+    public string AlternatZweiteFS { get; private set; } // nur für Abizeugnis: gibt Text für fachgeb. HSR mit alternative Einbringung aus
 
     public ZeugnisDruck(Schueler s, Bericht b, UnterschriftZeugnis u) : base(s, b)
     {
@@ -239,6 +240,12 @@ namespace diNo
         else if (s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife)) ZeugnisArt = "allgemeine Hochschulreife";
         else ZeugnisArt = "fachgebundene Hochschulreife";
         IstJahreszeugnis = SprachniveauDruck.HatFremdsprachen(s); // verbogen für "---" im Fremdpsrachenblock des Abizeugnisses, falls keine Sprachen da sind
+        if (s.getNoten.AlternatZweiteFS != null)
+          AlternatZweiteFS = "Für die fachgebundene Hochschulreife wird anstelle des Halbjahresergebnisses 13/" +
+            (s.getNoten.AlternatZweiteFS.Art == HjArt.Hj1 ? 1 : 2) + " in " + s.getNoten.AlternatZweiteFS.getFach.BezZeugnis +
+            " das Halbjahresergebnis 13/" +
+            (s.getNoten.AlternatEinbr.Art == HjArt.Hj1 ? 1 : 2) + " in " + s.getNoten.AlternatEinbr.getFach.BezZeugnis +
+            " eingebracht.";
       }
       else
       {
@@ -818,7 +825,7 @@ namespace diNo
     {
       int i;
       fachBez = f.getFach.BezZeugnis;
-      i = fachBez.IndexOf(" ");
+      i = fachBez.IndexOf(" "); // wegen (fortgef.) raus
       if (i > 0) fachBez = fachBez.Substring(0,i); 
       Stufe = Fremdsprachen.NiveauText(Fremdsprachen.HjToSprachniveau(f));
     }
@@ -845,10 +852,21 @@ namespace diNo
           list.Add(new SprachniveauDruck(f));
         }
       }
+      /*
+      if (s.getZweiteFSArt() == ZweiteFSArt.ErgPr && !s.Data.IsAndereFremdspr2FachNull())
+      {
+        list.Add(new SprachniveauDruck(Zugriff.Instance.FachRep.Find(s.Data.AndereFremdspr2Fach)));
+      }*/
+      /* sollte schon in alleSprachen stehen (Sprachniveau aus Import)
+      if (s.getZweiteFSArt() == ZweiteFSArt.FFAlt)
+      {
+        list.Add(new SprachniveauDruck(s.getNoten.ZweiteFSalt));
+      }*/
       return list;
     }
   }
   
+  // stellt die Daten der Ergänzungsprüfung oder eines früheren Besuchs von Französisch (fortgef) bereit
   public class ZusZweiteFSDruck
   {
     public bool hideHj { get; private set; }
@@ -860,11 +878,11 @@ namespace diNo
     public string JN { get; set; }
     public string JNText { get; set; }
 
-    public ZusZweiteFSDruck(string fach, int punkte)
+    public ZusZweiteFSDruck(int fachID, int punkte)
     {      
       hideHj = true;
       Kopfzeile = "Ergänzungsprüfung in";
-      fachBez = fach;
+      fachBez = Zugriff.Instance.FachRep.Find(fachID).BezZeugnis;
       JN = punkte.ToString("D2");
       JNText = NotenZeugnisDruck.getJNText(punkte);
     }
@@ -891,10 +909,10 @@ namespace diNo
     public static List<ZusZweiteFSDruck> CreateZusZweiteFSDruck(Schueler s)
     {
       List<ZusZweiteFSDruck> list = new List<ZusZweiteFSDruck>();
-      if (s.getNoten.ZweiteFS != null)
-        list.Add(new ZusZweiteFSDruck(s.getNoten.ZweiteFS));
-      if (!s.Data.IsAndereFremdspr2NoteNull()) 
-        list.Add(new ZusZweiteFSDruck(s.Data.AndereFremdspr2Text, s.Data.AndereFremdspr2Note));
+      if (s.getZweiteFSArt()==ZweiteFSArt.ErgPr && !s.Data.IsAndereFremdspr2NoteNull()) 
+        list.Add(new ZusZweiteFSDruck(s.Data.AndereFremdspr2Fach, s.Data.AndereFremdspr2Note));
+      else if (s.getNoten.ZweiteFSalt != null)
+        list.Add(new ZusZweiteFSDruck(s.getNoten.ZweiteFSalt));
 
       return list;
     }

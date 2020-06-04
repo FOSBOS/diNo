@@ -26,7 +26,7 @@ namespace diNo
     public int anz4P=0;
     public double Punkteschnitt = 0;
     public List<HjLeistung> Fachreferat = new List<HjLeistung>(); // sollte i.d.R. nur einelementig sein, aber wegen irrtümlicher Doppelvergabe
-    public FachSchuelerNoten ZweiteFS = null;  // Verweis auf die beiden HjLeistungen in der 2. Fremdsprache (kann auch Kurs aus der 12. enthalten)
+    public FachSchuelerNoten ZweiteFSalt = null;  // Verweis auf die beiden HjLeistungen in der 2. Fremdsprache (kann auch Kurs aus der 12. enthalten oder 13., die wiederholt wurde)
     public HjLeistung AlternatZweiteFS = null; // Verweis auf die schlechtere Leistung in der 2. Fremdsprache in der 13. Klasse (nur befüllt bei aktuellem Kurs in 13)
     public HjLeistung AlternatEinbr = null;    // Verweis auf eine alternativ einzubringende HjLeistung (fachgeb. HSR)
 
@@ -52,14 +52,16 @@ namespace diNo
       {
         Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
         var fsn = new FachSchuelerNoten(schueler, fach, this);
-        if (ZweiteFS == null && fach.getKursniveau() == Kursniveau.Fortg) // Sonderfall F-f aus 12. Klasse
-        {
-          ZweiteFS = fsn; // nicht in die normale Liste aufnehmen, da außerhalb der Noten- und Einbringungsprüfung
+
+        if (fach.getKursniveau() > Kursniveau.None)
+        { // abgelegte 2. FS --> nicht in die normale Liste aufnehmen, da außerhalb der Noten- und Einbringungsprüfung
+          alleSprachen.Add(fsn);
+          if (s.Data.AndereFremdspr2Art != (int)ZweiteFSArt.ErgPr)
+            ZweiteFSalt = fsn;
         }
         else
         {
-          alleFaecher.Add(fsn);
-          AddSprache(fsn);
+          alleFaecher.Add(fsn);          
           FaecherOhneKurse.Add(fsn);
         }
       }
@@ -81,8 +83,11 @@ namespace diNo
       anzahlNoten = new int[7, 2];
       InitAnzahlNoten();
       InitAlternatEinbr();
+      if (AlternatZweiteFS != null && AlternatEinbr == null)
+        AlternatZweiteFS = null; // wenn keine alternative Einbringung existiert (weil es nicht besser wird), gibt es auch keine Alternative 2.FS-Einbringung
     }
 
+    // prüft, ob bei aktiven Kursen eine alternative Einbringung für die fachgeb. HSR günstiger ist
     private void AddSprache(FachSchuelerNoten fsn)
     {
       Kursniveau k = fsn.getFach.getKursniveau();
@@ -520,7 +525,8 @@ namespace diNo
       if (AlteZweiteFS)      
         hjDT = ta.GetDataBySchuelerAndFach(schueler.Id, getFach.Id); // kann aus einer früheren 12./13. Klasse kommen
       else
-        hjDT = ta.GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == jg);
+        // alle HjLeistungen dieses Jahres selektieren, Sprachniveau kann aus vorigen Jahrgangsstufen mitgebracht worden sein.
+        hjDT = ta.GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == jg || x.Art==(byte)HjArt.Sprachenniveau);
       foreach (var hjR in hjDT)
       {
         hjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);

@@ -285,7 +285,8 @@ public static class Faecherkanon
     Allgemein = 0,
     Profilfach = 1,
     WPF = 2,
-    Seminar = 3,
+    FPA = 3,
+    Seminar = 4,
     OhneNoten = 9
   }
 }

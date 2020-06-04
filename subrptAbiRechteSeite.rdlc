@@ -17,6 +17,10 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="AlternatZweiteFS">
+          <DataField>AlternatZweiteFS</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Anrede">
           <DataField>Anrede</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -601,6 +605,38 @@
             <Visibility>
               <Hidden>=First(Fields!IstJahreszeugnis.Value, "DataSet1")</Hidden>
             </Visibility>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox4">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Fields!AlternatZweiteFS.Value</Value>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox4</rd:DefaultName>
+            <Top>1.27908cm</Top>
+            <Left>0.03013cm</Left>
+            <Height>0.46771cm</Height>
+            <Width>15.96987cm</Width>
+            <ZIndex>5</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>

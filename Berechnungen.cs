@@ -241,7 +241,7 @@ namespace diNo
     /// </summary>
     public void BerechneGesErg(Schueler s)
     {
-      Punktesumme p = new Punktesumme(s);
+      Punktesumme p = s.punktesumme;
 
       p.Clear();
       
@@ -255,12 +255,12 @@ namespace diNo
       
       if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
       {
-        FachSchuelerNoten fs2 = s.getNoten.ZweiteFS;
+        FachSchuelerNoten fs2 = s.getNoten.ZweiteFSalt;
         // Ergänzungsprüfung zählt doppelt
-        if (!s.Data.IsAndereFremdspr2NoteNull())
+        if (s.getZweiteFSArt() == ZweiteFSArt.ErgPr && !s.Data.IsAndereFremdspr2NoteNull())
           p.Add(PunktesummeArt.FremdspracheErgPr, s.Data.AndereFremdspr2Note, 2);
 
-        // Frz. fortgeführt aus 12. Klasse
+        // Frz. fortgeführt aus alter 12./13. Klasse
         else if (fs2!=null && fs2.getHjLeistung(HjArt.Hj1) != null && fs2.getHjLeistung(HjArt.Hj1) != null)
         {
           p.Add(PunktesummeArt.FremdspracheAus12, fs2.getHjLeistung(HjArt.Hj1).Punkte);
@@ -324,32 +324,42 @@ namespace diNo
 
     public void BestimmeSprachniveau(Schueler s)
     {
-      var ta = new HjLeistungTableAdapter();
-      // vorher löschen, falls Stufe inzwischen nicht mehr erreicht wird, allerdings keine Vorjahre!
-      ta.DeleteBySchuelerIdAndArt(s.Id, (byte)HjArt.Sprachenniveau,(int)s.getKlasse.Jahrgangsstufe); 
+      var ta = new HjLeistungTableAdapter();      
+      // neue Logik ist, dass ein einmal erreichtes Sprachniveau an der FOS nicht mehr gelöscht wird.
+      // Problem, wenn sich wegen falscher Noteneingabe nachträglich was ändert (dann ggf. manuell Sprachniveau löschen).
+      // ta.DeleteBySchuelerIdAndArt(s.Id, (byte)HjArt.Sprachenniveau,(int)s.getKlasse.Jahrgangsstufe); 
 
       HjLeistung ge,hj2,ap;
       foreach (var f in s.getNoten.alleSprachen)
       {
         Kursniveau n = f.getFach.getKursniveau();        
-        if (n!=Kursniveau.None)
-        {
-          ge = f.getHjLeistung(HjArt.GesErgSprache);
-          if (ge == null || ge.Punkte < 4) continue; // Gesamtergebnis muss immer mind. 4P sein.
+        ge = f.getHjLeistung(HjArt.GesErgSprache);
+        if (ge == null || ge.Punkte < 4) continue; // Gesamtergebnis muss immer mind. 4P sein.
             
-          hj2 = f.getHjLeistung(HjArt.Hj2);
-          ap = f.getHjLeistung(HjArt.AP);
+        hj2 = f.getHjLeistung(HjArt.Hj2);
+        ap = f.getHjLeistung(HjArt.AP);
 
-          bool istSAP = n == Kursniveau.Englisch;
-          if (hj2 == null || ap == null && istSAP) continue;
-          if (hj2.Punkte < 4 && (!istSAP || ap.Punkte < 4)) continue; // Prüfung oder Hj2 muss mind. 4 sein
+        bool istSAP = n == Kursniveau.Englisch;
+        if (hj2 == null || ap == null && istSAP) continue;
+        if (hj2.Punkte < 4 && (!istSAP || ap.Punkte < 4)) continue; // Prüfung oder Hj2 muss mind. 4 sein
 
-          HjLeistung niveau = new HjLeistung(s.Id, f.getFach, HjArt.Sprachenniveau, s.getKlasse.Jahrgangsstufe);
-          niveau.Punkte = (byte)Fremdsprachen.GetSprachniveau(f.getFach.getKursniveau(), s.getKlasse.Jahrgangsstufe);
-          niveau.WriteToDB();
-        }
+        // Spachniveau anlegen oder aktualisieren
+        HjLeistung niveau = f.getHjLeistung(HjArt.Sprachenniveau);
+        HjLeistung.CreateOrUpdateSprachniveau(niveau, s.Id, f.getFach, s.getKlasse.Jahrgangsstufe, Fremdsprachen.GetSprachniveau(f.getFach.getKursniveau(), s.getKlasse.Jahrgangsstufe));
       }
 
+      if (s.getZweiteFSArt()==ZweiteFSArt.ErgPr) // mitgebrachte Noten werden nicht ausgewiesen
+                      // Sprachniveau von F-f aus 12/13alt sollte vom Import schon vorhanden sein.
+      {
+        Fach f = Zugriff.Instance.FachRep.Find(s.Data.AndereFremdspr2Fach);
+        HjLeistung niveau = null;
+        foreach (var spr in s.getNoten.alleSprachen) // prüfen, ob dafür schon ein Sprachniveau vorliegt
+          if (spr.getFach == f)
+          {
+            niveau = spr.getHjLeistung(HjArt.Sprachenniveau);
+          }
+        HjLeistung.CreateOrUpdateSprachniveau(niveau, s.Id, f, Jahrgangsstufe.Dreizehn, Sprachniveau.B1);
+      }
     }
   }
 
