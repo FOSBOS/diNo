@@ -80,7 +80,7 @@ namespace diNo
       if (dia.ShowDialog() == DialogResult.OK)
       {
         Cursor = Cursors.WaitCursor;
-        ImportExportJahresnoten.ImportierteHJLeistungen(dia.FileName);
+        ImportExportJahresnoten.ImportiereHJLeistungen(dia.FileName);
         Cursor = Cursors.Default;
       }
     }

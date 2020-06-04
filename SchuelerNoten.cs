@@ -624,7 +624,7 @@ namespace diNo
       fs = SummeHalbjahre(fach.NichtNC); // Nicht-NC-Fächer ausrechnen, aber nicht verbuchen
 
       // Verbuchen auf die richtige Gesamt-Punktesumme (über alle Fächer)
-      if (fach.Kuerzel == "FpA") p.Add(PunktesummeArt.FPA, fs);
+      if (fach.Typ == FachTyp.FPA) p.Add(PunktesummeArt.FPA, fs);
       else if (!fach.NichtNC) p.Add(PunktesummeArt.HjLeistungen, fs);
 
       // AP
