@@ -84,6 +84,7 @@ namespace diNo
         if (dataSource.Count > 1 && (
               b == Bericht.Zwischenzeugnis && !s.hatVorkommnis(Vorkommnisart.Zwischenzeugnis) ||
               b == Bericht.Jahreszeugnis && !s.hatVorkommnis(Vorkommnisart.Jahreszeugnis) ||
+              b == Bericht.ZusatzAllgHSR && !(s.hatVorkommnis(Vorkommnisart.fachgebundeneHochschulreife) && !s.Data.IsAndereFremdspr2NoteNull() && s.getZweiteFSArt()==ZweiteFSArt.RS) ||
               b == Bericht.Abiturzeugnis && !(s.hatVorkommnis(Vorkommnisart.Fachabiturzeugnis) || s.hatVorkommnis(Vorkommnisart.fachgebundeneHochschulreife) || s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife))
               )) continue;
         bindingDataSource.Add(SchuelerDruck.CreateSchuelerDruck(s, b, u));

@@ -43,6 +43,7 @@
       this.btnKlassenliste = new System.Windows.Forms.Button();
       this.btnNotendruck = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
+      this.btnExportKurswahl = new System.Windows.Forms.Button();
       this.btnSeStatistik = new System.Windows.Forms.Button();
       this.btnMBStatistik = new System.Windows.Forms.Button();
       this.btnSendExcelFiles = new System.Windows.Forms.Button();
@@ -78,7 +79,6 @@
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
-      this.btnExportKurswahl = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -223,7 +223,8 @@
             "Bescheinigung",
             "Zwischenzeugnis",
             "Jahreszeugnis",
-            "Abiturzeugnis"});
+            "Abiturzeugnis",
+            "Zusatz allg. HSR"});
       this.cbNotendruck.Location = new System.Drawing.Point(21, 102);
       this.cbNotendruck.Name = "cbNotendruck";
       this.cbNotendruck.Size = new System.Drawing.Size(132, 21);
@@ -263,6 +264,16 @@
       this.groupBoxExport.TabIndex = 4;
       this.groupBoxExport.TabStop = false;
       this.groupBoxExport.Text = "Export";
+      // 
+      // btnExportKurswahl
+      // 
+      this.btnExportKurswahl.Location = new System.Drawing.Point(20, 106);
+      this.btnExportKurswahl.Name = "btnExportKurswahl";
+      this.btnExportKurswahl.Size = new System.Drawing.Size(182, 23);
+      this.btnExportKurswahl.TabIndex = 9;
+      this.btnExportKurswahl.Text = "Datei für Kurswahl";
+      this.btnExportKurswahl.UseVisualStyleBackColor = true;
+      this.btnExportKurswahl.Click += new System.EventHandler(this.btnExportKurswahl_Click);
       // 
       // btnSeStatistik
       // 
@@ -633,16 +644,6 @@
       this.btnEinbringung.Text = "Einbringung berechnen";
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
-      // 
-      // btnExportKurswahl
-      // 
-      this.btnExportKurswahl.Location = new System.Drawing.Point(20, 106);
-      this.btnExportKurswahl.Name = "btnExportKurswahl";
-      this.btnExportKurswahl.Size = new System.Drawing.Size(182, 23);
-      this.btnExportKurswahl.TabIndex = 9;
-      this.btnExportKurswahl.Text = "Datei für Kurswahl";
-      this.btnExportKurswahl.UseVisualStyleBackColor = true;
-      this.btnExportKurswahl.Click += new System.EventHandler(this.btnExportKurswahl_Click);
       // 
       // UserControlAdministration
       // 

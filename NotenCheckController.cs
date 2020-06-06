@@ -276,6 +276,9 @@ namespace diNo
           res.list.Add(new NotenCheckResult(r.Value.schueler, r.Value.kurs, r.Value.meldung));
         }
       }
+
+      if (chkContainer.Count == 0 && chkCounter.Count == 0 && modus == NotenCheckModus.Protokolle)
+        res.list.Add(new NotenCheckResult(aktSchueler.getKlasse));
     }
 
     public void ShowResults()
@@ -338,6 +341,14 @@ namespace diNo
       lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
       fach =   k!=null ? k.getFach.Kuerzel : "";
       meldung = m;
+      Klassenleiter = kl.Klassenleiter.NameDienstbezeichnung + ", " + kl.Klassenleiter.KLString;
+    }
+
+    public NotenCheckResult(Klasse kl)
+    {
+      schueler = "Es traten keine Fehler auf.";
+      klassenId = kl.Data.Id;
+      klasse = kl.Data.Bezeichnung;
       Klassenleiter = kl.Klassenleiter.NameDienstbezeichnung + ", " + kl.Klassenleiter.KLString;
     }
 

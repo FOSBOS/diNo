@@ -16,9 +16,10 @@ namespace diNo
     Zwischenzeugnis,
     Jahreszeugnis,
     Abiturzeugnis,
+    ZusatzAllgHSR,
     Notenbogen,
     Klassenliste,
-    EinserAbi
+    EinserAbi    
   }
 
   public enum UnterschriftZeugnis
@@ -99,6 +100,7 @@ namespace diNo
         case Bericht.Zwischenzeugnis:
         case Bericht.Jahreszeugnis: return "rptZeugnis";
         case Bericht.Abiturzeugnis: return "rptAbiturzeugnis";
+        case Bericht.ZusatzAllgHSR: return "rptZusatzAllgHSR";
         case Bericht.Gefaehrdung: return "rptGefaehrdung";
         case Bericht.Abiergebnisse: return "rptAbiergebnisse";
         case Bericht.Notenmitteilung: return "rptNotenmitteilung";
@@ -120,6 +122,7 @@ namespace diNo
         case Bericht.Jahreszeugnis:
         case Bericht.Abiturzeugnis:
         case Bericht.Gefaehrdung: return new ZeugnisDruck(s, b, u);
+        case Bericht.ZusatzAllgHSR: return new ZusatzAllgHSRDruck(s);
         case Bericht.EinserAbi:
         case Bericht.Notenmitteilung: return new NotenmitteilungDruck(s, b);
         default: return new SchuelerDruck(s, b);
@@ -223,7 +226,7 @@ namespace diNo
     public string DatumZeugnis { get; private set; }
     public bool ShowKenntnisGenommen { get; private set; } // Minderjährige beim Zwischenzeugnis
     public bool ShowGezSL { get; private set; } // statt eigenhändige Unterschrift erscheint gez. Helga Traut
-    public bool ShowFOBOSOHinweis { get; private set; } // Diesem Zeungnis liegt die Schulordnung ...
+    public bool ShowFOBOSOHinweis { get; protected set; } // Diesem Zeungnis liegt die Schulordnung ...
     public string Siegel { get; private set; } // (Siegel) andrucken
     public bool IstJahreszeugnis { get; private set; }
     public string BestandenText { get; private set; } // nur für Abizeugnis
@@ -252,6 +255,7 @@ namespace diNo
         if (b == Bericht.Bescheinigung) ZeugnisArt = "Bescheinigung";
         else if (b == Bericht.Zwischenzeugnis) ZeugnisArt = "Zwischenzeugnis";
         else if (b == Bericht.Jahreszeugnis) ZeugnisArt = "Jahreszeugnis";
+        else ZeugnisArt = "Zeugnis";
         ZeugnisArt = ZeugnisArt.ToUpper();
         IstJahreszeugnis = (b == Bericht.Jahreszeugnis);
       }
@@ -359,13 +363,34 @@ namespace diNo
     }
   }
 
-  /*
-*****************************************************************************************************
-**********************************  Unterberichtsdaten **********************************************
-   */
+  public class ZusatzAllgHSRDruck : ZeugnisDruck
+  {
+    public string DatumFachgebHSR { get; private set; }
+    public string Sprache { get; private set; }
+    public string Note { get; private set; }
+    public string Punkte { get; private set; }
 
-  // erzeugt die Druckdaten für die FPA, halbjahresweise
-  public class FPADruck
+    public ZusatzAllgHSRDruck(Schueler s) : base(s, Bericht.ZusatzAllgHSR, UnterschriftZeugnis.SL)
+    {
+      DatumFachgebHSR = Schulart.Replace("Staatliche", "staatlichen") + " vom " + Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy") + " ";
+      if (!s.Data.IsAndereFremdspr2FachNull())
+      {
+        Fach f = Zugriff.Instance.FachRep.Find(s.Data.AndereFremdspr2Fach);
+        Sprache = f.BezZeugnis;
+        Punkte = s.Data.AndereFremdspr2Note.ToString("D2");
+        Note = NotenZeugnisDruck.getJNText(s.Data.AndereFremdspr2Note);
+      }
+
+      ShowFOBOSOHinweis = true;
+    }
+  }
+    /*
+  *****************************************************************************************************
+  **********************************  Unterberichtsdaten **********************************************
+     */
+
+    // erzeugt die Druckdaten für die FPA, halbjahresweise
+    public class FPADruck
   {
     public string Betrieb { get; private set; }
     public string Anleitung { get; private set; }
