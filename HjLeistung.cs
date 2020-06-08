@@ -100,6 +100,7 @@ namespace diNo
       {
         hjl = new HjLeistung(sid, fach, art, jg);
       }
+
       Update(hjl, punkte, punkte2Dez, schnittMdl);
     }
 
@@ -114,7 +115,10 @@ namespace diNo
       }
       else if (hjl != null) // HjLeistung wurde in dieser Exceldatei gelöscht
       {
-        hjl.Delete();
+        //TODO: Corona-Änderung wieder rückgängig machen!!!
+        // wenn im mdl. Schnitt 21 Punkte drinstehen, wird die HJLeistung nicht gelöscht, auch wenn in Excel leer bleibt
+        if (hjl.SchnittMdl < 20)
+          hjl.Delete();
       }
     }
 

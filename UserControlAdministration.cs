@@ -395,19 +395,31 @@ namespace diNo
           {
             var hj1 = noten.getHjLeistung(HjArt.Hj1);
             var hj2 = noten.getHjLeistung(HjArt.Hj2);
+            var jahresnote = noten.getHjLeistung(HjArt.JN);
 
             if (hj2 != null)
-              throw new InvalidOperationException("Der Schüler " + schueler.Name + " aus Klasse " + klasse.Bezeichnung + " hat bereits eine Halbjahresleistung im zweiten Halbjahr");
+            {
+              hj2.Delete();
+            }
 
-            hj2 = new HjLeistung(schueler.Id, hj1.getFach, HjArt.Hj2, hj1.JgStufe);
+            if (hj1 == null) // das betrifft eigentlich nur die in die Vorklasse zurückgetretenen. Wie geht man damit um? Bekommen die irgendein Zeugnis?
+              continue;
+
+            hj2 = new HjLeistung(schueler.Id, noten.getFach, HjArt.Hj2, hj1.JgStufe);
             hj2.Punkte = hj1.Punkte;
             hj2.Punkte2Dez = hj1.Punkte2Dez;
             hj2.SchnittMdl = 21; // um kopierte Noten zu erkennen
 
             hj2.WriteToDB();
+
+            //Jahresnote
+            HjLeistung.CreateOrUpdate(jahresnote, schueler.Id, HjArt.JN, noten.getFach, hj1.JgStufe, hj1.Punkte);
+
+            //Einzelnoten löschen
+            new NoteTableAdapter().DeleteByKursAndHalbjahr(noten.kursId, (byte)Halbjahr.Zweites);
           }
-          
-          
+
+
         }
       }
 

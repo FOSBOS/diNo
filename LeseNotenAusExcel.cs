@@ -548,6 +548,7 @@ namespace diNo
         decimal? Punkte2Dez = xls.ReadKommanote("N" + i, sheet);
         decimal? SchnittMdl = xls.ReadKommanote("K" + i, sheet);
         HjArt art = hj == Halbjahr.Erstes ? HjArt.Hj1 : HjArt.Hj2;
+
         HjLeistung.CreateOrUpdate(f.getHjLeistung(art), sid,art, kurs.getFach, jg, zeugnisnote, Punkte2Dez, SchnittMdl);
       }
     }
