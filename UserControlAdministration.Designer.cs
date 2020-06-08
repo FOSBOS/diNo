@@ -79,6 +79,7 @@
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
+      this.btnCorona2HJKlonen = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -594,6 +595,7 @@
       // 
       // groupBoxReparatur
       // 
+      this.groupBoxReparatur.Controls.Add(this.btnCorona2HJKlonen);
       this.groupBoxReparatur.Controls.Add(this.btnKurseZuweisen);
       this.groupBoxReparatur.Controls.Add(this.btnGesErg);
       this.groupBoxReparatur.Controls.Add(this.btnDelEinbringung);
@@ -644,6 +646,16 @@
       this.btnEinbringung.Text = "Einbringung berechnen";
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
+      // 
+      // btnCorona2HJKlonen
+      // 
+      this.btnCorona2HJKlonen.Location = new System.Drawing.Point(15, 141);
+      this.btnCorona2HJKlonen.Name = "btnCorona2HJKlonen";
+      this.btnCorona2HJKlonen.Size = new System.Drawing.Size(163, 23);
+      this.btnCorona2HJKlonen.TabIndex = 11;
+      this.btnCorona2HJKlonen.Text = "Corona: HJ-Ergebnisse klonen";
+      this.btnCorona2HJKlonen.UseVisualStyleBackColor = true;
+      this.btnCorona2HJKlonen.Click += new System.EventHandler(this.btnCorona2HJKlonen_Click);
       // 
       // UserControlAdministration
       // 
@@ -734,5 +746,6 @@
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Button btnKurseZuweisen;
     private System.Windows.Forms.Button btnExportKurswahl;
+    private System.Windows.Forms.Button btnCorona2HJKlonen;
   }
 }

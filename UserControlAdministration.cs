@@ -381,6 +381,37 @@ namespace diNo
         ek.ExportAlteWPF(dia.FileName);
       }
     }
+
+    private void btnCorona2HJKlonen_Click(object sender, EventArgs e)
+    {
+      foreach (var klasse in Zugriff.Instance.Klassen)
+      {
+        if (klasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
+          continue;
+
+        foreach (var schueler in klasse.eigeneSchueler)
+        {
+          foreach (var noten in schueler.getNoten.alleKurse)
+          {
+            var hj1 = noten.getHjLeistung(HjArt.Hj1);
+            var hj2 = noten.getHjLeistung(HjArt.Hj2);
+
+            if (hj2 != null)
+              throw new InvalidOperationException("Der Schüler " + schueler.Name + " aus Klasse " + klasse.Bezeichnung + " hat bereits eine Halbjahresleistung im zweiten Halbjahr");
+
+            hj2 = new HjLeistung(schueler.Id, hj1.getFach, HjArt.Hj2, hj1.JgStufe);
+            hj2.Punkte = hj1.Punkte;
+            hj2.Punkte2Dez = hj1.Punkte2Dez;
+            hj2.SchnittMdl = 21; // um kopierte Noten zu erkennen
+
+            hj2.WriteToDB();
+          }
+          
+          
+        }
+      }
+
+    }
   }
 }
 
