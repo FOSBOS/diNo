@@ -1,16 +1,13 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace diNo
 {
-   
+
   /// <summary>
   /// Abstrakte Basis für Notenchecker. Regelt Fehlermeldungen und Controller
   /// </summary>
-  public abstract class NotenCheck 
+  public abstract class NotenCheck
   {
     protected SchuelerNoten noten;
     protected NotenCheckController contr;
@@ -37,31 +34,31 @@ namespace diNo
     /// <param name="schueler">Der Schüler.</param>    
     public virtual void Check(Schueler schueler)
     {
-        noten = schueler.getNoten;
+      noten = schueler.getNoten;
     }
 
     // erzeugt einen grammatikalisch korrekten Satz, je nach Anzahl der LNWs
     // Leerzeichen werden vorne und hinten angefügt.
-    protected string toText(int z, string adjektiv="", string substantiv="", Halbjahr hj=Halbjahr.Ohne)
-    {   
-        string res = (hj==Halbjahr.Zweites)  ? "Im 2. Halbjahr" : "Es";
-        
-        if (adjektiv!="")
-        {
-          if (z==0) adjektiv+="n "; // mündlichen
-          else adjektiv +=" ";      // mündliche
-        }
-        if (substantiv!="")
-        {
-          if (z==1) substantiv+=" "; // Note
-          else substantiv +="n ";    // Noten
-        }
-        if (z==0) res += " sind keine "+adjektiv+substantiv;
-        else if (z==1) res += " ist nur eine "+adjektiv+substantiv;
-        else res += " sind nur " + z + " " +adjektiv+substantiv;  
-        
-        res += "vorhanden.";
-        return res;
+    protected string toText(int z, string adjektiv = "", string substantiv = "", Halbjahr hj = Halbjahr.Ohne)
+    {
+      string res = (hj == Halbjahr.Zweites) ? "Im 2. Halbjahr" : "Es";
+
+      if (adjektiv != "")
+      {
+        if (z == 0) adjektiv += "n "; // mündlichen
+        else adjektiv += " ";      // mündliche
+      }
+      if (substantiv != "")
+      {
+        if (z == 1) substantiv += " "; // Note
+        else substantiv += "n ";    // Noten
+      }
+      if (z == 0) res += " sind keine " + adjektiv + substantiv;
+      else if (z == 1) res += " ist nur eine " + adjektiv + substantiv;
+      else res += " sind nur " + z + " " + adjektiv + substantiv;
+
+      res += "vorhanden.";
+      return res;
     }
   }
 
@@ -70,9 +67,9 @@ namespace diNo
   /// </summary>
   public class FachreferatChecker : NotenCheck
   {
-    public FachreferatChecker(NotenCheckController contr) :base (contr)
-        { }
-        
+    public FachreferatChecker(NotenCheckController contr) : base(contr)
+    { }
+
 
     /// <summary>
     /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
@@ -94,25 +91,25 @@ namespace diNo
       base.Check(schueler);
       int anz = schueler.Fachreferat.Count;
       if (anz == 0)
-        contr.Add(null,"Es ist keine Note für das Fachreferat vorhanden.");
+        contr.Add(null, "Es ist keine Note für das Fachreferat vorhanden.");
       else if (anz > 1)
       {
-        string s="";
+        string s = "";
         foreach (var hj in schueler.Fachreferat)
           s += hj.getFach.Kuerzel + " ";
 
         contr.Add(null, "Es sind " + anz + " Noten für das Fachreferat vorhanden; Fächer: " + s);
-      }        
+      }
     }
   }
 
   /// <summary>
   /// Prüft, ob die fachpraktische Ausbildung mit Erfolg durchlaufen wurde.
   /// </summary>
-  public class FpABestandenChecker: NotenCheck
+  public class FpABestandenChecker : NotenCheck
   {
-    public FpABestandenChecker(NotenCheckController contr) :base (contr)
-        { }
+    public FpABestandenChecker(NotenCheckController contr) : base(contr)
+    { }
 
     /// <summary>
     /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
@@ -130,7 +127,7 @@ namespace diNo
     /// </summary>
     /// <param name="schueler">Der Schüler.</param>
     public override void Check(Schueler schueler)
-    {                
+    {
       var fpANoten = schueler.FPANoten;
       var fpa1 = fpANoten[0];
       var fpa2 = fpANoten[1];
@@ -140,17 +137,17 @@ namespace diNo
         if (fpa1.IsGesamtNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
         else if (fpa1.Gesamt < 4)
         {
-            contr.Add(null, "<b>Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.</b>");
+          contr.Add(null, "<b>Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.</b>");
         }
         if (fpa1.IsStelleNull())
           contr.Add(null, "Die FpA-Stelle ist nicht angegeben.");
-      }            
+      }
       else if (contr.zeitpunkt == Zeitpunkt.Jahresende)
       {
         if (fpa1.IsGesamtNull() || fpa2.IsGesamtNull()) contr.Add(null, "Es liegt keine FpA-Note vor.");
-        else if (fpa1.Gesamt < 4 || fpa2.Gesamt < 4 || fpa1.Gesamt+fpa2.Gesamt < 10)
+        else if (fpa1.Gesamt < 4 || fpa2.Gesamt < 4 || fpa1.Gesamt + fpa2.Gesamt < 10)
         {
-            contr.Add(null, "<b>Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.</b>");
+          contr.Add(null, "<b>Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.</b>");
         }
         if (fpa2.IsStelleNull())
           contr.Add(null, "Die FpA-Stelle ist nicht angegeben.");
@@ -162,10 +159,10 @@ namespace diNo
   /// <summary>
   /// Prüft, ob eine Seminarfachnote vorhanden ist und ein Thema eingetragen wurde.
   /// </summary>
-  public class SeminarfachChecker: NotenCheck
+  public class SeminarfachChecker : NotenCheck
   {
-    public SeminarfachChecker(NotenCheckController contr) :base (contr)
-        { }
+    public SeminarfachChecker(NotenCheckController contr) : base(contr)
+    { }
     /// <summary>
     /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
     /// </summary>
@@ -187,7 +184,7 @@ namespace diNo
       var seminarfachnoten = seminarfachAdapter.GetDataBySchuelerId(schueler.Id);
       if (seminarfachnoten.Count == 0)
       {
-            contr.Add(null,"Es liegt keine Seminarfachnote vor.");
+        contr.Add(null, "Es liegt keine Seminarfachnote vor.");
       }
       else
       {
@@ -211,9 +208,9 @@ namespace diNo
             contr.Add(null, "Es liegt kein Seminarfachthema vor.");
           }
         }
+      }
     }
   }
-}
 
   /// <summary>
   /// Prüft die Anzahl der Noten
@@ -282,9 +279,9 @@ namespace diNo
         int kurzarbeitenCount = fachNoten.getNotenanzahl(hj, Notentyp.Kurzarbeit);
         int muendlicheCount = fachNoten.getNotenanzahl(hj, Notentyp.Ex) + fachNoten.getNotenanzahl(hj, Notentyp.EchteMuendliche);
         int schulaufgabenCount = fachNoten.getNotenanzahl(hj, Notentyp.Schulaufgabe);
-        
+
         // wenn gar nichts da ist...
-        if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0 )
+        if (kurzarbeitenCount == 0 && muendlicheCount == 0 && schulaufgabenCount == 0)
         {
           contr.Add(kurs, toText(0, "", "Note", hj));
           continue;
@@ -306,14 +303,14 @@ namespace diNo
           {
             if (schulaufgabenCount == 0)
               contr.Add(kurs, toText(schulaufgabenCount, "", "Schulaufgabe", hj));
-            if (kurzarbeitenCount==0 && muendlicheCount==0)
+            if (kurzarbeitenCount == 0 && muendlicheCount == 0)
               contr.Add(kurs, "Es liegt keine sonstige Leistung vor.");
           }
           else if (schulaufgabenCount == 0 && kurzarbeitenCount == 0 && muendlicheCount < 2)
           {
             contr.Add(kurs, "Es liegen nicht genügend sonstige Leistungen vor.");
           }
-       
+
           // zusätzliche mdl. Note, falls kritisch (<4 P. im Hj)
           else if (muendlicheCount == 0)
           {
@@ -332,7 +329,7 @@ namespace diNo
           {
             contr.Add(kurs, "Es sind zuviele Schulaufgaben eingetragen.");
           }
-          
+
           if (kurs.schreibtKA && kurzarbeitenCount == 0)
           {
             contr.Add(kurs, toText(kurzarbeitenCount, "", "Kurzarbeite"));
@@ -346,11 +343,11 @@ namespace diNo
       }
     }
   }
-  
+
   public class UnterpunktungChecker : NotenCheck
   {
-    public UnterpunktungChecker(NotenCheckController contr) :base (contr)
-        { }
+    public UnterpunktungChecker(NotenCheckController contr) : base(contr)
+    { }
     /// <summary>
     /// Ob die implementierte Prüfung überhaupt sinnvoll ist.
     /// </summary>
@@ -359,7 +356,7 @@ namespace diNo
     /// <param name="contr.zeitpunkt">Die Art der Prüfung.</param>
     /// <returns>true wenn check nötig.</returns>
     public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
-    {      
+    {
       return true;
     }
 
@@ -371,9 +368,9 @@ namespace diNo
     /// <returns>Array mit Fehler- oder Problemmeldungen. Kann auch leer sein.</returns>
     public override void Check(Schueler schueler)
     {
-        base.Check(schueler);
-        SchuelerNoten n = schueler.getNoten;
-        n.SetZeitpunkt(contr.zeitpunkt);
+      base.Check(schueler);
+      SchuelerNoten n = schueler.getNoten;
+      n.SetZeitpunkt(contr.zeitpunkt);
 
       // Integrationsklasse: dort gibt es kein Bestehen...
       /*if (schueler.getKlasse.Bezeichnung=="IV")
@@ -403,12 +400,12 @@ namespace diNo
       }
 
       else if (contr.zeitpunkt == Zeitpunkt.ErstePA)
-      {        
+      {
         // nur falls ein Schüler bereits zuviele schlechte Noten in Nichtprüfungsfächer hat
         if (n.AnzahlNoten(6, false) * 2 + n.AnzahlNoten(5, false) > 2)
         {
-          contr.Add(Vorkommnisart.NichtZurPruefungZugelassen, n.Unterpunktungen, true);          
-        }        
+          contr.Add(Vorkommnisart.NichtZurPruefungZugelassen, n.Unterpunktungen, true);
+        }
       }
 
       else if (contr.zeitpunkt == Zeitpunkt.ZweitePA)
@@ -427,8 +424,8 @@ namespace diNo
         if (nz)
           contr.Add(Vorkommnisart.nichtBestandenMAPnichtZugelassen, n.Unterpunktungen, true);
         else if (nb)
-          contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich, n.Unterpunktungen, true);                    
-        
+          contr.Add(Vorkommnisart.bisherNichtBestandenMAPmoeglich, n.Unterpunktungen, true);
+
         return;
       }
 
@@ -443,7 +440,7 @@ namespace diNo
         if (n.HatNichtBestanden())
         {
           nb = true;
-          contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);            
+          contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
         }
         if (nb && n.DarfInBOS13())
           contr.Add(Vorkommnisart.VorrueckenBOS13moeglich, "");
@@ -463,12 +460,12 @@ namespace diNo
             contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
 
           // Schüler der BOS-Vk erhalten mittlere Reife, wenn sie bestanden haben:
-          else if (schueler.Data.Schulart == "B" && Zugriff.Instance.globaleKonstanten.Schuljahr!=2019)
+          else if (schueler.Data.Schulart == "B" && Zugriff.Instance.globaleKonstanten.Schuljahr != 2019)
             contr.Add(Vorkommnisart.MittlereReife, "");
 
           if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && n.HatIn12KeinePZ())
             contr.Add(Vorkommnisart.KeineProbezeitNaechstesSJ, "");
-        }        
+        }
       }
     }
   }
@@ -501,25 +498,25 @@ namespace diNo
   // Gibt nur die Ergebnisse der MAP für die 3. PA aus
   public class MAPChecker : NotenCheck
   {
-    public MAPChecker(NotenCheckController contr) :base (contr)
-        { }
-        
+    public MAPChecker(NotenCheckController contr) : base(contr)
+    { }
+
     public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
     {
       return true;
     }
-   
+
     public override void Check(Schueler schueler)
     {
       base.Check(schueler);
-          
+
       foreach (var fach in noten.alleKurse)
-      {         
-        if (fach.getFach.Kuerzel!="E" && fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APMuendlich)>0)
+      {
+        if (fach.getFach.Kuerzel != "E" && fach.getNotenanzahl(Halbjahr.Zweites, Notentyp.APMuendlich) > 0)
         {
-          contr.Add(null,"MAP in " + fach.getFach.Kuerzel + " mit " + fach.getNoten(Halbjahr.Zweites,Notentyp.APMuendlich)[0]+ " P.");
+          contr.Add(null, "MAP in " + fach.getFach.Kuerzel + " mit " + fach.getNoten(Halbjahr.Zweites, Notentyp.APMuendlich)[0] + " P.");
         }
-      } 
+      }
     }
   }
 
@@ -541,8 +538,8 @@ namespace diNo
 
       if (schueler.IsLegastheniker)
       {
-          contr.Add(null, "Die bisherigen Regelungen zum Nachteilsausgleich bleiben bestehen.");
-      }      
+        contr.Add(null, "Die bisherigen Regelungen zum Nachteilsausgleich bleiben bestehen.");
+      }
     }
   }
 
@@ -562,7 +559,7 @@ namespace diNo
       if (schueler.Data.Berechungsstatus == (byte)Berechnungsstatus.Unberechnet)
       {
         if (contr.zeitpunkt > Zeitpunkt.ErstePA)
-          contr.Add(null,"Die Gesamtergebnisse sind noch nicht berechnet.");
+          contr.Add(null, "Die Gesamtergebnisse sind noch nicht berechnet.");
         return;
       }
       int notw = schueler.GetAnzahlEinbringung();
@@ -592,17 +589,17 @@ namespace diNo
   // Ermittelt bei 2./3.PA, ob ein Schüler für die Eliteförderung in Frage kommt.
   public class EliteChecker : NotenCheck
   {
-    public EliteChecker(NotenCheckController contr) :base (contr)
+    public EliteChecker(NotenCheckController contr) : base(contr)
     { }
-        
+
     public override bool CheckIsNecessary(Jahrgangsstufe jahrgangsstufe, Schulart schulart)
     {
       return true;
     }
-   
+
     public override void Check(Schueler schueler)
     {
-      int sumSAP=0;
+      int sumSAP = 0;
       int noteSAP;
       base.Check(schueler);
       decimal DNote;
@@ -610,22 +607,22 @@ namespace diNo
         DNote = schueler.Data.DNote;
       else return;
 
-      if (Math.Floor(10*DNote) > 13) // Schnitt mindestens 1.3
+      if (Math.Floor(10 * DNote) > 13) // Schnitt mindestens 1.3
         return;
 
       foreach (var fach in noten.alleKurse)
-      {                       
+      {
         if (!fach.getFach.IstSAPFach(schueler.Zweig)) continue;
-        if (fach.getNotenanzahl(Halbjahr.Zweites,Notentyp.APSchriftlich)==0) return; // Note fehlt
-        noteSAP = fach.getNoten(Halbjahr.Zweites,Notentyp.APSchriftlich)[0];
-        if (noteSAP<10) return; // keine SAP-Note darf einstellig sein.
+        if (fach.getNotenanzahl(Halbjahr.Zweites, Notentyp.APSchriftlich) == 0) return; // Note fehlt
+        noteSAP = fach.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich)[0];
+        if (noteSAP < 10) return; // keine SAP-Note darf einstellig sein.
         sumSAP += noteSAP;
       }
       if (sumSAP >= 50) // Schnitt aller SAP muss mindestens 12,5 Punkte sein
       {
         decimal erg = (17 - (decimal)schueler.punktesumme.Summe(PunktesummeArt.Gesamt) / schueler.punktesumme.Anzahl(PunktesummeArt.Gesamt)) / 3;
         contr.Add(null, "V" +
-          "orschlag für Eliteförderung, Durchschnitt: " + String.Format("{0:0.0000}",erg));
+          "orschlag für Eliteförderung, Durchschnitt: " + String.Format("{0:0.0000}", erg));
       }
       else
         contr.Add(null, "Durchschnitt: " + DNote + ", aber Prüfung zu 'schlecht'.");

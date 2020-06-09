@@ -1,93 +1,90 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using diNo.diNoDataSetTableAdapters;
+﻿using diNo.diNoDataSetTableAdapters;
+using System;
 
 namespace diNo
 {
+  /// <summary>
+  /// Typ einer Note.
+  /// </summary>
+  public enum Notentyp
+  {
     /// <summary>
-    /// Typ einer Note.
+    /// Default
     /// </summary>
-    public enum Notentyp
-    {
-        /// <summary>
-        /// Default
-        /// </summary>
-        NONE = 0,
-        /// <summary>
-        /// Schulaufgabe.
-        /// </summary>
-        Schulaufgabe = 1,
-        /// <summary>
-        /// Kurzarbeit
-        /// </summary>
-        Kurzarbeit = 2,
-        /// <summary>
-        /// Ex.
-        /// </summary>
-        Ex = 3,
-        /// <summary>
-        /// Echte mündliche Note.
-        /// </summary>
-        EchteMuendliche = 4,
-        /// <summary>
-        /// Fachreferat.
-        /// </summary>
-        Fachreferat = 5, // TODO: 5-7 raus, wenn AlteFOBOSO raus
-        /// <summary>
-        /// Seminararfach.
-        /// </summary>
-        Seminarfach = 6,
-        /// <summary>
-        /// Ersatzprüfung.
-        /// </summary>
-        Ersatzprüfung = 7,
-        /// <summary>
-        /// Schriftliche Abschlussprüfung.
-        /// </summary>
-        APSchriftlich = 8,
-        /// <summary>
-        /// Mündliche Abschlussprüfung.
-        /// </summary>
-        APMuendlich = 9
-    }
-  
+    NONE = 0,
     /// <summary>
-    /// Enumeration fuer Halbjahre. Bitte Nummern nicht ändern (die werden so in die Datenbank als int gecasted).
+    /// Schulaufgabe.
     /// </summary>
-    public enum Halbjahr
-    {
+    Schulaufgabe = 1,
+    /// <summary>
+    /// Kurzarbeit
+    /// </summary>
+    Kurzarbeit = 2,
+    /// <summary>
+    /// Ex.
+    /// </summary>
+    Ex = 3,
+    /// <summary>
+    /// Echte mündliche Note.
+    /// </summary>
+    EchteMuendliche = 4,
+    /// <summary>
+    /// Fachreferat.
+    /// </summary>
+    Fachreferat = 5, // TODO: 5-7 raus, wenn AlteFOBOSO raus
+                     /// <summary>
+                     /// Seminararfach.
+                     /// </summary>
+    Seminarfach = 6,
+    /// <summary>
+    /// Ersatzprüfung.
+    /// </summary>
+    Ersatzprüfung = 7,
+    /// <summary>
+    /// Schriftliche Abschlussprüfung.
+    /// </summary>
+    APSchriftlich = 8,
+    /// <summary>
+    /// Mündliche Abschlussprüfung.
+    /// </summary>
+    APMuendlich = 9
+  }
 
-        /// <summary>
-        /// Keine Zuordnung zu einem Halbjahr möglich.
-        /// </summary>
-        Ohne = 0,
-
-        /// <summary>
-        /// Erstes Halbjahr.
-        /// </summary>
-        Erstes = 1,
-        /// <summary>
-        /// Zweites Halbjahr.
-        /// </summary>
-        Zweites = 2
-    }
+  /// <summary>
+  /// Enumeration fuer Halbjahre. Bitte Nummern nicht ändern (die werden so in die Datenbank als int gecasted).
+  /// </summary>
+  public enum Halbjahr
+  {
 
     /// <summary>
-    /// Enumeration für Zeitpunkte zur Standspeicherung und Überprüfung der Notenkonsistenzen
-    /// Bitte Nummern nicht ändern (die werden so in die Datenbank als int gecasted).
+    /// Keine Zuordnung zu einem Halbjahr möglich.
     /// </summary>
-    public enum Zeitpunkt
-    {
-        None = 0,
-        ProbezeitBOS = 1,
-        HalbjahrUndProbezeitFOS = 2,
-        ErstePA = 3,
-        ZweitePA = 4,
-        DrittePA = 5,
-        Jahresende = 6
-    }
+    Ohne = 0,
+
+    /// <summary>
+    /// Erstes Halbjahr.
+    /// </summary>
+    Erstes = 1,
+    /// <summary>
+    /// Zweites Halbjahr.
+    /// </summary>
+    Zweites = 2
+  }
+
+  /// <summary>
+  /// Enumeration für Zeitpunkte zur Standspeicherung und Überprüfung der Notenkonsistenzen
+  /// Bitte Nummern nicht ändern (die werden so in die Datenbank als int gecasted).
+  /// </summary>
+  public enum Zeitpunkt
+  {
+    None = 0,
+    ProbezeitBOS = 1,
+    HalbjahrUndProbezeitFOS = 2,
+    ErstePA = 3,
+    ZweitePA = 4,
+    DrittePA = 5,
+    Jahresende = 6
+  }
 
   /// <summary>
   /// Eine Note.
@@ -186,41 +183,41 @@ namespace diNo
       }
     }
   }
-     
+
 
   public static class Notentools
   {
     public static decimal Aufrunden2NK(decimal schnitt)
     {
-      return Math.Ceiling(schnitt*100)/100;
+      return Math.Ceiling(schnitt * 100) / 100;
     }
-    
+
     public static byte RundeJF(decimal schnitt)
     {
       if (schnitt < 1)
-          return 0;
-      else 
-          return (byte) Math.Round((double)schnitt,0,MidpointRounding.AwayFromZero);
+        return 0;
+      else
+        return (byte)Math.Round((double)schnitt, 0, MidpointRounding.AwayFromZero);
     }
 
-    public static byte BerechneZeugnisnote(decimal? jf,decimal? sap, decimal? map)
+    public static byte BerechneZeugnisnote(decimal? jf, decimal? sap, decimal? map)
     {
       decimal abi;
-      
+
       // bei externen ist jf==null
-      if (jf!=null && map==null && sap==null) return RundeJF(jf.GetValueOrDefault());
+      if (jf != null && map == null && sap == null) return RundeJF(jf.GetValueOrDefault());
 
-      if (map==null) abi = sap.GetValueOrDefault();
-      else if (sap==null) abi = map.GetValueOrDefault();
-      else abi = Aufrunden2NK((2*sap.GetValueOrDefault()+map.GetValueOrDefault())/3);
+      if (map == null) abi = sap.GetValueOrDefault();
+      else if (sap == null) abi = map.GetValueOrDefault();
+      else abi = Aufrunden2NK((2 * sap.GetValueOrDefault() + map.GetValueOrDefault()) / 3);
 
-      if (jf==null) return RundeJF(abi);
-      else return RundeJF(Aufrunden2NK((jf.GetValueOrDefault()+abi)/2));
+      if (jf == null) return RundeJF(abi);
+      else return RundeJF(Aufrunden2NK((jf.GetValueOrDefault() + abi) / 2));
     }
 
     public static byte BerechneAbiGes(int sap, int map)
     {
-      return RundeJF((2 * sap+ map) / (decimal)3);
+      return RundeJF((2 * sap + map) / (decimal)3);
     }
   }
 }

@@ -1,16 +1,14 @@
-﻿using System;
+﻿using diNo.diNoDataSetTableAdapters;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
   public class Lehrer : IRepositoryObject
   {
     private diNoDataSet.LehrerRow data;
-    private bool KlassenleiterAbfragen=true;
-    private Klasse klassenleiterVon=null;
+    private bool KlassenleiterAbfragen = true;
+    private Klasse klassenleiterVon = null;
     public IList<int> rollen;
 
     public Lehrer(int id)
@@ -42,17 +40,17 @@ namespace diNo
     }
 
     public string Kuerzel
-    { get {return data.Kuerzel; } }
+    { get { return data.Kuerzel; } }
 
     public string Name
     {
       get { return this.data.Nachname + ", " + this.Data.Vorname; }
     }
 
-/*  public string NameMitAbkVorname
-    {
-      get { return Data.Vorname.Substring(0, 1) + ". " + Data.Nachname; }
-    }*/
+    /*  public string NameMitAbkVorname
+        {
+          get { return Data.Vorname.Substring(0, 1) + ". " + Data.Nachname; }
+        }*/
 
     public string VornameName
     {
@@ -76,7 +74,7 @@ namespace diNo
     }
 
 
-    public void AddRolle (int aRolle)
+    public void AddRolle(int aRolle)
     {
       LehrerRolleTableAdapter ada = new LehrerRolleTableAdapter();
       if (!this.HatRolle(aRolle))
@@ -145,15 +143,18 @@ namespace diNo
     { get { return data.Id; } }
 
     public Klasse KlassenleiterVon
-    { get { // übliche Technik funktioniert nicht ganz, weil KL auch null sein kann.
-        if (KlassenleiterAbfragen)          
+    {
+      get
+      { // übliche Technik funktioniert nicht ganz, weil KL auch null sein kann.
+        if (KlassenleiterAbfragen)
         {
           var rst = new KlasseTableAdapter().GetDataByKlassenleiterId(Id);
-          if (rst.Count>0) klassenleiterVon = Zugriff.Instance.KlassenRep.Find(rst[0].Id);
+          if (rst.Count > 0) klassenleiterVon = Zugriff.Instance.KlassenRep.Find(rst[0].Id);
           KlassenleiterAbfragen = false;
         }
         return klassenleiterVon;
-    } }
+      }
+    }
 
     public string KompletterName
     {

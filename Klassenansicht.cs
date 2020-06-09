@@ -1,6 +1,5 @@
 ﻿using log4net;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -10,9 +9,9 @@ namespace diNo
 {
   public partial class Klassenansicht : BasisForm
   {
-    private Schueler schueler=null;
+    private Schueler schueler = null;
     private SchuelerverwaltungController verwaltungController;
-    private Brief frmBrief=null;
+    private Brief frmBrief = null;
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
     public Klassenansicht()
@@ -28,10 +27,10 @@ namespace diNo
         this.treeListView1.IsSimpleDragSource = true;
         this.treeListView1.IsSimpleDropSink = true;
         this.treeListView1.ModelCanDrop += this.verwaltungController.treeListView1_ModelCanDrop;
-        this.treeListView1.ModelDropped += this.verwaltungController.treeListView1_ModelDropped;               
+        this.treeListView1.ModelDropped += this.verwaltungController.treeListView1_ModelDropped;
       }
       else
-      { 
+      {
         tabControl1.Controls.Remove(tabPageKurszuordnungen); // man kann die Seite nicht unsichtbar machen, nur entfernen
         tabControl1.Controls.Remove(tabPageAdministration);
         tabControl1.Controls.Remove(tabPageSekretariat);
@@ -55,7 +54,7 @@ namespace diNo
       userControlVorkommnisse1.Schueler = schueler;
       userControlFPAundSeminar1.Schueler = schueler;
       if (schueler == null) return;
-        userControlNotenbogen1.Schueler = schueler;
+      userControlNotenbogen1.Schueler = schueler;
 
       nameLabel.Text = schueler.NameVorname;
       klasseLabel.Text = schueler.KlassenBezeichnung;
@@ -78,8 +77,8 @@ namespace diNo
     {
       Zugriff.Instance.markierteSchueler.Clear();
       if (treeListView1.SelectedObject is Schueler)
-        schueler = treeListView1.SelectedObject as Schueler;      
-      
+        schueler = treeListView1.SelectedObject as Schueler;
+
       if (schueler != null)
       {
         // aus irgendwelchen Gründen kommt das Ereignis beim Wechseln des Schülers zwei Mal,
@@ -92,7 +91,7 @@ namespace diNo
 
       btnPrint.Enabled = true;
     }
-    
+
     private void Klassenansicht_Load(object sender, EventArgs e)
     {
       btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
@@ -110,7 +109,7 @@ namespace diNo
       klasseLabel.Text = "";
       pictureBoxImage.Image = null; 
       */
-      toolStripStatusLabel1.Text = "";     
+      toolStripStatusLabel1.Text = "";
     }
 
     private void btnNotenabgeben_Click(object sender, EventArgs e)
@@ -136,12 +135,12 @@ namespace diNo
           schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); // neues Objekt setzen
           SetSchueler();
         }
-        MessageBox.Show("Die Notendateien wurden übertragen.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
+        MessageBox.Show("Die Notendateien wurden übertragen.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         toolStripStatusLabel1.Text = "";
         Cursor.Current = Cursors.Default;
       }
     }
-            
+
     /// <summary>
     /// Event Handler für Statusmeldungen vom Notenleser.
     /// </summary>
@@ -149,7 +148,7 @@ namespace diNo
     /// <param name="sender">Der Sender des Events.</param>
     void notenReader_OnStatusChange(Object sender, StatusChangedEventArgs e)
     {
-          toolStripStatusLabel1.Text = e.Meldung;
+      toolStripStatusLabel1.Text = e.Meldung;
     }
 
     // normale Lehrer können über den Druckbutton einen Notenbogen ausdrucken, oder bei Wahl
@@ -172,19 +171,19 @@ namespace diNo
       var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
 
       // Schüler, die über NotenCheck gewählt wurden
-      if (Zugriff.Instance.HatVerwaltungsrechte && Zugriff.Instance.markierteSchueler.Count > 0) 
+      if (Zugriff.Instance.HatVerwaltungsrechte && Zugriff.Instance.markierteSchueler.Count > 0)
       {
         foreach (Schueler s in Zugriff.Instance.markierteSchueler.Values)
         {
           res.Add(s);
         }
       }
-      else if (obj.Count>0 && obj[0] is Klasse)
+      else if (obj.Count > 0 && obj[0] is Klasse)
       {
         foreach (Klasse k in obj)
         {
           foreach (Schueler s in k.eigeneSchueler)
-          {               
+          {
             res.Add(s);
           }
         }
@@ -196,15 +195,15 @@ namespace diNo
           res.Add(s);
         }
       }
-      else if (schueler!=null)
+      else if (schueler != null)
         res.Add(schueler); // nur aktuell ausgewählter Schüler
 
       return res;
-    } 
+    }
 
     private void btnBrief_Click(object sender, EventArgs e)
     {
-      if (frmBrief== null) frmBrief = new Brief(this);
+      if (frmBrief == null) frmBrief = new Brief(this);
       frmBrief.Anzeigen(schueler);
     }
 
@@ -216,14 +215,14 @@ namespace diNo
       {
         foreach (Klasse k in obj)
           SelKlassen.Add(k);
-      }  
+      }
       var c = new NotenCheckForm(SelKlassen);
       c.Show();
       btnPrint.Enabled = btnPrint.Enabled || Zugriff.Instance.HatVerwaltungsrechte;
     }
 
     public void RefreshVorkommnisse()
-    {          
+    {
       userControlVorkommnisse1.RefreshVorkommnisse();
     }
 
@@ -263,7 +262,7 @@ namespace diNo
         verz += "\\Corona2\\";
         if (!Directory.Exists(verz))
           Directory.CreateDirectory(verz);
-        File.Copy(fileName, verz+datei, true);
+        File.Copy(fileName, verz + datei, true);
 
         // dieser Aufruf kopiert die Noten und gibt die neuen Noten dann auch gleich ab.
         //new CoronaNoten(verz + datei, notenReader_OnStatusChange);

@@ -1,10 +1,6 @@
-﻿using System;
+﻿using diNo.diNoDataSetTableAdapters;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using diNo.diNoDataSetTableAdapters;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 
 namespace diNo
 {
@@ -89,7 +85,7 @@ namespace diNo
       if (azeitpunkt == Zeitpunkt.DrittePA && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         alleNotenchecks.Add(new MAPChecker(this));
 
-      if (modus==NotenCheckModus.Protokolle && azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+      if (modus == NotenCheckModus.Protokolle && azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
         alleNotenchecks.Add(new LRSChecker(this));
 
       // Folgende Vorkommnisse ggf. löschen, bzw. neu erzeugen bei 2./3.PA
@@ -111,9 +107,9 @@ namespace diNo
         zeitpunkt == Zeitpunkt.ProbezeitBOS ||
         k.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf && zeitpunkt <= Zeitpunkt.DrittePA ||
         k.Jahrgangsstufe < Jahrgangsstufe.Zwoelf && zeitpunkt == Zeitpunkt.Jahresende)
-      {        
-          zuPruefendeKlassen.Add(k);
-          AnzahlSchueler += k.eigeneSchueler.Count;       
+      {
+        zuPruefendeKlassen.Add(k);
+        AnzahlSchueler += k.eigeneSchueler.Count;
       }
     }
 
@@ -137,31 +133,31 @@ namespace diNo
        */
       CreateResults();
     }
-  
+
     public void CheckSchueler(Schueler s)
-    {  
+    {
       aktSchueler = s;
-      if (s.Status==Schuelerstatus.Abgemeldet) return;
-              
-      Klasse klasse = s.getKlasse;          
-      UnterpunktungGedruckt=false;
-        
+      if (s.Status == Schuelerstatus.Abgemeldet) return;
+
+      Klasse klasse = s.getKlasse;
+      UnterpunktungGedruckt = false;
+
       // muss dieser Schüler überhaupt geprüft werden?
-          // S ohne Probezeit oder späterer Probezeit                             
-      if (zeitpunkt == Zeitpunkt.ProbezeitBOS && s.HatProbezeitBis()==Zeitpunkt.ProbezeitBOS ||
+      // S ohne Probezeit oder späterer Probezeit                             
+      if (zeitpunkt == Zeitpunkt.ProbezeitBOS && s.HatProbezeitBis() == Zeitpunkt.ProbezeitBOS ||
           // fast alle zum Halbjahr
           zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS /*&& klasse.Jahrgangsstufe != Jahrgangsstufe.Vorkurs */||
           // Jahresende nur für Vorklasse und 11. 
           zeitpunkt == Zeitpunkt.Jahresende && klasse.Jahrgangsstufe <= Jahrgangsstufe.Elf ||
           // 1.-3. PA nur für 12./13.
           klasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf &&
-            (zeitpunkt == Zeitpunkt.ErstePA 
+            (zeitpunkt == Zeitpunkt.ErstePA
             || zeitpunkt == Zeitpunkt.ZweitePA
             || zeitpunkt == Zeitpunkt.DrittePA)
           )
       {
         // Erst werden alle Berechnungen durchgeführt (Gesamtergebnisse, DNote,...)
-        if (berechnungen!=null)
+        if (berechnungen != null)
           berechnungen.BerechneSchueler(s);
 
         // In memoriam: Schüler, die draußen sind
@@ -171,7 +167,7 @@ namespace diNo
           if (s.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen))
           {
             weg = true;
-            Add(null, "War nicht zur Prüfung zugelassen.");            
+            Add(null, "War nicht zur Prüfung zugelassen.");
           }
           if (s.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
           {
@@ -179,11 +175,11 @@ namespace diNo
             Add(null, "Hat die Prüfung abgebrochen.");
           }
           if (weg)
-          { 
+          {
             if (modus == NotenCheckModus.KonferenzVorbereiten && zeitpunkt == Zeitpunkt.DrittePA && !s.hatVorkommnis(Vorkommnisart.keinJahreszeugnis))
               s.AddVorkommnis(Vorkommnisart.Jahreszeugnis, Zugriff.Instance.Zeugnisdatum, "");
             return;
-          }          
+          }
         }
 
         foreach (var ch in alleNotenchecks)
@@ -199,63 +195,63 @@ namespace diNo
           && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         {
           Add(null, "Unterpunktet in " + s.getNoten.Unterpunktungen);
-        }        
+        }
       }
-    }   
-    
-    // fügt eine Meldung/Vorkommnis hinzu, und erzeugt ggf. abhängige Vorkommnisse
-    public void Add(Vorkommnisart art, string meldung,bool aUnterpunktungGedruckt=false)
-    {     
-      if (aUnterpunktungGedruckt) UnterpunktungGedruckt=aUnterpunktungGedruckt;
-      AddVorkommnis(art, meldung);
-     
-      // bei Wiederholungsschülern wird bei bestimmten Ereignissen automatisch Gefahr d. Abw. oder d.n.w erzeugt
-      if (aktSchueler.Wiederholt() && Zugriff.Instance.Schuljahr !=2019)
-      {
-        if (art==Vorkommnisart.NichtBestanden || art==Vorkommnisart.nichtBestandenMAPnichtZugelassen ||
-          art==Vorkommnisart.NichtZurPruefungZugelassen || art==Vorkommnisart.KeineVorrueckungserlaubnis)           
-            AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen,"");
+    }
 
-        if (art==Vorkommnisart.Gefaehrdungsmitteilung || art==Vorkommnisart.starkeGefaehrdungsmitteilung || art==Vorkommnisart.BeiWeiteremAbsinken)           
-            AddVorkommnis(Vorkommnisart.GefahrDerAbweisung,"");
+    // fügt eine Meldung/Vorkommnis hinzu, und erzeugt ggf. abhängige Vorkommnisse
+    public void Add(Vorkommnisart art, string meldung, bool aUnterpunktungGedruckt = false)
+    {
+      if (aUnterpunktungGedruckt) UnterpunktungGedruckt = aUnterpunktungGedruckt;
+      AddVorkommnis(art, meldung);
+
+      // bei Wiederholungsschülern wird bei bestimmten Ereignissen automatisch Gefahr d. Abw. oder d.n.w erzeugt
+      if (aktSchueler.Wiederholt() && Zugriff.Instance.Schuljahr != 2019)
+      {
+        if (art == Vorkommnisart.NichtBestanden || art == Vorkommnisart.nichtBestandenMAPnichtZugelassen ||
+          art == Vorkommnisart.NichtZurPruefungZugelassen || art == Vorkommnisart.KeineVorrueckungserlaubnis)
+          AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen, "");
+
+        if (art == Vorkommnisart.Gefaehrdungsmitteilung || art == Vorkommnisart.starkeGefaehrdungsmitteilung || art == Vorkommnisart.BeiWeiteremAbsinken)
+          AddVorkommnis(Vorkommnisart.GefahrDerAbweisung, "");
       }
     }
 
     private void AddVorkommnis(Vorkommnisart art, string meldung)
     {
-      if (modus==NotenCheckModus.KonferenzVorbereiten && zeitpunkt>Zeitpunkt.ProbezeitBOS)
+      if (modus == NotenCheckModus.KonferenzVorbereiten && zeitpunkt > Zeitpunkt.ProbezeitBOS)
       {
-        aktSchueler.AddVorkommnis(art,meldung);
+        aktSchueler.AddVorkommnis(art, meldung);
       }
 
       Add(null, Vorkommnisse.Instance.VorkommnisText(art) + " " + meldung);
     }
 
-    public void Add(Kurs k,string m,bool aUnterpunktungGedruckt=false)
+    public void Add(Kurs k, string m, bool aUnterpunktungGedruckt = false)
     {
-      if (aUnterpunktungGedruckt) UnterpunktungGedruckt=aUnterpunktungGedruckt;
-      NotenCheckCounter c;      
-      if (k!=null)
+      if (aUnterpunktungGedruckt) UnterpunktungGedruckt = aUnterpunktungGedruckt;
+      NotenCheckCounter c;
+      if (k != null)
       {
-        chkContainer.Add(new KeyValuePair<string, NotenCheckContainer>(k.Id + "_" +m,new NotenCheckContainer(k,aktSchueler,m)));
-        if (chkCounter.TryGetValue(k.Id + "_" +m,out c))
+        chkContainer.Add(new KeyValuePair<string, NotenCheckContainer>(k.Id + "_" + m, new NotenCheckContainer(k, aktSchueler, m)));
+        if (chkCounter.TryGetValue(k.Id + "_" + m, out c))
         {
           c.count++; // so eine ähnliche Meldung gab es schon mal
         }
         else
         {
-          chkCounter.Add(k.Id + "_" +m,new NotenCheckCounter(k,m));
+          chkCounter.Add(k.Id + "_" + m, new NotenCheckCounter(k, m));
         }
       }
       else
       {
-        chkContainer.Add(new KeyValuePair<string, NotenCheckContainer>("",new NotenCheckContainer(k,aktSchueler,m)));
+        chkContainer.Add(new KeyValuePair<string, NotenCheckContainer>("", new NotenCheckContainer(k, aktSchueler, m)));
       }
 
       if (!Zugriff.Instance.markierteSchueler.ContainsKey(aktSchueler.Id))
-        Zugriff.Instance.markierteSchueler.Add(aktSchueler.Id,aktSchueler);
+        Zugriff.Instance.markierteSchueler.Add(aktSchueler.Id, aktSchueler);
     }
-    
+
     public void CreateResults()
     {
       NotenCheckCounter cnt;
@@ -296,50 +292,50 @@ namespace diNo
     }
   }
 
-   
-    /// <summary>
-    /// Verwaltet die Fehlermeldungen
-    /// </summary>
-    public class NotenCheckResults
+
+  /// <summary>
+  /// Verwaltet die Fehlermeldungen
+  /// </summary>
+  public class NotenCheckResults
+  {
+    public IList<NotenCheckResult> list;
+    public NotenCheckResults()
     {
-        public IList<NotenCheckResult> list;
-        public NotenCheckResults()
-        {
-            list = new List<NotenCheckResult>();
-        }
+      list = new List<NotenCheckResult>();
     }
+  }
 
   /// <summary>
   /// Verwaltet eine Fehlermeldung für einen Schüler
   /// </summary>
   public class NotenCheckResult
   {
-    public string schueler  { get; private set; }
+    public string schueler { get; private set; }
     public int klassenId { get; private set; }
     public string Klassenleiter { get; private set; }
-    public string klasse { get; private set; } 
-    public string lehrer { get; private set; } 
-    public string fach { get; private set; } 
+    public string klasse { get; private set; }
+    public string lehrer { get; private set; }
+    public string fach { get; private set; }
     public string meldung { get; set; }
 
-    public NotenCheckResult(Schueler s,Kurs k,string m)
+    public NotenCheckResult(Schueler s, Kurs k, string m)
     {
-      schueler = s.NameVorname;        
+      schueler = s.NameVorname;
       klasse = s.getKlasse.Data.Bezeichnung;
-      lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
-      fach =   k!=null ? k.getFach.Kuerzel : "";
-      meldung = m;      
+      lehrer = k != null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
+      fach = k != null ? k.getFach.Kuerzel : "";
+      meldung = m;
       klassenId = s.getKlasse.Data.Id;
       Klassenleiter = s.getKlasse.Klassenleiter.NameDienstbezeichnung + ", " + s.getKlasse.Klassenleiter.KLString;
     }
 
-    public NotenCheckResult(Klasse kl,Kurs k,string m)
+    public NotenCheckResult(Klasse kl, Kurs k, string m)
     {
       schueler = "...mehrmals...";
       klassenId = kl.Data.Id;
       klasse = kl.Data.Bezeichnung;
-      lehrer = k!=null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
-      fach =   k!=null ? k.getFach.Kuerzel : "";
+      lehrer = k != null && k.getLehrer != null ? k.getLehrer.Kuerzel : "";
+      fach = k != null ? k.getFach.Kuerzel : "";
       meldung = m;
       Klassenleiter = kl.Klassenleiter.NameDienstbezeichnung + ", " + kl.Klassenleiter.KLString;
     }
@@ -355,47 +351,47 @@ namespace diNo
     public override string ToString()
     {
       return klasse + ", " + schueler + ", " +
-            (lehrer=="" ? fach + " (" + lehrer + "): " : "")  + meldung;            
+            (lehrer == "" ? fach + " (" + lehrer + "): " : "") + meldung;
     }
   }
 
-    // nimmt eine Fehlermeldung zur Zwischenspeicherung auf
-    public class NotenCheckContainer
-    {     
-      public Kurs kurs;
-      public Schueler schueler;
-      public string meldung;
+  // nimmt eine Fehlermeldung zur Zwischenspeicherung auf
+  public class NotenCheckContainer
+  {
+    public Kurs kurs;
+    public Schueler schueler;
+    public string meldung;
 
-      public NotenCheckContainer(Kurs k,Schueler s, string m)
-      {
-        kurs = k;
-        schueler = s;
-        meldung = m;
-      }
-
-    }
-
-    // verwaltet die Anzahl ähnlicher Fehlermeldungen je Klasse
-    public class NotenCheckCounter
-    {      
-      public int count;
-      public Kurs kurs;     
-      public string meldung;
-
-      public NotenCheckCounter(Kurs k, string m)
-      {
-        count =1;
-        kurs = k;        
-        meldung = m;
-      }
-    }
-
-    public enum NotenCheckModus
+    public NotenCheckContainer(Kurs k, Schueler s, string m)
     {
-      EigeneNotenVollstaendigkeit,
-      EigeneKlasse, // nur für Klassenleiter
-      Gesamtpruefung,
-      KonferenzVorbereiten,  // nur Admin
-      Protokolle
-     }
+      kurs = k;
+      schueler = s;
+      meldung = m;
+    }
+
   }
+
+  // verwaltet die Anzahl ähnlicher Fehlermeldungen je Klasse
+  public class NotenCheckCounter
+  {
+    public int count;
+    public Kurs kurs;
+    public string meldung;
+
+    public NotenCheckCounter(Kurs k, string m)
+    {
+      count = 1;
+      kurs = k;
+      meldung = m;
+    }
+  }
+
+  public enum NotenCheckModus
+  {
+    EigeneNotenVollstaendigkeit,
+    EigeneKlasse, // nur für Klassenleiter
+    Gesamtpruefung,
+    KonferenzVorbereiten,  // nur Admin
+    Protokolle
+  }
+}

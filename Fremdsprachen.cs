@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace diNo
+﻿namespace diNo
 {
   public static class Fremdsprachen
   {
@@ -23,24 +17,24 @@ namespace diNo
 
     public static Sprachniveau GetSprachniveau(Kursniveau k, Jahrgangsstufe jg)
     {
-      if (jg!=Jahrgangsstufe.Dreizehn)
-      switch (k)
-      {
-        case Kursniveau.Anfaenger: return Sprachniveau.A2;
-        case Kursniveau.Fortg: return Sprachniveau.B1;
-        case Kursniveau.FortgIW: return Sprachniveau.B1p;
-        case Kursniveau.Englisch: return Sprachniveau.B2;
-        default: return Sprachniveau.None;
-      }
+      if (jg != Jahrgangsstufe.Dreizehn)
+        switch (k)
+        {
+          case Kursniveau.Anfaenger: return Sprachniveau.A2;
+          case Kursniveau.Fortg: return Sprachniveau.B1;
+          case Kursniveau.FortgIW: return Sprachniveau.B1p;
+          case Kursniveau.Englisch: return Sprachniveau.B2;
+          default: return Sprachniveau.None;
+        }
       else
-      switch (k)
-      {
-        case Kursniveau.Anfaenger: return Sprachniveau.B1;
-        case Kursniveau.Fortg: return Sprachniveau.B1p;
-        case Kursniveau.FortgIW: return Sprachniveau.B2;
-        case Kursniveau.Englisch: return Sprachniveau.B2p;
-        default: return Sprachniveau.None;
-      }
+        switch (k)
+        {
+          case Kursniveau.Anfaenger: return Sprachniveau.B1;
+          case Kursniveau.Fortg: return Sprachniveau.B1p;
+          case Kursniveau.FortgIW: return Sprachniveau.B2;
+          case Kursniveau.Englisch: return Sprachniveau.B2p;
+          default: return Sprachniveau.None;
+        }
     }
 
     public static Sprachniveau HjToSprachniveau(FachSchuelerNoten f)

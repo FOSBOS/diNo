@@ -1,8 +1,5 @@
-﻿using System;
+﻿using diNo.diNoDataSetTableAdapters;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
@@ -31,9 +28,9 @@ namespace diNo
       string s;
       dic.TryGetValue((int)g, out s);
       return s;
-    }   
+    }
   }
-  
+
   public enum GlobaleStrings
   {
     Backuppfad = 1,
@@ -59,5 +56,5 @@ namespace diNo
     MailPasswort,
     VerzeichnisExceldateien
   }
-  
+
 }

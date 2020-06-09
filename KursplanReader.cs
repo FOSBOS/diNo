@@ -1,9 +1,9 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using log4net;
 
 namespace diNo
 {
@@ -111,7 +111,8 @@ namespace diNo
 
           //säubere die Einzeleinträge (Anführungsstriche, Leerzeichen etc. entfernen)
           string[] cleanArray = array.Select(aString => aString.Trim(new char[] { '\"', ' ', '\n' })).ToArray();
-          result.Add(new KursplanZeile() {
+          result.Add(new KursplanZeile()
+          {
             Klasse = cleanArray[klasseSpalte],
             FachKurzbez = cleanArray[fachSpalte],
             LehrerKuerzel = cleanArray[lehrerkuerzelSpalte],

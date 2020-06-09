@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using diNo.diNoDataSetTableAdapters;
+using System;
 using static diNo.diNoDataSet;
-using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
@@ -32,14 +28,14 @@ namespace diNo
     public void Clear()
     {
       anzahl = new int[Enum.GetValues(typeof(PunktesummeArt)).Length];
-      summe = new int[Enum.GetValues(typeof(PunktesummeArt)).Length];      
+      summe = new int[Enum.GetValues(typeof(PunktesummeArt)).Length];
     }
 
     public void BerechneGesamtpunktzahl(int deltaP)
     {
       if (!schueler.Seminarfachnote.IsGesamtnoteNull())
       {
-        Add(PunktesummeArt.Seminar,(byte)schueler.Seminarfachnote.Gesamtnote,2);
+        Add(PunktesummeArt.Seminar, (byte)schueler.Seminarfachnote.Gesamtnote, 2);
       }
 
       int anz = 0, sum = 0;
@@ -48,10 +44,10 @@ namespace diNo
         if (anzahl[i] > 0)
         {
           anz += anzahl[i];
-          sum += summe[i];          
+          sum += summe[i];
         }
       }
-      
+
       // für Ergänzungsprüfung oder F-f in 12. Klasse:
       if (anzahl[(int)PunktesummeArt.FremdspracheErgPr] > 0 || anzahl[(int)PunktesummeArt.FremdspracheAus12] > 0)
       {
@@ -73,12 +69,12 @@ namespace diNo
     }
 
     // deltaP gibt an, um wieviel höher die Punktesumme bei der fachgeb. HSR liegt, wenn eine alternative HjLeistung eingebracht wird
-    public void WriteToDB(int deltaP=0)
+    public void WriteToDB(int deltaP = 0)
     {
       BerechneGesamtpunktzahl(deltaP);
       var ta = new PunktesummeTableAdapter();
       ta.DeleteBySchuelerId(schueler.Id);
-      for (int i=0; i < Enum.GetValues(typeof(PunktesummeArt)).Length; i++)
+      for (int i = 0; i < Enum.GetValues(typeof(PunktesummeArt)).Length; i++)
       {
         if (anzahl[i] > 0)
           ta.Insert(schueler.Id, i, summe[i], anzahl[i]);
@@ -92,9 +88,9 @@ namespace diNo
     }
 
     // Addition eines Einzelwertes
-    public void Add(PunktesummeArt art, int punkte, int faktor=1)
+    public void Add(PunktesummeArt art, int punkte, int faktor = 1)
     {
-      anzahl[(int)art] +=faktor;
+      anzahl[(int)art] += faktor;
       summe[(int)art] += punkte * faktor;
     }
 
@@ -118,7 +114,7 @@ namespace diNo
         case PunktesummeArt.HjLeistungen: return "Halbjahresleistungen";
         case PunktesummeArt.Seminar: return "Seminar";
         case PunktesummeArt.FremdspracheErgPr: return "Ergänzungsprüfung";
-        case PunktesummeArt.FremdspracheAus12:return "Fremdsprache der 12. Klasse";
+        case PunktesummeArt.FremdspracheAus12: return "Fremdsprache der 12. Klasse";
         case PunktesummeArt.Gesamt: return "Summe";
         case PunktesummeArt.GesamtFachgebHSR: return "Summe (fachgeb. HSR)";
         default: return "";

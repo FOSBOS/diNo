@@ -1,5 +1,4 @@
-﻿using System;
-namespace diNo
+﻿namespace diNo
 {
   /// <summary>
   /// Enthält die Konstanten, in welcher Zelle welche Noten stehen.
@@ -13,9 +12,9 @@ namespace diNo
     public static string Schuljahr = "S1";
     public static string DatumStand = "Z1";
     public static int ZeileErsterSchueler = 5;
-    
+
     #region Konstanten geben das Feld für den ersten Schüler an.
-    
+
     public static string Nachname = "B";
     public static string LegasthenieVermerk = "Y";
     public static string LegasthenieEintragung = "Legasthenie";
@@ -34,7 +33,7 @@ namespace diNo
 
     #region AP
 
- public static int APZeileErsterSchueler = 6;
+    public static int APZeileErsterSchueler = 6;
 
     #endregion
 
@@ -53,7 +52,7 @@ namespace diNo
     /// <summary>
     /// M oder E zulässig
     /// </summary>
-    public static string SchluesselArt ="H32";
+    public static string SchluesselArt = "H32";
 
     public static string ProzentFuenfUntergrenze = "H34";
     public static string ProzentFuenfObergrenze = "H35";
@@ -80,7 +79,7 @@ namespace diNo
           case Notentyp.Ex: s = new[] { "D", "E", "F", "G" }; break;
           case Notentyp.EchteMuendliche: s = new[] { "H", "I", "J" }; break;
           case Notentyp.Fachreferat: s = new[] { "L" }; break;
-          //case Notentyp.Ersatzprüfung: s = new[] { "K" }; break;
+            //case Notentyp.Ersatzprüfung: s = new[] { "K" }; break;
         }
       }
 
@@ -107,8 +106,8 @@ namespace diNo
       return s; // ggf. eine leere Liste, falls diese Kombi nicht zulässig ist
     }
 
-        
-    }
+
+  }
 
 }
 

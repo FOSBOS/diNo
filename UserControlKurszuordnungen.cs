@@ -58,10 +58,10 @@ namespace diNo
         }
       }
 
-      this.objectListView2.SetObjects(moeglicheNeueKurse);     
-      
+      this.objectListView2.SetObjects(moeglicheNeueKurse);
+
       // Kontrollfelder aktualisieren
-      textBoxReliOderEthik.Text = schueler.Data.IsReligionOderEthikNull() ? "" : schueler.Data.ReligionOderEthik; 
+      textBoxReliOderEthik.Text = schueler.Data.IsReligionOderEthikNull() ? "" : schueler.Data.ReligionOderEthik;
     }
 
     private void objectListView1_DoubleClick(object sender, System.EventArgs e)

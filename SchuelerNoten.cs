@@ -1,8 +1,7 @@
-﻿using System;
+﻿using diNo.diNoDataSetTableAdapters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
@@ -20,10 +19,10 @@ namespace diNo
     // die folgendes Array verwaltet die Anzahl der Einser, Zweier, usw., getrennt nach SAP-Fach und Nebenfach
     // anzahlNoten[6,1] ergibt z.B. die Anzahl der Sechser in SAP-Fächern, anzahlNoten[5,0] die Anzahl der Fünfer in Nebenfächern
     private int[,] anzahlNoten;
-    private int abi5er=0,abi6er=0,abiE=0; // Anzahl 5er und 6 im Abi, Abi-Note in Englisch
+    private int abi5er = 0, abi6er = 0, abiE = 0; // Anzahl 5er und 6 im Abi, Abi-Note in Englisch
     private Zeitpunkt zeitpunkt = (Zeitpunkt)Zugriff.Instance.aktZeitpunkt;
     public string Unterpunktungen, UnterpunktungenAbi;
-    public int anz4P=0;
+    public int anz4P = 0;
     public double Punkteschnitt = 0;
     public List<HjLeistung> Fachreferat = new List<HjLeistung>(); // sollte i.d.R. nur einelementig sein, aber wegen irrtümlicher Doppelvergabe
     public FachSchuelerNoten ZweiteFSalt = null;  // Verweis auf die beiden HjLeistungen in der 2. Fremdsprache (kann auch Kurs aus der 12. enthalten oder 13., die wiederholt wurde)
@@ -32,7 +31,7 @@ namespace diNo
 
     public SchuelerNoten(Schueler s)
     {
-      schueler = s;     
+      schueler = s;
       alleFaecher = new List<FachSchuelerNoten>();
       alleKurse = new List<FachSchuelerNoten>();
       alleSprachen = new List<FachSchuelerNoten>();
@@ -47,7 +46,7 @@ namespace diNo
       }
 
       // alle Fächer des Schülers ohne Kurs finden und diese HjLeistungen laden 
-      diNoDataSet.FachDataTable fDT = (new FachTableAdapter()).GetFaecherOhneKurseBySchuelerId(schueler.Id,(int)schueler.getKlasse.Jahrgangsstufe);
+      diNoDataSet.FachDataTable fDT = (new FachTableAdapter()).GetFaecherOhneKurseBySchuelerId(schueler.Id, (int)schueler.getKlasse.Jahrgangsstufe);
       foreach (var fachR in fDT)
       {
         Fach fach = Zugriff.Instance.FachRep.Find(fachR.Id);
@@ -61,7 +60,7 @@ namespace diNo
         }
         else
         {
-          alleFaecher.Add(fsn);          
+          alleFaecher.Add(fsn);
           FaecherOhneKurse.Add(fsn);
         }
       }
@@ -76,8 +75,8 @@ namespace diNo
       */
 
       Zweig z = schueler.Zweig; // Profilfächer haben neue Sortierung
-      alleFaecher.Sort((x,y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
-      alleKurse.Sort((x,y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
+      alleFaecher.Sort((x, y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
+      alleKurse.Sort((x, y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
 
       // Schnitt, Unterpunktungen etc. berechnen
       anzahlNoten = new int[7, 2];
@@ -93,7 +92,7 @@ namespace diNo
       Kursniveau k = fsn.getFach.getKursniveau();
       if (k != Kursniveau.None) alleSprachen.Add(fsn);
       if (k > Kursniveau.Englisch)
-      {        
+      {
         var hj1 = fsn.getHjLeistung(HjArt.Hj1);
         var hj2 = fsn.getHjLeistung(HjArt.Hj2);
         if (hj1 != null && hj2 != null)
@@ -131,7 +130,7 @@ namespace diNo
       }
       return null;
       //throw new IndexOutOfRangeException("FachSchuelerNoten.getFach: falsche kursid");            
-  }
+    }
 
     /// <summary>
     /// Liefert die Noten des Schülers im übergebenen Fach.
@@ -144,7 +143,7 @@ namespace diNo
       {
         if (f.getFach.Kuerzel.Equals(fachKuerzel, StringComparison.OrdinalIgnoreCase)) return f;
       }
-       
+
       if (throwExceptionIfNotFound)
       {
         throw new InvalidOperationException("Der Schüler belegt Fach " + fachKuerzel + " gar nicht.");
@@ -158,14 +157,14 @@ namespace diNo
     /// </summary>
     public IList<NotenDruck> SchuelerNotenDruck(Bericht rptName)
     {
-      IList<NotenDruck> liste = new List<NotenDruck>();      
+      IList<NotenDruck> liste = new List<NotenDruck>();
       foreach (FachSchuelerNoten f in alleFaecher)
-      {               
-        liste.Add(NotenDruck.CreateNotenDruck(f,rptName));
+      {
+        liste.Add(NotenDruck.CreateNotenDruck(f, rptName));
       }
       foreach (var f in Fachreferat)
       {
-        if (rptName==Bericht.Abiergebnisse)
+        if (rptName == Bericht.Abiergebnisse)
           liste.Add(new NotenAbiDruck(f));
         else
           liste.Add(new NotenHjDruck(f));
@@ -177,12 +176,12 @@ namespace diNo
         else
           liste.Add(new NotenHjDruck(schueler.Seminarfachnote));
       }
-      return liste;      
+      return liste;
     }
 
     public IList<NotenDruck> SchuelerNotenZeugnisDruck(Bericht rptName)
     {
-      IList<NotenDruck> liste = new List<NotenDruck>(); 
+      IList<NotenDruck> liste = new List<NotenDruck>();
       if (rptName == Bericht.Abiturzeugnis)
       {
         foreach (FachSchuelerNoten f in alleFaecher)
@@ -191,19 +190,19 @@ namespace diNo
         }
       }
       else
-      foreach (FachSchuelerNoten f in alleKurse)
-      {
-        if (rptName!=Bericht.Gefaehrdung || f.getRelevanteNote(zeitpunkt)<=4)
-          liste.Add(new NotenZeugnisDruck(f, rptName));
-      }
+        foreach (FachSchuelerNoten f in alleKurse)
+        {
+          if (rptName != Bericht.Gefaehrdung || f.getRelevanteNote(zeitpunkt) <= 4)
+            liste.Add(new NotenZeugnisDruck(f, rptName));
+        }
 
       foreach (var f in Fachreferat)
       {
         liste.Add(new NotenZeugnisDruck(f, "Fachreferat in " + f.getFach.BezZeugnis));
       }
       if (rptName != Bericht.Gefaehrdung && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
-      {        
-        NotenZeugnisDruck f = new NotenZeugnisDruck(schueler.FPANoten);          
+      {
+        NotenZeugnisDruck f = new NotenZeugnisDruck(schueler.FPANoten);
         liste.Add(f);
       }
       if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
@@ -214,41 +213,41 @@ namespace diNo
 
       return liste;
     }
-     
+
     // Zu diesem Zeitpunkt werden die Notenanzahlen gebildet,
     // wird dieser geändert, muss neu gerechnet werden
     public void SetZeitpunkt(Zeitpunkt z)
     {
-      if (zeitpunkt!=z)
+      if (zeitpunkt != z)
       {
         anzahlNoten = null;
         anzahlNoten = new int[7, 2];
         zeitpunkt = z;
-        InitAnzahlNoten();        
+        InitAnzahlNoten();
       }
     }
 
     public int AnzahlProbleme()
     {
-      return AnzahlNoten(5) + 2*AnzahlNoten(6);
+      return AnzahlNoten(5) + 2 * AnzahlNoten(6);
     }
-    
+
     // liefert Anzahl der Sechser, Fünfer, ..., egal ob Prüfungsfach oder nicht
     public int AnzahlNoten(int note)
     {
-      return AnzahlNoten(note,true) + AnzahlNoten(note, false);      
+      return AnzahlNoten(note, true) + AnzahlNoten(note, false);
     }
 
     // Doku s. private Variable
     public int AnzahlNoten(int note, bool SAP)
     {
-      if (SAP) return anzahlNoten[note,1];
-      else return anzahlNoten[note,0];
+      if (SAP) return anzahlNoten[note, 1];
+      else return anzahlNoten[note, 0];
     }
 
     private void NimmNote(byte relevanteNote, int istSAP, string kuerzel)
     {
-      if (relevanteNote == 0) anzahlNoten[6, istSAP]++;        
+      if (relevanteNote == 0) anzahlNoten[6, istSAP]++;
       else if (relevanteNote < 4) anzahlNoten[5, istSAP]++;
       else if (relevanteNote >= 13) anzahlNoten[1, istSAP]++;
       else if (relevanteNote >= 10) anzahlNoten[2, istSAP]++;
@@ -262,7 +261,7 @@ namespace diNo
     }
 
     private void InitAnzahlNoten()
-    {      
+    {
       string kuerzel;
       int Punktesumme = 0;
       int AnzahlFaecher = 0;
@@ -277,14 +276,14 @@ namespace diNo
         kuerzel = fachNoten.getFach.Kuerzel;
         if (fachNoten.getFach.NichtNC) continue;  // Nicht-NC-Fächer zählen gar nicht
         byte? relevanteNote = fachNoten.getRelevanteNote(zeitpunkt);
-        int istSAP = fachNoten.getFach.IstSAPFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse) ? 1:0;
+        int istSAP = fachNoten.getFach.IstSAPFach(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse) ? 1 : 0;
         if (relevanteNote != null)
         {
           Punktesumme += relevanteNote.GetValueOrDefault();
           AnzahlFaecher++;
           NimmNote(relevanteNote.GetValueOrDefault(), istSAP, kuerzel);
         }
-        if (istSAP==1 && (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA))
+        if (istSAP == 1 && (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA))
         {
           InitAbiNoten(fachNoten);
         }
@@ -292,9 +291,9 @@ namespace diNo
 
       foreach (var f in Fachreferat)
       {
-        NimmNote(f.Punkte, 0, "FR"); 
+        NimmNote(f.Punkte, 0, "FR");
       }
-      
+
       if (!schueler.Seminarfachnote.IsGesamtnoteNull())
       {
         byte relevanteNote = (byte)schueler.Seminarfachnote.Gesamtnote;
@@ -304,7 +303,7 @@ namespace diNo
       }
 
       // Punkteschnitt berechnen
-      if (zeitpunkt>=Zeitpunkt.ErstePA && zeitpunkt<=Zeitpunkt.DrittePA)
+      if (zeitpunkt >= Zeitpunkt.ErstePA && zeitpunkt <= Zeitpunkt.DrittePA)
       {
         Punktesumme = schueler.punktesumme.Summe(PunktesummeArt.Gesamt);
         AnzahlFaecher = schueler.punktesumme.Anzahl(PunktesummeArt.Gesamt);
@@ -313,7 +312,7 @@ namespace diNo
       {
         Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2, MidpointRounding.AwayFromZero);
         if (Unterpunktungen != "" && !(zeitpunkt == Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse))
-        { 
+        {
           Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
           if (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
             Unterpunktungen += "; " + Punktesumme + " P.";
@@ -322,7 +321,7 @@ namespace diNo
     }
 
     private void InitAbiNoten(FachSchuelerNoten f)
-    {            
+    {
       HjLeistung hj = f.getHjLeistung(HjArt.AP);
       if (hj == null) return;
 
@@ -331,7 +330,7 @@ namespace diNo
       if (apg < 4)
       {
         UnterpunktungenAbi += f.getFach.Kuerzel + "-Abi(" + apg + ") ";
-        if (apg == 0) abi6er++; else abi5er++;          
+        if (apg == 0) abi6er++; else abi5er++;
       }
     }
 
@@ -346,12 +345,12 @@ namespace diNo
     // kann nicht mal mehr das Abi bestehen, weil zu viele 0er da sind
     // 2 Noten können durch MAP bereinigt werden.
     public bool WegenAbiNichtZurMAPZugelassen()
-    {      
+    {
       int nachMAP6er = abi6er;
       int nachMAP5er = abi5er;
-      for (byte i=0; i<2;i++) // zwei MAP möglich
+      for (byte i = 0; i < 2; i++) // zwei MAP möglich
       {
-        if (abiE == 0 && nachMAP6er > 1) nachMAP6er--; 
+        if (abiE == 0 && nachMAP6er > 1) nachMAP6er--;
         else if (nachMAP6er > 0) nachMAP6er--;
         else if (nachMAP5er > 0) nachMAP5er--;
       }
@@ -374,7 +373,7 @@ namespace diNo
         else
           return !(AnzahlNoten(1) + AnzahlNoten(2) > 0 || AnzahlNoten(3) > 1);
       }
-      else 
+      else
         return !(AnzahlNoten(6) == 0 && AnzahlNoten(5) == 0 ||
           AnzahlNoten(6) == 0 && AnzahlNoten(5) == 1 && Punkteschnitt >= 5 ||
           (AnzahlNoten(6) * 2 + AnzahlNoten(5)) == 2 && Punkteschnitt >= 6);
@@ -386,22 +385,22 @@ namespace diNo
     }
 
     public bool MAPmoeglich()
-    {      
+    {
       GEVariante[] gev = new GEVariante[3]; // aus 3 Fächern kann die MAP ausgewählt werden
-      byte index = 0; 
+      byte index = 0;
 
       foreach (var f in alleKurse)
       {
-        string kuerzel = f.getFach.Kuerzel;       
+        string kuerzel = f.getFach.Kuerzel;
 
         HjLeistung hj = f.getHjLeistung(HjArt.GesErg);
         if (hj == null) continue; // sollte natürlich nicht passieren!
-        
+
         // nur in Abifächern außer E kann man MAP machen
         if (f.getFach.IstSAPFach(schueler.Zweig) && kuerzel != "E")
-        {        
+        {
           int? sap = f.getNote(Halbjahr.Zweites, Notentyp.APSchriftlich);
-          if (sap == null && f.getHjLeistung(HjArt.AP)!=null) sap = f.getHjLeistung(HjArt.AP).Punkte; // für Testzwecke Meldung über Notenanzahlchecker
+          if (sap == null && f.getHjLeistung(HjArt.AP) != null) sap = f.getHjLeistung(HjArt.AP).Punkte; // für Testzwecke Meldung über Notenanzahlchecker
           gev[index] = new GEVariante();
 
           Fachsumme fs = f.SummeHalbjahre();
@@ -416,7 +415,7 @@ namespace diNo
 
       return CheckVariante(gev[0], gev[1]) || CheckVariante(gev[0], gev[2]) || CheckVariante(gev[1], gev[2]);
     }
-  
+
     // ergibt true, wenn er bei dieser Variante besteht
     private bool CheckVariante(GEVariante v1, GEVariante v2)
     {
@@ -436,7 +435,7 @@ namespace diNo
       foreach (var f in alleKurse) // auch Nicht-NC-Fächer
       {
         var jn = f.getHjLeistung(HjArt.JN);
-        if (jn ==null || jn.Punkte < 4)
+        if (jn == null || jn.Punkte < 4)
           return false;
       }
       return true;
@@ -505,7 +504,7 @@ namespace diNo
       }
     }
 
-    private void LeseNotenAusDB(bool AlteZweiteFS=false)
+    private void LeseNotenAusDB(bool AlteZweiteFS = false)
     {
       if (kursId > 0)
       {
@@ -522,11 +521,11 @@ namespace diNo
       var ta = new HjLeistungTableAdapter();
       IEnumerable<diNoDataSet.HjLeistungRow> hjDT;
       // suche alte Französischnoten
-      if (AlteZweiteFS)      
+      if (AlteZweiteFS)
         hjDT = ta.GetDataBySchuelerAndFach(schueler.Id, getFach.Id); // kann aus einer früheren 12./13. Klasse kommen
       else
         // alle HjLeistungen dieses Jahres selektieren, Sprachniveau kann aus vorigen Jahrgangsstufen mitgebracht worden sein.
-        hjDT = ta.GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == jg || x.Art==(byte)HjArt.Sprachenniveau);
+        hjDT = ta.GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == jg || x.Art == (byte)HjArt.Sprachenniveau);
       foreach (var hjR in hjDT)
       {
         hjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
@@ -536,9 +535,9 @@ namespace diNo
         }
       }
 
-      if (schueler.hatVorHj) 
+      if (schueler.hatVorHj)
       {
-        hjDT = ta.GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == jg-1 && x.Art < 2);
+        hjDT = ta.GetDataBySchuelerAndFach(schueler.Id, getFach.Id).Where(x => x.JgStufe == jg - 1 && x.Art < 2);
         foreach (var hjR in hjDT)
         {
           vorHjLeistung[(int)(hjR.Art)] = new HjLeistung(hjR);
@@ -562,7 +561,7 @@ namespace diNo
     {
       return noten[(int)hj, (int)typ]; // klappt der Cast immer???
     }
-   
+
     /// <summary>
     /// Liefert die Halbjahresleistungen
     /// </summary>
@@ -780,12 +779,12 @@ namespace diNo
       return map.ToString();
     }
   }
-  
+
   // Verwaltet die Gesamtergebnis-Varianten, um zu überprüfen, ob ein Schüler noch in die MAP darf
   public class GEVariante
   {
-    public int AP,GE,PunkteDiff,ProblemDiff;
-    
+    public int AP, GE, PunkteDiff, ProblemDiff;
+
     public void CalcDiff(int APalt, int GEalt, int faktor)
     {
       PunkteDiff = (AP - APalt) * faktor;

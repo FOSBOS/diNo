@@ -1,8 +1,8 @@
-﻿using System;
+﻿using diNo.Xml.Mbstatistik;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-using diNo.Xml.Mbstatistik;
 
 namespace diNo.Xml
 {
@@ -243,7 +243,7 @@ namespace diNo.Xml
       }
     }
 
-    private static bool SucheProperty(string propertyName, object xmlFachObject, List<object> unzuordenbareHalbjahre, HjLeistung hj, Func<HjLeistung, object> createFunc, bool addToUnzuordenbare )
+    private static bool SucheProperty(string propertyName, object xmlFachObject, List<object> unzuordenbareHalbjahre, HjLeistung hj, Func<HjLeistung, object> createFunc, bool addToUnzuordenbare)
     {
       var property = xmlFachObject.GetType().GetProperty(propertyName);
       if (property != null)
@@ -341,7 +341,7 @@ namespace diNo.Xml
       };
     }
 
-    private static object CreateXMLAPObject (abschlusspruefung parent, Fach fach, Schueler schueler)
+    private static object CreateXMLAPObject(abschlusspruefung parent, Fach fach, Schueler schueler)
     {
       if (string.IsNullOrEmpty(fach.PlatzInMBStatistik))
       {
@@ -380,7 +380,7 @@ namespace diNo.Xml
       }
 
       // erzeuge ein neues Objekt vom gesuchten Typ mittels des Standardkonstruktors - hoffentlich haben das alle
-      string neededTypeName = "ap_"+(pfadBestandteile.Length == 1 ? pfadBestandteile[0] : pfadBestandteile[1]);
+      string neededTypeName = "ap_" + (pfadBestandteile.Length == 1 ? pfadBestandteile[0] : pfadBestandteile[1]);
       Type neededType = Type.GetType("diNo.Xml.Mbstatistik." + neededTypeName, true);
       object newObject = neededType.GetConstructor(new Type[] { }).Invoke(new object[] { });
       property.SetValue(parent, newObject);
@@ -412,7 +412,7 @@ namespace diNo.Xml
 
       // erzeuge ein neues Objekt vom gesuchten Typ mittels des Standardkonstruktors - hoffentlich haben das alle
       string neededTypeName = pfadBestandteile.Length == 1 ? pfadBestandteile[0] : pfadBestandteile[1];
-      Type neededType = Type.GetType("diNo.Xml.Mbstatistik."+neededTypeName, true);
+      Type neededType = Type.GetType("diNo.Xml.Mbstatistik." + neededTypeName, true);
       object newObject = neededType.GetConstructor(new Type[] { }).Invoke(new object[] { });
       if (property.PropertyType.IsArray)
       {
@@ -459,7 +459,7 @@ namespace diNo.Xml
       {
         case Jahrgangsstufe.Elf: return new hj_11_1() { punkte = hj1.Punkte.ToString(), eingebracht = (hj1.Status == HjStatus.Einbringen) ? hj_11_1Eingebracht.ja : hj_11_1Eingebracht.nein };
         case Jahrgangsstufe.Zwoelf: return new hj_12_1() { punkte = hj1.Punkte.ToString(), eingebracht = (hj1.Status == HjStatus.Einbringen) ? hj_12_1Eingebracht.ja : hj_12_1Eingebracht.nein };
-        case Jahrgangsstufe.Dreizehn: return  new hj_13_1() { punkte = hj1.Punkte.ToString(), eingebracht = (hj1.Status == HjStatus.Einbringen) ? hj_13_1Eingebracht.ja : hj_13_1Eingebracht.nein };
+        case Jahrgangsstufe.Dreizehn: return new hj_13_1() { punkte = hj1.Punkte.ToString(), eingebracht = (hj1.Status == HjStatus.Einbringen) ? hj_13_1Eingebracht.ja : hj_13_1Eingebracht.nein };
         default: return null;   // andere Jahrgangsstufen werden ignoriert
       }
     }

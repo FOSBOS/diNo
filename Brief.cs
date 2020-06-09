@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.IO;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -47,7 +42,7 @@ namespace diNo
 
     private void btnOK_Click(object sender, EventArgs e)
     {
-      BriefTyp typ=BriefTyp.Standard;
+      BriefTyp typ = BriefTyp.Standard;
       if (opVerweis.Checked || opVerschVerweis.Checked) typ = BriefTyp.Verweis;
       else if (opMEP.Checked || opSEP.Checked) typ = BriefTyp.Ersatzpruefung;
       else if (opAttestpflicht.Checked) typ = BriefTyp.Attestpflicht;
@@ -123,7 +118,7 @@ namespace diNo
       b.Betreff = "Nachholung von Leistungsnachweisen";
       if (b.IstU18) b.Inhalt += (s.Data.Geschlecht == "M" ? "Ihr Sohn " : "Ihre Tochter ") + s.benutzterVorname
         + " konnte in diesem Schuljahr im Fach " + cbFach.Text + " wegen " + (s.Data.Geschlecht == "M" ? "seiner " : "ihrer ");
-      else 
+      else
         b.Inhalt += "Sie konnten in diesem Schuljahr im Fach " + cbFach.Text + " wegen Ihrer ";
       b.Inhalt += "Versäumnisse nicht hinreichend geprüft werden.<br><br>Gemäß § 20 (2) FOBOSO wird hiermit eine " + lnwart + " Ersatzprüfung angesetzt.<br><br>";
       b.Inhalt += "Prüfungsstoff wird sein: <br>" + edInhalt.Text + "<br><br>";
@@ -145,7 +140,7 @@ namespace diNo
     }
 
     public void AttestpflichtText()
-    {      
+    {
       b.Betreff = "Attestpflicht";
       b.Inhalt += "da sich im laufenden Schuljahr bei ";
       if (b.IstU18) b.Inhalt += (s.Data.Geschlecht == "M" ? "Ihrem Sohn " : "Ihrer Tochter ") + s.VornameName;
@@ -193,7 +188,7 @@ namespace diNo
       Telefon = "Telefon: " + Zugriff.Instance.getString(GlobaleStrings.SchulTel) + "\nTelefax: " + Zugriff.Instance.getString(GlobaleStrings.SchulFax);
       Telefon += "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulWeb) + "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulMail);
 
-      Adressfeld = s.ErzeugeAdresse(IstU18); 
+      Adressfeld = s.ErzeugeAdresse(IstU18);
       Name = s.Name;
       VornameName = s.VornameName;
       Klasse = s.getKlasse.Bezeichnung;
@@ -201,7 +196,7 @@ namespace diNo
 
       if (UnterschriftKL)
       {
-        lehrer = s.getKlasse.Klassenleiter;        
+        lehrer = s.getKlasse.Klassenleiter;
       }
       else
         lehrer = Zugriff.Instance.lehrer;
@@ -243,7 +238,7 @@ namespace diNo
     }
   }
 
-  public enum BriefTyp 
+  public enum BriefTyp
   {
     Standard = 0,
     Verweis = 1,

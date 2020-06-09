@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace diNo
 {
@@ -21,16 +20,16 @@ namespace diNo
 
     private static char[] trimchar = new char[] { '"' };
 
-  /// <summary>
-  /// Die Methode zum Einlesen der Daten.
-  /// </summary>
-  /// <param name="fileName">Der Dateiname.</param>
-  public static void Read(string fileName)
+    /// <summary>
+    /// Die Methode zum Einlesen der Daten.
+    /// </summary>
+    /// <param name="fileName">Der Dateiname.</param>
+    public static void Read(string fileName)
     {
       // TODO: Notbehelf, weil die IDs nicht in Untis gespeichert sind      
       IDictionary<string, int> anmeldenameZuID = new Dictionary<string, int>();
 
-      string directory =  Path.GetDirectoryName(fileName);
+      string directory = Path.GetDirectoryName(fileName);
       try
       {
         using (StreamReader reader = new StreamReader(directory + "\\ZuordnungSchueler.txt", Encoding.GetEncoding("iso-8859-1")))
@@ -68,7 +67,7 @@ namespace diNo
         {
           string line = reader.ReadLine();
           if (string.IsNullOrEmpty(line))
-          {            
+          {
             continue;
           }
 
@@ -105,9 +104,9 @@ namespace diNo
           {
             ;
             // nichts tun --> hoffentlich klappt es mit der Zuordnungstabelle.
-          }          
+          }
 
-          Schueler schueler=null;
+          Schueler schueler = null;
           if (schuelerId == 0) // externe Id konnte nicht geladen werden ==> Zuordnungstabelle verwenden
           {
             try
@@ -122,7 +121,7 @@ namespace diNo
           }
           try
           {
-            schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);          
+            schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
           }
           catch
           {
@@ -136,8 +135,8 @@ namespace diNo
           }
           catch
           {
-            log.Error("Schüler mit ID=" + schuelerId + " konnte nicht im Kurs " + kursId + " angemeldet werden." );
-          }          
+            log.Error("Schüler mit ID=" + schuelerId + " konnte nicht im Kurs " + kursId + " angemeldet werden.");
+          }
         }
       }
     }

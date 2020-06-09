@@ -3,7 +3,6 @@ using diNo.diNoDataSetTableAdapters;
 using diNo.Properties;
 using System;
 using System.Collections.Generic;
-using System.Resources;
 using System.Windows.Forms;
 
 namespace diNo
@@ -21,7 +20,7 @@ namespace diNo
     private diNoDataSet.FpaDataTable fpaDT; // wird zum Speichern benötigt: FPA-Halbjahr 1 und 2
     private diNoDataSet.SeminarfachnoteRow seminar;
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
-    public Zweig Zweig;    
+    public Zweig Zweig;
     public Punktesumme punktesumme;
     bool BekommtAllgHSR = false; // wird true, sobald eine 2. Fremdsprache mit Niveau B1 vorliegt.
 
@@ -197,10 +196,10 @@ namespace diNo
     }
 
     public bool hatVorHj
-    { get { return  (!Data.SonderfallNur2Hj) && (getKlasse.Jahrgangsstufe==Jahrgangsstufe.Zwoelf) && (Data.Schulart == "F"); } }
+    { get { return (!Data.SonderfallNur2Hj) && (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf) && (Data.Schulart == "F"); } }
 
     public int APFaktor
-    { get { return (hatVorHj?3:2); } }
+    { get { return (hatVorHj ? 3 : 2); } }
 
     /// <summary>
     /// FPA-Noten
@@ -235,7 +234,7 @@ namespace diNo
       return res;
     }
 
-    
+
 
     public diNoDataSet.SeminarfachnoteRow Seminarfachnote
     {
@@ -272,7 +271,7 @@ namespace diNo
       return wh;
     }
 
-    
+
     /// <summary>
     /// Liefert entweder
     /// K falls der Schüler in kath. Religionslehre geht
@@ -356,7 +355,7 @@ namespace diNo
           noten = new SchuelerNoten(this);
         }
         return noten;
-      }      
+      }
     }
 
     public void ReloadNoten()
@@ -502,7 +501,7 @@ namespace diNo
       foreach (var f in getNoten.alleSprachen)
       {
         if (f.getFach.getKursniveau() == Kursniveau.Englisch) continue;
-        if (Fremdsprachen.HjToSprachniveau(f) >= Sprachniveau.B1) return true;        
+        if (Fremdsprachen.HjToSprachniveau(f) >= Sprachniveau.B1) return true;
       }
 
       return false;
@@ -565,7 +564,7 @@ namespace diNo
       data.Austrittsdatum = when;
       Save();
       if (Wiederholt())
-        AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen,"");
+        AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen, "");
     }
 
     /// <summary>
@@ -582,9 +581,9 @@ namespace diNo
     }
 
     public void MeldeAb(string vonFachKuerzel)
-    {      
+    {
       foreach (var kurs in this.Kurse)
-      {        
+      {
         if (kurs.getFach.Kuerzel == vonFachKuerzel)
         {
           MeldeAb(kurs);
@@ -655,7 +654,7 @@ namespace diNo
       }
     }
 
-    private bool KursPasstOhneGeschlechtspruefung (Kurs k)
+    private bool KursPasstOhneGeschlechtspruefung(Kurs k)
     {
       string kuerzel = k.getFach.Kuerzel;
       string reli = getReliKuerzel();
@@ -671,7 +670,7 @@ namespace diNo
       else if (kuerzel == "F-Wi" || kuerzel == "WIn") return (kuerzel == Data.Wahlpflichtfach);
       */
       else return KursPasstZumZweig(k);
-  }
+    }
 
 
     // wandelt das beim Schüler gespeicherte Bekenntnis in das Fachkürzel um
@@ -758,14 +757,14 @@ namespace diNo
 
     public ZweiteFSArt getZweiteFSArt()
     {
-      return (ZweiteFSArt) (getNoten.ZweiteFSalt != null ? 2 : Data.AndereFremdspr2Art);
+      return (ZweiteFSArt)(getNoten.ZweiteFSalt != null ? 2 : Data.AndereFremdspr2Art);
     }
 
     public int Alter()
-    {      
+    {
       return Alter(DateTime.Now);
     }
-    
+
     public int Alter(DateTime datum)
     {
       int jahre = datum.Year - data.Geburtsdatum.Year;
@@ -774,7 +773,7 @@ namespace diNo
       return jahre;
     }
 
-    public string getErSie(bool Satzanfang=false)
+    public string getErSie(bool Satzanfang = false)
     {
       if (Satzanfang) return (Data.Geschlecht == "M" ? "Er" : "Sie");
       else return (Data.Geschlecht == "M" ? "er" : "sie");
@@ -805,7 +804,7 @@ namespace diNo
 
     private string erzAnr(string anrede, string nachname)
     {
-      if (anrede == "M" || anrede =="H")
+      if (anrede == "M" || anrede == "H")
         return "Sehr geehrter Herr " + nachname + ",<br>";
       else
         return "Sehr geehrte Frau " + nachname + ",<br>";
@@ -815,7 +814,7 @@ namespace diNo
     {
       if (ElternadresseVerwenden)
       {
-        string s="";        
+        string s = "";
         if (Data.AnredeEltern1 != "") s = erzAnr(Data.AnredeEltern1, data.NachnameEltern1);
         if (Data.AnredeEltern2 != "") s += erzAnr(Data.AnredeEltern2, data.NachnameEltern2);
         s += "<br>";
@@ -830,11 +829,11 @@ namespace diNo
     // Adresse von Minderjährigen mit den Eltern
     public string ErzeugeAdresse(bool ElternadresseVerwenden)
     {
-      string s="";
+      string s = "";
       if (ElternadresseVerwenden)
       {
         // wenn beide Eltern getrennt gespeichert sind, muss die Anrede in dieselbe Zeile, sonst extra:
-        s = getHerrnFrau(Data.AnredeEltern1) + (Data.AnredeEltern2 == "" ? "\n" :"") + Data.VornameEltern1 + " " + Data.NachnameEltern1 + "\n";
+        s = getHerrnFrau(Data.AnredeEltern1) + (Data.AnredeEltern2 == "" ? "\n" : "") + Data.VornameEltern1 + " " + Data.NachnameEltern1 + "\n";
         if (Data.AnredeEltern2 != "")
           s += getHerrnFrau(Data.AnredeEltern2) + Data.VornameEltern2 + " " + Data.NachnameEltern2 + "\n";
       }

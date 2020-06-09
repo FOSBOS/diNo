@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace diNo
 {
@@ -23,13 +19,13 @@ namespace diNo
       foreach (var f in s.getNoten.alleKurse)
       {
         byte sum;
-        sum = Wuerfeln(f,HjArt.Hj1);
-        sum +=Wuerfeln(f,HjArt.Hj2);
+        sum = Wuerfeln(f, HjArt.Hj1);
+        sum += Wuerfeln(f, HjArt.Hj2);
         sum /= 2;
-        
-        HjLeistung jn  = f.getHjLeistung(HjArt.JN);
-        if (jn==null)
-           jn = new HjLeistung(f.schueler.Id, f.getFach, HjArt.JN, f.schueler.getKlasse.Jahrgangsstufe);
+
+        HjLeistung jn = f.getHjLeistung(HjArt.JN);
+        if (jn == null)
+          jn = new HjLeistung(f.schueler.Id, f.getFach, HjArt.JN, f.schueler.getKlasse.Jahrgangsstufe);
         jn.Punkte = sum;
         jn.SchnittMdl = 20;
         jn.WriteToDB();
@@ -37,11 +33,11 @@ namespace diNo
         if (f.getFach.IstSAPFach(s.Zweig))
           Wuerfeln(f, HjArt.AP);
 
-        if (!FR && r.Next(10)==9)
+        if (!FR && r.Next(10) == 9)
         {
           Wuerfeln(f, HjArt.FR);
           FR = true;
-        }       
+        }
       }
     }
 

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using diNo.diNoDataSetTableAdapters;
+﻿using diNo.diNoDataSetTableAdapters;
+using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -23,13 +23,13 @@ namespace diNo
         groupBoxReparatur.Visible = false;
       }
       else
-      {                
+      {
         chkSperre.Checked = konstanten.Sperre == 1;
         edSchuljahr.Text = konstanten.Schuljahr.ToString();
-        comboBoxZeitpunkt.SelectedIndex = konstanten.aktZeitpunkt-1;        
+        comboBoxZeitpunkt.SelectedIndex = konstanten.aktZeitpunkt - 1;
         opNurAktuelleNoten.Checked = konstanten.LeseModusExcel == 0;
         opVollstaendig.Checked = konstanten.LeseModusExcel == 1;
-      }      
+      }
       groupboxTest.Visible = Zugriff.Instance.IsTestDB;
       dateZeugnis.Value = konstanten.Zeugnisdatum;
       cbNotendruck.SelectedIndex = 0;
@@ -55,9 +55,9 @@ namespace diNo
     private List<Schueler> getSelectedObjects()
     {
       // Elternreihenfolge: usercontrol -> Tabpage -> pageControl -> Form Klassenansicht
-      var obj =  ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
-      if (obj.Count==0)
-        MessageBox.Show("Bitte zuerst einen Schüler oder eine/mehrere Klassen markieren.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
+      var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
+      if (obj.Count == 0)
+        MessageBox.Show("Bitte zuerst einen Schüler oder eine/mehrere Klassen markieren.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       return obj;
     }
 
@@ -115,12 +115,12 @@ namespace diNo
       if (MessageBox.Show("Die Exceldatei muss folgendes Format haben:\nDaten sind ab Zeile 2 vorhanden.\nSpalte C enthält das Lehrerkürzel, Spalte D die Klasse.", "Import Klassenleiter", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       new ImportKlassenleiter();
     }
-       
+
     private void btnSave_Click(object sender, EventArgs e)
     {
       konstanten.Sperre = chkSperre.Checked ? 1 : 0;
       konstanten.Schuljahr = int.Parse(edSchuljahr.Text);
-      konstanten.aktZeitpunkt = comboBoxZeitpunkt.SelectedIndex+1;      
+      konstanten.aktZeitpunkt = comboBoxZeitpunkt.SelectedIndex + 1;
       konstanten.Zeugnisdatum = dateZeugnis.Value;
       konstanten.LeseModusExcel = opVollstaendig.Checked ? 1 : 0;
       (new GlobaleKonstantenTableAdapter()).Update(konstanten);
@@ -135,8 +135,8 @@ namespace diNo
     }
 
     private void btnSendMail_Click(object sender, EventArgs e)
-    {      
-      new SendExcelMails(this.onStatusChange);     
+    {
+      new SendExcelMails(this.onStatusChange);
     }
 
     void onStatusChange(Object sender, StatusChangedEventArgs e)
@@ -153,7 +153,7 @@ namespace diNo
     {
       new Datenauswahl().ShowDialog();
     }
-    
+
     private UnterschriftZeugnis getUnterschriftZeugnis()
     {
       if (opStv.Checked) return UnterschriftZeugnis.Stv;
@@ -166,20 +166,20 @@ namespace diNo
     {
       konstanten.Zeugnisdatum = dateZeugnis.Value; // lokale Übernahme (Speichern nur durch Übernehmen-Button)
       var obj = getSelectedObjects();
-      if (obj.Count>0)
+      if (obj.Count > 0)
       {
         if (cbNotendruck.SelectedIndex == 1)
         {
           if (Zugriff.Instance.aktZeitpunkt == (int)Zeitpunkt.HalbjahrUndProbezeitFOS)
             new ReportGefaehrdungen(obj).Show(); // Gefährdungen werden anders selektiert
           else
-            MessageBox.Show("Gefährdungen können nur zum Halbjahr gedruckt werden.","diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("Gefährdungen können nur zum Halbjahr gedruckt werden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         else
         {
-          new ReportSchuelerdruck(obj, (Bericht) cbNotendruck.SelectedIndex, getUnterschriftZeugnis()).Show();
+          new ReportSchuelerdruck(obj, (Bericht)cbNotendruck.SelectedIndex, getUnterschriftZeugnis()).Show();
         }
-      }          
+      }
     }
 
     private void btnLehrer_Click(object sender, EventArgs e)
@@ -251,12 +251,12 @@ namespace diNo
           b.BerechneSchueler(s);
 
         RefreshNotenbogen();
-      }      
+      }
       finally
       {
         Cursor = Cursors.Default;
       }
-}
+    }
 
     private void DelEinbr(HjLeistung hj)
     {
@@ -271,7 +271,7 @@ namespace diNo
         foreach (var f in s.getNoten.alleFaecher)
         {
           DelEinbr(f.getHjLeistung(HjArt.Hj1));
-          DelEinbr(f.getHjLeistung(HjArt.Hj2));          
+          DelEinbr(f.getHjLeistung(HjArt.Hj2));
           DelEinbr(f.getVorHjLeistung(HjArt.Hj1));
           DelEinbr(f.getVorHjLeistung(HjArt.Hj2));
         }
@@ -373,7 +373,7 @@ namespace diNo
       {
         ek.ExportSchueler(dia.FileName);
       }
-      
+
       dia.Title = "Alte Kurse exportieren";
       dia.FileName = "AlteKurse.txt";
       if (dia.ShowDialog() == DialogResult.OK)

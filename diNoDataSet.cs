@@ -49,18 +49,19 @@ namespace diNo.diNoDataSetTableAdapters
   }
 
   partial class vwNotenbogenTableAdapter
-    {
-    }
+  {
+  }
 
-    partial class SchuelerTableAdapter
+  partial class SchuelerTableAdapter
   {
   }
 
   partial class FachTableAdapter
   {
   }
-    
-    
-    public partial class NoteTableAdapter {
-    }
+
+
+  public partial class NoteTableAdapter
+  {
+  }
 }

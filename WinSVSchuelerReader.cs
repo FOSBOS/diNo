@@ -72,7 +72,7 @@ namespace diNo
     /// </summary>
     /// <param name="fileName">Der Dateiname.</param>
     public static void ReadSchueler(string fileName)
-    {          
+    {
       using (StreamReader reader = new StreamReader(fileName, Encoding.GetEncoding("iso-8859-1")))
       using (SchuelerTableAdapter tableAdapter = new SchuelerTableAdapter())
       using (KlasseTableAdapter klasseTableAdapter = new KlasseTableAdapter())
@@ -124,7 +124,7 @@ namespace diNo
       row.Id = int.Parse(cleanArray[schuelerIdSpalte]);
       row.Name = cleanArray[nachnameSpalte];
       row.Vorname = cleanArray[vornameSpalte];
-      row.KlasseId = klasse.Id;      
+      row.KlasseId = klasse.Id;
       row.Schulart = klasse.Bezeichnung.StartsWith("B") ? "B" : "F";
       row.Rufname = cleanArray[rufnameSpalte];
       row.Geschlecht = cleanArray[geschlechtSpalte];
@@ -149,7 +149,7 @@ namespace diNo
       row.AnschriftTelefonnummer = cleanArray[anschr1TelefonSpalte];
       row.Ausbildungsrichtung = ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]);
       row.ReligionOderEthik = cleanArray[reliOderEthikSpalte];
-      
+
       row.Wiederholung1Jahrgangsstufe = cleanArray[wdh1JahrgangsstufeSpalte];
       row.Wiederholung2Jahrgangsstufe = cleanArray[wdh2JahrgangsstufeSpalte];
       row.Wiederholung1Grund = cleanArray[wdh1GrundSpalte];

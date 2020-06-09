@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using diNo.diNoDataSetTableAdapters;
+using System;
 using System.Collections.Generic;
-using diNo.diNoDataSetTableAdapters;
-using System.Windows.Forms;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -12,7 +12,7 @@ namespace diNo
   /// </summary>
   public abstract class BasisLeseNotenAusExcel
   {
-    private StatusChanged StatusChanged;    
+    private StatusChanged StatusChanged;
     protected string fileName;
     protected List<int> sidList = new List<int>(); // enthält die SIDs der Schüler, in der Reihenfolge wie im Excel
     protected Kurs kurs;
@@ -22,7 +22,7 @@ namespace diNo
     public BasisLeseNotenAusExcel(string fileName, StatusChanged StatusChangedMethod)
     {
       this.fileName = fileName;
-      this.StatusChanged = StatusChangedMethod;          
+      this.StatusChanged = StatusChangedMethod;
     }
 
     /// <summary>
@@ -117,7 +117,7 @@ namespace diNo
 
         int noetigeAnzahlMuendliche = 1;
         if (!PruefeZellen(i, new string[] { "C", "D" }, 1)) // Schauen, ob 1 KA übertragen werden kann
-        {          
+        {
           noetigeAnzahlMuendliche = 3; // wenn keine Kurzarbeiten vorliegen, müssen 3 mündliche da sein!
         }
 
@@ -126,13 +126,13 @@ namespace diNo
           hinweise.Add("Es gibt nicht genügend mündliche Noten aus dem 1. Halbjahr. Prüfen Sie bitte die Noten von " + schuelername + " von Hand!");
         }
       }
-      
+
       xls.SetCoronaFile();
 
       if (keine11)
-        MessageBox.Show("Für 11. Klassen und Vorklassen gibt es momentan noch keine Regelung.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+        MessageBox.Show("Für 11. Klassen und Vorklassen gibt es momentan noch keine Regelung.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-      else 
+      else
         HinweiseAusgeben(xls); // in dieser Methode wird auch das Speichern ausgelöst
 
       UebertrageNoten();
@@ -292,10 +292,10 @@ namespace diNo
       // oder ein Halbjahr ist bereits vergangen, dann wird die HJLeistung nicht mehr angefasst
     }
 
-  /// <summary>
-  /// Gleicht die Schülerdaten zwischen DB und Excel ab. Prüft, ob neue Schüler hinzugekommen, oder ob Legasthenie neu vermerkt wurde.
-  /// </summary>        
-  private void Synchronize()
+    /// <summary>
+    /// Gleicht die Schülerdaten zwischen DB und Excel ab. Prüft, ob neue Schüler hinzugekommen, oder ob Legasthenie neu vermerkt wurde.
+    /// </summary>        
+    private void Synchronize()
     {
       var klasse = kurs.getSchueler(true);
 
@@ -331,7 +331,7 @@ namespace diNo
     protected void UebertrageNoten()
     {
       int i = 4;
-      int indexAP = CellConstant.APZeileErsterSchueler;      
+      int indexAP = CellConstant.APZeileErsterSchueler;
       NoteTableAdapter ta = new NoteTableAdapter();
       bool alles = Zugriff.Instance.Lesemodus == LesemodusExcel.Vollstaendig;
 
@@ -362,14 +362,14 @@ namespace diNo
         Jahrgangsstufe jg;
         Klasse klasse = schueler.getKlasse;
         // WPFs werden Jg-Übergreifend angeboten, Klasse des Schülers verwenden, IntVk teilweise gemischt mit anderen JgStufen
-        if (kurs.getFach.Typ == FachTyp.WPF && klasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf || klasse.Jahrgangsstufe==Jahrgangsstufe.IntVk) 
+        if (kurs.getFach.Typ == FachTyp.WPF && klasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf || klasse.Jahrgangsstufe == Jahrgangsstufe.IntVk)
           jg = klasse.Jahrgangsstufe;
         else  // Kurs hängt an Klasse (alte Noten werden weiterhin dieser Klasse zugeordnet)
           jg = kurs.JgStufe;
 
         if (aktiverKurs && !alles)
           PruefeAlteNoten(i, fsn);
-        
+
         if (liesErstesHJ)
         {
           LiesHalbjahr(xls.notenbogen, fsn, Halbjahr.Erstes, i, sid, jg);
@@ -428,11 +428,11 @@ namespace diNo
               }
             }
           }
-        
+
           // AP-Gesamtleistung        
           decimal? kommaAP = xls.ReadKommanote("I" + (i + 2), xls.AP);
           byte? apGesamt = xls.ReadNote("J" + (i + 2), xls.AP);
-          HjLeistung.CreateOrUpdate(fsn.getHjLeistung(HjArt.AP), sid, HjArt.AP, kurs.getFach, jg, apGesamt,kommaAP);
+          HjLeistung.CreateOrUpdate(fsn.getHjLeistung(HjArt.AP), sid, HjArt.AP, kurs.getFach, jg, apGesamt, kommaAP);
         }
 
         // Fachreferat
@@ -453,7 +453,7 @@ namespace diNo
             hjlFR = new HjLeistung(sid, kurs.getFach, HjArt.FR, jg);
           }
           if (xlsFR != null) // FR übertragen (überschreiben oder neu anlegen)
-          { 
+          {
             hjlFR.Punkte = (byte)xlsFR;
             hjlFR.Punkte2Dez = Convert.ToDecimal((byte)xlsFR);
             hjlFR.WriteToDB();
@@ -461,7 +461,7 @@ namespace diNo
           else if (hjlFR != null) // FR wurde in dieser Exceldatei gelöscht
           {
             hjlFR.Delete();
-          }            
+          }
         }
 
         berechner.AktualisiereGE(schueler); // damit das GE wird konsistent zum Abi wird
@@ -488,12 +488,12 @@ namespace diNo
           // Prüfe, ob die Gesamtnote aus dem ersten Halbjahr unverändert ist          
           HjLeistung hjNote1 = f.getHjLeistung(HjArt.Hj1);
           if (hjNote1 != null && hjNote1.Punkte != zeugnisnoteHJ1)
-          {            
-            warnungen.Add(s.NameVorname + ": Die Punktzahl im 1. Halbjahr wurde verändert (alt: " + hjNote1.Punkte + ", neu: "+ zeugnisnoteHJ1 + ").");
+          {
+            warnungen.Add(s.NameVorname + ": Die Punktzahl im 1. Halbjahr wurde verändert (alt: " + hjNote1.Punkte + ", neu: " + zeugnisnoteHJ1 + ").");
           }
         }
       }
-      
+
       if ((Zeitpunkt)Zugriff.Instance.aktZeitpunkt > Zeitpunkt.ErstePA && (int)s.getKlasse.Jahrgangsstufe > 11)
       {
         // prüfe, ob sich die Noten des zweiten Halbjahres noch im richtigen Zustand befinden
@@ -543,13 +543,13 @@ namespace diNo
       ErzeugeNoten(sheet, i, sid, new string[] { "H", "I", "J" }, hj, Notentyp.EchteMuendliche);
       ErzeugeNoten(sheet, i, sid, new string[] { "L", "M" }, hj, Notentyp.Schulaufgabe);
       byte? zeugnisnote = xls.ReadNote("O" + i, sheet);
-      if (zeugnisnote != null && f!=null)
+      if (zeugnisnote != null && f != null)
       {
         decimal? Punkte2Dez = xls.ReadKommanote("N" + i, sheet);
         decimal? SchnittMdl = xls.ReadKommanote("K" + i, sheet);
         HjArt art = hj == Halbjahr.Erstes ? HjArt.Hj1 : HjArt.Hj2;
 
-        HjLeistung.CreateOrUpdate(f.getHjLeistung(art), sid,art, kurs.getFach, jg, zeugnisnote, Punkte2Dez, SchnittMdl);
+        HjLeistung.CreateOrUpdate(f.getHjLeistung(art), sid, art, kurs.getFach, jg, zeugnisnote, Punkte2Dez, SchnittMdl);
       }
     }
 
@@ -585,7 +585,7 @@ namespace diNo
 
     private HjLeistung FindOrCreateHjLeistung(int sid, HjLeistungTableAdapter ada, HjArt art, Jahrgangsstufe jg)
     {
-      var vorhandeneNote = FindHjLeistung(sid, ada, art,jg);
+      var vorhandeneNote = FindHjLeistung(sid, ada, art, jg);
       return vorhandeneNote ?? new HjLeistung(sid, kurs.getFach, art, jg);
     }
 

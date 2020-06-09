@@ -1,9 +1,6 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using Microsoft.Office.Interop.Excel;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 // erwartet in Spalte C das Lehrerkürzel und in Spalte D einen Klassennamen, falls dieser Lehrer eine KL hat.
@@ -18,16 +15,16 @@ namespace diNo
 
     public ImportKlassenleiter()
     {
-      MessageBox.Show("Benötigt wird eine Excelliste, bei der in Spalte 3 das Kürzel und in Spalte 4 die Klasse steht.\nAb Zeile 2 müssen Daten enthalten sein.\nDie Klassen müssen schon angelegt worden sein.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
+      MessageBox.Show("Benötigt wird eine Excelliste, bei der in Spalte 3 das Kürzel und in Spalte 4 die Klasse steht.\nAb Zeile 2 müssen Daten enthalten sein.\nDie Klassen müssen schon angelegt worden sein.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       var fileDialog = new OpenFileDialog();
       fileDialog.Filter = "Excel Files|*.xls*";
-            
+
       if (fileDialog.ShowDialog() == DialogResult.OK)
       {
         xls = new OpenExcel(fileDialog.FileName);
         LoadLehrer();
         LeseKlassenleiter();
-        MessageBox.Show("Bitte in der Datenbank prüfen, ob alle Klassen richtig angelegt wurden.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+        MessageBox.Show("Bitte in der Datenbank prüfen, ob alle Klassen richtig angelegt wurden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
         xls.Dispose();
       }
     }
@@ -35,7 +32,7 @@ namespace diNo
 
     private void LoadLehrer()
     {
-      diNoDataSet.LehrerDataTable dt;      
+      diNoDataSet.LehrerDataTable dt;
       var ta = new LehrerTableAdapter();
       dt = ta.GetData();
 
@@ -46,23 +43,23 @@ namespace diNo
     }
 
     private void LeseKlassenleiter()
-    {      
-      KlasseTableAdapter ta  = new KlasseTableAdapter();
+    {
+      KlasseTableAdapter ta = new KlasseTableAdapter();
       Worksheet s = xls.workbook.Worksheets[1];
       //Worksheet s = wb.ActiveSheet;
-      int zeile=2;
+      int zeile = 2;
       string kuerzel, klasse;
       int lehrerid;
 
-      kuerzel = (string)(s.Cells[zeile,3].Value);
-      klasse = (string)(s.Cells[zeile,4].Value);
-      while (kuerzel!=null)
+      kuerzel = (string)(s.Cells[zeile, 3].Value);
+      klasse = (string)(s.Cells[zeile, 4].Value);
+      while (kuerzel != null)
       {
-        if (klasse!=null)
+        if (klasse != null)
         {
-          LehrerListe.TryGetValue(kuerzel,out lehrerid);
+          LehrerListe.TryGetValue(kuerzel, out lehrerid);
           var dt = ta.GetDataByBezeichnung(klasse);
-          if (dt.Count>0)
+          if (dt.Count > 0)
           {
             var klassenRow = dt[0];
             klassenRow.KlassenleiterId = lehrerid;
@@ -70,9 +67,9 @@ namespace diNo
           }
         }
         zeile++;
-        kuerzel = (string)(s.Cells[zeile,3].Value);
-        klasse = (string)(s.Cells[zeile,4].Value);
+        kuerzel = (string)(s.Cells[zeile, 3].Value);
+        klasse = (string)(s.Cells[zeile, 4].Value);
       }
     }
-  }  
+  }
 }

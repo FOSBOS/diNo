@@ -1,6 +1,4 @@
 ﻿using diNo.diNoDataSetTableAdapters;
-using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace diNo
@@ -37,11 +35,11 @@ namespace diNo
         {
           Jahrgangsstufe jg = schueler.getKlasse.Jahrgangsstufe;
           foreach (var fachNoten in schueler.getNoten.alleFaecher)
-          {           
+          {
             foreach (HjArt hjArt in new[] { HjArt.Hj1, HjArt.Hj2 })
             {
-              HjLeistung note=null;
-              if (jg ==Jahrgangsstufe.Elf)
+              HjLeistung note = null;
+              if (jg == Jahrgangsstufe.Elf)
                 note = fachNoten.getHjLeistung(hjArt);
               else if (jg == Jahrgangsstufe.Zwoelf)
                 note = fachNoten.getVorHjLeistung(hjArt); // für die Wiederholer
@@ -58,9 +56,9 @@ namespace diNo
             {
               Kursniveau kn = fachNoten.getFach.getKursniveau();
               HjArt[] hjArten;
-              if (kn == Kursniveau.Englisch || kn==Kursniveau.Anfaenger && jg==Jahrgangsstufe.Zwoelf)
+              if (kn == Kursniveau.Englisch || kn == Kursniveau.Anfaenger && jg == Jahrgangsstufe.Zwoelf)
                 hjArten = new[] { HjArt.Sprachenniveau };
-              else 
+              else
                 hjArten = new[] { HjArt.Hj1, HjArt.Hj2, HjArt.Sprachenniveau };
 
               foreach (HjArt hjArt in hjArten)
@@ -73,8 +71,8 @@ namespace diNo
             foreach (var fpaZeile in schueler.FPANoten)
             {
               if (fpaZeile.IsGesamtNull())
-                 continue;
-                           
+                continue;
+
               writer.WriteLine(schueler.Id + Sep + fpa.Id + Sep + "11" + Sep + fpaZeile.Gesamt + Sep + fpaZeile.Halbjahr + Sep + schueler.NameVorname + Sep + fpa.Kuerzel);
 
               /* Die Fpa-Daten brauchen wir nicht mehr (im Notfall s. alter Notenbogen)
@@ -132,7 +130,7 @@ namespace diNo
       //FpaTableAdapter fpata = new FpaTableAdapter();
       using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(stream))
-      using (StreamWriter writer = new StreamWriter(new FileStream(fileName+"_err.txt", FileMode.Create, FileAccess.ReadWrite)))
+      using (StreamWriter writer = new StreamWriter(new FileStream(fileName + "_err.txt", FileMode.Create, FileAccess.ReadWrite)))
       {
         var schuelerAdapter = new SchuelerTableAdapter();
         while (!reader.EndOfStream)
@@ -155,7 +153,7 @@ namespace diNo
           Jahrgangsstufe jgSchueler = schueler.getKlasse.Jahrgangsstufe;
           if (jgSchueler <= Jahrgangsstufe.Elf)
             continue; // Schüler aus der 11. fangen vorne an (hier vermutlich Wiederholer), nix importieren
-          
+
           int fachId = int.Parse(line[1]);
           Fach fach = Zugriff.Instance.FachRep.Find(fachId);
 
@@ -163,12 +161,12 @@ namespace diNo
           HjArt notenArt = (HjArt)byte.Parse(line[4]);
 
           // Importiere nur die Halbjahres-Noten der elften Klasse und immer die Sprachen
-          if (jgstufeHj == Jahrgangsstufe.Elf && jgSchueler ==Jahrgangsstufe.Zwoelf || fach.getKursniveau()!=Kursniveau.None)
+          if (jgstufeHj == Jahrgangsstufe.Elf && jgSchueler == Jahrgangsstufe.Zwoelf || fach.getKursniveau() != Kursniveau.None)
           {
             byte punkte = byte.Parse(line[3]);
             ada.Insert(schueler.Id, fachId, (byte)notenArt, punkte, null, null, (int)jgstufeHj, (byte)HjStatus.None);
           }
-           
+
 
           /*
           if (line.Length >= 13)
@@ -206,10 +204,10 @@ namespace diNo
             fpata.Insert(schuelerId, halbjahr, betrieb, anleitung, vertiefung, vertiefung1, vertiefung2, gesamt, stelle, bemerkung, jahrespunkte);
           }*/
         }
-      }      
+      }
     }
 
-    
+
     /// <summary>
     /// Sucht nach dem Fach in der Datenbank und liefert die Id zurück
     /// Wirft eine Exception wenn das Fach nicht gefunden werden kann

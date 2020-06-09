@@ -1,8 +1,7 @@
-﻿using System;
+﻿using diNo.diNoDataSetTableAdapters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
@@ -10,14 +9,14 @@ namespace diNo
   /// Verwaltet durchzuführenden Berechnung am übergebenen Zeitpunkt
   /// </summary>
   public class Berechnungen
-  {      
+  {
     public delegate void Aufgabe(Schueler s);
     public List<Aufgabe> aufgaben = new List<Aufgabe>();    // speichert alle zu erledigenden Berechnungsaufgaben eines Schülers
 
     public Berechnungen() { }
 
     public Berechnungen(Zeitpunkt zeitpunkt)
-    {      
+    {
       if (zeitpunkt == Zeitpunkt.ErstePA)
         aufgaben.Add(BerechneEinbringung);
 
@@ -35,7 +34,7 @@ namespace diNo
     /// Führt alle Berechnungen, die in den Aufgaben vermerkt sind, für einen Schüler durch.
     /// </summary>
     public void BerechneSchueler(Schueler s)
-    {      
+    {
       foreach (var a in aufgaben)
       {
         a(s);
@@ -61,7 +60,7 @@ namespace diNo
 
 
 
-    
+
     /// <summary>
     /// Methode macht einen Vorschlag zur Einbringung der Halbjahresleistungen eines Schülers.
     /// </summary>
@@ -71,8 +70,8 @@ namespace diNo
       var sowiesoPflicht = new List<HjLeistung>(); // zählen nicht zu den 25 bzw. 17 HjLeistungen
       var einbringen = new List<HjLeistung>(); // enthält alle "weiteren" HjErgebnisse (außer FR, FPA, AP)
       var streichen = new List<HjLeistung>();
-      var unbedingtStreichen = new List<HjLeistung>();      
-      HjLeistung frzHj=null;  // Hj in der 2. FS, das am schlechtesten lief (relevant für 13. Klasse)
+      var unbedingtStreichen = new List<HjLeistung>();
+      HjLeistung frzHj = null;  // Hj in der 2. FS, das am schlechtesten lief (relevant für 13. Klasse)
 
       // eine vorhandene Einbringung darf nicht überschrieben werden!
       if (s.Data.Berechungsstatus >= (byte)Berechnungsstatus.Einbringung) return;
@@ -97,15 +96,15 @@ namespace diNo
 
             // sind ungültige dabei?
             if (hjLeistung == null)
-            { 
-              if (art <= HjArt.Hj2) 
-                anzLeer++; 
-              continue; 
+            {
+              if (art <= HjArt.Hj2)
+                anzLeer++;
+              continue;
             }
-            if (hjLeistung.Status == HjStatus.Ungueltig) 
-            { 
-              anzUngueltig++; 
-              continue;                       
+            if (hjLeistung.Status == HjStatus.Ungueltig)
+            {
+              anzUngueltig++;
+              continue;
             }
 
             if (hjLeistung.Art == HjArt.AP || hjLeistung.Art == HjArt.FR || kuerzel == "FpA" /*TODO: Oder Seminarfach*/)
@@ -150,17 +149,17 @@ namespace diNo
           }
           // Sortieren, nur eine davon kann gestrichen werden
           if (hjLeistungen.Count > 0)
-          {            
+          {
             if (anzUngueltig > 0)
             {
               einbringen.AddRange(hjLeistungen);
             }
             // für allg. HSR verwendet: 2. FS nutzt nur was, wenn 2. Hj und Durchschnitt mind. 4 Punkte sind
             else if (frzHj == null && s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && fachNoten.getFach.getKursniveau() > Kursniveau.Englisch
-               && hjLeistungen.Count == 2 && hjLeistungen[1].Punkte >= 4 && hjLeistungen[0].Punkte + hjLeistungen[1].Punkte >= 7) 
-            {              
+               && hjLeistungen.Count == 2 && hjLeistungen[1].Punkte >= 4 && hjLeistungen[0].Punkte + hjLeistungen[1].Punkte >= 7)
+            {
               // die schlechtere merken wir uns für eine alternative Streichung vor
-              frzHj  = hjLeistungen[(hjLeistungen[0].Punkte < hjLeistungen[1].Punkte) ? 0 : 1];
+              frzHj = hjLeistungen[(hjLeistungen[0].Punkte < hjLeistungen[1].Punkte) ? 0 : 1];
               einbringen.AddRange(hjLeistungen); // alle einbringen
             }
             else
@@ -178,7 +177,7 @@ namespace diNo
         else // Nicht NC
         {
           HjLeistung hj;
-          if ((hj = fachNoten.getHjLeistung(HjArt.Hj1))!=null && hj.Status!=HjStatus.Ungueltig) hj.SetStatus(HjStatus.NichtEinbringen);
+          if ((hj = fachNoten.getHjLeistung(HjArt.Hj1)) != null && hj.Status != HjStatus.Ungueltig) hj.SetStatus(HjStatus.NichtEinbringen);
           if ((hj = fachNoten.getHjLeistung(HjArt.Hj2)) != null && hj.Status != HjStatus.Ungueltig) hj.SetStatus(HjStatus.NichtEinbringen);
         }
       }
@@ -189,13 +188,13 @@ namespace diNo
       {
         einbringen.AddRange(streichen);
         fehlend -= streichen.Count;
-        streichen.Clear();        
+        streichen.Clear();
         if (fehlend > unbedingtStreichen.Count) // nicht mal da sind genügend vorhanden ==> S hat insgesamt zu wenige HjL
         {
           einbringen.AddRange(unbedingtStreichen);
           unbedingtStreichen.Clear();
           fehlend -= streichen.Count;
-          s.Data.Berechungsstatus = (byte)Berechnungsstatus.ZuWenigeHjLeistungen;          
+          s.Data.Berechungsstatus = (byte)Berechnungsstatus.ZuWenigeHjLeistungen;
         }
         else
         {
@@ -227,7 +226,7 @@ namespace diNo
     }
 
     // liefert wahr, wenn sich ohne Streichung zusätzlich eine 5 (oder 6) ergeben würde
-    private bool UnbedingtStreichen(List <HjLeistung>hjl)
+    private bool UnbedingtStreichen(List<HjLeistung> hjl)
     {
       double s = hjl.Sum((x) => x.Punkte) / (double)hjl.Count;
       double s1 = hjl.GetRange(0, hjl.Count - 1).Sum((x) => x.Punkte) / (double)(hjl.Count - 1);
@@ -235,7 +234,7 @@ namespace diNo
       return (s1 >= 3.5 && s < 3.5 || s1 >= 1.0 && s < 1.0);
     }
 
-    
+
     /// <summary>
     /// Berechnet das Gesamtergebnis aller Fächer, sowie die Punktesumme
     /// </summary>
@@ -244,7 +243,7 @@ namespace diNo
       Punktesumme p = s.punktesumme;
 
       p.Clear();
-      
+
       foreach (var f in s.getNoten.alleFaecher)
       {
         f.BerechneGesErg(p);
@@ -252,7 +251,7 @@ namespace diNo
 
       foreach (var f in s.Fachreferat)
         p.Add(PunktesummeArt.FR, f.Punkte);
-      
+
       if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
       {
         FachSchuelerNoten fs2 = s.getNoten.ZweiteFSalt;
@@ -261,17 +260,17 @@ namespace diNo
           p.Add(PunktesummeArt.FremdspracheErgPr, s.Data.AndereFremdspr2Note, 2);
 
         // Frz. fortgeführt aus alter 12./13. Klasse
-        else if (fs2!=null && fs2.getHjLeistung(HjArt.Hj1) != null && fs2.getHjLeistung(HjArt.Hj1) != null)
+        else if (fs2 != null && fs2.getHjLeistung(HjArt.Hj1) != null && fs2.getHjLeistung(HjArt.Hj1) != null)
         {
           p.Add(PunktesummeArt.FremdspracheAus12, fs2.getHjLeistung(HjArt.Hj1).Punkte);
           p.Add(PunktesummeArt.FremdspracheAus12, fs2.getHjLeistung(HjArt.Hj2).Punkte);
         }
       }
 
-      if (s.getNoten.AlternatEinbr != null)      
-        p.WriteToDB(s.getNoten.AlternatEinbr.Punkte - s.getNoten.AlternatZweiteFS.Punkte);      
+      if (s.getNoten.AlternatEinbr != null)
+        p.WriteToDB(s.getNoten.AlternatEinbr.Punkte - s.getNoten.AlternatZweiteFS.Punkte);
       else
-        p.WriteToDB();            
+        p.WriteToDB();
     }
 
     /// <summary>
@@ -303,7 +302,7 @@ namespace diNo
     }
 
     public void BerechneDNote(Schueler s)
-    {      
+    {
       if (s.Data.Berechungsstatus != (byte)Berechnungsstatus.ZuWenigeHjLeistungen)
       {
         decimal d;
@@ -312,30 +311,30 @@ namespace diNo
 
         d = FormelDNote(s, PunktesummeArt.GesamtFachgebHSR);
         if (d == 0) s.Data.SetDNoteFachgebHSRNull(); else s.Data.DNoteFachgebHSR = d;
-        
+
         s.Data.Berechungsstatus = (byte)Berechnungsstatus.Gesamtergebnis;
       }
       else
       {
         s.Data.SetDNoteNull();
         s.Data.SetDNoteFachgebHSRNull();
-      }    
+      }
     }
 
     public void BestimmeSprachniveau(Schueler s)
     {
-      var ta = new HjLeistungTableAdapter();      
+      var ta = new HjLeistungTableAdapter();
       // neue Logik ist, dass ein einmal erreichtes Sprachniveau an der FOS nicht mehr gelöscht wird.
       // Problem, wenn sich wegen falscher Noteneingabe nachträglich was ändert (dann ggf. manuell Sprachniveau löschen).
       // ta.DeleteBySchuelerIdAndArt(s.Id, (byte)HjArt.Sprachenniveau,(int)s.getKlasse.Jahrgangsstufe); 
 
-      HjLeistung ge,hj2,ap;
+      HjLeistung ge, hj2, ap;
       foreach (var f in s.getNoten.alleSprachen)
       {
-        Kursniveau n = f.getFach.getKursniveau();        
+        Kursniveau n = f.getFach.getKursniveau();
         ge = f.getHjLeistung(HjArt.GesErgSprache);
         if (ge == null || ge.Punkte < 4) continue; // Gesamtergebnis muss immer mind. 4P sein.
-            
+
         hj2 = f.getHjLeistung(HjArt.Hj2);
         ap = f.getHjLeistung(HjArt.AP);
 
@@ -348,8 +347,8 @@ namespace diNo
         HjLeistung.CreateOrUpdateSprachniveau(niveau, s.Id, f.getFach, s.getKlasse.Jahrgangsstufe, Fremdsprachen.GetSprachniveau(f.getFach.getKursniveau(), s.getKlasse.Jahrgangsstufe));
       }
 
-      if (s.getZweiteFSArt()==ZweiteFSArt.ErgPr) // mitgebrachte Noten werden nicht ausgewiesen
-                      // Sprachniveau von F-f aus 12/13alt sollte vom Import schon vorhanden sein.
+      if (s.getZweiteFSArt() == ZweiteFSArt.ErgPr) // mitgebrachte Noten werden nicht ausgewiesen
+                                                   // Sprachniveau von F-f aus 12/13alt sollte vom Import schon vorhanden sein.
       {
         Fach f = Zugriff.Instance.FachRep.Find(s.Data.AndereFremdspr2Fach);
         HjLeistung niveau = null;

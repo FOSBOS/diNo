@@ -1,11 +1,6 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace diNo
@@ -16,7 +11,7 @@ namespace diNo
     private List<Lehrer> t;
     private LehrerTableAdapter ta = new LehrerTableAdapter();
     private List<diNoDataSet.RolleRow> rollen = new List<diNoDataSet.RolleRow>();
-    
+
     public LehrerForm()
     {
       InitializeComponent();
@@ -66,7 +61,7 @@ namespace diNo
 
     private void btnSave_Click(object sender, EventArgs e)
     {
-      if (q!=null) 
+      if (q != null)
       {
         q.Data.Nachname = edNachname.Text;
         q.Data.Vorname = edVorname.Text;
@@ -74,7 +69,7 @@ namespace diNo
         q.Data.Dienstbezeichnung = edDienstbez.Text;
         q.Data.Windowsname = edWindowsname.Text;
         if (edMail.Text == "") q.Data.SetEMailNull(); else q.Data.EMail = edMail.Text;
-        q.Data.Geschlecht = (opMaennlich.Checked ? "M":"W");
+        q.Data.Geschlecht = (opMaennlich.Checked ? "M" : "W");
         ta.Update(q.Data);
 
 
@@ -94,14 +89,14 @@ namespace diNo
         */
       }
       else
-      {        
+      {
         try
-        {          
+        {
           ta.Insert(F(edKuerzel), F(edDienstbez), F(edMail), F(edWindowsname), F(edVorname), F(edNachname), (opMaennlich.Checked ? "M" : "W"));
           //TODO: ta. sollte irgendwie verraten, welche Id er in der DB vergeben hat, dann nur den neu laden
           Zugriff.Instance.LehrerRep.Clear();
           Zugriff.Instance.LoadLehrer();
-          Init();         
+          Init();
         }
         catch
         {
@@ -113,7 +108,7 @@ namespace diNo
     }
 
     private void SetBerechtigung(int rolle, bool newValue)
-    {      
+    {
       if (q != null)
       {
         if (newValue && !q.HatRolle(rolle))
@@ -130,9 +125,9 @@ namespace diNo
 
     private void btnDel_Click(object sender, EventArgs e)
     {
-      if (q!=null)
-      {        
-        if (MessageBox.Show("Soll der Lehrer " + q.KompletterName +" gelöscht werden?", "Löschen?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+      if (q != null)
+      {
+        if (MessageBox.Show("Soll der Lehrer " + q.KompletterName + " gelöscht werden?", "Löschen?", MessageBoxButtons.YesNo) == DialogResult.Yes)
         {
           try
           {
@@ -161,8 +156,8 @@ namespace diNo
       opMaennlich.Checked = true;
       opWeiblich.Checked = false;
 
-      for (int  i = 0; i < listBoxBerechtigungen.Items.Count; i++)
-      { 
+      for (int i = 0; i < listBoxBerechtigungen.Items.Count; i++)
+      {
         listBoxBerechtigungen.SetItemChecked(i, false);
       }
 

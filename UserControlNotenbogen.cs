@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -19,11 +15,11 @@ namespace diNo
       int z = Zugriff.Instance.aktZeitpunkt;
       InitializeComponent();
       chkShowHj1.Checked = z <= (int)Zeitpunkt.HalbjahrUndProbezeitFOS;
-      chkShowHj2.Checked = z  == (int)Zeitpunkt.ErstePA || z == (int)Zeitpunkt.Jahresende;
+      chkShowHj2.Checked = z == (int)Zeitpunkt.ErstePA || z == (int)Zeitpunkt.Jahresende;
       chkShowAbi.Checked = z == (int)Zeitpunkt.ZweitePA || z == (int)Zeitpunkt.DrittePA;
       chkShowHj1_CheckedChanged(this, null);
       chkShowHj2_CheckedChanged(this, null);
-      chkShowAbi_CheckedChanged(this,null);
+      chkShowAbi_CheckedChanged(this, null);
 
       if (Zugriff.Instance.HatRolle(Rolle.Admin)) // bearbeiten von Punktewerten
       {
@@ -32,7 +28,7 @@ namespace diNo
         comboBoxBerechnungsstatus.Visible = true;
       }
     }
-  
+
     public Schueler Schueler
     {
       get
@@ -57,7 +53,7 @@ namespace diNo
       dataGridNoten.RowsDefaultCellStyle.BackColor = Color.White;
 
       if (schueler.Status == Schuelerstatus.Abgemeldet)
-      {        
+      {
         dataGridNoten.RowsDefaultCellStyle.BackColor = Color.LightGray;
       }
 
@@ -84,11 +80,11 @@ namespace diNo
         dataGridNoten.Rows[lineCount].Cells[3].Value = fach.sL(Halbjahr.Erstes);
 
         HjLeistung hjl = fach.getHjLeistung(HjArt.Hj1);
-        if (hjl!=null)
+        if (hjl != null)
         {
-          if (hjl.SchnittMdl!=null) // der Rest sollte befüllt sein!
-            dataGridNoten.Rows[lineCount].Cells[4].Value = hjl.SchnittMdl.GetValueOrDefault(); 
-          dataGridNoten.Rows[lineCount].Cells[6].Value = hjl.Punkte2Dez.GetValueOrDefault();          
+          if (hjl.SchnittMdl != null) // der Rest sollte befüllt sein!
+            dataGridNoten.Rows[lineCount].Cells[4].Value = hjl.SchnittMdl.GetValueOrDefault();
+          dataGridNoten.Rows[lineCount].Cells[6].Value = hjl.Punkte2Dez.GetValueOrDefault();
           FillCell(dataGridNoten.Rows[lineCount].Cells[7], hjl);
         }
 
@@ -96,10 +92,10 @@ namespace diNo
         dataGridNoten.Rows[lineCount].Cells[8].Value = fach.sL(Halbjahr.Zweites);
 
         hjl = fach.getHjLeistung(HjArt.Hj2);
-        if (hjl!=null)
+        if (hjl != null)
         {
           if (hjl.SchnittMdl != null)
-            dataGridNoten.Rows[lineCount].Cells[9].Value = hjl.SchnittMdl.GetValueOrDefault(); 
+            dataGridNoten.Rows[lineCount].Cells[9].Value = hjl.SchnittMdl.GetValueOrDefault();
           dataGridNoten.Rows[lineCount].Cells[11].Value = hjl.Punkte2Dez.GetValueOrDefault();
           FillCell(dataGridNoten.Rows[lineCount].Cells[12], hjl);
         }
@@ -113,7 +109,7 @@ namespace diNo
         lineCount++;
       }
       foreach (HjLeistung fr in schueler.Fachreferat)
-      {        
+      {
         dataGridNoten.Rows.Add();
         dataGridNoten.Rows[lineCount].Height += 2;
         dataGridNoten.Rows[lineCount].Cells[0].Value = "Fachreferat in " + fr.getFach.Bezeichnung;
@@ -150,16 +146,16 @@ namespace diNo
 
     private void SetBackgroundColor(HjLeistung hj, DataGridViewCell cell)
     {
-      cell.Style.BackColor = hj.GetBackgroundColor(); ;      
+      cell.Style.BackColor = hj.GetBackgroundColor(); ;
     }
 
     private void FillCell(DataGridViewCell c, HjLeistung hjl)
     {
-      if (hjl!=null)
+      if (hjl != null)
       {
         c.Tag = hjl;
         c.Value = hjl.Punkte;
-        SetBackgroundColor(hjl, c);        
+        SetBackgroundColor(hjl, c);
       }
     }
 
@@ -173,28 +169,28 @@ namespace diNo
       }
     }
 
-    private void ShowCols(int vonCol,int bisCol, bool visible)
+    private void ShowCols(int vonCol, int bisCol, bool visible)
     {
       int i;
-      for (i=vonCol;i<=bisCol;i++)
+      for (i = vonCol; i <= bisCol; i++)
         dataGridNoten.Columns[i].Visible = visible;
     }
 
     private void chkShowHj1_CheckedChanged(object sender, EventArgs e)
     {
-      ShowCols(3,6,chkShowHj1.Checked);
+      ShowCols(3, 6, chkShowHj1.Checked);
       ShowFixedCols();
     }
 
     private void chkShowHj2_CheckedChanged(object sender, EventArgs e)
     {
-      ShowCols(8,11,chkShowHj2.Checked);
+      ShowCols(8, 11, chkShowHj2.Checked);
       ShowFixedCols();
     }
 
     private void chkShowAbi_CheckedChanged(object sender, EventArgs e)
     {
-      ShowCols(13,15,chkShowAbi.Checked);
+      ShowCols(13, 15, chkShowAbi.Checked);
       ShowFixedCols();
     }
 
@@ -208,8 +204,8 @@ namespace diNo
 
     private void setStatus(HjStatus status)
     {
-      HjLeistung hj = (HjLeistung) dataGridNoten.SelectedCells[0].Tag;
-      hj.SetStatus(status);      
+      HjLeistung hj = (HjLeistung)dataGridNoten.SelectedCells[0].Tag;
+      hj.SetStatus(status);
       //SetBackgroundColor(hj, dataGridNoten.SelectedCells[0]);
       var berechnungen = new Berechnungen();
       berechnungen.AktualisiereGE(schueler);
@@ -254,7 +250,7 @@ namespace diNo
     {
       setStatus(HjStatus.AlternativeEinbr);
     }
-    
+
     private void dataGridNoten_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
     {
       if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
@@ -266,7 +262,7 @@ namespace diNo
     private void dataGridNoten_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
     {
       var c = dataGridNoten.Rows[e.RowIndex].Cells[e.ColumnIndex];
-      if (c.Tag==null)
+      if (c.Tag == null)
       {
         HjArt art;
         switch (e.ColumnIndex)
@@ -284,7 +280,7 @@ namespace diNo
         EditHjLeistung(hj);
         schueler.ReloadNoten();
       }
-      else        
+      else
         EditHjLeistung((HjLeistung)c.Tag);
       Init();
     }

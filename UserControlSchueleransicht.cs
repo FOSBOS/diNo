@@ -12,7 +12,7 @@ namespace diNo
       InitializeComponent();
       SchuelerverwaltungController.InitDateTimePicker(this.dateTimeProbezeit);
       SchuelerverwaltungController.InitDateTimePicker(this.dateTimeAustritt);
-      btnSave.Visible = Zugriff.Instance.HatVerwaltungsrechte;      
+      btnSave.Visible = Zugriff.Instance.HatVerwaltungsrechte;
       btnResetProbezeit.Visible = btnSave.Visible;
       labelAustrittHinweis.Visible = btnSave.Visible;
     }
@@ -33,7 +33,7 @@ namespace diNo
           textBoxOrt.Text = schueler.Data.AnschriftOrt;
           textBoxTelefonnummer.Text = schueler.Data.AnschriftTelefonnummer;
           textBoxNotfalltelefonnummer.Text = schueler.Data.Notfalltelefonnummer;
-          
+
           textBoxGeburtsdatum.Text = schueler.Data.IsGeburtsdatumNull() ? "" : schueler.Data.Geburtsdatum.ToString("dd.MM.yyyy");
           textBoxGeburtsort.Text = schueler.Data.Geburtsort;
           textBoxWiederholungen.Text = schueler.getWiederholungen();
@@ -45,9 +45,9 @@ namespace diNo
           string kontaktEltern = schueler.Data.VornameEltern1 + " " + schueler.Data.NachnameEltern1;
           kontaktEltern += string.IsNullOrEmpty(schueler.Data.VornameEltern2) ? "" : "\n" + schueler.Data.VornameEltern2 + " " + schueler.Data.NachnameEltern2;
           textBoxAdresseEltern.Lines = kontaktEltern.Split('\n');
-          textBoxBekenntnis.Text = schueler.Data.Bekenntnis;                    
-                    
-          dateTimeProbezeit.Value = schueler.Data.IsProbezeitBisNull() ? dateTimeProbezeit.MinDate : schueler.Data.ProbezeitBis;          
+          textBoxBekenntnis.Text = schueler.Data.Bekenntnis;
+
+          dateTimeProbezeit.Value = schueler.Data.IsProbezeitBisNull() ? dateTimeProbezeit.MinDate : schueler.Data.ProbezeitBis;
           dateTimeAustritt.Value = schueler.Data.IsAustrittsdatumNull() ? dateTimeAustritt.MinDate : schueler.Data.Austrittsdatum;
           textBoxEmail.Text = schueler.Data.Email;
           cbStatus.SelectedIndex = schueler.Data.Status;
@@ -82,33 +82,33 @@ namespace diNo
       schueler.Data.AnschriftOrt = textBoxOrt.Text;
       schueler.Data.AnschriftTelefonnummer = textBoxTelefonnummer.Text;
       schueler.Data.Notfalltelefonnummer = textBoxNotfalltelefonnummer.Text;
-          
-      schueler.Data.Bekenntnis = textBoxBekenntnis.Text;      
+
+      schueler.Data.Bekenntnis = textBoxBekenntnis.Text;
       // ReliUnterricht via Kurszuordnung wird automatisch gesetzt!       
 
-      if (dateTimeProbezeit.Value==dateTimeProbezeit.MinDate) schueler.Data.SetProbezeitBisNull();
-        else schueler.Data.ProbezeitBis = dateTimeProbezeit.Value;
-      if (dateTimeAustritt.Value==dateTimeAustritt.MinDate) schueler.Data.SetAustrittsdatumNull();
-        else schueler.Data.Austrittsdatum = dateTimeAustritt.Value;
+      if (dateTimeProbezeit.Value == dateTimeProbezeit.MinDate) schueler.Data.SetProbezeitBisNull();
+      else schueler.Data.ProbezeitBis = dateTimeProbezeit.Value;
+      if (dateTimeAustritt.Value == dateTimeAustritt.MinDate) schueler.Data.SetAustrittsdatumNull();
+      else schueler.Data.Austrittsdatum = dateTimeAustritt.Value;
 
       schueler.Data.Email = textBoxEmail.Text;
       schueler.Data.Status = cbStatus.SelectedIndex;
-    
+
       schueler.Save();
     }
 
     private void dateTimeAustritt_ValueChanged(object sender, EventArgs e)
     {
-      if (dateTimeAustritt.Value!=dateTimeAustritt.MinDate) cbStatus.SelectedIndex=1; // abgemeldet
-        else cbStatus.SelectedIndex=0; // aktiv
+      if (dateTimeAustritt.Value != dateTimeAustritt.MinDate) cbStatus.SelectedIndex = 1; // abgemeldet
+      else cbStatus.SelectedIndex = 0; // aktiv
 
     }
-    
+
     private void cbStatus_SelectedIndexChanged(object sender, EventArgs e)
     {
-      if (cbStatus.SelectedIndex==0)
+      if (cbStatus.SelectedIndex == 0)
         dateTimeAustritt.Value = dateTimeAustritt.MinDate;
-      else if (cbStatus.SelectedIndex==1 && dateTimeAustritt.Value == dateTimeAustritt.MinDate) // nur setzen wenn nicht eh schon ein Datum drinsteht
+      else if (cbStatus.SelectedIndex == 1 && dateTimeAustritt.Value == dateTimeAustritt.MinDate) // nur setzen wenn nicht eh schon ein Datum drinsteht
         dateTimeAustritt.Value = DateTime.Today;
     }
 

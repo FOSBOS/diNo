@@ -11,7 +11,7 @@ namespace diNo
     private Kurs q;
     private List<Kurs> t;
     private KursTableAdapter ta = new KursTableAdapter();
-    
+
     public KurseForm()
     {
       InitializeComponent();
@@ -28,7 +28,7 @@ namespace diNo
       var dt = ta.GetData();
       foreach (var d in dt)
         t.Add(new Kurs(d));
-      
+
       t.Sort((x, y) => x.Kursbezeichnung.CompareTo(y.Kursbezeichnung));
       liste.DataSource = t;
 
@@ -55,7 +55,7 @@ namespace diNo
     {
       q = liste.SelectedItem as Kurs;
       edBezeichnung.Text = q.Data.Bezeichnung;
-      edKurzbez.Text = q.Data.IsKurzbezNull() ? "" :  q.Data.Kurzbez;
+      edKurzbez.Text = q.Data.IsKurzbezNull() ? "" : q.Data.Kurzbez;
       edId.Text = q.Data.Id.ToString();
       edZweig.Text = (q.Data.IsZweigNull() ? "" : q.Data.Zweig);
       opUndef.Checked = q.Data.IsGeschlechtNull();
@@ -79,7 +79,7 @@ namespace diNo
 
     private void btnSave_Click(object sender, EventArgs e)
     {
-      if (q!=null) 
+      if (q != null)
       {
         q.Data.Bezeichnung = edBezeichnung.Text;
         // = edKurzbez.Text;        
@@ -96,18 +96,18 @@ namespace diNo
         ta.Update(q.Data);
 
         q.Klassen.Clear();
-        foreach(Klasse klasse in checkedListBoxKlassen.CheckedItems)
+        foreach (Klasse klasse in checkedListBoxKlassen.CheckedItems)
         {
           q.Klassen.Add(klasse);
         }
         q.SaveKlassenzuordnung();
       }
       else
-      {        
+      {
         try
-        {       
-          ta.Insert(int.Parse(edId.Text), F(edBezeichnung), (int)cbLehrer.SelectedValue, (int)cbFach.SelectedValue, F(edZweig), (opUndef.Checked ? null : (opMaennlich.Checked ? "M" : "W")), (edKurzbez.Text=="" ? null : edKurzbez.Text));
-          Init();         
+        {
+          ta.Insert(int.Parse(edId.Text), F(edBezeichnung), (int)cbLehrer.SelectedValue, (int)cbFach.SelectedValue, F(edZweig), (opUndef.Checked ? null : (opMaennlich.Checked ? "M" : "W")), (edKurzbez.Text == "" ? null : edKurzbez.Text));
+          Init();
         }
         catch (Exception ex)
         {
@@ -119,9 +119,9 @@ namespace diNo
 
     private void btnDel_Click(object sender, EventArgs e)
     {
-      if (q!=null)
-      {        
-        if (MessageBox.Show("Soll der Kurs " + q.Data.Bezeichnung +" gelöscht werden?", "Löschen?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+      if (q != null)
+      {
+        if (MessageBox.Show("Soll der Kurs " + q.Data.Bezeichnung + " gelöscht werden?", "Löschen?", MessageBoxButtons.YesNo) == DialogResult.Yes)
         {
           try
           {
@@ -147,7 +147,7 @@ namespace diNo
       opUndef.Checked = true;
       opMaennlich.Checked = false;
       opWeiblich.Checked = false;
-      edId.Text = "";      
+      edId.Text = "";
     }
 
     private void btnErzeugeExcel_Click(object sender, EventArgs e)

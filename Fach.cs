@@ -1,13 +1,10 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using log4net;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace diNo
 {
-  public class Fach :IRepositoryObject
+  public class Fach : IRepositoryObject
   {
     private diNoDataSet.FachRow data;
     private int[] sort = new int[5]; // Profilfachnummer je nach Ausbildungsrichtung (Index vgl. enum Zweig)
@@ -22,7 +19,7 @@ namespace diNo
       }
       else
       {
-          throw new InvalidOperationException("Konstruktor Kurs: Ungültige ID=" + id);
+        throw new InvalidOperationException("Konstruktor Kurs: Ungültige ID=" + id);
       }
     }
 
@@ -38,12 +35,12 @@ namespace diNo
     }
 
     private void InitSortierung()
-    { 
+    {
       if (Typ == FachTyp.Profilfach)
       {
         var ta = new FachSortierungTableAdapter();
         var d = ta.GetDataByFachId(Id);
-        if (d.Count==0)
+        if (d.Count == 0)
           throw new InvalidOperationException("Im Fach " + Bezeichnung + " (Id=" + Id + ") liegt keine Sortierung vor.");
         foreach (var r in d)
         {
@@ -62,7 +59,7 @@ namespace diNo
 
     public int Id
     {
-        get { return this.data.Id; }
+      get { return this.data.Id; }
     }
 
     public int GetId()
@@ -71,18 +68,21 @@ namespace diNo
     }
     public string Bezeichnung
     {
-        get { return this.data.Bezeichnung; }
+      get { return this.data.Bezeichnung; }
     }
 
     public string Kuerzel
     {
-       get { return this.data.Kuerzel; }
+      get { return this.data.Kuerzel; }
     }
 
     public int? WPFid
-    {      
-      get { if (data.IsWPFidNull()) return null;
-      else return data.WPFid; }
+    {
+      get
+      {
+        if (data.IsWPFidNull()) return null;
+        else return data.WPFid;
+      }
     }
 
     public string PlatzInMBStatistik
@@ -99,38 +99,38 @@ namespace diNo
     // ab neuer FOBOSO: SA pro Halbjahr
     public int AnzahlSA(Zweig zweig, Jahrgangsstufe jg)
     {
-      int z=0;
+      int z = 0;
       if (jg == Jahrgangsstufe.Vorklasse || jg == Jahrgangsstufe.IntVk)
       {
         // in D,E,M je 2 SA
-        if (Kuerzel == "D" || Kuerzel == "DAZ" || Kuerzel == "E" || Kuerzel == "M") z=2;             
+        if (Kuerzel == "D" || Kuerzel == "DAZ" || Kuerzel == "E" || Kuerzel == "M") z = 2;
       }
       else if (jg == Jahrgangsstufe.Elf)
       {
-        if (IstSAPFach(zweig)) z=1;            
+        if (IstSAPFach(zweig)) z = 1;
       }
       else
       {
-        if (IstSAPFach(zweig) || Kuerzel == "F"  || sort[(byte)zweig] == 2) z = 1; // Prüfungsfächer, Französisch und Profilfach 2
+        if (IstSAPFach(zweig) || Kuerzel == "F" || sort[(byte)zweig] == 2) z = 1; // Prüfungsfächer, Französisch und Profilfach 2
       }
       return z;
     }
 
     public bool IstSAFach(Zweig zweig, Jahrgangsstufe jg)
     {
-        return AnzahlSA(zweig,jg)>0;
+      return AnzahlSA(zweig, jg) > 0;
     }
 
     public int Sortierung(Zweig zweig)
     {
       if (zweig != Zweig.None && Typ == FachTyp.Profilfach)
-      {            
-        return 100+sort[(byte)zweig];
+      {
+        return 100 + sort[(byte)zweig];
       }
       else
       {
         return this.data.Sortierung;
-      }          
+      }
     }
 
     public FachTyp Typ
@@ -142,8 +142,8 @@ namespace diNo
     {
       get { return (data.IsBezZeugnisNull() ? data.Bezeichnung : data.BezZeugnis); }
     }
-   
-    public bool IstSAPFach(Zweig zweig, bool inVorklasse=false)
+
+    public bool IstSAPFach(Zweig zweig, bool inVorklasse = false)
     {
 
       if (Kuerzel == "D" || Kuerzel == "E" || Kuerzel == "M") return true;
@@ -153,28 +153,28 @@ namespace diNo
       }
       else return false;
     }
-      
-    public bool IstEinstuendig(Jahrgangsstufe jg,Schulart sa)
+
+    public bool IstEinstuendig(Jahrgangsstufe jg, Schulart sa)
     {
-      return ((sa==Schulart.BOS || jg==Jahrgangsstufe.Dreizehn) && (Kuerzel=="K" || Kuerzel=="Ev" || Kuerzel=="Eth"));
-        // || ggf. Kunst im S-Zweig, und Wl in A-Zweig in der 11. Klasse
+      return ((sa == Schulart.BOS || jg == Jahrgangsstufe.Dreizehn) && (Kuerzel == "K" || Kuerzel == "Ev" || Kuerzel == "Eth"));
+      // || ggf. Kunst im S-Zweig, und Wl in A-Zweig in der 11. Klasse
     }
 
     public bool NichtNC
     {
-      get 
-      { 
-        return data.NichtNC; 
-      }     
-    } 
+      get
+      {
+        return data.NichtNC;
+      }
+    }
   }
 
 
-///  <summary>
-/// Klasse Fächerkanon dient der Konvertierung von Strings in Enumerables
-/// </summary>
-public static class Faecherkanon
-	{
+  ///  <summary>
+  /// Klasse Fächerkanon dient der Konvertierung von Strings in Enumerables
+  /// </summary>
+  public static class Faecherkanon
+  {
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
     public static Zweig GetZweig(string zweig)
@@ -185,7 +185,7 @@ public static class Faecherkanon
         case "T": return Zweig.Technik;
         case "WVR":
         case "W":
-          return Zweig.Wirtschaft;        
+          return Zweig.Wirtschaft;
         case "U": return Zweig.Umwelt;
         default: return Zweig.None; //Vorklasse FOS ohne Zweigzuordnung
       }
@@ -212,7 +212,7 @@ public static class Faecherkanon
         return Jahrgangsstufe.Vorkurs;
       }
 
-      if (jahrgangsstufe=="IV")
+      if (jahrgangsstufe == "IV")
       {
         return Jahrgangsstufe.IntVk;
       }
@@ -247,8 +247,8 @@ public static class Faecherkanon
         case Jahrgangsstufe.IntVk: return "9";
         case Jahrgangsstufe.Vorklasse: return "10";
         case Jahrgangsstufe.Elf: return "11";
-        case Jahrgangsstufe.Zwoelf: return "12" ;
-        case Jahrgangsstufe.Dreizehn: return "13" ;
+        case Jahrgangsstufe.Zwoelf: return "12";
+        case Jahrgangsstufe.Dreizehn: return "13";
         default: throw new InvalidOperationException("unbekannte Jahrgangsstufe " + jahrgangsstufe);
       }
     }
@@ -261,7 +261,7 @@ public static class Faecherkanon
         case Schulart.FOS: return "FOS";
         case Schulart.BOS: return "BOS";
         case Schulart.ALLE: return "ALLE";
-        default: throw new InvalidOperationException("Unbekannte Schulart : "+schulart);
+        default: throw new InvalidOperationException("Unbekannte Schulart : " + schulart);
       }
     }
 
@@ -273,12 +273,12 @@ public static class Faecherkanon
         case Zweig.Sozial: return "S";
         case Zweig.Wirtschaft: return "W";
         case Zweig.Technik: return "T";
-        case Zweig.Umwelt: return "U";        
+        case Zweig.Umwelt: return "U";
         default: throw new InvalidOperationException("Unbekannter Zweig : " + zweig);
       }
     }
 
-	}
+  }
 
   public enum FachTyp
   {

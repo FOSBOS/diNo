@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using diNo.diNoDataSetTableAdapters;
 using System.Drawing;
-using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
   public class HjLeistung
   {
     private diNoDataSet.HjLeistungRow data = null; // für Update
-    private Fach fach=null;
-    private int schuelerId;    
+    private Fach fach = null;
+    private int schuelerId;
     public HjArt Art { get; private set; }
     public byte Punkte;
-    public HjStatus Status=HjStatus.None;
+    public HjStatus Status = HjStatus.None;
     public Jahrgangsstufe JgStufe;
-    public decimal? Punkte2Dez=null;
-    public decimal? SchnittMdl=null;
+    public decimal? Punkte2Dez = null;
+    public decimal? SchnittMdl = null;
     public static HjLeistungTableAdapter ta = new HjLeistungTableAdapter();
 
-    public HjLeistung(int SchuelerId,Fach afach,HjArt aart, Jahrgangsstufe jg)
+    public HjLeistung(int SchuelerId, Fach afach, HjArt aart, Jahrgangsstufe jg)
     {
-      schuelerId=SchuelerId;
-      Art=aart;
-      fach=afach;
+      schuelerId = SchuelerId;
+      Art = aart;
+      fach = afach;
       JgStufe = jg;
     }
 
@@ -33,10 +29,10 @@ namespace diNo
       data = r;
       Art = (HjArt)r.Art;
       Punkte = r.Punkte;
-      Status = (HjStatus) r.Status;
-      JgStufe = (Jahrgangsstufe) r.JgStufe;
-      if (!r.IsPunkte2DezNull()) Punkte2Dez =  r.Punkte2Dez;
-      if (!r.IsSchnittMdlNull()) SchnittMdl =  r.SchnittMdl;      
+      Status = (HjStatus)r.Status;
+      JgStufe = (Jahrgangsstufe)r.JgStufe;
+      if (!r.IsPunkte2DezNull()) Punkte2Dez = r.Punkte2Dez;
+      if (!r.IsSchnittMdlNull()) SchnittMdl = r.SchnittMdl;
     }
 
     public Fach getFach
@@ -54,28 +50,28 @@ namespace diNo
     }
 
     public void WriteToDB()
-    {    
-      if (data==null) // neue HjLeistung -->INSERT
-      {        
-        ta.Insert(schuelerId,getFach.Id,(byte)Art,Punkte,Punkte2Dez,SchnittMdl,(int)JgStufe,(byte)Status);
+    {
+      if (data == null) // neue HjLeistung -->INSERT
+      {
+        ta.Insert(schuelerId, getFach.Id, (byte)Art, Punkte, Punkte2Dez, SchnittMdl, (int)JgStufe, (byte)Status);
       }
       else // vorhandene HjLeistung anpassen
       {
-        data.Punkte=Punkte;
+        data.Punkte = Punkte;
         data.Status = (byte)Status;
         data.FachId = getFach.Id;
         data.JgStufe = (byte)JgStufe;
-        if (Punkte2Dez==null) data.SetPunkte2DezNull(); else data.Punkte2Dez = Punkte2Dez.GetValueOrDefault();
-        if (SchnittMdl==null) data.SetSchnittMdlNull(); else data.SchnittMdl = SchnittMdl.GetValueOrDefault();
+        if (Punkte2Dez == null) data.SetPunkte2DezNull(); else data.Punkte2Dez = Punkte2Dez.GetValueOrDefault();
+        if (SchnittMdl == null) data.SetSchnittMdlNull(); else data.SchnittMdl = SchnittMdl.GetValueOrDefault();
         ta.Update(data);
       }
     }
     public void Delete()
     {
       if (data != null)
-      {              
+      {
         ta.Delete1(data.Id);
-      }        
+      }
     }
 
     public void SetStatus(HjStatus s)
@@ -95,7 +91,7 @@ namespace diNo
     }
 
     public static void CreateOrUpdate(HjLeistung hjl, int sid, HjArt art, Fach fach, Jahrgangsstufe jg, byte? punkte, decimal? punkte2Dez = null, decimal? schnittMdl = null)
-    {      
+    {
       if (hjl == null && punkte != null) // neu anlegen (nicht gefunden)
       {
         hjl = new HjLeistung(sid, fach, art, jg);
@@ -105,7 +101,7 @@ namespace diNo
     }
 
     public static void Update(HjLeistung hjl, byte? punkte, decimal? punkte2Dez = null, decimal? schnittMdl = null)
-    { 
+    {
       if (punkte != null) // überschreiben
       {
         hjl.Punkte = (byte)punkte;
@@ -124,7 +120,7 @@ namespace diNo
 
     // aktualisiert das Sprachniveau (sollte im jeweiligen Fach als HjLeistung stehen) oder legt es neu an
     public static void CreateOrUpdateSprachniveau(HjLeistung niveau, int sid, Fach fach, Jahrgangsstufe jg, Sprachniveau sn)
-    {      
+    {
       if (niveau == null) niveau = new HjLeistung(sid, fach, HjArt.Sprachenniveau, jg);
       else niveau.JgStufe = jg;
 

@@ -13,7 +13,7 @@ namespace diNo
   /// </summary>
   public class OpenExcel : IDisposable
   {
-    
+
     /// <summary>
     /// Konstruktor; öffnet die Exceldatei und verwaltet den Freigabemechanismus
     /// </summary>
@@ -32,7 +32,7 @@ namespace diNo
       catch (Exception exp)
       {
         log.Fatal("Fehler beim Öffnen der Excel-Datei " + fileName, exp);
-      }      
+      }
       OpenExcel.excelApp.DisplayAlerts = false; // unterdrückt Meldungen, die von Excel kommen
     }
 
@@ -127,7 +127,7 @@ namespace diNo
     #endregion
   }
 
-  public abstract class BasisNotendatei: OpenExcel
+  public abstract class BasisNotendatei : OpenExcel
   {
     /// <summary>
     /// Die Maximalanzahl von Schülern in einem ExcelSheet.
@@ -154,7 +154,7 @@ namespace diNo
     /// </summary>
     public Worksheet sid;
 
-    public BasisNotendatei(string filename): base(filename)
+    public BasisNotendatei(string filename) : base(filename)
     {
       notenbogen = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("1. Halbjahr") select sh).FirstOrDefault();
       if (notenbogen == null)
@@ -307,7 +307,7 @@ namespace diNo
     }
   }
 
-  public class OpenNotendatei: BasisNotendatei
+  public class OpenNotendatei : BasisNotendatei
   {
     /// <summary>
     /// Konstruktor
@@ -327,7 +327,7 @@ namespace diNo
       UnsavedChanges = true;
 
       int zeile = GetErsteFreieZeile(sid); //gilt in Notenbogen und auf dem diNo-sid-Reiter
-      WriteValueProtectedCell(notenbogen, "B" + zeile, aSchueler.Name + ", "+aSchueler.Rufname);
+      WriteValueProtectedCell(notenbogen, "B" + zeile, aSchueler.Name + ", " + aSchueler.Rufname);
       WriteValueProtectedCell(sid, CellConstant.SId + zeile, aSchueler.Id.ToString());
       if (setzeLegasthenie && aSchueler.LRSStoerung)
       {
