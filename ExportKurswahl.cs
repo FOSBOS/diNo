@@ -46,7 +46,7 @@ namespace diNo
       foreach (Schueler s in list)
       {
         string klasse = s.getKlasse.Bezeichnung;
-        string username = klasse + "_" + repl(s.Data.Vorname).Substring(0, 2) + repl(s.Name);
+        string username = klasse + "_" + repl(s.Data.Rufname).Substring(0, 2) + repl(s.Name);
         if (username.Length > 20)
           username = username.Substring(0, 20); // maximale Länge
 

@@ -426,7 +426,7 @@ namespace diNo
             hj2.WriteToDB();
 
             //Jahresnote
-            HjLeistung.CreateOrUpdate(jahresnote, schueler.Id, HjArt.JN, noten.getFach, hj1.JgStufe, hj1.Punkte);
+            HjLeistung.CreateOrUpdate(jahresnote, schueler.Id, HjArt.JN, noten.getFach, hj1.JgStufe, hj1.Punkte, null, hj2.SchnittMdl);
 
             //Einzelnoten löschen
             new NoteTableAdapter().DeleteByKursAndHalbjahr(noten.kursId, (byte)Halbjahr.Zweites);
