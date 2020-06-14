@@ -432,6 +432,23 @@ namespace diNo
             new NoteTableAdapter().DeleteByKursAndHalbjahr(noten.kursId, (byte)Halbjahr.Zweites);
           }
 
+          // fpA-Note
+          if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.FPANoten.Count == 2)
+          {
+            schueler.FPANoten[1].Anleitung = schueler.FPANoten[0].Anleitung;
+            schueler.FPANoten[1].Bemerkung = "aufgrund der Corona-Regelung aus dem ersten Halbjahr kopiert";
+            schueler.FPANoten[1].Betrieb = schueler.FPANoten[0].Betrieb;
+            schueler.FPANoten[1].Gesamt = schueler.FPANoten[0].Gesamt;
+            schueler.FPANoten[1].Jahrespunkte = schueler.FPANoten[0].Gesamt;
+            schueler.FPANoten[1].Stelle = "";
+            schueler.FPANoten[1].Vertiefung = schueler.FPANoten[0].Vertiefung;
+            if (!schueler.FPANoten[0].IsVertiefung1Null())
+              schueler.FPANoten[1].Vertiefung1 = schueler.FPANoten[0].Vertiefung1;
+            if (!schueler.FPANoten[0].IsVertiefung2Null())
+              schueler.FPANoten[1].Vertiefung2 = schueler.FPANoten[0].Vertiefung2;
+            schueler.FPANoten[1].AcceptChanges();
+          }
+
 
         }
       }
