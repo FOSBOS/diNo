@@ -88,147 +88,6 @@ namespace diNo
     }
   }
 
-  public class CoronaNoten : LeseNotenAusExcel
-  {
-    public CoronaNoten(String dateiname, StatusChanged statusChanged)
-      : base(dateiname, statusChanged, true)
-    {
-      bool keine11 = false;
-
-      for (int i = CellConstant.zeileSIdErsterSchueler; i < CellConstant.zeileSIdErsterSchueler + BasisNotendatei.MaxAnzahlSchueler; i++)
-      {
-        int sid = Convert.ToInt32(xls.ReadValue(xls.sid, CellConstant.SId + i));
-        if (sid == 0) break; // wir sind wohl am Ende der Datei
-        Schueler schueler = new Schueler(sid);
-        string schuelername = xls.ReadValue(xls.notenbogen, "B" + i);
-        if (string.IsNullOrEmpty(schuelername)) continue; // dieser Schüler ist wohl ausgetreten. Keine Noten übernehmen.
-        // verhindern, dass jemand ne 11. Klasse hier abgibt
-        if (schueler.getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
-        {
-          keine11 = true;
-          continue;
-        }
-
-        int noetigeAnzahlSchulaufgaben = kurs.getFach.AnzahlSA(schueler.Zweig, schueler.getKlasse.Jahrgangsstufe);
-        if (!PruefeZellen(i, new string[] { "L", "M" }, noetigeAnzahlSchulaufgaben))
-        {
-          hinweise.Add("Es gibt nicht genügend Schulaufgaben aus dem ersten Halbjahr. Prüfen Sie bitte die Noten von " + schuelername + " von Hand!");
-        }
-
-        int noetigeAnzahlMuendliche = 1;
-        if (!PruefeZellen(i, new string[] { "C", "D" }, 1)) // Schauen, ob 1 KA übertragen werden kann
-        {
-          noetigeAnzahlMuendliche = 3; // wenn keine Kurzarbeiten vorliegen, müssen 3 mündliche da sein!
-        }
-
-        if (!PruefeZellen(i, new string[] { "J", "I", "H", "G", "F", "E" }, noetigeAnzahlMuendliche))
-        {
-          hinweise.Add("Es gibt nicht genügend mündliche Noten aus dem 1. Halbjahr. Prüfen Sie bitte die Noten von " + schuelername + " von Hand!");
-        }
-      }
-
-      xls.SetCoronaFile();
-
-      if (keine11)
-        MessageBox.Show("Für 11. Klassen und Vorklassen gibt es momentan noch keine Regelung.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-      else
-        HinweiseAusgeben(xls); // in dieser Methode wird auch das Speichern ausgelöst
-
-      UebertrageNoten();
-      xls.workbook.Save();
-      xls.Dispose();
-      xls = null;
-    }
-
-    private bool PruefeZellen(int i, string[] spalten, int minimalZahl)
-    {
-      //finde erstmal raus wie viele Noten der Schüler im ersten Halbjahr hatte
-      var noten1 = GetNoten(i, spalten, xls.notenbogen);
-
-      //dann schaue wie viele Noten im zweiten Halbjahr eingetragen sind
-      var noten2 = GetNoten(i, spalten, xls.notenbogen2);
-
-      int differenz = minimalZahl - noten2.Count; // so viele Noten fehlen
-      while (differenz > 0)
-      {
-        if (noten1.Count == 0)
-        {
-          return false;
-        }
-
-        noten1.Sort();
-        // Finde eine freie Zelle und trage die beste aus HJ 1 dort ein
-        foreach (string spalte in spalten)
-        {
-          string wert = xls.ReadValue(xls.notenbogen2, spalte + i);
-          if (string.IsNullOrEmpty(wert))
-          {
-            // freie Zelle gefunden
-            xls.WriteValueProtectedCell(xls.notenbogen2, spalte + i, noten1[noten1.Count - 1].ToString());
-            noten1.RemoveAt(noten1.Count - 1);
-            break;
-          }
-        }
-        differenz--;
-      }
-
-      return true;
-    }
-
-    private List<byte> GetNoten(int i, string[] spalten, Microsoft.Office.Interop.Excel.Worksheet sheet)
-    {
-      List<byte> noten1 = new List<byte>();
-      for (int j = 0; j < spalten.Length; j++)
-      {
-        var note = xls.ReadNote(spalten[j] + i, sheet);
-
-        if (note.HasValue)
-        {
-          noten1.Add(note.Value);
-        }
-      }
-      return noten1;
-    }
-
-    #region IDisposable Support
-    private bool disposedValue = false; // Dient zur Erkennung redundanter Aufrufe.
-
-    protected virtual void Dispose(bool disposing)
-    {
-      if (!disposedValue)
-      {
-        if (disposing)
-        {
-          // TODO: verwalteten Zustand (verwaltete Objekte) entsorgen.
-        }
-
-        // TODO: nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer weiter unten überschreiben.
-        // TODO: große Felder auf Null setzen.
-
-        disposedValue = true;
-      }
-    }
-
-    // TODO: Finalizer nur überschreiben, wenn Dispose(bool disposing) weiter oben Code für die Freigabe nicht verwalteter Ressourcen enthält.
-    // ~CoronaNoten()
-    // {
-    //   // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in Dispose(bool disposing) weiter oben ein.
-    //   Dispose(false);
-    // }
-
-    // Dieser Code wird hinzugefügt, um das Dispose-Muster richtig zu implementieren.
-    public void Dispose()
-    {
-      // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in Dispose(bool disposing) weiter oben ein.
-      Dispose(true);
-      // TODO: Auskommentierung der folgenden Zeile aufheben, wenn der Finalizer weiter oben überschrieben wird.
-      // GC.SuppressFinalize(this);
-    }
-    #endregion
-
-  }
-
   public class LeseNotenAusExcel : BasisLeseNotenAusExcel, IDisposable
   {
     protected OpenNotendatei xls;
@@ -377,12 +236,20 @@ namespace diNo
 
         if (liesZweitesHJ)
         {
-          LiesHalbjahr(xls.notenbogen2, fsn, Halbjahr.Zweites, i, sid, jg);
-
-          if (aktiverKurs)
+          // CORONA - Code: Diese Abfrage wieder rauswerfen!
+          if ((schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf) && 
+              (kurs.getFach.Kuerzel == "G" || // Geschichte immer
+              (kurs.getFach.Kuerzel == "C" && schueler.Data.Ausbildungsrichtung == "S") || //Chemie im Sozialzweig
+              (kurs.getFach.Kuerzel == "Rl" && schueler.Data.Ausbildungsrichtung == "W")) // Rechtslehre im Wirtschaftszweig
+             ) 
           {
-            byte? jahresnote = xls.ReadNote("R" + i, xls.notenbogen2);
-            HjLeistung.CreateOrUpdate(fsn.getHjLeistung(HjArt.JN), sid, HjArt.JN, kurs.getFach, jg, jahresnote);
+            LiesHalbjahr(xls.notenbogen2, fsn, Halbjahr.Zweites, i, sid, jg);
+
+            if (aktiverKurs)
+            {
+              byte? jahresnote = xls.ReadNote("R" + i, xls.notenbogen2);
+              HjLeistung.CreateOrUpdate(fsn.getHjLeistung(HjArt.JN), sid, HjArt.JN, kurs.getFach, jg, jahresnote);
+            }
           }
         }
 

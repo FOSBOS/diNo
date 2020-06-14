@@ -408,7 +408,20 @@ namespace diNo
             hj2 = new HjLeistung(schueler.Id, noten.getFach, HjArt.Hj2, hj1.JgStufe);
             hj2.Punkte = hj1.Punkte;
             hj2.Punkte2Dez = hj1.Punkte2Dez;
-            hj2.SchnittMdl = 21; // um kopierte Noten zu erkennen
+
+            // um kopierte Noten zu erkennen
+            if ((schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf) &&  
+                (noten.getFach.Kuerzel == "G" || // Geschichte immer
+                (noten.getFach.Kuerzel == "C" && schueler.Data.Ausbildungsrichtung == "S") || //Chemie im Sozialzweig
+                (noten.getFach.Kuerzel == "Rl" && schueler.Data.Ausbildungsrichtung == "W")) // Rechtslehre im Wirtschaftszweig
+               )
+            {
+              hj2.SchnittMdl = 22;
+            }
+            else
+            {
+              hj2.SchnittMdl = 21;
+            }
 
             hj2.WriteToDB();
 

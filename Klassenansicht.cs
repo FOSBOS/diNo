@@ -37,7 +37,6 @@ namespace diNo
       }
 
       lbTest.Visible = Zugriff.Instance.IsTestDB;
-      btnCorona.Visible = Zugriff.Instance.HatVerwaltungsrechte;
       log.Debug("Klassenansicht fertig.");
     }
 
@@ -234,52 +233,6 @@ namespace diNo
     private void btnRefresh_Click(object sender, EventArgs e)
     {
       RefreshTreeView();
-    }
-
-    private void btnCorona_Click(object sender, EventArgs e)
-    {
-      //if (MessageBox.Show("Wähle alle Notendateien aus, bei denen fehlende Halbjahresleistungen automatisch für das Corona-Abitur aus dem 1. Halbjahr übernommen werden sollen.", "diNo", MessageBoxButtons.OKCancel, MessageBoxIcon.Information)!=DialogResult.OK) return;
-      if (MessageBox.Show("Wähle nur die Notendateien aus, bei denen ALLE Ersatzprüfungen vollständig eingetragen worden sind.", "diNo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK) return;
-
-      var fileDialog = new OpenFileDialog();
-      fileDialog.Filter = "Exceldateien|*.xls*";
-      fileDialog.Multiselect = true;
-      // Call the ShowDialog method to show the dialog box.
-      if (fileDialog.ShowDialog() != DialogResult.OK) return;
-
-      Cursor.Current = Cursors.WaitCursor;
-      foreach (string fileName in fileDialog.FileNames)
-      {
-        toolStripStatusLabel1.Text = "Erzeuge Coronadatei für " + fileName;
-        string datei = Path.GetFileName(fileName);
-        string verz = fileName.Substring(0, fileName.LastIndexOf('\\'));
-        if (verz.Contains("Corona1") || verz.Contains("Corona2"))
-        {
-          MessageBox.Show("Notendateien aus den Corona-Verzeichnissen dienen zur Sicherung. Bitte die Datei aus dem Hauptverzeichnis verwenden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-          Cursor.Current = Cursors.Default;
-          return;
-        }
-        verz += "\\Corona2\\";
-        if (!Directory.Exists(verz))
-          Directory.CreateDirectory(verz);
-        File.Copy(fileName, verz + datei, true);
-
-        // dieser Aufruf kopiert die Noten und gibt die neuen Noten dann auch gleich ab.
-        //new CoronaNoten(verz + datei, notenReader_OnStatusChange);
-
-        // nach der ersten Woche:        
-        new CoronaNoten(fileName, notenReader_OnStatusChange);
-      }
-
-      RefreshTreeView(); // Noten neu laden
-      if (schueler != null)
-      {
-        schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); // neues Objekt setzen
-        SetSchueler();
-      }
-      Cursor.Current = Cursors.Default;
-      MessageBox.Show("Die Notendateien wurden kopiert und auch schon eingelesen, eine Abgabe ist nicht mehr notwendig. Bitte kontrolliere aber die Noten auf Plausibilität.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-      toolStripStatusLabel1.Text = "";
     }
   }
 }
