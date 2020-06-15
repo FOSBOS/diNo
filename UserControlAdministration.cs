@@ -431,7 +431,7 @@ namespace diNo
             //Einzelnoten löschen
             new NoteTableAdapter().DeleteByKursAndHalbjahr(noten.kursId, (byte)Halbjahr.Zweites);
           }
-
+          
           // fpA-Note
           if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.FPANoten.Count == 2)
           {
@@ -446,7 +446,7 @@ namespace diNo
               schueler.FPANoten[1].Vertiefung1 = schueler.FPANoten[0].Vertiefung1;
             if (!schueler.FPANoten[0].IsVertiefung2Null())
               schueler.FPANoten[1].Vertiefung2 = schueler.FPANoten[0].Vertiefung2;
-            schueler.FPANoten[1].AcceptChanges();
+            (new FpaTableAdapter()).Update(schueler.FPANoten[1]);
           }
 
 
