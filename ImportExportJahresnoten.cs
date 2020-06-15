@@ -73,7 +73,9 @@ namespace diNo
               if (fpaZeile.IsGesamtNull())
                 continue;
 
-              writer.WriteLine(schueler.Id + Sep + fpa.Id + Sep + "11" + Sep + fpaZeile.Gesamt + Sep + fpaZeile.Halbjahr + Sep + schueler.NameVorname + Sep + fpa.Kuerzel);
+              // Corona: 22 als SchnittMdl ==> kopiert
+              writer.WriteLine(schueler.Id + Sep + fpa.Id + Sep + "11" + Sep + fpaZeile.Gesamt + Sep + fpaZeile.Halbjahr + Sep 
+                + (fpaZeile.Halbjahr==1 ? 22 : fpaZeile.Gesamt) + Sep + fpaZeile.Gesamt + Sep + schueler.NameVorname + Sep + fpa.Kuerzel);
 
               /* Die Fpa-Daten brauchen wir nicht mehr (im Notfall s. alter Notenbogen)
               // jahrespunkte sind null bei den fpaNoten aus dem ersten Halbjahr
@@ -100,9 +102,9 @@ namespace diNo
     {
       if (note != null && note.Status != HjStatus.Ungueltig)
       {
-        // Erzeugt eine Zeile mit 9 durch ; getrennten Werten
-        //                   0                       1                       2                       3                    4                       5                    
-        writer.WriteLine(schueler.Id + Sep + note.getFach.Id + Sep + (int)note.JgStufe + Sep + note.Punkte + Sep + (byte)note.Art + Sep + schueler.NameVorname + " " + schueler.getKlasse.Bezeichnung + Sep + note.getFach.Kuerzel);
+        // Erzeugt eine Zeile mit 10 durch ; getrennten Werten
+        //                   0                       1                       2                       3                    4                       5                  6                         7                                      8                               9
+        writer.WriteLine(schueler.Id + Sep + note.getFach.Id + Sep + (int)note.JgStufe + Sep + note.Punkte + Sep + (byte)note.Art + Sep + note.SchnittMdl + Sep + note.Punkte2Dez + Sep + schueler.NameVorname + " " + schueler.getKlasse.Bezeichnung + Sep + note.getFach.Kuerzel);
       }
     }
 
@@ -137,7 +139,7 @@ namespace diNo
         {
           string orignal = reader.ReadLine();
           string[] line = orignal.Split(SepChar);
-          if (line.Length != 7) // Format sollte passen
+          if (line.Length != 10) // Format sollte passen
           {
             writer.WriteLine(orignal);
             continue;
@@ -164,7 +166,9 @@ namespace diNo
           if (jgstufeHj == Jahrgangsstufe.Elf && jgSchueler == Jahrgangsstufe.Zwoelf || fach.getKursniveau() != Kursniveau.None)
           {
             byte punkte = byte.Parse(line[3]);
-            ada.Insert(schueler.Id, fachId, (byte)notenArt, punkte, null, null, (int)jgstufeHj, (byte)HjStatus.None);
+            decimal schnittMdl = decimal.Parse(line[5]);
+            decimal punkte2Dez = decimal.Parse(line[6]);
+            ada.Insert(schueler.Id, fachId, (byte)notenArt, punkte, punkte2Dez, schnittMdl, (int)jgstufeHj, (byte)HjStatus.None);
           }
 
 
