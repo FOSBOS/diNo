@@ -258,7 +258,18 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Evtl. Einbringungsänderungen habe ich oben bereits farbig markiert oder werde ich der Oberstufenbetreuung zeitnah schriftlich mitteilen.</Value>
+                              <Value>Evtl. Einbringungsänderungen müssen der Schulleitung am Mittwoch, 24.6.2020 zwischen 9 und 12 Uhr persönlich mitgeteilt werden.</Value>
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style />
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Bei Minderjährigen ist dafür die Unterschrift eines Erziehungsberechtigten erforderlich.</Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
                               </Style>

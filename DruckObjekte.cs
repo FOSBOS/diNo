@@ -805,9 +805,9 @@ namespace diNo
         case PunktesummeArt.FPA: return "- Punktesumme der fachpraktischen Ausbildung aus 11/1 und 11/2";
         case PunktesummeArt.FR: return "- Ergebnis des Fachreferats";
         case PunktesummeArt.HjLeistungen: return "- Punktesumme aus " + p.Anzahl(art) + " einzubringenden Halbjahresergebnissen";
-        case PunktesummeArt.Seminar: return "Ergebnis des Seminars (zweifach)";
-        case PunktesummeArt.FremdspracheErgPr: return "Ergebnis der Ergänzungsprüfung (zweifach)";
-        case PunktesummeArt.FremdspracheAus12: return "Punktesumme der zweiten Fremdsprache";
+        case PunktesummeArt.Seminar: return "- Ergebnis des Seminars (zweifach)";
+        case PunktesummeArt.FremdspracheErgPr: return "- Ergebnis der Ergänzungsprüfung (zweifach)";
+        case PunktesummeArt.FremdspracheAus12: return "- Punktesumme der zweiten Fremdsprache";
         case PunktesummeArt.Gesamt: return "Summe";
         default: return "";
       }
