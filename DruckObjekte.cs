@@ -715,7 +715,7 @@ namespace diNo
     private string HjToZeugnis(HjLeistung t) // für NeueFOBOSO
     {
       if (t == null) return rpt == Bericht.Abiturzeugnis ? "" : "--";
-      else if (t.Status == HjStatus.Ungueltig || t.SchnittMdl==21) return "--";
+      else if (t.Status == HjStatus.Ungueltig || t.SchnittMdl==21 && t.JgStufe==Jahrgangsstufe.Elf) return "--";
       else if (rpt == Bericht.Abiturzeugnis && (t.Status == HjStatus.NichtEinbringen || t.Status == HjStatus.AlternativeEinbr))
         return "(" + t.Punkte.ToString("D2") + ")";
       else return t.Punkte.ToString("D2");
@@ -729,7 +729,7 @@ namespace diNo
 
     private void JNToZeugnis(HjLeistung t)
     {
-      if (t == null || t.Status == HjStatus.Ungueltig || t.SchnittMdl == 21) JNToZeugnis((byte?)null);
+      if (t == null || t.Status == HjStatus.Ungueltig || t.SchnittMdl == 21 && t.JgStufe == Jahrgangsstufe.Elf) JNToZeugnis((byte?)null);
       else JNToZeugnis(t.Punkte);
     }
 
