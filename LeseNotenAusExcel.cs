@@ -237,7 +237,7 @@ namespace diNo
         if (liesZweitesHJ)
         {
           // CORONA - Code: Diese Abfrage wieder rauswerfen!
-          if ((schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf) && 
+          if (alles || (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf) && 
               (kurs.getFach.Kuerzel == "G" || // Geschichte immer
               (kurs.getFach.Kuerzel == "C" && schueler.Data.Ausbildungsrichtung == "S") || //Chemie im Sozialzweig
               (kurs.getFach.Kuerzel == "Rl" && schueler.Data.Ausbildungsrichtung == "W")) // Rechtslehre im Wirtschaftszweig
