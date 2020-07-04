@@ -337,7 +337,12 @@ namespace diNo
       if (s.hatVorkommnis(Vorkommnisart.MittlereReife))
         Bemerkung += "<br><b>Dieses Zeugnis verleiht den mittleren Schulabschluss gemäß Art. 25 Abs. 1 Satz 2 Nr. 6 BayEUG.</b>";
       if (jg == 11 && b == Bericht.Jahreszeugnis)
-        Bemerkung += "<br><b>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 12 hat " + s.getErSie() + (s.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis) ? " nicht" : "") + " erhalten.</b>";
+      {
+        string zusatz = "";
+        if (s.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis)) zusatz = " nicht";
+        else if (s.hatVorkommnis(Vorkommnisart.VorrueckenAufProbe)) zusatz = " auf Probe";
+        Bemerkung += "<br><b>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 12 hat " + s.getErSie() + zusatz + " erhalten.</b>";
+      }
       if (jg >= 12 && b == Bericht.Jahreszeugnis)
       {
         if (jg == 12 && s.Data.Schulart == "B")

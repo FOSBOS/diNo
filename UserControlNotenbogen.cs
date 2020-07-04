@@ -222,7 +222,7 @@ namespace diNo
       }
 
       byte s = (byte)((HjLeistung)c.Tag).Status; // aktueller Status anhaken
-      for (int i = 0; i < 4; i++)
+      for (int i = 0; i < 5; i++)
         ((ToolStripMenuItem)contextMenu.Items[i]).Checked = i == s;
     }
 

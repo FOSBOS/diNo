@@ -582,7 +582,7 @@ namespace diNo
       if (vorJahr) hj = getVorHjLeistung(a);
       else hj = getHjLeistung(a);
 
-      if (hj != null && hj.Status != HjStatus.Ungueltig && (hj.Status == HjStatus.Einbringen || ignoreEinbringung))
+      if (hj != null && hj.Status != HjStatus.Ungueltig && (a==HjArt.AP || hj.Status <= HjStatus.Einbringen || ignoreEinbringung))
       {
         if (a == HjArt.AP)
         {
