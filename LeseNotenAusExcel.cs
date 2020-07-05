@@ -385,8 +385,8 @@ namespace diNo
     {
       if ((Zeitpunkt)Zugriff.Instance.aktZeitpunkt <= Zeitpunkt.HalbjahrUndProbezeitFOS)
         return false; // solange des erste Halbjahr noch läuft, wird das zweite nicht eingelesen
-
-      if (kurs.IstSAPKurs)
+      
+      if (kurs.Klassen.Count > 0 && kurs.Klassen[0].Jahrgangsstufe > Jahrgangsstufe.Elf)
       {
         // in den Prüfungsklassen wird das zweite Halbjahr nur von Februar bis zur ersten PA gelesen
         return (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ErstePA;
