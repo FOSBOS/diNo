@@ -436,7 +436,13 @@ namespace diNo
         if (k.Jahrgangsstufe > JgStufe)
         {
           JgStufe = k.Jahrgangsstufe;
-          IstSAPKurs = (JgStufe == Jahrgangsstufe.Zwoelf || JgStufe == Jahrgangsstufe.Dreizehn) && getFach.IstSAPFach(k.Zweig);
+          Zweig z;
+          if (Schueler.Count > 0)
+            z = Faecherkanon.GetZweig(Schueler[0].Ausbildungsrichtung);
+          else
+            z = Zweig.None;
+
+          IstSAPKurs = (JgStufe == Jahrgangsstufe.Zwoelf || JgStufe == Jahrgangsstufe.Dreizehn) && getFach.IstSAPFach(z);
         }
       }
     }
