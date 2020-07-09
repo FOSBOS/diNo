@@ -845,7 +845,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>1.53458cm</Height>
+              <Height>2.09447cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -1100,64 +1100,6 @@
                 </TablixCell>
               </TablixCells>
             </TablixRow>
-            <TablixRow>
-              <Height>1.11552cm</Height>
-              <TablixCells>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox36">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontFamily>Gadugi</FontFamily>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                                <Color>#000000</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>Diesem Zeugnis liegt die Schulordnung für die Berufliche Oberschule - Fachoberschulen und Berufsoberschulen - in der jeweils geltenden Fassung zugrunde.</Value>
-                              <Style>
-                                <FontStyle>Normal</FontStyle>
-                                <FontFamily>Gadugi</FontFamily>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                                <Color>#000000</Color>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox36</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Style>None</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                    <ColSpan>3</ColSpan>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell />
-                <TablixCell />
-              </TablixCells>
-            </TablixRow>
           </TablixRows>
         </TablixBody>
         <TablixColumnHierarchy>
@@ -1199,7 +1141,6 @@
                         <Hidden>=Fields!ShowGezSL.Value</Hidden>
                       </Visibility>
                     </TablixMember>
-                    <TablixMember />
                   </TablixMembers>
                 </TablixMember>
               </TablixMembers>
@@ -1210,7 +1151,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>18.23739cm</Height>
+        <Height>17.68176cm</Height>
         <Width>14.05599cm</Width>
         <Style>
           <Border>
@@ -1221,13 +1162,13 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>18.23739cm</Height>
+    <Height>17.68176cm</Height>
     <Style />
   </Body>
   <Width>14.6cm</Width>
   <Page>
     <PageFooter>
-      <Height>1.9cm</Height>
+      <Height>3.16999cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1249,7 +1190,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Height>0.6cm</Height>
           <Width>1.9091cm</Width>
           <Style>
@@ -1280,7 +1221,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.29999cm</Top>
+          <Top>2.56999cm</Top>
           <Height>0.6cm</Height>
           <Width>1.97965cm</Width>
           <ZIndex>1</ZIndex>
@@ -1314,7 +1255,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>2cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1350,7 +1291,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>11.8cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1386,7 +1327,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>11.1cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1422,7 +1363,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>10.4cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1458,7 +1399,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>9.7cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1494,7 +1435,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>8.3cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1530,7 +1471,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>7.6cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1566,7 +1507,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>9cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1602,7 +1543,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>6.9cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1638,7 +1579,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>6.2cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1674,7 +1615,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>5.5cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1710,7 +1651,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>4.8cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1746,7 +1687,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>4.1cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1782,7 +1723,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>3.4cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1818,7 +1759,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>2.7cm</Left>
           <Height>0.6cm</Height>
           <Width>0.7cm</Width>
@@ -1854,7 +1795,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.69999cm</Top>
+          <Top>1.96999cm</Top>
           <Left>12.5cm</Left>
           <Height>0.6cm</Height>
           <Width>2.1cm</Width>
@@ -1890,7 +1831,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.29999cm</Top>
+          <Top>2.56999cm</Top>
           <Left>2cm</Left>
           <Height>0.6cm</Height>
           <Width>2.1cm</Width>
@@ -1932,7 +1873,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.29999cm</Top>
+          <Top>2.56999cm</Top>
           <Left>4.1cm</Left>
           <Height>0.6cm</Height>
           <Width>2.1cm</Width>
@@ -1974,7 +1915,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.29999cm</Top>
+          <Top>2.56999cm</Top>
           <Left>6.2cm</Left>
           <Height>0.6cm</Height>
           <Width>2.1cm</Width>
@@ -2016,7 +1957,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.29999cm</Top>
+          <Top>2.56999cm</Top>
           <Left>8.3cm</Left>
           <Height>0.6cm</Height>
           <Width>2.1cm</Width>
@@ -2058,7 +1999,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.29999cm</Top>
+          <Top>2.56999cm</Top>
           <Left>10.4cm</Left>
           <Height>0.6cm</Height>
           <Width>2.1cm</Width>
@@ -2100,7 +2041,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.29999cm</Top>
+          <Top>2.56999cm</Top>
           <Left>12.5cm</Left>
           <Height>0.6cm</Height>
           <Width>2.1cm</Width>
@@ -2140,10 +2081,45 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.03527cm</Top>
+          <Top>1.30527cm</Top>
           <Height>0.6cm</Height>
           <Width>9cm</Width>
           <ZIndex>24</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+        <Textbox Name="Textbox1">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>Diesem Zeugnis liegt die Schulordnung für die Berufliche Oberschule - Fachoberschulen und Berufsoberschulen - in der jeweils geltenden Fassung zugrunde.</Value>
+                  <Style>
+                    <FontStyle>Normal</FontStyle>
+                    <FontFamily>Gadugi</FontFamily>
+                    <FontSize>8pt</FontSize>
+                    <FontWeight>Normal</FontWeight>
+                    <Color>#000000</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox1</rd:DefaultName>
+          <Top>0.14111cm</Top>
+          <Height>1.02305cm</Height>
+          <Width>14.03075cm</Width>
+          <ZIndex>25</ZIndex>
           <Style>
             <Border>
               <Style>None</Style>

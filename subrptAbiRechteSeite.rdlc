@@ -296,7 +296,7 @@
                     <MarkupType>HTML</MarkupType>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>8pt</FontSize>
+                      <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
@@ -322,12 +322,43 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
+                    <Value />
+                    <MarkupType>HTML</MarkupType>
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>8pt</FontSize>
+                      <FontWeight>Normal</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
                     <Value>verliehen.</Value>
                     <MarkupType>HTML</MarkupType>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Normal</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -430,6 +461,18 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
+                    <Value />
+                    <Style>
+                      <FontFamily>Gadugi</FontFamily>
+                      <FontSize>11pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
                     <Value>.....................................................................               </Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
@@ -484,7 +527,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Diesem Zeugnis liegt die Schulordnung für die Berufliche Oberschule - Fachoberschulen und Berufsoberschulen - in der jeweils geltenden Fassung zugrunde.</Value>
+                    <Value />
                     <Style>
                       <FontStyle>Normal</FontStyle>
                       <FontFamily>Gadugi</FontFamily>
@@ -499,7 +542,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>4.30953cm</Top>
-            <Height>11.60833cm</Height>
+            <Height>10.68229cm</Height>
             <Width>16cm</Width>
             <Style>
               <Border>
@@ -648,7 +691,7 @@
             </Style>
           </Textbox>
         </ReportItems>
-        <Height>15.91786cm</Height>
+        <Height>14.99182cm</Height>
         <Style>
           <Border>
             <Color>White</Color>
@@ -659,7 +702,7 @@
       <Width>16.03013cm</Width>
       <Page>
         <PageFooter>
-          <Height>2.24896cm</Height>
+          <Height>0.02646cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <Style>
