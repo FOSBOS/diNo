@@ -248,7 +248,7 @@ namespace diNo
             if (aktiverKurs)
             {
               byte? jahresnote = xls.ReadNote("R" + i, xls.notenbogen2);
-              HjLeistung.CreateOrUpdate(fsn.getHjLeistung(HjArt.JN), sid, HjArt.JN, kurs.getFach, jg, jahresnote);
+              HjLeistung.CreateOrUpdate(fsn, sid, HjArt.JN, kurs.getFach, jg, jahresnote);
             }
           }
         }
@@ -299,7 +299,7 @@ namespace diNo
           // AP-Gesamtleistung        
           decimal? kommaAP = xls.ReadKommanote("I" + (i + 2), xls.AP);
           byte? apGesamt = xls.ReadNote("J" + (i + 2), xls.AP);
-          HjLeistung.CreateOrUpdate(fsn.getHjLeistung(HjArt.AP), sid, HjArt.AP, kurs.getFach, jg, apGesamt, kommaAP);
+          HjLeistung.CreateOrUpdate(fsn, sid, HjArt.AP, kurs.getFach, jg, apGesamt, kommaAP);
         }
 
         // Fachreferat
@@ -330,7 +330,7 @@ namespace diNo
             hjlFR.Delete();
           }
         }
-
+        schueler.ReloadNoten(); // neu initialisieren
         berechner.AktualisiereGE(schueler); // damit das GE wird konsistent zum Abi wird
 
         i++;
@@ -416,7 +416,7 @@ namespace diNo
         decimal? SchnittMdl = xls.ReadKommanote("K" + i, sheet);
         HjArt art = hj == Halbjahr.Erstes ? HjArt.Hj1 : HjArt.Hj2;
 
-        HjLeistung.CreateOrUpdate(f.getHjLeistung(art), sid, art, kurs.getFach, jg, zeugnisnote, Punkte2Dez, SchnittMdl);
+        HjLeistung.CreateOrUpdate(f, sid, art, kurs.getFach, jg, zeugnisnote, Punkte2Dez, SchnittMdl);
       }
     }
 

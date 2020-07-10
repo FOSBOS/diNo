@@ -128,7 +128,6 @@ namespace diNo
           new LeseNotenAusExcel(fileName, notenReader_OnStatusChange, false);
         }
 
-        RefreshTreeView(); // Noten neu laden
         if (schueler != null)
         {
           schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); // neues Objekt setzen

@@ -1,4 +1,5 @@
 ﻿using diNo.diNoDataSetTableAdapters;
+using System.Data;
 using System.Drawing;
 
 namespace diNo
@@ -54,6 +55,9 @@ namespace diNo
       if (data == null) // neue HjLeistung -->INSERT
       {
         ta.Insert(schuelerId, getFach.Id, (byte)Art, Punkte, Punkte2Dez, SchnittMdl, (int)JgStufe, (byte)Status);
+        var dt = ta.GetDataBySchuelerAndFach(schuelerId, getFach.Id).Where(x => x.JgStufe == (int)JgStufe && x.Art == (byte)Art);
+        foreach (var d in dt) // sollte einelementig sein. TODO: Kriegt man das nicht besser hin?
+          data = d; // Daten wieder konsistent im Speicher        
       }
       else // vorhandene HjLeistung anpassen
       {
@@ -90,11 +94,13 @@ namespace diNo
       return Color.White;
     }
 
-    public static void CreateOrUpdate(HjLeistung hjl, int sid, HjArt art, Fach fach, Jahrgangsstufe jg, byte? punkte, decimal? punkte2Dez = null, decimal? schnittMdl = null)
+    public static void CreateOrUpdate(FachSchuelerNoten fsn, int sid, HjArt art, Fach fach, Jahrgangsstufe jg, byte? punkte, decimal? punkte2Dez = null, decimal? schnittMdl = null)
     {
+      HjLeistung hjl = fsn.getHjLeistung(art);
       if (hjl == null && punkte != null) // neu anlegen (nicht gefunden)
       {
         hjl = new HjLeistung(sid, fach, art, jg);
+        fsn.setHjLeistung(hjl);
       }
 
       Update(hjl, punkte, punkte2Dez, schnittMdl);

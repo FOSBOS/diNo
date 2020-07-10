@@ -570,6 +570,11 @@ namespace diNo
       return hjLeistung[(int)art];
     }
 
+    public void setHjLeistung(HjLeistung hj)
+    {
+      hjLeistung[(int)hj.Art] = hj;
+    }
+
     public HjLeistung getVorHjLeistung(HjArt art)
     {
       return vorHjLeistung[(int)art];
