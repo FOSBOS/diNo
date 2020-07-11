@@ -92,29 +92,40 @@ namespace diNo
   {
     protected OpenNotendatei xls;
 
-    public LeseNotenAusExcel(string afileName, StatusChanged StatusChangedMethod, bool doNothingModus)
+    public LeseNotenAusExcel(string afileName, StatusChanged StatusChangedMethod)
       : base(afileName, StatusChangedMethod)
     {
-      xls = new OpenNotendatei(afileName);
-
-      ReadBasisdaten(xls);
-      BackupZiehen();
-
-      if (!doNothingModus)
+      try
       {
-        Status("Synchronisiere Datei " + afileName);
-        Synchronize();
+        xls = new OpenNotendatei(afileName);
 
-        Status("Übertrage Noten aus Datei " + afileName);
-        DeleteAlteNoten();
-        UebertrageNoten();
+        ReadBasisdaten(xls);
+        BackupZiehen();
+  
+        // Corona:
+        if (kurs.JgStufe>Jahrgangsstufe.Elf || Zugriff.Instance.HatVerwaltungsrechte)
+        {
+          Status("Synchronisiere Datei " + afileName);
+          Synchronize();
 
-        HinweiseAusgeben(xls);
-
+          Status("Übertrage Noten aus Datei " + afileName);
+          DeleteAlteNoten();
+          UebertrageNoten();
+          HinweiseAusgeben(xls);
+        }
+        else
+        {
+          MessageBox.Show("Notendateien der 11. Klassen und Vorklassen können nicht abgegeben werden. \n" +
+            "Ergebnisse der Ersatzprüfungen bitte auf einer Liste erfassen und mit der Notendatei an Markus Siegel mailen."
+            , "diNo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        }
+      }
+      finally
+      {
         xls.Dispose();
         xls = null;
-      }
-      Status("fertig mit Datei " + afileName);
+        Status("fertig mit Datei " + afileName);
+      }          
     }
 
     private void BackupZiehen()
