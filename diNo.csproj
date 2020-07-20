@@ -40,6 +40,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -150,7 +151,7 @@
     <Compile Include="GlobalesForm.Designer.cs">
       <DependentUpon>GlobalesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Xml\abschlusspruefung_1_3.cs" />
+    <Compile Include="Xml\abschlusspruefung_1_4.cs" />
     <Compile Include="Xml\MBStatistik.cs" />
     <Compile Include="Xml\schulerfolg_1_1.cs" />
     <Compile Include="Xml\Schulerfolgsstatistik.cs" />
@@ -433,7 +434,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Xml\abschlusspruefung_1.3.dtd" />
+    <None Include="Xml\abschlusspruefung_1.4.dtd" />
     <None Include="Xml\schulerfolg_1.1.xsd">
       <SubType>Designer</SubType>
     </None>

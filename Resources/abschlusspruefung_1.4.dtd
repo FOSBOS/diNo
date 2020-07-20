@@ -43,7 +43,7 @@
 						<!ELEMENT vorbildung (m_deutsch,m_mathematik,m_englisch)>
 						<!ATTLIST vorbildung
 									msa_erworben_an_schulart (GY|RS|MS|BS|WS|BO|SO|KS) #REQUIRED
-									besuchte_schulart_vor_eintritt (GY|RS|MS|BS|WS|BO|SO|KS) #REQUIRED>
+									besuchte_schulart_vor_eintritt (GY|RS|MS|BS|WS|BO|SO|KS|AL) #REQUIRED>
 									<!-- GY: Gymnasium RS: Realschule MS: Mittelschule BS: Berufsschule WS: Wirtschaftsschule BO: Berufliche Oberschule (Vorklasse) SO: sonstige -->
 									
 							<!ELEMENT m_deutsch (#PCDATA)>
@@ -166,9 +166,9 @@
 							<!ELEMENT sozialwirtschaft_und_recht (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
 							<!ELEMENT gesundheitswissenschaften (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
 							<!ELEMENT kommunikation_und_interaktion (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
-							<!ELEMENT gestaltung_praxis (hj_11_1,hj_11_2,hj_12_1,hj_12_2)>
-							<!ELEMENT gestaltung_theorie (hj_11_1,hj_11_2,hj_12_1,hj_12_2)>
-							<!ELEMENT medien ((hj_11_1,hj_11_2,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT gestaltung_praxis ((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)>
+							<!ELEMENT gestaltung_theorie ((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)>
+							<!ELEMENT medien (((hj_11_1,hj_11_2)?,hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
 							<!ELEMENT gestaltung (hj_13_1,hj_13_2)>
 							<!ELEMENT soziologie ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
 							
@@ -178,11 +178,14 @@
 					<!ELEMENT ausbildungsabschnitte (dbfh_allgemeinbildende_faecher, dbfh_profilfaecher)>	
 						
 					<!ELEMENT seminar (punkte)>
-					<!ELEMENT zweite_fremdsprache (note)>
+					<!ELEMENT zweite_fremdsprache (note|unterricht)>
 					<!ATTLIST zweite_fremdsprache
 									sprache (Spanisch|Italienisch|Russisch|Franzoesisch|Latein) #REQUIRED
-									art (EP|VN) #REQUIRED> <!-- EP:Ergänzungsprüfung VN:Vornote -->
+									art (EP|VN|UT) #REQUIRED> <!-- EP:Ergänzungsprüfung VN:Vornote UT: aus Unterricht -->
 						<!ELEMENT note (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT unterricht (halbjahr1,halbjahr2)>
+									<!ELEMENT halbjahr1 (#PCDATA)>
+									<!ELEMENT halbjahr2 (#PCDATA)> 
 							
 						
 					<!ELEMENT wahlpflichtfaecher (informatik?, biotechnologie?, wirtschaft_aktuell?, sozialpsychologie?, experimentelles_gestalten?, spektrum_der_gesundheit?,
