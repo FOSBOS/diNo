@@ -344,11 +344,11 @@ namespace diNo.Xml
       {
         besuchte_schulart_vor_eintritt = ErmittleVorherBesuchteSchulart(unserSchueler),
         msa_erworben_an_schulart = ErmittleSchulartDerMittlerenReife(unserSchueler),
-        // wenn ein Schüler keine Vornote mitbringt ist doch 5 eine gute Schätzung
-        m_deutsch = unserSchueler.Data.IsMittlereReifeDeutschnoteNull() ? "5" : unserSchueler.Data.MittlereReifeDeutschnote.ToString(),
-        m_englisch = unserSchueler.Data.IsMittlereReifeEnglischnoteNull() ? "5" : unserSchueler.Data.MittlereReifeEnglischnote.ToString(),
-        m_mathematik = unserSchueler.Data.IsMittlereReifeMathenoteNull() ? "5" : unserSchueler.Data.MittlereReifeMathenote.ToString()
       };
+
+      if (!unserSchueler.Data.IsMittlereReifeDeutschnoteNull()) xmlSchueler.grunddaten.vorbildung.m_deutsch = unserSchueler.Data.MittlereReifeDeutschnote.ToString();
+      if (!unserSchueler.Data.IsMittlereReifeEnglischnoteNull()) xmlSchueler.grunddaten.vorbildung.m_englisch = unserSchueler.Data.MittlereReifeEnglischnote.ToString();
+      if (!unserSchueler.Data.IsMittlereReifeMathenoteNull()) xmlSchueler.grunddaten.vorbildung.m_mathematik = unserSchueler.Data.MittlereReifeMathenote.ToString();
     }
 
     private static object CreateXMLAPObject(abschlusspruefung parent, Fach fach, Schueler schueler)
