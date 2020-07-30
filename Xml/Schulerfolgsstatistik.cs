@@ -142,8 +142,14 @@ namespace diNo.Xml
     private static void FuelleGrunddaten(Schueler unserSchueler, schueler xmlSchueler)
     {
       xmlSchueler.grunddaten.geschlecht = unserSchueler.Data.Geschlecht == "m" ? grunddatenGeschlecht.m : grunddatenGeschlecht.w;
-      xmlSchueler.grunddaten.pz_bis = unserSchueler.Data.IsProbezeitBisNull() ? "" : unserSchueler.Data.ProbezeitBis.ToString("dd.mm.yyyy");
-      xmlSchueler.grunddaten.ausgetreten_am = unserSchueler.Data.IsAustrittsdatumNull() ? "" : unserSchueler.Data.Austrittsdatum.ToString("dd.mm.yyyy");
+      if (!unserSchueler.Data.IsProbezeitBisNull())
+      {
+        xmlSchueler.grunddaten.pz_bis = unserSchueler.Data.ProbezeitBis.ToString("dd.MM.yyyy");
+      }
+      if (!unserSchueler.Data.IsAustrittsdatumNull())
+      {
+        xmlSchueler.grunddaten.ausgetreten_am = unserSchueler.Data.Austrittsdatum.ToString("dd.MM.yyyy");
+      }
       xmlSchueler.grunddaten.pz_bestanden = unserSchueler.hatVorkommnis(Vorkommnisart.ProbezeitNichtBestanden) ? grunddatenPz_bestanden.nein : grunddatenPz_bestanden.ja;
       xmlSchueler.grunddaten.pz_bestandenSpecified = true;
       xmlSchueler.grunddaten.jgst_bestanden = grunddatenJgst_bestanden.ja;

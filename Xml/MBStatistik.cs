@@ -1,6 +1,7 @@
 ﻿using diNo.Xml.Mbstatistik;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -325,9 +326,18 @@ namespace diNo.Xml
     private static void FuelleGrunddaten(Schueler unserSchueler, schueler xmlSchueler)
     {
       xmlSchueler.grunddaten.geschlecht = unserSchueler.Data.Geschlecht == "m" ? grunddatenGeschlecht.m : grunddatenGeschlecht.w;
-      xmlSchueler.grunddaten.herkunftsschule = unserSchueler.Data.IsEintrittAusSchulnummerNull() ? "" : unserSchueler.Data.EintrittAusSchulnummer.ToString();
-      xmlSchueler.grunddaten.ausgetreten_am = unserSchueler.Data.IsAustrittsdatumNull() ? "" : unserSchueler.Data.Austrittsdatum.ToString("dd.mm.yyyy");
-      xmlSchueler.grunddaten.durchschnittsnote = unserSchueler.Data.IsDNoteNull() ? "" : unserSchueler.Data.DNote.ToString();
+      if (!unserSchueler.Data.IsEintrittAusSchulnummerNull())
+      {
+        xmlSchueler.grunddaten.herkunftsschule =  unserSchueler.Data.EintrittAusSchulnummer.ToString();
+      } 
+      if (!unserSchueler.Data.IsAustrittsdatumNull())
+      { 
+        xmlSchueler.grunddaten.ausgetreten_am = unserSchueler.Data.Austrittsdatum.ToString("dd.MM.yyyy"); 
+      }
+      if (!unserSchueler.Data.IsDNoteNull())
+      {
+        xmlSchueler.grunddaten.durchschnittsnote = unserSchueler.Data.DNote.ToString(CultureInfo.InvariantCulture);
+      }
       xmlSchueler.grunddaten.wdh_jgst = ErmittleWiederholungskennzahl(unserSchueler, xmlSchueler);
       xmlSchueler.grunddaten.wdh_jgstSpecified = true;
       xmlSchueler.grunddaten.vorbildung = new vorbildung
@@ -477,7 +487,55 @@ namespace diNo.Xml
 
     private static zweite_fremdsprache getSprache(Schueler schueler)
     {
+      if (schueler.HatZweiteFremdsprache())
+      {
+        zweite_fremdsprache result = new zweite_fremdsprache();
+        switch (schueler.Data.AndereFremdspr2Art)
+        {
+          case (int)ZweiteFSArt.RS: result.art = zweite_fremdspracheArt.VN; break;
+          case (int)ZweiteFSArt.FFAlt: result.art = zweite_fremdspracheArt.UT;break;
+          case (int)ZweiteFSArt.ErgPr: result.art = zweite_fremdspracheArt.EP; break;
+        }
+
+        if (!schueler.Data.IsAndereFremdspr2FachNull())
+        {
+          // dies dürfte der Fall sein bei Ersatzprüfungen oder Noten aus der vorigen Schule
+          Fach sprachfach = new Fach(schueler.Data.AndereFremdspr2Fach);
+          result.sprache = GetSprache(sprachfach);
+          result.Item = new note() { gesamt = schueler.Data.AndereFremdspr2Note.ToString() };
+          return result;
+        }
+        else
+        {
+          unterricht unterricht = new unterricht();
+          // Schüler muss irgendwas bei uns gehabt haben
+          if (schueler.Data.AndereFremdspr2Art == (int)ZweiteFSArt.FFAlt)
+          {
+            result.sprache = GetSprache(schueler.getNoten.ZweiteFSalt.getFach);
+            //TODO: stimmt das so ungefähr?
+            unterricht.halbjahr1 = schueler.getNoten.ZweiteFSalt.getHjLeistung(HjArt.Hj1).Punkte.ToString();
+            unterricht.halbjahr2 = schueler.getNoten.ZweiteFSalt.getHjLeistung(HjArt.Hj2).Punkte.ToString();
+          }
+          else
+          {
+            // Schüler muss dieses Jahr Französisch bei uns gehabt haben
+            var zweitsprachen = new List<FachSchuelerNoten> (schueler.getNoten.alleSprachen);
+            zweitsprachen.RemoveAll(x => x.getFach.Kuerzel == "E");
+            if (zweitsprachen.Count != 1)
+              throw new InvalidOperationException("Schüler hat mehr als 1 Zweitsprache.");
+            result.sprache = GetSprache(zweitsprachen[0].getFach);
+            unterricht.halbjahr1 = zweitsprachen[0].getHjLeistung(HjArt.Hj1).Punkte.ToString();
+            unterricht.halbjahr2 = zweitsprachen[0].getHjLeistung(HjArt.Hj2).Punkte.ToString();
+          }
+          result.Item = unterricht;
+        }
+
+        return result;
+       
+      }
+
       return null;
+
       /* TODO: AndereFremdspr2Art abfragen und Sprache aus AndereFremdspr2Text entnehmen!
       if (schueler.Data.IsAndereFremdspr2TextNull() || schueler.Data.IsAndereFremdspr2NoteNull())
       {
@@ -496,6 +554,20 @@ namespace diNo.Xml
 
       result.note = new note() { gesamt = schueler.Data.AndereFremdspr2Note.ToString() };
       return result;*/
+    }
+
+    private static zweite_fremdspracheSprache GetSprache(Fach sprachfach)
+    {
+      switch (sprachfach.Kuerzel)
+      {
+        case "It": return zweite_fremdspracheSprache.Italienisch;
+        case "F": return zweite_fremdspracheSprache.Franzoesisch;
+        case "F-f": return zweite_fremdspracheSprache.Franzoesisch;
+        case "L": return zweite_fremdspracheSprache.Latein;
+        case "Ru": return zweite_fremdspracheSprache.Russisch;
+        case "Sp": return zweite_fremdspracheSprache.Spanisch;
+        default: throw new InvalidOperationException("unbekannte Sprache: "+ sprachfach.Kuerzel);
+      }
     }
 
     private static vorbildungMsa_erworben_an_schulart ErmittleSchulartDerMittlerenReife(Schueler unserSchueler)
