@@ -88,10 +88,14 @@ namespace diNo.Xml
           }
         }
 
-
         foreach (diNoDataSet.SchuelerRow s in k.getSchueler)
         {
           Schueler unserSchueler = new Schueler(s);
+
+          if ((unserSchueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf) || (unserSchueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+          && (unserSchueler.Status == Schuelerstatus.Aktiv && !unserSchueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen) && !unserSchueler.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen)))
+            continue;
+
           schueler xmlSchueler = new schueler
           {
             nummer = unserSchueler.Id.ToString(),
@@ -150,17 +154,28 @@ namespace diNo.Xml
       if (!unserSchueler.Data.IsProbezeitBisNull())
       {
         xmlSchueler.grunddaten.pz_bis = unserSchueler.Data.ProbezeitBis.ToString("dd.MM.yyyy");
+        // jetzt noch schauen, ob er die Probezeit auch bestanden hat
+        xmlSchueler.grunddaten.pz_bestanden = (unserSchueler.hatVorkommnis(Vorkommnisart.ProbezeitNichtBestanden)) ? grunddatenPz_bestanden.nein : grunddatenPz_bestanden.ja;
+        xmlSchueler.grunddaten.pz_bestandenSpecified = true;
       }
       if (!unserSchueler.Data.IsAustrittsdatumNull())
       {
         xmlSchueler.grunddaten.ausgetreten_am = unserSchueler.Data.Austrittsdatum.ToString("dd.MM.yyyy");
       }
-      xmlSchueler.grunddaten.pz_bestanden = unserSchueler.hatVorkommnis(Vorkommnisart.ProbezeitNichtBestanden) ? grunddatenPz_bestanden.nein : grunddatenPz_bestanden.ja;
-      xmlSchueler.grunddaten.pz_bestandenSpecified = true;
+      
       xmlSchueler.grunddaten.jgst_bestanden = grunddatenJgst_bestanden.ja;
-      if (unserSchueler.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis) || unserSchueler.hatVorkommnis(Vorkommnisart.NichtBestanden) || unserSchueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen) || unserSchueler.hatVorkommnis(Vorkommnisart.nichtBestandenMAPnichtZugelassen))
+      if (unserSchueler.Status == Schuelerstatus.Abgemeldet || unserSchueler.hatVorkommnis(Vorkommnisart.ProbezeitNichtBestanden) || unserSchueler.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis) || unserSchueler.hatVorkommnis(Vorkommnisart.NichtBestanden) || unserSchueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen) || unserSchueler.hatVorkommnis(Vorkommnisart.nichtBestandenMAPnichtZugelassen))
       {
         xmlSchueler.grunddaten.jgst_bestanden = grunddatenJgst_bestanden.nein;
+      }
+
+      if (unserSchueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen))
+      {
+        xmlSchueler.grunddaten.pruefung = "0"; // 0 = nicht zugelassen
+      }
+      if (unserSchueler.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
+      {
+        xmlSchueler.grunddaten.pruefung = "1"; // 1 = abgebrochen
       }
     }
   }
