@@ -37,6 +37,11 @@ namespace diNo.Xml
         foreach (var s in k.getSchueler)
         {
           Schueler schueler = new Schueler(s);
+
+          if ((schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf) || (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+            && (schueler.Status == Schuelerstatus.Aktiv && !schueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen) && !schueler.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen)))
+            continue;
+
           if (!xmlKlassen.ContainsKey(schueler.Zweig))
           {
             //die erste Teilklasse erhält einfach die Id der Klasse. Nur bei Mischklassen künstliche Ids.

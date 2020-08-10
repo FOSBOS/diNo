@@ -154,8 +154,9 @@ namespace diNo
       row.Wiederholung2Jahrgangsstufe = cleanArray[wdh2JahrgangsstufeSpalte];
       row.Wiederholung1Grund = cleanArray[wdh1GrundSpalte];
       row.Wiederholung2Grund = cleanArray[wdh2GrundSpalte];
+      
       DateTime? probezeit = ParseDate(cleanArray[probezeitBisSpalte]);
-      if (probezeit == null || probezeit <= DateTime.Now)
+      if (probezeit == null)
       {
         row.SetProbezeitBisNull();
       }
@@ -163,7 +164,7 @@ namespace diNo
       {
         row.ProbezeitBis = (DateTime)probezeit;
       }
-
+      
       DateTime? austrittsdatum = ParseDate(cleanArray[austrittsdatumSpalte]);
       if (austrittsdatum == null)
       {
