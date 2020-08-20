@@ -19,7 +19,10 @@ namespace diNo.Xml
         hoechsteKlassenId = k.GetId() > hoechsteKlassenId ? k.GetId() : hoechsteKlassenId;
       }
 
-      schule fos = new schule() { art = schuleArt.FOS, nummer = "0871" };
+      // TODO: Schulnummer FOS in SF (als globaler String?), Umgang mit BOS?
+      string snr = Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87527" ? "0904" : "0871";
+
+      schule fos = new schule() { art = schuleArt.FOS, nummer = snr };
       schule bos = new schule() { art = schuleArt.BOS, nummer = "0841" };
       se.schule = new schule[] { fos, bos };
 
