@@ -54,7 +54,9 @@ namespace diNo
     Port,
     SendExcelViaMail,
     MailPasswort,
-    VerzeichnisExceldateien
+    VerzeichnisExceldateien,
+    SchulnummerFOS,
+    SchulnummerBOS
   }
 
 }

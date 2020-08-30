@@ -435,6 +435,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="Xml\abschlusspruefung_1.4.dtd" />
+    <None Include="Xml\schulerfolg_1.1.dtd" />
     <None Include="Xml\schulerfolg_1.1.xsd">
       <SubType>Designer</SubType>
     </None>

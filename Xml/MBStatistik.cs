@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace diNo.Xml
@@ -23,8 +24,8 @@ namespace diNo.Xml
       }
 
       // hier wird die Abschlusspruefungsstatistik zusammengebaut
-      schule fos = new schule() { art = schuleArt.FOS, nummer = "0871" };
-      schule bos = new schule() { art = schuleArt.BOS, nummer = "0841" };
+      schule fos = new schule() { art = schuleArt.FOS, nummer = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) };
+      schule bos = new schule() { art = schuleArt.BOS, nummer = Zugriff.Instance.getString(GlobaleStrings.SchulnummerBOS) };
       ap.schule = new schule[] { fos, bos };
 
       List<klasse> fosKlassen12 = new List<klasse>();
@@ -34,7 +35,7 @@ namespace diNo.Xml
 
       foreach (Klasse k in Zugriff.Instance.Klassen)
       {
-        if (k.Jahrgangsstufe != Jahrgangsstufe.Zwoelf /*&& k.Jahrgangsstufe != Jahrgangsstufe.Dreizehn*/)
+        if (k.Jahrgangsstufe != Jahrgangsstufe.Zwoelf && k.Jahrgangsstufe != Jahrgangsstufe.Dreizehn)
         {
           continue; // in MB-Statistik nur 12te und 13te Klassen
         }
@@ -128,7 +129,7 @@ namespace diNo.Xml
               var xmlFachObject = SucheRichtigenXMLKnoten(hjErg, fach);
               if (xmlFachObject != null)
               {
-                FuelleHalbjahre(fach, xmlFachObject);
+                FuelleHalbjahre(unserSchueler, fach, xmlFachObject);
               }
             }
           }
@@ -141,15 +142,30 @@ namespace diNo.Xml
         }
       }
 
-      fos.jahrgangsstufe12 = new jahrgangsstufe12 { klasse = fosKlassen12.ToArray() };
-      fos.jahrgangsstufe13 = new jahrgangsstufe13 { klasse = fosKlassen13.ToArray() };
-      bos.jahrgangsstufe12 = new jahrgangsstufe12 { klasse = bosKlassen12.ToArray() };
-      bos.jahrgangsstufe13 = new jahrgangsstufe13 { klasse = bosKlassen13.ToArray() };
-
-      using (FileStream stream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+      if (fosKlassen12.Count > 0)
       {
-        XmlSerializer ser = new XmlSerializer(typeof(abschlusspruefungsstatistik));
-        ser.Serialize(stream, ap);
+        fos.jahrgangsstufe12 = new jahrgangsstufe12 { klasse = fosKlassen12.ToArray() };
+      }
+      if (fosKlassen13.Count > 0)
+      {
+        fos.jahrgangsstufe13 = new jahrgangsstufe13 { klasse = fosKlassen13.ToArray() };
+      }
+      if (bosKlassen12.Count > 0)
+      {
+        bos.jahrgangsstufe12 = new jahrgangsstufe12 { klasse = bosKlassen12.ToArray() };
+      }
+      if (bosKlassen13.Count > 0)
+      {
+        bos.jahrgangsstufe13 = new jahrgangsstufe13 { klasse = bosKlassen13.ToArray() };
+      }
+
+      XmlSerializer ser = new XmlSerializer(typeof(abschlusspruefungsstatistik));
+      XmlWriterSettings settings = new XmlWriterSettings();
+      settings.Indent = true;
+      using (XmlWriter writer = XmlWriter.Create(fileName, settings))
+      {
+        writer.WriteDocType("abschlusspruefungsstatistik", null, "abschlusspruefung_1.4.dtd", null);
+        ser.Serialize(writer, ap);
       }
     }
 
@@ -183,13 +199,28 @@ namespace diNo.Xml
       return null;
     }
 
-    private static void FuelleHalbjahre(FachSchuelerNoten fach, object xmlFachObject)
+    private static void FuelleHalbjahre(Schueler schueler, FachSchuelerNoten fach, object xmlFachObject)
     {
       List<HjLeistung> leistungen = new List<HjLeistung>();
       leistungen.Add(fach.getVorHjLeistung(HjArt.Hj1));
       leistungen.Add(fach.getVorHjLeistung(HjArt.Hj2));
-      leistungen.Add(fach.getHjLeistung(HjArt.Hj1));
-      leistungen.Add(fach.getHjLeistung(HjArt.Hj2));
+      var hjLeistungAktuell_1 = fach.getHjLeistung(HjArt.Hj1);
+      var hjLeistungAktuell_2 = fach.getHjLeistung(HjArt.Hj2);
+      if (hjLeistungAktuell_1 == null && hjLeistungAktuell_2 != null)
+      {
+        // nicht vorhandene HJLeistungen gehen nicht. Im Zweifelsfall dummy anlegen
+        hjLeistungAktuell_1 = new HjLeistung(schueler.Id, fach.getFach, HjArt.Hj1, hjLeistungAktuell_2.JgStufe);
+        hjLeistungAktuell_1.Status = HjStatus.Ungueltig;
+      }
+      if (hjLeistungAktuell_1 != null && hjLeistungAktuell_2 == null)
+      {
+        // nicht vorhandene HJLeistungen gehen nicht. Im Zweifelsfall dummy anlegen
+        hjLeistungAktuell_2 = new HjLeistung(schueler.Id, fach.getFach, HjArt.Hj2, hjLeistungAktuell_1.JgStufe);
+        hjLeistungAktuell_2.Status = HjStatus.Ungueltig;
+      }
+
+      leistungen.Add(hjLeistungAktuell_1);
+      leistungen.Add(hjLeistungAktuell_2);
 
       List<object> unzuordenbareHalbjahre = new List<object>();
 
@@ -346,9 +377,9 @@ namespace diNo.Xml
         msa_erworben_an_schulart = ErmittleSchulartDerMittlerenReife(unserSchueler),
       };
 
-      if (!unserSchueler.Data.IsMittlereReifeDeutschnoteNull()) xmlSchueler.grunddaten.vorbildung.m_deutsch = unserSchueler.Data.MittlereReifeDeutschnote.ToString();
-      if (!unserSchueler.Data.IsMittlereReifeEnglischnoteNull()) xmlSchueler.grunddaten.vorbildung.m_englisch = unserSchueler.Data.MittlereReifeEnglischnote.ToString();
-      if (!unserSchueler.Data.IsMittlereReifeMathenoteNull()) xmlSchueler.grunddaten.vorbildung.m_mathematik = unserSchueler.Data.MittlereReifeMathenote.ToString();
+      xmlSchueler.grunddaten.vorbildung.m_deutsch = !unserSchueler.Data.IsMittlereReifeDeutschnoteNull() ? unserSchueler.Data.MittlereReifeDeutschnote.ToString() : " ";
+      xmlSchueler.grunddaten.vorbildung.m_englisch = !unserSchueler.Data.IsMittlereReifeEnglischnoteNull() ? unserSchueler.Data.MittlereReifeEnglischnote.ToString() : " ";
+      xmlSchueler.grunddaten.vorbildung.m_mathematik = !unserSchueler.Data.IsMittlereReifeMathenoteNull() ? unserSchueler.Data.MittlereReifeMathenote.ToString() : " ";
     }
 
     private static object CreateXMLAPObject(abschlusspruefung parent, Fach fach, Schueler schueler)
