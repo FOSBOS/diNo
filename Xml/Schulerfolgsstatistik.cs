@@ -22,6 +22,7 @@ namespace diNo.Xml
 
       schule fos = new schule() { art = schuleArt.FOS, nummer = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) };
       schule bos = new schule() { art = schuleArt.BOS, nummer = Zugriff.Instance.getString(GlobaleStrings.SchulnummerBOS) };
+
       se.schule = new schule[] { fos, bos };
 
       List<klasse> fosKlassen11 = new List<klasse>();
