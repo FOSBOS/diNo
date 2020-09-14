@@ -137,10 +137,12 @@ namespace diNo.Xml
       XmlSerializer ser = new XmlSerializer(typeof(schulerfolg));
       XmlWriterSettings settings = new XmlWriterSettings();
       settings.Indent = true;
+      XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+      ns.Add("", "http://tempuri.org/schulerfolg_1.1");
       using (XmlWriter writer = XmlWriter.Create(fileName, settings))
       {
         writer.WriteDocType("schulerfolg", null, "schulerfolg_1.1.dtd", null);
-        ser.Serialize(writer, se);
+        ser.Serialize(writer, se, ns);
       }
     }
 

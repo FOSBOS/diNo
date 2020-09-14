@@ -162,10 +162,12 @@ namespace diNo.Xml
       XmlSerializer ser = new XmlSerializer(typeof(abschlusspruefungsstatistik));
       XmlWriterSettings settings = new XmlWriterSettings();
       settings.Indent = true;
+      XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+      ns.Add("", "http://tempuri.org/abschlusspruefung_1.4");
       using (XmlWriter writer = XmlWriter.Create(fileName, settings))
       {
         writer.WriteDocType("abschlusspruefungsstatistik", null, "abschlusspruefung_1.4.dtd", null);
-        ser.Serialize(writer, ap);
+        ser.Serialize(writer, ap, ns);
       }
     }
 
@@ -377,9 +379,9 @@ namespace diNo.Xml
         msa_erworben_an_schulart = ErmittleSchulartDerMittlerenReife(unserSchueler),
       };
 
-      xmlSchueler.grunddaten.vorbildung.m_deutsch = !unserSchueler.Data.IsMittlereReifeDeutschnoteNull() ? unserSchueler.Data.MittlereReifeDeutschnote.ToString() : " ";
-      xmlSchueler.grunddaten.vorbildung.m_englisch = !unserSchueler.Data.IsMittlereReifeEnglischnoteNull() ? unserSchueler.Data.MittlereReifeEnglischnote.ToString() : " ";
-      xmlSchueler.grunddaten.vorbildung.m_mathematik = !unserSchueler.Data.IsMittlereReifeMathenoteNull() ? unserSchueler.Data.MittlereReifeMathenote.ToString() : " ";
+      xmlSchueler.grunddaten.vorbildung.m_deutsch = !unserSchueler.Data.IsMittlereReifeDeutschnoteNull() ? unserSchueler.Data.MittlereReifeDeutschnote.ToString() : "0";
+      xmlSchueler.grunddaten.vorbildung.m_englisch = !unserSchueler.Data.IsMittlereReifeEnglischnoteNull() ? unserSchueler.Data.MittlereReifeEnglischnote.ToString() : "0";
+      xmlSchueler.grunddaten.vorbildung.m_mathematik = !unserSchueler.Data.IsMittlereReifeMathenoteNull() ? unserSchueler.Data.MittlereReifeMathenote.ToString() : "0";
     }
 
     private static object CreateXMLAPObject(abschlusspruefung parent, Fach fach, Schueler schueler)
