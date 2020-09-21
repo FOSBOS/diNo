@@ -153,13 +153,7 @@ namespace diNo
       }
       else return false;
     }
-
-    public bool IstEinstuendig(Jahrgangsstufe jg, Schulart sa)
-    {
-      return ((sa == Schulart.BOS || jg == Jahrgangsstufe.Dreizehn) && (Kuerzel == "K" || Kuerzel == "Ev" || Kuerzel == "Eth"));
-      // || ggf. Kunst im S-Zweig, und Wl in A-Zweig in der 11. Klasse
-    }
-
+    
     public bool NichtNC
     {
       get

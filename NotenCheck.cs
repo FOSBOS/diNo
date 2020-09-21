@@ -203,7 +203,7 @@ namespace diNo
           }
           */
 
-          if (seminarfachnoten[0].IsThemaLangNull() && seminarfachnoten[0].IsThemaKurzNull())
+          if (seminarfachnoten[0].IsThemaNull())
           {
             contr.Add(null, "Es liegt kein Seminarfachthema vor.");
           }

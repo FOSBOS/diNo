@@ -162,10 +162,10 @@ namespace diNo
 
       if (jg == 13)
       {
-        if (!s.Seminarfachnote.IsThemaKurzNull())
+        if (!s.Seminarfachnote.IsThemaNull())
         {
           Bemerkung = "<b>Thema der Seminararbeit:</b><br>";
-          Bemerkung += s.Seminarfachnote.ThemaKurz + "<br><br>";
+          Bemerkung += s.Seminarfachnote.Thema + "<br><br>";
         }
       }
 
@@ -706,7 +706,7 @@ namespace diNo
 
     public NotenZeugnisDruck(diNoDataSet.SeminarfachnoteRow s)
     {
-      if (!s.IsThemaKurzNull()) Seminarthema = s.ThemaKurz;
+      if (!s.IsThemaNull()) Seminarthema = s.Thema;
       else Seminarthema = "";
       fachGruppe = "Wahlpflichtfächer";
       fachBez = "<b>Seminar</b>";

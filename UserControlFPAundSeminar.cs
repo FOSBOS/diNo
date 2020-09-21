@@ -57,14 +57,12 @@ namespace diNo
       {
         var sem = schueler.Seminarfachnote;
         numSeminarpunkte.Value = sem.IsGesamtnoteNull() ? null : (decimal?)sem.Gesamtnote;
-        textBoxSeminarfachthemaKurz.Text = sem.IsThemaKurzNull() ? "" : sem.ThemaKurz;
-        textBoxSeminarfachthemaLang.Text = sem.IsThemaLangNull() ? "" : sem.ThemaLang;
+        textBoxSeminarfachthema.Text = sem.IsThemaNull() ? "" : sem.Thema;
       }
       else
       {
         numSeminarpunkte.Value = null;
-        textBoxSeminarfachthemaKurz.Text = "";
-        textBoxSeminarfachthemaLang.Text = "";
+        textBoxSeminarfachthema.Text = "";        
       }
     }
 
@@ -187,8 +185,7 @@ namespace diNo
     {
       var sem = schueler.Seminarfachnote;
       if (numSeminarpunkte.Value == null) sem.SetGesamtnoteNull(); else sem.Gesamtnote = (int)numSeminarpunkte.Value;
-      if (textBoxSeminarfachthemaKurz.Text == "") sem.SetThemaKurzNull(); else sem.ThemaKurz = textBoxSeminarfachthemaKurz.Text;
-      if (textBoxSeminarfachthemaLang.Text == "") sem.SetThemaLangNull(); else sem.ThemaLang = textBoxSeminarfachthemaLang.Text;
+      if (textBoxSeminarfachthema.Text == "") sem.SetThemaNull(); else sem.Thema = textBoxSeminarfachthema.Text;
       schueler.Save();
     }
   }

@@ -3462,9 +3462,7 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnGesamtnote;
             
-            private global::System.Data.DataColumn columnThemaLang;
-            
-            private global::System.Data.DataColumn columnThemaKurz;
+            private global::System.Data.DataColumn columnThema;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
@@ -3517,17 +3515,9 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ThemaLangColumn {
+            public global::System.Data.DataColumn ThemaColumn {
                 get {
-                    return this.columnThemaLang;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public global::System.Data.DataColumn ThemaKurzColumn {
-                get {
-                    return this.columnThemaKurz;
+                    return this.columnThema;
                 }
             }
             
@@ -3568,13 +3558,12 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public SeminarfachnoteRow AddSeminarfachnoteRow(SchuelerRow parentSchuelerRowByFK_Seminarfachnote_Schueler, int Gesamtnote, string ThemaLang, string ThemaKurz) {
+            public SeminarfachnoteRow AddSeminarfachnoteRow(SchuelerRow parentSchuelerRowByFK_Seminarfachnote_Schueler, int Gesamtnote, string Thema) {
                 SeminarfachnoteRow rowSeminarfachnoteRow = ((SeminarfachnoteRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
                         Gesamtnote,
-                        ThemaLang,
-                        ThemaKurz};
+                        Thema};
                 if ((parentSchuelerRowByFK_Seminarfachnote_Schueler != null)) {
                     columnValuesArray[0] = parentSchuelerRowByFK_Seminarfachnote_Schueler[0];
                 }
@@ -3609,8 +3598,7 @@ namespace diNo {
             internal void InitVars() {
                 this.columnSchuelerId = base.Columns["SchuelerId"];
                 this.columnGesamtnote = base.Columns["Gesamtnote"];
-                this.columnThemaLang = base.Columns["ThemaLang"];
-                this.columnThemaKurz = base.Columns["ThemaKurz"];
+                this.columnThema = base.Columns["Thema"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3620,16 +3608,13 @@ namespace diNo {
                 base.Columns.Add(this.columnSchuelerId);
                 this.columnGesamtnote = new global::System.Data.DataColumn("Gesamtnote", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnGesamtnote);
-                this.columnThemaLang = new global::System.Data.DataColumn("ThemaLang", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnThemaLang);
-                this.columnThemaKurz = new global::System.Data.DataColumn("ThemaKurz", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnThemaKurz);
+                this.columnThema = new global::System.Data.DataColumn("Thema", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnThema);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnSchuelerId}, true));
                 this.columnSchuelerId.AllowDBNull = false;
                 this.columnSchuelerId.Unique = true;
-                this.columnThemaLang.MaxLength = 1024;
-                this.columnThemaKurz.MaxLength = 117;
+                this.columnThema.MaxLength = 1024;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9782,33 +9767,17 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string ThemaLang {
+            public string Thema {
                 get {
                     try {
-                        return ((string)(this[this.tableSeminarfachnote.ThemaLangColumn]));
+                        return ((string)(this[this.tableSeminarfachnote.ThemaColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte ThemaLang in Tabelle Seminarfachnote ist DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Thema in Tabelle Seminarfachnote ist DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableSeminarfachnote.ThemaLangColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public string ThemaKurz {
-                get {
-                    try {
-                        return ((string)(this[this.tableSeminarfachnote.ThemaKurzColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte ThemaKurz in Tabelle Seminarfachnote ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSeminarfachnote.ThemaKurzColumn] = value;
+                    this[this.tableSeminarfachnote.ThemaColumn] = value;
                 }
             }
             
@@ -9837,26 +9806,14 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsThemaLangNull() {
-                return this.IsNull(this.tableSeminarfachnote.ThemaLangColumn);
+            public bool IsThemaNull() {
+                return this.IsNull(this.tableSeminarfachnote.ThemaColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetThemaLangNull() {
-                this[this.tableSeminarfachnote.ThemaLangColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public bool IsThemaKurzNull() {
-                return this.IsNull(this.tableSeminarfachnote.ThemaKurzColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public void SetThemaKurzNull() {
-                this[this.tableSeminarfachnote.ThemaKurzColumn] = global::System.Convert.DBNull;
+            public void SetThemaNull() {
+                this[this.tableSeminarfachnote.ThemaColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -17042,47 +16999,42 @@ SELECT Id, Notenart, Punktwert, Datum, Zelle, Halbjahr, SchuelerId, KursId FROM 
             tableMapping.DataSetTable = "Seminarfachnote";
             tableMapping.ColumnMappings.Add("SchuelerId", "SchuelerId");
             tableMapping.ColumnMappings.Add("Gesamtnote", "Gesamtnote");
-            tableMapping.ColumnMappings.Add("ThemaLang", "ThemaLang");
-            tableMapping.ColumnMappings.Add("ThemaKurz", "ThemaKurz");
+            tableMapping.ColumnMappings.Add("Thema", "Thema");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Seminarfachnote] WHERE (([SchuelerId] = @Original_SchuelerId) AND ((@IsNull_Gesamtnote = 1 AND [Gesamtnote] IS NULL) OR ([Gesamtnote] = @Original_Gesamtnote)) AND ((@IsNull_ThemaLang = 1 AND [ThemaLang] IS NULL) OR ([ThemaLang] = @Original_ThemaLang)) AND ((@IsNull_ThemaKurz = 1 AND [ThemaKurz] IS NULL) OR ([ThemaKurz] = @Original_ThemaKurz)))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [Seminarfachnote] WHERE (([SchuelerId] = @Original_SchuelerId) AND ((" +
+                "@IsNull_Gesamtnote = 1 AND [Gesamtnote] IS NULL) OR ([Gesamtnote] = @Original_Ge" +
+                "samtnote)) AND ((@IsNull_Thema = 1 AND [Thema] IS NULL) OR ([Thema] = @Original_" +
+                "Thema)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Gesamtnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gesamtnote", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Gesamtnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gesamtnote", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ThemaLang", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaLang", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ThemaLang", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaLang", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ThemaKurz", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaKurz", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ThemaKurz", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaKurz", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Thema", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Thema", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Thema", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Thema", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [Seminarfachnote] ([SchuelerId], [Gesamtnote], [ThemaLang], [ThemaKur" +
-                "z]) VALUES (@SchuelerId, @Gesamtnote, @ThemaLang, @ThemaKurz);\r\nSELECT SchuelerI" +
-                "d, Gesamtnote, ThemaLang, ThemaKurz FROM Seminarfachnote WHERE (SchuelerId = @Sc" +
-                "huelerId)";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [Seminarfachnote] ([SchuelerId], [Gesamtnote], [Thema]) VALUES (@Schu" +
+                "elerId, @Gesamtnote, @Thema);\r\nSELECT SchuelerId, Gesamtnote, Thema FROM Seminar" +
+                "fachnote WHERE (SchuelerId = @SchuelerId)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Gesamtnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gesamtnote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ThemaLang", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaLang", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ThemaKurz", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaKurz", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thema", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Thema", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [Seminarfachnote] SET [SchuelerId] = @SchuelerId, [Gesamtnote] = @Gesamtnote, [ThemaLang] = @ThemaLang, [ThemaKurz] = @ThemaKurz WHERE (([SchuelerId] = @Original_SchuelerId) AND ((@IsNull_Gesamtnote = 1 AND [Gesamtnote] IS NULL) OR ([Gesamtnote] = @Original_Gesamtnote)) AND ((@IsNull_ThemaLang = 1 AND [ThemaLang] IS NULL) OR ([ThemaLang] = @Original_ThemaLang)) AND ((@IsNull_ThemaKurz = 1 AND [ThemaKurz] IS NULL) OR ([ThemaKurz] = @Original_ThemaKurz)));
-SELECT SchuelerId, Gesamtnote, ThemaLang, ThemaKurz FROM Seminarfachnote WHERE (SchuelerId = @SchuelerId)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Seminarfachnote] SET [SchuelerId] = @SchuelerId, [Gesamtnote] = @Gesamtnote, [Thema] = @Thema WHERE (([SchuelerId] = @Original_SchuelerId) AND ((@IsNull_Gesamtnote = 1 AND [Gesamtnote] IS NULL) OR ([Gesamtnote] = @Original_Gesamtnote)) AND ((@IsNull_Thema = 1 AND [Thema] IS NULL) OR ([Thema] = @Original_Thema)));
+SELECT SchuelerId, Gesamtnote, Thema FROM Seminarfachnote WHERE (SchuelerId = @SchuelerId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Gesamtnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gesamtnote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ThemaLang", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaLang", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ThemaKurz", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaKurz", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thema", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Thema", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_SchuelerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Gesamtnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gesamtnote", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Gesamtnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Gesamtnote", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ThemaLang", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaLang", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ThemaLang", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaLang", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ThemaKurz", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaKurz", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ThemaKurz", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ThemaKurz", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Thema", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Thema", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Thema", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Thema", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17098,13 +17050,11 @@ SELECT SchuelerId, Gesamtnote, ThemaLang, ThemaKurz FROM Seminarfachnote WHERE (
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        SchuelerId, Gesamtnote, ThemaLang, ThemaKurz\r\nFROM            Semin" +
-                "arfachnote";
+            this._commandCollection[0].CommandText = "SELECT        *\r\nFROM            Seminarfachnote";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT Gesamtnote, SchuelerId, ThemaKurz, ThemaLang FROM Seminarfachnote WHERE (S" +
-                "chuelerId = @SchuelerId)";
+            this._commandCollection[1].CommandText = "SELECT * FROM Seminarfachnote \r\nWHERE (SchuelerId = @SchuelerId)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -17118,20 +17068,6 @@ SELECT SchuelerId, Gesamtnote, ThemaLang, ThemaKurz FROM Seminarfachnote WHERE (
             diNoDataSet.SeminarfachnoteDataTable dataTable = new diNoDataSet.SeminarfachnoteDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
-        public virtual int FillBySchuelerId(diNoDataSet.SeminarfachnoteDataTable dataTable, int SchuelerId) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(SchuelerId));
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -17179,7 +17115,7 @@ SELECT SchuelerId, Gesamtnote, ThemaLang, ThemaKurz FROM Seminarfachnote WHERE (
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_SchuelerId, global::System.Nullable<int> Original_Gesamtnote, string Original_ThemaLang, string Original_ThemaKurz) {
+        public virtual int Delete(int Original_SchuelerId, global::System.Nullable<int> Original_Gesamtnote, string Original_Thema) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_SchuelerId));
             if ((Original_Gesamtnote.HasValue == true)) {
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
@@ -17189,21 +17125,13 @@ SELECT SchuelerId, Gesamtnote, ThemaLang, ThemaKurz FROM Seminarfachnote WHERE (
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
-            if ((Original_ThemaLang == null)) {
+            if ((Original_Thema == null)) {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_ThemaLang));
-            }
-            if ((Original_ThemaKurz == null)) {
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
-                this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((string)(Original_ThemaKurz));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((string)(Original_Thema));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -17225,7 +17153,7 @@ SELECT SchuelerId, Gesamtnote, ThemaLang, ThemaKurz FROM Seminarfachnote WHERE (
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int SchuelerId, global::System.Nullable<int> Gesamtnote, string ThemaLang, string ThemaKurz) {
+        public virtual int Insert(int SchuelerId, global::System.Nullable<int> Gesamtnote, string Thema) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(SchuelerId));
             if ((Gesamtnote.HasValue == true)) {
                 this.Adapter.InsertCommand.Parameters[1].Value = ((int)(Gesamtnote.Value));
@@ -17233,17 +17161,11 @@ SELECT SchuelerId, Gesamtnote, ThemaLang, ThemaKurz FROM Seminarfachnote WHERE (
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            if ((ThemaLang == null)) {
+            if ((Thema == null)) {
                 this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(ThemaLang));
-            }
-            if ((ThemaKurz == null)) {
-                this.Adapter.InsertCommand.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[3].Value = ((string)(ThemaKurz));
+                this.Adapter.InsertCommand.Parameters[2].Value = ((string)(Thema));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -17265,7 +17187,7 @@ SELECT SchuelerId, Gesamtnote, ThemaLang, ThemaKurz FROM Seminarfachnote WHERE (
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int SchuelerId, global::System.Nullable<int> Gesamtnote, string ThemaLang, string ThemaKurz, int Original_SchuelerId, global::System.Nullable<int> Original_Gesamtnote, string Original_ThemaLang, string Original_ThemaKurz) {
+        public virtual int Update(int SchuelerId, global::System.Nullable<int> Gesamtnote, string Thema, int Original_SchuelerId, global::System.Nullable<int> Original_Gesamtnote, string Original_Thema) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(SchuelerId));
             if ((Gesamtnote.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(Gesamtnote.Value));
@@ -17273,42 +17195,28 @@ SELECT SchuelerId, Gesamtnote, ThemaLang, ThemaKurz FROM Seminarfachnote WHERE (
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            if ((ThemaLang == null)) {
+            if ((Thema == null)) {
                 this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(ThemaLang));
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(Thema));
             }
-            if ((ThemaKurz == null)) {
-                this.Adapter.UpdateCommand.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(ThemaKurz));
-            }
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(Original_SchuelerId));
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_SchuelerId));
             if ((Original_Gesamtnote.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_Gesamtnote.Value));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_Gesamtnote.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
-            if ((Original_ThemaLang == null)) {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[7].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_ThemaLang));
-            }
-            if ((Original_ThemaKurz == null)) {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
+            if ((Original_Thema == null)) {
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_ThemaKurz));
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(Original_Thema));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -17330,8 +17238,8 @@ SELECT SchuelerId, Gesamtnote, ThemaLang, ThemaKurz FROM Seminarfachnote WHERE (
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(global::System.Nullable<int> Gesamtnote, string ThemaLang, string ThemaKurz, int Original_SchuelerId, global::System.Nullable<int> Original_Gesamtnote, string Original_ThemaLang, string Original_ThemaKurz) {
-            return this.Update(Original_SchuelerId, Gesamtnote, ThemaLang, ThemaKurz, Original_SchuelerId, Original_Gesamtnote, Original_ThemaLang, Original_ThemaKurz);
+        public virtual int Update(global::System.Nullable<int> Gesamtnote, string Thema, int Original_SchuelerId, global::System.Nullable<int> Original_Gesamtnote, string Original_Thema) {
+            return this.Update(Original_SchuelerId, Gesamtnote, Thema, Original_SchuelerId, Original_Gesamtnote, Original_Thema);
         }
     }
     
