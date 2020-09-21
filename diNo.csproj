@@ -95,6 +95,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExportKurswahl.cs" />
+    <Compile Include="KlasseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KlasseForm.Designer.cs">
+      <DependentUpon>KlasseForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ListeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,12 +161,6 @@
     <Compile Include="Xml\MBStatistik.cs" />
     <Compile Include="Xml\schulerfolg_1_1.cs" />
     <Compile Include="Xml\Schulerfolgsstatistik.cs" />
-    <Compile Include="Stammdaten.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Stammdaten.Designer.cs">
-      <DependentUpon>Stammdaten.cs</DependentUpon>
-    </Compile>
     <Compile Include="Testdaten.cs" />
     <Compile Include="UserControlAdministration.cs">
       <SubType>UserControl</SubType>
@@ -275,6 +275,9 @@
     <EmbeddedResource Include="InputBox.resx">
       <DependentUpon>InputBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="KlasseForm.resx">
+      <DependentUpon>KlasseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Klassenansicht.resx">
       <DependentUpon>Klassenansicht.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -302,9 +305,6 @@
     <EmbeddedResource Include="rptNotenmitteilung.rdlc" />
     <EmbeddedResource Include="GlobalesForm.resx">
       <DependentUpon>GlobalesForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Stammdaten.resx">
-      <DependentUpon>Stammdaten.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="subrptAbiLinkeSeite.rdlc" />
     <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />

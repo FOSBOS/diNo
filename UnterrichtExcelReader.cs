@@ -295,7 +295,7 @@ namespace diNo
         {
           if (createIfNotFound)
           {
-            new KlasseTableAdapter().Insert(aklasse, null);
+            Klasse.Insert(aklasse);
           }
           else
           {

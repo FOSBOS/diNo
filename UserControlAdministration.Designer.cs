@@ -75,11 +75,12 @@
       this.btnHjLeistungenWuerfeln = new System.Windows.Forms.Button();
       this.groupboxTest = new System.Windows.Forms.GroupBox();
       this.groupBoxReparatur = new System.Windows.Forms.GroupBox();
+      this.btnCorona2HJKlonen = new System.Windows.Forms.Button();
       this.btnKurseZuweisen = new System.Windows.Forms.Button();
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
-      this.btnCorona2HJKlonen = new System.Windows.Forms.Button();
+      this.btnKlassen = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -402,6 +403,7 @@
       // 
       // groupBoxStammdaten
       // 
+      this.groupBoxStammdaten.Controls.Add(this.btnKlassen);
       this.groupBoxStammdaten.Controls.Add(this.btnBerechtigungen);
       this.groupBoxStammdaten.Controls.Add(this.btnGlobales);
       this.groupBoxStammdaten.Controls.Add(this.btnLehrer);
@@ -607,6 +609,16 @@
       this.groupBoxReparatur.TabStop = false;
       this.groupBoxReparatur.Text = "Reparaturen";
       // 
+      // btnCorona2HJKlonen
+      // 
+      this.btnCorona2HJKlonen.Location = new System.Drawing.Point(15, 141);
+      this.btnCorona2HJKlonen.Name = "btnCorona2HJKlonen";
+      this.btnCorona2HJKlonen.Size = new System.Drawing.Size(163, 23);
+      this.btnCorona2HJKlonen.TabIndex = 11;
+      this.btnCorona2HJKlonen.Text = "Corona: HJ-Ergebnisse klonen";
+      this.btnCorona2HJKlonen.UseVisualStyleBackColor = true;
+      this.btnCorona2HJKlonen.Click += new System.EventHandler(this.btnCorona2HJKlonen_Click);
+      // 
       // btnKurseZuweisen
       // 
       this.btnKurseZuweisen.Location = new System.Drawing.Point(15, 197);
@@ -647,15 +659,15 @@
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
       // 
-      // btnCorona2HJKlonen
+      // btnKlassen
       // 
-      this.btnCorona2HJKlonen.Location = new System.Drawing.Point(15, 141);
-      this.btnCorona2HJKlonen.Name = "btnCorona2HJKlonen";
-      this.btnCorona2HJKlonen.Size = new System.Drawing.Size(163, 23);
-      this.btnCorona2HJKlonen.TabIndex = 11;
-      this.btnCorona2HJKlonen.Text = "Corona: HJ-Ergebnisse klonen";
-      this.btnCorona2HJKlonen.UseVisualStyleBackColor = true;
-      this.btnCorona2HJKlonen.Click += new System.EventHandler(this.btnCorona2HJKlonen_Click);
+      this.btnKlassen.Location = new System.Drawing.Point(18, 85);
+      this.btnKlassen.Name = "btnKlassen";
+      this.btnKlassen.Size = new System.Drawing.Size(174, 23);
+      this.btnKlassen.TabIndex = 6;
+      this.btnKlassen.Text = "Klassen";
+      this.btnKlassen.UseVisualStyleBackColor = true;
+      this.btnKlassen.Click += new System.EventHandler(this.btnKlassen_Click);
       // 
       // UserControlAdministration
       // 
@@ -747,5 +759,6 @@
     private System.Windows.Forms.Button btnKurseZuweisen;
     private System.Windows.Forms.Button btnExportKurswahl;
     private System.Windows.Forms.Button btnCorona2HJKlonen;
+    private System.Windows.Forms.Button btnKlassen;
   }
 }

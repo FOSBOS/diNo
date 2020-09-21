@@ -322,8 +322,7 @@ namespace diNo
     }
 
     public void BestimmeSprachniveau(Schueler s)
-    {
-      var ta = new HjLeistungTableAdapter();
+    {      
       // neue Logik ist, dass ein einmal erreichtes Sprachniveau an der FOS nicht mehr gelöscht wird.
       // Problem, wenn sich wegen falscher Noteneingabe nachträglich was ändert (dann ggf. manuell Sprachniveau löschen).
       // ta.DeleteBySchuelerIdAndArt(s.Id, (byte)HjArt.Sprachenniveau,(int)s.getKlasse.Jahrgangsstufe); 

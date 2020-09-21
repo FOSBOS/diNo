@@ -66,27 +66,10 @@ namespace diNo
     private void Init()
     {
       eigeneSchueler = new List<Schueler>();
-      jg = Faecherkanon.GetJahrgangsstufe(data.Bezeichnung);
-
-      // Zweig der Klasse (None für Mischklassen)
-      string bez = this.Bezeichnung;
-      if (bez.Contains("_"))
-        zweig = CharToZweig(bez.Substring(bez.Length - 1, 1)); // Teilklasse      
-      else if (bez.Contains("W") && !bez.Contains("S") && !bez.Contains("U") && !bez.Contains("T"))
-        zweig = Zweig.Wirtschaft;
-      else if (bez.Contains("S") && !bez.Contains("W") && !bez.Contains("U") && !bez.Contains("T"))
-        zweig = Zweig.Sozial;
-      else if (bez.Contains("T") && !bez.Contains("S") && !bez.Contains("U") && !bez.Contains("W"))
-        zweig = Zweig.Technik;
-      else if (bez.Contains("U") && !bez.Contains("S") && !bez.Contains("T") && !bez.Contains("W"))
-        zweig = Zweig.Umwelt;
-      else //hier stehen nur noch die Klassen, deren Zweig nicht eindeutig ist, z. B. Vorkurs BOS oder Mischklassen      
-        zweig = Zweig.None;
-
-      if (bez.StartsWith("B") || bez.StartsWith("b"))
-        schulart = Schulart.BOS;
-      else
-        schulart = Schulart.FOS;
+      jg = (Jahrgangsstufe) data.JgStufe;
+      if (data.IsZweigNull() || data.Zweig.Length != 1) zweig = Zweig.None;
+      else zweig = CharToZweig(data.Zweig);
+      schulart = data.IsSchulartNull() ? Schulart.None : (Schulart)data.Schulart;
     }
 
     public static Klasse CreateKlasse(int id)
@@ -209,6 +192,26 @@ namespace diNo
       }
     }
 
+    public static void Insert(string bez)
+    {
+      var ta = new KlasseTableAdapter();
+      Schulart schulart = (bez.StartsWith("B") || bez.StartsWith("b")) ? schulart = Schulart.BOS : Schulart.FOS;
+      Jahrgangsstufe jg = Faecherkanon.GetJahrgangsstufe(bez);
+      string zweig = "";
+      if (bez.Contains("S")) zweig = "S";
+      if (bez.Contains("T")) zweig += "T";
+      if (bez.Contains("U")) zweig += "U";
+      if (bez.Contains("W")) zweig += "W";
+      ta.Insert(bez, null, (byte)jg, (byte)schulart, zweig);
+    }
+
+    public void Save()
+    {
+      var ta = new KlasseTableAdapter();
+      ta.Update(data);
+      klassenleiter = null;
+      Init();
+    }
   }
 
   /// <summary>

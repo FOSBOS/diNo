@@ -452,7 +452,11 @@ namespace diNo
 
         }
       }
+    }
 
+    private void btnKlassen_Click(object sender, EventArgs e)
+    {
+      new KlasseForm().ShowDialog();
     }
   }
 }

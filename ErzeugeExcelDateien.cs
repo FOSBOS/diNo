@@ -255,11 +255,7 @@ namespace diNo
     {
       var klassen = new List<string>(); // sammelt alle Klassennamen dieses Kurses (z.B. für Ethik spannend)
                                         // Schulart, SA-Wertung wird dem ersten Schüler entnommen
-
-      Schueler ersterSchueler = new Schueler(alleSchueler[0]); // muss existieren, da nur Kurse mit Schülern erzeugt werden
-
-      Schulart schulart = ersterSchueler.getKlasse.Schulart;
-
+     
       // schreibe Notenbogen - Kopf
       xls.WriteValue(xls.notenbogen, "E1", kurs.getFach.Bezeichnung);
       xls.WriteValueProtectedCell(xls.notenbogen, "I1", GetLehrerOderLehrerin(kurs));
@@ -282,7 +278,6 @@ namespace diNo
         // Schüler in die Exceldatei schreiben
         xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name + ", " + schueler.benutzterVorname);
         xls.WriteValueProtectedCell(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
-        //xls.WriteValueProtectedCell(xls.sid, CellConstant.Regelung + zeileFuerSId, schueler.hatVorHj ? "FOS" : "BOS");
 
         zeile++;
         zeileFuerSId++;
