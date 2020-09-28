@@ -268,20 +268,6 @@ namespace diNo
       return !string.IsNullOrEmpty(v) ? Convert.ToDecimal(v, CultureInfo.CurrentUICulture) : (decimal?)null;
     }
 
-    /// <summary>
-    /// Prüft, ob die Datei nach der alten Schulordnung ausgelesen werden muss.
-    /// </summary>
-    /// <returns>true wenn für diese Datei die alte Schulordnung gelten muss.</returns>
-    public bool IsCoronaFile()
-    {
-      return ReadValue(sid, "F1") == "Corona";
-    }
-
-    public void SetCoronaFile()
-    {
-      WriteValueProtectedCell(sid, "F1", "Corona");
-    }
-
     protected int GetErsteFreieZeile(Excel.Worksheet sheet)
     {
       int zeile = 38;

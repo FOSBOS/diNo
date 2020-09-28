@@ -72,25 +72,10 @@ namespace diNo
             {
               if (fpaZeile.IsGesamtNull())
                 continue;
-
-              // Corona: 22 als SchnittMdl ==> kopiert
-              writer.WriteLine(schueler.Id + Sep + fpa.Id + Sep + "11" + Sep + fpaZeile.Gesamt + Sep + fpaZeile.Halbjahr + Sep 
-                + (fpaZeile.Halbjahr==1 ? 22 : fpaZeile.Gesamt) + Sep + fpaZeile.Gesamt + Sep + schueler.NameVorname + Sep + fpa.Kuerzel);
-
-              /* Die Fpa-Daten brauchen wir nicht mehr (im Notfall s. alter Notenbogen)
-              // jahrespunkte sind null bei den fpaNoten aus dem ersten Halbjahr
-              // vertiefung1 und vertiefung2 sind nur bei den Sozialen gefüllt
-              // bemerkung und stelle sind für uns auch nicht so wichtig und dürften null sein
-              byte? jahresPunkte = fpaZeile.IsJahrespunkteNull() ? (byte?)null : fpaZeile.Jahrespunkte;
-              string bemerkung = fpaZeile.IsBemerkungNull() ? null : fpaZeile.Bemerkung.Replace("\n", ""); // mehrzeilig geht nicht mit csv
-              byte? vertiefung1 = fpaZeile.IsVertiefung1Null() ? (byte?)null : fpaZeile.Vertiefung1;
-              byte? vertiefung2 = fpaZeile.IsVertiefung2Null() ? (byte?)null : fpaZeile.Vertiefung2;
-              string stelle = fpaZeile.IsStelleNull() ? null : fpaZeile.Stelle.Replace(";", ".").Replace("\n", "");
               
-                // Erzeugt eine Zeile mit mind. 12 durch ; getrennten Werten (kann mehr sein, falls in der Bemerkung auch ;e enthalten sind)
-                writer.WriteLine(schueler.Id + Sep + schueler.NameVorname + Sep + FpAKennzeichen + Sep + fpaZeile.Gesamt + Sep + fpaZeile.Halbjahr + Sep + jahresPunkte + Sep + fpaZeile.Vertiefung + Sep + vertiefung1 + Sep + vertiefung2 + Sep + fpaZeile.Anleitung + Sep + fpaZeile.Betrieb + Sep + stelle + Sep + bemerkung);
-                // dasselbe als Hj-Leistung abspeichern: trage hierbei Gesamt auch als mdl. und Note2Dez ein (ist richtiger als leer lassen)
-              */
+              writer.WriteLine(schueler.Id + Sep + fpa.Id + Sep + "11" + Sep + fpaZeile.Gesamt + Sep + fpaZeile.Halbjahr + Sep 
+                + fpaZeile.Gesamt + Sep + fpaZeile.Gesamt + Sep + schueler.NameVorname + Sep + fpa.Kuerzel);
+  
             }
           }
 

@@ -102,23 +102,13 @@ namespace diNo
         ReadBasisdaten(xls);
         BackupZiehen();
   
-        // Corona:
-        if (kurs.JgStufe>Jahrgangsstufe.Elf || Zugriff.Instance.HatVerwaltungsrechte)
-        {
-          Status("Synchronisiere Datei " + afileName);
-          Synchronize();
+        Status("Synchronisiere Datei " + afileName);
+        Synchronize();
 
-          Status("Übertrage Noten aus Datei " + afileName);
-          DeleteAlteNoten();
-          UebertrageNoten();
-          HinweiseAusgeben(xls);
-        }
-        else
-        {
-          MessageBox.Show("Notendateien der 11. Klassen und Vorklassen können nicht abgegeben werden. \n" +
-            "Ergebnisse der Ersatzprüfungen bitte auf einer Liste erfassen und mit der Notendatei an Markus Siegel mailen."
-            , "diNo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        }
+        Status("Übertrage Noten aus Datei " + afileName);
+        DeleteAlteNoten();
+        UebertrageNoten();
+        HinweiseAusgeben(xls);
       }
       finally
       {
@@ -247,20 +237,12 @@ namespace diNo
 
         if (liesZweitesHJ)
         {
-          // CORONA - Code: Diese Abfrage wieder rauswerfen!
-          if (alles || (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf) && 
-              (kurs.getFach.Kuerzel == "G" || // Geschichte immer
-              (kurs.getFach.Kuerzel == "C" && schueler.Data.Ausbildungsrichtung == "S") || //Chemie im Sozialzweig
-              (kurs.getFach.Kuerzel == "Rl" && schueler.Data.Ausbildungsrichtung == "W")) // Rechtslehre im Wirtschaftszweig
-             ) 
-          {
-            LiesHalbjahr(xls.notenbogen2, fsn, Halbjahr.Zweites, i, sid, jg);
+          LiesHalbjahr(xls.notenbogen2, fsn, Halbjahr.Zweites, i, sid, jg);
 
-            if (aktiverKurs)
-            {
-              byte? jahresnote = xls.ReadNote("R" + i, xls.notenbogen2);
-              HjLeistung.CreateOrUpdate(fsn, sid, HjArt.JN, kurs.getFach, jg, jahresnote);
-            }
+          if (aktiverKurs)
+          {
+            byte? jahresnote = xls.ReadNote("R" + i, xls.notenbogen2);
+            HjLeistung.CreateOrUpdate(fsn, sid, HjArt.JN, kurs.getFach, jg, jahresnote);
           }
         }
 

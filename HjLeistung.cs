@@ -117,10 +117,7 @@ namespace diNo
       }
       else if (hjl != null) // HjLeistung wurde in dieser Exceldatei gelöscht
       {
-        //TODO: Corona-Änderung wieder rückgängig machen!!!
-        // wenn im mdl. Schnitt 21 oder 22 Punkte drinstehen, wird die HJLeistung nicht gelöscht, auch wenn in Excel leer bleibt
-        if (hjl.SchnittMdl < 20)
-          hjl.Delete();
+        hjl.Delete();
       }
     }
 

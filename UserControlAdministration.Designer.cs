@@ -57,6 +57,7 @@
       this.btnImportUnterricht = new System.Windows.Forms.Button();
       this.importNoten = new System.Windows.Forms.Button();
       this.groupBoxStammdaten = new System.Windows.Forms.GroupBox();
+      this.btnKlassen = new System.Windows.Forms.Button();
       this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.btnGlobales = new System.Windows.Forms.Button();
       this.btnLehrer = new System.Windows.Forms.Button();
@@ -80,7 +81,6 @@
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
-      this.btnKlassen = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -415,6 +415,16 @@
       this.groupBoxStammdaten.TabStop = false;
       this.groupBoxStammdaten.Text = "Stammdaten";
       // 
+      // btnKlassen
+      // 
+      this.btnKlassen.Location = new System.Drawing.Point(18, 85);
+      this.btnKlassen.Name = "btnKlassen";
+      this.btnKlassen.Size = new System.Drawing.Size(174, 23);
+      this.btnKlassen.TabIndex = 6;
+      this.btnKlassen.Text = "Klassen";
+      this.btnKlassen.UseVisualStyleBackColor = true;
+      this.btnKlassen.Click += new System.EventHandler(this.btnKlassen_Click);
+      // 
       // btnBerechtigungen
       // 
       this.btnBerechtigungen.Location = new System.Drawing.Point(18, 153);
@@ -615,7 +625,7 @@
       this.btnCorona2HJKlonen.Name = "btnCorona2HJKlonen";
       this.btnCorona2HJKlonen.Size = new System.Drawing.Size(163, 23);
       this.btnCorona2HJKlonen.TabIndex = 11;
-      this.btnCorona2HJKlonen.Text = "Corona: HJ-Ergebnisse klonen";
+      this.btnCorona2HJKlonen.Text = "Corona-Günstigerpr. Ende 12/1";
       this.btnCorona2HJKlonen.UseVisualStyleBackColor = true;
       this.btnCorona2HJKlonen.Click += new System.EventHandler(this.btnCorona2HJKlonen_Click);
       // 
@@ -658,16 +668,6 @@
       this.btnEinbringung.Text = "Einbringung berechnen";
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
-      // 
-      // btnKlassen
-      // 
-      this.btnKlassen.Location = new System.Drawing.Point(18, 85);
-      this.btnKlassen.Name = "btnKlassen";
-      this.btnKlassen.Size = new System.Drawing.Size(174, 23);
-      this.btnKlassen.TabIndex = 6;
-      this.btnKlassen.Text = "Klassen";
-      this.btnKlassen.UseVisualStyleBackColor = true;
-      this.btnKlassen.Click += new System.EventHandler(this.btnKlassen_Click);
       // 
       // UserControlAdministration
       // 

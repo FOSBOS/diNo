@@ -745,14 +745,12 @@ namespace diNo
         return 16;
       }
 
-      // Corona-Hack:
-      int corr = (getNoten.Fachreferat.Count == 0) ? 1 : 0; // nur Jg=12
       if (!hatVorHj)
       {
-        return 17 + corr;
+        return 17;
       }
 
-      return 25 + corr; //FOS11
+      return 25;
     }
 
     public ZweiteFSArt getZweiteFSArt()

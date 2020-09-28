@@ -382,74 +382,31 @@ namespace diNo
       }
     }
 
+
+    // zum Ende des 1. Hj 2020/21 müssen die 11/2 Noten mit einer Günstigerprüfung mit 12/1 abgeglichen werden
     private void btnCorona2HJKlonen_Click(object sender, EventArgs e)
     {
       foreach (var klasse in Zugriff.Instance.Klassen)
       {
-        if (klasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf)
+        if (klasse.Jahrgangsstufe != Jahrgangsstufe.Zwoelf)
           continue;
 
         foreach (var schueler in klasse.eigeneSchueler)
         {
           foreach (var noten in schueler.getNoten.alleKurse)
           {
-            var hj1 = noten.getHjLeistung(HjArt.Hj1);
-            var hj2 = noten.getHjLeistung(HjArt.Hj2);
-            var jahresnote = noten.getHjLeistung(HjArt.JN);
+            var hj11_2 = noten.getVorHjLeistung(HjArt.Hj2);
+            var hj12_1 = noten.getHjLeistung(HjArt.Hj1);
 
-            if (hj2 != null)
+            // nur kopierte Noten werden überprüft (Kennzeichen 21)!
+            if (hj11_2 == null || hj12_1 == null || hj11_2.SchnittMdl != 21) continue;
+
+            if (hj12_1.Punkte > hj11_2.Punkte)
             {
-              hj2.Delete();
+              hj11_2.Punkte = hj12_1.Punkte;
+              hj11_2.WriteToDB();
             }
-
-            if (hj1 == null) // das betrifft eigentlich nur die in die Vorklasse zurückgetretenen. Wie geht man damit um? Bekommen die irgendein Zeugnis?
-              continue;
-
-            hj2 = new HjLeistung(schueler.Id, noten.getFach, HjArt.Hj2, hj1.JgStufe);
-            hj2.Punkte = hj1.Punkte;
-            hj2.Punkte2Dez = hj1.Punkte2Dez;
-
-            // um kopierte Noten zu erkennen
-            if ((schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf) &&  
-                (noten.getFach.Kuerzel == "G" || // Geschichte immer
-                (noten.getFach.Kuerzel == "C" && schueler.Data.Ausbildungsrichtung == "S") || //Chemie im Sozialzweig
-                (noten.getFach.Kuerzel == "Rl" && schueler.Data.Ausbildungsrichtung == "W")) // Rechtslehre im Wirtschaftszweig
-               )
-            {
-              hj2.SchnittMdl = 22;
-            }
-            else
-            {
-              hj2.SchnittMdl = 21;
-            }
-
-            hj2.WriteToDB();
-
-            //Jahresnote
-            HjLeistung.CreateOrUpdate(noten, schueler.Id, HjArt.JN, noten.getFach, hj1.JgStufe, hj1.Punkte, null, hj2.SchnittMdl);
-
-            //Einzelnoten löschen
-            new NoteTableAdapter().DeleteByKursAndHalbjahr(noten.kursId, (byte)Halbjahr.Zweites);
           }
-          
-          // fpA-Note
-          if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf && schueler.FPANoten.Count == 2)
-          {
-            schueler.FPANoten[1].Anleitung = schueler.FPANoten[0].Anleitung;
-            schueler.FPANoten[1].Bemerkung = "aufgrund der Corona-Regelung aus dem ersten Halbjahr kopiert";
-            schueler.FPANoten[1].Betrieb = schueler.FPANoten[0].Betrieb;
-            schueler.FPANoten[1].Gesamt = schueler.FPANoten[0].Gesamt;
-            schueler.FPANoten[1].Jahrespunkte = schueler.FPANoten[0].Gesamt;
-            schueler.FPANoten[1].Stelle = "";
-            schueler.FPANoten[1].Vertiefung = schueler.FPANoten[0].Vertiefung;
-            if (!schueler.FPANoten[0].IsVertiefung1Null())
-              schueler.FPANoten[1].Vertiefung1 = schueler.FPANoten[0].Vertiefung1;
-            if (!schueler.FPANoten[0].IsVertiefung2Null())
-              schueler.FPANoten[1].Vertiefung2 = schueler.FPANoten[0].Vertiefung2;
-            (new FpaTableAdapter()).Update(schueler.FPANoten[1]);
-          }
-
-
         }
       }
     }

@@ -289,22 +289,10 @@ namespace diNo
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
       if (jg == 11 && b == Bericht.Jahreszeugnis)
       {
-        // Corona
-        Bemerkung = "Die fachpraktische Ausbildung wurde in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.";
-        // Bemerkung steht nächstes Jahr im Abizeugnis!
-        //Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.";
+        // Corona --> Bemerkung nach Sj 20/21 im Abizeugnis wieder ändern!
+        // Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in Jahrgangsstufe 11 in außerschulischen Betrieben bzw.schuleigenen Werkstätten abgeleistet.
+       Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.";
         Bemerkung += "<br><br>Bemerkungen:";
-        // Corona Schuljahr==2019:
-        Bemerkung += "<br>Im zweiten Halbjahr konnten in den Fächern Deutsch, Englisch, Mathematik, ";
-        switch (s.Data.Ausbildungsrichtung)
-        {
-          case "S": Bemerkung += "Pädagogik/Psychologie sowie Sozialwirtschaft und Recht"; break;
-          case "T": Bemerkung += "Physik, Technologie sowie Chemie"; break;
-          case "W": Bemerkung += "Betriebswirtschaftslehre sowie Volkswirtschaftslehre"; break;
-          case "U": Bemerkung += "Biologie, Chemie sowie Physik"; break;
-          default: break;
-        }
-        Bemerkung += " keine Noten erhoben werden.";
       }
       else if (b != Bericht.Abiturzeugnis)
         Bemerkung = "Bemerkungen:";
@@ -317,10 +305,6 @@ namespace diNo
         Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
       if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
         Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
-
-      // Corona:
-      if (b == Bericht.Abiturzeugnis && s.Fachreferat.Count == 0 && s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
-        Bemerkung += "<br>Das Fachreferat wurde nicht gehalten.";
 
       if (Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87435")
       {
