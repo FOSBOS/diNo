@@ -206,6 +206,7 @@ namespace diNo
 
       row.SonderfallNur2Hj = false;
       row.Berechungsstatus = (int)Berechnungsstatus.Unberechnet;
+      row.AndereFremdspr2Art = 0;
     }
 
     /// <summary>

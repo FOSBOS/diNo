@@ -124,11 +124,12 @@ namespace diNo
         {
           string orignal = reader.ReadLine();
           string[] line = orignal.Split(SepChar);
-          if (line.Length != 10) // Format sollte passen
+          /*
+          if (line.Length != 9) // Format sollte passen
           {
             writer.WriteLine(orignal);
             continue;
-          }
+          }*/
           int schuelerId = int.Parse(line[0]);
           var schuelerGefunden = schuelerAdapter.GetDataById(schuelerId);
           if (schuelerGefunden == null || schuelerGefunden.Count == 0)
@@ -141,21 +142,27 @@ namespace diNo
           if (jgSchueler <= Jahrgangsstufe.Elf)
             continue; // Schüler aus der 11. fangen vorne an (hier vermutlich Wiederholer), nix importieren
 
-          int fachId = int.Parse(line[1]);
-          Fach fach = Zugriff.Instance.FachRep.Find(fachId);
-
-          Jahrgangsstufe jgstufeHj = (Jahrgangsstufe)int.Parse(line[2]);
-          HjArt notenArt = (HjArt)byte.Parse(line[4]);
-
-          // Importiere nur die Halbjahres-Noten der elften Klasse und immer die Sprachen
-          if (jgstufeHj == Jahrgangsstufe.Elf && jgSchueler == Jahrgangsstufe.Zwoelf || fach.getKursniveau() != Kursniveau.None)
+          try
           {
-            byte punkte = byte.Parse(line[3]);
-            decimal schnittMdl = decimal.Parse(line[5]);
-            decimal punkte2Dez = decimal.Parse(line[6]);
-            ada.Insert(schueler.Id, fachId, (byte)notenArt, punkte, punkte2Dez, schnittMdl, (int)jgstufeHj, (byte)HjStatus.None);
-          }
+            int fachId = int.Parse(line[1]);
+            Fach fach = Zugriff.Instance.FachRep.Find(fachId);
 
+            Jahrgangsstufe jgstufeHj = (Jahrgangsstufe)int.Parse(line[2]);
+            HjArt notenArt = (HjArt)byte.Parse(line[4]);
+
+            // Importiere nur die Halbjahres-Noten der elften Klasse und immer die Sprachen
+            if (jgstufeHj == Jahrgangsstufe.Elf && jgSchueler == Jahrgangsstufe.Zwoelf || fach.getKursniveau() != Kursniveau.None)
+            {
+              byte punkte = byte.Parse(line[3]);
+              decimal? schnittMdl = (line[5] == "") ? null : (decimal?)decimal.Parse(line[5]);
+              decimal? punkte2Dez = (line[6] == "") ? null : (decimal?)decimal.Parse(line[6]);
+              ada.Insert(schueler.Id, fachId, (byte)notenArt, punkte, punkte2Dez, schnittMdl, (int)jgstufeHj, (byte)HjStatus.None);
+            }
+          }
+          catch
+          {
+            writer.WriteLine(orignal);
+          }
 
           /*
           if (line.Length >= 13)

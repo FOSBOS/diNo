@@ -69,7 +69,7 @@ namespace diNo
       {
         mailServer = new SmtpClient(Zugriff.Instance.getString(GlobaleStrings.SMTP), int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port)));
         mailServer.EnableSsl = true;
-        mailServer.UseDefaultCredentials = false;
+        mailServer.UseDefaultCredentials = false;        
         mailServer.Credentials = new System.Net.NetworkCredential(Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail), Zugriff.Instance.getString(GlobaleStrings.MailPasswort));
       }
       catch (Exception ex)
@@ -136,6 +136,7 @@ namespace diNo
         msg.To.Add(new MailAddress(to));
         msg.Subject = subject;
         msg.Body = bodyText;
+        
         foreach (string fileName in fileNames)
         {
           msg.Attachments.Add(new Attachment(fileName));

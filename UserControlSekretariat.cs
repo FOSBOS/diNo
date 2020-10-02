@@ -54,8 +54,13 @@ namespace diNo
           if (FS2Art == 2)
           {
             var f = schueler.getNoten.ZweiteFSalt;
-            lbFFalt.Text = "Hj1 = " + f.getHjLeistung(HjArt.Hj1).Punkte + ", Hj2 = " + f.getHjLeistung(HjArt.Hj2).Punkte + " aus "
-              + f.getFach.Kuerzel + " der Jgst. " + (int)f.getHjLeistung(HjArt.Hj1).JgStufe;
+            try
+            {
+              lbFFalt.Text = "Hj1 = " + f.getHjLeistung(HjArt.Hj1).Punkte + ", Hj2 = " + f.getHjLeistung(HjArt.Hj2).Punkte + " aus "
+                + f.getFach.Kuerzel + " der Jgst. " + (int)f.getHjLeistung(HjArt.Hj1).JgStufe;
+            }
+            catch
+            { lbFFalt.Text = ""; }
           }
           else lbFFalt.Text = "";
 

@@ -2,18 +2,25 @@ Liebe Kolleginnen und Kollegen,
  
 diese Nachricht wurde maschinell von unserer digitalen Notenverwaltung diNo erzeugt.
 
-Im Anhang finden Sie die Excel-Notenlisten für das kommende Schuljahr. Ich habe die Dateien stichprobenhaft auf Plausibilität geprüft.
-Prüfen Sie dennoch bitte 
-- ob es sich um Ihre Kurse handelt und die Schülerliste vollständig ist (insbesondere bei Wahlpflichtfächern, Religionskursen und Mischklassen)
-- ob die Einstellungen in der Datei korrekt sind (z. B. Lehrername, Schulaufgabenwertung und ähnliche Eintragungen)
+Im Anhang findet ihr die Excel-Notenlisten für das kommende Schuljahr. Die Dateien haben wir stichprobenhaft auf Plausibilität geprüft.
+Prüft dennoch bitte 
+- ob es sich um eure Kurse handelt und die Schülerliste vollständig ist (insbesondere bei Wahlpflichtfächern, Religionskursen und Mischklassen)
+- ob die Einstellungen in der Datei korrekt sind (z. B. Lehrername und ähnliche Eintragungen)
 - ob sich sonstige offensichtliche Fehler, z. B. beim Notenschlüssel eingeschlichen haben
+- ob alle unterrichteten Kurse dabei sind.
 
-Bei Problemen oder Fragen bitte ich um eine Nachricht.          
+Bei Problemen oder Fragen bitte um eine kurze Nachricht an uns.
+
+Kollegen mit Seminarfach, FPA-Noteneingabe, usw. prüfen bitte auch, ob sie die entsprechenden Sonderrechte haben.
 
 Bei allen Kursen, die von Tandems unterrichtet werden (v. a. Vorklassen) ist der Kurs momentan dem ersten Lehrer aus UNTIS zugeordnet. Meistens ist das auch die/derjenige mit den meisten Stunden, aber leider nicht immer.
-Dieser Lehrkraft werden auch die Notendateien übersandt. Sollten Sie hierbei eine Änderung wünschen bitte ich um eine kurze Rückmeldung.
+Dieser Lehrkraft werden auch die Notendateien übersandt. Solltet ihr hierbei eine Änderung wünschen bitte um eine kurze Rückmeldung.
 
-Die neuen Kolleginnen und Kollegen würde ich bitten, sich in den nächsten Tagen mal anzumelden und somit ihren Zugang zu testen.
+Die neuen Kolleginnen und Kollegen würde ich bitten, sich in den nächsten Tagen mal anzumelden und somit ihren Zugang zu testen. Eine Schulung bieten wir in naher Zukunft an.
 
-Viele Grüße
-Claus Konrad
+Noch ein Tipp für die Notenabgabe: Wir empfehlen, die Notendateien auf eurem Convertible in einem extra Verzeichnis auf der Festplatte (z.B. C:\Noten\) abzulegen - die Festplatte ist ja verschlüsselt.
+So könnt ihr auch von zu Hause darauf zugreifen; eine Abgabe ist weiterhin nur möglich, wenn sich euer Convertible im Schul-WLAN befindet.
+Wer es noch nicht gemacht hat: Zieht den diNo-Link vom Verzeichnis T:\Allgemeines einfach auf euren Desktop, so habt ihr einen bequemen Zugriff für die Notenabgabe.
+
+Viele Grüße und alles Gute
+Claus Konrad und Markus Siegel
