@@ -140,6 +140,13 @@ namespace diNo
       }
     }
 
+    public string KlasseName
+    {
+      get
+      {
+        return getKlasse.Bezeichnung + ", " + Data.Name + ", " + Data.Rufname;
+      }
+    }
 
 
     [OLVColumn(Title = "Name", Width = 100, DisplayIndex = 1)]

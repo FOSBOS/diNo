@@ -176,10 +176,8 @@ namespace diNo
         return; // es gibt auch Kurse ohne Lehrer, z. B. übernommene Noten aus 11ter Klasse
       }
 
-      List<diNoDataSet.SchuelerRow> dieSchueler = new List<diNoDataSet.SchuelerRow>(kurs.getSchueler(true));
-      dieSchueler.Sort((x, y) => (x.Name + x.Vorname).CompareTo(y.Name + y.Vorname));
-      alleSchueler = dieSchueler;
-
+      List<Schueler> alleSchueler = kurs.Schueler;
+      alleSchueler.Sort((x, y) => (x.Name + x.Vorname).CompareTo(y.Name + y.Vorname));
 
       if (alleSchueler.Count == 0)
       {

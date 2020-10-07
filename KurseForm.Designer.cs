@@ -52,6 +52,7 @@
       this.checkedListBoxKlassen = new System.Windows.Forms.CheckedListBox();
       this.textBox1 = new System.Windows.Forms.TextBox();
       this.btnErzeugeExcel = new System.Windows.Forms.Button();
+      this.listSchueler = new System.Windows.Forms.ListBox();
       this.gbGeschlecht.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -139,7 +140,7 @@
       // 
       this.btnSave.ImageIndex = 4;
       this.btnSave.ImageList = this.imageList1;
-      this.btnSave.Location = new System.Drawing.Point(629, 462);
+      this.btnSave.Location = new System.Drawing.Point(319, 462);
       this.btnSave.Name = "btnSave";
       this.btnSave.Size = new System.Drawing.Size(40, 40);
       this.btnSave.TabIndex = 8;
@@ -290,7 +291,7 @@
       // 
       this.btnErzeugeExcel.ImageIndex = 5;
       this.btnErzeugeExcel.ImageList = this.imageList1;
-      this.btnErzeugeExcel.Location = new System.Drawing.Point(583, 462);
+      this.btnErzeugeExcel.Location = new System.Drawing.Point(377, 462);
       this.btnErzeugeExcel.Name = "btnErzeugeExcel";
       this.btnErzeugeExcel.Size = new System.Drawing.Size(40, 40);
       this.btnErzeugeExcel.TabIndex = 39;
@@ -298,11 +299,21 @@
       this.btnErzeugeExcel.UseVisualStyleBackColor = true;
       this.btnErzeugeExcel.Click += new System.EventHandler(this.btnErzeugeExcel_Click);
       // 
+      // listSchueler
+      // 
+      this.listSchueler.DisplayMember = "KlasseName";
+      this.listSchueler.FormattingEnabled = true;
+      this.listSchueler.Location = new System.Drawing.Point(730, 27);
+      this.listSchueler.Name = "listSchueler";
+      this.listSchueler.Size = new System.Drawing.Size(243, 420);
+      this.listSchueler.TabIndex = 40;
+      // 
       // KurseForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(746, 524);
+      this.ClientSize = new System.Drawing.Size(1015, 524);
+      this.Controls.Add(this.listSchueler);
       this.Controls.Add(this.btnErzeugeExcel);
       this.Controls.Add(this.textBox1);
       this.Controls.Add(this.checkedListBoxKlassen);
@@ -356,5 +367,6 @@
     private System.Windows.Forms.CheckedListBox checkedListBoxKlassen;
     private System.Windows.Forms.TextBox textBox1;
     private System.Windows.Forms.Button btnErzeugeExcel;
+    private System.Windows.Forms.ListBox listSchueler;
   }
 }

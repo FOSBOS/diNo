@@ -157,16 +157,16 @@ namespace diNo
     /// </summary>        
     private void Synchronize()
     {
-      var klasse = kurs.getSchueler(true);
+      var klasse = kurs.Schueler;
 
       foreach (var schueler in klasse)
       {
         // prüfen, ob neue Schüler dazugekommen sind
         if (!sidList.Contains(schueler.Id))
         {
-          xls.AppendSchueler(schueler, kurs.getFach.Kuerzel == "F" || kurs.getFach.Kuerzel == "E");
+          xls.AppendSchueler(schueler.Data, kurs.getFach.Kuerzel == "F" || kurs.getFach.Kuerzel == "E");
           sidList.Add(schueler.Id);
-          hinweise.Add(schueler.Name + ", " + schueler.Rufname + " wurde neu aufgenommen.");
+          hinweise.Add(schueler.Name + ", " + schueler.Data.Rufname + " wurde neu aufgenommen.");
         }
       }
 

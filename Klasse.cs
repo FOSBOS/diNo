@@ -220,7 +220,7 @@ namespace diNo
   public class Kurs : IRepositoryObject
   {
     private diNoDataSet.KursRow data;
-    private diNoDataSet.SchuelerDataTable schueler;
+    private List<Schueler> schueler;
     private List<Klasse> klassen;
     private Fach fach;
     private Lehrer lehrer;
@@ -278,23 +278,7 @@ namespace diNo
       get { return data.Kurzbez; }
     }
 
-    /// <summary>
-    /// Die Liste der Schüler dieser Kurses (sortiert via SQL)
-    /// </summary>
-    public diNoDataSet.SchuelerDataTable Schueler
-    {
-      get
-      {
-        if (schueler == null)
-        {
-          SchuelerTableAdapter sa = new SchuelerTableAdapter();
-          schueler = sa.GetDataByKursId(Id);
-        }
-
-        return schueler;
-      }
-    }
-
+   
     /// <summary>
     /// Die Liste der Klassen dieser Kurses
     /// </summary>
@@ -331,28 +315,28 @@ namespace diNo
     }
 
     /// <summary>
-    /// Die Liste der Schüler dieser Kurses (sortiert via SQL).
+    /// Die Liste der Schüler dieser Kurses
     /// </summary>
-    /// <param name="excludeAusgetretene">Ob Ausgetretene ausgeschlossen werden sollen.</param>
-    /// <returns>Liste mit den SchuelerRows.</returns>
-    public IList<diNoDataSet.SchuelerRow> getSchueler(bool excludeAusgetretene)
-    {
-      if (excludeAusgetretene)
+    public List<Schueler> Schueler
+    {      
+      get
       {
-        IList<diNoDataSet.SchuelerRow> result = new List<diNoDataSet.SchuelerRow>();
-        foreach (var schueler in this.Schueler)
+        if (schueler == null)
         {
-          if (schueler.IsAustrittsdatumNull())
+          schueler = new List<Schueler>();
+          Schueler s;
+          var ta = new SchuelerKursTableAdapter();
+          var dt = ta.GetDataByKursId(this.Id);
+
+          foreach (var d in dt)
           {
-            result.Add(schueler);
+            s = Zugriff.Instance.SchuelerRep.Find(d.SchuelerId);
+            if (s.Status == Schuelerstatus.Aktiv)
+              schueler.Add(s);
           }
         }
 
-        return result;
-      }
-      else
-      {
-        return new List<diNoDataSet.SchuelerRow>(this.Schueler);
+        return schueler;
       }
     }
 
@@ -441,7 +425,7 @@ namespace diNo
           JgStufe = k.Jahrgangsstufe;
           Zweig z;
           if (Schueler.Count > 0)
-            z = Faecherkanon.GetZweig(Schueler[0].Ausbildungsrichtung);
+            z = Faecherkanon.GetZweig(Schueler[0].Data.Ausbildungsrichtung);
           else
             z = Zweig.None;
 

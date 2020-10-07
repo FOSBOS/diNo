@@ -69,6 +69,7 @@ namespace diNo
       {
         checkedListBoxKlassen.SetItemChecked(i, q.Klassen.Contains(checkedListBoxKlassen.Items[i]));
       }
+      listSchueler.DataSource = q.Schueler;
     }
 
     private string F(TextBox t)
