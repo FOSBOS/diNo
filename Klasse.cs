@@ -334,10 +334,16 @@ namespace diNo
             if (s.Status == Schuelerstatus.Aktiv)
               schueler.Add(s);
           }
+          schueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
         }
 
         return schueler;
       }
+    }
+
+    public void ResetSchueler()
+    {
+      schueler = null;
     }
 
     /// <summary>

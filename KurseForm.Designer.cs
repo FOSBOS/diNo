@@ -53,6 +53,9 @@
       this.textBox1 = new System.Windows.Forms.TextBox();
       this.btnErzeugeExcel = new System.Windows.Forms.Button();
       this.listSchueler = new System.Windows.Forms.ListBox();
+      this.btnDeleteSchueler = new System.Windows.Forms.Button();
+      this.btnSchuelerZuteilen = new System.Windows.Forms.Button();
+      this.lbAnzSchueler = new System.Windows.Forms.Label();
       this.gbGeschlecht.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -284,14 +287,13 @@
       this.textBox1.Size = new System.Drawing.Size(154, 124);
       this.textBox1.TabIndex = 38;
       this.textBox1.Text = "Wenn die Klassenzuordnung geändert wird, werden die Schüler nicht automatisch in " +
-    "diesen Kurse angemeldet. Verwende dazu den Befehl unter Administration/Reparatur" +
-    "en.";
+    "diesen Kurse angemeldet. Verwende dazu den grünen Haken.";
       // 
       // btnErzeugeExcel
       // 
       this.btnErzeugeExcel.ImageIndex = 5;
       this.btnErzeugeExcel.ImageList = this.imageList1;
-      this.btnErzeugeExcel.Location = new System.Drawing.Point(377, 462);
+      this.btnErzeugeExcel.Location = new System.Drawing.Point(365, 462);
       this.btnErzeugeExcel.Name = "btnErzeugeExcel";
       this.btnErzeugeExcel.Size = new System.Drawing.Size(40, 40);
       this.btnErzeugeExcel.TabIndex = 39;
@@ -308,11 +310,48 @@
       this.listSchueler.Size = new System.Drawing.Size(243, 420);
       this.listSchueler.TabIndex = 40;
       // 
+      // btnDeleteSchueler
+      // 
+      this.btnDeleteSchueler.ImageIndex = 0;
+      this.btnDeleteSchueler.ImageList = this.imageList1;
+      this.btnDeleteSchueler.Location = new System.Drawing.Point(730, 462);
+      this.btnDeleteSchueler.Name = "btnDeleteSchueler";
+      this.btnDeleteSchueler.Size = new System.Drawing.Size(40, 40);
+      this.btnDeleteSchueler.TabIndex = 41;
+      this.toolTipButtons.SetToolTip(this.btnDeleteSchueler, "Alle Schüler aus dem Kurs löschen");
+      this.btnDeleteSchueler.UseVisualStyleBackColor = true;
+      this.btnDeleteSchueler.Click += new System.EventHandler(this.btnDeleteSchueler_Click);
+      // 
+      // btnSchuelerZuteilen
+      // 
+      this.btnSchuelerZuteilen.ImageIndex = 1;
+      this.btnSchuelerZuteilen.ImageList = this.imageList1;
+      this.btnSchuelerZuteilen.Location = new System.Drawing.Point(776, 462);
+      this.btnSchuelerZuteilen.Name = "btnSchuelerZuteilen";
+      this.btnSchuelerZuteilen.Size = new System.Drawing.Size(40, 40);
+      this.btnSchuelerZuteilen.TabIndex = 42;
+      this.toolTipButtons.SetToolTip(this.btnSchuelerZuteilen, "Schüler dem Kurs zuteilen");
+      this.btnSchuelerZuteilen.UseVisualStyleBackColor = true;
+      this.btnSchuelerZuteilen.Click += new System.EventHandler(this.btnSchuelerZuteilen_Click);
+      // 
+      // lbAnzSchueler
+      // 
+      this.lbAnzSchueler.AutoSize = true;
+      this.lbAnzSchueler.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lbAnzSchueler.Location = new System.Drawing.Point(727, 11);
+      this.lbAnzSchueler.Name = "lbAnzSchueler";
+      this.lbAnzSchueler.Size = new System.Drawing.Size(78, 13);
+      this.lbAnzSchueler.TabIndex = 43;
+      this.lbAnzSchueler.Text = "Anzahl Schüler";
+      // 
       // KurseForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(1015, 524);
+      this.Controls.Add(this.lbAnzSchueler);
+      this.Controls.Add(this.btnSchuelerZuteilen);
+      this.Controls.Add(this.btnDeleteSchueler);
       this.Controls.Add(this.listSchueler);
       this.Controls.Add(this.btnErzeugeExcel);
       this.Controls.Add(this.textBox1);
@@ -368,5 +407,8 @@
     private System.Windows.Forms.TextBox textBox1;
     private System.Windows.Forms.Button btnErzeugeExcel;
     private System.Windows.Forms.ListBox listSchueler;
+    private System.Windows.Forms.Button btnDeleteSchueler;
+    private System.Windows.Forms.Button btnSchuelerZuteilen;
+    private System.Windows.Forms.Label lbAnzSchueler;
   }
 }

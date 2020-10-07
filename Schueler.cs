@@ -640,7 +640,7 @@ namespace diNo
       }
       else
       {
-        return k.Data.Zweig == Data.Ausbildungsrichtung;
+        return k.Data.Zweig.Contains(Data.Ausbildungsrichtung);
       }
     }
 
@@ -665,8 +665,7 @@ namespace diNo
     {
       string kuerzel = k.getFach.Kuerzel;
       string reli = getReliKuerzel();
-
-      // Ku ist bei uns immer Pflichtfach
+      
       if (kuerzel == "K" || kuerzel == "Ev" || kuerzel == "Eth") return (kuerzel == reli);
       /* obsolet mit WPF
       else if (kuerzel == "F") return !Data.IsFremdsprache2Null() && (kuerzel == Data.Fremdsprache2);

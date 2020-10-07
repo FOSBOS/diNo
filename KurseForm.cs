@@ -69,7 +69,7 @@ namespace diNo
       {
         checkedListBoxKlassen.SetItemChecked(i, q.Klassen.Contains(checkedListBoxKlassen.Items[i]));
       }
-      listSchueler.DataSource = q.Schueler;
+      InitSchueler();
     }
 
     private string F(TextBox t)
@@ -149,12 +149,46 @@ namespace diNo
       opMaennlich.Checked = false;
       opWeiblich.Checked = false;
       edId.Text = "";
+      for (int i = 0; i < checkedListBoxKlassen.Items.Count; i++)
+      {
+        checkedListBoxKlassen.SetItemChecked(i, false);
+      }
     }
 
     private void btnErzeugeExcel_Click(object sender, EventArgs e)
     {
       var datei = new ErzeugeNeueExcelDatei(q.Data);
       datei.Dispose();
+    }
+
+    private void InitSchueler()
+    {
+      listSchueler.DataSource = q.Schueler;
+      lbAnzSchueler.Text = q.Schueler.Count + " Schüler im Kurs";
+    }
+
+    private void btnDeleteSchueler_Click(object sender, EventArgs e)
+    {
+      foreach (Schueler s in q.Schueler)
+      {
+        s.MeldeAb(q);
+      }
+      q.ResetSchueler();
+      InitSchueler();
+    }
+
+    private void btnSchuelerZuteilen_Click(object sender, EventArgs e)
+    {
+      foreach (Klasse k in q.Klassen)
+      {
+        foreach (Schueler s in k.eigeneSchueler)
+        {
+          if (s.KursPasstZumSchueler(q))
+            s.MeldeAn(q);
+        }
+      }
+      q.ResetSchueler();
+      InitSchueler();
     }
   }
 }

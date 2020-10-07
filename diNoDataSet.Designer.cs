@@ -2085,7 +2085,7 @@ namespace diNo {
                 this.columnBezeichnung.AllowDBNull = false;
                 this.columnBezeichnung.MaxLength = 256;
                 this.columnFachId.AllowDBNull = false;
-                this.columnZweig.MaxLength = 1;
+                this.columnZweig.MaxLength = 5;
                 this.columnKurzbez.MaxLength = 50;
             }
             
