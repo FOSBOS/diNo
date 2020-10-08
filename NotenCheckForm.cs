@@ -33,6 +33,8 @@ namespace diNo
       comboBoxCheckModus.EndUpdate();
 
       comboBoxZeitpunkt.SelectedIndex = Zugriff.Instance.aktZeitpunkt - 1;
+
+      comboBoxZeitpunkt.Enabled = Zugriff.Instance.HatVerwaltungsrechte || Zugriff.Instance.HatRolle(Rolle.Schulleitung);
     }
 
     private void btnStart_Click(object sender, EventArgs e)
