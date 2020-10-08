@@ -162,7 +162,7 @@ namespace diNo
     private OpenNotendatei xls;
     private Kurs kurs;
     private string fileName;
-    private IList<diNoDataSet.SchuelerRow> alleSchueler;
+    private List<Schueler> alleSchueler;
 
     /// <summary>
     /// Aus dem übergebenen Kurs wird eine Exceldatei mit allen Schülerdaten generiert
@@ -176,7 +176,7 @@ namespace diNo
         return; // es gibt auch Kurse ohne Lehrer, z. B. übernommene Noten aus 11ter Klasse
       }
 
-      List<Schueler> alleSchueler = kurs.Schueler;
+      alleSchueler = kurs.Schueler;
       alleSchueler.Sort((x, y) => (x.Name + x.Vorname).CompareTo(y.Name + y.Vorname));
 
       if (alleSchueler.Count == 0)
@@ -265,10 +265,8 @@ namespace diNo
       int zeile = 4;
       int zeileFuerSId = CellConstant.zeileSIdErsterSchueler;
 
-      foreach (var s in alleSchueler)
-      {
-        Schueler schueler = Zugriff.Instance.SchuelerRep.Find(s.Id);
-
+      foreach (var schueler in alleSchueler)
+      {        
         if (!klassen.Contains(schueler.getKlasse.Data.Bezeichnung))
         {
           klassen.Add(schueler.getKlasse.Data.Bezeichnung);
