@@ -87,15 +87,25 @@ namespace diNo
 
     private void btnImportUnterricht_Click(object sender, EventArgs e)
     {
-      if (MessageBox.Show("Die Unterrichtsmatrix muss als Exceldatei in Tabelle1 vorliegen (via Untis-Export).\nBitte kontrollieren, ob Daten ab Zeile 5 vorhanden sind\nund ob Spalte A die Unterrichtsnummer, Spalte E das Lehrerkürzel, Spalte F das Fach und Spalte G alle zugeordneten Klassen enthält.", "Import Unterrichtsmatrix", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
-      OpenFileDialog dia = new OpenFileDialog();
-      dia.Title = "Dateiname wählen";
-      if (dia.ShowDialog() == DialogResult.OK)
-      {
-        Cursor = Cursors.WaitCursor;
-        UnterrichtExcelReader.ReadUnterricht(dia.FileName);
-        Cursor = Cursors.Default;
-      }
+      /*    if (MessageBox.Show("Die Unterrichtsmatrix muss als Exceldatei in Tabelle1 vorliegen (via Untis-Export).\nBitte kontrollieren, ob Daten ab Zeile 5 vorhanden sind\nund ob Spalte A die Unterrichtsnummer, Spalte E das Lehrerkürzel, Spalte F das Fach und Spalte G alle zugeordneten Klassen enthält.", "Import Unterrichtsmatrix", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+            OpenFileDialog dia = new OpenFileDialog();
+            dia.Title = "Dateiname wählen";
+            if (dia.ShowDialog() == DialogResult.OK)
+            {
+              Cursor = Cursors.WaitCursor;
+              UnterrichtExcelReader.ReadUnterricht(dia.FileName);
+              Cursor = Cursors.Default;
+            }*/
+            if (MessageBox.Show("Die Unterrichtdaten müssen als aus Untis GPU002.txt vorliegen.", "Import Unterrichtsmatrix", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+            OpenFileDialog dia = new OpenFileDialog();
+            dia.Title = "Dateiname wählen";
+            if (dia.ShowDialog() == DialogResult.OK)
+            {
+              Cursor = Cursors.WaitCursor;
+              var iu = new ImportUnterricht(dia.FileName);
+              iu.Import();
+              Cursor = Cursors.Default;
+            }
     }
 
     private void btnImportSchueler_Click(object sender, EventArgs e)
@@ -414,6 +424,13 @@ namespace diNo
     private void btnKlassen_Click(object sender, EventArgs e)
     {
       new KlasseForm().ShowDialog();
+    }
+
+    private void btnNotenmitteilung_Click(object sender, EventArgs e)
+    {
+      var klassen = ((Klassenansicht)(Parent.Parent.Parent)).SelectedKlassen();
+      if (klassen.Count > 0)
+         new KlassenleiterNoten(klassen);
     }
   }
 }

@@ -6,7 +6,9 @@ namespace diNo
   public interface IRepositoryObject
   {
     int GetId();
+    string Comparer(); // diese Methode liefert ein im Objekt festgelegtes Attribut um es mit einem anderen zu vgl. (z.B. Kürzel bei Lehrer)
   }
+
 
   // Schüler, Kurse, Klassen, ... sollen effizient verwaltet werden, 
   // indem sie nur einmal aus der DB geladen werden
@@ -34,6 +36,7 @@ namespace diNo
       }
     }
 
+    // sucht, ob es ein Objekt mit dieser ID gibt und legt es sonst an
     public T Find(int id)
     {
       T res;
@@ -48,6 +51,17 @@ namespace diNo
         Add(res);
         return res;
       }
+    }
+
+    // sucht, ob es ein Objekt mit dem zugehörigen Kürzel gibt (wird im Objekt festgelegt)
+    public T Find(string kuerzel)
+    {
+      foreach (T t in Liste.Values)
+      {
+        if (t.Comparer() == kuerzel)
+          return t;
+      }
+      return default(T);
     }
 
     public bool Contains(int id)

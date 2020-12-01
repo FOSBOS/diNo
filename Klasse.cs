@@ -82,6 +82,11 @@ namespace diNo
       return data.Id;
     }
 
+    public string Comparer()
+    {
+      return Bezeichnung;
+    }
+
     public diNoDataSet.KlasseRow Data
     {
       get { return this.data; }
@@ -261,6 +266,11 @@ namespace diNo
     {
       get;
       private set;
+    }
+
+    public string Comparer()
+    {
+      return Kurzbez;
     }
 
     public int GetId()

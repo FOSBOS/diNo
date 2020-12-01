@@ -95,12 +95,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExportKurswahl.cs" />
+    <Compile Include="ImportUnterricht.cs" />
     <Compile Include="KlasseForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="KlasseForm.Designer.cs">
       <DependentUpon>KlasseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="KlassenleiterNoten.cs" />
     <Compile Include="ListeForm.cs">
       <SubType>Form</SubType>
     </Compile>

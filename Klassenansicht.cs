@@ -162,6 +162,19 @@ namespace diNo
       new ReportSchuelerdruck(obj, rpt).Show();
     }
 
+    // nur vom Adminbereich aus aufrufbar
+    public List<Klasse> SelectedKlassen()
+    {
+      var res = new List<Klasse>();
+      var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
+      if (obj.Count > 0 && obj[0] is Klasse)
+      {
+        foreach (Klasse k in obj)
+          res.Add(k);
+      }
+      return res;
+    }
+
     // liefert den angeklickten Schüler, oder eine Liste von Klassen (nur für Admins)
     public List<Schueler> SelectedObjects()
     {

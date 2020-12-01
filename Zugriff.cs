@@ -173,7 +173,7 @@ namespace diNo
       log.Debug("Schüler geladen.");
     }
 
-    private void LoadFaecher()
+    public void LoadFaecher()
     {
       eigeneFaecher = new List<Fach>();
       var ta = new FachTableAdapter();

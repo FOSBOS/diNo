@@ -103,6 +103,11 @@ namespace diNo
       return Id;
     }
 
+    public string Comparer()
+    {
+      return NameVorname; // wird nicht verwendet (nur fürs Interface)
+    }
+
     [OLVColumn(Title = "Rufname", Width = 100, DisplayIndex = 3)]
     public string benutzterVorname
     {

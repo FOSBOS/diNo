@@ -81,6 +81,7 @@
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
+      this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -357,7 +358,7 @@
       this.btnReadWahlpflichtfaecher.Name = "btnReadWahlpflichtfaecher";
       this.btnReadWahlpflichtfaecher.Size = new System.Drawing.Size(182, 23);
       this.btnReadWahlpflichtfaecher.TabIndex = 7;
-      this.btnReadWahlpflichtfaecher.Text = "Wahlpflichtfächer aus Untis";
+      this.btnReadWahlpflichtfaecher.Text = "Wahlpflichtfächer (GPU015)";
       this.btnReadWahlpflichtfaecher.UseVisualStyleBackColor = true;
       this.btnReadWahlpflichtfaecher.Click += new System.EventHandler(this.btnReadWahlpflichtfaecher_Click);
       // 
@@ -387,7 +388,7 @@
       this.btnImportUnterricht.Name = "btnImportUnterricht";
       this.btnImportUnterricht.Size = new System.Drawing.Size(182, 23);
       this.btnImportUnterricht.TabIndex = 4;
-      this.btnImportUnterricht.Text = "Kurse aus Untis-Excel";
+      this.btnImportUnterricht.Text = "Kurse aus Untis (GPU002)";
       this.btnImportUnterricht.UseVisualStyleBackColor = true;
       this.btnImportUnterricht.Click += new System.EventHandler(this.btnImportUnterricht_Click);
       // 
@@ -607,6 +608,7 @@
       // 
       // groupBoxReparatur
       // 
+      this.groupBoxReparatur.Controls.Add(this.btnNotenmitteilung);
       this.groupBoxReparatur.Controls.Add(this.btnCorona2HJKlonen);
       this.groupBoxReparatur.Controls.Add(this.btnKurseZuweisen);
       this.groupBoxReparatur.Controls.Add(this.btnGesErg);
@@ -668,6 +670,16 @@
       this.btnEinbringung.Text = "Einbringung berechnen";
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
+      // 
+      // btnNotenmitteilung
+      // 
+      this.btnNotenmitteilung.Location = new System.Drawing.Point(15, 168);
+      this.btnNotenmitteilung.Name = "btnNotenmitteilung";
+      this.btnNotenmitteilung.Size = new System.Drawing.Size(163, 23);
+      this.btnNotenmitteilung.TabIndex = 12;
+      this.btnNotenmitteilung.Text = "Notenmitteilung an KL";
+      this.btnNotenmitteilung.UseVisualStyleBackColor = true;
+      this.btnNotenmitteilung.Click += new System.EventHandler(this.btnNotenmitteilung_Click);
       // 
       // UserControlAdministration
       // 
@@ -760,5 +772,6 @@
     private System.Windows.Forms.Button btnExportKurswahl;
     private System.Windows.Forms.Button btnCorona2HJKlonen;
     private System.Windows.Forms.Button btnKlassen;
+    private System.Windows.Forms.Button btnNotenmitteilung;
   }
 }

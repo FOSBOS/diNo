@@ -39,6 +39,11 @@ namespace diNo
       return data.Id;
     }
 
+    public string Comparer()
+    {
+      return data.Kuerzel; 
+    }
+
     public string Kuerzel
     { get { return data.Kuerzel; } }
 
