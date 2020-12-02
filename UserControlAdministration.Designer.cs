@@ -75,13 +75,13 @@
       this.lblStatus = new System.Windows.Forms.Label();
       this.btnHjLeistungenWuerfeln = new System.Windows.Forms.Button();
       this.groupboxTest = new System.Windows.Forms.GroupBox();
+      this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.groupBoxReparatur = new System.Windows.Forms.GroupBox();
       this.btnCorona2HJKlonen = new System.Windows.Forms.Button();
       this.btnKurseZuweisen = new System.Windows.Forms.Button();
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
-      this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -598,6 +598,7 @@
       // 
       // groupboxTest
       // 
+      this.groupboxTest.Controls.Add(this.btnNotenmitteilung);
       this.groupboxTest.Controls.Add(this.btnHjLeistungenWuerfeln);
       this.groupboxTest.Location = new System.Drawing.Point(746, 277);
       this.groupboxTest.Name = "groupboxTest";
@@ -606,9 +607,18 @@
       this.groupboxTest.TabStop = false;
       this.groupboxTest.Text = "Testverfahren";
       // 
+      // btnNotenmitteilung
+      // 
+      this.btnNotenmitteilung.Location = new System.Drawing.Point(15, 96);
+      this.btnNotenmitteilung.Name = "btnNotenmitteilung";
+      this.btnNotenmitteilung.Size = new System.Drawing.Size(163, 23);
+      this.btnNotenmitteilung.TabIndex = 13;
+      this.btnNotenmitteilung.Text = "Notenmitteilung an KL";
+      this.btnNotenmitteilung.UseVisualStyleBackColor = true;
+      this.btnNotenmitteilung.Click += new System.EventHandler(this.btnNotenmitteilung_Click);
+      // 
       // groupBoxReparatur
       // 
-      this.groupBoxReparatur.Controls.Add(this.btnNotenmitteilung);
       this.groupBoxReparatur.Controls.Add(this.btnCorona2HJKlonen);
       this.groupBoxReparatur.Controls.Add(this.btnKurseZuweisen);
       this.groupBoxReparatur.Controls.Add(this.btnGesErg);
@@ -670,16 +680,6 @@
       this.btnEinbringung.Text = "Einbringung berechnen";
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
-      // 
-      // btnNotenmitteilung
-      // 
-      this.btnNotenmitteilung.Location = new System.Drawing.Point(15, 168);
-      this.btnNotenmitteilung.Name = "btnNotenmitteilung";
-      this.btnNotenmitteilung.Size = new System.Drawing.Size(163, 23);
-      this.btnNotenmitteilung.TabIndex = 12;
-      this.btnNotenmitteilung.Text = "Notenmitteilung an KL";
-      this.btnNotenmitteilung.UseVisualStyleBackColor = true;
-      this.btnNotenmitteilung.Click += new System.EventHandler(this.btnNotenmitteilung_Click);
       // 
       // UserControlAdministration
       // 

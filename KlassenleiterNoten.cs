@@ -5,20 +5,25 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using SevenZip;
+using System.Net.Mail;
+using System.Windows.Forms;
 
 namespace diNo
 {
   public class KlassenleiterNoten
   {
-    public KlassenleiterNoten(List<Klasse> klassen)      
+    string passwort = "test";
+    string pfad = "C:\\tmp\\";
+    public KlassenleiterNoten(List<Klasse> klassen)
     {
       string datei;
       foreach (Klasse k in klassen)
       {
-        //datei = "\\SRVFOSBOS\\" + k.Klassenleiter.Data.Windowsname + "\\Notenübersicht " +  k.Bezeichnung + ".pdf";
-        datei = "C:\\tmp\\Notenübersicht " + k.Bezeichnung + ".pdf";
+        datei = pfad + "Notenübersicht " + k.Bezeichnung + ".pdf";
         CreatePdf(k, datei);
+        Zip(datei);
+        Send(k, datei + ".zip");
       }
     }
 
@@ -40,7 +45,7 @@ namespace diNo
 
       //Report mit Daten befüllen
       foreach (Schueler s in k.eigeneSchueler)
-      {        
+      {
         liste.Add(SchuelerDruck.CreateSchuelerDruck(s, Bericht.Notenmitteilung, UnterschriftZeugnis.SL));
       }
       dataSource.Value = liste; // ob das geht???
@@ -54,7 +59,7 @@ namespace diNo
 
       rpt.Dispose();
     }
-   
+
     void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
     {
       // ACHTUNG: Der Parameter muss im Haupt- und im Unterbericht definiert werden (mit gleichem Namen)
@@ -67,6 +72,78 @@ namespace diNo
         IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenDruck(Bericht.Notenmitteilung);
         e.DataSources.Add(new ReportDataSource("DataSet1", noten));
       }
+    }
+
+    void Zip(string inFile)
+    {
+      // Es muss das NuGet-Package SevenZipSharp installiert sein. Diesem muss man den DLL-Pfad der 7z.dll mitgeben: 
+
+      string outFile = inFile + ".zip";
+      string dll = @"F:\diNo\packages\SevenZipSharp.Net45.1.0.19\lib\net45\7z.dll";
+      SevenZipCompressor.SetLibraryPath(dll);
+
+      SevenZipCompressor szc = new SevenZipCompressor
+      {
+        CompressionMethod = CompressionMethod.Deflate,
+        CompressionLevel = CompressionLevel.Normal,
+        CompressionMode = CompressionMode.Create,
+        DirectoryStructure = true,
+        PreserveDirectoryRoot = false,
+        ArchiveFormat = OutArchiveFormat.Zip
+      };
+
+      szc.CompressFilesEncrypted(outFile, passwort, new string[] { inFile });
+    }
+
+
+    void Send(Klasse k, string datei)
+    {
+      string bodyText = "";
+      MailAddress from = new MailAddress(Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail), "Digitale Notenverwaltung");
+      SmtpClient mailServer;
+
+      string infoFile = pfad + "Mail.txt";
+      if (MessageBox.Show("Mailservereinstellungen müssen unter globale Texte angegeben werden.\nEin in der Mail zu versendender Infotext kann in der Datei " + infoFile + " abgelegt werden.", "Notendateien versenden", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+      try
+      {
+        mailServer = new SmtpClient(Zugriff.Instance.getString(GlobaleStrings.SMTP), int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port)));
+        mailServer.EnableSsl = true;
+        mailServer.UseDefaultCredentials = false;
+        mailServer.Credentials = new System.Net.NetworkCredential(Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail), Zugriff.Instance.getString(GlobaleStrings.MailPasswort));
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+      }
+
+      if (File.Exists(infoFile))
+      {
+        bodyText = File.ReadAllText(infoFile);
+      }
+
+      string dienstlicheMailAdresse = k.Klassenleiter.Data.EMail;
+      if (!string.IsNullOrEmpty(dienstlicheMailAdresse))
+      {
+        try
+        {
+          MailMessage msg = new MailMessage();
+          msg.From = from;
+          msg.To.Add(new MailAddress(dienstlicheMailAdresse));
+          msg.Subject = "Notenübersicht Elternsprechwoche";
+          msg.Body = bodyText;
+          msg.Attachments.Add(new Attachment(datei));
+
+          mailServer.Send(msg);
+        }
+        catch (Exception ex)
+        {
+          if (MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+            throw;
+        }
+      }
+
+
     }
   }
 }
