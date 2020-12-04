@@ -22,6 +22,7 @@ namespace diNo
 
     private Schueler aktSchueler;
     private bool UnterpunktungGedruckt;
+    private bool HatFallMitPZ;
     private ProgressBar progressBar;
     private Berechnungen berechnungen = null;
     public int FehlendeBerechnung = 0; // gibt einen Überblick, ob Gesamtergebnisse schon bestimmt sind.
@@ -104,7 +105,7 @@ namespace diNo
     private void KlasseInNotenpruefungAufnehmen(Klasse k)
     {
       if (zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS ||
-        zeitpunkt == Zeitpunkt.ProbezeitBOS ||
+        zeitpunkt == Zeitpunkt.ProbezeitBOS && k.Jahrgangsstufe != Jahrgangsstufe.Elf ||
         k.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf && zeitpunkt <= Zeitpunkt.DrittePA ||
         k.Jahrgangsstufe < Jahrgangsstufe.Zwoelf && zeitpunkt == Zeitpunkt.Jahresende)
       {
@@ -118,6 +119,7 @@ namespace diNo
       // je Klasse wird die akkumulierte Liste neu gefüllt
       chkContainer = new List<KeyValuePair<string, NotenCheckContainer>>();
       chkCounter = new Dictionary<string, NotenCheckCounter>();
+      HatFallMitPZ = false;
       foreach (Schueler s in k.eigeneSchueler)
       {
         CheckSchueler(s);
@@ -156,6 +158,8 @@ namespace diNo
             || zeitpunkt == Zeitpunkt.DrittePA)
           )
       {
+        HatFallMitPZ = true; // Merker für Klassen zur PZ BOS, in denen nur einzelne Schüler betroffen sind.
+
         // Erst werden alle Berechnungen durchgeführt (Gesamtergebnisse, DNote,...)
         if (berechnungen != null)
           berechnungen.BerechneSchueler(s);
@@ -206,8 +210,8 @@ namespace diNo
       AddVorkommnis(art, meldung);
 
       // bei Wiederholungsschülern wird bei bestimmten Ereignissen automatisch Gefahr d. Abw. oder d.n.w erzeugt
-      if (aktSchueler.Wiederholt() && Zugriff.Instance.Schuljahr != 2019)
-      {
+      if (aktSchueler.Wiederholt())
+      {        
         if (art == Vorkommnisart.NichtBestanden || art == Vorkommnisart.nichtBestandenMAPnichtZugelassen ||
           art == Vorkommnisart.NichtZurPruefungZugelassen || art == Vorkommnisart.KeineVorrueckungserlaubnis)
           AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen, "");
@@ -256,12 +260,13 @@ namespace diNo
     {
       NotenCheckCounter cnt;
       int maxAnzahl = 5; // ab dieser Zahl wird kumuliert
+      Klasse k = aktSchueler.getKlasse;
 
       // kumulierte Meldungen für viele Schüler
       foreach (var c in chkCounter)
       {
         if (c.Value.count > maxAnzahl)
-          res.list.Add(new NotenCheckResult(aktSchueler.getKlasse, c.Value.kurs, c.Value.meldung + " (" + c.Value.count + "x)"));
+          res.list.Add(new NotenCheckResult(k, c.Value.kurs, c.Value.meldung + " (" + c.Value.count + "x)"));
       }
 
       // einzelne Meldungen
@@ -273,8 +278,9 @@ namespace diNo
         }
       }
 
-      if (chkContainer.Count == 0 && chkCounter.Count == 0 && modus == NotenCheckModus.Protokolle)
-        res.list.Add(new NotenCheckResult(aktSchueler.getKlasse));
+      if (chkContainer.Count == 0 && chkCounter.Count == 0 && modus == NotenCheckModus.Protokolle 
+        && (HatFallMitPZ || k.Schulart == Schulart.BOS && k.Jahrgangsstufe  != Jahrgangsstufe.Dreizehn || k.Jahrgangsstufe < Jahrgangsstufe.Elf))
+        res.list.Add(new NotenCheckResult(k));
     }
 
     public void ShowResults()
@@ -342,7 +348,7 @@ namespace diNo
 
     public NotenCheckResult(Klasse kl)
     {
-      schueler = "Es traten keine Fehler auf.";
+      schueler = "Es traten keine Meldungen auf.";
       klassenId = kl.Data.Id;
       klasse = kl.Data.Bezeichnung;
       Klassenleiter = kl.Klassenleiter.NameDienstbezeichnung + ", " + kl.Klassenleiter.KLString;

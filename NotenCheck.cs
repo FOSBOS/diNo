@@ -382,6 +382,8 @@ namespace diNo
         if (n.HatNichtBestanden())
         {
           contr.Add(null, "<b>Probezeit nicht bestanden</b> " + n.Unterpunktungen, true);
+          if (schueler.Wiederholt())
+            contr.Add(null, Vorkommnisse.Instance.VorkommnisText(Vorkommnisart.DarfNichtMehrWiederholen));
         }
       }
 
