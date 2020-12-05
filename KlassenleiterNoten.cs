@@ -13,7 +13,7 @@ namespace diNo
 {
   public class KlassenleiterNoten
   {
-    string passwort = "test";
+    string passwort = "Sprechtag8home";
     string pfad = "C:\\tmp\\";
     public KlassenleiterNoten(List<Klasse> klassen)
     {
@@ -103,7 +103,7 @@ namespace diNo
       SmtpClient mailServer;
 
       string infoFile = pfad + "Mail.txt";
-      if (MessageBox.Show("Mailservereinstellungen müssen unter globale Texte angegeben werden.\nEin in der Mail zu versendender Infotext kann in der Datei " + infoFile + " abgelegt werden.", "Notendateien versenden", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+//    if (MessageBox.Show("Mailservereinstellungen müssen unter globale Texte angegeben werden.\nEin in der Mail zu versendender Infotext kann in der Datei " + infoFile + " abgelegt werden.", "Notendateien versenden", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       try
       {
         mailServer = new SmtpClient(Zugriff.Instance.getString(GlobaleStrings.SMTP), int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port)));
@@ -122,7 +122,7 @@ namespace diNo
         bodyText = File.ReadAllText(infoFile);
       }
 
-      string dienstlicheMailAdresse = k.Klassenleiter.Data.EMail;
+      string dienstlicheMailAdresse = k.Klassenleiter.Data.EMail; // "claus.konrad@fosbos-kempten.de";
       if (!string.IsNullOrEmpty(dienstlicheMailAdresse))
       {
         try
@@ -131,7 +131,7 @@ namespace diNo
           msg.From = from;
           msg.To.Add(new MailAddress(dienstlicheMailAdresse));
           msg.Subject = "Notenübersicht Elternsprechwoche";
-          msg.Body = bodyText;
+          msg.Body = "Hallo " + k.Klassenleiter.Data.Vorname + "," + bodyText;
           msg.Attachments.Add(new Attachment(datei));
 
           mailServer.Send(msg);

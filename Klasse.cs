@@ -66,7 +66,7 @@ namespace diNo
     private void Init()
     {
       eigeneSchueler = new List<Schueler>();
-      jg = (Jahrgangsstufe) data.JgStufe;
+      jg = (Jahrgangsstufe)data.JgStufe;
       if (data.IsZweigNull() || data.Zweig.Length != 1) zweig = Zweig.None;
       else zweig = CharToZweig(data.Zweig);
       schulart = data.IsSchulartNull() ? Schulart.None : (Schulart)data.Schulart;
@@ -182,6 +182,12 @@ namespace diNo
         }
         return kurse;
       }
+    }
+
+    public void RefreshKurse()
+    {
+      Zugriff.Instance.KursRep.Clear();
+      kurse = null;
     }
 
     public diNoDataSet.SchuelerDataTable getSchueler

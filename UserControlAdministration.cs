@@ -96,7 +96,8 @@ namespace diNo
               UnterrichtExcelReader.ReadUnterricht(dia.FileName);
               Cursor = Cursors.Default;
             }*/
-            if (MessageBox.Show("Die Unterrichtdaten müssen als aus Untis GPU002.txt vorliegen.", "Import Unterrichtsmatrix", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+            if (MessageBox.Show("Die Unterrichtdaten müssen als GPU002.txt aus Untis vorliegen.\nDatenbank unbedingt vorher sichern, da der Import ohne Fehler durchlaufen sollte.\n" +
+            "Dazu die Error-Datei im selben Verzeichnis beachten.", "Import Unterrichtsmatrix", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
             OpenFileDialog dia = new OpenFileDialog();
             dia.Title = "Dateiname wählen";
             if (dia.ShowDialog() == DialogResult.OK)

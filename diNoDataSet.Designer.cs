@@ -16014,7 +16014,7 @@ SELECT Id, Kuerzel, Dienstbezeichnung, EMail, Windowsname, Vorname, Nachname, Ge
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[6];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        KlasseId, KursId\r\nFROM            KlasseKurs";
@@ -16027,25 +16027,33 @@ SELECT Id, Kuerzel, Dienstbezeichnung, EMail, Windowsname, Vorname, Nachname, Ge
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
             this._commandCollection[2].CommandText = "SELECT KlasseId, KursId\r\nFROM  KlasseKurs, Kurs\r\nWHERE KlasseKurs.KursId=Kurs.Id " +
-                "AND\r\nKlasseKurs.KlasseId=@KlasseId AND Kurs.FachId=@FachId AND Kurs.Zweig=@Zweig" +
-                "";
+                "AND\r\nKlasseKurs.KlasseId=@KlasseId AND Kurs.FachId=@FachId AND Kurs.Zweig is Nul" +
+                "l\r\n";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FachId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "FachId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Zweig", global::System.Data.SqlDbType.NVarChar, 20, global::System.Data.ParameterDirection.Input, 0, 0, "Zweig", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT        KlasseId, KursId\r\nFROM            KlasseKurs\r\nWHERE        (KursId " +
-                "= @KursId)";
+            this._commandCollection[3].CommandText = "SELECT KlasseId, KursId\r\nFROM  KlasseKurs, Kurs\r\nWHERE KlasseKurs.KursId=Kurs.Id " +
+                "AND\r\nKlasseKurs.KlasseId=@KlasseId AND Kurs.FachId=@FachId AND Kurs.Zweig=@Zweig" +
+                "\r\n";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FachId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "FachId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Zweig", global::System.Data.SqlDbType.NVarChar, 20, global::System.Data.ParameterDirection.Input, 0, 0, "Zweig", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[4].Connection = this.Connection;
-            this._commandCollection[4].CommandText = "SELECT COUNT(*) FROM KlasseKurs\r\nWHERE (KlasseId = @KlasseId) AND (KursId = @Kurs" +
-                "Id)";
+            this._commandCollection[4].CommandText = "SELECT        KlasseId, KursId\r\nFROM            KlasseKurs\r\nWHERE        (KursId " +
+                "= @KursId)";
             this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[5].Connection = this.Connection;
+            this._commandCollection[5].CommandText = "SELECT COUNT(*) FROM KlasseKurs\r\nWHERE (KlasseId = @KlasseId) AND (KursId = @Kurs" +
+                "Id)";
+            this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KursId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KursId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -16063,8 +16071,21 @@ SELECT Id, Kuerzel, Dienstbezeichnung, EMail, Windowsname, Vorname, Nachname, Ge
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual diNoDataSet.KlasseKursDataTable GetDataByKlasseAndFach(int KlasseId, int FachId, string Zweig) {
+        public virtual diNoDataSet.KlasseKursDataTable GetDataByKlasseAndFach(int KlasseId, int FachId) {
             this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((int)(FachId));
+            diNoDataSet.KlasseKursDataTable dataTable = new diNoDataSet.KlasseKursDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual diNoDataSet.KlasseKursDataTable GetDataByKlasseFachAndZweig(int KlasseId, int FachId, string Zweig) {
+            this.Adapter.SelectCommand = this.CommandCollection[3];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KlasseId));
             this.Adapter.SelectCommand.Parameters[1].Value = ((int)(FachId));
             if ((Zweig == null)) {
@@ -16083,7 +16104,7 @@ SELECT Id, Kuerzel, Dienstbezeichnung, EMail, Windowsname, Vorname, Nachname, Ge
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual diNoDataSet.KlasseKursDataTable GetDataByKursId(int KursId) {
-            this.Adapter.SelectCommand = this.CommandCollection[3];
+            this.Adapter.SelectCommand = this.CommandCollection[4];
             this.Adapter.SelectCommand.Parameters[0].Value = ((int)(KursId));
             diNoDataSet.KlasseKursDataTable dataTable = new diNoDataSet.KlasseKursDataTable();
             this.Adapter.Fill(dataTable);
@@ -16170,7 +16191,7 @@ SELECT Id, Kuerzel, Dienstbezeichnung, EMail, Windowsname, Vorname, Nachname, Ge
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         public virtual global::System.Nullable<int> ScalarQueryCountByKlasseAndKurs(int KlasseId, int KursId) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[4];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[5];
             command.Parameters[0].Value = ((int)(KlasseId));
             command.Parameters[1].Value = ((int)(KursId));
             global::System.Data.ConnectionState previousConnectionState = command.Connection.State;

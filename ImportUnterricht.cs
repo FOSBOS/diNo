@@ -67,7 +67,7 @@ namespace diNo
             continue;
           }
 
-          string zweig = "";
+          string zweig = null;
           if (kl.Contains("_")) // Mischklasse: Zweig extrahieren
           {
             string[] teilstrings = kl.Split('_'); 
@@ -75,6 +75,7 @@ namespace diNo
             if (fach.Typ == FachTyp.Profilfach ||  // nur Profilfächer und Mathe (T/NT) außer Vorklasse werden i.d.R. getrennt
               fach.Kuerzel=="M" && kl.Contains("T") && !kl.Contains("V"))
               zweig = teilstrings[1].Trim();
+            if (zweig == "") zweig = null;
           }
 
           Klasse klasse = Zugriff.Instance.KlassenRep.Find(kl);
@@ -91,17 +92,24 @@ namespace diNo
           }
 
           // Tandems/anderer Raum sind kein neuer Unterricht (geht teils quer über UNr): gleiche Klasse, Fach und Zweig
-          diNoDataSet.KlasseKursDataTable dt = klasseKursTa.GetDataByKlasseAndFach(klasse.GetId(), fach.Id, zweig);
-          if (dt.Count > 0)
-            continue;
+          if (fach.Typ != FachTyp.WPF)
+          {
+            diNoDataSet.KlasseKursDataTable dt;
+            if (zweig==null)
+              dt = klasseKursTa.GetDataByKlasseAndFach(klasse.GetId(), fach.Id);
+            else
+              dt = klasseKursTa.GetDataByKlasseFachAndZweig(klasse.GetId(), fach.Id, zweig);
+            if (dt.Count > 0)
+              continue;
+          }
 
           // Existiert diese Kursnummer schon? Suche in GleicheKursnr, ob Fach und Lehrer-Kombi nur in einer anderen Klasse auftreten
           if (vorigeUNr != UNr)
           {
             GleicheKursnr.Clear();
             vorigeUNr = UNr;            
-          }
-          else 
+          }          
+          else
           {
             foreach (var k in GleicheKursnr)
             {
@@ -123,7 +131,7 @@ namespace diNo
               }
 
               // gleiches Fach, gleiche Klasse ==> Lehrer-Tandem (nicht aufnehmen)
-              else if (k.getFach.Id == fach.Id && k.Klassen.Count == 1 && k.Klassen[0].GetId() == klasse.GetId())
+              else if (fach.Typ==FachTyp.WPF || k.getFach.Id == fach.Id && k.Klassen.Count == 1 && k.Klassen[0].GetId() == klasse.GetId())
               {
                 weiter = true;
                 break;
@@ -138,8 +146,8 @@ namespace diNo
           }
 
           // neuen Kurs anlegen
-          string KursBezeichung = fach.Typ == FachTyp.WPF ? fach.Bezeichnung + " " + fachOrg : fach.Bezeichnung.Trim() + " " + klasse.Bezeichnung;
-          string geschlecht = "";
+          string KursBezeichung = fach.Typ == FachTyp.WPF ? fach.Bezeichnung + " " + fachOrg : fach.Bezeichnung.Trim() + " " + klasse.Bezeichnung + (zweig!=null ? "_"+zweig :"");
+          string geschlecht = null;
           if (fach.Kuerzel == "Sw") geschlecht = "W";
           if (fach.Kuerzel == "Sm") geschlecht = "M";
           kursTa.Insert(UNr, KursBezeichung, lehrer.Id, fach.Id, zweig, geschlecht, (fach.Typ == FachTyp.WPF ? fachOrg : fach.Kuerzel) + " (" + lehrer.Kuerzel + ")");
@@ -156,9 +164,11 @@ namespace diNo
     // Meldet alle Schüler in den Kursen an (außer WPF)
     public void SchuelerZuweisen()
     {
+      
       // nochmal alle Klasse mit ihren Schülern durchgehen: Die Kurse werden nun zugewiesen.
       foreach (Klasse k in Zugriff.Instance.Klassen)
       {
+        k.RefreshKurse();
         foreach (Schueler s in k.eigeneSchueler)
         {
           var kurse = s.AlleNotwendigenKurse();
