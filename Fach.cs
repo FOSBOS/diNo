@@ -117,7 +117,7 @@ namespace diNo
       }
       else
       {
-        if (IstSAPFach(zweig) || Kuerzel == "F" || sort[(byte)zweig] == 2) z = 1; // Prüfungsfächer, Französisch und Profilfach 2
+        if (IstSAPFach(zweig) || getKursniveau()==Kursniveau.Anfaenger || sort[(byte)zweig] == 2) z = 1; // Prüfungsfächer, Anfängerfremdsprache und Profilfach 2
       }
       return z;
     }
