@@ -198,6 +198,11 @@ namespace diNo
       //ermittle erst mal welche Teile jetzt eingelesen werden sollen
       bool liesErstesHJ = alles || (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ProbezeitBOS || (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS;
       bool liesZweitesHJ = alles || ErmittleObHJ2GelesenWird();
+      if (kurs.Klassen.Count > 0 && kurs.Klassen[0].Jahrgangsstufe < Jahrgangsstufe.Zwoelf) // Corona
+      {
+        liesErstesHJ = true;
+        liesZweitesHJ = false;
+      }
       bool liesSAP = alles || kurs.IstSAPKurs && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.ZweitePA; // nur in Prüfungsklassen zur 2.PA
       bool liesMAP = alles || kurs.IstSAPKurs && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt == Zeitpunkt.DrittePA ||
           kurs.getFach.getKursniveau() == Kursniveau.Englisch && (Zeitpunkt)Zugriff.Instance.aktZeitpunkt >= Zeitpunkt.ErstePA;
@@ -210,7 +215,6 @@ namespace diNo
         ta.DeleteByKursAndHalbjahr(kurs.Id, (byte)Halbjahr.Zweites);
       }
 
-      HjArt art = GetAktuellesHalbjahr();
       Berechnungen berechner = new Berechnungen();
       foreach (int sid in sidList)
       {
@@ -244,6 +248,12 @@ namespace diNo
             byte? jahresnote = xls.ReadNote("R" + i, xls.notenbogen2);
             HjLeistung.CreateOrUpdate(fsn, sid, HjArt.JN, kurs.getFach, jg, jahresnote);
           }
+        }
+        else if (liesErstesHJ) // Kontrolle, ob jemand was in 2. Hj geschrieben hat (Corona
+        {
+          byte? zeugnisnote = xls.ReadNote("O" + i, xls.notenbogen2);
+          if (zeugnisnote != null)
+            warnungen.Add(schueler.NameVorname + ": Bei 11. Klasse/Vorklasse dürfen Noten nicht im 2. Halbjahr eingetragen werden.");
         }
 
         // Abitur

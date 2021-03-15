@@ -82,6 +82,7 @@
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
+      this.btnCopy11 = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -619,6 +620,7 @@
       // 
       // groupBoxReparatur
       // 
+      this.groupBoxReparatur.Controls.Add(this.btnCopy11);
       this.groupBoxReparatur.Controls.Add(this.btnCorona2HJKlonen);
       this.groupBoxReparatur.Controls.Add(this.btnKurseZuweisen);
       this.groupBoxReparatur.Controls.Add(this.btnGesErg);
@@ -680,6 +682,16 @@
       this.btnEinbringung.Text = "Einbringung berechnen";
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
+      // 
+      // btnCopy11
+      // 
+      this.btnCopy11.Location = new System.Drawing.Point(15, 168);
+      this.btnCopy11.Name = "btnCopy11";
+      this.btnCopy11.Size = new System.Drawing.Size(163, 23);
+      this.btnCopy11.TabIndex = 12;
+      this.btnCopy11.Text = "Corona-11/1 nach 11/2 kopieren";
+      this.btnCopy11.UseVisualStyleBackColor = true;
+      this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
       // 
       // UserControlAdministration
       // 
@@ -773,5 +785,6 @@
     private System.Windows.Forms.Button btnCorona2HJKlonen;
     private System.Windows.Forms.Button btnKlassen;
     private System.Windows.Forms.Button btnNotenmitteilung;
+    private System.Windows.Forms.Button btnCopy11;
   }
 }

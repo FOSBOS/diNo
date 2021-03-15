@@ -433,6 +433,33 @@ namespace diNo
       if (klassen.Count > 0)
          new KlassenleiterNoten(klassen);
     }
+
+    private void btnCopy11_Click(object sender, EventArgs e)
+    {
+      foreach (var klasse in Zugriff.Instance.Klassen)
+      {
+        if (klasse.Jahrgangsstufe > Jahrgangsstufe.Elf)
+          continue;
+
+        foreach (var schueler in klasse.eigeneSchueler)
+        {
+          foreach (var noten in schueler.getNoten.alleKurse)
+          {            
+            var hj1 = noten.getHjLeistung(HjArt.Hj1);
+            if (hj1 == null) continue;
+
+            HjLeistung hj2 = new HjLeistung(schueler.Id, hj1.getFach, HjArt.Hj2, hj1.JgStufe);
+            hj2.Punkte = hj1.Punkte;
+            hj2.WriteToDB();
+
+            HjLeistung jn = new HjLeistung(schueler.Id, hj1.getFach, HjArt.JN, hj1.JgStufe);
+            jn.Punkte = hj1.Punkte;
+            jn.WriteToDB();
+
+          }
+        }
+      }
+    }
   }
 }
 
