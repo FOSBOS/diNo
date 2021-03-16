@@ -231,7 +231,7 @@ namespace diNo
         else  // Kurs hängt an Klasse (alte Noten werden weiterhin dieser Klasse zugeordnet)
           jg = kurs.JgStufe;
 
-        if (aktiverKurs && !alles)
+        if (aktiverKurs && !alles && jg > Jahrgangsstufe.Elf /*Corona*/)
           PruefeAlteNoten(i, fsn);
 
         if (liesErstesHJ)
