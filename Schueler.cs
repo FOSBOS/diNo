@@ -138,10 +138,12 @@ namespace diNo
       get
       {
         var k = getKlasse;
-        if (k.Bezeichnung.Substring(0, 2) == "FB")
+        if (k.Zweig == Zweig.None)        
+          return k.Bezeichnung + ((k.Zweig == Zweig.None && data.Ausbildungsrichtung != "V") ? "_" + data.Ausbildungsrichtung : "");        
+        else if (k.Bezeichnung.Substring(0, 2) == "FB")
           return k.Bezeichnung + "_" + Data.Schulart;
-        else
-          return k.Bezeichnung + ((k.Zweig == Zweig.None && data.Ausbildungsrichtung != "V") ? "_" + data.Ausbildungsrichtung : "");
+        else return k.Bezeichnung;
+          
       }
     }
 
