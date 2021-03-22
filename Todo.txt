@@ -1,6 +1,8 @@
 ﻿todos für diNo
 --------------
 
+- Datenbank aufräumen: Schülertabelle (Wahlfächer, WPF, Fremdsprache2)
+
 - Umgang mit Legasthenikern in neuer SchO nachlesen und ggf. programmieren
 
 - neue Notendatei
@@ -9,5 +11,3 @@
 
 - Statistiken ?
    --> die letzten zwei Punkte sind N2H, die wir programmieren, wenn sonst alles läuft und uns nix besseres einfällt. ;-)
-
-- neue Vorrücken- und Bestehensregeln

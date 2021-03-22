@@ -67,6 +67,11 @@ namespace diNo
     {
       eigeneSchueler = new List<Schueler>();
       jg = (Jahrgangsstufe)data.JgStufe;
+      if (jg==Jahrgangsstufe.None) 
+      {
+        throw new Exception("Jahrgangstufe bei Klasse " + data.Bezeichnung + " nicht belegt.");
+        //jg = Jahrgangsstufe.Dreizehn;
+      }
       if (data.IsZweigNull() || data.Zweig.Length != 1) zweig = Zweig.None;
       else zweig = CharToZweig(data.Zweig);
       schulart = data.IsSchulartNull() ? Schulart.None : (Schulart)data.Schulart;

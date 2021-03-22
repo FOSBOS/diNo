@@ -56,7 +56,7 @@ namespace diNo
         if (jgstufe < 11) jgstufe = 12; // BOS-Vorklasse
         else if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites && jgstufe < 13) jgstufe++; // Wahl idR für das nächste Schuljahr
         writer.WriteLine(s.Id + sep + qt(username) + sep + qt(pwd) + sep + qt(s.Name.Replace("'", " ")) + sep + qt(s.Data.Rufname) + sep
-          + qt(klasse) + sep + jgstufe + sep + qt(s.Data.Ausbildungsrichtung) + sep + qt(s.Data.Schulart));
+          + qt(klasse) + sep + jgstufe + sep + qt(s.Data.Ausbildungsrichtung) + sep + qt(s.Data.Schulart) + sep + qt(s.Data.SchulischeVorbildung));
       }
       writer.Close();
     }

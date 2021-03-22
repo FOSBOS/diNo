@@ -240,7 +240,7 @@ namespace diNo
         if (jg == 12) ZeugnisArt = "Fachhochschulreife";
         else if (s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife)) ZeugnisArt = "allgemeine Hochschulreife";
         else ZeugnisArt = "fachgebundene Hochschulreife";
-        IstJahreszeugnis = SprachniveauDruck.HatFremdsprachen(s); // verbogen für "---" im Fremdpsrachenblock des Abizeugnisses, falls keine Sprachen da sind
+        IstJahreszeugnis = SprachniveauDruck.HatFremdsprachen(s); // verbogen für "---" im Fremdsprachenblock des Abizeugnisses, falls keine Sprachen da sind
         if (s.getNoten.AlternatZweiteFS != null)
           AlternatZweiteFS = "Für die fachgebundene Hochschulreife wird anstelle des Halbjahresergebnisses 13/" +
             (s.getNoten.AlternatZweiteFS.Art == HjArt.Hj1 ? 1 : 2) + " in " + s.getNoten.AlternatZweiteFS.getFach.BezZeugnis +
@@ -259,7 +259,7 @@ namespace diNo
       }
 
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
-      KlasseAR = (b == Bericht.Zwischenzeugnis ? "besucht" : "besuchte") + " im " + Schuljahr;
+      KlasseAR = (b == Bericht.Zwischenzeugnis || b == Bericht.Bescheinigung && s.Status == Schuelerstatus.Aktiv ? "besucht" : "besuchte") + " im " + Schuljahr;
       KlasseAR += " die " + s.getKlasse.JahrgangsstufeZeugnis + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
       if (b == Bericht.Abiturzeugnis)
         KlasseAR += " und unterzog sich als Schüler" + (s.Data.Geschlecht == "M" ? "" : "in") + " der Klasse " + s.getKlasse.Bezeichnung + " der " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " in der Ausbildungsrichtung " + Faecherkanon.GetZweigText(s) + ".";
@@ -268,8 +268,10 @@ namespace diNo
         if (s.Data.Ausbildungsrichtung != "V") // IV idR. ohne AR
           KlasseAR += ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s);
         KlasseAR += " in der Klasse " + s.getKlasse.Bezeichnung;
-        if (b == Bericht.Bescheinigung)
+        if (b == Bericht.Bescheinigung && s.Status == Schuelerstatus.Abgemeldet)
           KlasseAR += "\nund ist heute aus der Schule ausgetreten. \n\nIm laufenden Schulhalbjahr erzielte " + s.getErSie() + " bis zum Austritt folgende Leistungen:";
+        else if (b == Bericht.Bescheinigung)
+          KlasseAR += ". \n\nIm laufenden Schulhalbjahr erzielte " + s.getErSie() + " folgende Leistungen:";
         else
           KlasseAR += ".";
       }
