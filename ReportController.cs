@@ -37,10 +37,12 @@ namespace diNo
   {
     private NotenCheckResults bindingDataSource;
     private bool IsProtokolle;
+    private bool IsPA;
     public ReportNotencheck(NotenCheckResults dataSource, bool aProtokolle) : base()
     {
       bindingDataSource = dataSource;
       IsProtokolle = aProtokolle;
+      IsPA = Zugriff.Instance.aktZeitpunkt >= (int)Zeitpunkt.ErstePA && Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.DrittePA;
     }
 
     public override void Init()
@@ -50,6 +52,8 @@ namespace diNo
       {
         rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptKlassenkonferenz.rdlc";
         rpt.reportViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(subrptEventHandler);
+        // Parameter PA liefert die Nummer des PA --> für Berichtsüberschrift
+        rpt.reportViewer.LocalReport.SetParameters(new ReportParameter("PA", IsPA ? (Zugriff.Instance.aktZeitpunkt-2).ToString() + ". Prüfungsschuss" : "Klassenkonferenz"));
       }
       else
         rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenCheck.rdlc";
@@ -59,11 +63,14 @@ namespace diNo
     {
       int klassenId;
       int.TryParse(e.Parameters[0].Values[0], out klassenId);
-      if (klassenId > 0)
+      
+      // keine Lehrerliste bei PA
+      IList<LehrerDerKlasseDruck> lehrer = new List<LehrerDerKlasseDruck>();
+      if (klassenId > 0 && !IsPA) 
       {
-        IList<LehrerDerKlasseDruck> lehrer = LehrerDerKlasseDruck.CreateLehrerDerKlasseDruck(klassenId);
-        e.DataSources.Add(new ReportDataSource("DataSet1", lehrer));
+        lehrer = LehrerDerKlasseDruck.CreateLehrerDerKlasseDruck(klassenId);        
       }
+      e.DataSources.Add(new ReportDataSource("DataSet1", lehrer));
     }
   }
 
