@@ -137,7 +137,7 @@ namespace diNo
         case "S": return Zweig.Sozial;
         case "T": return Zweig.Technik;
         case "W": return Zweig.Wirtschaft;
-        case "A": return Zweig.Umwelt;
+        case "U": return Zweig.Umwelt;
         default: return Zweig.None;
       }
     }
