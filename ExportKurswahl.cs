@@ -4,18 +4,9 @@ using System.IO;
 
 namespace diNo
 {
-  public class ExportKurswahl : IDisposable
+  public static class Tools
   {
-    private StreamWriter writer;
-    private List<Schueler> list;
-    string sep = ",";
-
-    private string qt(string t)
-    {
-      return "'" + t + "'";
-    }
-
-    private string repl(string t)
+    public static string ErsetzeUmlaute(string t)
     {
       t = t.Replace("ä", "ae");
       t = t.Replace("ö", "oe");
@@ -32,11 +23,23 @@ namespace diNo
       return t;
     }
 
+  }
+
+  public class ExportKurswahl : IDisposable
+  {
+    private StreamWriter writer;
+    private List<Schueler> list;
+    string sep = ",";
+
+    private string qt(string t)
+    {
+      return "'" + t + "'";
+    }
+
     // erstellt eine csv-Datei, die direkt als Sql-String eingelesen werden kann vom Kursmodul->ImportAct.php
     public ExportKurswahl(List<Schueler> aList)
     {
       list = aList;
-
     }
 
     public void ExportSchueler(string datei)
@@ -46,10 +49,9 @@ namespace diNo
       foreach (Schueler s in list)
       {
         string klasse = s.getKlasse.Bezeichnung;
-        string username = klasse + "_" + repl(s.Data.Rufname).Substring(0, 2) + repl(s.Name);
+        string username = klasse + "_" + Tools.ErsetzeUmlaute(s.Data.Rufname).Substring(0, 2) + Tools.ErsetzeUmlaute(s.Name);
         if (username.Length > 20)
           username = username.Substring(0, 20); // maximale Länge
-
 
         string pwd = "FB-" + s.Data.Geburtsdatum.ToString("yyyyMMdd");
         int jgstufe = (int)s.getKlasse.Jahrgangsstufe;

@@ -11,24 +11,31 @@ using System.Windows.Forms;
 
 namespace diNo
 {
-  public class KlassenleiterNoten
+  public class MailSchuelerNoten
   {
-    string passwort = "FB8home";
+    string passwort;
     string pfad = @"C:\tmp\";
-    public KlassenleiterNoten(List<Klasse> klassen)
-    {
-      string datei;
-      foreach (Klasse k in klassen)
+
+    public MailSchuelerNoten(List<Schueler> schueler)
+    {      
+      foreach (Schueler s in schueler)
       {
-        datei = pfad + "Notenübersicht " + k.Bezeichnung + ".pdf";
-        CreatePdf(k, datei);
-        Zip(datei);
-        Send(k, datei + ".zip");
+        SendSchuelerNoten(s);
       }
     }
 
+    private void SendSchuelerNoten(Schueler s)
+    {
+      string datei;
+      datei = pfad + s.getKlasse.Bezeichnung + "_" + s.Name + ".pdf";
+      passwort = "FB-" + s.Data.Geburtsdatum.ToString("yyyyMMdd");
+      CreatePdf(s, datei);
+      Zip(datei);      
+      Send(s, datei + ".zip");
+    }
+
     // erzeugt eine Notenmitteilung in PDF-Form
-    public void CreatePdf(Klasse k, string targetFile)
+    public void CreatePdf(Schueler s, string targetFile)
     {
       List<SchuelerDruck> liste = new List<SchuelerDruck>();
 
@@ -44,11 +51,9 @@ namespace diNo
       rpt.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(subrptEventHandler);
 
       //Report mit Daten befüllen
-      foreach (Schueler s in k.eigeneSchueler)
-      {
-        liste.Add(SchuelerDruck.CreateSchuelerDruck(s, Bericht.Notenmitteilung, UnterschriftZeugnis.SL));
-      }
-      dataSource.Value = liste; // ob das geht???
+      liste.Add(SchuelerDruck.CreateSchuelerDruck(s, Bericht.Notenmitteilung, UnterschriftZeugnis.SL));
+      
+      dataSource.Value = liste;
       rpt.LocalReport.DataSources.Add(dataSource);
 
       //Report als PDF in Datei speichern
@@ -96,7 +101,7 @@ namespace diNo
     }
 
 
-    void Send(Klasse k, string datei)
+    void Send(Schueler s, string datei)
     {
       string bodyText = "";
       MailAddress from = new MailAddress(Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail), "Digitale Notenverwaltung");
@@ -122,18 +127,21 @@ namespace diNo
         bodyText = File.ReadAllText(infoFile);
       }
 
-      string dienstlicheMailAdresse = k.Klassenleiter.Data.EMail; // "claus.konrad@fosbos-kempten.de";
-      if (!string.IsNullOrEmpty(dienstlicheMailAdresse))
+      string MailAdresse = Tools.ErsetzeUmlaute(s.benutzterVorname + "." + s.Name + "@fosbos-kempten.de");
+
+      //MailAdresse = "claus.konrad@fosbos-kempten.de"; // Test
+      if (!string.IsNullOrEmpty(MailAdresse))
       {
         try
         {
           MailMessage msg = new MailMessage();
           msg.From = from;
-          msg.To.Add(new MailAddress(dienstlicheMailAdresse));
-          msg.Subject = "Notenübersicht " + k.Bezeichnung;
-          msg.Body = "Hallo " + k.Klassenleiter.Data.Vorname + "," + bodyText;
+          msg.To.Add(new MailAddress(MailAdresse));
+          msg.Subject = "Aktuelle Notenübersicht";
+          msg.Body = "Hallo " + s.benutzterVorname + "," + bodyText;
           msg.Attachments.Add(new Attachment(datei));
 
+          //MessageBox.Show("Mail an " + MailAdresse, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
           mailServer.Send(msg);
         }
         catch (Exception ex)
@@ -142,8 +150,6 @@ namespace diNo
             throw;
         }
       }
-
-
     }
   }
 }

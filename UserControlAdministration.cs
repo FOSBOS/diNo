@@ -96,17 +96,17 @@ namespace diNo
               UnterrichtExcelReader.ReadUnterricht(dia.FileName);
               Cursor = Cursors.Default;
             }*/
-            if (MessageBox.Show("Die Unterrichtdaten müssen als GPU002.txt aus Untis vorliegen.\nDatenbank unbedingt vorher sichern, da der Import ohne Fehler durchlaufen sollte.\n" +
-            "Dazu die Error-Datei im selben Verzeichnis beachten.", "Import Unterrichtsmatrix", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
-            OpenFileDialog dia = new OpenFileDialog();
-            dia.Title = "Dateiname wählen";
-            if (dia.ShowDialog() == DialogResult.OK)
-            {
-              Cursor = Cursors.WaitCursor;
-              var iu = new ImportUnterricht(dia.FileName);
-              iu.Import();
-              Cursor = Cursors.Default;
-            }
+      if (MessageBox.Show("Die Unterrichtdaten müssen als GPU002.txt aus Untis vorliegen.\nDatenbank unbedingt vorher sichern, da der Import ohne Fehler durchlaufen sollte.\n" +
+      "Dazu die Error-Datei im selben Verzeichnis beachten.", "Import Unterrichtsmatrix", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+      OpenFileDialog dia = new OpenFileDialog();
+      dia.Title = "Dateiname wählen";
+      if (dia.ShowDialog() == DialogResult.OK)
+      {
+        Cursor = Cursors.WaitCursor;
+        var iu = new ImportUnterricht(dia.FileName);
+        iu.Import();
+        Cursor = Cursors.Default;
+      }
     }
 
     private void btnImportSchueler_Click(object sender, EventArgs e)
@@ -429,9 +429,47 @@ namespace diNo
 
     private void btnNotenmitteilung_Click(object sender, EventArgs e)
     {
+      Cursor.Current = Cursors.WaitCursor;
       var klassen = ((Klassenansicht)(Parent.Parent.Parent)).SelectedKlassen();
       if (klassen.Count > 0)
-         new KlassenleiterNoten(klassen);
+        new KlassenleiterNoten(klassen);
+      Cursor.Current = Cursors.Default;
+    }
+
+    private void btnNotenmailSchueler_Click(object sender, EventArgs e)
+    {
+      Cursor.Current = Cursors.WaitCursor;
+      var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
+      if (obj.Count > 0)
+        new MailSchuelerNoten(obj);
+      Cursor.Current = Cursors.Default;
+    }
+
+    private void btnCopy11_Click(object sender, EventArgs e)
+    {
+      foreach (var klasse in Zugriff.Instance.Klassen)
+      {
+        if (klasse.Jahrgangsstufe > Jahrgangsstufe.Elf)
+          continue;
+
+        foreach (var schueler in klasse.eigeneSchueler)
+        {
+          foreach (var noten in schueler.getNoten.alleKurse)
+          {
+            var hj1 = noten.getHjLeistung(HjArt.Hj1);
+            if (hj1 == null) continue;
+
+            HjLeistung hj2 = new HjLeistung(schueler.Id, hj1.getFach, HjArt.Hj2, hj1.JgStufe);
+            hj2.Punkte = hj1.Punkte;
+            hj2.WriteToDB();
+
+            HjLeistung jn = new HjLeistung(schueler.Id, hj1.getFach, HjArt.JN, hj1.JgStufe);
+            jn.Punkte = hj1.Punkte;
+            jn.WriteToDB();
+
+          }
+        }
+      }
     }
   }
 }
