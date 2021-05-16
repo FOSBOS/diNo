@@ -15,10 +15,11 @@ namespace diNo
       t = t.Replace("Ö", "Oe");
       t = t.Replace("Ü", "Ue");
       t = t.Replace("ß", "ss");
-      t = t.Replace(" ", "");
+      t = t.Replace(" ", "-");
       t = t.Replace("'", "");
       t = t.Replace("à", "a");
       t = t.Replace("é", "e");
+      t = t.Replace("è", "e");
       t = t.Replace("ó", "o");
       return t;
     }

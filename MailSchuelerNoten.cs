@@ -15,6 +15,7 @@ namespace diNo
   {
     string passwort;
     string pfad = @"C:\tmp\";
+    Bericht rpttyp = Bericht.Einbringung; // Bericht.Notenmitteilung; // ggf. ändern
 
     public MailSchuelerNoten(List<Schueler> schueler)
     {      
@@ -27,7 +28,7 @@ namespace diNo
     private void SendSchuelerNoten(Schueler s)
     {
       string datei;
-      datei = pfad + s.getKlasse.Bezeichnung + "_" + s.Name + ".pdf";
+      datei = pfad + s.getKlasse.Bezeichnung + "_" + Tools.ErsetzeUmlaute(s.Name + s.benutzterVorname) + ".pdf";
       passwort = "FB-" + s.Data.Geburtsdatum.ToString("yyyyMMdd");
       CreatePdf(s, datei);
       Zip(datei);      
@@ -45,7 +46,7 @@ namespace diNo
       dataSource.Name = "DataSet1";
 
       //Report als Embedded Resource mit dem Namen "Report.rdlc" ... entsprechend anpassen
-      rpt.LocalReport.ReportEmbeddedResource = "diNo.rptNotenmitteilung.rdlc";
+      rpt.LocalReport.ReportEmbeddedResource = "diNo." + SchuelerDruck.GetBerichtsname(rpttyp) + ".rdlc"; //"diNo.rptNotenmitteilung.rdlc";
 
       // Unterberichte einbinden
       rpt.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(subrptEventHandler);
@@ -66,16 +67,22 @@ namespace diNo
     }
 
     void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
-    {
-      // ACHTUNG: Der Parameter muss im Haupt- und im Unterbericht definiert werden (mit gleichem Namen)
-      // string subrpt = e.ReportPath; // jeder Unterbericht ruft diesen EventHandler auf; hier steht drin welcher es ist.
+    {      
+      string subrpt = e.ReportPath; // jeder Unterbericht ruft diesen EventHandler auf; hier steht drin welcher es ist.
       int schuelerId;
       int.TryParse(e.Parameters[0].Values[0], out schuelerId);
       if (schuelerId > 0)
       {
         Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-        IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenDruck(Bericht.Notenmitteilung);
-        e.DataSources.Add(new ReportDataSource("DataSet1", noten));
+        if (subrpt == "subrptPunktesumme" || subrpt == "subrptPunktesummeNB")
+        {
+          e.DataSources.Add(new ReportDataSource("DataSet1", PunkteSummeDruck.Create(schueler, rpttyp)));
+        }
+        else
+        {          
+          IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenDruck(Bericht.Notenmitteilung);
+          e.DataSources.Add(new ReportDataSource("DataSet1", noten));
+        }
       }
     }
 
@@ -137,7 +144,8 @@ namespace diNo
           MailMessage msg = new MailMessage();
           msg.From = from;
           msg.To.Add(new MailAddress(MailAdresse));
-          msg.Subject = "Aktuelle Notenübersicht";
+          if (rpttyp==Bericht.Einbringung) msg.Subject = "Einbringungsvorschlag";
+          else msg.Subject = "Aktuelle Notenübersicht";
           msg.Body = "Hallo " + s.benutzterVorname + "," + bodyText;
           msg.Attachments.Add(new Attachment(datei));
 
