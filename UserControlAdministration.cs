@@ -461,6 +461,7 @@ namespace diNo
 
             HjLeistung hj2 = new HjLeistung(schueler.Id, hj1.getFach, HjArt.Hj2, hj1.JgStufe);
             hj2.Punkte = hj1.Punkte;
+            hj2.SchnittMdl = 21; //Kennzeichen für kopierte Note
             hj2.WriteToDB();
 
             HjLeistung jn = new HjLeistung(schueler.Id, hj1.getFach, HjArt.JN, hj1.JgStufe);

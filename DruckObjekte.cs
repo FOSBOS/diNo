@@ -655,6 +655,7 @@ namespace diNo
         default: fachGruppe = "Wahlpflichtfächer"; break;
       }
       fachBez = s.getFach.BezZeugnis;
+      bool isSport = fachBez == "Sport"; // Sportbefreiungen machen Ärger
       if (rpt == Bericht.Abiturzeugnis)
       {
         if (s.getFach.NichtNC) { fachBez += "*"; hatNichtNC = true; }
@@ -664,8 +665,8 @@ namespace diNo
         VorHj1 = HjToZeugnis(s.getVorHjLeistung(HjArt.Hj1));
         VorHj2 = HjToZeugnis(s.getVorHjLeistung(HjArt.Hj2));
       }
-      Hj1 = HjToZeugnis(s.getHjLeistung(HjArt.Hj1));
-      Hj2 = HjToZeugnis(s.getHjLeistung(HjArt.Hj2));
+      Hj1 = HjToZeugnis(s.getHjLeistung(HjArt.Hj1), isSport);
+      Hj2 = HjToZeugnis(s.getHjLeistung(HjArt.Hj2), isSport);
       if (rpt == Bericht.Abiturzeugnis)
       {
         JNToZeugnis(s.getHjLeistung(HjArt.GesErg));
@@ -709,10 +710,10 @@ namespace diNo
       }
     }
 
-    private string HjToZeugnis(HjLeistung t) // für NeueFOBOSO
+    private string HjToZeugnis(HjLeistung t, bool isSport = false)
     {
-      if (t == null) return rpt == Bericht.Abiturzeugnis ? "" : "--";
-      else if (t.Status == HjStatus.Ungueltig || t.SchnittMdl==21 && t.JgStufe==Jahrgangsstufe.Elf) return "--";
+      if (t == null) return (rpt == Bericht.Abiturzeugnis && !isSport) ? "" : "--";
+      else if (t.Status == HjStatus.Ungueltig) return "--";
       else if (rpt == Bericht.Abiturzeugnis && (t.Status == HjStatus.NichtEinbringen || t.Status == HjStatus.AlternativeEinbr))
         return "(" + t.Punkte.ToString("D2") + ")";
       else return t.Punkte.ToString("D2");
@@ -726,7 +727,7 @@ namespace diNo
 
     private void JNToZeugnis(HjLeistung t)
     {
-      if (t == null || t.Status == HjStatus.Ungueltig || t.SchnittMdl == 21 && t.JgStufe == Jahrgangsstufe.Elf) JNToZeugnis((byte?)null);
+      if (t == null || t.Status == HjStatus.Ungueltig) JNToZeugnis((byte?)null);
       else JNToZeugnis(t.Punkte);
     }
 
