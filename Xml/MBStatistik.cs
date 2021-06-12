@@ -317,7 +317,7 @@ namespace diNo.Xml
 
     private static void FuelleFpA(Schueler unserSchueler, halbjahresergebnisse hjErg)
     {
-      var fpaNoten = unserSchueler.getNoten.FindeFach("FpA", false);
+      var fpaNoten = unserSchueler.getNoten.FindeFach("FpA");
       if (fpaNoten != null)
       {
         var fpa1 = fpaNoten.getVorHjLeistung(HjArt.Hj1);

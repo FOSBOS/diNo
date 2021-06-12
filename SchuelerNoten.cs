@@ -137,18 +137,27 @@ namespace diNo
     /// </summary>
     /// <param name="fachKuerzel">Das Fachkürzel.</param>
     /// <returns>Die FachNoten oder null, wenn der Schüler das fach nicht belegt.</returns>
-    public FachSchuelerNoten FindeFach(string fachKuerzel, bool throwExceptionIfNotFound)
+    public FachSchuelerNoten FindeFach(string fachKuerzel)
     {
       foreach (FachSchuelerNoten f in alleFaecher)
       {
         if (f.getFach.Kuerzel.Equals(fachKuerzel, StringComparison.OrdinalIgnoreCase)) return f;
       }
+      
+      return null;
+    }
 
-      if (throwExceptionIfNotFound)
+    /// <summary>
+    /// Liefert die Sportnoten des Schülers
+    /// </summary>
+    /// <returns>Die FachNoten oder null, wenn der Schüler das fach nicht belegt.</returns>
+    public FachSchuelerNoten FindeSportnote()
+    {
+      foreach (FachSchuelerNoten f in alleFaecher)
       {
-        throw new InvalidOperationException("Der Schüler belegt Fach " + fachKuerzel + " gar nicht.");
+        if (f.getFach.BezZeugnis.StartsWith("Sport", StringComparison.OrdinalIgnoreCase)) return f;
       }
-
+      
       return null;
     }
 

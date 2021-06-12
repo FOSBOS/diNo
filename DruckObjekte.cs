@@ -306,12 +306,18 @@ namespace diNo
       if (s.IsLegastheniker)
         Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
       if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
-        Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
+      {
+        var sport = s.getNoten.FindeSportnote();
+        bool ganzBefreit = (sport.getHjLeistung(HjArt.Hj1) == null || sport.getHjLeistung(HjArt.Hj1).Status == HjStatus.Ungueltig)
+          && (sport.getHjLeistung(HjArt.Hj2) == null || sport.getHjLeistung(HjArt.Hj2).Status == HjStatus.Ungueltig);
+        Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") 
+          + " war vom Unterricht im Fach Sport " + (ganzBefreit ? "" : "teilweise ") + "befreit.";
+      }
 
       if (Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87435")
       {
-        bool hatIPo = s.getNoten.FindeFach("IPo", false) != null;
-        bool hatIBS = s.getNoten.FindeFach("IBS", false) != null;
+        bool hatIPo = s.getNoten.FindeFach("IPo") != null;
+        bool hatIBS = s.getNoten.FindeFach("IBS") != null;
         if (hatIBS && hatIPo)
           Bemerkung += "<br>Die Fächer International Business Studies und Internationale Politik wurden bilingual unterrichtet.";
         else if (hatIBS)

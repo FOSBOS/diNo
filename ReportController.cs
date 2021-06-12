@@ -42,7 +42,7 @@ namespace diNo
     {
       bindingDataSource = dataSource;
       IsProtokolle = aProtokolle;
-      IsPA = Zugriff.Instance.aktZeitpunkt >= (int)Zeitpunkt.ErstePA && Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.DrittePA;
+      IsPA = Zugriff.Instance.aktZeitpunkt > (int)Zeitpunkt.ErstePA && Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.DrittePA;
     }
 
     public override void Init()
@@ -53,7 +53,7 @@ namespace diNo
         rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptKlassenkonferenz.rdlc";
         rpt.reportViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(subrptEventHandler);
         // Parameter PA liefert die Nummer des PA --> für Berichtsüberschrift
-        rpt.reportViewer.LocalReport.SetParameters(new ReportParameter("PA", IsPA ? (Zugriff.Instance.aktZeitpunkt-2).ToString() + ". Prüfungsschuss" : "Klassenkonferenz"));
+        rpt.reportViewer.LocalReport.SetParameters(new ReportParameter("PA", IsPA ? (Zugriff.Instance.aktZeitpunkt - 2).ToString() + ". Prüfungsausschuss" : "Klassenkonferenz"));
       }
       else
         rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenCheck.rdlc";
