@@ -270,7 +270,8 @@ namespace diNo
         // Halbjahresprüfung
         // -----------------
         Halbjahr hj;
-        if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS || contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS)
+        if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS || contr.zeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS
+          || contr.zeitpunkt ==Zeitpunkt.Jahresende) // Corona
           hj = Halbjahr.Erstes;
         else
           hj = Halbjahr.Zweites;

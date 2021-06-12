@@ -152,10 +152,19 @@ namespace diNo
       return null;
     }
 
-    /// <summary>
-    /// Liefert eine Liste in der je Fach alle Noten in druckbarer Form vorliegen.
-    /// </summary>
-    public IList<NotenDruck> SchuelerNotenDruck(Bericht rptName)
+    public FachSchuelerNoten FindeSportnote()
+    {
+      foreach (FachSchuelerNoten f in alleFaecher)
+      {
+        if (f.getFach.BezZeugnis.StartsWith("Sport", StringComparison.OrdinalIgnoreCase)) return f;
+      }
+      return null;
+    }
+
+      /// <summary>
+      /// Liefert eine Liste in der je Fach alle Noten in druckbarer Form vorliegen.
+      /// </summary>
+      public IList<NotenDruck> SchuelerNotenDruck(Bericht rptName)
     {
       IList<NotenDruck> liste = new List<NotenDruck>();
       foreach (FachSchuelerNoten f in alleFaecher)
@@ -656,7 +665,7 @@ namespace diNo
     public byte? getRelevanteNote(Zeitpunkt z)
     {
       HjLeistung hj;
-      if (z <= Zeitpunkt.HalbjahrUndProbezeitFOS) hj = getHjLeistung(HjArt.Hj1);
+      if (z <= Zeitpunkt.HalbjahrUndProbezeitFOS || z == Zeitpunkt.Jahresende) hj = getHjLeistung(HjArt.Hj1);// Corona
       else if ((byte)schueler.getKlasse.Jahrgangsstufe < 12)
       {
         hj = getHjLeistung(HjArt.JN);
