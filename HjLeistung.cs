@@ -11,6 +11,7 @@ namespace diNo
     private int schuelerId;
     public HjArt Art { get; private set; }
     public byte Punkte;
+    public int Sortierung=0; // für die Einbringungsberechnung
     public HjStatus Status = HjStatus.None;
     public Jahrgangsstufe JgStufe;
     public decimal? Punkte2Dez = null;

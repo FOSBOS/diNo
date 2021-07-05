@@ -87,7 +87,7 @@ namespace diNo
           byte anzUngueltig = 0;
           byte anzLeer = 0;
 
-          var hjLeistungen = new List<HjLeistung>();
+          var hjLeistungen = new List<HjLeistung>(); // enthält alle HjLeistungen dieses Fachs, die einbringbar wären
           // HjArt.GetFields().Where(x => x.IsLiteral).Select(x => x.GetValue(null)); TODO: Subset von Enum.HjArt bilden
           foreach (HjArt art in Enum.GetValues(typeof(HjArt))) // 12./13. Klasse
           {
@@ -150,6 +150,7 @@ namespace diNo
           // Sortieren, nur eine davon kann gestrichen werden
           if (hjLeistungen.Count > 0)
           {
+            HJLSortierung(hjLeistungen);
             if (anzUngueltig > 0)
             {
               einbringen.AddRange(hjLeistungen);
@@ -198,14 +199,14 @@ namespace diNo
         }
         else
         {
-          unbedingtStreichen.Sort((x, y) => y.Punkte.CompareTo(x.Punkte));
+          unbedingtStreichen.Sort((x, y) => y.Sortierung.CompareTo(x.Sortierung));
           einbringen.AddRange(unbedingtStreichen.GetRange(0, fehlend));
           unbedingtStreichen.RemoveRange(0, fehlend);
         }
       }
       else
       {
-        streichen.Sort((x, y) => y.Punkte.CompareTo(x.Punkte));
+        streichen.Sort((x, y) => y.Sortierung.CompareTo(x.Sortierung));
         einbringen.AddRange(streichen.GetRange(0, fehlend));
         streichen.RemoveRange(0, fehlend);
         // alternative Streichung für 2. FS
@@ -223,6 +224,18 @@ namespace diNo
 
       foreach (var hjLeistung in streichen.Union(unbedingtStreichen))
         hjLeistung.SetStatus(HjStatus.NichtEinbringen);
+    }
+
+    // Belegt das Feld Sortierung in HjL
+    private void HJLSortierung(List<HjLeistung> hjl)
+    {    
+      byte ge = (byte)Math.Round(hjl.Average((x)=> x.Punkte), MidpointRounding.AwayFromZero);
+      
+      foreach (var hj in hjl)
+      {
+        // ge wurde berechnet, wenn alle eingebracht werden - kann bei Streichung also nur besser werden:
+        hj.Sortierung = hj.Punkte * 15 - ge; // Punkte zählen immer mehr als das GE!
+      }      
     }
 
     // liefert wahr, wenn sich ohne Streichung zusätzlich eine 5 (oder 6) ergeben würde
