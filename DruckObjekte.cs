@@ -291,9 +291,7 @@ namespace diNo
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
       if (jg == 11 && b == Bericht.Jahreszeugnis)
       {
-        // Corona --> Bemerkung nach Sj 20/21 im Abizeugnis wieder ändern!
-        // Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in Jahrgangsstufe 11 in außerschulischen Betrieben bzw.schuleigenen Werkstätten abgeleistet.
-       Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.";
+        Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in Jahrgangsstufe 11 in außerschulischen Betrieben bzw.schuleigenen Werkstätten abgeleistet.";
         Bemerkung += "<br><br>Bemerkungen:";
       }
       else if (b != Bericht.Abiturzeugnis)
@@ -364,6 +362,8 @@ namespace diNo
     public string Sprache { get; private set; }
     public string Note { get; private set; }
     public string Punkte { get; private set; }
+    public string DNote { get; private set; }
+    public string KMK { get; private set; }
 
     public ZusatzAllgHSRDruck(Schueler s) : base(s, Bericht.ZusatzAllgHSR, UnterschriftZeugnis.SL)
     {
@@ -374,6 +374,10 @@ namespace diNo
         Sprache = f.BezZeugnis;
         Punkte = s.Data.AndereFremdspr2Note.ToString("D2");
         Note = NotenZeugnisDruck.getJNText(s.Data.AndereFremdspr2Note);
+        if (!s.Data.IsDNoteNull())
+          DNote = string.Format("{0:F1}", s.Data.DNote) + "(" + ZeugnisTools.ZahlToText(s.Data.DNote) + ")";
+        KMK = (s.Data.Schulart == "B") ? "Berufsoberschule - Beschluss der Kultusministerkonferenz vom 25. November 1976 " :
+          "Fachoberschule - Beschluss der Kultusministerkonferenz vom 16. Dezember 2004 ";
       }
 
       ShowFOBOSOHinweis = true;
@@ -786,11 +790,11 @@ namespace diNo
 
         if (!s.Data.IsDNoteFachgebHSRNull() && s.Data.DNoteFachgebHSR < s.Data.DNote)
         {
-          list.Add(new PunkteSummeDruck("Durchschnittsnote allgemeine Hochschulreife", string.Format("{0:F1}", s.Data.DNote), ZahlToText(s.Data.DNote)));
-          list.Add(new PunkteSummeDruck("Durchschnittsnote fachgebundene Hochschulreife", string.Format("{0:F1}", s.Data.DNoteFachgebHSR), ZahlToText(s.Data.DNoteFachgebHSR)));
+          list.Add(new PunkteSummeDruck("Durchschnittsnote allgemeine Hochschulreife", string.Format("{0:F1}", s.Data.DNote), ZeugnisTools.ZahlToText(s.Data.DNote)));
+          list.Add(new PunkteSummeDruck("Durchschnittsnote fachgebundene Hochschulreife", string.Format("{0:F1}", s.Data.DNoteFachgebHSR), ZeugnisTools.ZahlToText(s.Data.DNoteFachgebHSR)));
         }
         else
-          list.Add(new PunkteSummeDruck("Durchschnittsnote", string.Format("{0:F1}", s.Data.DNote), ZahlToText(s.Data.DNote)));
+          list.Add(new PunkteSummeDruck("Durchschnittsnote", string.Format("{0:F1}", s.Data.DNote), ZeugnisTools.ZahlToText(s.Data.DNote)));
       }
       return list;
     }
@@ -811,30 +815,7 @@ namespace diNo
       }
     }
 
-    public static string ZahlToText(decimal zahl)
-    {
-      int vk = (int)Math.Floor(zahl);
-      int nk = (int)Math.Floor((zahl - vk) * 10 + (decimal)0.01);
-      return ZifferToText(vk) + "," + ZifferToText(nk);
-    }
 
-    public static string ZifferToText(int ziffer)
-    {
-      switch (ziffer)
-      {
-        case 0: return "null";
-        case 1: return "eins";
-        case 2: return "zwei";
-        case 3: return "drei";
-        case 4: return "vier";
-        case 5: return "fünf";
-        case 6: return "sechs";
-        case 7: return "sieben";
-        case 8: return "acht";
-        case 9: return "neun";
-        default: return "";
-      }
-    }
   }
 
   public class SprachniveauDruck
@@ -884,6 +865,33 @@ namespace diNo
         list.Add(new SprachniveauDruck(s.getNoten.ZweiteFSalt));
       }*/
       return list;
+    }
+  }
+  public static class ZeugnisTools
+  {
+    public static string ZahlToText(decimal zahl)
+    {
+      int vk = (int)Math.Floor(zahl);
+      int nk = (int)Math.Floor((zahl - vk) * 10 + (decimal)0.01);
+      return ZifferToText(vk) + "," + ZifferToText(nk);
+    }
+
+    public static string ZifferToText(int ziffer)
+    {
+      switch (ziffer)
+      {
+        case 0: return "null";
+        case 1: return "eins";
+        case 2: return "zwei";
+        case 3: return "drei";
+        case 4: return "vier";
+        case 5: return "fünf";
+        case 6: return "sechs";
+        case 7: return "sieben";
+        case 8: return "acht";
+        case 9: return "neun";
+        default: return "";
+      }
     }
   }
 
