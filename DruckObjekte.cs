@@ -370,6 +370,8 @@ namespace diNo
     public string Sprache { get; private set; }
     public string Note { get; private set; }
     public string Punkte { get; private set; }
+    public string DNote { get; private set; }
+    public string KMK { get; private set; }
 
     public ZusatzAllgHSRDruck(Schueler s) : base(s, Bericht.ZusatzAllgHSR, UnterschriftZeugnis.SL)
     {
@@ -380,11 +382,44 @@ namespace diNo
         Sprache = f.BezZeugnis;
         Punkte = s.Data.AndereFremdspr2Note.ToString("D2");
         Note = NotenZeugnisDruck.getJNText(s.Data.AndereFremdspr2Note);
+        if (!s.Data.IsDNoteNull())
+          DNote = string.Format("{0:F1}", s.Data.DNote) + "(" + ZeugnisTools.ZahlToText(s.Data.DNote) + ")";
+        KMK = (s.Data.Schulart == "B") ? "Berufsoberschule - Beschluss der Kultusministerkonferenz vom 25. November 1976 " :
+          "Fachoberschule - Beschluss der Kultusministerkonferenz vom 16. Dezember 2004 ";
       }
 
       ShowFOBOSOHinweis = true;
     }
   }
+
+  public static class ZeugnisTools
+  {
+    public static string ZahlToText(decimal zahl)
+    {
+      int vk = (int)Math.Floor(zahl);
+      int nk = (int)Math.Floor((zahl - vk) * 10 + (decimal)0.01);
+      return ZifferToText(vk) + "," + ZifferToText(nk);
+    }
+
+    public static string ZifferToText(int ziffer)
+    {
+      switch (ziffer)
+      {
+        case 0: return "null";
+        case 1: return "eins";
+        case 2: return "zwei";
+        case 3: return "drei";
+        case 4: return "vier";
+        case 5: return "fünf";
+        case 6: return "sechs";
+        case 7: return "sieben";
+        case 8: return "acht";
+        case 9: return "neun";
+        default: return "";
+      }
+    }
+  }
+
   /*
 *****************************************************************************************************
 **********************************  Unterberichtsdaten **********************************************

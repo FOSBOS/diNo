@@ -691,7 +691,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>5.72226cm</Height>
+              <Height>6.1985cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -813,7 +813,69 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Entsprechend der Rahmenvereinbarung über die Fachoberschule - Beschluss der Kultusministerkonferenz vom 16. Dezember 2004 in der jeweils geltenden Fassung - berechtigt dieses Zeugnis in allen Ländern in der Bundesrepublik Deutschland zum Studium aller Studiengänge an wissenschaftlichen Hochschulen.</Value>
+                              <Value>Entsprechend der Rahmenvereinbarung über die </Value>
+                              <MarkupType>HTML</MarkupType>
+                              <Style>
+                                <FontFamily>Gadugi</FontFamily>
+                                <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!KMK.Value</Value>
+                              <MarkupType>HTML</MarkupType>
+                              <Style>
+                                <FontFamily>Gadugi</FontFamily>
+                                <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>in der jeweils geltenden Fassung - berechtigt dieses Zeugnis in allen Ländern in der Bundesrepublik Deutschland zum Studium aller Studiengänge an wissenschaftlichen Hochschulen.</Value>
+                              <MarkupType>HTML</MarkupType>
+                              <Style>
+                                <FontFamily>Gadugi</FontFamily>
+                                <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value />
+                              <MarkupType>HTML</MarkupType>
+                              <Style>
+                                <FontFamily>Gadugi</FontFamily>
+                                <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                          </TextRuns>
+                          <Style>
+                            <TextAlign>Left</TextAlign>
+                          </Style>
+                        </Paragraph>
+                        <Paragraph>
+                          <TextRuns>
+                            <TextRun>
+                              <Value>Gemäß Schulordnung (§27 Abs. 3) errechnet sich die allgemeine Durchschnittsnote </Value>
+                              <MarkupType>HTML</MarkupType>
+                              <Style>
+                                <FontFamily>Gadugi</FontFamily>
+                                <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!DNote.Value</Value>
+                              <MarkupType>HTML</MarkupType>
+                              <Style>
+                                <FontFamily>Gadugi</FontFamily>
+                                <FontWeight>Normal</FontWeight>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>.</Value>
                               <MarkupType>HTML</MarkupType>
                               <Style>
                                 <FontFamily>Gadugi</FontFamily>
@@ -1151,7 +1213,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>17.68176cm</Height>
+        <Height>18.158cm</Height>
         <Width>14.05599cm</Width>
         <Style>
           <Border>
@@ -1162,7 +1224,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>17.68176cm</Height>
+    <Height>18.84592cm</Height>
     <Style />
   </Body>
   <Width>14.6cm</Width>
@@ -2194,6 +2256,10 @@
           <DataField>DatumZeugnis</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="DNote">
+          <DataField>DNote</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="GeborenInAm">
           <DataField>GeborenInAm</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -2240,6 +2306,10 @@
         </Field>
         <Field Name="KlassenleiterText">
           <DataField>KlassenleiterText</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="KMK">
+          <DataField>KMK</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Nachname">
