@@ -316,8 +316,13 @@ namespace diNo
       else if ((s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf) && (s.Data.Schulart == "F")) // FOS 12 in Corona kein Sport
       {
         var sport = s.getNoten.FindeSportnote();
-        if (sport.getHjLeistung(HjArt.Hj2) == null)
+        if (sport.getHjLeistung(HjArt.Hj1) == null && sport.getHjLeistung(HjArt.Hj2) == null)
+          Bemerkung += "<br>Unterricht im Fach Sport wurde nicht erteilt.";
+        else if (sport.getHjLeistung(HjArt.Hj2) == null)
           Bemerkung += "<br>Unterricht im Fach Sport wurde im 2. Halbjahr nicht erteilt.";
+        else if (sport.getHjLeistung(HjArt.Hj1) == null)
+          Bemerkung += "<br>Unterricht im Fach Sport wurde im 1. Halbjahr nicht erteilt.";
+
       }
 
       if (Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87435")
