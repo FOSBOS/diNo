@@ -55,7 +55,7 @@ namespace diNo
         if (fach.getKursniveau() > Kursniveau.None)
         { // abgelegte 2. FS --> nicht in die normale Liste aufnehmen, da außerhalb der Noten- und Einbringungsprüfung
           alleSprachen.Add(fsn);
-          if (s.Data.AndereFremdspr2Art != (int)ZweiteFSArt.ErgPr)
+          if (fsn.getHjLeistung(HjArt.Hj1) != null && fsn.getHjLeistung(HjArt.Hj2) != null) // (s.Data.AndereFremdspr2Art != (int)ZweiteFSArt.ErgPr )
             ZweiteFSalt = fsn;
         }
         else
