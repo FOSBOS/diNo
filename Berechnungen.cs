@@ -273,7 +273,7 @@ namespace diNo
           p.Add(PunktesummeArt.FremdspracheErgPr, s.Data.AndereFremdspr2Note, 2);
 
         // Frz. fortgeführt aus alter 12./13. Klasse
-        else if (fs2 != null && fs2.getHjLeistung(HjArt.Hj1) != null && fs2.getHjLeistung(HjArt.Hj1) != null)
+        else if (fs2 != null)
         {
           p.Add(PunktesummeArt.FremdspracheAus12, fs2.getHjLeistung(HjArt.Hj1).Punkte);
           p.Add(PunktesummeArt.FremdspracheAus12, fs2.getHjLeistung(HjArt.Hj2).Punkte);
