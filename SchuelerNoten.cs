@@ -147,6 +147,16 @@ namespace diNo
       return null;
     }
 
+    public FachSchuelerNoten FindeFach(int fachId)
+    {
+      foreach (FachSchuelerNoten f in alleFaecher)
+      {
+        if (f.getFach.Id == fachId) return f;
+      }
+
+      return null;
+    }
+
     /// <summary>
     /// Liefert die Sportnoten des Schülers
     /// </summary>

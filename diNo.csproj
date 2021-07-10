@@ -101,6 +101,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auswertungen.cs" />
     <Compile Include="ExportKurswahl.cs" />
     <Compile Include="ImportUnterricht.cs" />
     <Compile Include="KlasseForm.cs">

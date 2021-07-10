@@ -472,6 +472,11 @@ namespace diNo
         }
       }
     }
+
+    private void btnSchnitte_Click(object sender, EventArgs e)
+    {
+      Auswertungen.AbiSchnitte();
+    }
   }
 }
 

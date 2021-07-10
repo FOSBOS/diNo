@@ -75,15 +75,16 @@
       this.lblStatus = new System.Windows.Forms.Label();
       this.btnHjLeistungenWuerfeln = new System.Windows.Forms.Button();
       this.groupboxTest = new System.Windows.Forms.GroupBox();
+      this.btnNotenmailSchueler = new System.Windows.Forms.Button();
       this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.groupBoxReparatur = new System.Windows.Forms.GroupBox();
-      this.btnCopy11 = new System.Windows.Forms.Button();
       this.btnCorona2HJKlonen = new System.Windows.Forms.Button();
       this.btnKurseZuweisen = new System.Windows.Forms.Button();
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
-      this.btnNotenmailSchueler = new System.Windows.Forms.Button();
+      this.btnCopy11 = new System.Windows.Forms.Button();
+      this.btnSchnitte = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -98,6 +99,7 @@
       // 
       // groupBoxAnalyse
       // 
+      this.groupBoxAnalyse.Controls.Add(this.btnSchnitte);
       this.groupBoxAnalyse.Controls.Add(this.btnWPF);
       this.groupBoxAnalyse.Controls.Add(this.btnEinserAbi);
       this.groupBoxAnalyse.Controls.Add(this.btnSelect);
@@ -110,7 +112,7 @@
       // 
       // btnWPF
       // 
-      this.btnWPF.Location = new System.Drawing.Point(21, 81);
+      this.btnWPF.Location = new System.Drawing.Point(21, 123);
       this.btnWPF.Name = "btnWPF";
       this.btnWPF.Size = new System.Drawing.Size(132, 23);
       this.btnWPF.TabIndex = 2;
@@ -610,6 +612,16 @@
       this.groupboxTest.TabStop = false;
       this.groupboxTest.Text = "Testverfahren";
       // 
+      // btnNotenmailSchueler
+      // 
+      this.btnNotenmailSchueler.Location = new System.Drawing.Point(15, 125);
+      this.btnNotenmailSchueler.Name = "btnNotenmailSchueler";
+      this.btnNotenmailSchueler.Size = new System.Drawing.Size(163, 23);
+      this.btnNotenmailSchueler.TabIndex = 14;
+      this.btnNotenmailSchueler.Text = "Notenmitteilung an Schüler";
+      this.btnNotenmailSchueler.UseVisualStyleBackColor = true;
+      this.btnNotenmailSchueler.Click += new System.EventHandler(this.btnNotenmailSchueler_Click);
+      // 
       // btnNotenmitteilung
       // 
       this.btnNotenmitteilung.Location = new System.Drawing.Point(15, 96);
@@ -633,16 +645,6 @@
       this.groupBoxReparatur.TabIndex = 9;
       this.groupBoxReparatur.TabStop = false;
       this.groupBoxReparatur.Text = "Reparaturen";
-      // 
-      // btnCopy11
-      // 
-      this.btnCopy11.Location = new System.Drawing.Point(15, 168);
-      this.btnCopy11.Name = "btnCopy11";
-      this.btnCopy11.Size = new System.Drawing.Size(163, 23);
-      this.btnCopy11.TabIndex = 12;
-      this.btnCopy11.Text = "Corona-11/1 nach 11/2 kopieren";
-      this.btnCopy11.UseVisualStyleBackColor = true;
-      this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
       // 
       // btnCorona2HJKlonen
       // 
@@ -694,17 +696,26 @@
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
       // 
-
-      // btnNotenmailSchueler
+      // btnCopy11
       // 
-      this.btnNotenmailSchueler.Location = new System.Drawing.Point(15, 125);
-      this.btnNotenmailSchueler.Name = "btnNotenmailSchueler";
-      this.btnNotenmailSchueler.Size = new System.Drawing.Size(163, 23);
-      this.btnNotenmailSchueler.TabIndex = 14;
-      this.btnNotenmailSchueler.Text = "Notenmitteilung an Schüler";
-      this.btnNotenmailSchueler.UseVisualStyleBackColor = true;
-      this.btnNotenmailSchueler.Click += new System.EventHandler(this.btnNotenmailSchueler_Click);
-
+      this.btnCopy11.Location = new System.Drawing.Point(15, 168);
+      this.btnCopy11.Name = "btnCopy11";
+      this.btnCopy11.Size = new System.Drawing.Size(163, 23);
+      this.btnCopy11.TabIndex = 12;
+      this.btnCopy11.Text = "Corona-11/1 nach 11/2 kopieren";
+      this.btnCopy11.UseVisualStyleBackColor = true;
+      this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
+      // 
+      // btnSchnitte
+      // 
+      this.btnSchnitte.Location = new System.Drawing.Point(21, 81);
+      this.btnSchnitte.Name = "btnSchnitte";
+      this.btnSchnitte.Size = new System.Drawing.Size(132, 23);
+      this.btnSchnitte.TabIndex = 3;
+      this.btnSchnitte.Text = "Abi-Schnitte";
+      this.btnSchnitte.UseVisualStyleBackColor = true;
+      this.btnSchnitte.Click += new System.EventHandler(this.btnSchnitte_Click);
+      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -799,5 +810,6 @@
     private System.Windows.Forms.Button btnNotenmitteilung;
     private System.Windows.Forms.Button btnCopy11;
     private System.Windows.Forms.Button btnNotenmailSchueler;
+    private System.Windows.Forms.Button btnSchnitte;
   }
 }
