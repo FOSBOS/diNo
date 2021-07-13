@@ -210,14 +210,7 @@ namespace diNo
 
     private void btnEinserAbi_Click(object sender, EventArgs e)
     {
-      List<Schueler> alle = Zugriff.Instance.SchuelerRep.getList();
-      List<Schueler> liste = new List<Schueler>();
-
-      foreach (var s in alle)
-      {
-        if (!s.Data.IsDNoteNull() && (double)s.Data.DNote < 2.0) liste.Add(s);
-      }
-      new ReportSchuelerdruck(liste, Bericht.EinserAbi).Show();
+      Auswertungen.AbiBesten();
     }
 
     private void btnBerechtigungen_Click(object sender, EventArgs e)
