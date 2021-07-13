@@ -321,6 +321,7 @@ namespace diNo
     {
       SaveFileDialog dia = new SaveFileDialog();
       dia.Title = "Dateiname wählen";
+      dia.FileName = "S0871_AP" + (Zugriff.Instance.Schuljahr - 2000 +1) + ".xml";
       if (dia.ShowDialog() == DialogResult.OK)
       {
         Xml.MBStatistik.Serialize(dia.FileName);
@@ -331,6 +332,7 @@ namespace diNo
     {
       SaveFileDialog dia = new SaveFileDialog();
       dia.Title = "Dateiname wählen";
+      dia.FileName = "S0871_Erfolg" + (Zugriff.Instance.Schuljahr - 2000 + 1) + ".xml";
       if (dia.ShowDialog() == DialogResult.OK)
       {
         Xml.SEStatistik.Serialize(dia.FileName);

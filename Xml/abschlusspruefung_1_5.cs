@@ -20,8 +20,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class abschlusspruefungsstatistik {
         
         private schule[] schuleField;
@@ -43,8 +43,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class schule {
         
         private jahrgangsstufe12 jahrgangsstufe12Field;
@@ -139,8 +139,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class jahrgangsstufe12 {
         
         private klasse[] klasseField;
@@ -162,8 +162,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class klasse {
         
         private schueler[] schuelerField;
@@ -211,8 +211,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class schueler {
         
         private grunddaten grunddatenField;
@@ -308,8 +308,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class grunddaten {
         
         private string durchschnittsnoteField;
@@ -406,8 +406,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class vorbildung {
         
         private string m_deutschField;
@@ -476,7 +476,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum vorbildungMsa_erworben_an_schulart {
         
         /// <remarks/>
@@ -507,7 +507,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum vorbildungBesuchte_schulart_vor_eintritt {
         
         /// <remarks/>
@@ -541,7 +541,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum grunddatenGeschlecht {
         
         /// <remarks/>
@@ -554,7 +554,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum grunddatenWdh_jgst {
         
         /// <remarks/>
@@ -591,8 +591,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class abschlusspruefung {
         
         private ap_deutsch ap_deutschField;
@@ -603,9 +603,9 @@ namespace diNo.Xml.Mbstatistik {
         
         private ap_profilfach1 ap_profilfach1Field;
         
-        private ap_geschichte_sozialkunde ap_geschichte_sozialkundeField;
+        private ap_geschichte_politikundgesellschaft ap_geschichte_politikundgesellschaftField;
         
-        private ap_sozialkunde ap_sozialkundeField;
+        private ap_politikundgesellschaft ap_politikundgesellschaftField;
         
         private ap_profilfach2 ap_profilfach2Field;
         
@@ -674,22 +674,22 @@ namespace diNo.Xml.Mbstatistik {
         }
         
         /// <remarks/>
-        public ap_geschichte_sozialkunde ap_geschichte_sozialkunde {
+        public ap_geschichte_politikundgesellschaft ap_geschichte_politikundgesellschaft {
             get {
-                return this.ap_geschichte_sozialkundeField;
+                return this.ap_geschichte_politikundgesellschaftField;
             }
             set {
-                this.ap_geschichte_sozialkundeField = value;
+                this.ap_geschichte_politikundgesellschaftField = value;
             }
         }
         
         /// <remarks/>
-        public ap_sozialkunde ap_sozialkunde {
+        public ap_politikundgesellschaft ap_politikundgesellschaft {
             get {
-                return this.ap_sozialkundeField;
+                return this.ap_politikundgesellschaftField;
             }
             set {
-                this.ap_sozialkundeField = value;
+                this.ap_politikundgesellschaftField = value;
             }
         }
         
@@ -822,8 +822,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_deutsch {
         
         private string schriftlichField;
@@ -868,8 +868,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_mathematik {
         
         private string schriftlichField;
@@ -914,8 +914,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_englisch {
         
         private string schriftlichField;
@@ -960,8 +960,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_ersatzfremdsprache {
         
         private string schriftlichField;
@@ -1019,8 +1019,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_profilfach1 {
         
         private string schriftlichField;
@@ -1065,9 +1065,9 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
-    public partial class ap_geschichte_sozialkunde {
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
+    public partial class ap_geschichte_politikundgesellschaft {
         
         private string schriftlichField;
         
@@ -1111,9 +1111,9 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
-    public partial class ap_sozialkunde {
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
+    public partial class ap_politikundgesellschaft {
         
         private string schriftlichField;
         
@@ -1157,8 +1157,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_profilfach2 {
         
         private string schriftlichField;
@@ -1203,8 +1203,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_profilfach3 {
         
         private string schriftlichField;
@@ -1249,8 +1249,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_geschichte {
         
         private string schriftlichField;
@@ -1295,8 +1295,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_profilfach4 {
         
         private string schriftlichField;
@@ -1341,8 +1341,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_ethik {
         
         private string schriftlichField;
@@ -1387,8 +1387,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_rechtslehre {
         
         private string schriftlichField;
@@ -1433,8 +1433,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_chemie {
         
         private string schriftlichField;
@@ -1479,8 +1479,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_religionslehre_ev {
         
         private string schriftlichField;
@@ -1525,8 +1525,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ap_religionslehre_rk {
         
         private string schriftlichField;
@@ -1569,7 +1569,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum abschlusspruefungBestanden {
         
         /// <remarks/>
@@ -1582,7 +1582,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum abschlusspruefungAbgelegt {
         
         /// <remarks/>
@@ -1603,8 +1603,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ausbildungsabschnitte {
         
         private dbfh_allgemeinbildende_faecher dbfh_allgemeinbildende_faecherField;
@@ -1637,8 +1637,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_allgemeinbildende_faecher {
         
         private object itemField;
@@ -1647,7 +1647,7 @@ namespace diNo.Xml.Mbstatistik {
         
         private dbfh_englisch dbfh_englischField;
         
-        private dbfh_sozialkunde dbfh_sozialkundeField;
+        private dbfh_politikundgesellschaft dbfh_politikundgesellschaftField;
         
         private dbfh_geschichte dbfh_geschichteField;
         
@@ -1687,12 +1687,12 @@ namespace diNo.Xml.Mbstatistik {
         }
         
         /// <remarks/>
-        public dbfh_sozialkunde dbfh_sozialkunde {
+        public dbfh_politikundgesellschaft dbfh_politikundgesellschaft {
             get {
-                return this.dbfh_sozialkundeField;
+                return this.dbfh_politikundgesellschaftField;
             }
             set {
-                this.dbfh_sozialkundeField = value;
+                this.dbfh_politikundgesellschaftField = value;
             }
         }
         
@@ -1722,8 +1722,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_ethik {
         
         private a2_3_1 a2_3_1Field;
@@ -1744,8 +1744,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class a2_3_1 {
         
         private string punkteField;
@@ -1777,7 +1777,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum a2_3_1Eingebracht {
         
         /// <remarks/>
@@ -1794,8 +1794,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_religionslehre_ev {
         
         private a2_3_1 a2_3_1Field;
@@ -1816,8 +1816,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_religionslehre_rk {
         
         private a2_3_1 a2_3_1Field;
@@ -1838,8 +1838,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_deutsch {
         
         private a2_3_1 a2_3_1Field;
@@ -1872,8 +1872,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class a3_2 {
         
         private string punkteField;
@@ -1905,7 +1905,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum a3_2Eingebracht {
         
         /// <remarks/>
@@ -1926,8 +1926,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_englisch {
         
         private a2_3_1 a2_3_1Field;
@@ -1960,9 +1960,9 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
-    public partial class dbfh_sozialkunde {
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
+    public partial class dbfh_politikundgesellschaft {
         
         private a2_3_1 a2_3_1Field;
         
@@ -1982,8 +1982,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_geschichte {
         
         private a2_3_1 a2_3_1Field;
@@ -2016,8 +2016,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_mathematik {
         
         private a2_3_1 a2_3_1Field;
@@ -2050,8 +2050,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_profilfaecher {
         
         private dbfh_physik[] dbfh_physikField;
@@ -2151,8 +2151,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_physik {
         
         private a2_3_1 a2_3_1Field;
@@ -2185,8 +2185,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_chemie {
         
         private a2_3_1 a2_3_1Field;
@@ -2219,8 +2219,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_mathematik_additum {
         
         private a2_3_1 a2_3_1Field;
@@ -2253,8 +2253,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_bwr {
         
         private a2_3_1 a2_3_1Field;
@@ -2287,8 +2287,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_volkswirtschaftslehre {
         
         private a2_3_1 a2_3_1Field;
@@ -2321,8 +2321,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_naturwissenschaften {
         
         private a2_3_1 a2_3_1Field;
@@ -2355,8 +2355,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh_informatik {
         
         private a2_3_1 a2_3_1Field;
@@ -2389,8 +2389,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class halbjahresergebnisse {
         
         private allgemeinbildende_faecher allgemeinbildende_faecherField;
@@ -2447,8 +2447,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class allgemeinbildende_faecher {
         
         private object itemField;
@@ -2459,9 +2459,9 @@ namespace diNo.Xml.Mbstatistik {
         
         private geschichte geschichteField;
         
-        private sozialkunde sozialkundeField;
+        private politikundgesellschaft politikundgesellschaftField;
         
-        private geschichte_sozialkunde geschichte_sozialkundeField;
+        private geschichte_politikundgesellschaft geschichte_politikundgesellschaftField;
         
         private mathematik mathematikField;
         
@@ -2513,22 +2513,22 @@ namespace diNo.Xml.Mbstatistik {
         }
         
         /// <remarks/>
-        public sozialkunde sozialkunde {
+        public politikundgesellschaft politikundgesellschaft {
             get {
-                return this.sozialkundeField;
+                return this.politikundgesellschaftField;
             }
             set {
-                this.sozialkundeField = value;
+                this.politikundgesellschaftField = value;
             }
         }
         
         /// <remarks/>
-        public geschichte_sozialkunde geschichte_sozialkunde {
+        public geschichte_politikundgesellschaft geschichte_politikundgesellschaft {
             get {
-                return this.geschichte_sozialkundeField;
+                return this.geschichte_politikundgesellschaftField;
             }
             set {
-                this.geschichte_sozialkundeField = value;
+                this.geschichte_politikundgesellschaftField = value;
             }
         }
         
@@ -2558,8 +2558,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ethik {
         
         private object itemField;
@@ -2596,8 +2596,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class hj_12_1 {
         
         private string punkteField;
@@ -2629,7 +2629,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum hj_12_1Eingebracht {
         
         /// <remarks/>
@@ -2644,8 +2644,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class hj_13_1 {
         
         private string punkteField;
@@ -2677,7 +2677,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum hj_13_1Eingebracht {
         
         /// <remarks/>
@@ -2692,8 +2692,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class hj_12_2 {
         
         private string punkteField;
@@ -2725,7 +2725,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum hj_12_2Eingebracht {
         
         /// <remarks/>
@@ -2740,8 +2740,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class hj_13_2 {
         
         private string punkteField;
@@ -2773,7 +2773,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum hj_13_2Eingebracht {
         
         /// <remarks/>
@@ -2788,8 +2788,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class religionslehre_ev {
         
         private object itemField;
@@ -2826,8 +2826,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class religionslehre_rk {
         
         private object itemField;
@@ -2864,8 +2864,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class deutsch {
         
         private object[] itemsField;
@@ -2892,8 +2892,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class hj_11_1 {
         
         private string punkteField;
@@ -2925,7 +2925,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum hj_11_1Eingebracht {
         
         /// <remarks/>
@@ -2940,8 +2940,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class hj_11_2 {
         
         private string punkteField;
@@ -2973,7 +2973,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum hj_11_2Eingebracht {
         
         /// <remarks/>
@@ -2988,8 +2988,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class englisch {
         
         private hj_11_1 hj_11_1Field;
@@ -3038,8 +3038,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ersatzfremdsprache {
         
         private hj_11_1 hj_11_1Field;
@@ -3088,8 +3088,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class geschichte {
         
         private hj_11_1 hj_11_1Field;
@@ -3122,9 +3122,9 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
-    public partial class sozialkunde {
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
+    public partial class politikundgesellschaft {
         
         private hj_12_1 hj_12_1Field;
         
@@ -3156,9 +3156,9 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
-    public partial class geschichte_sozialkunde {
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
+    public partial class geschichte_politikundgesellschaft {
         
         private object[] itemsField;
         
@@ -3182,8 +3182,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class mathematik {
         
         private hj_11_1 hj_11_1Field;
@@ -3232,8 +3232,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class sport {
         
         private object[] itemsField;
@@ -3258,8 +3258,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class profilfaecher {
         
         private physik[] physikField;
@@ -3593,8 +3593,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class physik {
         
         private object[] itemsField;
@@ -3621,8 +3621,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class technologie {
         
         private object[] itemsField;
@@ -3649,8 +3649,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class chemie {
         
         private object[] itemsField;
@@ -3677,8 +3677,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class mathematik_additum_t {
         
         private hj_12_1 hj_12_1Field;
@@ -3711,8 +3711,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class biologie {
         
         private object[] itemsField;
@@ -3739,8 +3739,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class bwr {
         
         private object[] itemsField;
@@ -3767,8 +3767,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class volkswirtschaftslehre {
         
         private object[] itemsField;
@@ -3795,8 +3795,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class rechtslehre {
         
         private hj_11_1 hj_11_1Field;
@@ -3829,8 +3829,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class naturwissenschaften {
         
         private object itemField;
@@ -3867,8 +3867,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class informatik {
         
         private object[] itemsField;
@@ -3893,8 +3893,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class ibv {
         
         private object[] itemsField;
@@ -3921,8 +3921,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class franzoesisch {
         
         private object[] itemsField;
@@ -3949,8 +3949,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class franzoesisch_fortgefuehrt {
         
         private object[] itemsField;
@@ -3977,8 +3977,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class spanisch {
         
         private object[] itemsField;
@@ -4005,8 +4005,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class spanisch_fortgefuehrt {
         
         private object[] itemsField;
@@ -4033,8 +4033,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class international_business_studies {
         
         private object[] itemsField;
@@ -4059,8 +4059,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class paedagogik_psychologie {
         
         private object[] itemsField;
@@ -4087,8 +4087,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class sozialwirtschaft_und_recht {
         
         private object[] itemsField;
@@ -4115,8 +4115,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class gesundheitswissenschaften {
         
         private object[] itemsField;
@@ -4143,8 +4143,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class kommunikation_und_interaktion {
         
         private object[] itemsField;
@@ -4171,8 +4171,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class gestaltung_praxis {
         
         private hj_11_1 hj_11_1Field;
@@ -4229,8 +4229,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class gestaltung_theorie {
         
         private hj_11_1 hj_11_1Field;
@@ -4287,8 +4287,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class medien {
         
         private object[] itemsField;
@@ -4315,8 +4315,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class gestaltung {
         
         private hj_13_1 hj_13_1Field;
@@ -4349,8 +4349,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class soziologie {
         
         private object[] itemsField;
@@ -4375,8 +4375,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class wahlpflichtfaecher {
         
         private informatik[] informatikField;
@@ -4775,8 +4775,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class biotechnologie {
         
         private object[] itemsField;
@@ -4801,8 +4801,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class wirtschaft_aktuell {
         
         private object[] itemsField;
@@ -4827,8 +4827,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class sozialpsychologie {
         
         private object[] itemsField;
@@ -4853,8 +4853,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class experimentelles_gestalten {
         
         private object[] itemsField;
@@ -4879,8 +4879,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class spektrum_der_gesundheit {
         
         private object[] itemsField;
@@ -4905,8 +4905,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class mathematik_additum {
         
         private object[] itemsField;
@@ -4931,8 +4931,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class physik_additum {
         
         private hj_13_1 hj_13_1Field;
@@ -4965,8 +4965,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class aspekte_der_physik {
         
         private object[] itemsField;
@@ -4991,8 +4991,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class aspekte_der_chemie {
         
         private object[] itemsField;
@@ -5017,8 +5017,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class english_book_club {
         
         private object[] itemsField;
@@ -5043,8 +5043,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class internationale_politik {
         
         private object[] itemsField;
@@ -5069,8 +5069,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class aspekte_der_biologie {
         
         private object[] itemsField;
@@ -5095,8 +5095,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class wirtschaft_und_recht {
         
         private object[] itemsField;
@@ -5121,8 +5121,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class aspekte_der_psychologie {
         
         private object[] itemsField;
@@ -5147,8 +5147,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class gesundheitswirtschaft_und_recht {
         
         private object[] itemsField;
@@ -5173,8 +5173,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class studier_und_arbeitstechniken {
         
         private hj_12_1 hj_12_1Field;
@@ -5207,8 +5207,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class kunst {
         
         private object[] itemsField;
@@ -5233,8 +5233,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class musik {
         
         private object[] itemsField;
@@ -5259,8 +5259,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class szenisches_gestalten {
         
         private object[] itemsField;
@@ -5285,8 +5285,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class italienisch {
         
         private object[] itemsField;
@@ -5311,8 +5311,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class latein {
         
         private object[] itemsField;
@@ -5337,8 +5337,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class russisch {
         
         private object[] itemsField;
@@ -5363,8 +5363,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class fachpraktische_ausbildung {
         
         private hj_11_1 hj_11_1Field;
@@ -5397,8 +5397,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class fachreferat {
         
         private string fachField;
@@ -5431,8 +5431,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class seminar {
         
         private string punkteField;
@@ -5453,8 +5453,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class zweite_fremdsprache {
         
         private object itemField;
@@ -5503,8 +5503,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class note {
         
         private string schriftlichField;
@@ -5549,8 +5549,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class unterricht {
         
         private string halbjahr1Field;
@@ -5581,7 +5581,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum zweite_fremdspracheSprache {
         
         /// <remarks/>
@@ -5603,7 +5603,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum zweite_fremdspracheArt {
         
         /// <remarks/>
@@ -5619,7 +5619,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum klasseAusbildungsrichtung {
         
         /// <remarks/>
@@ -5649,8 +5649,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class jahrgangsstufe13 {
         
         private klasse[] klasseField;
@@ -5672,8 +5672,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class dbfh {
         
         private klasse[] klasseField;
@@ -5695,8 +5695,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class anderebewerber_12 {
         
         private klasse[] klasseField;
@@ -5718,8 +5718,8 @@ namespace diNo.Xml.Mbstatistik {
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.4", IsNullable=false)]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace="http://tempuri.org/abschlusspruefung_1.5", IsNullable=false)]
     public partial class anderebewerber_13 {
         
         private klasse[] klasseField;
@@ -5739,7 +5739,7 @@ namespace diNo.Xml.Mbstatistik {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
     [System.SerializableAttribute()]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.4")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="http://tempuri.org/abschlusspruefung_1.5")]
     public enum schuleArt {
         
         /// <remarks/>

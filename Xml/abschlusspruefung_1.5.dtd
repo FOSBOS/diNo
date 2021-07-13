@@ -51,7 +51,7 @@
 							<!ELEMENT m_englisch (#PCDATA)>
 							
 
-					<!ELEMENT abschlusspruefung (ap_deutsch?,ap_mathematik?,(ap_englisch | ap_ersatzfremdsprache)?,ap_profilfach1?, ap_geschichte_sozialkunde?,ap_sozialkunde?, ap_profilfach2?, ap_profilfach3?, ap_geschichte?,ap_profilfach4?,ap_ethik?,ap_rechtslehre?,ap_chemie?, ap_religionslehre_ev?, ap_religionslehre_rk?)>
+					<!ELEMENT abschlusspruefung (ap_deutsch?,ap_mathematik?,(ap_englisch | ap_ersatzfremdsprache)?,ap_profilfach1?, ap_geschichte_politikundgesellschaft?,ap_politikundgesellschaft?, ap_profilfach2?, ap_profilfach3?, ap_geschichte?,ap_profilfach4?,ap_ethik?,ap_rechtslehre?,ap_chemie?, ap_religionslehre_ev?, ap_religionslehre_rk?)>
 						<!ATTLIST abschlusspruefung									
 									bestanden (ja|nein) #IMPLIED 
 									abgelegt (0|1|2) #REQUIRED> <!--0: vollabgelegt 1: teilweise oder vollständig nicht abgelegt aus vom Schüler nicht zu vertretendem Grund 2: teilweise oder vollständig nicht abgelegt aus vom Schüler zu vertretendem Grund -->
@@ -70,24 +70,24 @@
 						<!ELEMENT ap_profilfach2 (schriftlich?,muendlich?, gesamt)>
 						<!ELEMENT ap_profilfach3 (schriftlich?,muendlich?, gesamt)>
 						<!ELEMENT ap_profilfach4 (schriftlich?,muendlich?, gesamt)>
-						<!ELEMENT ap_sozialkunde (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_politikundgesellschaft (schriftlich?,muendlich?, gesamt)>
 						<!ELEMENT ap_geschichte (schriftlich?,muendlich?, gesamt)>
 						<!ELEMENT ap_rechtslehre (schriftlich?,muendlich?, gesamt)>
 						<!ELEMENT ap_religionslehre_ev (schriftlich?,muendlich?, gesamt)>
 						<!ELEMENT ap_religionslehre_rk (schriftlich?,muendlich?, gesamt)>
 						<!ELEMENT ap_ethik (schriftlich?,muendlich?, gesamt)>
 						<!ELEMENT ap_chemie (schriftlich?,muendlich?, gesamt)>
-						<!ELEMENT ap_geschichte_sozialkunde (schriftlich?,muendlich?, gesamt)>
+						<!ELEMENT ap_geschichte_politikundgesellschaft (schriftlich?,muendlich?, gesamt)>
 					
 					<!ELEMENT halbjahresergebnisse (allgemeinbildende_faecher, profilfaecher, wahlpflichtfaecher, fachpraktische_ausbildung?)>
-						<!ELEMENT allgemeinbildende_faecher ((religionslehre_rk|religionslehre_ev|ethik),deutsch,(englisch|ersatzfremdsprache), geschichte?,sozialkunde?,geschichte_sozialkunde?,mathematik,sport? )>
-						<!ELEMENT dbfh_allgemeinbildende_faecher ((dbfh_religionslehre_rk|dbfh_religionslehre_ev|dbfh_ethik),dbfh_deutsch,dbfh_englisch ,dbfh_sozialkunde,dbfh_geschichte,dbfh_mathematik )>
+						<!ELEMENT allgemeinbildende_faecher ((religionslehre_rk|religionslehre_ev|ethik),deutsch,(englisch|ersatzfremdsprache), geschichte?,politikundgesellschaft?,geschichte_politikundgesellschaft?,mathematik,sport? )>
+						<!ELEMENT dbfh_allgemeinbildende_faecher ((dbfh_religionslehre_rk|dbfh_religionslehre_ev|dbfh_ethik),dbfh_deutsch,dbfh_englisch ,dbfh_politikundgesellschaft,dbfh_geschichte,dbfh_mathematik )>
 							<!ELEMENT religionslehre_rk ((hj_12_1|hj_13_1),(hj_12_2|hj_13_2))>
 							
 							<!ELEMENT dbfh_religionslehre_rk (a2_3_1)>
 							<!ELEMENT dbfh_religionslehre_ev (a2_3_1)>
 							<!ELEMENT dbfh_ethik (a2_3_1)>
-							<!ELEMENT dbfh_sozialkunde (a2_3_1)>
+							<!ELEMENT dbfh_politikundgesellschaft (a2_3_1)>
 							<!ELEMENT dbfh_geschichte (a2_3_1,a3_2)>
 							<!ELEMENT dbfh_deutsch (a2_3_1,a3_2)>
 							<!ELEMENT dbfh_englisch (a2_3_1,a3_2)>
@@ -135,8 +135,8 @@
 							<!ELEMENT ersatzfremdsprache ((hj_11_1,hj_11_2)?,((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2)))>
 							<!ELEMENT mathematik ((hj_11_1,hj_11_2)?,((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2)))>
 							<!ELEMENT geschichte (hj_11_1,hj_11_2)>
-							<!ELEMENT sozialkunde (hj_12_1,hj_12_2)>
-							<!ELEMENT geschichte_sozialkunde ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
+							<!ELEMENT politikundgesellschaft (hj_12_1,hj_12_2)>
+							<!ELEMENT geschichte_politikundgesellschaft ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
 							<!ELEMENT sport ((hj_12_1,hj_12_2)|(hj_13_1,hj_13_2))>
 						<!ELEMENT fachpraktische_ausbildung (hj_11_1,hj_11_2)>
 							
