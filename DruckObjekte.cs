@@ -206,7 +206,8 @@ namespace diNo
       if (!s.Data.IsDNoteNull() && !s.hatVorkommnis(Vorkommnisart.NichtBestanden))
       {
         if (Bemerkung != "") Bemerkung += "<br>";
-        DNote = (b == Bericht.EinserAbi ? "" : "Durchschnittsnote*: ") + String.Format("{0:0.0}", s.Data.DNote);
+        DNote = (b == Bericht.EinserAbi ? s.punktesumme.Summe(PunktesummeArt.Gesamt) + " von " + 15*s.punktesumme.Anzahl(PunktesummeArt.Gesamt) + " P.    "
+          : "Durchschnittsnote*: ") + String.Format("{0:0.0}", s.Data.DNote);
 
         if (!s.Data.IsDNoteFachgebHSRNull())
         {

@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 
 //TODO: Achtung vorher alle Kurse mal reinladen (aktuell manuell durch Notenprüfung)
 
 namespace diNo
 {
+  /*
   [Serializable]
   public class AbiErgebnis
   {
@@ -26,13 +25,13 @@ namespace diNo
       sw.WriteLine(Kursbez + ";" + Lehrerkuerzel + ";" + Anzahl + ";" + Hj1 + ";" + Hj2 + ";" + Abi);
     }
   }
-
+  */
   public static class Auswertungen
   {
-  
+    /*
     public static void CopyToClipboard(List<AbiErgebnis> erg)
     {
-    //??
+    // funktioniert nicht??
       System.IO.MemoryStream mem = new System.IO.MemoryStream();
       BinaryFormatter bin = new BinaryFormatter();
       bin.Serialize(mem, erg);
@@ -50,22 +49,13 @@ namespace diNo
       // Put data into clipboard
       Clipboard.SetDataObject(dataObject, false);
     }
-
+    */
     public static void AbiSchnitte()
     {
-      StreamWriter sw = new StreamWriter(@"C:\tmp\AbiErgebnis.txt");
-      //List<AbiErgebnis> ergListe = new List<AbiErgebnis>();
-      {
-        var erg = new AbiErgebnis();
-        erg.Kursbez = "Kurs";
-        erg.Lehrerkuerzel = "Lehrer";
-        erg.Anzahl = "Anzahl";
-        erg.Hj1 = "Hj1";
-        erg.Hj2 = "Hj2";
-        erg.Abi = "SAP";
-        erg.Schreibe(sw);
-        //ergListe.Add(erg);
-      }
+      string erg;
+      
+      erg =  "Kurs\tLehrer\tAnzahl\tHj1\tHj2\tSAP\r\n";
+
       List<Kurs> kurse = Zugriff.Instance.KursRep.getList();
       foreach (Kurs k in kurse)
       {
@@ -84,20 +74,41 @@ namespace diNo
               anz++;
             }
           }
-          AbiErgebnis erg = new AbiErgebnis();
-          erg.Kursbez = k.Data.Bezeichnung;
-          erg.Lehrerkuerzel = k.getLehrer.Kuerzel;
-          erg.Anzahl = anz.ToString();
-          erg.Hj1 = String.Format("{0:0.00}", hj1 / (double)anz);
-          erg.Hj2 = String.Format("{0:0.00}", hj2 / (double)anz);
-          erg.Abi = String.Format("{0:0.00}", abi / (double)anz);
-
-          //ergListe.Add(erg);
-          erg.Schreibe(sw);
+          erg += k.Data.Bezeichnung +"\t";
+          erg += k.getLehrer.Kuerzel + "\t";
+          erg += anz.ToString() + "\t";
+          erg += String.Format("{0:0.00}", hj1 / (double)anz) + "\t";
+          erg += String.Format("{0:0.00}", hj2 / (double)anz) + "\t";
+          erg += String.Format("{0:0.00}", abi / (double)anz) + "\r\n";
         }
       }
-      sw.Close();
-      //CopyToClipboard(ergListe);
+      Clipboard.SetText(erg);
+      MessageBox.Show("Auswertung liegt in der Zwischenablage.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    public static void AbiBesten()
+    {            
+      List<Schueler> best = new List<Schueler>();
+      List<Klasse> klassen = Zugriff.Instance.KlassenRep.getList();
+      foreach (var k in klassen)
+      {
+        if (k.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
+          continue;
+        Schueler bester=null;
+        foreach (Schueler s in k.eigeneSchueler)
+        {
+          if (bester == null || bester.punktesumme.Summe(PunktesummeArt.Gesamt) < s.punktesumme.Summe(PunktesummeArt.Gesamt))
+            bester = s;
+          if (!s.Data.IsDNoteNull() && (double)s.Data.DNote < 2.0)
+            best.Add(s);
+        }
+        if (!bester.Data.IsDNoteNull() && (double)bester.Data.DNote > 1.9)
+          best.Add(bester); // zumindest den Klassenbester nehmen wir noch auf.
+      }
+      if (best.Count > 0)
+        new ReportSchuelerdruck(best, Bericht.EinserAbi).Show();
+      else
+        MessageBox.Show("Die benötigten Daten werden erst zur 3. PA berechnet.");
     }
   }
 }

@@ -104,7 +104,7 @@
                   <Width>0.8cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>7.85136cm</Width>
+                  <Width>6.76657cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>8.93615cm</Width>
@@ -123,7 +123,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Schüler mit Einser-Abitur im </Value>
+                                  <Value>Die besten Abiturschnitte im </Value>
                                   <Style>
                                     <FontSize>14pt</FontSize>
                                     <FontWeight>Normal</FontWeight>
@@ -348,6 +348,7 @@
                       <SortExpressions>
                         <SortExpression>
                           <Value>=Fields!DNote.Value</Value>
+                          <Direction>Descending</Direction>
                         </SortExpression>
                         <SortExpression>
                           <Value>=Fields!Nachname.Value</Value>
@@ -364,7 +365,7 @@
             <DataSetName>DataSet1</DataSetName>
             <Left>0.22521cm</Left>
             <Height>2.13812cm</Height>
-            <Width>17.58751cm</Width>
+            <Width>16.50272cm</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -375,7 +376,7 @@
         <Height>0.96341in</Height>
         <Style />
       </Body>
-      <Width>7.01288in</Width>
+      <Width>6.5858in</Width>
       <Page>
         <PageHeader>
           <Height>0.02646cm</Height>
