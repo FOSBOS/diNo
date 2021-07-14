@@ -12,3 +12,5 @@ und die Schulerfolgsstatistik am Jahresende (alle anderen  Schüler).
    
 5. In diesem NetFX Verzeichnis liegen dann C#-Klassen, die wiederum in VisualStudio eingebunden werden können
 
+6. Datenfelder in der Datenbank ggf. aktualisieren
+7. Dateiname der XML-Datei muss sein: S0871_AP21.xml oder S0871_Erfolg21.xml Diese Datei dann zippen.
