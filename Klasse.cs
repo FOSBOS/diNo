@@ -437,7 +437,9 @@ namespace diNo
 
     private void Init()
     {
-      var rst = new NoteTableAdapter().GetKAByKursId(Id, (byte)Zugriff.Instance.aktHalbjahr);
+      Halbjahr hj = Zugriff.Instance.aktHalbjahr; // Corona
+      if (Zugriff.Instance.aktZeitpunkt == (int)Zeitpunkt.Jahresende) hj = Halbjahr.Erstes;
+      var rst = new NoteTableAdapter().GetKAByKursId(Id, (byte)hj);
       schreibtKA = rst.Count > 0;
 
       var ta = new KlasseTableAdapter();
