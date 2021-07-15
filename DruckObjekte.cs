@@ -78,7 +78,7 @@ namespace diNo
 
       Schuljahr = "Schuljahr " + Zugriff.Instance.Schuljahr + "/" + (Zugriff.Instance.Schuljahr + 1);
 
-      HideHj2 = Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes;
+      HideHj2 = s.getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf || Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes;
       HideVorHj = !s.hatVorHj; // nur bei F12 anzeigen
       HideAbi = jg < 12 || Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.ErstePA;
 
@@ -566,7 +566,8 @@ namespace diNo
 
     public NotenHjDruck(FachSchuelerNoten s, Bericht b) : base(s, b)
     {
-      Halbjahr h = Zugriff.Instance.aktHalbjahr;
+      // Corona
+      Halbjahr h = (s.schueler.getKlasse.Jahrgangsstufe < Jahrgangsstufe.Zwoelf ? Halbjahr.Erstes : Zugriff.Instance.aktHalbjahr);
       SA = s.SA(h);
       sL = s.sL(h);
       HjLeistung hj = (h == Halbjahr.Erstes ? hj1 : hj2);
