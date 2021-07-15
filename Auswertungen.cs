@@ -1,4 +1,5 @@
-﻿using System;
+﻿using diNo.diNoDataSetTableAdapters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -52,10 +53,17 @@ namespace diNo
     */
     public static void AbiSchnitte()
     {
-      string erg;
-      
+      string erg;      
       erg =  "Kurs\tLehrer\tAnzahl\tHj1\tHj2\tSAP\r\n";
 
+      // alle Kurse laden
+      var ta = new KursTableAdapter();
+      diNoDataSet.KursDataTable dtFach = ta.GetData();
+      foreach (var kRow in dtFach)
+      {
+        Kurs k = new Kurs(kRow);
+        Zugriff.Instance.KursRep.Add(k);
+      }
       List<Kurs> kurse = Zugriff.Instance.KursRep.getList();
       foreach (Kurs k in kurse)
       {
@@ -66,7 +74,7 @@ namespace diNo
           {
             var f = s.getNoten.FindeFach(k.getFach.Id);
             int? ap = f.getNote(Halbjahr.Zweites, Notentyp.APSchriftlich);
-            if (ap!=null)
+            if (ap != null)
             {
               hj1 += f.getHjLeistung(HjArt.Hj1).Punkte;
               hj2 += f.getHjLeistung(HjArt.Hj2).Punkte;
@@ -74,12 +82,15 @@ namespace diNo
               anz++;
             }
           }
-          erg += k.Data.Bezeichnung +"\t";
-          erg += k.getLehrer.Kuerzel + "\t";
-          erg += anz.ToString() + "\t";
-          erg += String.Format("{0:0.00}", hj1 / (double)anz) + "\t";
-          erg += String.Format("{0:0.00}", hj2 / (double)anz) + "\t";
-          erg += String.Format("{0:0.00}", abi / (double)anz) + "\r\n";
+          if (anz > 0)
+          {
+            erg += k.Data.Bezeichnung + "\t";
+            erg += k.getLehrer.Kuerzel + "\t";
+            erg += anz.ToString() + "\t";
+            erg += String.Format("{0:0.00}", hj1 / (double)anz) + "\t";
+            erg += String.Format("{0:0.00}", hj2 / (double)anz) + "\t";
+            erg += String.Format("{0:0.00}", abi / (double)anz) + "\r\n";
+          }
         }
       }
       Clipboard.SetText(erg);

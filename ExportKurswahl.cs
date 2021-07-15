@@ -21,6 +21,7 @@ namespace diNo
       t = t.Replace("é", "e");
       t = t.Replace("è", "e");
       t = t.Replace("ó", "o");
+      t = t.Replace("ñ", "n");
       return t;
     }
 
