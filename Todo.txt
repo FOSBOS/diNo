@@ -11,3 +11,7 @@
 
 - Statistiken ?
    --> die letzten zwei Punkte sind N2H, die wir programmieren, wenn sonst alles läuft und uns nix besseres einfällt. ;-)
+
+- MBStatistik: trennen FOS und BOS bei Mischklassen; -1 eintragen bei fehlender Note
+
+- Kursdialog: grüner Haken bei WPF ausblenden
