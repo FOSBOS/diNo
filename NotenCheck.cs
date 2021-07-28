@@ -148,10 +148,10 @@ namespace diNo
         else if (fpa1.Gesamt < 4 || fpa2.Gesamt < 4 || fpa1.Gesamt + fpa2.Gesamt < 10)
         {
           contr.Add(null, "<b>Die fachpraktische Ausbildung wurde ohne Erfolg durchlaufen.</b>");
+          contr.Add(Vorkommnisart.KeineVorrueckungserlaubnis,"FPA nicht bestanden");
         }
         if (fpa2.IsStelleNull())
           contr.Add(null, "Die FpA-Stelle ist nicht angegeben.");
-
       }
     }
   }
