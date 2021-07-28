@@ -138,7 +138,7 @@ namespace diNo.Xml
       XmlWriterSettings settings = new XmlWriterSettings();
       settings.Indent = true;
       XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-      ns.Add("", "http://tempuri.org/schulerfolg_1.1");
+      //ns.Add("", "http://tempuri.org/schulerfolg_1.1");
       using (XmlWriter writer = XmlWriter.Create(fileName, settings))
       {
         writer.WriteDocType("schulerfolg", null, "schulerfolg_1.1.dtd", null);

@@ -13,6 +13,8 @@ namespace diNo.Xml
   /// </summary>
   public class MBStatistik
   {
+    private const string DatenVersion = "abschlusspruefung_1.5";
+    
     public static void Serialize(String fileName)
     {
       abschlusspruefungsstatistik ap = new abschlusspruefungsstatistik();
@@ -102,7 +104,8 @@ namespace diNo.Xml
 
             if (unserSchueler.Fachreferat != null && unserSchueler.Fachreferat.Count > 0)
             {
-              xmlSchueler.fachreferat = new fachreferat() { fach = unserSchueler.Fachreferat[0].getFach.Kuerzel, punkte = unserSchueler.Fachreferat[0].Punkte.ToString() };
+              var f = unserSchueler.Fachreferat[0].getFach.PlatzInMBStatistik.Split(':');
+              xmlSchueler.fachreferat = new fachreferat() { fach = f[f.Length-1], punkte = unserSchueler.Fachreferat[0].Punkte.ToString() };
             }
             if (unserSchueler.Seminarfachnote != null && !unserSchueler.Seminarfachnote.IsGesamtnoteNull())
             {
@@ -163,10 +166,10 @@ namespace diNo.Xml
       XmlWriterSettings settings = new XmlWriterSettings();
       settings.Indent = true;
       XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-      ns.Add("", "http://tempuri.org/abschlusspruefung_1.4");
+      
       using (XmlWriter writer = XmlWriter.Create(fileName, settings))
       {
-        writer.WriteDocType("abschlusspruefungsstatistik", null, "abschlusspruefung_1.4.dtd", null);
+        writer.WriteDocType("abschlusspruefungsstatistik", null, DatenVersion + ".dtd", null);
         ser.Serialize(writer, ap, ns);
       }
     }
@@ -352,7 +355,8 @@ namespace diNo.Xml
         xmlSchueler.abschlusspruefung.abgelegt = abschlusspruefungAbgelegt.Item0; // vollständig abgelegt
       }
 
-      xmlSchueler.abschlusspruefung.bestanden = unserSchueler.hatVorkommnis(Vorkommnisart.PruefungNichtBestanden) ? abschlusspruefungBestanden.nein : abschlusspruefungBestanden.ja;
+      //xmlSchueler.abschlusspruefung.bestanden = unserSchueler.hatVorkommnis(Vorkommnisart.PruefungNichtBestanden) ? abschlusspruefungBestanden.nein : abschlusspruefungBestanden.ja;
+      xmlSchueler.abschlusspruefung.bestanden = unserSchueler.hatVorkommnis(Vorkommnisart.Jahreszeugnis) ? abschlusspruefungBestanden.nein : abschlusspruefungBestanden.ja;
       xmlSchueler.abschlusspruefung.bestandenSpecified = true;
     }
 
