@@ -258,7 +258,19 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Evtl. Einbringungsänderungen müssen der Schulleitung am Mittwoch, 24.6.2020 zwischen 9 und 12 Uhr persönlich mitgeteilt werden.</Value>
+                              <Value>Evtl. Einbringungsänderungen müssen der Oberstufenbetreuung am </Value>
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value>=Fields!Bemerkung.Value</Value>
+                              <Style>
+                                <FontSize>12pt</FontSize>
+                              </Style>
+                            </TextRun>
+                            <TextRun>
+                              <Value> zwischen 9 und 12 Uhr persönlich mitgeteilt werden.</Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
                               </Style>

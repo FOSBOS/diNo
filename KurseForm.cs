@@ -65,6 +65,10 @@ namespace diNo
       cbLehrer.SelectedValue = q.getLehrer.Id; // in der ComboBox muss als ValueMember Id stehen!!
       cbFach.SelectedValue = q.getFach.Id;
 
+      bool isWPF = q.getFach.Typ == FachTyp.WPF;
+      btnDeleteSchueler.Enabled = !isWPF;
+      btnSchuelerZuteilen.Enabled = !isWPF;
+
       for (int i = 0; i < checkedListBoxKlassen.Items.Count; i++)
       {
         checkedListBoxKlassen.SetItemChecked(i, q.Klassen.Contains(checkedListBoxKlassen.Items[i]));

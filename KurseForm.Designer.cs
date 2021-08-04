@@ -287,7 +287,7 @@
       this.textBox1.Size = new System.Drawing.Size(154, 124);
       this.textBox1.TabIndex = 38;
       this.textBox1.Text = "Wenn die Klassenzuordnung geändert wird, werden die Schüler nicht automatisch in " +
-    "diesen Kurse angemeldet. Verwende dazu den grünen Haken.";
+    "diesen Kursen angemeldet. Verwende dazu den grünen Haken.";
       // 
       // btnErzeugeExcel
       // 

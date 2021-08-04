@@ -317,7 +317,10 @@ namespace diNo
       dia.FileName = "S" + Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_AP" + (Zugriff.Instance.Schuljahr - 2000 +1) + ".xml";
       if (dia.ShowDialog() == DialogResult.OK)
       {
+        Cursor = Cursors.WaitCursor;
         Xml.MBStatistik.Serialize(dia.FileName);
+        Cursor = Cursors.Default;
+        MessageBox.Show("Fertig. Bitte in Zeile 3 der Datei die Attribute löschen, so dass dort nur noch <abschlusspruefungsstatistik> steht.\nAnschließend das Prüfprogramm verwenden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
     }
 
@@ -328,7 +331,10 @@ namespace diNo
       dia.FileName = "S" + Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_Erfolg" + (Zugriff.Instance.Schuljahr - 2000 + 1) + ".xml";
       if (dia.ShowDialog() == DialogResult.OK)
       {
+        Cursor = Cursors.WaitCursor;
         Xml.SEStatistik.Serialize(dia.FileName);
+        Cursor = Cursors.Default;
+        MessageBox.Show("Fertig. Bitte in Zeile 3 der Datei die Attribute löschen, so dass dort nur noch <schulerfolg> steht.\nAnschließend das Prüfprogramm verwenden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
     }
 

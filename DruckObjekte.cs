@@ -87,6 +87,10 @@ namespace diNo
         int anzProbleme = s.getNoten.AnzahlProbleme();
         Bemerkung = "Sie benötigen bei " + (anzProbleme > 2 ? 2 : anzProbleme) + " Gesamtergebnissen unter 4 Punkten mindestens " + s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 : 5) + " Punkte, um zu bestehen. ";
       }
+      else if (b == Bericht.Einbringung)
+      {
+        Bemerkung = Zugriff.Instance.Zeugnisdatum.ToString("dddd, dd.MM.yyyy"); // Abgabedatum von Einbringungsänderungen
+      }
     }
 
     public static string GetBerichtsname(Bericht b)

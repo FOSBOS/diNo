@@ -154,6 +154,8 @@ namespace diNo
       {
         if (klassenleiter == null)
         {
+          if (Data.IsKlassenleiterIdNull())
+            throw new Exception("Klassenleiter fehlt bei Klasse " + Bezeichnung);
           klassenleiter = Zugriff.Instance.LehrerRep.Find(Data.KlassenleiterId);
         }
 

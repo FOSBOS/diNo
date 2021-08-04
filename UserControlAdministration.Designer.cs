@@ -79,7 +79,6 @@
       this.btnNotenmailSchueler = new System.Windows.Forms.Button();
       this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.groupBoxReparatur = new System.Windows.Forms.GroupBox();
-      this.btnCorona2HJKlonen = new System.Windows.Forms.Button();
       this.btnKurseZuweisen = new System.Windows.Forms.Button();
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
@@ -644,7 +643,6 @@
       // 
       // groupBoxReparatur
       // 
-      this.groupBoxReparatur.Controls.Add(this.btnCorona2HJKlonen);
       this.groupBoxReparatur.Controls.Add(this.btnKurseZuweisen);
       this.groupBoxReparatur.Controls.Add(this.btnGesErg);
       this.groupBoxReparatur.Controls.Add(this.btnDelEinbringung);
@@ -655,16 +653,6 @@
       this.groupBoxReparatur.TabIndex = 9;
       this.groupBoxReparatur.TabStop = false;
       this.groupBoxReparatur.Text = "Reparaturen";
-      // 
-      // btnCorona2HJKlonen
-      // 
-      this.btnCorona2HJKlonen.Location = new System.Drawing.Point(15, 141);
-      this.btnCorona2HJKlonen.Name = "btnCorona2HJKlonen";
-      this.btnCorona2HJKlonen.Size = new System.Drawing.Size(163, 23);
-      this.btnCorona2HJKlonen.TabIndex = 11;
-      this.btnCorona2HJKlonen.Text = "Corona-Günstigerpr. Ende 12/1";
-      this.btnCorona2HJKlonen.UseVisualStyleBackColor = true;
-      this.btnCorona2HJKlonen.Click += new System.EventHandler(this.btnCorona2HJKlonen_Click);
       // 
       // btnKurseZuweisen
       // 
@@ -805,7 +793,6 @@
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Button btnKurseZuweisen;
     private System.Windows.Forms.Button btnExportKurswahl;
-    private System.Windows.Forms.Button btnCorona2HJKlonen;
     private System.Windows.Forms.Button btnKlassen;
     private System.Windows.Forms.Button btnNotenmitteilung;
     private System.Windows.Forms.Button btnCopy11;
