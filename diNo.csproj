@@ -103,6 +103,7 @@
   <ItemGroup>
     <Compile Include="Auswertungen.cs" />
     <Compile Include="ExportKurswahl.cs" />
+    <Compile Include="ImportCheck.cs" />
     <Compile Include="ImportUnterricht.cs" />
     <Compile Include="KlasseForm.cs">
       <SubType>Form</SubType>

@@ -32,7 +32,7 @@ namespace diNo
       string directory = Path.GetDirectoryName(fileName);
       try
       {
-        using (StreamReader reader = new StreamReader(directory + "\\ZuordnungSchueler.txt", Encoding.GetEncoding("iso-8859-1")))
+        using (StreamReader reader = new StreamReader(directory + "\\ZuordnungSchueler.txt", Encoding.GetEncoding("utf-8")))
         {
           while (!reader.EndOfStream)
           {

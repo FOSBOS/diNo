@@ -147,7 +147,9 @@ namespace diNo
 
     private void btnSendMail_Click(object sender, EventArgs e)
     {
+      Cursor = Cursors.WaitCursor;
       new SendExcelMails(this.onStatusChange);
+      Cursor = Cursors.Default;
     }
 
     void onStatusChange(Object sender, StatusChangedEventArgs e)
@@ -338,30 +340,6 @@ namespace diNo
       }
     }
 
-    private void btnWPF_Click(object sender, EventArgs e)
-    {
-      List<Schueler> alle = Zugriff.Instance.SchuelerRep.getList();
-      List<Schueler> liste = new List<Schueler>();
-
-      foreach (var s in alle)
-      {
-        Jahrgangsstufe jg = s.getKlasse.Jahrgangsstufe;
-        if (jg < Jahrgangsstufe.Zwoelf) continue;
-        byte notw = 1;
-        if (jg == Jahrgangsstufe.Zwoelf && s.Data.Schulart == "F") // FOS 12
-          notw = 2;
-
-        byte anz = 0;
-        foreach (var k in s.Kurse)
-        {
-          if (k.getFach.Typ == FachTyp.WPF) anz++;
-        }
-        if (anz < notw) liste.Add(s);
-      }
-      if (liste.Count == 0) MessageBox.Show("Alles in Ordnung.", "diNo", MessageBoxButtons.OK);
-      else new ReportSchuelerdruck(liste, Bericht.Klassenliste).Show();
-    }
-
     private void btnKurseZuweisen_Click(object sender, EventArgs e)
     {
       if (MessageBox.Show("Achtung: Alle Kurszuordnungen der Schüler werden gemäß den Kursdaten neu erstellt. Wahlpflichtfachzuordnungen gehen verloren.", "diNo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel) return;
@@ -477,6 +455,13 @@ namespace diNo
     private void btnSchnitte_Click(object sender, EventArgs e)
     {
       Auswertungen.AbiSchnitte();
+    }
+
+    private void btnImportCheck_Click(object sender, EventArgs e)
+    {
+      Cursor = Cursors.WaitCursor;
+      new ImportCheck();
+      Cursor = Cursors.Default;
     }
   }
 }

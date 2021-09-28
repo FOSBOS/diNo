@@ -79,6 +79,7 @@ namespace diNo
           textBoxVorname.Text = schueler.Data.Vorname;
           textBoxRufname.Text = schueler.Data.Rufname;
           textBoxAR.Text = schueler.Data.Ausbildungsrichtung;
+          textBoxFB.Text = schueler.Data.Schulart;
         }
       }
     }
@@ -111,6 +112,7 @@ namespace diNo
       schueler.Data.Vorname = textBoxVorname.Text;
       schueler.Data.Rufname = textBoxRufname.Text;
       schueler.Data.Ausbildungsrichtung = textBoxAR.Text;
+      schueler.Data.Schulart = textBoxFB.Text;
 
       schueler.Save();
     }
@@ -154,6 +156,8 @@ namespace diNo
       this.label18 = new System.Windows.Forms.Label();
       this.textBoxNachname = new System.Windows.Forms.TextBox();
       this.label7 = new System.Windows.Forms.Label();
+      this.textBoxFB = new System.Windows.Forms.TextBox();
+      this.lbFB = new System.Windows.Forms.Label();
       this.groupBoxMittlereReife.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMathe)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEnglisch)).BeginInit();
@@ -462,6 +466,8 @@ namespace diNo
       // 
       // panelSekretariat
       // 
+      this.panelSekretariat.Controls.Add(this.textBoxFB);
+      this.panelSekretariat.Controls.Add(this.lbFB);
       this.panelSekretariat.Controls.Add(this.checkBoxSonderfall2Hj);
       this.panelSekretariat.Controls.Add(this.textBoxAR);
       this.panelSekretariat.Controls.Add(this.label20);
@@ -533,7 +539,7 @@ namespace diNo
       // 
       this.checkBoxLegasthenie.AutoSize = true;
       this.checkBoxLegasthenie.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-      this.checkBoxLegasthenie.Location = new System.Drawing.Point(148, 107);
+      this.checkBoxLegasthenie.Location = new System.Drawing.Point(25, 130);
       this.checkBoxLegasthenie.Name = "checkBoxLegasthenie";
       this.checkBoxLegasthenie.Size = new System.Drawing.Size(93, 17);
       this.checkBoxLegasthenie.TabIndex = 80;
@@ -594,6 +600,25 @@ namespace diNo
       this.label7.Size = new System.Drawing.Size(59, 13);
       this.label7.TabIndex = 75;
       this.label7.Text = "Nachname";
+      // 
+      // textBoxFB
+      // 
+      this.textBoxFB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxFB.Location = new System.Drawing.Point(153, 96);
+      this.textBoxFB.MaxLength = 1;
+      this.textBoxFB.Name = "textBoxFB";
+      this.textBoxFB.Size = new System.Drawing.Size(88, 20);
+      this.textBoxFB.TabIndex = 92;
+      // 
+      // lbFB
+      // 
+      this.lbFB.AutoSize = true;
+      this.lbFB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lbFB.Location = new System.Drawing.Point(150, 82);
+      this.lbFB.Name = "lbFB";
+      this.lbFB.Size = new System.Drawing.Size(46, 13);
+      this.lbFB.TabIndex = 93;
+      this.lbFB.Text = "Schulart";
       // 
       // UserControlSekretariat
       // 

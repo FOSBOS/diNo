@@ -43,5 +43,7 @@
     private System.Windows.Forms.RadioButton opFFalt;
     private System.Windows.Forms.RadioButton opErgPr;
     private System.Windows.Forms.RadioButton opRS;
+    private System.Windows.Forms.TextBox textBoxFB;
+    private System.Windows.Forms.Label lbFB;
   }
 }

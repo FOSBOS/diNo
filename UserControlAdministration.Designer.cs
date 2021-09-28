@@ -30,7 +30,6 @@
     {
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
       this.btnSchnitte = new System.Windows.Forms.Button();
-      this.btnWPF = new System.Windows.Forms.Button();
       this.btnEinserAbi = new System.Windows.Forms.Button();
       this.btnSelect = new System.Windows.Forms.Button();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
@@ -84,6 +83,7 @@
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
       this.btnCopy11 = new System.Windows.Forms.Button();
+      this.btnImportCheck = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -99,7 +99,6 @@
       // groupBoxAnalyse
       // 
       this.groupBoxAnalyse.Controls.Add(this.btnSchnitte);
-      this.groupBoxAnalyse.Controls.Add(this.btnWPF);
       this.groupBoxAnalyse.Controls.Add(this.btnEinserAbi);
       this.groupBoxAnalyse.Controls.Add(this.btnSelect);
       this.groupBoxAnalyse.Location = new System.Drawing.Point(19, 268);
@@ -118,16 +117,6 @@
       this.btnSchnitte.Text = "Schnitte je Klasse";
       this.btnSchnitte.UseVisualStyleBackColor = true;
       this.btnSchnitte.Click += new System.EventHandler(this.btnSchnitte_Click);
-      // 
-      // btnWPF
-      // 
-      this.btnWPF.Location = new System.Drawing.Point(21, 123);
-      this.btnWPF.Name = "btnWPF";
-      this.btnWPF.Size = new System.Drawing.Size(132, 23);
-      this.btnWPF.TabIndex = 2;
-      this.btnWPF.Text = "Fehlende WPF";
-      this.btnWPF.UseVisualStyleBackColor = true;
-      this.btnWPF.Click += new System.EventHandler(this.btnWPF_Click);
       // 
       // btnEinserAbi
       // 
@@ -343,6 +332,7 @@
       // 
       // groupBoxImport
       // 
+      this.groupBoxImport.Controls.Add(this.btnImportCheck);
       this.groupBoxImport.Controls.Add(this.label3);
       this.groupBoxImport.Controls.Add(this.btnReadWahlpflichtfaecher);
       this.groupBoxImport.Controls.Add(this.btnImportKlassenleiter);
@@ -359,7 +349,7 @@
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(6, 186);
+      this.label3.Location = new System.Drawing.Point(16, 171);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(198, 13);
       this.label3.TabIndex = 8;
@@ -704,6 +694,16 @@
       this.btnCopy11.UseVisualStyleBackColor = true;
       this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
       // 
+      // btnImportCheck
+      // 
+      this.btnImportCheck.Location = new System.Drawing.Point(22, 195);
+      this.btnImportCheck.Name = "btnImportCheck";
+      this.btnImportCheck.Size = new System.Drawing.Size(182, 23);
+      this.btnImportCheck.TabIndex = 9;
+      this.btnImportCheck.Text = "Import-Kontrolle";
+      this.btnImportCheck.UseVisualStyleBackColor = true;
+      this.btnImportCheck.Click += new System.EventHandler(this.btnImportCheck_Click);
+      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -789,7 +789,6 @@
     private System.Windows.Forms.Button btnGesErg;
     private System.Windows.Forms.Button btnMBStatistik;
     private System.Windows.Forms.Button btnSeStatistik;
-    private System.Windows.Forms.Button btnWPF;
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Button btnKurseZuweisen;
     private System.Windows.Forms.Button btnExportKurswahl;
@@ -798,5 +797,6 @@
     private System.Windows.Forms.Button btnCopy11;
     private System.Windows.Forms.Button btnNotenmailSchueler;
     private System.Windows.Forms.Button btnSchnitte;
+    private System.Windows.Forms.Button btnImportCheck;
   }
 }
