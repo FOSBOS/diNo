@@ -62,6 +62,7 @@
       this.chkNurAktive = new System.Windows.Forms.CheckBox();
       this.btnRefresh = new System.Windows.Forms.Button();
       this.lbTest = new System.Windows.Forms.Label();
+      this.btnLNWabgeben = new System.Windows.Forms.Button();
       this.tabControl1.SuspendLayout();
       this.tabPageStammdaten.SuspendLayout();
       this.tabPageNotenbogen.SuspendLayout();
@@ -86,6 +87,7 @@
       this.imageList1.Images.SetKeyName(5, "Excel.png");
       this.imageList1.Images.SetKeyName(6, "424px-User-admin.png");
       this.imageList1.Images.SetKeyName(7, "Refresh.png");
+      this.imageList1.Images.SetKeyName(8, "Ablage.png");
       // 
       // tabControl1
       // 
@@ -319,7 +321,7 @@
       // 
       this.btnCheck.ImageIndex = 1;
       this.btnCheck.ImageList = this.imageList1;
-      this.btnCheck.Location = new System.Drawing.Point(466, 88);
+      this.btnCheck.Location = new System.Drawing.Point(519, 87);
       this.btnCheck.Name = "btnCheck";
       this.btnCheck.Size = new System.Drawing.Size(40, 40);
       this.btnCheck.TabIndex = 5;
@@ -332,7 +334,7 @@
       this.btnBrief.Enabled = false;
       this.btnBrief.ImageIndex = 2;
       this.btnBrief.ImageList = this.imageList1;
-      this.btnBrief.Location = new System.Drawing.Point(420, 89);
+      this.btnBrief.Location = new System.Drawing.Point(473, 88);
       this.btnBrief.Name = "btnBrief";
       this.btnBrief.Size = new System.Drawing.Size(40, 40);
       this.btnBrief.TabIndex = 4;
@@ -345,7 +347,7 @@
       this.btnPrint.Enabled = false;
       this.btnPrint.ImageIndex = 3;
       this.btnPrint.ImageList = this.imageList1;
-      this.btnPrint.Location = new System.Drawing.Point(374, 89);
+      this.btnPrint.Location = new System.Drawing.Point(427, 88);
       this.btnPrint.Name = "btnPrint";
       this.btnPrint.Size = new System.Drawing.Size(40, 40);
       this.btnPrint.TabIndex = 3;
@@ -419,7 +421,7 @@
       // 
       this.btnRefresh.ImageIndex = 7;
       this.btnRefresh.ImageList = this.imageList1;
-      this.btnRefresh.Location = new System.Drawing.Point(328, 89);
+      this.btnRefresh.Location = new System.Drawing.Point(381, 88);
       this.btnRefresh.Name = "btnRefresh";
       this.btnRefresh.Size = new System.Drawing.Size(40, 40);
       this.btnRefresh.TabIndex = 41;
@@ -439,12 +441,25 @@
       this.lbTest.Text = "Testdatenbank";
       this.lbTest.Visible = false;
       // 
+      // btnLNWabgeben
+      // 
+      this.btnLNWabgeben.ImageIndex = 8;
+      this.btnLNWabgeben.ImageList = this.imageList1;
+      this.btnLNWabgeben.Location = new System.Drawing.Point(328, 88);
+      this.btnLNWabgeben.Name = "btnLNWabgeben";
+      this.btnLNWabgeben.Size = new System.Drawing.Size(40, 40);
+      this.btnLNWabgeben.TabIndex = 43;
+      this.toolTipButtons.SetToolTip(this.btnLNWabgeben, "Angabe und Lösung von LNW abgeben");
+      this.btnLNWabgeben.UseVisualStyleBackColor = true;
+      this.btnLNWabgeben.Click += new System.EventHandler(this.btnLNWabgeben_Click);
+      // 
       // Klassenansicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
       this.ClientSize = new System.Drawing.Size(1185, 645);
+      this.Controls.Add(this.btnLNWabgeben);
       this.Controls.Add(this.lbTest);
       this.Controls.Add(this.btnRefresh);
       this.Controls.Add(this.chkNurAktive);
@@ -514,5 +529,6 @@
     private System.Windows.Forms.TabPage tabPageSekretariat;
     private UserControlSekretariat userControlSekretariat1;
     private System.Windows.Forms.Label lbTest;
+    private System.Windows.Forms.Button btnLNWabgeben;
   }
 }

@@ -246,5 +246,10 @@ namespace diNo
     {
       RefreshTreeView();
     }
+
+    private void btnLNWabgeben_Click(object sender, EventArgs e)
+    {
+      new CopyLNW().ShowDialog();
+    }
   }
 }

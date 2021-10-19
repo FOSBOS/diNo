@@ -22,8 +22,6 @@ namespace diNo
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
     public Zweig Zweig;
     public Punktesumme punktesumme;
-    bool BekommtAllgHSR = false; // wird true, sobald eine 2. Fremdsprache mit Niveau B1 vorliegt.
-
 
     public Schueler(int id)
     {
