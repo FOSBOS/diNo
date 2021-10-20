@@ -26,19 +26,24 @@ namespace diNo
       {
         cbKurs.Items.Add(f.Bezeichnung);
       }
+      cbKurs.SelectedIndex = 0;
+      cbArt.SelectedIndex = 0;
+      cbNummer.SelectedIndex = 0;
     }
 
     private void Kopiere(string datei, string art)
     {
-      using (UserImpersonation user = new UserImpersonation("CopyUser", "", "NdiNo87§"))
+      using (UserImpersonation user = new UserImpersonation("CopyUser", "FOSBOS", "NdiNo87§"))
       {
         if (user.ImpersonateValidUser())
         {
-          string verz = @"F:\AblageLNW\";
-          string dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + cbKurs.Text + "_Hj" + Zugriff.Instance.aktHalbjahr + "_" 
+          string verz = @"\\srvfosbos\AblageLNW\" + "Hj" + (byte)Zugriff.Instance.aktHalbjahr;
+          string dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + cbKurs.Text + "_Hj" + (byte)Zugriff.Instance.aktHalbjahr + "_" 
             + cbArt.Text + cbNummer.Text + "_" + art + ".pdf";
 
-          File.Copy(datei, verz + dat);
+         if (!Directory.Exists(verz))
+            Directory.CreateDirectory(verz);
+         File.Copy(datei, verz + dat);
           MessageBox.Show("Die " + art + " wurde archiviert.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         else

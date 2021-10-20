@@ -1,6 +1,6 @@
 use diNo;
 
-alter table Seminarfachnote drop column ThemaKurz
-EXEC sp_rename 'Seminarfachnote.ThemaLang', 'Thema', 'COLUMN';
+alter table Fach add Fachschaft varchar(50);
+update Fach set Fachschaft = Bezeichnung;
 
-alter table Klasse alter column Schulart tinyint;
+-- Danach in Tabelle Fach die Fachschaften anpassen (in größere Gruppe zusammenfassen, so muss später auch das Unterverzeichnis für die Ablage der LNW heißen).
