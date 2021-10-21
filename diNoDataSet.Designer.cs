@@ -1154,6 +1154,8 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnWPFid;
             
+            private global::System.Data.DataColumn columnFachschaft;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public FachDataTable() {
@@ -1269,6 +1271,14 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn FachschaftColumn {
+                get {
+                    return this.columnFachschaft;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1304,7 +1314,7 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public FachRow AddFachRow(string Bezeichnung, string Kuerzel, int Sortierung, byte Typ, string BezZeugnis, bool NichtNC, byte Kursniveau, string PlatzInMBStatistik, int WPFid) {
+            public FachRow AddFachRow(string Bezeichnung, string Kuerzel, int Sortierung, byte Typ, string BezZeugnis, bool NichtNC, byte Kursniveau, string PlatzInMBStatistik, int WPFid, string Fachschaft) {
                 FachRow rowFachRow = ((FachRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1316,7 +1326,8 @@ namespace diNo {
                         NichtNC,
                         Kursniveau,
                         PlatzInMBStatistik,
-                        WPFid};
+                        WPFid,
+                        Fachschaft};
                 rowFachRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowFachRow);
                 return rowFachRow;
@@ -1356,6 +1367,7 @@ namespace diNo {
                 this.columnKursniveau = base.Columns["Kursniveau"];
                 this.columnPlatzInMBStatistik = base.Columns["PlatzInMBStatistik"];
                 this.columnWPFid = base.Columns["WPFid"];
+                this.columnFachschaft = base.Columns["Fachschaft"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1381,6 +1393,8 @@ namespace diNo {
                 base.Columns.Add(this.columnPlatzInMBStatistik);
                 this.columnWPFid = new global::System.Data.DataColumn("WPFid", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnWPFid);
+                this.columnFachschaft = new global::System.Data.DataColumn("Fachschaft", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFachschaft);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AutoIncrement = true;
@@ -1395,6 +1409,7 @@ namespace diNo {
                 this.columnKuerzel.MaxLength = 10;
                 this.columnBezZeugnis.MaxLength = 50;
                 this.columnKursniveau.AllowDBNull = false;
+                this.columnFachschaft.MaxLength = 50;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8825,6 +8840,22 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Fachschaft {
+                get {
+                    try {
+                        return ((string)(this[this.tableFach.FachschaftColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Fachschaft in Tabelle Fach ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableFach.FachschaftColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsSortierungNull() {
                 return this.IsNull(this.tableFach.SortierungColumn);
             }
@@ -8893,6 +8924,18 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetWPFidNull() {
                 this[this.tableFach.WPFidColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsFachschaftNull() {
+                return this.IsNull(this.tableFach.FachschaftColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetFachschaftNull() {
+                this[this.tableFach.FachschaftColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13469,10 +13512,11 @@ namespace diNo.diNoDataSetTableAdapters {
             tableMapping.ColumnMappings.Add("Kursniveau", "Kursniveau");
             tableMapping.ColumnMappings.Add("PlatzInMBStatistik", "PlatzInMBStatistik");
             tableMapping.ColumnMappings.Add("WPFid", "WPFid");
+            tableMapping.ColumnMappings.Add("Fachschaft", "Fachschaft");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Fach] WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ([Kuerzel] = @Original_Kuerzel) AND ((@IsNull_Sortierung = 1 AND [Sortierung] IS NULL) OR ([Sortierung] = @Original_Sortierung)) AND ((@IsNull_Typ = 1 AND [Typ] IS NULL) OR ([Typ] = @Original_Typ)) AND ((@IsNull_BezZeugnis = 1 AND [BezZeugnis] IS NULL) OR ([BezZeugnis] = @Original_BezZeugnis)) AND ((@IsNull_NichtNC = 1 AND [NichtNC] IS NULL) OR ([NichtNC] = @Original_NichtNC)) AND ([Kursniveau] = @Original_Kursniveau) AND ((@IsNull_PlatzInMBStatistik = 1 AND [PlatzInMBStatistik] IS NULL) OR ([PlatzInMBStatistik] = @Original_PlatzInMBStatistik)) AND ((@IsNull_WPFid = 1 AND [WPFid] IS NULL) OR ([WPFid] = @Original_WPFid)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Fach] WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ([Kuerzel] = @Original_Kuerzel) AND ((@IsNull_Sortierung = 1 AND [Sortierung] IS NULL) OR ([Sortierung] = @Original_Sortierung)) AND ((@IsNull_Typ = 1 AND [Typ] IS NULL) OR ([Typ] = @Original_Typ)) AND ((@IsNull_BezZeugnis = 1 AND [BezZeugnis] IS NULL) OR ([BezZeugnis] = @Original_BezZeugnis)) AND ((@IsNull_NichtNC = 1 AND [NichtNC] IS NULL) OR ([NichtNC] = @Original_NichtNC)) AND ([Kursniveau] = @Original_Kursniveau) AND ((@IsNull_PlatzInMBStatistik = 1 AND [PlatzInMBStatistik] IS NULL) OR ([PlatzInMBStatistik] = @Original_PlatzInMBStatistik)) AND ((@IsNull_WPFid = 1 AND [WPFid] IS NULL) OR ([WPFid] = @Original_WPFid)) AND ((@IsNull_Fachschaft = 1 AND [Fachschaft] IS NULL) OR ([Fachschaft] = @Original_Fachschaft)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -13490,10 +13534,12 @@ namespace diNo.diNoDataSetTableAdapters {
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PlatzInMBStatistik", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PlatzInMBStatistik", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_WPFid", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WPFid", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_WPFid", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WPFid", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Fachschaft", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fachschaft", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Fachschaft", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fachschaft", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Fach] ([Bezeichnung], [Kuerzel], [Sortierung], [Typ], [BezZeugnis], [NichtNC], [Kursniveau], [PlatzInMBStatistik], [WPFid]) VALUES (@Bezeichnung, @Kuerzel, @Sortierung, @Typ, @BezZeugnis, @NichtNC, @Kursniveau, @PlatzInMBStatistik, @WPFid);
-SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, NichtNC, Kursniveau, PlatzInMBStatistik, WPFid FROM Fach WHERE (Id = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Fach] ([Bezeichnung], [Kuerzel], [Sortierung], [Typ], [BezZeugnis], [NichtNC], [Kursniveau], [PlatzInMBStatistik], [WPFid], [Fachschaft]) VALUES (@Bezeichnung, @Kuerzel, @Sortierung, @Typ, @BezZeugnis, @NichtNC, @Kursniveau, @PlatzInMBStatistik, @WPFid, @Fachschaft);
+SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, NichtNC, Kursniveau, PlatzInMBStatistik, WPFid, Fachschaft FROM Fach WHERE (Id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Kuerzel", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -13504,10 +13550,11 @@ SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, NichtNC, Kursnivea
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Kursniveau", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kursniveau", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PlatzInMBStatistik", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PlatzInMBStatistik", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@WPFid", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WPFid", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Fachschaft", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fachschaft", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [Fach] SET [Bezeichnung] = @Bezeichnung, [Kuerzel] = @Kuerzel, [Sortierung] = @Sortierung, [Typ] = @Typ, [BezZeugnis] = @BezZeugnis, [NichtNC] = @NichtNC, [Kursniveau] = @Kursniveau, [PlatzInMBStatistik] = @PlatzInMBStatistik, [WPFid] = @WPFid WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ([Kuerzel] = @Original_Kuerzel) AND ((@IsNull_Sortierung = 1 AND [Sortierung] IS NULL) OR ([Sortierung] = @Original_Sortierung)) AND ((@IsNull_Typ = 1 AND [Typ] IS NULL) OR ([Typ] = @Original_Typ)) AND ((@IsNull_BezZeugnis = 1 AND [BezZeugnis] IS NULL) OR ([BezZeugnis] = @Original_BezZeugnis)) AND ((@IsNull_NichtNC = 1 AND [NichtNC] IS NULL) OR ([NichtNC] = @Original_NichtNC)) AND ([Kursniveau] = @Original_Kursniveau) AND ((@IsNull_PlatzInMBStatistik = 1 AND [PlatzInMBStatistik] IS NULL) OR ([PlatzInMBStatistik] = @Original_PlatzInMBStatistik)) AND ((@IsNull_WPFid = 1 AND [WPFid] IS NULL) OR ([WPFid] = @Original_WPFid)));
-SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, NichtNC, Kursniveau, PlatzInMBStatistik, WPFid FROM Fach WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Fach] SET [Bezeichnung] = @Bezeichnung, [Kuerzel] = @Kuerzel, [Sortierung] = @Sortierung, [Typ] = @Typ, [BezZeugnis] = @BezZeugnis, [NichtNC] = @NichtNC, [Kursniveau] = @Kursniveau, [PlatzInMBStatistik] = @PlatzInMBStatistik, [WPFid] = @WPFid, [Fachschaft] = @Fachschaft WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ([Kuerzel] = @Original_Kuerzel) AND ((@IsNull_Sortierung = 1 AND [Sortierung] IS NULL) OR ([Sortierung] = @Original_Sortierung)) AND ((@IsNull_Typ = 1 AND [Typ] IS NULL) OR ([Typ] = @Original_Typ)) AND ((@IsNull_BezZeugnis = 1 AND [BezZeugnis] IS NULL) OR ([BezZeugnis] = @Original_BezZeugnis)) AND ((@IsNull_NichtNC = 1 AND [NichtNC] IS NULL) OR ([NichtNC] = @Original_NichtNC)) AND ([Kursniveau] = @Original_Kursniveau) AND ((@IsNull_PlatzInMBStatistik = 1 AND [PlatzInMBStatistik] IS NULL) OR ([PlatzInMBStatistik] = @Original_PlatzInMBStatistik)) AND ((@IsNull_WPFid = 1 AND [WPFid] IS NULL) OR ([WPFid] = @Original_WPFid)) AND ((@IsNull_Fachschaft = 1 AND [Fachschaft] IS NULL) OR ([Fachschaft] = @Original_Fachschaft)));
+SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, NichtNC, Kursniveau, PlatzInMBStatistik, WPFid, Fachschaft FROM Fach WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Kuerzel", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -13518,6 +13565,7 @@ SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, NichtNC, Kursnivea
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Kursniveau", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kursniveau", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PlatzInMBStatistik", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PlatzInMBStatistik", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@WPFid", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WPFid", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Fachschaft", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fachschaft", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Kuerzel", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -13534,6 +13582,8 @@ SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, NichtNC, Kursnivea
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PlatzInMBStatistik", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PlatzInMBStatistik", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_WPFid", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WPFid", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_WPFid", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WPFid", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Fachschaft", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fachschaft", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Fachschaft", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Fachschaft", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
@@ -13554,14 +13604,12 @@ SELECT Id, Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, NichtNC, Kursnivea
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT BezZeugnis, Bezeichnung, Id, Kuerzel, Kursniveau, NichtNC, PlatzInMBStatis" +
-                "tik, Sortierung, Typ, WPFid FROM Fach WHERE (Id = @Id)";
+            this._commandCollection[1].CommandText = "SELECT * FROM Fach WHERE (Id = @Id)";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT BezZeugnis, Bezeichnung, Id, Kuerzel, Kursniveau, NichtNC, PlatzInMBStatis" +
-                "tik, Sortierung, Typ, WPFid FROM Fach WHERE (Kuerzel = @kuerzel)";
+            this._commandCollection[2].CommandText = "SELECT * FROM Fach WHERE (Kuerzel = @kuerzel)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@kuerzel", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Kuerzel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
@@ -13693,7 +13741,7 @@ select distinct
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, string Original_Bezeichnung, string Original_Kuerzel, global::System.Nullable<int> Original_Sortierung, global::System.Nullable<byte> Original_Typ, string Original_BezZeugnis, global::System.Nullable<bool> Original_NichtNC, byte Original_Kursniveau, string Original_PlatzInMBStatistik, global::System.Nullable<int> Original_WPFid) {
+        public virtual int Delete(int Original_Id, string Original_Bezeichnung, string Original_Kuerzel, global::System.Nullable<int> Original_Sortierung, global::System.Nullable<byte> Original_Typ, string Original_BezZeugnis, global::System.Nullable<bool> Original_NichtNC, byte Original_Kursniveau, string Original_PlatzInMBStatistik, global::System.Nullable<int> Original_WPFid, string Original_Fachschaft) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             if ((Original_Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Original_Bezeichnung");
@@ -13756,6 +13804,14 @@ select distinct
                 this.Adapter.DeleteCommand.Parameters[14].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
+            if ((Original_Fachschaft == null)) {
+                this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[17].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[16].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[17].Value = ((string)(Original_Fachschaft));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -13776,7 +13832,7 @@ select distinct
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string Bezeichnung, string Kuerzel, global::System.Nullable<int> Sortierung, global::System.Nullable<byte> Typ, string BezZeugnis, global::System.Nullable<bool> NichtNC, byte Kursniveau, string PlatzInMBStatistik, global::System.Nullable<int> WPFid) {
+        public virtual int Insert(string Bezeichnung, string Kuerzel, global::System.Nullable<int> Sortierung, global::System.Nullable<byte> Typ, string BezZeugnis, global::System.Nullable<bool> NichtNC, byte Kursniveau, string PlatzInMBStatistik, global::System.Nullable<int> WPFid, string Fachschaft) {
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
             }
@@ -13826,6 +13882,12 @@ select distinct
             else {
                 this.Adapter.InsertCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
+            if ((Fachschaft == null)) {
+                this.Adapter.InsertCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[9].Value = ((string)(Fachschaft));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -13856,6 +13918,7 @@ select distinct
                     byte Kursniveau, 
                     string PlatzInMBStatistik, 
                     global::System.Nullable<int> WPFid, 
+                    string Fachschaft, 
                     int Original_Id, 
                     string Original_Bezeichnung, 
                     string Original_Kuerzel, 
@@ -13866,6 +13929,7 @@ select distinct
                     byte Original_Kursniveau, 
                     string Original_PlatzInMBStatistik, 
                     global::System.Nullable<int> Original_WPFid, 
+                    string Original_Fachschaft, 
                     int Id) {
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
@@ -13916,69 +13980,83 @@ select distinct
             else {
                 this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_Id));
+            if ((Fachschaft == null)) {
+                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((string)(Fachschaft));
+            }
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Original_Id));
             if ((Original_Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Original_Bezeichnung");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_Bezeichnung));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(Original_Bezeichnung));
             }
             if ((Original_Kuerzel == null)) {
                 throw new global::System.ArgumentNullException("Original_Kuerzel");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((string)(Original_Kuerzel));
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((string)(Original_Kuerzel));
             }
             if ((Original_Sortierung.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(Original_Sortierung.Value));
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[14].Value = ((int)(Original_Sortierung.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[13].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[14].Value = global::System.DBNull.Value;
             }
             if ((Original_Typ.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((byte)(Original_Typ.Value));
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[16].Value = ((byte)(Original_Typ.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[16].Value = global::System.DBNull.Value;
             }
             if ((Original_BezZeugnis == null)) {
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[17].Value = ((string)(Original_BezZeugnis));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((string)(Original_BezZeugnis));
             }
             if ((Original_NichtNC.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((bool)(Original_NichtNC.Value));
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((bool)(Original_NichtNC.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[20].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[20].Value = ((byte)(Original_Kursniveau));
+            this.Adapter.UpdateCommand.Parameters[21].Value = ((byte)(Original_Kursniveau));
             if ((Original_PlatzInMBStatistik == null)) {
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[22].Value = ((string)(Original_PlatzInMBStatistik));
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[23].Value = ((string)(Original_PlatzInMBStatistik));
             }
             if ((Original_WPFid.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((int)(Original_WPFid.Value));
+                this.Adapter.UpdateCommand.Parameters[24].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[25].Value = ((int)(Original_WPFid.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[24].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[25].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[25].Value = ((int)(Id));
+            if ((Original_Fachschaft == null)) {
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[27].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[27].Value = ((string)(Original_Fachschaft));
+            }
+            this.Adapter.UpdateCommand.Parameters[28].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -14009,6 +14087,7 @@ select distinct
                     byte Kursniveau, 
                     string PlatzInMBStatistik, 
                     global::System.Nullable<int> WPFid, 
+                    string Fachschaft, 
                     int Original_Id, 
                     string Original_Bezeichnung, 
                     string Original_Kuerzel, 
@@ -14018,8 +14097,9 @@ select distinct
                     global::System.Nullable<bool> Original_NichtNC, 
                     byte Original_Kursniveau, 
                     string Original_PlatzInMBStatistik, 
-                    global::System.Nullable<int> Original_WPFid) {
-            return this.Update(Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, NichtNC, Kursniveau, PlatzInMBStatistik, WPFid, Original_Id, Original_Bezeichnung, Original_Kuerzel, Original_Sortierung, Original_Typ, Original_BezZeugnis, Original_NichtNC, Original_Kursniveau, Original_PlatzInMBStatistik, Original_WPFid, Original_Id);
+                    global::System.Nullable<int> Original_WPFid, 
+                    string Original_Fachschaft) {
+            return this.Update(Bezeichnung, Kuerzel, Sortierung, Typ, BezZeugnis, NichtNC, Kursniveau, PlatzInMBStatistik, WPFid, Fachschaft, Original_Id, Original_Bezeichnung, Original_Kuerzel, Original_Sortierung, Original_Typ, Original_BezZeugnis, Original_NichtNC, Original_Kursniveau, Original_PlatzInMBStatistik, Original_WPFid, Original_Fachschaft, Original_Id);
         }
     }
     

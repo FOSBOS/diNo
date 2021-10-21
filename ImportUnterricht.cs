@@ -56,7 +56,7 @@ namespace diNo
           if (fach == null)
           {
             writer.WriteLine("Fach " + f + " wird angelegt.");
-            new FachTableAdapter().Insert(f, f, 999, 0, null, false, 0, null, null);
+            new FachTableAdapter().Insert(f, f, 999, 0, null, false, 0, null, null,null);
             Zugriff.Instance.FachRep.Clear();
             Zugriff.Instance.LoadFaecher();
             fach = Zugriff.Instance.FachRep.Find(f);

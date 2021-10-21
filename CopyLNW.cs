@@ -12,7 +12,7 @@ using System.Windows.Forms;
 /* ToDo: 
     Liste der Kurse inkl. Schlüssel einlesen
     Verzeichnisaufbau, ggf. nicht vorhandenes Verz. erstellen      
-    globale Strings für User und Passwort ggf. Domäne
+
 */
 
 namespace diNo
@@ -22,10 +22,17 @@ namespace diNo
     public CopyLNW()
     {
       InitializeComponent();
+      Dictionary<int, string> kurse = new Dictionary<int, string>();      
       foreach (var k in Zugriff.Instance.eigeneKurse)
       {
-        cbKurs.Items.Add(k.Kursbezeichnung);
+        kurse.Add(k.Id,k.Kursbezeichnung);
       }
+      cbKurs.BeginUpdate();
+      cbKurs.DataSource = kurse.ToList();
+      cbKurs.DisplayMember = "Value";
+      cbKurs.ValueMember = "Key";
+      cbKurs.EndUpdate();
+
       cbKurs.SelectedIndex = 0;
       cbArt.SelectedIndex = 1;
       cbNummer.SelectedIndex = 0;
@@ -42,11 +49,13 @@ namespace diNo
         {
           try
           {
+            Kurs k = Zugriff.Instance.KursRep.Find((int)cbKurs.SelectedValue);
             string kursBez = cbKurs.Text;
             kursBez.Replace("/", "");
-            string verz = Zugriff.Instance.getString(GlobaleStrings.LNWAblagePfad)
-              + @"\Hj" + (byte)Zugriff.Instance.aktHalbjahr + @"\" + cbKurs.Text + @"\";
-            string dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + cbKurs.Text + "_Hj" + (byte)Zugriff.Instance.aktHalbjahr + "_"
+
+            string verz = Zugriff.Instance.getString(GlobaleStrings.LNWAblagePfad) + @"\" + k.getFach.Fachschaft
+              + @"\Hj" + (byte)Zugriff.Instance.aktHalbjahr + @"\" + kursBez + @"\";
+            string dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + kursBez + "_Hj" + (byte)Zugriff.Instance.aktHalbjahr + "_"
               + cbArt.Text + cbNummer.Text + "_" + art + ".pdf";
 
             if (!Directory.Exists(verz))

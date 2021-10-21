@@ -91,6 +91,14 @@ namespace diNo
       }
     }
 
+    public string Fachschaft
+    {
+      get {
+        if (data.IsFachschaftNull()) return "unbekannt";
+        else return data.Fachschaft;
+      }
+    }
+
     public string PlatzInMBStatistik
     {
       get
