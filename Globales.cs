@@ -56,7 +56,11 @@ namespace diNo
     MailPasswort,
     VerzeichnisExceldateien,
     SchulnummerFOS,
-    SchulnummerBOS
+    SchulnummerBOS,
+    CopyUserLoginname,
+    CopyUserPwd,
+    CopyUserDomain,
+    LNWAblagePfad
   }
 
 }

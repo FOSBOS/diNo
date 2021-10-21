@@ -16,6 +16,7 @@ namespace diNo
     public Lehrer lehrer = null; // angemeldeter Lehrer
     public List<Klasse> Klassen { get; private set; } // Liste der angezeigten Klassen
     public List<Fach> eigeneFaecher { get; private set; }
+    private List<Kurs> _eigeneKurse = null; // alle Kurse, die der angemeldete Lehrer unterrichtet
     public Klasse eigeneKlasse { get; private set; } // Verweis auf die Klasse, in der der User Klassenleiter ist
     public Dictionary<int, Schueler> markierteSchueler { get; private set; } // Schüler, die z.B. beim NotenCheck eine Meldung erzeugt haben
     public int AnzahlSchueler { get; private set; }
@@ -173,6 +174,7 @@ namespace diNo
       log.Debug("Schüler geladen.");
     }
 
+    // lädt Fächer des angemeldeten Lehrers
     public void LoadFaecher()
     {
       eigeneFaecher = new List<Fach>();
@@ -183,6 +185,24 @@ namespace diNo
         Fach f = new Fach(fRow);
         eigeneFaecher.Add(f);
         FachRep.Add(f);
+      }
+    }
+
+    public List<Kurs>eigeneKurse
+    {  get {  
+        if (_eigeneKurse==null) // ausgelagert um eine Endlosschleife zu vermeiden
+        {
+          _eigeneKurse = new List<Kurs>();
+          var kta = new KursTableAdapter();
+          var dtKurs = kta.GetDataByLehrerId(lehrer.Id);
+          foreach (var rKurs in dtKurs)
+          {
+            Kurs k = new Kurs(rKurs);
+            _eigeneKurse.Add(k);
+            KursRep.Add(k);
+          }
+        }
+        return _eigeneKurse;
       }
     }
 

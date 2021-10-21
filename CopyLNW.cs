@@ -22,33 +22,51 @@ namespace diNo
     public CopyLNW()
     {
       InitializeComponent();
-      foreach (var f in Zugriff.Instance.eigeneFaecher)
+      foreach (var k in Zugriff.Instance.eigeneKurse)
       {
-        cbKurs.Items.Add(f.Bezeichnung);
+        cbKurs.Items.Add(k.Kursbezeichnung);
       }
       cbKurs.SelectedIndex = 0;
-      cbArt.SelectedIndex = 0;
+      cbArt.SelectedIndex = 1;
       cbNummer.SelectedIndex = 0;
     }
 
     private void Kopiere(string datei, string art)
     {
-      using (UserImpersonation user = new UserImpersonation("CopyUser", "FOSBOS", "NdiNo87§"))
+      using (UserImpersonation user = new UserImpersonation(
+        Zugriff.Instance.getString(GlobaleStrings.CopyUserLoginname),
+        Zugriff.Instance.getString(GlobaleStrings.CopyUserDomain),
+        Zugriff.Instance.getString(GlobaleStrings.CopyUserPwd)))
       {
         if (user.ImpersonateValidUser())
         {
-          string verz = @"\\srvfosbos\AblageLNW\" + "Hj" + (byte)Zugriff.Instance.aktHalbjahr;
-          string dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + cbKurs.Text + "_Hj" + (byte)Zugriff.Instance.aktHalbjahr + "_" 
-            + cbArt.Text + cbNummer.Text + "_" + art + ".pdf";
+          try
+          {
+            string kursBez = cbKurs.Text;
+            kursBez.Replace("/", "");
+            string verz = Zugriff.Instance.getString(GlobaleStrings.LNWAblagePfad)
+              + @"\Hj" + (byte)Zugriff.Instance.aktHalbjahr + @"\" + cbKurs.Text + @"\";
+            string dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + cbKurs.Text + "_Hj" + (byte)Zugriff.Instance.aktHalbjahr + "_"
+              + cbArt.Text + cbNummer.Text + "_" + art + ".pdf";
 
-         if (!Directory.Exists(verz))
-            Directory.CreateDirectory(verz);
-         File.Copy(datei, verz + dat);
-          MessageBox.Show("Die " + art + " wurde archiviert.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if (!Directory.Exists(verz))
+              Directory.CreateDirectory(verz);
+            if (File.Exists(verz + dat))
+            {
+              if (MessageBox.Show("Die " + art + " wurde bereits archiviert.\nSoll die Datei ersetzt werden?\n(Sind alle Einstellungen richtig?)", "diNo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
+                return;
+            }
+            File.Copy(datei, verz + dat, true);
+            MessageBox.Show("Die " + art + " wurde archiviert.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          }
+          catch
+          {
+            MessageBox.Show("Die " + art + " konnte nicht archiviert werden.\nFehler beim Kopieren.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          }
         }
         else
         {
-          MessageBox.Show("Die Datei konnte nicht archiviert werden.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Error);
+          MessageBox.Show("Die " + art + " konnte nicht archiviert werden.\nDer Server steht nicht zur Verfügung.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
       }
     }
@@ -56,6 +74,11 @@ namespace diNo
     private void btnAngabe_Click(object sender, EventArgs e)
     {
       Abgabe("Angabe");
+    }
+
+    private void btnLsg_Click(object sender, EventArgs e)
+    {
+      Abgabe("Lösung");
     }
 
     private void Abgabe(string art)
@@ -69,7 +92,7 @@ namespace diNo
         Kopiere(fileDialog.FileName, art);
         Cursor.Current = Cursors.Default;        
       }
-    }
+    }    
   }
 
 }

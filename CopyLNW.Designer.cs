@@ -35,6 +35,7 @@
       this.lbArt = new System.Windows.Forms.Label();
       this.cbNummer = new System.Windows.Forms.ComboBox();
       this.label1 = new System.Windows.Forms.Label();
+      this.btnLsg = new System.Windows.Forms.Button();
       this.SuspendLayout();
       // 
       // btnAngabe
@@ -42,7 +43,7 @@
       this.btnAngabe.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.btnAngabe.Location = new System.Drawing.Point(44, 199);
       this.btnAngabe.Name = "btnAngabe";
-      this.btnAngabe.Size = new System.Drawing.Size(129, 66);
+      this.btnAngabe.Size = new System.Drawing.Size(167, 66);
       this.btnAngabe.TabIndex = 0;
       this.btnAngabe.Text = "Angabe abgeben";
       this.btnAngabe.UseVisualStyleBackColor = true;
@@ -113,11 +114,23 @@
       this.label1.TabIndex = 21;
       this.label1.Text = "Nummer in diesem Halbjahr (nur bei Exen)";
       // 
+      // btnLsg
+      // 
+      this.btnLsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.btnLsg.Location = new System.Drawing.Point(269, 199);
+      this.btnLsg.Name = "btnLsg";
+      this.btnLsg.Size = new System.Drawing.Size(170, 66);
+      this.btnLsg.TabIndex = 23;
+      this.btnLsg.Text = "Erwartungshorizont abgeben";
+      this.btnLsg.UseVisualStyleBackColor = true;
+      this.btnLsg.Click += new System.EventHandler(this.btnLsg_Click);
+      // 
       // CopyLNW
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(483, 314);
+      this.Controls.Add(this.btnLsg);
       this.Controls.Add(this.cbNummer);
       this.Controls.Add(this.label1);
       this.Controls.Add(this.cbArt);
@@ -141,5 +154,6 @@
     private System.Windows.Forms.Label lbArt;
     private System.Windows.Forms.ComboBox cbNummer;
     private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Button btnLsg;
   }
 }
