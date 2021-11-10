@@ -56,6 +56,10 @@ namespace diNo
 
             string verz = Zugriff.Instance.getString(GlobaleStrings.LNWAblagePfad) + @"\" + k.getFach.Fachschaft
               + @"\Hj" + (byte)Zugriff.Instance.aktHalbjahr + @"\" + k.FachBezeichnung + @"\";
+            if (k.getFach.Typ!=FachTyp.WPF)
+            { 
+              verz += "Jg" + k.JgStufe + @"\";
+            }
             string dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + kursBez + "_Hj" + (byte)Zugriff.Instance.aktHalbjahr + "_"
               + cbArt.Text + cbNummer.Text + "_" + art + typ;
 
