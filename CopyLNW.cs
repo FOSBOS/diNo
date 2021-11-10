@@ -54,7 +54,7 @@ namespace diNo
             kursBez.Replace("/", "");
 
             string verz = Zugriff.Instance.getString(GlobaleStrings.LNWAblagePfad) + @"\" + k.getFach.Fachschaft
-              + @"\Hj" + (byte)Zugriff.Instance.aktHalbjahr + @"\" + kursBez + @"\";
+              + @"\Hj" + (byte)Zugriff.Instance.aktHalbjahr + @"\" + k.FachBezeichnung + @"\";
             string dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + kursBez + "_Hj" + (byte)Zugriff.Instance.aktHalbjahr + "_"
               + cbArt.Text + cbNummer.Text + "_" + art + ".pdf";
 
