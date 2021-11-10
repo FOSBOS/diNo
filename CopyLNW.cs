@@ -52,11 +52,12 @@ namespace diNo
             Kurs k = Zugriff.Instance.KursRep.Find((int)cbKurs.SelectedValue);
             string kursBez = cbKurs.Text;
             kursBez.Replace("/", "");
+            string typ = Path.GetExtension(datei);
 
             string verz = Zugriff.Instance.getString(GlobaleStrings.LNWAblagePfad) + @"\" + k.getFach.Fachschaft
               + @"\Hj" + (byte)Zugriff.Instance.aktHalbjahr + @"\" + k.FachBezeichnung + @"\";
             string dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + kursBez + "_Hj" + (byte)Zugriff.Instance.aktHalbjahr + "_"
-              + cbArt.Text + cbNummer.Text + "_" + art + ".pdf";
+              + cbArt.Text + cbNummer.Text + "_" + art + typ;
 
             if (!Directory.Exists(verz))
               Directory.CreateDirectory(verz);
@@ -93,7 +94,7 @@ namespace diNo
     private void Abgabe(string art)
     {
       var fileDialog = new OpenFileDialog();
-      fileDialog.Filter = "PDF|*.pdf";
+      fileDialog.Filter = "PDF|*.pdf|MP3|*.mp3";
 
       if (fileDialog.ShowDialog() == DialogResult.OK)
       {
