@@ -61,7 +61,10 @@ namespace diNo
               verz += "Jg" + k.JgStufe + @"\";
             }
             string dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + kursBez + "_Hj" + (byte)Zugriff.Instance.aktHalbjahr + "_"
-              + cbArt.Text + cbNummer.Text + "_" + art + typ;
+              + cbArt.Text + cbNummer.Text;
+            if (chkKoord.Checked) dat += "_koordiniert";
+              
+            dat += "_" + art + typ;
 
             if (!Directory.Exists(verz))
               Directory.CreateDirectory(verz);
