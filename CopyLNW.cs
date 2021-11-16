@@ -76,9 +76,9 @@ namespace diNo
             File.Copy(datei, verz + dat, true);
             MessageBox.Show("Die " + art + " wurde archiviert.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
           }
-          catch
+          catch (Exception e)
           {
-            MessageBox.Show("Die " + art + " konnte nicht archiviert werden.\nFehler beim Kopieren.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Die " + art + " konnte nicht archiviert werden.\n"+ e.Message , "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
           }
         }
         else
