@@ -40,6 +40,14 @@ namespace diNo
 
     private void Kopiere(string datei, string art)
     {
+      // Datei muss zunächst in ein neutrales Verzeichnis kopiert werden, weil z.B. Desktop oder Dokumente-Ordner gesperrt sind für den CopyUser
+      string tmp = @"C:\tmpCopyLNW\";
+      if (!Directory.Exists(tmp))
+        Directory.CreateDirectory(tmp);
+
+      tmp += Path.GetFileName(datei);
+      File.Copy(datei, tmp, true);
+
       using (UserImpersonation user = new UserImpersonation(
         Zugriff.Instance.getString(GlobaleStrings.CopyUserLoginname),
         Zugriff.Instance.getString(GlobaleStrings.CopyUserDomain),
@@ -73,7 +81,7 @@ namespace diNo
               if (MessageBox.Show("Die " + art + " wurde bereits archiviert.\nSoll die Datei ersetzt werden?\n(Sind alle Einstellungen richtig?)", "diNo", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) == DialogResult.No)
                 return;
             }
-            File.Copy(datei, verz + dat, true);
+            File.Copy(tmp, verz + dat, true);
             MessageBox.Show("Die " + art + " wurde archiviert.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
           }
           catch (Exception e)
