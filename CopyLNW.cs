@@ -58,12 +58,11 @@ namespace diNo
           try
           {
             Kurs k = Zugriff.Instance.KursRep.Find((int)cbKurs.SelectedValue);
-            string kursBez = cbKurs.Text;
-            kursBez.Replace("/", "");
+            string kursBez = cbKurs.Text.Replace("/", "");            
             string typ = Path.GetExtension(datei);
 
             string verz = Zugriff.Instance.getString(GlobaleStrings.LNWAblagePfad) + @"\" + k.getFach.Fachschaft
-              + @"\Hj" + (byte)Zugriff.Instance.aktHalbjahr + @"\" + k.FachBezeichnung + @"\";
+              + @"\Hj" + (byte)Zugriff.Instance.aktHalbjahr + @"\" + k.FachBezeichnung.Replace("/", "") + @"\";
             if (k.getFach.Typ!=FachTyp.WPF)
             { 
               verz += "Jg" + k.JgStufe + @"\";

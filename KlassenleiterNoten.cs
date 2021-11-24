@@ -13,7 +13,7 @@ namespace diNo
 {
   public class KlassenleiterNoten
   {
-    string passwort = "FB8home";
+    string passwort = "1949";
     string pfad = @"C:\tmp\";
     public KlassenleiterNoten(List<Klasse> klassen)
     {
