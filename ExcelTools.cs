@@ -306,20 +306,14 @@ namespace diNo
     /// <summary>
     /// Hängt einen neuen Schüler unten an die Datei an.
     /// </summary>
-    /// <param name="aSchueler">Der Schüler.</param>
-    /// <param name="setzeLegasthenie">Ob der Legasthenievermerk geprüft werden soll.</param>
-    public void AppendSchueler(diNoDataSet.SchuelerRow aSchueler, bool setzeLegasthenie)
+    /// <param name="aSchueler">Der Schüler.</param>    
+    public void AppendSchueler(diNoDataSet.SchuelerRow aSchueler)
     {
       UnsavedChanges = true;
 
       int zeile = GetErsteFreieZeile(sid); //gilt in Notenbogen und auf dem diNo-sid-Reiter
       WriteValueProtectedCell(notenbogen, "B" + zeile, aSchueler.Name + ", " + aSchueler.Rufname);
       WriteValueProtectedCell(sid, CellConstant.SId + zeile, aSchueler.Id.ToString());
-      if (setzeLegasthenie && aSchueler.LRSStoerung)
-      {
-        // TODO: Legastenie: wie geht das neuerdings?
-        //WriteValue(notenbogen, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
-      }
     }
 
     /// <summary>
@@ -339,126 +333,6 @@ namespace diNo
       UnsavedChanges = true;
       WriteValueProtectedCell(notenbogen, CellConstant.Nachname + zeile, "");
       return true;
-    }
-  }
-
-  /// <summary>
-  /// Klasse, die eine Notendatei öffnet und Verweise auf die wichtigsten Sheets liefert
-  /// </summary>
-  public class OpenAlteNotendatei : BasisNotendatei
-  {
-    /// <summary>
-    /// Konstruktor
-    /// </summary>
-    /// <param name="filename"></param>
-    public OpenAlteNotendatei(string filename) : base(filename)
-    {
-    }
-
-    /// <summary>
-    /// Hängt einen neuen Schüler unten an die Datei an.
-    /// </summary>
-    /// <param name="aSchueler">Der Schüler.</param>
-    /// <param name="setzeLegasthenie">Ob der Legasthenievermerk geprüft werden soll.</param>
-    public void AppendSchueler(diNoDataSet.SchuelerRow aSchueler, bool setzeLegasthenie)
-    {
-      UnsavedChanges = true;
-
-      int zeileFuerSId = GetErsteFreieZeile(sid);
-      int zeile = GetNotenbogenZeileForSidZeile(zeileFuerSId);
-
-      WriteValueProtectedCell(notenbogen, CellConstant.Nachname + zeile, aSchueler.Name);
-      WriteValueProtectedCell(notenbogen, CellConstant.Vorname + (zeile + 1), "   " + aSchueler.Rufname);
-      WriteValueProtectedCell(sid, CellConstant.SId + zeileFuerSId, aSchueler.Id.ToString());
-      if (setzeLegasthenie && aSchueler.LRSStoerung)
-      {
-        WriteValue(notenbogen, CellConstant.LegasthenieVermerk + zeile, CellConstant.LegasthenieEintragung);
-      }
-    }
-
-    /// <summary>
-    /// Entfernt einen Schüler aus der Datei (Name und Id). Lässt seine Noten aber stehen.
-    /// </summary>
-    /// <param name="aSchueler">der Schüler.</param>
-    public void RemoveSchueler(diNoDataSet.SchuelerRow aSchueler)
-    {
-      RemoveSchueler(aSchueler.Id);
-    }
-
-    /// <summary>
-    /// Entfernt einen Schüler aus der Datei (nur Name). Lässt seine Noten aber stehen.
-    /// </summary>
-    /// <param name="schuelerId">die Id des Schülers.</param>
-    public bool RemoveSchueler(int schuelerId)
-    {
-      int zeileSId = GetSidZeileForSchueler(schuelerId);
-      int zeileNachname = GetNotenbogenZeileForSidZeile(zeileSId);
-      string name = ReadValue(notenbogen, CellConstant.Nachname + zeileNachname) + ReadValue(notenbogen, CellConstant.Vorname + (zeileNachname + 1));
-      if (string.IsNullOrEmpty(name.Trim()))
-      {
-        // Der Schüler ist bereits aus der Datei entfernt. Keine Aktion nötig.
-        return false;
-      }
-
-      UnsavedChanges = true;
-      WriteValueProtectedCell(notenbogen, CellConstant.Nachname + zeileNachname, "");
-      WriteValueProtectedCell(notenbogen, CellConstant.Vorname + (zeileNachname + 1), "");
-      return true;
-    }
-
-    /// <summary>
-    /// Ruft den Legasthenievermerk für den Schüler ab.
-    /// </summary>
-    /// <param name="schuelerId">ID des Schülers.</param>
-    /// <returns>Ob der Schüler Legastheniker ist oder nicht.</returns>
-    public bool GetLegasthenievermerk(int schuelerId)
-    {
-      int zeileSId = GetSidZeileForSchueler(schuelerId);
-      int zeileNachname = GetNotenbogenZeileForSidZeile(zeileSId);
-      string value = ReadValue(notenbogen, CellConstant.LegasthenieVermerk + zeileNachname);
-      return CellConstant.LegasthenieEintragung.Equals(value);
-    }
-
-    /// <summary>
-    /// Setzt den Legasthenievermerk für  den Schüler.
-    /// </summary>
-    /// <param name="schuelerId">ID des Schülers.</param>
-    /// <param name="isLegastheniker">Ob der Schüler Legastheniker ist oder nicht.</param>
-    public void SetLegasthenievermerk(int schuelerId, bool isLegastheniker)
-    {
-      UnsavedChanges = true;
-      int zeileSId = GetSidZeileForSchueler(schuelerId);
-      int zeileNachname = GetNotenbogenZeileForSidZeile(zeileSId);
-      SetLegasthenievermerkByZeile(zeileNachname, isLegastheniker);
-    }
-
-    /// <summary>
-    /// Setzt den Legasthenievermerk für einen Schüler anhand der Zeile.
-    /// </summary>
-    /// <param name="zeile">Die Zeile, in der der Schueler steht.</param>
-    /// <param name="isLegastheniker">Ob der Schüler Legastheniker ist oder nicht.</param>
-    public void SetLegasthenievermerkByZeile(int zeile, bool isLegastheniker)
-    {
-      UnsavedChanges = true;
-      string value = isLegastheniker ? CellConstant.LegasthenieEintragung : string.Empty;
-      WriteValue(notenbogen, CellConstant.LegasthenieVermerk + zeile, value);
-    }
-
-    private int GetNotenbogenZeileForSidZeile(int sidZeile)
-    {
-      int indexSchueler = sidZeile - 4; // Beginnend mit dem Nullten
-      return 2 * indexSchueler + 5;
-    }
-
-    public byte? ReadNote(Notentyp typ, string zelle)
-    {
-      string v;
-      if (typ == Notentyp.APMuendlich || typ == Notentyp.APSchriftlich)
-        v = ReadValue(AP, zelle);
-      else
-        v = ReadValue(notenbogen, zelle);
-
-      return !string.IsNullOrEmpty(v) ? Convert.ToByte(v, CultureInfo.CurrentUICulture) : (byte?)null;
     }
   }
 

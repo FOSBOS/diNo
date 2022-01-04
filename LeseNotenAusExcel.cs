@@ -153,7 +153,7 @@ namespace diNo
     }
 
     /// <summary>
-    /// Gleicht die Schülerdaten zwischen DB und Excel ab. Prüft, ob neue Schüler hinzugekommen, oder ob Legasthenie neu vermerkt wurde.
+    /// Gleicht die Schülerdaten zwischen DB und Excel ab. Prüft, ob neue Schüler hinzugekommen.
     /// </summary>        
     private void Synchronize()
     {
@@ -164,7 +164,7 @@ namespace diNo
         // prüfen, ob neue Schüler dazugekommen sind
         if (!sidList.Contains(schueler.Id))
         {
-          xls.AppendSchueler(schueler.Data, kurs.getFach.Kuerzel == "F" || kurs.getFach.Kuerzel == "E");
+          xls.AppendSchueler(schueler.Data);
           sidList.Add(schueler.Id);
           hinweise.Add(schueler.Name + ", " + schueler.Data.Rufname + " wurde neu aufgenommen.");
         }

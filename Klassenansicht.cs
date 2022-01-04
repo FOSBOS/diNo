@@ -249,7 +249,7 @@ namespace diNo
 
     private void btnLNWabgeben_Click(object sender, EventArgs e)
     {
-      new CopyLNW().ShowDialog();
+      new CopyLNW();
     }
   }
 }
