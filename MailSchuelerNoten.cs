@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SevenZip;
-using System.Net.Mail;
 using System.Windows.Forms;
+using MailKit.Net;
+using System.Net.Mail;
 
 namespace diNo
 {
@@ -15,7 +16,7 @@ namespace diNo
   {
     string passwort;
     string pfad = @"C:\tmp\";
-    Bericht rpttyp = Bericht.Einbringung; // Bericht.Notenmitteilung; // ggf. ändern
+    Bericht rpttyp = Bericht.Notenmitteilung; // ggf. ändern Bericht.Einbringung; // 
 
     public MailSchuelerNoten(List<Schueler> schueler)
     {      
@@ -111,17 +112,16 @@ namespace diNo
     void Send(Schueler s, string datei)
     {
       string bodyText = "";
-      MailAddress from = new MailAddress(Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail), "Digitale Notenverwaltung");
-      SmtpClient mailServer;
+      string smtp = Zugriff.Instance.getString(GlobaleStrings.SMTP);
+      int port = int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port));
+      MailKit.Net.Smtp.SmtpClient mailServer;
 
       string infoFile = pfad + "Mail.txt";
-//    if (MessageBox.Show("Mailservereinstellungen müssen unter globale Texte angegeben werden.\nEin in der Mail zu versendender Infotext kann in der Datei " + infoFile + " abgelegt werden.", "Notendateien versenden", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       try
       {
-        mailServer = new SmtpClient(Zugriff.Instance.getString(GlobaleStrings.SMTP), int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port)));
-        mailServer.EnableSsl = true;
-        mailServer.UseDefaultCredentials = false;
-        mailServer.Credentials = new System.Net.NetworkCredential(Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail), Zugriff.Instance.getString(GlobaleStrings.MailPasswort));
+        mailServer = new MailKit.Net.Smtp.SmtpClient();
+        mailServer.Connect(smtp, port, MailKit.Security.SecureSocketOptions.StartTls);
+        mailServer.Authenticate(Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail), Zugriff.Instance.getString(GlobaleStrings.MailPasswort));
       }
       catch (Exception ex)
       {
@@ -134,22 +134,31 @@ namespace diNo
         bodyText = File.ReadAllText(infoFile);
       }
 
-      string MailAdresse = Tools.ErsetzeUmlaute(s.benutzterVorname + "." + s.Name + "@fosbos-kempten.de");
+      string MailTo = Tools.ErsetzeUmlaute(s.benutzterVorname + "." + s.Name + "@fosbos-kempten.de");
+      string MailFrom = Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail);
 
-      //MailAdresse = "claus.konrad@fosbos-kempten.de"; // Test
-      if (!string.IsNullOrEmpty(MailAdresse))
+      // Test
+      //MailTo = "claus.konrad@fosbos-kempten.de";
+
+      if (!string.IsNullOrEmpty(MailTo))
       {
         try
         {
-          MailMessage msg = new MailMessage();
-          msg.From = from;
-          msg.To.Add(new MailAddress(MailAdresse));
-          if (rpttyp==Bericht.Einbringung) msg.Subject = "Einbringungsvorschlag";
-          else msg.Subject = "Aktuelle Notenübersicht";
-          msg.Body = "Hallo " + s.benutzterVorname + "," + bodyText;
-          msg.Attachments.Add(new Attachment(datei));
+          var msg = new MimeKit.MimeMessage()
+          {
+            Sender = new MimeKit.MailboxAddress("Digitale Notenverwaltung", MailFrom),
+            Subject = (rpttyp == Bericht.Einbringung) ? "Einbringungsvorschlag" : "Aktuelle Notenübersicht"
+          };
 
-          //MessageBox.Show("Mail an " + MailAdresse, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          msg.From.Add(new MimeKit.MailboxAddress("Digitale Notenverwaltung", MailFrom));          
+          msg.To.Add(new MimeKit.MailboxAddress(s.benutzterVorname + " " + s.Name, MailTo));
+
+          var builder = new MimeKit.BodyBuilder();
+          builder.TextBody = "Hallo " + s.benutzterVorname + "," + bodyText;
+          builder.Attachments.Add(datei);
+          msg.Body = builder.ToMessageBody();
+
+          //mailServer.Timeout = 1000;
           mailServer.Send(msg);
         }
         catch (Exception ex)
