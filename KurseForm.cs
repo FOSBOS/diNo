@@ -185,7 +185,7 @@ namespace diNo
     {
       foreach (Klasse k in q.Klassen)
       {
-        foreach (Schueler s in k.eigeneSchueler)
+        foreach (Schueler s in k.Schueler)
         {
           if (s.KursPasstZumSchueler(q))
             s.MeldeAn(q);

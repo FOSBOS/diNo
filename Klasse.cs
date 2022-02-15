@@ -40,7 +40,7 @@ namespace diNo
     private Jahrgangsstufe jg;
     private Zweig zweig;
     private Schulart schulart;
-    public List<Schueler> eigeneSchueler;
+    public List<Schueler> Schueler;
     private List<Kurs> kurse = null;
 
     public Klasse(int id)
@@ -65,7 +65,7 @@ namespace diNo
 
     private void Init()
     {
-      eigeneSchueler = new List<Schueler>();
+      Schueler = new List<Schueler>();
       jg = (Jahrgangsstufe)data.JgStufe;
       if (jg==Jahrgangsstufe.None) 
       {

@@ -169,7 +169,7 @@ namespace diNo
       foreach (Klasse k in Zugriff.Instance.Klassen)
       {
         k.RefreshKurse();
-        foreach (Schueler s in k.eigeneSchueler)
+        foreach (Schueler s in k.Schueler)
         {
           var kurse = s.AlleNotwendigenKurse();
           foreach (var kurs in kurse)

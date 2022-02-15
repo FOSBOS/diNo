@@ -346,7 +346,7 @@ namespace diNo
       Cursor = Cursors.WaitCursor;
       foreach (Klasse k in Zugriff.Instance.Klassen)
       {
-        foreach (Schueler s in k.eigeneSchueler)
+        foreach (Schueler s in k.Schueler)
           s.WechsleKlasse(k);
       }
       Cursor = Cursors.Default;
@@ -381,7 +381,7 @@ namespace diNo
         if (klasse.Jahrgangsstufe != Jahrgangsstufe.Zwoelf)
           continue;
 
-        foreach (var schueler in klasse.eigeneSchueler)
+        foreach (var schueler in klasse.Schueler)
         {
           foreach (var noten in schueler.getNoten.alleKurse)
           {
@@ -410,8 +410,10 @@ namespace diNo
     {
       Cursor.Current = Cursors.WaitCursor;
       var klassen = ((Klassenansicht)(Parent.Parent.Parent)).SelectedKlassen();
-      if (klassen.Count > 0)
-        new KlassenleiterNoten(klassen);
+      if (klassen.Count > 0){
+        MailTools m = new MailTools();
+        m.MailToKlassenleiter(klassen);
+      }
       Cursor.Current = Cursors.Default;
     }
 
@@ -419,8 +421,10 @@ namespace diNo
     {
       Cursor.Current = Cursors.WaitCursor;
       var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
-      if (obj.Count > 0)
-        new MailSchuelerNoten(obj);
+      if (obj.Count > 0){
+        MailTools m = new MailTools();
+        m.MailToSchueler(obj);
+      }
       Cursor.Current = Cursors.Default;
     }
 
@@ -431,7 +435,7 @@ namespace diNo
         if (klasse.Jahrgangsstufe > Jahrgangsstufe.Elf)
           continue;
 
-        foreach (var schueler in klasse.eigeneSchueler)
+        foreach (var schueler in klasse.Schueler)
         {
           foreach (var noten in schueler.getNoten.alleKurse)
           {

@@ -161,14 +161,14 @@ namespace diNo
           KlassenRep.Add(k);
         }
         s.getKlasse = k; // dem Schüler die Klasseninstanz zuweisen, damit die nicht jedesmal neu erzeugt werden muss!
-        k.eigeneSchueler.Add(s); // und umgekehrt dieser Klasse den Schüler hinzufügen        
+        k.Schueler.Add(s); // und umgekehrt dieser Klasse den Schüler hinzufügen        
       }
 
       // alles sortieren
       Klassen.Sort((x, y) => x.Bezeichnung.CompareTo(y.Bezeichnung));
       foreach (var klasse in Klassen)
       {
-        klasse.eigeneSchueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
+        klasse.Schueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
         if (klasse.KlassenleiterId == lehrer.Id) eigeneKlasse = klasse;
       }
       log.Debug("Schüler geladen.");

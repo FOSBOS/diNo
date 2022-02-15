@@ -106,7 +106,7 @@ namespace diNo
         if (k.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
           continue;
         Schueler bester=null;
-        foreach (Schueler s in k.eigeneSchueler)
+        foreach (Schueler s in k.Schueler)
         {
           if (bester == null || bester.punktesumme.Summe(PunktesummeArt.Gesamt) < s.punktesumme.Summe(PunktesummeArt.Gesamt))
             bester = s;

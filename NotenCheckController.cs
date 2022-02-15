@@ -110,7 +110,7 @@ namespace diNo
         k.Jahrgangsstufe < Jahrgangsstufe.Zwoelf && zeitpunkt == Zeitpunkt.Jahresende)
       {
         zuPruefendeKlassen.Add(k);
-        AnzahlSchueler += k.eigeneSchueler.Count;
+        AnzahlSchueler += k.Schueler.Count;
       }
     }
 
@@ -120,7 +120,7 @@ namespace diNo
       chkContainer = new List<KeyValuePair<string, NotenCheckContainer>>();
       chkCounter = new Dictionary<string, NotenCheckCounter>();
       HatFallMitPZ = false;
-      foreach (Schueler s in k.eigeneSchueler)
+      foreach (Schueler s in k.Schueler)
       {
         CheckSchueler(s);
         progressBar.Increment(1);

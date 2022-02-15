@@ -102,7 +102,7 @@ namespace diNo
       Zugriff.Instance.Refresh(chkNurAktive.Checked);
       this.treeListView1.Roots = Zugriff.Instance.Klassen;
       this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
-      this.treeListView1.ChildrenGetter = delegate (object x) { return ((Klasse)x).eigeneSchueler; };
+      this.treeListView1.ChildrenGetter = delegate (object x) { return ((Klasse)x).Schueler; };
       /*
       nameLabel.Text = "";
       klasseLabel.Text = "";
@@ -193,7 +193,7 @@ namespace diNo
       {
         foreach (Klasse k in obj)
         {
-          foreach (Schueler s in k.eigeneSchueler)
+          foreach (Schueler s in k.Schueler)
           {
             res.Add(s);
           }

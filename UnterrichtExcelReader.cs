@@ -154,7 +154,7 @@ namespace diNo
       // nochmal alle Klasse mit ihren Schülern durchgehen: Die Kurse werden nun zugewiesen.
       foreach (Klasse k in Zugriff.Instance.Klassen)
       {
-        foreach (Schueler s in k.eigeneSchueler)
+        foreach (Schueler s in k.Schueler)
           s.WechsleKlasse(k);
       }
     }

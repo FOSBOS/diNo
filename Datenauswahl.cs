@@ -21,7 +21,7 @@ namespace diNo
       var erg = Zugriff.Instance.markierteSchueler;
       erg.Clear();
       foreach (var k in Zugriff.Instance.Klassen)
-        foreach (var s in k.eigeneSchueler)
+        foreach (var s in k.Schueler)
         {
           if (s.hatVorkommnis((Vorkommnisart)cbVorkommnisArt.SelectedValue))
             erg.Add(s.Id, s);
