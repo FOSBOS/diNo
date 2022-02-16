@@ -13,16 +13,18 @@ using System.Net.Mail;
 namespace diNo
 {
   public class MailTools
-  {     
+  {
+    public string Betreff = "Aktuelle Notenübersicht";
+    Bericht rptTyp = Bericht.Notenmitteilung;  // Bericht.Einbringung; // ggf. ändern
+    public string Pfad = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien); // @"C:\tmp\"; // Pfad, in dem die temporären Dateien abgelegt werden
+
     string smtp = Zugriff.Instance.getString(GlobaleStrings.SMTP);
     int port = int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port));
     string MailFrom = Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail);
     string MailPwd = Zugriff.Instance.getString(GlobaleStrings.MailPasswort);
     MailKit.Net.Smtp.SmtpClient mailServer;
     public string InfoFile; // Datei inkl. Pfad mit dem Mailtext
-    public string Pfad = @"C:\tmp\"; // Pfad, in dem die temporären Dateien abgelegt werden
     string BodyText;
-    Bericht rptTyp = Bericht.Abiergebnisse; // ggf. ändern
     string MailTo;
     string MailToVorname;
     string MailToNachname;
@@ -40,7 +42,8 @@ namespace diNo
         MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
         return;
       }
-                
+
+      InfoFile = Pfad + "Mail.txt";
       if (File.Exists(InfoFile))
       {
         BodyText = File.ReadAllText(InfoFile);
@@ -69,13 +72,21 @@ namespace diNo
         Send(s, datei + ".zip");
       }
     }
-  
+    
     public void Send(Lehrer l, string datei)
     {
       MailTo = l.Data.EMail;
       MailToNachname = l.Name;
       MailToVorname = l.Data.Vorname;
-      Send(datei);
+      Send(new string[] { datei });
+    }
+
+    public void Send(Lehrer l, string[] dateien)
+    {
+      MailTo = l.Data.EMail;
+      MailToNachname = l.Name;
+      MailToVorname = l.Data.Vorname;
+      Send(dateien);
     }
 
     private void Send (Schueler s, string datei)
@@ -83,10 +94,10 @@ namespace diNo
       MailTo = Tools.ErsetzeUmlaute(s.benutzterVorname + "." + s.Name + "@fosbos-kempten.de");
       MailToNachname = s.Name;
       MailToVorname = s.benutzterVorname;
-      Send(datei);
+      Send(new string[] { datei });
     }
 
-    private void Send(string datei)
+    private void Send(string[] dateien)
     {
       // Test
       MailTo = "claus.konrad@fosbos-kempten.de";
@@ -98,7 +109,7 @@ namespace diNo
           var msg = new MimeKit.MimeMessage()
           {
             Sender = new MimeKit.MailboxAddress("Digitale Notenverwaltung", MailFrom),
-            Subject = (rptTyp == Bericht.Einbringung) ? "Einbringungsvorschlag" : "Aktuelle Notenübersicht"
+            Subject = Betreff
           };
 
           msg.From.Add(new MimeKit.MailboxAddress("Digitale Notenverwaltung", MailFrom));
@@ -106,7 +117,8 @@ namespace diNo
 
           var builder = new MimeKit.BodyBuilder();
           builder.TextBody = "Hallo " + MailToVorname + "," + BodyText;
-          builder.Attachments.Add(datei);
+          foreach (var d in dateien)
+            builder.Attachments.Add(d);
           msg.Body = builder.ToMessageBody();
 
           //mailServer.Timeout = 1000;

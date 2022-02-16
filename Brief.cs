@@ -192,7 +192,8 @@ namespace diNo
       Name = s.Name;
       VornameName = s.VornameName;
       Klasse = s.getKlasse.Bezeichnung;
-      OrtDatum = Zugriff.Instance.getString(GlobaleStrings.SchulOrt) + ", den " + DateTime.Today.ToString("dd.MM.yyyy");
+      DateTime dat = (typ == BriefTyp.Gefaehrdung ? Zugriff.Instance.Zeugnisdatum : DateTime.Today);
+      OrtDatum = Zugriff.Instance.getString(GlobaleStrings.SchulOrt) + ", den " + dat.ToString("dd.MM.yyyy");
 
       if (UnterschriftKL)
       {

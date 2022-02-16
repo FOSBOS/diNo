@@ -1,6 +1,7 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace diNo
@@ -148,8 +149,31 @@ namespace diNo
     private void btnSendMail_Click(object sender, EventArgs e)
     {
       Cursor = Cursors.WaitCursor;
-      new SendExcelMails(this.onStatusChange);
-      Cursor = Cursors.Default;
+      try
+      {
+        var snd = new MailTools();
+        snd.Betreff = "Notendateien";
+        List<Lehrer> lehrer = Zugriff.Instance.LehrerRep.getList();
+        foreach (Lehrer l in lehrer)
+        {
+          onStatusChange(this, new StatusChangedEventArgs() { Meldung = "Versende " + l.Kuerzel });
+          string directoryName = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + l.Kuerzel;
+          try
+          {
+            string[] dateien = Directory.GetFiles(directoryName);
+            if (dateien.Length > 0)
+              snd.Send(l,dateien);
+          }
+          catch
+          {
+            ;// Lehrer unterrichtet nicht.
+          }
+        }
+      }
+      finally
+      {
+        Cursor = Cursors.Default;
+      }
     }
 
     void onStatusChange(Object sender, StatusChangedEventArgs e)

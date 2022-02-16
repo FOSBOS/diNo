@@ -224,7 +224,8 @@ namespace diNo
         NotenZeugnisDruck f = new NotenZeugnisDruck(schueler.FPANoten);
         liste.Add(f);
       }
-      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
+      if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && 
+        rptName != Bericht.Gefaehrdung && rptName != Bericht.Bescheinigung && rptName != Bericht.Zwischenzeugnis) // kommt sonst sinnlos bei Gefährdungen und ZZ)
       {
         liste.Add(new NotenZeugnisDruck(schueler.Seminarfachnote));
       }
