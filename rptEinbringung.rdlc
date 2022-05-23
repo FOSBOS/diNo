@@ -258,7 +258,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Evtl. Einbringungsänderungen müssen der Oberstufenbetreuung am </Value>
+                              <Value>Evtl. Einbringungsänderungen müssen der Oberstufenbetreuung oder Schulleitung bis spätestens </Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
                               </Style>
@@ -270,7 +270,7 @@
                               </Style>
                             </TextRun>
                             <TextRun>
-                              <Value> zwischen 9 und 12 Uhr persönlich mitgeteilt werden.</Value>
+                              <Value> 10 Uhr persönlich mitgeteilt werden.</Value>
                               <Style>
                                 <FontSize>12pt</FontSize>
                               </Style>
