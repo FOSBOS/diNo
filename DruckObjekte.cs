@@ -89,7 +89,9 @@ namespace diNo
       }
       else if (b == Bericht.Einbringung)
       {
-        Bemerkung = Zugriff.Instance.Zeugnisdatum.ToString("dddd, dd.MM.yyyy"); // Abgabedatum von Einbringungsänderungen
+        Bemerkung = (Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87435" ? "dem Oberstufenbetreuer oder " :"")
+          + "der Schulleitung bis spätestens " +
+          Zugriff.Instance.Zeugnisdatum.ToString("dddd, dd.MM.yyyy"); // Abgabedatum von Einbringungsänderungen
       }
     }
 
@@ -316,6 +318,20 @@ namespace diNo
         Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") 
           + " war vom Unterricht im Fach Sport " + (ganzBefreit ? "" : "teilweise ") + "befreit.";
       }
+      else
+      {
+        var sport = s.getNoten.FindeSportnote();
+        bool keinHj1 = sport.getHjLeistung(HjArt.Hj1) == null || sport.getHjLeistung(HjArt.Hj1).Status == HjStatus.Ungueltig;
+        bool keinHj2 = sport.getHjLeistung(HjArt.Hj2) == null || sport.getHjLeistung(HjArt.Hj2).Status == HjStatus.Ungueltig;
+        if (keinHj1 || keinHj2)
+        {
+          Bemerkung += "<br>Der Unterricht im Fach Sport konnte ";
+          if (!keinHj1) Bemerkung += "im 2. Halbjahr ";
+          if (!keinHj2) Bemerkung += "im 1. Halbjahr ";
+          Bemerkung += "nicht erteilt werden.";
+        }
+      }
+
 
       if (Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87435")
       {

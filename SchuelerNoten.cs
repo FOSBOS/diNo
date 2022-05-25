@@ -1,4 +1,5 @@
 ﻿using diNo.diNoDataSetTableAdapters;
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace diNo
     public List<HjLeistung> Fachreferat = new List<HjLeistung>(); // sollte i.d.R. nur einelementig sein, aber wegen irrtümlicher Doppelvergabe
     public FachSchuelerNoten ZweiteFSalt = null;  // Verweis auf die beiden HjLeistungen in der 2. Fremdsprache (kann auch Kurs aus der 12. enthalten oder 13., die wiederholt wurde)
     public HjLeistung AlternatZweiteFS = null; // Verweis auf die schlechtere Leistung in der 2. Fremdsprache in der 13. Klasse (nur befüllt bei aktuellem Kurs in 13)
-    public HjLeistung AlternatEinbr = null;    // Verweis auf eine alternativ einzubringende HjLeistung (fachgeb. HSR)
+    public HjLeistung AlternatEinbr = null;    // Verweis auf eine alternativ einzubringende HjLeistung (fachgeb. HSR)    
 
     public SchuelerNoten(Schueler s)
     {
@@ -477,7 +478,7 @@ namespace diNo
       get;
       private set;
     }
-
+    //private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
     // das Array wird über das Halbjahr und den Notentyp indiziert, 
     // jedes Arrayelement enthält eine Liste mit Noten dieses Typs.
@@ -615,6 +616,7 @@ namespace diNo
         }
         fs.anz += faktor;
         fs.sum += hj.Punkte * faktor;
+        // log.Debug("Jahr=" + (vorJahr?"11":"12") + "Art=" + a + " P=" + hj.Punkte);
       }
     }
 
@@ -645,6 +647,7 @@ namespace diNo
       if (gesErg == null) gesErg = new HjLeistung(schueler.Id, fach, HjArt.GesErg, schueler.getKlasse.Jahrgangsstufe);
 
       // 4 mögliche Halbjahre:
+      // log.Debug("Fach " + fach.Kuerzel);
       fs = SummeHalbjahre(fach.NichtNC); // Nicht-NC-Fächer ausrechnen, aber nicht verbuchen
 
       // Verbuchen auf die richtige Gesamt-Punktesumme (über alle Fächer)
