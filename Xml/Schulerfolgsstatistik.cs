@@ -36,10 +36,8 @@ namespace diNo.Xml
       {
         Dictionary<Zweig, klasse> xmlKlassen = new Dictionary<Zweig, klasse>();
         Dictionary<Zweig, List<schueler>> schuelerDict = new Dictionary<Zweig, List<schueler>>();
-        foreach (var s in k.getSchueler)
-        {
-          Schueler schueler = new Schueler(s);
-
+        foreach (var schueler in k.Schueler)
+        {          
           if (!SchuelerMussInStatistik(schueler))
             continue;
 
@@ -89,20 +87,18 @@ namespace diNo.Xml
           }
         }
 
-        foreach (diNoDataSet.SchuelerRow s in k.getSchueler)
+        foreach (Schueler s in k.Schueler)
         {
-          Schueler unserSchueler = new Schueler(s);
-
-          if (SchuelerMussInStatistik(unserSchueler))
+          if (SchuelerMussInStatistik(s))
           {
             schueler xmlSchueler = new schueler
             {
-              nummer = unserSchueler.Id.ToString(),
+              nummer = s.Id.ToString(),
               grunddaten = new grunddaten()
             };
 
-            schuelerDict[unserSchueler.Zweig].Add(xmlSchueler);
-            FuelleGrunddaten(unserSchueler, xmlSchueler);
+            schuelerDict[s.Zweig].Add(xmlSchueler);
+            FuelleGrunddaten(s, xmlSchueler);
           }
         }
 

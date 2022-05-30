@@ -14,17 +14,27 @@ namespace diNo.Xml
   public class MBStatistik
   {
     private const string DatenVersion = "abschlusspruefung_1.5";
-    
+
+    public struct SchulartZweig
+    {
+      public SchulartZweig(string s, Zweig z)
+      {       
+        S = s;
+        Z = z;
+      }
+
+      public string S { get; }
+      public Zweig Z { get; }
+
+      public override string ToString() => $"({S}, {Z})";
+    }
+
     public static void Serialize(String fileName)
     {
       abschlusspruefungsstatistik ap = new abschlusspruefungsstatistik();
 
-      int hoechsteKlassenId = 0;
-      foreach (Klasse k in Zugriff.Instance.Klassen)
-      {
-        hoechsteKlassenId = k.GetId() > hoechsteKlassenId ? k.GetId() : hoechsteKlassenId;
-      }
-
+      int KlassenId = 0;
+      
       // hier wird die Abschlusspruefungsstatistik zusammengebaut
       schule fos = new schule() { art = schuleArt.FOS, nummer = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) };
       schule bos = new schule() { art = schuleArt.BOS, nummer = Zugriff.Instance.getString(GlobaleStrings.SchulnummerBOS) };
@@ -38,110 +48,95 @@ namespace diNo.Xml
       foreach (Klasse k in Zugriff.Instance.Klassen)
       {
         if (k.Jahrgangsstufe != Jahrgangsstufe.Zwoelf && k.Jahrgangsstufe != Jahrgangsstufe.Dreizehn)
-        {
           continue; // in MB-Statistik nur 12te und 13te Klassen
-        }
 
-        Dictionary<Zweig, klasse> xmlKlassen = new Dictionary<Zweig, klasse>();
-        Dictionary<Zweig, List<schueler>> schuelerDict = new Dictionary<Zweig, List<schueler>>();
-        foreach (var s in k.getSchueler)
+        // verwaltet alle Teilklasse je nach Schulart und Zweig in Klasse k
+        Dictionary<SchulartZweig, klasse> xmlKlassen = new Dictionary<SchulartZweig, klasse>(); // Key = Schulart + Zweig 
+        // Liste aller Schüler in dieser Teilklasse
+        Dictionary<SchulartZweig, List<schueler>> xmlSchuelerliste = new Dictionary<SchulartZweig, List<schueler>>();
+        klasse xmlKlasse;
+        
+        foreach (var schueler in k.Schueler)
         {
-          Schueler schueler = new Schueler(s);
-          if (!xmlKlassen.ContainsKey(schueler.Zweig))
+          // nur Schüler in MB-Statistik, die die Prüfung vollständig abgelegt haben
+          if (schueler.Status == Schuelerstatus.Abgemeldet || schueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen) || schueler.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
+            continue;
+          
+          SchulartZweig sz = new SchulartZweig(schueler.Data.Schulart, schueler.Zweig);
+          if (!xmlKlassen.TryGetValue(sz, out xmlKlasse))
           {
-            //die erste Teilklasse erhält einfach die Id der Klasse. Nur bei Mischklassen künstliche Ids.
-            int id = k.GetId();
-            if (xmlKlassen.Count > 0)
+            KlassenId++;
+            xmlKlasse = CreateXMLKlasse(KlassenId, schueler.Zweig);
+            xmlKlassen.Add(sz, xmlKlasse);
+            xmlSchuelerliste.Add(sz, new List<schueler>());
+            Jahrgangsstufe jg = k.Jahrgangsstufe;
+            if (schueler.Data.Schulart == "F")
             {
-              hoechsteKlassenId++;
-              id = hoechsteKlassenId;
+              if (jg == Jahrgangsstufe.Zwoelf)              
+                fosKlassen12.Add(xmlKlasse);
+              else if (jg == Jahrgangsstufe.Dreizehn)
+                fosKlassen13.Add(xmlKlasse);
             }
-
-            xmlKlassen.Add(schueler.Zweig, CreateXMLKlasse(id, schueler.Zweig));
-            schuelerDict.Add(schueler.Zweig, new List<schueler>());
-          }
-        }
-
-        if (k.Schulart == Schulart.FOS)
-        {
-          if (k.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
-          {
-            fosKlassen12.AddRange(xmlKlassen.Values);
-          }
-          else if (k.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
-          {
-            fosKlassen13.AddRange(xmlKlassen.Values);
-          }
-        }
-        else if (k.Schulart == Schulart.BOS)
-        {
-          if (k.Jahrgangsstufe == Jahrgangsstufe.Zwoelf)
-          {
-            bosKlassen12.AddRange(xmlKlassen.Values);
-          }
-          else if (k.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
-          {
-            bosKlassen13.AddRange(xmlKlassen.Values);
-          }
-        }
-
-        foreach (diNoDataSet.SchuelerRow s in k.getSchueler)
-        {
-          Schueler unserSchueler = new Schueler(s);
-
-          if (unserSchueler.Status == Schuelerstatus.Aktiv && !unserSchueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen) && !unserSchueler.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
-          {
-            // nur Schüler in MB-Statistik, die die Prüfung vollständig abgelegt haben
-
-            schueler xmlSchueler = new schueler
+            else if (schueler.Data.Schulart == "B")
             {
-              nummer = unserSchueler.Id.ToString(),
-              grunddaten = new grunddaten()
-            };
-
-            schuelerDict[unserSchueler.Zweig].Add(xmlSchueler);
-            FuelleGrunddaten(unserSchueler, xmlSchueler);
-
-            if (unserSchueler.Fachreferat != null && unserSchueler.Fachreferat.Count > 0)
-            {
-              var f = unserSchueler.Fachreferat[0].getFach.PlatzInMBStatistik.Split(':');
-              xmlSchueler.fachreferat = new fachreferat() { fach = f[f.Length-1], punkte = unserSchueler.Fachreferat[0].Punkte.ToString() };
+              if (jg == Jahrgangsstufe.Zwoelf)
+                bosKlassen12.Add(xmlKlasse);
+              else if (jg == Jahrgangsstufe.Dreizehn)
+                bosKlassen13.Add(xmlKlasse);
             }
-            if (unserSchueler.Seminarfachnote != null && !unserSchueler.Seminarfachnote.IsGesamtnoteNull())
+          }
+        
+          
+          schueler xmlSchueler = new schueler
+          {
+            nummer = schueler.Id.ToString(),
+            grunddaten = new grunddaten()
+          };
+
+          List<schueler> szList = xmlSchuelerliste[sz];  // da sollte keine Exception kommen, weil xmlKlassen und xmlSchuelerlist gemeinsam gefüllt werden
+          szList.Add(xmlSchueler); // ordne den Schüler der passenden Klasse (nach Schulart + Zweig) zu
+
+          FuelleGrunddaten(schueler, xmlSchueler);
+
+          if (schueler.Fachreferat != null && schueler.Fachreferat.Count > 0)
+          {
+            var f = schueler.Fachreferat[0].getFach.PlatzInMBStatistik.Split(':');
+            xmlSchueler.fachreferat = new fachreferat() { fach = f[f.Length-1], punkte = schueler.Fachreferat[0].Punkte.ToString() };
+          }
+          if (schueler.Seminarfachnote != null && !schueler.Seminarfachnote.IsGesamtnoteNull())
+          {
+            xmlSchueler.seminar = new seminar() { punkte = schueler.Seminarfachnote.Gesamtnote.ToString() };
+          }
+          xmlSchueler.zweite_fremdsprache = getSprache(schueler);
+
+          FuelleAPGrunddaten(schueler, xmlSchueler);
+
+          halbjahresergebnisse hjErg = new halbjahresergebnisse();
+          xmlSchueler.Item = hjErg;
+          FuelleFpA(schueler, hjErg);
+
+          hjErg.allgemeinbildende_faecher = new allgemeinbildende_faecher();
+          hjErg.profilfaecher = new profilfaecher();
+          hjErg.wahlpflichtfaecher = new wahlpflichtfaecher();
+
+          foreach (var fach in schueler.getNoten.alleFaecher)
+          {
+            if (fach.getFach.PlatzInMBStatistik == "sport" && schueler.hatVorkommnis(Vorkommnisart.Sportbefreiung))
+              continue;
+
+            FuelleAPWennVorhanden(schueler, xmlSchueler, fach);
+            var xmlFachObject = SucheRichtigenXMLKnoten(hjErg, fach);
+            if (xmlFachObject != null)
             {
-              xmlSchueler.seminar = new seminar() { punkte = unserSchueler.Seminarfachnote.Gesamtnote.ToString() };
-            }
-            xmlSchueler.zweite_fremdsprache = getSprache(unserSchueler);
-
-            FuelleAPGrunddaten(unserSchueler, xmlSchueler);
-
-            halbjahresergebnisse hjErg = new halbjahresergebnisse();
-            xmlSchueler.Item = hjErg;
-            FuelleFpA(unserSchueler, hjErg);
-
-            hjErg.allgemeinbildende_faecher = new allgemeinbildende_faecher();
-            hjErg.profilfaecher = new profilfaecher();
-            hjErg.wahlpflichtfaecher = new wahlpflichtfaecher();
-
-            foreach (var fach in unserSchueler.getNoten.alleFaecher)
-            {
-              if (fach.getFach.PlatzInMBStatistik == "sport" && unserSchueler.hatVorkommnis(Vorkommnisart.Sportbefreiung))
-                continue;
-
-              FuelleAPWennVorhanden(unserSchueler, xmlSchueler, fach);
-              var xmlFachObject = SucheRichtigenXMLKnoten(hjErg, fach);
-              if (xmlFachObject != null)
-              {
-                FuelleHalbjahre(unserSchueler, fach, xmlFachObject);
-              }
+              FuelleHalbjahre(schueler, fach, xmlFachObject);
             }
           }
         }
-
+        
         foreach (var kvp in xmlKlassen)
         {
           // weise das Schueler-Array der richtigen xml-Klasse zu
-          kvp.Value.schueler = schuelerDict[kvp.Key].ToArray();
+          kvp.Value.schueler = xmlSchuelerliste[kvp.Key].ToArray();
         }
       }
 

@@ -89,7 +89,7 @@ namespace diNo
       }
       else if (b == Bericht.Einbringung)
       {
-        Bemerkung = (Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87435" ? "dem Oberstufenbetreuer oder " :"")
+        Bemerkung = (Zugriff.Instance.IsFBKempten ? "dem Oberstufenbetreuer oder " :"")
           + "der Schulleitung bis spätestens " +
           Zugriff.Instance.Zeugnisdatum.ToString("dddd, dd.MM.yyyy"); // Abgabedatum von Einbringungsänderungen
       }
@@ -306,7 +306,7 @@ namespace diNo
 
       if (!s.Data.IsZeugnisbemerkungNull())
         Bemerkung += "<br>" + s.Data.Zeugnisbemerkung;
-      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87435")
+      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && Zugriff.Instance.IsFBKempten)
         Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden."; // nicht in SF
       if (s.IsLegastheniker)
         Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
@@ -332,8 +332,7 @@ namespace diNo
         }
       }
 
-
-      if (Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87435")
+      if (Zugriff.Instance.IsFBKempten)
       {
         bool hatIPo = s.getNoten.FindeFach("IPo") != null;
         bool hatIBS = s.getNoten.FindeFach("IBS") != null;

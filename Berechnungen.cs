@@ -226,15 +226,16 @@ namespace diNo
         hjLeistung.SetStatus(HjStatus.NichtEinbringen);
     }
 
-    // Belegt das Feld Sortierung in HjL
+    // Belegt das Feld Sortierung in HjL (hjl sind einbringbare Hj eines Faches)
     private void HJLSortierung(List<HjLeistung> hjl)
-    {    
-      byte ge = (byte)Math.Round(hjl.Average((x)=> x.Punkte), MidpointRounding.AwayFromZero);
+    {
+      hjl.Sort((x,y) => y.Punkte.CompareTo(x.Punkte));
+      // ge wird berechnet, wenn die schlechteste gestrichen wird
+      byte ge = (byte)Math.Round(hjl.GetRange(0,hjl.Count-1).Average((x)=> x.Punkte), MidpointRounding.AwayFromZero);
       
       foreach (var hj in hjl)
-      {
-        // ge wurde berechnet, wenn alle eingebracht werden - kann bei Streichung also nur besser werden:
-        hj.Sortierung = hj.Punkte * 15 - ge; // Punkte zählen immer mehr als das GE!
+      {        
+        hj.Sortierung = hj.Punkte * 16 - ge; // Punkte zählen immer mehr als das GE!
       }      
     }
 

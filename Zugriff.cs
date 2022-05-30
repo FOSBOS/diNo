@@ -38,6 +38,7 @@ namespace diNo
     public LesemodusExcel Lesemodus { get { return (LesemodusExcel)globaleKonstanten.LeseModusExcel; } }
     public bool SiehtAlles { get; private set; }
     public bool HatVerwaltungsrechte { get; private set; }
+    public bool IsFBKempten = false;
     public bool IsTestDB { get; private set; }
 
     private Zugriff()
@@ -89,6 +90,7 @@ namespace diNo
         LoadLehrer();
         log.Debug("Lehrer geladen.");
         LoadGlobaleKonstanten();
+        IsFBKempten = getString(GlobaleStrings.SchulPLZ) == "87435";
         log.Debug("Globales geladen.");
       }
       catch (Exception e)
