@@ -243,12 +243,12 @@ namespace diNo
       {
         BestandenText = "hat die " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " bestanden. Der Prüfungsausschuss hat ";
         BestandenText += (s.Data.Geschlecht == "M" ? "ihm" : "ihr") + " die";
-
+        
         if (jg == 12) ZeugnisArt = "Fachhochschulreife";
         else if (s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife)) ZeugnisArt = "allgemeine Hochschulreife";
         else ZeugnisArt = "fachgebundene Hochschulreife";
         IstJahreszeugnis = SprachniveauDruck.HatFremdsprachen(s); // verbogen für "---" im Fremdsprachenblock des Abizeugnisses, falls keine Sprachen da sind
-        if (s.getNoten.AlternatZweiteFS != null)
+        if (s.getNoten.AlternatZweiteFS != null && !s.Data.IsDNoteFachgebHSRNull() && s.Data.DNoteFachgebHSR < s.Data.DNote)
           AlternatZweiteFS = "Für die fachgebundene Hochschulreife wird anstelle des Halbjahresergebnisses 13/" +
             (s.getNoten.AlternatZweiteFS.Art == HjArt.Hj1 ? 1 : 2) + " in " + s.getNoten.AlternatZweiteFS.getFach.BezZeugnis +
             " das Halbjahresergebnis 13/" +
@@ -321,14 +321,17 @@ namespace diNo
       else
       {
         var sport = s.getNoten.FindeSportnote();
-        bool keinHj1 = sport.getHjLeistung(HjArt.Hj1) == null || sport.getHjLeistung(HjArt.Hj1).Status == HjStatus.Ungueltig;
-        bool keinHj2 = sport.getHjLeistung(HjArt.Hj2) == null || sport.getHjLeistung(HjArt.Hj2).Status == HjStatus.Ungueltig;
-        if (keinHj1 || keinHj2)
+        if (sport != null)
         {
-          Bemerkung += "<br>Der Unterricht im Fach Sport konnte ";
-          if (!keinHj1) Bemerkung += "im 2. Halbjahr ";
-          if (!keinHj2) Bemerkung += "im 1. Halbjahr ";
-          Bemerkung += "nicht erteilt werden.";
+          bool keinHj1 = sport.getHjLeistung(HjArt.Hj1) == null || sport.getHjLeistung(HjArt.Hj1).Status == HjStatus.Ungueltig;
+          bool keinHj2 = sport.getHjLeistung(HjArt.Hj2) == null || sport.getHjLeistung(HjArt.Hj2).Status == HjStatus.Ungueltig;
+          if (keinHj1 || keinHj2)
+          {
+            Bemerkung += "<br>Der Unterricht im Fach Sport konnte ";
+            if (!keinHj1) Bemerkung += "im 2. Halbjahr ";
+            if (!keinHj2) Bemerkung += "im 1. Halbjahr ";
+            Bemerkung += "nicht erteilt werden.";
+          }
         }
       }
 
