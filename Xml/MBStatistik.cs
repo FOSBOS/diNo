@@ -357,7 +357,7 @@ namespace diNo.Xml
 
     private static void FuelleGrunddaten(Schueler unserSchueler, schueler xmlSchueler)
     {
-      xmlSchueler.grunddaten.geschlecht = unserSchueler.Data.Geschlecht == "m" ? grunddatenGeschlecht.m : grunddatenGeschlecht.w;
+      xmlSchueler.grunddaten.geschlecht = unserSchueler.Data.Geschlecht.ToUpper() == "M" ? grunddatenGeschlecht.m : grunddatenGeschlecht.w;
       if (!unserSchueler.Data.IsEintrittAusSchulnummerNull())
       {
         xmlSchueler.grunddaten.herkunftsschule =  unserSchueler.Data.EintrittAusSchulnummer.ToString();
@@ -529,7 +529,7 @@ namespace diNo.Xml
           case (int)ZweiteFSArt.ErgPr: result.art = zweite_fremdspracheArt.EP; break;
         }
 
-        if (!schueler.Data.IsAndereFremdspr2FachNull())
+        if (!schueler.Data.IsAndereFremdspr2FachNull() && !schueler.Data.IsAndereFremdspr2NoteNull())
         {
           // dies dürfte der Fall sein bei Ersatzprüfungen oder Noten aus der vorigen Schule
           Fach sprachfach = new Fach(schueler.Data.AndereFremdspr2Fach);
@@ -553,8 +553,8 @@ namespace diNo.Xml
             // Schüler muss dieses Jahr Französisch bei uns gehabt haben
             var zweitsprachen = new List<FachSchuelerNoten> (schueler.getNoten.alleSprachen);
             zweitsprachen.RemoveAll(x => x.getFach.Kuerzel == "E");
-            if (zweitsprachen.Count != 1)
-              throw new InvalidOperationException("Schüler hat mehr als 1 Zweitsprache.");
+            //if (zweitsprachen.Count != 1)
+            //  throw new InvalidOperationException("Schüler hat mehr als 1 Zweitsprache.");
             result.sprache = GetSprache(zweitsprachen[0].getFach);
             unterricht.halbjahr1 = zweitsprachen[0].getHjLeistung(HjArt.Hj1).Punkte.ToString();
             unterricht.halbjahr2 = zweitsprachen[0].getHjLeistung(HjArt.Hj2).Punkte.ToString();

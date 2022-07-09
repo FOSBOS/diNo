@@ -3,6 +3,4 @@
 
 - Statistiken ?
 
-- MBStatistik: trennen FOS und BOS bei Mischklassen; -1 eintragen bei fehlender Note
-
 
