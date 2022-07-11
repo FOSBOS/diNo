@@ -54,6 +54,8 @@ namespace diNo
           if (jg > Jahrgangsstufe.Elf)
             foreach (var fachNoten in schueler.getNoten.alleSprachen)
             {
+              if (fachNoten.getHjLeistung(HjArt.Sprachenniveau) == null)
+                continue; // wenn das Sprachniveau nicht erreicht wurde, auch keine Noten weiterreichen
               Kursniveau kn = fachNoten.getFach.getKursniveau();
               HjArt[] hjArten;
               if (kn == Kursniveau.Englisch || kn == Kursniveau.Anfaenger && jg == Jahrgangsstufe.Zwoelf)

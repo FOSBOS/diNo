@@ -63,6 +63,9 @@
       this.btnRefresh = new System.Windows.Forms.Button();
       this.lbTest = new System.Windows.Forms.Label();
       this.btnLNWabgeben = new System.Windows.Forms.Button();
+      this.edSuchen = new System.Windows.Forms.TextBox();
+      this.btnSuchen = new System.Windows.Forms.Button();
+      this.lbSuchen = new System.Windows.Forms.Label();
       this.tabControl1.SuspendLayout();
       this.tabPageStammdaten.SuspendLayout();
       this.tabPageNotenbogen.SuspendLayout();
@@ -299,11 +302,11 @@
             this.olvColumnBezeichnung});
       this.treeListView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.treeListView1.HideSelection = false;
-      this.treeListView1.Location = new System.Drawing.Point(12, 43);
+      this.treeListView1.Location = new System.Drawing.Point(12, 87);
       this.treeListView1.Name = "treeListView1";
       this.treeListView1.OwnerDraw = true;
       this.treeListView1.ShowGroups = false;
-      this.treeListView1.Size = new System.Drawing.Size(240, 586);
+      this.treeListView1.Size = new System.Drawing.Size(240, 529);
       this.treeListView1.TabIndex = 0;
       this.treeListView1.UseCompatibleStateImageBehavior = false;
       this.treeListView1.View = System.Windows.Forms.View.Details;
@@ -409,7 +412,7 @@
       this.chkNurAktive.AutoSize = true;
       this.chkNurAktive.Checked = true;
       this.chkNurAktive.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chkNurAktive.Location = new System.Drawing.Point(16, 20);
+      this.chkNurAktive.Location = new System.Drawing.Point(12, 64);
       this.chkNurAktive.Name = "chkNurAktive";
       this.chkNurAktive.Size = new System.Drawing.Size(185, 17);
       this.chkNurAktive.TabIndex = 40;
@@ -453,12 +456,43 @@
       this.btnLNWabgeben.UseVisualStyleBackColor = true;
       this.btnLNWabgeben.Click += new System.EventHandler(this.btnLNWabgeben_Click);
       // 
+      // edSuchen
+      // 
+      this.edSuchen.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.edSuchen.Location = new System.Drawing.Point(12, 30);
+      this.edSuchen.Name = "edSuchen";
+      this.edSuchen.Size = new System.Drawing.Size(194, 22);
+      this.edSuchen.TabIndex = 44;
+      // 
+      // btnSuchen
+      // 
+      this.btnSuchen.ImageKey = "424px-User-admin.png";
+      this.btnSuchen.ImageList = this.imageList1;
+      this.btnSuchen.Location = new System.Drawing.Point(211, 12);
+      this.btnSuchen.Name = "btnSuchen";
+      this.btnSuchen.Size = new System.Drawing.Size(41, 40);
+      this.btnSuchen.TabIndex = 45;
+      this.btnSuchen.UseVisualStyleBackColor = true;
+      this.btnSuchen.Click += new System.EventHandler(this.btnSuchen_Click);
+      // 
+      // lbSuchen
+      // 
+      this.lbSuchen.AutoSize = true;
+      this.lbSuchen.Location = new System.Drawing.Point(9, 14);
+      this.lbSuchen.Name = "lbSuchen";
+      this.lbSuchen.Size = new System.Drawing.Size(81, 13);
+      this.lbSuchen.TabIndex = 46;
+      this.lbSuchen.Text = "Schüler suchen";
+      // 
       // Klassenansicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
       this.ClientSize = new System.Drawing.Size(1185, 645);
+      this.Controls.Add(this.lbSuchen);
+      this.Controls.Add(this.btnSuchen);
+      this.Controls.Add(this.edSuchen);
       this.Controls.Add(this.btnLNWabgeben);
       this.Controls.Add(this.lbTest);
       this.Controls.Add(this.btnRefresh);
@@ -530,5 +564,8 @@
     private UserControlSekretariat userControlSekretariat1;
     private System.Windows.Forms.Label lbTest;
     private System.Windows.Forms.Button btnLNWabgeben;
+    private System.Windows.Forms.TextBox edSuchen;
+    private System.Windows.Forms.Button btnSuchen;
+    private System.Windows.Forms.Label lbSuchen;
   }
 }

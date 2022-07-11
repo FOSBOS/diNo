@@ -13,6 +13,8 @@ namespace diNo
     private SchuelerverwaltungController verwaltungController;
     private Brief frmBrief = null;
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    private List<Schueler> SuchListe;
+    private int SuchIndex=-1;
 
     public Klassenansicht()
     {
@@ -35,6 +37,9 @@ namespace diNo
         tabControl1.Controls.Remove(tabPageAdministration);
         tabControl1.Controls.Remove(tabPageSekretariat);
       }
+      edSuchen.Visible = Zugriff.Instance.SiehtAlles;
+      btnSuchen.Visible = Zugriff.Instance.SiehtAlles;
+      lbSuchen.Visible = Zugriff.Instance.SiehtAlles;
 
       lbTest.Visible = Zugriff.Instance.IsTestDB;
       log.Debug("Klassenansicht fertig.");
@@ -250,6 +255,34 @@ namespace diNo
     private void btnLNWabgeben_Click(object sender, EventArgs e)
     {
       new CopyLNW();
+    }
+
+    private void btnSuchen_Click(object sender, EventArgs e)
+    {
+      // klappt leider nicht direkt, weil nur geöffnete Klassen durchsucht werden
+      // ListViewItem s = treeListView1.FindItemWithText(edSuchen.Text,true,0,true);
+      string cmp = edSuchen.Text;
+      int c = 0;      
+      if (SuchListe == null)  SuchListe = Zugriff.Instance.SchuelerRep.getList();
+      int max = SuchListe.Count;
+      lbSuchen.ForeColor = Color.Black;
+
+      do
+      {
+        SuchIndex++;
+        if (SuchIndex == max) SuchIndex = 0; // wieder von vorn anfangen
+        c++; // Endlosschleife verhindern
+
+        if (SuchListe[SuchIndex].Name.StartsWith(cmp, StringComparison.OrdinalIgnoreCase))
+        {
+          schueler = SuchListe[SuchIndex];
+          SetSchueler();
+          break;
+        }
+      }
+      while (c < max);
+      if (c==max)
+        lbSuchen.ForeColor = Color.Red;
     }
   }
 }

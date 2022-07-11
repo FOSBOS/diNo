@@ -364,7 +364,7 @@ namespace diNo
         if (s.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen))
           Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " wurde nach § 31 Abs. 2 FOBOSO nicht zur Prüfung zugelassen. ";
         else //if (s.Status == Schuelerstatus.Aktiv) // abgebrochen. bzw BOS12 nicht angetreten
-          Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " hat sich der Fachabiturprüfung ohne Erfolg unterzogen. ";
+          Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " hat sich der " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " ohne Erfolg unterzogen. ";
 
         Bemerkung += s.getErSie(true) + " darf die Prüfung gemäß Art. 54 Abs. 5 Satz 1 BayEUG " + (s.hatVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen) ? "nicht mehr" : "noch einmal") + " wiederholen.";
       }
@@ -963,7 +963,7 @@ namespace diNo
       List<ZusZweiteFSDruck> list = new List<ZusZweiteFSDruck>();
       if (s.getZweiteFSArt() == ZweiteFSArt.ErgPr && !s.Data.IsAndereFremdspr2NoteNull())
         list.Add(new ZusZweiteFSDruck(s.Data.AndereFremdspr2Fach, s.Data.AndereFremdspr2Note));
-      else if (s.getNoten.ZweiteFSalt != null)
+      else if (s.getNoten.ZweiteFSalt != null && s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
         list.Add(new ZusZweiteFSDruck(s.getNoten.ZweiteFSalt));
 
       return list;
