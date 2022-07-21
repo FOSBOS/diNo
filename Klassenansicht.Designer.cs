@@ -88,9 +88,10 @@
       this.imageList1.Images.SetKeyName(3, "print.png");
       this.imageList1.Images.SetKeyName(4, "Save.png");
       this.imageList1.Images.SetKeyName(5, "Excel.png");
-      this.imageList1.Images.SetKeyName(6, "424px-User-admin.png");
+      this.imageList1.Images.SetKeyName(6, "Admin.png");
       this.imageList1.Images.SetKeyName(7, "Refresh.png");
       this.imageList1.Images.SetKeyName(8, "Ablage.png");
+      this.imageList1.Images.SetKeyName(9, "lupe.jpg");
       // 
       // tabControl1
       // 
@@ -466,9 +467,9 @@
       // 
       // btnSuchen
       // 
-      this.btnSuchen.ImageKey = "424px-User-admin.png";
+      this.btnSuchen.ImageKey = "lupe.jpg";
       this.btnSuchen.ImageList = this.imageList1;
-      this.btnSuchen.Location = new System.Drawing.Point(211, 12);
+      this.btnSuchen.Location = new System.Drawing.Point(211, 14);
       this.btnSuchen.Name = "btnSuchen";
       this.btnSuchen.Size = new System.Drawing.Size(41, 40);
       this.btnSuchen.TabIndex = 45;

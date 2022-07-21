@@ -332,7 +332,7 @@ namespace diNo
       if (AnzahlFaecher > 0)
       {
         Punkteschnitt = Math.Round((double)Punktesumme / AnzahlFaecher, 2, MidpointRounding.AwayFromZero);
-        if (Unterpunktungen != "" && !(zeitpunkt == Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse))
+        if (Unterpunktungen != "" && zeitpunkt!=Zeitpunkt.ErstePA && !(zeitpunkt == Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse))
         {
           Unterpunktungen += " Schnitt: " + String.Format("{0:0.00}", Punkteschnitt);
           if (zeitpunkt == Zeitpunkt.ZweitePA || zeitpunkt == Zeitpunkt.DrittePA)
