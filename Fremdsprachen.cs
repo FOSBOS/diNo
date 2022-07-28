@@ -15,7 +15,7 @@
       }
     }
 
-    public static Sprachniveau GetSprachniveau(Kursniveau k, Jahrgangsstufe jg)
+    public static Sprachniveau GetSprachniveau(Kursniveau k, Jahrgangsstufe jg, HjLeistung bisherigesNiveau)
     {
       if (jg != Jahrgangsstufe.Dreizehn)
         switch (k)
@@ -30,7 +30,9 @@
         switch (k)
         {
           case Kursniveau.Anfaenger: return Sprachniveau.B1;
-          case Kursniveau.Fortg: return Sprachniveau.B1p;
+          // B1+ gibt es bei fortgeführtem Kurs nur, wenn er auch in der 12. belegt wurde
+          case Kursniveau.Fortg: return (bisherigesNiveau!=null && bisherigesNiveau.Punkte == (byte)Sprachniveau.B1 && bisherigesNiveau.JgStufe==Jahrgangsstufe.Zwoelf)
+            ? Sprachniveau.B1p : Sprachniveau.B1;
           case Kursniveau.FortgIW: return Sprachniveau.B2;
           case Kursniveau.Englisch: return Sprachniveau.B2p;
           default: return Sprachniveau.None;

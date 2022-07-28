@@ -357,7 +357,7 @@ namespace diNo
 
         // Spachniveau anlegen oder aktualisieren
         HjLeistung niveau = f.getHjLeistung(HjArt.Sprachenniveau);
-        HjLeistung.CreateOrUpdateSprachniveau(niveau, s.Id, f.getFach, s.getKlasse.Jahrgangsstufe, Fremdsprachen.GetSprachniveau(f.getFach.getKursniveau(), s.getKlasse.Jahrgangsstufe));
+        HjLeistung.CreateOrUpdateSprachniveau(niveau, s.Id, f.getFach, s.getKlasse.Jahrgangsstufe, Fremdsprachen.GetSprachniveau(f.getFach.getKursniveau(), s.getKlasse.Jahrgangsstufe, niveau));
       }
 
       if (s.getZweiteFSArt() == ZweiteFSArt.ErgPr) // mitgebrachte Noten werden nicht ausgewiesen

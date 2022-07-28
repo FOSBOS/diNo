@@ -126,7 +126,10 @@ namespace diNo
     public static void CreateOrUpdateSprachniveau(HjLeistung niveau, int sid, Fach fach, Jahrgangsstufe jg, Sprachniveau sn)
     {
       if (niveau == null) niveau = new HjLeistung(sid, fach, HjArt.Sprachenniveau, jg);
-      else niveau.JgStufe = jg;
+      else if (niveau.Punkte > (byte)sn) // altes Niveau war schon höher (kann bei F-f passieren)
+        return;
+      else
+        niveau.JgStufe = jg;
 
       niveau.Punkte = (byte)sn;
       niveau.WriteToDB();
