@@ -270,7 +270,7 @@ namespace diNo
       do
       {
         SuchIndex++;
-        if (SuchIndex == max) SuchIndex = 0; // wieder von vorn anfangen
+        if (SuchIndex >= max) SuchIndex = 0; // wieder von vorn anfangen
         c++; // Endlosschleife verhindern
 
         if (SuchListe[SuchIndex].Name.StartsWith(cmp, StringComparison.OrdinalIgnoreCase))
@@ -281,7 +281,7 @@ namespace diNo
         }
       }
       while (c < max);
-      if (c==max)
+      if (c>=max)
         lbSuchen.ForeColor = Color.Red;
     }
   }

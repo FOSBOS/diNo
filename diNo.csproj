@@ -216,6 +216,7 @@
       <DependentUpon>GlobalesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="UserImpersonation.cs" />
     <Compile Include="Xml\abschlusspruefung_1_5.cs" />
     <Compile Include="Xml\MBStatistik.cs" />
@@ -584,6 +585,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Lupe.png" />
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="stegosaurus-304011__180 klein.ico" />
   </ItemGroup>
   <ItemGroup>
