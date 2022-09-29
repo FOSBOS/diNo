@@ -878,11 +878,9 @@ namespace diNo
     }
 
     public static string GetSchulname(int schulnummer)
-    {
-      // WinSV liefert 7777 für außerbay. Schule?
-      //bool b = schulnummer!=7777 && schulenInBayern.ContainsKey(schulnummer);
-      //return b ? schulenInBayern[schulnummer] : "";
-      return schulenInBayern[schulnummer];
+    {      
+      bool b = schulenInBayern.ContainsKey(schulnummer);
+      return b ? schulenInBayern[schulnummer] : "";      
     }
   }
 

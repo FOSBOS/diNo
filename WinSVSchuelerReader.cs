@@ -229,7 +229,7 @@ namespace diNo
         // AHR, FHR: Klassen des vergangenen Jahres
         // Abm: Abmeldungen
         // Ex, Import: ?
-        if (klasse.EndsWith("-N") || klasse.Contains("AHR") || klasse.Contains("FHR") || klasse.Contains("Abm") || klasse.Equals("Ex") || klasse.Equals("Import"))
+        if (klasse.EndsWith("-N") || klasse.Contains("Rest") || klasse.Contains("AHR") || klasse.Contains("FHR") || klasse.Contains("Abm") || klasse.Equals("Ex") || klasse.Equals("Import"))
         {
           return null;
         }
