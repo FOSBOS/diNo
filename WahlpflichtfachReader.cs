@@ -79,7 +79,7 @@ namespace diNo
             continue;
           }
 
-          string nameVorname = array[0].Trim(trimchar); // nur zur Kontrolle
+          string schuelerRef = array[0].Trim(trimchar);
           int kursId = 0;
           try
           {
@@ -87,18 +87,14 @@ namespace diNo
           }
           catch
           {
-            log.Warn("Kurs-ID " + array[1] + " bei Schüler " + nameVorname + " konnte nicht konvertiert werden.");
+            log.Warn("Kurs-ID " + array[1] + " bei Schüler " + schuelerRef + " konnte nicht konvertiert werden.");
             continue;
           }
 
-          // string kursKuerzel = array[2].Trim(trimchar); // Untis-Kursname. Der ist identisch zu diNo.
-          // was in array[3] steht weiß ich nicht - es scheint immer leer zu sein
-          // string klasse = array[4].Trim(trimchar); // nur zur Kontrolle
-          // was in array[5] steht weiß ich nicht - es scheint immer leer zu sein
           int schuelerId = 0;
           try
           {
-            schuelerId = int.Parse(array[6].Trim(trimchar));
+            schuelerId = int.Parse(schuelerRef);
           }
           catch
           {
@@ -111,11 +107,11 @@ namespace diNo
           {
             try
             {
-              schuelerId = anmeldenameZuID[nameVorname]; // wirft Exception wenn nicht vorhanden. Das ist gut so.
+              schuelerId = anmeldenameZuID[schuelerRef]; // wirft Exception wenn nicht vorhanden. Das ist gut so.
             }
             catch
             {
-              log.Error("Schüler " + nameVorname + " in der Zuordnungstabelle nicht gefunden.");
+              log.Error("Schüler " + schuelerRef + " in der Zuordnungstabelle nicht gefunden.");
               continue;
             }
           }
