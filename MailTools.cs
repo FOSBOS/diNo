@@ -100,7 +100,7 @@ namespace diNo
     private void Send(string[] dateien)
     {
       // Test
-      MailTo = "claus.konrad@fosbos-kempten.de";
+      // MailTo = "claus.konrad@fosbos-kempten.de";
 
       if (!string.IsNullOrEmpty(MailTo))
       {

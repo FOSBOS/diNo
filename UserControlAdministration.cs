@@ -153,7 +153,12 @@ namespace diNo
       {
         var snd = new MailTools();
         snd.Betreff = "Notendateien";
+        // Produktiv:
         List<Lehrer> lehrer = Zugriff.Instance.LehrerRep.getList();
+
+        // Test:
+        //List<Lehrer> lehrer = new List<Lehrer>(); lehrer.Add(Zugriff.Instance.LehrerRep.Find("Kon"));
+
         foreach (Lehrer l in lehrer)
         {
           onStatusChange(this, new StatusChangedEventArgs() { Meldung = "Versende " + l.Kuerzel });
