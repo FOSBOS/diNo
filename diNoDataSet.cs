@@ -2,40 +2,40 @@
 {
 
 
-  public partial class diNoDataSet
-  {
-    partial class LehrerDataTable
+    public partial class diNoDataSet
     {
-    }
+        partial class LehrerDataTable
+        {
+        }
 
-    partial class VorkommnisDataTable
-    {
-    }
+        partial class VorkommnisDataTable
+        {
+        }
 
-    partial class NoteFixStandDataTable
-    {
-    }
+        partial class NoteFixStandDataTable
+        {
+        }
 
-    partial class KursDataTable
-    {
-    }
+        partial class KursDataTable
+        {
+        }
 
-    partial class SchuelerDataTable
-    {
-    }
+        partial class SchuelerDataTable
+        {
+        }
 
-    partial class KlasseDataTable
-    {
-    }
+        partial class KlasseDataTable
+        {
+        }
 
-    partial class FachDataTable
-    {
-    }
+        partial class FachDataTable
+        {
+        }
 
-    partial class SchuelerKursDataTable
-    {
+        partial class SchuelerKursDataTable
+        {
+        }
     }
-  }
 }
 
 namespace diNo.diNoDataSetTableAdapters
