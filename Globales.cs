@@ -1,5 +1,7 @@
 ﻿using diNo.diNoDataSetTableAdapters;
+using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -14,12 +16,24 @@ namespace diNo
 
     public void Refresh()
     {
-      dic = new Dictionary<int, string>();
-      var ta = new GlobaleStringsTableAdapter();
-      var dt = ta.GetData();
-      foreach (var d in dt)
+      dic = new Dictionary<int, string>();      
+      try
+      {        
+        dic.Clear();
+        // Erster Datenbankzugriff beim Programmstart: 1. Globale Daten, dann Logindaten
+        var ta = new GlobaleStringsTableAdapter();
+        var dt = ta.GetData();
+
+        foreach (var d in dt)
+        {
+          dic.Add(d.ID, d.Wert);
+        }
+      }
+      catch (Exception e)
       {
-        dic.Add(d.ID, d.Wert);
+        Cursor.Current = Cursors.Default;
+        MessageBox.Show("Keine Verbindung zur Datenbank!\nBitte wenden Sie sich an einen Administrator.\n\n" + e.Message, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Application.Exit();
       }
     }
 

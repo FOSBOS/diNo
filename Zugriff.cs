@@ -55,6 +55,7 @@ namespace diNo
 
       try
       {
+        Cursor.Current = Cursors.WaitCursor;
         Klassen = new List<Klasse>();
         markierteSchueler = new Dictionary<int, Schueler>();
         Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
@@ -96,6 +97,10 @@ namespace diNo
       catch (Exception e)
       {
         MessageBox.Show(e.Message + "\n" + e.StackTrace, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+      finally
+      {
+        Cursor.Current = Cursors.Default;
       }
     }
 
