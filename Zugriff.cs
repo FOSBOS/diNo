@@ -59,14 +59,9 @@ namespace diNo
         Klassen = new List<Klasse>();
         markierteSchueler = new Dictionary<int, Schueler>();
         Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-        // TODO: Username ToUpper verwenden, dann muss aber die DB passen
-        if (Username == "MARKUS\\Markus")
-        {
-          Username = "FOSBOS\\msiegel";
-        }
         if (Username == "CLAUSPC\\Claus")
         {
-          Username = "FOSBOS\\ckonrad";
+          Username = "SN\\ckonrad";
         }
 
         Username = Username.ToLower();
