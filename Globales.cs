@@ -33,7 +33,8 @@ namespace diNo
       {
         Cursor.Current = Cursors.Default;
         MessageBox.Show("Keine Verbindung zur Datenbank!\nBitte wenden Sie sich an einen Administrator.\n\n" + e.Message, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        Application.Exit();
+        Application.ExitThread();
+        Environment.Exit(1);
       }
     }
 

@@ -73,7 +73,7 @@ namespace diNo
         if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
         else
         {
-          MessageBox.Show("Keine Zugriffsberechtigung!\nBitte wenden Sie sich an einen Administrator.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          MessageBox.Show("Keine Zugriffsberechtigung für Benutzer "+ Username + "!\nBitte wenden Sie sich an einen Administrator.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
           Application.ExitThread();
           Environment.Exit(1);
         }
