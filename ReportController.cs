@@ -1,9 +1,13 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using log4net;
+using Microsoft.Reporting.Map.WebForms.BingMaps;
 using Microsoft.Reporting.WinForms;
+using Org.BouncyCastle.Utilities.IO;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace diNo
@@ -24,6 +28,18 @@ namespace diNo
     public void Show()
     {
       Init();
+
+      /* als PDF speichern:
+      int numPages = rpt.reportViewer.LocalReport.GetTotalPages();
+      byte[] bytes = rpt.reportViewer.LocalReport.Render(
+         "PDF", null, out mimeType, out encoding, out filenameExtension,
+         out streamids, out warnings);
+
+      using (FileStream fs = new FileStream(exportPath, FileMode.Create))
+      {
+        fs.Write(bytes, 0, bytes.Length);
+      }*/
+
       if (rpt == null) return;
       rpt.reportViewer.RefreshReport();
       rpt.reportViewer.SetDisplayMode(DisplayMode.PrintLayout); // Darstellung sofort im Seitenlayout

@@ -65,7 +65,7 @@ namespace diNo
 
     private void StarteNotenCheck()
     {
-      var contr = new NotenCheckController(GetZeitpunkt(), (NotenCheckModus)comboBoxCheckModus.SelectedValue, progressBarChecks, SelObj);
+      var contr = new NotenCheckController(GetZeitpunkt(), (NotenCheckModus)comboBoxCheckModus.SelectedValue, chkKurzfassung.Checked, progressBarChecks, SelObj);
       progressBarChecks.Maximum = contr.AnzahlSchueler;
       if (contr.zuPruefendeKlassen.Count == 0)
       {

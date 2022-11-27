@@ -15,6 +15,7 @@ namespace diNo
     public List<Aufgabe> aufgaben; // speichert alle zu erledigenden Berechnungsaufgaben + Notenchecks eines Schülers
     public Zeitpunkt zeitpunkt;
     public NotenCheckModus modus;
+    public bool Kurzfassung;
     public List<Klasse> zuPruefendeKlassen = new List<Klasse>();
     public int AnzahlSchueler = 0;
     private List<KeyValuePair<string, NotenCheckContainer>> chkContainer;
@@ -27,10 +28,11 @@ namespace diNo
     private Berechnungen berechnungen = null;
     public int FehlendeBerechnung = 0; // gibt einen Überblick, ob Gesamtergebnisse schon bestimmt sind.
 
-    public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus, ProgressBar aprogressBar, List<Klasse> obj)
+    public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus, bool aKurzfassung, ProgressBar aprogressBar, List<Klasse> obj)
     {
       zeitpunkt = azeitpunkt;
       modus = amodus;
+      Kurzfassung = aKurzfassung;
       progressBar = aprogressBar;
       Zugriff.Instance.markierteSchueler.Clear();
 
@@ -195,7 +197,7 @@ namespace diNo
         }
 
         // Kontrollmöglichkeit: alle weiteren Unterpunktungen werden gedruckt
-        if (s.getNoten.Unterpunktungen != "" && !UnterpunktungGedruckt && zeitpunkt != Zeitpunkt.HalbjahrUndProbezeitFOS
+        if (!Kurzfassung && s.getNoten.Unterpunktungen != "" && !UnterpunktungGedruckt && zeitpunkt != Zeitpunkt.HalbjahrUndProbezeitFOS
           && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         {
           Add(null, "Unterpunktet in " + s.getNoten.Unterpunktungen);
