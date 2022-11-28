@@ -5,10 +5,12 @@ using Microsoft.Reporting.WinForms;
 using Org.BouncyCastle.Utilities.IO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace diNo
 {
@@ -17,7 +19,7 @@ namespace diNo
   {
     protected static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
     protected ReportForm rpt;
-
+    
     public ReportController()
     {
       rpt = new ReportForm();
@@ -49,11 +51,26 @@ namespace diNo
            "PDF", null, out mimeType, out encoding, out filenameExtension,
            out streamids, out warnings);
 
-        using (FileStream fs = new FileStream(@"C:\tmp\dino.pdf", FileMode.Create))
+        int k = 1;
+        string file;
+        do
         {
-          fs.Write(bytes, 0, bytes.Length);
+          file = @"C:\tmp\dino" + k + ".pdf";
+          try
+          { // wenn die vorige Datei nicht geschlossen wurde, kann es Probleme geben.
+            using (FileStream fs = new FileStream(file, FileMode.Create))
+            {
+              fs.Write(bytes, 0, bytes.Length);
+            }
+            k = 0; // hat geklappt
+          }
+          catch
+          {
+            k++;
+          }          
         }
-        System.Diagnostics.Process.Start(@"C:\tmp\dino.pdf");
+        while (k > 0);
+        System.Diagnostics.Process.Start(file);
       }
     }
   }
