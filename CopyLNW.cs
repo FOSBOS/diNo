@@ -56,7 +56,7 @@ namespace diNo
       return CopyUser;
     }
     
-    private void SetzePfade(string datei, string art)
+    private void SetzePfade(string datei, string art, bool delete)
     {
       Kurs k = Zugriff.Instance.KursRep.Find((int)cbKurs.SelectedValue);
       kursBez = k.Kursbezeichnung.Replace("/", "");
@@ -68,11 +68,16 @@ namespace diNo
       {
         verz += "Jg" + k.JgStufe + @"\";
       }
-      dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + kursBez + "_Hj" + cbHalbjahr.Text + "_"
-        + cbArt.Text + cbNummer.Text;
-      if (chkKoord.Checked) dat += "_koordiniert";
+      dat = Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + kursBez + "_Hj" + cbHalbjahr.Text + "_";
+      if (delete) // aus dem angeklickten Item nehmen
+        dat += datei;
+      else
+      {
+        dat += cbArt.Text + cbNummer.Text;
+        if (chkKoord.Checked) dat += "_koordiniert";
 
-      dat += "_" + art + typ;
+        dat += "_" + art + typ;
+      }
     }
 
     private void Kopiere(string datei, string art)
@@ -84,7 +89,7 @@ namespace diNo
 
       tmp += Path.GetFileName(datei);
       File.Copy(datei, tmp, true);
-      SetzePfade(datei, art);
+      SetzePfade(datei, art, false);
 
       using (GetCopyUser())
       try
@@ -108,7 +113,7 @@ namespace diNo
 
     private void AktualisiereAbgabeListe(object sender, EventArgs e)
     {
-      SetzePfade("dummy.pdf", "");
+      SetzePfade("dummy.pdf", "", false);
       List<string> files = new List<string>();
       listAbgegeben.Items.Clear();
 
@@ -130,6 +135,31 @@ namespace diNo
     private void btnAngabe_Click(object sender, EventArgs e)
     {
       Abgabe("Angabe");
+    }
+
+    private void menuOpen_Click(object sender, EventArgs e)
+    {
+      //
+    }
+
+    private void menuDelete_Click(object sender, EventArgs e)
+    {
+      if (listAbgegeben.SelectedItem==null)
+      {
+        MessageBox.Show("Bitte erst eine Datei auswählen.","diNo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        return;
+      }
+      SetzePfade(listAbgegeben.SelectedItem.ToString(),"",true); // angezeigter Dateiname in der Liste
+      using (GetCopyUser())
+        try
+        {          
+          File.Delete(verz + dat);          
+        }
+        catch (Exception ex)
+        {
+          MessageBox.Show("Die Datei " + verz+dat + " konnte nicht gelöscht werden.\n" + ex.Message, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+      AktualisiereAbgabeListe(null, null);
     }
 
     private void btnLsg_Click(object sender, EventArgs e)
