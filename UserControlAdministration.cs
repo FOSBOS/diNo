@@ -496,6 +496,11 @@ namespace diNo
       new ImportCheck();
       Cursor = Cursors.Default;
     }
+
+    private void chkRptDruck_CheckedChanged(object sender, EventArgs e)
+    {
+      Zugriff.Instance.RptDruck = chkRptDruck.Checked;
+    }
   }
 }
 

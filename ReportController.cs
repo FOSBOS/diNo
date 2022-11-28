@@ -29,23 +29,32 @@ namespace diNo
     {
       Init();
 
-      /* als PDF speichern:
-      int numPages = rpt.reportViewer.LocalReport.GetTotalPages();
-      byte[] bytes = rpt.reportViewer.LocalReport.Render(
-         "PDF", null, out mimeType, out encoding, out filenameExtension,
-         out streamids, out warnings);
-
-      using (FileStream fs = new FileStream(exportPath, FileMode.Create))
+      // Rendern über den ReportViewer:
+      if (Zugriff.Instance.RptDruck)
       {
-        fs.Write(bytes, 0, bytes.Length);
-      }*/
+        if (rpt == null) return;
+        rpt.reportViewer.RefreshReport();
+        rpt.reportViewer.SetDisplayMode(DisplayMode.PrintLayout); // Darstellung sofort im Seitenlayout
+        rpt.reportViewer.ZoomMode = ZoomMode.Percent;
+        rpt.reportViewer.ZoomPercent = 100;
+        rpt.Show();
+      }
+      else // als PDF speichern, dann öffnen, um Skalierungsprobleme zu vermeiden
+      {
+        string mimeType, encoding, filenameExtension;
+        string[] streamids;
+        Microsoft.Reporting.WinForms.Warning[] warnings;
+        int numPages = rpt.reportViewer.LocalReport.GetTotalPages();
+        byte[] bytes = rpt.reportViewer.LocalReport.Render(
+           "PDF", null, out mimeType, out encoding, out filenameExtension,
+           out streamids, out warnings);
 
-      if (rpt == null) return;
-      rpt.reportViewer.RefreshReport();
-      rpt.reportViewer.SetDisplayMode(DisplayMode.PrintLayout); // Darstellung sofort im Seitenlayout
-      rpt.reportViewer.ZoomMode = ZoomMode.Percent;
-      rpt.reportViewer.ZoomPercent = 100;
-      rpt.Show();
+        using (FileStream fs = new FileStream(@"C:\tmp\dino.pdf", FileMode.Create))
+        {
+          fs.Write(bytes, 0, bytes.Length);
+        }
+        System.Diagnostics.Process.Start(@"C:\tmp\dino.pdf");
+      }
     }
   }
 

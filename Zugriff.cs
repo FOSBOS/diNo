@@ -38,6 +38,7 @@ namespace diNo
     public LesemodusExcel Lesemodus { get { return (LesemodusExcel)globaleKonstanten.LeseModusExcel; } }
     public bool SiehtAlles { get; private set; }
     public bool HatVerwaltungsrechte { get; private set; }
+    public bool RptDruck = false;
     public bool IsFBKempten = false;
     public bool IsTestDB { get; private set; }
 
