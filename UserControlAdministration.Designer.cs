@@ -50,6 +50,7 @@
       this.btnCreateExcels = new System.Windows.Forms.Button();
       this.exportNoten = new System.Windows.Forms.Button();
       this.groupBoxImport = new System.Windows.Forms.GroupBox();
+      this.btnImportCheck = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
       this.btnReadWahlpflichtfaecher = new System.Windows.Forms.Button();
       this.btnImportKlassenleiter = new System.Windows.Forms.Button();
@@ -83,7 +84,7 @@
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
       this.btnCopy11 = new System.Windows.Forms.Button();
-      this.btnImportCheck = new System.Windows.Forms.Button();
+      this.chkRptDruck = new System.Windows.Forms.CheckBox();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -140,6 +141,7 @@
       // 
       // groupBoxDrucken
       // 
+      this.groupBoxDrucken.Controls.Add(this.chkRptDruck);
       this.groupBoxDrucken.Controls.Add(this.gbUnterschrift);
       this.groupBoxDrucken.Controls.Add(this.lbZeugnis);
       this.groupBoxDrucken.Controls.Add(this.dateZeugnis);
@@ -237,7 +239,7 @@
       // 
       // btnKlassenliste
       // 
-      this.btnKlassenliste.Location = new System.Drawing.Point(21, 166);
+      this.btnKlassenliste.Location = new System.Drawing.Point(21, 156);
       this.btnKlassenliste.Name = "btnKlassenliste";
       this.btnKlassenliste.Size = new System.Drawing.Size(132, 23);
       this.btnKlassenliste.TabIndex = 4;
@@ -345,6 +347,16 @@
       this.groupBoxImport.TabIndex = 3;
       this.groupBoxImport.TabStop = false;
       this.groupBoxImport.Text = "Import (in dieser Reihenfolge)";
+      // 
+      // btnImportCheck
+      // 
+      this.btnImportCheck.Location = new System.Drawing.Point(22, 195);
+      this.btnImportCheck.Name = "btnImportCheck";
+      this.btnImportCheck.Size = new System.Drawing.Size(182, 23);
+      this.btnImportCheck.TabIndex = 9;
+      this.btnImportCheck.Text = "Import-Kontrolle";
+      this.btnImportCheck.UseVisualStyleBackColor = true;
+      this.btnImportCheck.Click += new System.EventHandler(this.btnImportCheck_Click);
       // 
       // label3
       // 
@@ -694,15 +706,16 @@
       this.btnCopy11.UseVisualStyleBackColor = true;
       this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
       // 
-      // btnImportCheck
+      // chkRptDruck
       // 
-      this.btnImportCheck.Location = new System.Drawing.Point(22, 195);
-      this.btnImportCheck.Name = "btnImportCheck";
-      this.btnImportCheck.Size = new System.Drawing.Size(182, 23);
-      this.btnImportCheck.TabIndex = 9;
-      this.btnImportCheck.Text = "Import-Kontrolle";
-      this.btnImportCheck.UseVisualStyleBackColor = true;
-      this.btnImportCheck.Click += new System.EventHandler(this.btnImportCheck_Click);
+      this.chkRptDruck.AutoSize = true;
+      this.chkRptDruck.Location = new System.Drawing.Point(21, 199);
+      this.chkRptDruck.Name = "chkRptDruck";
+      this.chkRptDruck.Size = new System.Drawing.Size(162, 17);
+      this.chkRptDruck.TabIndex = 31;
+      this.chkRptDruck.Text = "Mit dem Reportviewer öffnen";
+      this.chkRptDruck.UseVisualStyleBackColor = true;
+      this.chkRptDruck.CheckedChanged += new System.EventHandler(this.chkRptDruck_CheckedChanged);
       // 
       // UserControlAdministration
       // 
@@ -798,5 +811,6 @@
     private System.Windows.Forms.Button btnNotenmailSchueler;
     private System.Windows.Forms.Button btnSchnitte;
     private System.Windows.Forms.Button btnImportCheck;
-  }
+        private System.Windows.Forms.CheckBox chkRptDruck;
+    }
 }

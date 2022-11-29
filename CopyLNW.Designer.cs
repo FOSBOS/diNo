@@ -28,6 +28,7 @@
     /// </summary>
     private void InitializeComponent()
     {
+      this.components = new System.ComponentModel.Container();
       this.btnAngabe = new System.Windows.Forms.Button();
       this.cbKurs = new System.Windows.Forms.ComboBox();
       this.label2 = new System.Windows.Forms.Label();
@@ -42,6 +43,10 @@
       this.label4 = new System.Windows.Forms.Label();
       this.cbHalbjahr = new System.Windows.Forms.ComboBox();
       this.label5 = new System.Windows.Forms.Label();
+      this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.menuOpen = new System.Windows.Forms.ToolStripMenuItem();
+      this.menuDelete = new System.Windows.Forms.ToolStripMenuItem();
+      this.contextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
       // btnAngabe
@@ -155,6 +160,7 @@
       // 
       // listAbgegeben
       // 
+      this.listAbgegeben.ContextMenuStrip = this.contextMenu;
       this.listAbgegeben.FormattingEnabled = true;
       this.listAbgegeben.Location = new System.Drawing.Point(47, 129);
       this.listAbgegeben.Name = "listAbgegeben";
@@ -166,9 +172,9 @@
       this.label4.AutoSize = true;
       this.label4.Location = new System.Drawing.Point(44, 113);
       this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(139, 13);
+      this.label4.Size = new System.Drawing.Size(378, 13);
       this.label4.TabIndex = 28;
-      this.label4.Text = "Bisher abgegebene Dateien";
+      this.label4.Text = "Bisher abgegebene Dateien (zum Löschen anklicken, dann rechte Maustaste):";
       // 
       // cbHalbjahr
       // 
@@ -192,6 +198,30 @@
       this.label5.TabIndex = 29;
       this.label5.Text = "Halbjahr";
       // 
+      // contextMenu
+      // 
+      this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuOpen,
+            this.menuDelete});
+      this.contextMenu.Name = "contextMenu";
+      this.contextMenu.ShowImageMargin = false;
+      this.contextMenu.Size = new System.Drawing.Size(99, 48);
+      // 
+      // menuOpen
+      // 
+      this.menuOpen.Name = "menuOpen";
+      this.menuOpen.Size = new System.Drawing.Size(123, 22);
+      this.menuOpen.Text = "Anzeigen";
+      this.menuOpen.Visible = false;
+      this.menuOpen.Click += new System.EventHandler(this.menuOpen_Click);
+      // 
+      // menuDelete
+      // 
+      this.menuDelete.Name = "menuDelete";
+      this.menuDelete.Size = new System.Drawing.Size(155, 22);
+      this.menuDelete.Text = "Löschen";
+      this.menuDelete.Click += new System.EventHandler(this.menuDelete_Click);
+      // 
       // CopyLNW
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -213,6 +243,7 @@
       this.Controls.Add(this.btnAngabe);
       this.Name = "CopyLNW";
       this.Text = "Abgabe von Leistungsnachweisen";
+      this.contextMenu.ResumeLayout(false);
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -234,5 +265,8 @@
     private System.Windows.Forms.Label label4;
     private System.Windows.Forms.ComboBox cbHalbjahr;
     private System.Windows.Forms.Label label5;
-  }
+        private System.Windows.Forms.ContextMenuStrip contextMenu;
+        private System.Windows.Forms.ToolStripMenuItem menuOpen;
+        private System.Windows.Forms.ToolStripMenuItem menuDelete;
+    }
 }

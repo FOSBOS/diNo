@@ -36,6 +36,7 @@
       this.label1 = new System.Windows.Forms.Label();
       this.label2 = new System.Windows.Forms.Label();
       this.comboBoxCheckModus = new System.Windows.Forms.ComboBox();
+      this.chkKurzfassung = new System.Windows.Forms.CheckBox();
       this.SuspendLayout();
       // 
       // imageList1
@@ -87,7 +88,7 @@
       // lbStatus
       // 
       this.lbStatus.AutoSize = true;
-      this.lbStatus.Location = new System.Drawing.Point(22, 144);
+      this.lbStatus.Location = new System.Drawing.Point(22, 153);
       this.lbStatus.Name = "lbStatus";
       this.lbStatus.Size = new System.Drawing.Size(37, 13);
       this.lbStatus.TabIndex = 15;
@@ -121,11 +122,22 @@
       this.comboBoxCheckModus.Size = new System.Drawing.Size(218, 24);
       this.comboBoxCheckModus.TabIndex = 17;
       // 
+      // chkKurzfassung
+      // 
+      this.chkKurzfassung.AutoSize = true;
+      this.chkKurzfassung.Location = new System.Drawing.Point(25, 124);
+      this.chkKurzfassung.Name = "chkKurzfassung";
+      this.chkKurzfassung.Size = new System.Drawing.Size(149, 17);
+      this.chkKurzfassung.TabIndex = 19;
+      this.chkKurzfassung.Text = "Nur Problemfälle anzeigen";
+      this.chkKurzfassung.UseVisualStyleBackColor = true;
+      // 
       // NotenCheckForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(329, 222);
+      this.Controls.Add(this.chkKurzfassung);
       this.Controls.Add(this.label2);
       this.Controls.Add(this.comboBoxCheckModus);
       this.Controls.Add(this.label1);
@@ -148,5 +160,6 @@
         private System.Windows.Forms.Label label1;
     private System.Windows.Forms.Label label2;
     private System.Windows.Forms.ComboBox comboBoxCheckModus;
-  }
+        private System.Windows.Forms.CheckBox chkKurzfassung;
+    }
 }
