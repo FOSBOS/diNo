@@ -51,8 +51,11 @@ namespace diNo
            "PDF", null, out mimeType, out encoding, out filenameExtension,
            out streamids, out warnings);
 
+        string file = @"C:\tmp\";
+        if (!Directory.Exists(file))
+            Directory.CreateDirectory(file);
+        
         int k = 1;
-        string file;
         do
         {
           file = @"C:\tmp\dino" + k + ".pdf";
@@ -66,6 +69,11 @@ namespace diNo
           }
           catch
           {
+            if (k == 100)
+            {
+                MessageBox.Show("Fehler beim Erzeugen der PDF-Datei.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             k++;
           }          
         }
