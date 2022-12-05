@@ -1,4 +1,5 @@
 ﻿using log4net;
+using log4net.Layout;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -66,7 +67,9 @@ namespace diNo
       pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
       btnBrief.Enabled = true;
 
-      labelHinweise.Text = (schueler.IsLegastheniker ? "Legasthenie" : "");
+      labelHinweise.Text = (schueler.IsLegastheniker ? "Notenschutz (Legasthenie)" : "") 
+        + (schueler.IsLegastheniker && schueler.Data.LRSZuschlagMax > 0 ? ", " : "")
+        + (schueler.Data.LRSZuschlagMax>0 ? "Zeitzuschlag von " + schueler.Data.LRSZuschlagMin +  "% bis " + schueler.Data.LRSZuschlagMax + "%" : "");
       labelHinweise.ForeColor = Color.Red;
 
       if (Zugriff.Instance.HatVerwaltungsrechte)

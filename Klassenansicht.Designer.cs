@@ -377,10 +377,10 @@
       this.labelHinweise.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.labelHinweise.Location = new System.Drawing.Point(569, 88);
       this.labelHinweise.Name = "labelHinweise";
-      this.labelHinweise.Size = new System.Drawing.Size(509, 34);
+      this.labelHinweise.Size = new System.Drawing.Size(449, 34);
       this.labelHinweise.TabIndex = 36;
-      this.labelHinweise.Text = "Notendateien können ab sofort über die Excel-Schaltfläche abgegeben werden.\r\nÜber" +
-    " den Stift können z.B. Verweise gedruckt werden.\r\n";
+      this.labelHinweise.Text = "Notendateien können über die Excel-Schaltfläche abgegeben werden.\r\nÜber den Stift" +
+    " können z.B. Verweise gedruckt werden.\r\n";
       // 
       // pictureBoxImage
       // 

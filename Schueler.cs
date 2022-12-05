@@ -207,7 +207,7 @@ namespace diNo
     }
 
     public bool hatVorHj
-    { get { return (!Data.SonderfallNur2Hj) && (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf) && (Data.Schulart == "F"); } }
+    { get { return (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf) && (Data.Schulart == "F"); } }
 
     public int APFaktor
     { get { return (hatVorHj ? 3 : 2); } }
