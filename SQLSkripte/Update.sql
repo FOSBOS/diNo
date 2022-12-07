@@ -1,8 +1,7 @@
 use diNo;
 
 ALTER TABLE dbo.Schueler ADD
-	LRSZuschlagMin int NULL,
-	LRSZuschlagMax int NULL
+	LRSZuschlagMin int NOT NULL DEFAULT 0,
+	LRSZuschlagMax int NOT NULL DEFAULT 0
 	
-ALTER TABLE dbo.Schueler
-	DROP COLUMN SonderfallNur2Hj
+--ALTER TABLE dbo.Schueler DROP COLUMN SonderfallNur2Hj
