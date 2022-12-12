@@ -172,7 +172,7 @@ namespace diNo
     }
 
     /// <summary>
-    /// Ob der Schüler Legastheniker ist (so dass in Englisch und Französisch 1:1 gewertet werden muss).
+    /// Ob der Schüler Notenschutz hat
     /// </summary>
     [OLVColumn(Title = "Legasthenie", Width = 80)]
     public bool IsLegastheniker

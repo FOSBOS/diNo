@@ -17,6 +17,7 @@ namespace diNo
     ZusatzAllgHSR,
     Notenbogen,
     Klassenliste,
+    Legastheniker,
     EinserAbi
   }
 
@@ -89,13 +90,22 @@ namespace diNo
       }
       else if (b == Bericht.Einbringung)
       {
-        Bemerkung = (Zugriff.Instance.IsFBKempten ? "dem Oberstufenbetreuer oder " :"")
+        Bemerkung = (Zugriff.Instance.IsFBKempten ? "dem Oberstufenbetreuer oder " : "")
           + "der Schulleitung bis spätestens " +
           Zugriff.Instance.Zeugnisdatum.ToString("dddd, dd.MM.yyyy"); // Abgabedatum von Einbringungsänderungen
       }
+      else if (b == Bericht.Legastheniker)
+      {
+        Bemerkung = (s.IsLegastheniker ? "Notenschutz" : "");
+        if (s.Data.LRSZuschlagMax > 0 && s.IsLegastheniker)
+          Bemerkung += ", ";
+        if (s.Data.LRSZuschlagMax>0)
+          Bemerkung += "Zeitzuschlag von " + s.Data.LRSZuschlagMin + "% bis " + s.Data.LRSZuschlagMax + "%";
+      }
+
     }
 
-    public static string GetBerichtsname(Bericht b)
+      public static string GetBerichtsname(Bericht b)
     {
       switch (b)
       {
@@ -111,6 +121,7 @@ namespace diNo
         case Bericht.Einbringung: return "rptEinbringung";
 
         case Bericht.Klassenliste: return "rptKlassenliste";
+        case Bericht.Legastheniker: return "rptLegastheniker";
         case Bericht.EinserAbi: return "rptEinserAbi";
         default: return "";
       }

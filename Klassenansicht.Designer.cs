@@ -53,6 +53,10 @@
       this.btnCheck = new System.Windows.Forms.Button();
       this.btnBrief = new System.Windows.Forms.Button();
       this.btnPrint = new System.Windows.Forms.Button();
+      this.contextMenuPrint = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.druKlassenliste = new System.Windows.Forms.ToolStripMenuItem();
+      this.druNotenbogen = new System.Windows.Forms.ToolStripMenuItem();
+      this.druLegastheniker = new System.Windows.Forms.ToolStripMenuItem();
       this.btnNotenabgeben = new System.Windows.Forms.Button();
       this.labelHinweise = new System.Windows.Forms.Label();
       this.pictureBoxImage = new System.Windows.Forms.PictureBox();
@@ -75,6 +79,7 @@
       this.tabPageSekretariat.SuspendLayout();
       this.tabPageAdministration.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
+      this.contextMenuPrint.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
       this.statusStrip1.SuspendLayout();
       this.SuspendLayout();
@@ -348,7 +353,7 @@
       // 
       // btnPrint
       // 
-      this.btnPrint.Enabled = false;
+      this.btnPrint.ContextMenuStrip = this.contextMenuPrint;
       this.btnPrint.ImageIndex = 3;
       this.btnPrint.ImageList = this.imageList1;
       this.btnPrint.Location = new System.Drawing.Point(427, 88);
@@ -358,6 +363,40 @@
       this.toolTipButtons.SetToolTip(this.btnPrint, "Notenbogen drucken");
       this.btnPrint.UseVisualStyleBackColor = true;
       this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
+      // 
+      // contextMenuPrint
+      // 
+      this.contextMenuPrint.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.druKlassenliste,
+            this.druNotenbogen,
+            this.druLegastheniker});
+      this.contextMenuPrint.Name = "contextMenuPrint";
+      this.contextMenuPrint.ShowImageMargin = false;
+      this.contextMenuPrint.Size = new System.Drawing.Size(176, 70);
+      // 
+      // druKlassenliste
+      // 
+      this.druKlassenliste.Name = "druKlassenliste";
+      this.druKlassenliste.Size = new System.Drawing.Size(175, 22);
+      this.druKlassenliste.Tag = "1";
+      this.druKlassenliste.Text = "Klassenliste";
+      this.druKlassenliste.Click += new System.EventHandler(this.druKlassenliste_Click);
+      // 
+      // druNotenbogen
+      // 
+      this.druNotenbogen.Name = "druNotenbogen";
+      this.druNotenbogen.Size = new System.Drawing.Size(175, 22);
+      this.druNotenbogen.Tag = "2";
+      this.druNotenbogen.Text = "Notenbogen";
+      this.druNotenbogen.Click += new System.EventHandler(this.druNotenbogen_Click);
+      // 
+      // druLegastheniker
+      // 
+      this.druLegastheniker.Name = "druLegastheniker";
+      this.druLegastheniker.Size = new System.Drawing.Size(175, 22);
+      this.druLegastheniker.Tag = "3";
+      this.druLegastheniker.Text = "Übersicht Legastheniker";
+      this.druLegastheniker.Click += new System.EventHandler(this.druLegastheniker_Click);
       // 
       // btnNotenabgeben
       // 
@@ -523,6 +562,7 @@
       this.tabPageSekretariat.ResumeLayout(false);
       this.tabPageAdministration.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
+      this.contextMenuPrint.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
       this.statusStrip1.ResumeLayout(false);
       this.statusStrip1.PerformLayout();
@@ -568,5 +608,9 @@
     private System.Windows.Forms.TextBox edSuchen;
     private System.Windows.Forms.Button btnSuchen;
     private System.Windows.Forms.Label lbSuchen;
-  }
+        private System.Windows.Forms.ContextMenuStrip contextMenuPrint;
+        private System.Windows.Forms.ToolStripMenuItem druNotenbogen;
+        private System.Windows.Forms.ToolStripMenuItem druLegastheniker;
+        private System.Windows.Forms.ToolStripMenuItem druKlassenliste;
+    }
 }

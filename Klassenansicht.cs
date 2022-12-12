@@ -1,9 +1,11 @@
-﻿using log4net;
+﻿using diNo.Xml.Mbstatistik;
+using log4net;
 using log4net.Layout;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace diNo
@@ -41,6 +43,18 @@ namespace diNo
       edSuchen.Visible = Zugriff.Instance.SiehtAlles;
       btnSuchen.Visible = Zugriff.Instance.SiehtAlles;
       lbSuchen.Visible = Zugriff.Instance.SiehtAlles;
+
+      // Kontextmenü für das Drucken von Kurslisten erzeugen
+      foreach (var k in Zugriff.Instance.eigeneKurse)
+      {
+        Fach f = k.getFach;
+        if (f.Typ == FachTyp.WPF || f.Kuerzel == "K" || f.Kuerzel == "Ev" || f.Kuerzel == "Eth")
+        {
+          var itm = new ToolStripMenuItem("Kursliste " + k.Kursbezeichnung, null, druKursliste);
+          itm.Tag = k;
+          contextMenuPrint.Items.Add(itm);   
+        }
+      }
 
       lbTest.Visible = Zugriff.Instance.IsTestDB;
       log.Debug("Klassenansicht fertig.");
@@ -94,9 +108,7 @@ namespace diNo
         {
           SetSchueler();
         }
-      }
-
-      btnPrint.Enabled = true;
+      }      
     }
 
     private void Klassenansicht_Load(object sender, EventArgs e)
@@ -157,19 +169,58 @@ namespace diNo
       toolStripStatusLabel1.Text = e.Meldung;
     }
 
-    // normale Lehrer können über den Druckbutton einen Notenbogen ausdrucken, oder bei Wahl
-    // einer Klasse die Klassenliste
+    // bei Click auf den Druck-Button öffnet sich das Kontextmenü mit verschiedenen Berichten
     private void btnPrint_Click(object sender, EventArgs e)
     {
-      Bericht rpt;
-      var obj = SelectedObjects();
-      if (Zugriff.Instance.HatVerwaltungsrechte || obj.Count == 1)
-        rpt = Bericht.Notenbogen;
+      contextMenuPrint.Show(btnPrint,20,40);
+    }
+    
+    private void druKlassenliste_Click(object sender, EventArgs e)
+    {
+      
+      var obj = treeListView1.SelectedObjects;
+      if (obj.Count > 0 && obj[0] is Klasse)
+      {
+        Klasse k = (Klasse)obj[0];
+        new ReportSchuelerdruck(k.Schueler, Bericht.Klassenliste).Show();
+      }
       else
-        rpt = Bericht.Klassenliste;
-      new ReportSchuelerdruck(obj, rpt).Show();
+      {
+        MessageBox.Show("Bitte erst eine Klasse auswählen.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      }
     }
 
+    // WPF oder Relikurse, die über das Kontextmenü ausgedruckt werden können
+    private void druKursliste(Object itm,EventArgs args)
+    {      
+      Kurs k = (Kurs)((ToolStripMenuItem)itm).Tag;
+      new ReportSchuelerdruck(k.Schueler, Bericht.Klassenliste).Show();
+    }
+
+
+    private void druNotenbogen_Click(object sender, EventArgs e)
+    {
+      var obj = SelectedObjects();
+      if (obj.Count == 0 || !Zugriff.Instance.HatVerwaltungsrechte && obj.Count > 1)
+      {
+        MessageBox.Show("Bitte erst einen Schüler auswählen.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        return;
+      }
+      
+      new ReportSchuelerdruck(obj, Bericht.Notenbogen).Show();
+    }
+
+    private void druLegastheniker_Click(object sender, EventArgs e)
+    {
+       List<Schueler> lst = new List<Schueler>();
+       foreach (Schueler s in Zugriff.Instance.SchuelerRep.getList())
+       {
+        if (s.IsLegastheniker || s.Data.LRSZuschlagMax>0)
+          lst.Add(s);
+       }
+      new ReportSchuelerdruck(lst, Bericht.Legastheniker).Show();
+    }
+    
     // nur vom Adminbereich aus aufrufbar
     public List<Klasse> SelectedKlassen()
     {
@@ -287,5 +338,6 @@ namespace diNo
       if (c>=max)
         lbSuchen.ForeColor = Color.Red;
     }
+
   }
 }
