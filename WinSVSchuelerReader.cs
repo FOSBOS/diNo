@@ -204,6 +204,7 @@ namespace diNo
       row.Email = cleanArray[emailSpalte];
       row.Notfalltelefonnummer = cleanArray[notfallrufnummerSpalte];
 
+      row.SonderfallNur2Hj = false;
       row.Berechungsstatus = (int)Berechnungsstatus.Unberechnet;
       row.AndereFremdspr2Art = 0;
     }

@@ -4242,6 +4242,8 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnLRSZuschlagMax;
             
+            private global::System.Data.DataColumn columnSonderfallNur2Hj;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public SchuelerDataTable() {
@@ -4701,6 +4703,14 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn SonderfallNur2HjColumn {
+                get {
+                    return this.columnSonderfallNur2Hj;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -4789,7 +4799,8 @@ namespace diNo {
                         int AndereFremdspr2Art, 
                         FachRow parentFachRowByFK_Schueler_AndereFremdspr2Fach, 
                         int LRSZuschlagMin, 
-                        int LRSZuschlagMax) {
+                        int LRSZuschlagMax, 
+                        bool SonderfallNur2Hj) {
                 SchuelerRow rowSchuelerRow = ((SchuelerRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
@@ -4844,7 +4855,8 @@ namespace diNo {
                         AndereFremdspr2Art,
                         null,
                         LRSZuschlagMin,
-                        LRSZuschlagMax};
+                        LRSZuschlagMax,
+                        SonderfallNur2Hj};
                 if ((parentKlasseRowByFK_Schueler_ToTable != null)) {
                     columnValuesArray[3] = parentKlasseRowByFK_Schueler_ToTable[0];
                 }
@@ -4933,6 +4945,7 @@ namespace diNo {
                 this.columnAndereFremdspr2Fach = base.Columns["AndereFremdspr2Fach"];
                 this.columnLRSZuschlagMin = base.Columns["LRSZuschlagMin"];
                 this.columnLRSZuschlagMax = base.Columns["LRSZuschlagMax"];
+                this.columnSonderfallNur2Hj = base.Columns["SonderfallNur2Hj"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5044,6 +5057,8 @@ namespace diNo {
                 base.Columns.Add(this.columnLRSZuschlagMin);
                 this.columnLRSZuschlagMax = new global::System.Data.DataColumn("LRSZuschlagMax", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLRSZuschlagMax);
+                this.columnSonderfallNur2Hj = new global::System.Data.DataColumn("SonderfallNur2Hj", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSonderfallNur2Hj);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AllowDBNull = false;
@@ -5086,6 +5101,8 @@ namespace diNo {
                 this.columnAndereFremdspr2Art.AllowDBNull = false;
                 this.columnLRSZuschlagMin.AllowDBNull = false;
                 this.columnLRSZuschlagMax.AllowDBNull = false;
+                this.columnSonderfallNur2Hj.AllowDBNull = false;
+                this.columnSonderfallNur2Hj.DefaultValue = ((bool)(false));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10900,6 +10917,17 @@ namespace diNo {
                 }
                 set {
                     this[this.tableSchueler.LRSZuschlagMaxColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool SonderfallNur2Hj {
+                get {
+                    return ((bool)(this[this.tableSchueler.SonderfallNur2HjColumn]));
+                }
+                set {
+                    this[this.tableSchueler.SonderfallNur2HjColumn] = value;
                 }
             }
             
@@ -18291,6 +18319,7 @@ SELECT Id, Datum, Bemerkung, SchuelerId, Art FROM Vorkommnis WHERE (Id = @Id)";
             tableMapping.ColumnMappings.Add("AndereFremdspr2Fach", "AndereFremdspr2Fach");
             tableMapping.ColumnMappings.Add("LRSZuschlagMin", "LRSZuschlagMin");
             tableMapping.ColumnMappings.Add("LRSZuschlagMax", "LRSZuschlagMax");
+            tableMapping.ColumnMappings.Add("SonderfallNur2Hj", "SonderfallNur2Hj");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
