@@ -538,9 +538,9 @@ namespace diNo
     {
       base.Check(schueler);
 
-      if (schueler.IsLegastheniker)
+      if (schueler.HatNachteilsausgleich)
       {
-        contr.Add(null, "Die bisherigen Regelungen zum Nachteilsausgleich bleiben bestehen.");
+        contr.Add(null, "Die Regelungen zum Nachteilsausgleich bleiben bestehen: "+ schueler.getNTAText);
       }
     }
   }

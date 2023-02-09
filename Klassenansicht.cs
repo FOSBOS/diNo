@@ -81,9 +81,7 @@ namespace diNo
       pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
       btnBrief.Enabled = true;
 
-      labelHinweise.Text = (schueler.IsLegastheniker ? "Notenschutz (Legasthenie)" : "") 
-        + (schueler.IsLegastheniker && schueler.Data.LRSZuschlagMax > 0 ? ", " : "")
-        + (schueler.Data.LRSZuschlagMax>0 ? "Zeitzuschlag von " + schueler.Data.LRSZuschlagMin +  "% bis " + schueler.Data.LRSZuschlagMax + "%" : "");
+      labelHinweise.Text = schueler.getNTAText;
       labelHinweise.ForeColor = Color.Red;
 
       if (Zugriff.Instance.HatVerwaltungsrechte)
@@ -215,7 +213,7 @@ namespace diNo
        List<Schueler> lst = new List<Schueler>();
        foreach (Schueler s in Zugriff.Instance.SchuelerRep.getList())
        {
-        if (s.IsLegastheniker || s.Data.LRSZuschlagMax>0)
+        if (s.HatNachteilsausgleich)
           lst.Add(s);
        }
       new ReportSchuelerdruck(lst, Bericht.Legastheniker).Show();

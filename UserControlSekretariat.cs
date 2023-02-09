@@ -73,7 +73,7 @@ namespace diNo
           numericUpDownMathe.Value = schueler.Data.IsMittlereReifeMathenoteNull() ? null : (decimal?)schueler.Data.MittlereReifeMathenote;
 
           textBoxID.Text = schueler.Id.ToString();
-          checkBoxLegasthenie.Checked = schueler.IsLegastheniker;
+          checkBoxLegasthenie.Checked = schueler.Data.LRSStoerung;
           numLRSZuschlagMin.Value = schueler.Data.LRSZuschlagMin;
           numLRSZuschlagMax.Value = schueler.Data.LRSZuschlagMax;
           textBoxNachname.Text = schueler.Data.Name;
@@ -110,7 +110,7 @@ namespace diNo
       if (numericUpDownMathe.Value == null) schueler.Data.SetMittlereReifeMathenoteNull();
       else schueler.Data.MittlereReifeMathenote = (int)numericUpDownMathe.Value.GetValueOrDefault();
 
-      schueler.IsLegastheniker = checkBoxLegasthenie.Checked;
+      schueler.Data.LRSStoerung = checkBoxLegasthenie.Checked;
       schueler.Data.LRSZuschlagMin = (int)numLRSZuschlagMin.Value;
       schueler.Data.LRSZuschlagMax = (int)numLRSZuschlagMax.Value;
 

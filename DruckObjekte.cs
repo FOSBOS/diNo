@@ -96,13 +96,8 @@ namespace diNo
       }
       else if (b == Bericht.Legastheniker)
       {
-        Bemerkung = (s.IsLegastheniker ? "Notenschutz" : "");
-        if (s.Data.LRSZuschlagMax > 0 && s.IsLegastheniker)
-          Bemerkung += ", ";
-        if (s.Data.LRSZuschlagMax>0)
-          Bemerkung += "Zeitzuschlag von " + s.Data.LRSZuschlagMin + "% bis " + s.Data.LRSZuschlagMax + "%";
+          Bemerkung = s.getNTAText;
       }
-
     }
 
       public static string GetBerichtsname(Bericht b)
@@ -175,7 +170,7 @@ namespace diNo
       // Wiederholungen
       string tmp = s.getWiederholungen();
       if (tmp != "") Laufbahn += "<br>Wiederholungen: " + tmp;
-      if (s.Data.LRSStoerung) Laufbahn += "<br><b>Legasthenie</b>";
+      if (s.Data.LRSStoerung) Laufbahn += "<br><b>" + s.getNTAText + "</b>";
 
       if (jg == 13)
       {
@@ -319,7 +314,7 @@ namespace diNo
         Bemerkung += "<br>" + s.Data.Zeugnisbemerkung;
       if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && Zugriff.Instance.IsFBKempten)
         Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden."; // nicht in SF
-      if (s.IsLegastheniker)
+      if (s.Data.LRSStoerung)
         Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
       if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
       {

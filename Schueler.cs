@@ -175,15 +175,20 @@ namespace diNo
     /// Ob der Schüler Notenschutz hat
     /// </summary>
     [OLVColumn(Title = "Legasthenie", Width = 80)]
-    public bool IsLegastheniker
+    public bool HatNachteilsausgleich
     {
-      get { return this.data.LRSStoerung; }
-      set
-      {
-        this.data.LRSStoerung = value;
-      }
+      get { return this.data.LRSStoerung || data.LRSZuschlagMax>0; }      
     }
 
+    public String getNTAText
+    {
+       get
+       {
+          return (Data.LRSStoerung ? "Notenschutz" : "")
+            + (Data.LRSStoerung && Data.LRSZuschlagMax > 0 ? ", " : "")
+            + (Data.LRSZuschlagMax > 0 ? "Zeitzuschlag von " + Data.LRSZuschlagMin + "% bis " + Data.LRSZuschlagMax + "%" : "");
+        }
+    }
     /// <summary>
     /// Die Klassenbezeichnung 
     /// </summary>
