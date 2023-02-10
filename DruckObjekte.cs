@@ -330,7 +330,7 @@ namespace diNo
         if (sport != null)
         {
           bool keinHj1 = sport.getHjLeistung(HjArt.Hj1) == null || sport.getHjLeistung(HjArt.Hj1).Status == HjStatus.Ungueltig;
-          bool keinHj2 = sport.getHjLeistung(HjArt.Hj2) == null || sport.getHjLeistung(HjArt.Hj2).Status == HjStatus.Ungueltig;
+          bool keinHj2 = (sport.getHjLeistung(HjArt.Hj2) == null || sport.getHjLeistung(HjArt.Hj2).Status == HjStatus.Ungueltig) && (b != Bericht.Zwischenzeugnis && b != Bericht.Bescheinigung);
           if (keinHj1 || keinHj2)
           {
             Bemerkung += "<br>Der Unterricht im Fach Sport konnte ";
