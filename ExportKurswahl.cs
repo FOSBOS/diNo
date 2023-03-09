@@ -50,8 +50,9 @@ namespace diNo
       writer = new StreamWriter(stream);
       foreach (Schueler s in list)
       {
-        string klasse = s.getKlasse.Bezeichnung;
-        string username = klasse + "_" + Tools.ErsetzeUmlaute(s.Data.Rufname).Substring(0, 2) + Tools.ErsetzeUmlaute(s.Name);
+        string pref = "FB" + (Zugriff.Instance.Schuljahr - 2000 - Math.Max((sbyte)s.getKlasse.Jahrgangsstufe - 11 ,0)) + "_";
+        string name = s.Name.Substring(1 + s.Name.LastIndexOfAny(new[] { ' ', '-' })) ; 
+        string username = pref + Tools.ErsetzeUmlaute(s.Data.Rufname).Substring(0, 2) + Tools.ErsetzeUmlaute(name);
         if (username.Length > 20)
           username = username.Substring(0, 20); // maximale Länge
 
@@ -60,7 +61,7 @@ namespace diNo
         if (jgstufe < 11) jgstufe = 12; // BOS-Vorklasse
         else if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites && jgstufe < 13) jgstufe++; // Wahl idR für das nächste Schuljahr
         writer.WriteLine(s.Id + sep + qt(username) + sep + qt(pwd) + sep + qt(s.Name.Replace("'", " ")) + sep + qt(s.Data.Rufname) + sep
-          + qt(klasse) + sep + jgstufe + sep + qt(s.Data.Ausbildungsrichtung) + sep + qt(s.Data.Schulart) + sep + qt(s.Data.SchulischeVorbildung));
+          + qt(s.getKlasse.Bezeichnung) + sep + jgstufe + sep + qt(s.Data.Ausbildungsrichtung) + sep + qt(s.Data.Schulart) + sep + qt(s.Data.SchulischeVorbildung));
       }
       writer.Close();
     }
