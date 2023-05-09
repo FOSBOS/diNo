@@ -214,6 +214,9 @@ namespace diNo
       {
         case "E":
         case "EBC": //English Book Club
+        case "Sp":
+        case "F":
+        case "F-f":
           schluessel = "E";
           ug = "34";
           og = "49";
@@ -224,8 +227,8 @@ namespace diNo
         case "VWL":
         case "Wl":
         case "Rl":
-        case "Inf": //Informatik für Sozial-13
-        case "Inf_W_AS": // Informatik Wahlfach für ABU, Soziale (für Inf_T gilt der Matheschlüssel)
+        case "Inf": //Informatik im Wirtschaftszweig
+        case "InfW_SU": // Informatik Wahlfach für ABU, Soziale (für InfW_T gilt der Matheschlüssel)
         case "WAk": // Wirtschaft aktuell
         case "WR": // Wirtschaft und Recht
         case "IBS": // International Business Studies

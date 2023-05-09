@@ -287,7 +287,7 @@ namespace diNo
 
     public void ShowResults()
     {
-      if (FehlendeBerechnung > 0)
+      if (FehlendeBerechnung > 0 && modus!=NotenCheckModus.EigeneNotenVollstaendigkeit)
       {
         string s = (Zugriff.Instance.HatVerwaltungsrechte ? " (" + FehlendeBerechnung + " HjL) " : "");
         MessageBox.Show("Die Gesamtergebnisse " + s + "sind noch nicht bei allen Schülern berechnet.\nEine aussagekräftige Notenprüfung kann erst durchgeführt werden, wenn die Einbringung vorliegt.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);

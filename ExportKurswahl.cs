@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace diNo
 {
@@ -81,6 +82,25 @@ namespace diNo
               writer.WriteLine(s.Id + sep + k.getFach.WPFid + sep + Zugriff.Instance.Schuljahr);
           }
         }
+      }
+      writer.Close();
+    }
+
+    public void ExportSchuelerID(string datei)
+    {
+      FileStream stream = new FileStream(datei, FileMode.Create, FileAccess.Write);
+      writer = new StreamWriter(stream);
+      sep = ";";
+      writer.WriteLine("ID;Nachname;Vorname;Klasse;JgStufe;Zweig;Schulart;SchulischeVorbildung");
+      foreach (Schueler s in list)
+      {
+        int jgstufe = (int)s.getKlasse.Jahrgangsstufe;
+        if (jgstufe < 11) jgstufe = 12; // BOS-Vorklasse
+        else if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites && jgstufe < 13) jgstufe++; // Wahl idR für das nächste Schuljahr
+
+        writer.WriteLine(s.Id + sep + s.Name + sep + s.Data.Rufname + sep + s.getKlasse.Bezeichnung + sep + jgstufe + sep +
+          s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep +s.Data.SchulischeVorbildung);
+
       }
       writer.Close();
     }
