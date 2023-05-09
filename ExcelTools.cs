@@ -4,6 +4,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace diNo
@@ -252,8 +253,17 @@ namespace diNo
     /// <returns></returns>
     public byte? ReadNote(string zelle, Worksheet sheet)
     {
-      string v = ReadValue(sheet, zelle);
-      return !string.IsNullOrEmpty(v) ? Convert.ToByte(v, CultureInfo.CurrentUICulture) : (byte?)null;
+        string v="";
+        try
+        {
+            v = ReadValue(sheet, zelle);
+            return !string.IsNullOrEmpty(v) ? Convert.ToByte(v, CultureInfo.CurrentUICulture) : (byte?)null;
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show("Im Reiter " + sheet.Name + " Zelle " + zelle + " konnte der Wert " + v + " nicht gelesen werden.\n" + e.Message, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);           
+            return null;
+        }
     }
 
     /// <summary>
