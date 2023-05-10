@@ -230,9 +230,14 @@ namespace diNo
     private void HJLSortierung(List<HjLeistung> hjl)
     {
       hjl.Sort((x,y) => y.Punkte.CompareTo(x.Punkte));
-      // ge wird berechnet, wenn die schlechteste gestrichen wird
-      byte ge = (byte)Math.Round(hjl.GetRange(0,hjl.Count-1).Average((x)=> x.Punkte), MidpointRounding.AwayFromZero);
-      
+
+      byte ge = 0; // ge wird berechnet, wenn die schlechteste gestrichen wird
+        try
+        {
+            ge = (byte)Math.Round(hjl.GetRange(0, hjl.Count - 1).Average((x) => x.Punkte), MidpointRounding.AwayFromZero);
+        }
+        catch { } // dann bleibt ge auf 0
+
       foreach (var hj in hjl)
       {        
         hj.Sortierung = hj.Punkte * 16 - ge; // Punkte zählen immer mehr als das GE!
