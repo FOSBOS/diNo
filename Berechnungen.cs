@@ -229,8 +229,6 @@ namespace diNo
     // Belegt das Feld Sortierung in HjL (hjl sind einbringbare Hj eines Faches)
     private void HJLSortierung(List<HjLeistung> hjl)
     {
-      hjl.Sort((x,y) => y.Punkte.CompareTo(x.Punkte));
-
       byte ge = 0; // ge wird berechnet, wenn die schlechteste gestrichen wird
         try
         {
