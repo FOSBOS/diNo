@@ -577,8 +577,8 @@ namespace diNo
         return;
       }
 
-      // Kontrolle, ob unterwegs nichts verloren gegangen ist:
-      if (contr.zeitpunkt > Zeitpunkt.ErstePA)
+      // Kontrolle, ob unterwegs nichts verloren gegangen ist (verwirrt aber Kollegen):
+      if (contr.zeitpunkt > Zeitpunkt.ErstePA && !contr.Kurzfassung && Zugriff.Instance.SiehtAlles)
       {
         notw = schueler.hatVorHj ? 40 : 26;
         eing = schueler.punktesumme.Anzahl(PunktesummeArt.Gesamt);
