@@ -66,7 +66,7 @@ namespace diNo
       Vorname = s.Vorname;
       Rufname = s.Data.Rufname;
       Anrede = s.getHerrFrau();
-      Klasse = s.getKlasse.Bezeichnung;
+      Klasse = b==Bericht.EinserAbi ? s.KlassenBezeichnung : s.getKlasse.Bezeichnung;
 
       var KL = s.getKlasse.Klassenleiter;
       Klassenleiter = KL.NameDienstbezeichnung;
