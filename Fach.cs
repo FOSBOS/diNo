@@ -160,7 +160,7 @@ namespace diNo
     public bool IstSAPFach(Zweig zweig, bool inVorklasse = false)
     {
 
-      if (Kuerzel == "D" || Kuerzel == "E" || Kuerzel == "M") return true;
+      if (Kuerzel == "D" || Kuerzel == "DAZ" || Kuerzel == "E" || Kuerzel == "M") return true;
       else if (!inVorklasse && Typ == FachTyp.Profilfach) // in der Vorklasse gibt es noch kein richtiges Profilfach
       {
         return sort[(int)zweig] == 1; // nur das 1. Profilfach ist SAP-Fach
