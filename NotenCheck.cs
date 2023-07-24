@@ -604,30 +604,48 @@ namespace diNo
       int sumSAP = 0;
       int noteSAP;
       base.Check(schueler);
-      decimal DNote;
-      if (!schueler.Data.IsDNoteNull())
-        DNote = schueler.Data.DNote;
-      else return;
+      if (schueler.punktesumme.Anzahl(PunktesummeArt.Gesamt) == 0) return;
+      double DNote = (17 - (double)schueler.punktesumme.Summe(PunktesummeArt.Gesamt) / schueler.punktesumme.Anzahl(PunktesummeArt.Gesamt)) / 3;
 
-      if (Math.Floor(10 * DNote) > 13) // Schnitt mindestens 1.3
+      if (DNote > 1.3) // Schnitt mindestens 1.3000 (daher neu berechnet)
         return;
+
+      // Maximilianeumsstiftung: Jede eingebrachte Hj + AP >=13
+      // Nicht geprüft wird: Keine der Einzelleistungen(Schulaufgaben sowie der gerundete Durchschnitt der sonstigen Leistungsnachweise) in zwei der vier Abiturprüfungsfächer darf unter 13 Punkten liegen.
+      bool maximilianeum = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn
+        && !schueler.Seminarfachnote.IsGesamtnoteNull() && schueler.Seminarfachnote.Gesamtnote >= 13;
 
       foreach (var fach in noten.alleKurse)
       {
-        if (!fach.getFach.IstSAPFach(schueler.Zweig)) continue;
-        if (fach.getNotenanzahl(Halbjahr.Zweites, Notentyp.APSchriftlich) == 0) return; // Note fehlt
-        noteSAP = fach.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich)[0];
-        if (noteSAP < 10) return; // keine SAP-Note darf einstellig sein.
-        sumSAP += noteSAP;
+        if (maximilianeum)
+        {
+          maximilianeum = maximilianeum && HjMaximilianeum(fach.getHjLeistung(HjArt.Hj1));
+          maximilianeum = maximilianeum && HjMaximilianeum(fach.getHjLeistung(HjArt.Hj2));
+        }
+        if (contr.zeitpunkt > Zeitpunkt.ErstePA)
+        {
+          if (!fach.getFach.IstSAPFach(schueler.Zweig)) continue;
+          if (fach.getNotenanzahl(Halbjahr.Zweites, Notentyp.APSchriftlich) == 0) return; // Note fehlt
+          noteSAP = fach.getNoten(Halbjahr.Zweites, Notentyp.APSchriftlich)[0];
+          if (noteSAP < 10) return; // keine SAP-Note darf einstellig sein.
+          if (fach.getHjLeistung(HjArt.AP).Punkte < 13) maximilianeum = false; // nur Einser im Abi
+          sumSAP += noteSAP;
+        }
       }
-      if (sumSAP >= 50) // Schnitt aller SAP muss mindestens 12,5 Punkte sein
-      {
-        decimal erg = (17 - (decimal)schueler.punktesumme.Summe(PunktesummeArt.Gesamt) / schueler.punktesumme.Anzahl(PunktesummeArt.Gesamt)) / 3;
-        contr.Add(null, "V" +
-          "orschlag für Eliteförderung, Durchschnitt: " + String.Format("{0:0.0000}", erg));
+      if (contr.zeitpunkt == Zeitpunkt.ErstePA || sumSAP >= 50) // Schnitt aller SAP muss mindestens 12,5 Punkte sein
+      {        
+        contr.Add(null, "Vorschlag für Eliteförderung, Durchschnitt: " + String.Format("{0:0.0000}", DNote));
       }
       else
         contr.Add(null, "Durchschnitt: " + DNote + ", aber Prüfung zu 'schlecht'.");
+
+      if (maximilianeum)
+        contr.Add(null, "Erfüllt evtl. die Voraussetzungen für die Maximilianeumsstiftung.");
+    }
+
+    private bool HjMaximilianeum(HjLeistung hj)
+    {
+      return hj!=null && (hj.Status != HjStatus.Einbringen || hj.Punkte >= 13) && hj.Punkte > 0;
     }
   }
 
