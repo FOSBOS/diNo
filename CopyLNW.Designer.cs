@@ -40,19 +40,20 @@
       this.label3 = new System.Windows.Forms.Label();
       this.chkKoord = new System.Windows.Forms.CheckBox();
       this.listAbgegeben = new System.Windows.Forms.ListBox();
-      this.label4 = new System.Windows.Forms.Label();
-      this.cbHalbjahr = new System.Windows.Forms.ComboBox();
-      this.label5 = new System.Windows.Forms.Label();
       this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.menuOpen = new System.Windows.Forms.ToolStripMenuItem();
       this.menuDelete = new System.Windows.Forms.ToolStripMenuItem();
+      this.label4 = new System.Windows.Forms.Label();
+      this.cbHalbjahr = new System.Windows.Forms.ComboBox();
+      this.label5 = new System.Windows.Forms.Label();
+      this.chkNachtermin = new System.Windows.Forms.CheckBox();
       this.contextMenu.SuspendLayout();
       this.SuspendLayout();
       // 
       // btnAngabe
       // 
       this.btnAngabe.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.btnAngabe.Location = new System.Drawing.Point(47, 405);
+      this.btnAngabe.Location = new System.Drawing.Point(47, 429);
       this.btnAngabe.Name = "btnAngabe";
       this.btnAngabe.Size = new System.Drawing.Size(167, 66);
       this.btnAngabe.TabIndex = 5;
@@ -128,7 +129,7 @@
       // btnLsg
       // 
       this.btnLsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.btnLsg.Location = new System.Drawing.Point(272, 405);
+      this.btnLsg.Location = new System.Drawing.Point(272, 429);
       this.btnLsg.Name = "btnLsg";
       this.btnLsg.Size = new System.Drawing.Size(170, 66);
       this.btnLsg.TabIndex = 6;
@@ -140,7 +141,7 @@
       // 
       this.label3.AutoSize = true;
       this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label3.Location = new System.Drawing.Point(44, 484);
+      this.label3.Location = new System.Drawing.Point(44, 508);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(382, 34);
       this.label3.TabIndex = 24;
@@ -166,6 +167,30 @@
       this.listAbgegeben.Name = "listAbgegeben";
       this.listAbgegeben.Size = new System.Drawing.Size(395, 121);
       this.listAbgegeben.TabIndex = 7;
+      // 
+      // contextMenu
+      // 
+      this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuOpen,
+            this.menuDelete});
+      this.contextMenu.Name = "contextMenu";
+      this.contextMenu.ShowImageMargin = false;
+      this.contextMenu.Size = new System.Drawing.Size(99, 48);
+      // 
+      // menuOpen
+      // 
+      this.menuOpen.Name = "menuOpen";
+      this.menuOpen.Size = new System.Drawing.Size(98, 22);
+      this.menuOpen.Text = "Anzeigen";
+      this.menuOpen.Visible = false;
+      this.menuOpen.Click += new System.EventHandler(this.menuOpen_Click);
+      // 
+      // menuDelete
+      // 
+      this.menuDelete.Name = "menuDelete";
+      this.menuDelete.Size = new System.Drawing.Size(98, 22);
+      this.menuDelete.Text = "Löschen";
+      this.menuDelete.Click += new System.EventHandler(this.menuDelete_Click);
       // 
       // label4
       // 
@@ -198,35 +223,23 @@
       this.label5.TabIndex = 29;
       this.label5.Text = "Halbjahr";
       // 
-      // contextMenu
+      // chkNachtermin
       // 
-      this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuOpen,
-            this.menuDelete});
-      this.contextMenu.Name = "contextMenu";
-      this.contextMenu.ShowImageMargin = false;
-      this.contextMenu.Size = new System.Drawing.Size(99, 48);
-      // 
-      // menuOpen
-      // 
-      this.menuOpen.Name = "menuOpen";
-      this.menuOpen.Size = new System.Drawing.Size(123, 22);
-      this.menuOpen.Text = "Anzeigen";
-      this.menuOpen.Visible = false;
-      this.menuOpen.Click += new System.EventHandler(this.menuOpen_Click);
-      // 
-      // menuDelete
-      // 
-      this.menuDelete.Name = "menuDelete";
-      this.menuDelete.Size = new System.Drawing.Size(155, 22);
-      this.menuDelete.Text = "Löschen";
-      this.menuDelete.Click += new System.EventHandler(this.menuDelete_Click);
+      this.chkNachtermin.AutoSize = true;
+      this.chkNachtermin.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.chkNachtermin.Location = new System.Drawing.Point(47, 384);
+      this.chkNachtermin.Name = "chkNachtermin";
+      this.chkNachtermin.Size = new System.Drawing.Size(99, 21);
+      this.chkNachtermin.TabIndex = 30;
+      this.chkNachtermin.Text = "Nachtermin";
+      this.chkNachtermin.UseVisualStyleBackColor = true;
       // 
       // CopyLNW
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(493, 544);
+      this.ClientSize = new System.Drawing.Size(493, 566);
+      this.Controls.Add(this.chkNachtermin);
       this.Controls.Add(this.cbHalbjahr);
       this.Controls.Add(this.label5);
       this.Controls.Add(this.label4);
@@ -268,5 +281,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenu;
         private System.Windows.Forms.ToolStripMenuItem menuOpen;
         private System.Windows.Forms.ToolStripMenuItem menuDelete;
+        private System.Windows.Forms.CheckBox chkNachtermin;
     }
 }
