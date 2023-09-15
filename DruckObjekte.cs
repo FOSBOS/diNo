@@ -66,7 +66,7 @@ namespace diNo
       Vorname = s.Vorname;
       Rufname = s.Data.Rufname;
       Anrede = s.getHerrFrau();
-      Klasse = s.getKlasse.Bezeichnung;
+      Klasse = b==Bericht.EinserAbi ? s.KlassenBezeichnung : s.getKlasse.Bezeichnung;
 
       var KL = s.getKlasse.Klassenleiter;
       Klassenleiter = KL.NameDienstbezeichnung;
@@ -304,7 +304,7 @@ namespace diNo
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
       if (jg == 11 && b == Bericht.Jahreszeugnis)
       {
-        Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in Jahrgangsstufe 11 in außerschulischen Betrieben bzw.schuleigenen Werkstätten abgeleistet.";
+        Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.";
         Bemerkung += "<br><br>Bemerkungen:";
       }
       else if (b != Bericht.Abiturzeugnis)
@@ -316,22 +316,21 @@ namespace diNo
         Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden."; // nicht in SF
       if (s.Data.LRSStoerung)
         Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
-      if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
+      
+      var sport = s.getNoten.FindeSportnote();
+      if (sport != null)
       {
-        var sport = s.getNoten.FindeSportnote();
-        bool ganzBefreit = (sport.getHjLeistung(HjArt.Hj1) == null || sport.getHjLeistung(HjArt.Hj1).Status == HjStatus.Ungueltig)
-          && (sport.getHjLeistung(HjArt.Hj2) == null || sport.getHjLeistung(HjArt.Hj2).Status == HjStatus.Ungueltig);
-        Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") 
-          + " war vom Unterricht im Fach Sport " + (ganzBefreit ? "" : "teilweise ") + "befreit.";
-      }
-      else
-      {
-        var sport = s.getNoten.FindeSportnote();
-        if (sport != null)
+        bool keinHj1 = sport.getHjLeistung(HjArt.Hj1) == null || sport.getHjLeistung(HjArt.Hj1).Status == HjStatus.Ungueltig;
+        bool keinHj2 = (sport.getHjLeistung(HjArt.Hj2) == null || sport.getHjLeistung(HjArt.Hj2).Status == HjStatus.Ungueltig) && (b != Bericht.Zwischenzeugnis && b != Bericht.Bescheinigung);          
+
+        if (keinHj1 || keinHj2)
         {
-          bool keinHj1 = sport.getHjLeistung(HjArt.Hj1) == null || sport.getHjLeistung(HjArt.Hj1).Status == HjStatus.Ungueltig;
-          bool keinHj2 = (sport.getHjLeistung(HjArt.Hj2) == null || sport.getHjLeistung(HjArt.Hj2).Status == HjStatus.Ungueltig) && (b != Bericht.Zwischenzeugnis && b != Bericht.Bescheinigung);
-          if (keinHj1 || keinHj2)
+          if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
+          {
+            Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin")
+              + " war vom Unterricht im Fach Sport " + (keinHj1 && keinHj2 ? "" : "teilweise ") + "befreit.";
+          }
+          else
           {
             Bemerkung += "<br>Der Unterricht im Fach Sport konnte ";
             if (!keinHj1) Bemerkung += "im 2. Halbjahr ";

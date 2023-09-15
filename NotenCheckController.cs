@@ -74,14 +74,11 @@ namespace diNo
       if ((azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)
         && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         alleNotenchecks.Add(new FpABestandenChecker(this));
-      if ((azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
-      {
-        //alleNotenchecks.Add(new AbiergebnisChecker(this));
-        alleNotenchecks.Add(new EliteChecker(this));
-      }
+
       if ((azeitpunkt == Zeitpunkt.ErstePA || azeitpunkt == Zeitpunkt.ZweitePA || azeitpunkt == Zeitpunkt.DrittePA) && modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
       {
         alleNotenchecks.Add(new EinbringungsChecker(this));
+        alleNotenchecks.Add(new EliteChecker(this));
       }
       if (modus != NotenCheckModus.EigeneNotenVollstaendigkeit)
         alleNotenchecks.Add(new UnterpunktungChecker(this));

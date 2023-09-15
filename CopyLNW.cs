@@ -75,6 +75,7 @@ namespace diNo
       {
         dat += cbArt.Text + cbNummer.Text;
         if (chkKoord.Checked) dat += "_koordiniert";
+        if (chkNachtermin.Checked) dat += "_Nachtermin";
 
         dat += "_" + art + typ;
       }

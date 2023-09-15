@@ -87,6 +87,13 @@ namespace diNo
               + schueler.Data.MittlereReifeDeutschnote + Sep
               + schueler.Data.MittlereReifeEnglischnote + Sep
               + schueler.Data.MittlereReifeMathenote);
+
+          // Legastheniezuschläge
+          if (schueler.Data.LRSZuschlagMax>0)
+            writer.WriteLine(schueler.Id + Sep + "-1" + Sep + "0" + Sep
+              + schueler.Data.LRSZuschlagMin + Sep
+              + schueler.Data.LRSZuschlagMax + Sep
+              + "0");
         }
       }
     }
@@ -164,7 +171,25 @@ namespace diNo
             {
               writer.WriteLine("NotenRS: " + orignal);              
             }
-            continue;
+            continue; // nächste Zeile
+          }
+
+          if (line[2] == "-1") // LRS-Zuschläge (frühere Eingabe)
+          {
+            try
+            {
+              byte min, max;
+              min = byte.Parse(line[3]);
+              max = byte.Parse(line[4]);              
+              schueler.Data.LRSZuschlagMin = min;
+              schueler.Data.LRSZuschlagMax = max;
+              schueler.Save();
+            }
+            catch
+            {
+              writer.WriteLine("LRS: " + orignal);
+            }
+            continue; // nächste Zeile
           }
 
           if (jgSchueler <= Jahrgangsstufe.Elf)

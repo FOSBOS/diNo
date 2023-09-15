@@ -19,6 +19,7 @@ namespace diNo
     private List<Kurs> _eigeneKurse = null; // alle Kurse, die der angemeldete Lehrer unterrichtet
     public Klasse eigeneKlasse { get; private set; } // Verweis auf die Klasse, in der der User Klassenleiter ist
     public Dictionary<int, Schueler> markierteSchueler { get; private set; } // Schüler, die z.B. beim NotenCheck eine Meldung erzeugt haben
+    public Vorkommnisart selectedVorkommnisart;
     public int AnzahlSchueler { get; private set; }
 
     // folgende Nachschlagelisten dienen v.a. der Performance, damit die Objekte insgesamt nur 1x im Speicher angelegt werden müssen!
