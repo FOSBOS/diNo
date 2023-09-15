@@ -189,6 +189,8 @@ namespace diNo
       row.AnredeEltern2 = cleanArray[anredeEltern2Spalte];
       row.VerwandtschaftsbezeichnungEltern2 = cleanArray[verwandtschaftsbezeichnungEltern2Spalte];
       row.EintrittJahrgangsstufe = cleanArray[eintrittJgstSpalte];
+      row.LRSZuschlagMin = 0;
+      row.LRSZuschlagMax = 0;
 
       DateTime? eintrittDatum = ParseDate(cleanArray[eintrittDatumSpalte]);
       if (eintrittDatum == null)
