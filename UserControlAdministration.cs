@@ -1,4 +1,5 @@
 ﻿using diNo.diNoDataSetTableAdapters;
+using log4net;
 using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
@@ -148,6 +149,7 @@ namespace diNo
 
     private void btnSendMail_Click(object sender, EventArgs e)
     {
+      if (MessageBox.Show("Die Dateien werden versendet!", "Notendateien versenden", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       Cursor = Cursors.WaitCursor;
       try
       {
@@ -171,7 +173,7 @@ namespace diNo
           }
           catch
           {
-            ;// Lehrer unterrichtet nicht.
+            LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType).Warn("Senden an " + l.Kuerzel + " fehlgeschlagen.");// Lehrer unterrichtet nicht.
           }
         }
       }
