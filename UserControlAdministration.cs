@@ -125,7 +125,6 @@ namespace diNo
 
     private void btnImportKlassenleiter_Click(object sender, EventArgs e)
     {
-      if (MessageBox.Show("Die Exceldatei muss folgendes Format haben:\nDaten sind ab Zeile 2 vorhanden.\nSpalte C enthält das Lehrerkürzel, Spalte D die Klasse.", "Import Klassenleiter", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       new ImportKlassenleiter();
     }
 

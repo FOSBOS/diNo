@@ -220,7 +220,7 @@ namespace diNo
         return Jahrgangsstufe.Vorkurs;
       }
 
-      if (jahrgangsstufe == "IV")
+      if (jahrgangsstufe.ToUpper().Contains("IV"))
       {
         return Jahrgangsstufe.IntVk;
       }

@@ -33,6 +33,7 @@
       this.btnEinserAbi = new System.Windows.Forms.Button();
       this.btnSelect = new System.Windows.Forms.Button();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
+      this.chkRptDruck = new System.Windows.Forms.CheckBox();
       this.gbUnterschrift = new System.Windows.Forms.GroupBox();
       this.opGez = new System.Windows.Forms.RadioButton();
       this.opStv = new System.Windows.Forms.RadioButton();
@@ -84,7 +85,6 @@
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
       this.btnCopy11 = new System.Windows.Forms.Button();
-      this.chkRptDruck = new System.Windows.Forms.CheckBox();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -154,6 +154,17 @@
       this.groupBoxDrucken.TabIndex = 3;
       this.groupBoxDrucken.TabStop = false;
       this.groupBoxDrucken.Text = "Drucken";
+      // 
+      // chkRptDruck
+      // 
+      this.chkRptDruck.AutoSize = true;
+      this.chkRptDruck.Location = new System.Drawing.Point(21, 199);
+      this.chkRptDruck.Name = "chkRptDruck";
+      this.chkRptDruck.Size = new System.Drawing.Size(162, 17);
+      this.chkRptDruck.TabIndex = 31;
+      this.chkRptDruck.Text = "Mit dem Reportviewer öffnen";
+      this.chkRptDruck.UseVisualStyleBackColor = true;
+      this.chkRptDruck.CheckedChanged += new System.EventHandler(this.chkRptDruck_CheckedChanged);
       // 
       // gbUnterschrift
       // 
@@ -383,7 +394,7 @@
       this.btnImportKlassenleiter.Name = "btnImportKlassenleiter";
       this.btnImportKlassenleiter.Size = new System.Drawing.Size(182, 23);
       this.btnImportKlassenleiter.TabIndex = 6;
-      this.btnImportKlassenleiter.Text = "Import Klassenleiter aus Excel";
+      this.btnImportKlassenleiter.Text = "Import Klassenleiter";
       this.btnImportKlassenleiter.UseVisualStyleBackColor = true;
       this.btnImportKlassenleiter.Click += new System.EventHandler(this.btnImportKlassenleiter_Click);
       // 
@@ -705,17 +716,6 @@
       this.btnCopy11.Text = "Corona-11/1 nach 11/2 kopieren";
       this.btnCopy11.UseVisualStyleBackColor = true;
       this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
-      // 
-      // chkRptDruck
-      // 
-      this.chkRptDruck.AutoSize = true;
-      this.chkRptDruck.Location = new System.Drawing.Point(21, 199);
-      this.chkRptDruck.Name = "chkRptDruck";
-      this.chkRptDruck.Size = new System.Drawing.Size(162, 17);
-      this.chkRptDruck.TabIndex = 31;
-      this.chkRptDruck.Text = "Mit dem Reportviewer öffnen";
-      this.chkRptDruck.UseVisualStyleBackColor = true;
-      this.chkRptDruck.CheckedChanged += new System.EventHandler(this.chkRptDruck_CheckedChanged);
       // 
       // UserControlAdministration
       // 

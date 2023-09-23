@@ -74,10 +74,10 @@ namespace diNo
             {
               if (fpaZeile.IsGesamtNull())
                 continue;
-              
-              writer.WriteLine(schueler.Id + Sep + fpa.Id + Sep + "11" + Sep + fpaZeile.Gesamt + Sep + fpaZeile.Halbjahr + Sep 
+
+              writer.WriteLine(schueler.Id + Sep + fpa.Id + Sep + "11" + Sep + fpaZeile.Gesamt + Sep + fpaZeile.Halbjahr + Sep
                 + fpaZeile.Gesamt + Sep + fpaZeile.Gesamt + Sep + schueler.NameVorname + Sep + fpa.Kuerzel);
-  
+
             }
           }
 
@@ -89,7 +89,7 @@ namespace diNo
               + schueler.Data.MittlereReifeMathenote);
 
           // Legastheniezuschläge
-          if (schueler.Data.LRSZuschlagMax>0)
+          if (schueler.Data.LRSZuschlagMax > 0)
             writer.WriteLine(schueler.Id + Sep + "-1" + Sep + "0" + Sep
               + schueler.Data.LRSZuschlagMin + Sep
               + schueler.Data.LRSZuschlagMax + Sep
@@ -128,8 +128,6 @@ namespace diNo
     public static void ImportiereHJLeistungen(string fileName)
     {
       HjLeistungTableAdapter ada = new HjLeistungTableAdapter();
-      //FachTableAdapter fta = new FachTableAdapter();
-      //FpaTableAdapter fpata = new FpaTableAdapter();
       using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(stream))
       using (StreamWriter writer = new StreamWriter(new FileStream(fileName + "_err.txt", FileMode.Create, FileAccess.ReadWrite)))
@@ -154,7 +152,7 @@ namespace diNo
 
           Schueler schueler = new Schueler(schuelerGefunden[0]);
           Jahrgangsstufe jgSchueler = schueler.getKlasse.Jahrgangsstufe;
-          if (line[2]=="0") // Noten aus der RS importieren (frühere Eingabe)
+          if (line[1] == "0") // Noten aus der RS importieren (frühere Eingabe)
           {
             try
             {
@@ -169,18 +167,18 @@ namespace diNo
             }
             catch
             {
-              writer.WriteLine("NotenRS: " + orignal);              
+              writer.WriteLine("NotenRS: " + orignal);
             }
             continue; // nächste Zeile
           }
 
-          if (line[2] == "-1") // LRS-Zuschläge (frühere Eingabe)
+          if (line[1] == "-1") // LRS-Zuschläge (frühere Eingabe)
           {
             try
             {
               byte min, max;
               min = byte.Parse(line[3]);
-              max = byte.Parse(line[4]);              
+              max = byte.Parse(line[4]);
               schueler.Data.LRSZuschlagMin = min;
               schueler.Data.LRSZuschlagMax = max;
               schueler.Save();
@@ -254,26 +252,6 @@ namespace diNo
           }*/
         }
       }
-    }
-
-
-    /// <summary>
-    /// Sucht nach dem Fach in der Datenbank und liefert die Id zurück
-    /// Wirft eine Exception wenn das Fach nicht gefunden werden kann
-    /// </summary>
-    /// <param name="fta">Fach Table Adapter.</param>
-    /// <param name="fachKuerzel">Das eingelesene Fächerkürzel.</param>
-    /// <returns>Die Id des Faches.</returns>
-    private static int GetFachId(FachTableAdapter fta, string fachKuerzel)
-    {
-      var ergebnisFachSuche = fta.GetDataByKuerzel(fachKuerzel);
-      if (ergebnisFachSuche == null || ergebnisFachSuche.Count == 0)
-      {
-        throw new InvalidDataException("ungültiges Fachkürzel in Halbjahresleistung " + fachKuerzel);
-      }
-
-      int fachId = ergebnisFachSuche[0].Id;
-      return fachId;
     }
   }
 }

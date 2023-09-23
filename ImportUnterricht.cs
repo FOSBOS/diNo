@@ -41,7 +41,7 @@ namespace diNo
           string f = line[6].Trim(new char[] { '"', ' ' , '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' }); // Kursnummern weg
           if (string.IsNullOrEmpty(kl) || string.IsNullOrEmpty(le) || string.IsNullOrEmpty(f)) continue;
 
-          foreach (var substr in new string[] { "FP", "FBB", "-Fö", "GK_", "GK-", "_Ü", "-Ü", "CHÜ", "PRAK" , "KL", "SF", "AWU", "PROJ" })
+          foreach (var substr in new string[] { "FP", "FBB", "-Fö", "GK_", "GK-", "_Ü", "-Ü", "BK-", "CHÜ", "PRAK" , "KL", "SF", "AWU", "PROJ", "SOZP" })
           { // diese Fächer werden ohne Noten unterrichtet
             if (f.ToUpper().Contains(substr))
             {
