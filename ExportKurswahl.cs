@@ -66,8 +66,7 @@ namespace diNo
         if (jgstufe < 11) jgstufe = 12; // BOS-Vorklasse
         else if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites && jgstufe < 13) jgstufe++; // Wahl idR für das nächste Schuljahr
         writer.WriteLine(s.Id + sep + qt(username) + sep + qt(pwd) + sep + qt(s.Name.Replace("'", " ")) + sep + qt(s.Data.Rufname) + sep
-          + qt(s.getKlasse.Bezeichnung) + sep + jgstufe + sep + qt(s.Data.Ausbildungsrichtung) + sep + qt(s.Data.Schulart) + sep + qt(s.Data.SchulischeVorbildung)
-          + sep + qt(getHash(s)));
+          + qt(s.getKlasse.Bezeichnung) + sep + jgstufe + sep + qt(s.Data.Ausbildungsrichtung) + sep + qt(s.Data.Schulart) + sep + qt(s.Data.SchulischeVorbildung));
       }
       writer.Close();
     }
@@ -104,29 +103,12 @@ namespace diNo
         else if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites && jgstufe < 13) jgstufe++; // Wahl idR für das nächste Schuljahr
 
         writer.WriteLine(s.Id + sep + s.Name + sep + s.Data.Rufname + sep + s.getKlasse.Bezeichnung + sep + jgstufe + sep +
-          s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep +s.Data.SchulischeVorbildung);
+          s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep + s.Data.SchulischeVorbildung);
 
       }
       writer.Close();
-    }
-
-    public string getHash(Schueler s)
-    {
-      return sha256(s.Id + s.Data.MailSchule + s.Data.KlasseId + s.Data.Rufname);
-    }
-
-    private string sha256(string randomString)
-    {
-      var crypt = new System.Security.Cryptography.SHA256Managed();
-      var hash = new System.Text.StringBuilder();
-      byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(randomString));
-      foreach (byte theByte in crypto)
-      {
-        hash.Append(theByte.ToString("x2"));
-      }
-      return hash.ToString();
-    }
-
+    }   
+       
     #region IDisposable Support
     private bool disposedValue = false; // Dient zur Erkennung redundanter Aufrufe.
 
