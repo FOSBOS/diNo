@@ -511,6 +511,11 @@ namespace diNo
     {
       Zugriff.Instance.RptDruck = chkRptDruck.Checked;
     }
+
+    private void btnImportLoginnamen_Click(object sender, EventArgs e)
+    {
+      new ImportLoginnamen();
+    }
   }
 }
 

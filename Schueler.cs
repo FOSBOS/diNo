@@ -4,6 +4,7 @@ using diNo.Properties;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace diNo
 {
@@ -859,6 +860,13 @@ public int APFaktor
       return s;
     }
 
+    public string getLoginname()
+    {
+      string s = Data.MailSchule;
+      int i = s.IndexOf("@");
+      if (i < 1) return "FB_Unbekannt";
+      return s.Substring(0,i-1);
+    }    
   }
 
   public static class SchulnummernHolder

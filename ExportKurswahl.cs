@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace diNo
@@ -51,18 +52,22 @@ namespace diNo
       writer = new StreamWriter(stream);
       foreach (Schueler s in list)
       {
+        /*
         string pref = "FB" + (Zugriff.Instance.Schuljahr - 2000 - Math.Max((sbyte)s.getKlasse.Jahrgangsstufe - 11 ,0)) + "_";
         string name = s.Name.Substring(1 + s.Name.LastIndexOfAny(new[] { ' ', '-' })) ; 
         string username = pref + Tools.ErsetzeUmlaute(s.Data.Rufname).Substring(0, 2) + Tools.ErsetzeUmlaute(name);
         if (username.Length > 20)
           username = username.Substring(0, 20); // maximale Länge
-
+        */
+        string username = s.getLoginname();
         string pwd = "FB-" + s.Data.Geburtsdatum.ToString("yyyyMMdd");
+
         int jgstufe = (int)s.getKlasse.Jahrgangsstufe;
         if (jgstufe < 11) jgstufe = 12; // BOS-Vorklasse
         else if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites && jgstufe < 13) jgstufe++; // Wahl idR für das nächste Schuljahr
         writer.WriteLine(s.Id + sep + qt(username) + sep + qt(pwd) + sep + qt(s.Name.Replace("'", " ")) + sep + qt(s.Data.Rufname) + sep
-          + qt(s.getKlasse.Bezeichnung) + sep + jgstufe + sep + qt(s.Data.Ausbildungsrichtung) + sep + qt(s.Data.Schulart) + sep + qt(s.Data.SchulischeVorbildung));
+          + qt(s.getKlasse.Bezeichnung) + sep + jgstufe + sep + qt(s.Data.Ausbildungsrichtung) + sep + qt(s.Data.Schulart) + sep + qt(s.Data.SchulischeVorbildung)
+          + sep + qt(getHash(s)));
       }
       writer.Close();
     }
@@ -103,6 +108,23 @@ namespace diNo
 
       }
       writer.Close();
+    }
+
+    public string getHash(Schueler s)
+    {
+      return sha256(s.Id + s.Data.MailSchule + s.Data.KlasseId + s.Data.Rufname);
+    }
+
+    private string sha256(string randomString)
+    {
+      var crypt = new System.Security.Cryptography.SHA256Managed();
+      var hash = new System.Text.StringBuilder();
+      byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(randomString));
+      foreach (byte theByte in crypto)
+      {
+        hash.Append(theByte.ToString("x2"));
+      }
+      return hash.ToString();
     }
 
     #region IDisposable Support

@@ -51,6 +51,7 @@
       this.btnCreateExcels = new System.Windows.Forms.Button();
       this.exportNoten = new System.Windows.Forms.Button();
       this.groupBoxImport = new System.Windows.Forms.GroupBox();
+      this.btnImportLoginnamen = new System.Windows.Forms.Button();
       this.btnImportCheck = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
       this.btnReadWahlpflichtfaecher = new System.Windows.Forms.Button();
@@ -345,6 +346,7 @@
       // 
       // groupBoxImport
       // 
+      this.groupBoxImport.Controls.Add(this.btnImportLoginnamen);
       this.groupBoxImport.Controls.Add(this.btnImportCheck);
       this.groupBoxImport.Controls.Add(this.label3);
       this.groupBoxImport.Controls.Add(this.btnReadWahlpflichtfaecher);
@@ -358,6 +360,16 @@
       this.groupBoxImport.TabIndex = 3;
       this.groupBoxImport.TabStop = false;
       this.groupBoxImport.Text = "Import (in dieser Reihenfolge)";
+      // 
+      // btnImportLoginnamen
+      // 
+      this.btnImportLoginnamen.Location = new System.Drawing.Point(120, 135);
+      this.btnImportLoginnamen.Name = "btnImportLoginnamen";
+      this.btnImportLoginnamen.Size = new System.Drawing.Size(82, 23);
+      this.btnImportLoginnamen.TabIndex = 10;
+      this.btnImportLoginnamen.Text = "Mail (Schule)";
+      this.btnImportLoginnamen.UseVisualStyleBackColor = true;
+      this.btnImportLoginnamen.Click += new System.EventHandler(this.btnImportLoginnamen_Click);
       // 
       // btnImportCheck
       // 
@@ -384,7 +396,7 @@
       this.btnReadWahlpflichtfaecher.Name = "btnReadWahlpflichtfaecher";
       this.btnReadWahlpflichtfaecher.Size = new System.Drawing.Size(182, 23);
       this.btnReadWahlpflichtfaecher.TabIndex = 7;
-      this.btnReadWahlpflichtfaecher.Text = "Wahlpflichtfächer (GPU015)";
+      this.btnReadWahlpflichtfaecher.Text = "Wahlpflichtfächer";
       this.btnReadWahlpflichtfaecher.UseVisualStyleBackColor = true;
       this.btnReadWahlpflichtfaecher.Click += new System.EventHandler(this.btnReadWahlpflichtfaecher_Click);
       // 
@@ -392,9 +404,9 @@
       // 
       this.btnImportKlassenleiter.Location = new System.Drawing.Point(20, 135);
       this.btnImportKlassenleiter.Name = "btnImportKlassenleiter";
-      this.btnImportKlassenleiter.Size = new System.Drawing.Size(182, 23);
+      this.btnImportKlassenleiter.Size = new System.Drawing.Size(87, 23);
       this.btnImportKlassenleiter.TabIndex = 6;
-      this.btnImportKlassenleiter.Text = "Import Klassenleiter";
+      this.btnImportKlassenleiter.Text = "Klassenleiter";
       this.btnImportKlassenleiter.UseVisualStyleBackColor = true;
       this.btnImportKlassenleiter.Click += new System.EventHandler(this.btnImportKlassenleiter_Click);
       // 
@@ -812,5 +824,6 @@
     private System.Windows.Forms.Button btnSchnitte;
     private System.Windows.Forms.Button btnImportCheck;
         private System.Windows.Forms.CheckBox chkRptDruck;
+        private System.Windows.Forms.Button btnImportLoginnamen;
     }
 }
