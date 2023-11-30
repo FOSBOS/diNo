@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Forms;
 
 namespace diNo
@@ -164,7 +165,13 @@ namespace diNo
     /// <param name="sender">Der Sender des Events.</param>
     void notenReader_OnStatusChange(Object sender, StatusChangedEventArgs e)
     {
-      toolStripStatusLabel1.Text = e.Meldung;
+        try
+        {
+            toolStripStatusLabel1.Text = e.Meldung;
+        }
+        catch { 
+           ;
+        }
     }
 
     // bei Click auf den Druck-Button öffnet sich das Kontextmenü mit verschiedenen Berichten

@@ -91,7 +91,7 @@ namespace diNo
 
     private void Send (Schueler s, string datei)
     {
-      MailTo = Tools.ErsetzeUmlaute(s.benutzterVorname + "." + s.Name + "@fosbos-kempten.de");
+      MailTo = s.Data.MailSchule;
       MailToNachname = s.Name;
       MailToVorname = s.benutzterVorname;
       Send(new string[] { datei });
