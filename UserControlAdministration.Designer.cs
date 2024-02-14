@@ -159,11 +159,12 @@
       // chkRptDruck
       // 
       this.chkRptDruck.AutoSize = true;
-      this.chkRptDruck.Location = new System.Drawing.Point(21, 199);
+      this.chkRptDruck.Location = new System.Drawing.Point(21, 184);
       this.chkRptDruck.Name = "chkRptDruck";
-      this.chkRptDruck.Size = new System.Drawing.Size(162, 17);
+      this.chkRptDruck.Size = new System.Drawing.Size(165, 43);
       this.chkRptDruck.TabIndex = 31;
-      this.chkRptDruck.Text = "Mit dem Reportviewer öffnen";
+      this.chkRptDruck.Text = "Mit dem Reportviewer öffnen \r\n(für Zeugnisse, Bildschirm-\r\nAuflösung auf 100% ste" +
+    "llen)";
       this.chkRptDruck.UseVisualStyleBackColor = true;
       this.chkRptDruck.CheckedChanged += new System.EventHandler(this.chkRptDruck_CheckedChanged);
       // 
@@ -251,7 +252,7 @@
       // 
       // btnKlassenliste
       // 
-      this.btnKlassenliste.Location = new System.Drawing.Point(21, 156);
+      this.btnKlassenliste.Location = new System.Drawing.Point(21, 146);
       this.btnKlassenliste.Name = "btnKlassenliste";
       this.btnKlassenliste.Size = new System.Drawing.Size(132, 23);
       this.btnKlassenliste.TabIndex = 4;

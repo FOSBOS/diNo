@@ -122,7 +122,7 @@ namespace diNo
     {
       // Datei sichern
       string verz = Zugriff.Instance.getString(GlobaleStrings.Backuppfad);
-      if (!string.IsNullOrEmpty(verz))
+      if (!string.IsNullOrEmpty(verz) && !Zugriff.Instance.IsTestDB)
       {
         try
         {
