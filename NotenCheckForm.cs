@@ -94,7 +94,7 @@ namespace diNo
 
 
       if ((NotenCheckModus)comboBoxCheckModus.SelectedValue == NotenCheckModus.KonferenzVorbereiten)
-        Zugriff.Instance.SchuelerRep.Clear(); // Berechnungsdaten neu laden
+        Zugriff.Instance.Refresh();
     }
 
     private Zeitpunkt GetZeitpunkt()

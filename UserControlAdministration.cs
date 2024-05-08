@@ -314,6 +314,9 @@ namespace diNo
         }
         s.Data.Berechungsstatus = (byte)Berechnungsstatus.Unberechnet;
         s.Save();
+        var ta = new PunktesummeTableAdapter();
+        ta.DeleteBySchuelerId(schueler.Id); // berechnete Punktesumme löschen
+        s.Refresh();
       }
       RefreshNotenbogen();
     }

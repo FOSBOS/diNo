@@ -63,6 +63,7 @@ namespace diNo
 
     public void RefreshTabs()
     {
+      schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); 
       SetSchueler();
       //userControlSchueleransicht1.Schueler = null;
       //treeListView1_SelectedIndexChanged(this, null);
@@ -95,19 +96,29 @@ namespace diNo
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
     {
+      int id=0;
       Zugriff.Instance.markierteSchueler.Clear();
       if (treeListView1.SelectedObject is Schueler)
-        schueler = treeListView1.SelectedObject as Schueler;
+      {
+        id = (treeListView1.SelectedObject as Schueler).Id; // nur Id auslesen, falls Refresh das Objekt verändert hat.
 
+        if ((schueler == null) || (schueler.Id != id))
+        {
+          schueler = Zugriff.Instance.SchuelerRep.Find(id);
+          SetSchueler();
+        }
+      }
+
+      /*
       if (schueler != null)
       {
         // aus irgendwelchen Gründen kommt das Ereignis beim Wechseln des Schülers zwei Mal,
         // davon einmal mit dem alten Schüler (sinnloser Refresh, sollte verhindert werden?)
         if (this.userControlSchueleransicht1.Schueler == null || this.userControlSchueleransicht1.Schueler.Id != schueler.Id)
         {
-          SetSchueler();
+          //
         }
-      }      
+      }     */ 
     }
 
     private void Klassenansicht_Load(object sender, EventArgs e)
@@ -121,12 +132,7 @@ namespace diNo
       Zugriff.Instance.Refresh(chkNurAktive.Checked);
       this.treeListView1.Roots = Zugriff.Instance.Klassen;
       this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
-      this.treeListView1.ChildrenGetter = delegate (object x) { return ((Klasse)x).Schueler; };
-      /*
-      nameLabel.Text = "";
-      klasseLabel.Text = "";
-      pictureBoxImage.Image = null; 
-      */
+      this.treeListView1.ChildrenGetter = delegate (object x) { return ((Klasse)x).Schueler; };      
       toolStripStatusLabel1.Text = "";
     }
 
@@ -146,7 +152,8 @@ namespace diNo
         {
           new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
         }
-
+        
+        Zugriff.Instance.Refresh();
         if (schueler != null)
         {
           schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); // neues Objekt setzen

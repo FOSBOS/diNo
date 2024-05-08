@@ -42,6 +42,7 @@ namespace diNo
     public bool RptDruck = false;
     public bool IsFBKempten = false;
     public bool IsTestDB { get; private set; }
+    private bool NurAktive = true;
 
     private Zugriff()
     {
@@ -113,8 +114,14 @@ namespace diNo
       }
     }
 
+    public void Refresh()
+    {
+      Refresh(NurAktive);
+    }
+
     public void Refresh(bool nurAktive)
     {
+      NurAktive = nurAktive;
       SchuelerRep.Clear();
       KlassenRep.Clear();
       KursRep.Clear();
