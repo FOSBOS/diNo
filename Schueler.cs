@@ -581,8 +581,8 @@ public int APFaktor
       Status = Schuelerstatus.Abgemeldet;
       data.Austrittsdatum = when;
       Save();
-      if (Wiederholt())
-        AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen, "");
+      //if (Wiederholt())  
+      //  AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen, ""); // wird aus Gefahr der Abweisung generiert.
     }
 
     /// <summary>
