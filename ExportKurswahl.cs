@@ -63,7 +63,7 @@ namespace diNo
         string pwd = "FB-" + s.Data.Geburtsdatum.ToString("yyyyMMdd");
 
         int jgstufe = (int)s.getKlasse.Jahrgangsstufe;
-        if (jgstufe < 11) jgstufe = 12; // BOS-Vorklasse
+        if (jgstufe < 11 && s.getKlasse.Schulart==Schulart.BOS) jgstufe = 12; // BOS-Vorklasse
         else if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites && jgstufe < 13) jgstufe++; // Wahl idR für das nächste Schuljahr
 
         //SchülerID;'Username';'Pwd';'Nachname';'Vorname';'Klasse';JgStufe;'Zweig';'Schulart';'ZweigRS';'Mail'
