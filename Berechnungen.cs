@@ -165,7 +165,7 @@ namespace diNo
             }
             else
             {
-              hjLeistungen.Sort((x, y) => y.Punkte.CompareTo(x.Punkte));
+              hjLeistungen.Sort((x, y) => y.Sortierung.CompareTo(x.Sortierung));
               einbringen.AddRange(hjLeistungen.GetRange(0, hjLeistungen.Count - 1)); // bis auf eine müssen eingebracht werden
 
               // rutscht man mit allen unter 4, obwohl das bei einer Streichung nicht passiert, lassen wir den auf jeden Fall weg
@@ -229,16 +229,20 @@ namespace diNo
     // Belegt das Feld Sortierung in HjL (hjl sind einbringbare Hj eines Faches)
     private void HJLSortierung(List<HjLeistung> hjl)
     {
-      byte ge = 0; // ge wird berechnet, wenn die schlechteste gestrichen wird
+      byte ge1, ge2;
+      int diff = 0; // ge wird berechnet, wenn die schlechteste gestrichen wird und wenn eingebracht wird
         try
         {
-            ge = (byte)Math.Round(hjl.GetRange(0, hjl.Count - 1).Average((x) => x.Punkte), MidpointRounding.AwayFromZero);
+          hjl.Sort((x, y) => y.Punkte.CompareTo(x.Punkte));
+          ge1 = (byte)Math.Round(hjl.Average((x) => x.Punkte), MidpointRounding.AwayFromZero);
+          ge2 = (byte)Math.Round(hjl.GetRange(0, hjl.Count - 1).Average((x) => x.Punkte), MidpointRounding.AwayFromZero);
+          diff = ge2 - ge1; 
         }
         catch { } // dann bleibt ge auf 0
 
       foreach (var hj in hjl)
       {        
-        hj.Sortierung = hj.Punkte * 16 - ge; // Punkte zählen immer mehr als das GE!
+        hj.Sortierung = hj.Punkte * 16 - diff; // Punkte zählen immer mehr als die GE-Verbesserung!
       }      
     }
 
