@@ -1,4 +1,5 @@
 ﻿using diNo.diNoDataSetTableAdapters;
+using diNo.Xml.Mbstatistik;
 using System;
 using System.Collections.Generic;
 
@@ -315,7 +316,12 @@ namespace diNo
       if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && Zugriff.Instance.IsFBKempten)
         Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden."; // nicht in SF
       if (s.Data.LRSStoerung)
-        Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
+      {
+        if (jg>11 && (b==Bericht.Abiturzeugnis || b==Bericht.Jahreszeugnis))
+          Bemerkung += "<br>Die Rechtschreibleistungen wurden mit Ausnahme " + (jg == 12 ? "des Fachreferats" : "der Seminararbeit") + " nicht bewertet.";
+        else
+          Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
+      }
       
       var sport = s.getNoten.FindeSportnote();
       if (sport != null)
