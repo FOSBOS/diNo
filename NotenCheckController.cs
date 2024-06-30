@@ -212,19 +212,20 @@ namespace diNo
       if (aktSchueler.Wiederholt())
       {        
         if (art == Vorkommnisart.NichtBestanden || art == Vorkommnisart.nichtBestandenMAPnichtZugelassen ||
-          art == Vorkommnisart.NichtZurPruefungZugelassen || art == Vorkommnisart.KeineVorrueckungserlaubnis)
-          AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen, "");
+          art == Vorkommnisart.NichtZurPruefungZugelassen || art == Vorkommnisart.KeineVorrueckungserlaubnis
+          || art==Vorkommnisart.PruefungNichtBestanden && zeitpunkt==Zeitpunkt.DrittePA)
+          AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen, "", false);
 
         if (art == Vorkommnisart.Gefaehrdungsmitteilung || art == Vorkommnisart.starkeGefaehrdungsmitteilung || art == Vorkommnisart.BeiWeiteremAbsinken)
-          AddVorkommnis(Vorkommnisart.GefahrDerAbweisung, "");
+          AddVorkommnis(Vorkommnisart.GefahrDerAbweisung, "", false);
       }
     }
 
-    private void AddVorkommnis(Vorkommnisart art, string meldung)
+    private void AddVorkommnis(Vorkommnisart art, string meldung, bool DuplikateErlaubt=true)
     {
       if (modus == NotenCheckModus.KonferenzVorbereiten && zeitpunkt > Zeitpunkt.ProbezeitBOS)
       {
-        aktSchueler.AddVorkommnis(art, meldung);
+        aktSchueler.AddVorkommnis(art, meldung, DuplikateErlaubt);
       }
 
       Add(null, Vorkommnisse.Instance.VorkommnisText(art) + " " + meldung);
