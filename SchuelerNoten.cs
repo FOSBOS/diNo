@@ -371,9 +371,8 @@ namespace diNo
       int nachMAP5er = abi5er;
       for (byte i = 0; i < 2; i++) // zwei MAP möglich
       {
-        if (abiE == 0 && nachMAP6er > 1) nachMAP6er--;
-        else if (nachMAP6er > 0) nachMAP6er--;
-        else if (nachMAP5er > 0) nachMAP5er--;
+        if (nachMAP6er > (abiE==0 ? 1 : 0)) nachMAP6er--;        // Abi-E geht nicht weg
+        else if (nachMAP5er > (abiE>0 && abiE<4 ? 1 : 0)) nachMAP5er--;
       }
       if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
         return (nachMAP6er > 0 || nachMAP5er > 2);
