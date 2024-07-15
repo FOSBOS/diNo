@@ -624,21 +624,30 @@ namespace diNo.Xml
       return vorbildungMsa_erworben_an_schulart.SO;
     }
 
+    private static bool wiederholt(Schueler s, string jg)
+    {
+        bool wh;
+        wh = !s.Data.IsWiederholung1JahrgangsstufeNull() && s.Data.Wiederholung1Jahrgangsstufe == jg;
+        wh = wh || !s.Data.IsWiederholung2JahrgangsstufeNull() && s.Data.Wiederholung2Jahrgangsstufe == jg;
+        return wh;
+    }
+
     private static grunddatenWdh_jgst ErmittleWiederholungskennzahl(Schueler unserSchueler, schueler xmlSchueler)
     {
-      bool wdh11 = unserSchueler.Data.Wiederholung1Jahrgangsstufe == "11" || unserSchueler.Data.Wiederholung2Jahrgangsstufe == "11";
-      bool wdh12 = unserSchueler.Data.Wiederholung1Jahrgangsstufe == "12" || unserSchueler.Data.Wiederholung2Jahrgangsstufe == "12";
-      bool wdh13 = unserSchueler.Data.Wiederholung1Jahrgangsstufe == "13" || unserSchueler.Data.Wiederholung2Jahrgangsstufe == "13";
+      bool wdh11 = wiederholt(unserSchueler, "11");
+      bool wdh12 = wiederholt(unserSchueler, "12");
+      bool wdh13 = wiederholt(unserSchueler, "13");
 
-      /*Wiederholung von...
-        O: keiner Jgst
-        1: 11.Jgst
-        2: 12.Jgst
-        3: 13.Jgst
-        4: 11.und 12.Jgst
-        5: 11.und 13.Jgst
-        6: 12.und 13.Jgst
-       */
+            /*Wiederholung von...
+              O: keiner Jgst
+              1: 11.Jgst
+              2: 12.Jgst
+              3: 13.Jgst
+              4: 11.und 12.Jgst
+              5: 11.und 13.Jgst
+              6: 12.und 13.Jgst
+             */
+
       if (wdh11 && !wdh12 && !wdh13) return grunddatenWdh_jgst.Item1;
       if (!wdh11 && wdh12 && !wdh13) return grunddatenWdh_jgst.Item2;
       if (!wdh11 && !wdh12 && wdh13) return grunddatenWdh_jgst.Item3;

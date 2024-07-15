@@ -384,7 +384,7 @@ namespace diNo
 
     public bool HatNichtBestanden()
     {
-      // Achtung: Vorklasse hat am Jahresende eine besondere Bestanden-Regelung
+      // Achtung: Vorklasse hat am Jahresende eine besondere Bestanden-Regelung §7 (2)
       if (zeitpunkt == Zeitpunkt.Jahresende && schueler.getKlasse.Jahrgangsstufe <= Jahrgangsstufe.Vorklasse)
       {
         if (AnzahlNoten(6) == 0 && AnzahlNoten(5) == 0) return false;  // bestanden
