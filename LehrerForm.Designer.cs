@@ -89,6 +89,7 @@
       this.edVorname.Name = "edVorname";
       this.edVorname.Size = new System.Drawing.Size(240, 20);
       this.edVorname.TabIndex = 2;
+      this.edVorname.Leave += new System.EventHandler(this.edVorname_Leave);
       // 
       // lbVorname
       // 

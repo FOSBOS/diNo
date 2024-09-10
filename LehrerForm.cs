@@ -1,6 +1,7 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace diNo
@@ -162,6 +163,17 @@ namespace diNo
       }
 
       listBoxBerechtigungen.Enabled = false;
+    }
+
+    private void edVorname_Leave(object sender, EventArgs e)
+    {
+      if (Zugriff.Instance.IsFBKempten)
+      {
+        if (String.IsNullOrEmpty(edMail.Text))
+          edMail.Text = edVorname.Text.ToLower() + "." + edNachname.Text.ToLower() + "@fosbos-kempten.de";
+        if (String.IsNullOrEmpty(edWindowsname.Text))
+          edWindowsname.Text = edVorname.Text.ToLower().First() +edNachname.Text.ToLower();
+      }
     }
   }
 }
