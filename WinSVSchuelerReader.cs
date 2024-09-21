@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -73,6 +74,9 @@ namespace diNo
     /// <param name="fileName">Der Dateiname.</param>
     public static void ReadSchueler(string fileName)
     {
+      int anzSpalten=0;
+      int zeile = 0;
+      int anzS = 0;
       using (StreamReader reader = new StreamReader(fileName, Encoding.GetEncoding("iso-8859-1")))
       using (SchuelerTableAdapter tableAdapter = new SchuelerTableAdapter())
       using (KlasseTableAdapter klasseTableAdapter = new KlasseTableAdapter())
@@ -87,6 +91,13 @@ namespace diNo
           }
 
           string[] array = line.Split(new string[] { "\t" }, StringSplitOptions.None);
+          zeile++;
+          if (anzSpalten == 0) anzSpalten = array.Length;
+          else if (anzSpalten != array.Length)
+          {
+            if (MessageBox.Show("Ungültige Spaltenzahl in Zeile " + zeile, "diNo", MessageBoxButtons.RetryCancel)==DialogResult.Cancel) 
+              return;
+          }
           string[] cleanArray = array.Select(aString => aString.Trim(new char[] { '\"', ' ', '\n' })).ToArray();
 
           var klasse = GetKlasseId(klasseTableAdapter, cleanArray[klasseSpalte].Trim());
@@ -103,6 +114,7 @@ namespace diNo
           if (table.Count == 0)
           {
             table.AddSchuelerRow(row);
+            anzS++;
           }
 
           tableAdapter.Update(row);
@@ -111,6 +123,7 @@ namespace diNo
           new Schueler(row).WechsleKlasse(new Klasse(klasse));
         }
       }
+      MessageBox.Show(zeile + " Zeilen mit " + anzS + " Schülern importiert.", "diNo", MessageBoxButtons.OK);
     }
 
     /// <summary>
