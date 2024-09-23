@@ -260,6 +260,12 @@ namespace diNo
         xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfObergrenze, og);
         xls.WriteValue(pruefungssheet, CellConstant.EingabeUeber, eingabe);
       }
+
+      if (kurs.Kursbezeichnung.Contains(" IV"))
+      {        
+        xls.WriteValue(xls.notenbogen2, "M39", "2");  // 2. SA im 2. Hj zählt doppelt
+      }
+
     }
   }
 }
