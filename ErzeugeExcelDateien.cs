@@ -261,11 +261,15 @@ namespace diNo
         xls.WriteValue(pruefungssheet, CellConstant.EingabeUeber, eingabe);
       }
 
-      if (kurs.Kursbezeichnung.Contains(" IV"))
-      {        
-        xls.WriteValue(xls.notenbogen2, "M39", "2");  // 2. SA im 2. Hj zählt doppelt
-      }
-
+        try
+        {
+            if (kurs.Klassen[0].Jahrgangsstufe == Jahrgangsstufe.IntVk)
+            {
+                xls.WriteValue(xls.notenbogen2, "M39", "2");  // 2. SA im 2. Hj zählt doppelt
+            }
+        }
+        catch
+        { }
     }
   }
 }
