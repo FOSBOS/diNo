@@ -372,11 +372,6 @@ namespace diNo
       SchuelerNoten n = schueler.getNoten;
       n.SetZeitpunkt(contr.zeitpunkt);
 
-      // Integrationsklasse: dort gibt es kein Bestehen...
-      /*if (schueler.getKlasse.Bezeichnung=="IV")
-      {          
-        return;
-      }*/
       if (contr.zeitpunkt == Zeitpunkt.ProbezeitBOS)
       {
         if (n.HatNichtBestanden())
@@ -461,8 +456,8 @@ namespace diNo
           if (n.HatNichtBestanden())
             contr.Add(Vorkommnisart.NichtBestanden, n.Unterpunktungen, true);
 
-          // Schüler der BOS-Vk erhalten mittlere Reife, wenn sie bestanden haben:
-          else if (schueler.Data.Schulart == "B" && Zugriff.Instance.globaleKonstanten.Schuljahr != 2019)
+          // Schüler der BOS-Vk + IV erhalten mittlere Reife, wenn sie bestanden haben:
+          else if (schueler.Data.Schulart == "B" || schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.IntVk )
             contr.Add(Vorkommnisart.MittlereReife, "");
 
           if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && n.HatIn12KeinePZ())

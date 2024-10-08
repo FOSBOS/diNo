@@ -571,9 +571,9 @@
       this.comboBoxZeitpunkt.Items.AddRange(new object[] {
             "Probezeit BOS",
             "Halbjahr",
-            "1. PA",
-            "2. PA",
-            "3. PA",
+            "Zulassung Abitur",
+            "SAP",
+            "MAP",
             "Jahresende"});
       this.comboBoxZeitpunkt.Location = new System.Drawing.Point(16, 97);
       this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";

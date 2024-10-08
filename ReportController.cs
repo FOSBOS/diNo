@@ -103,7 +103,7 @@ namespace diNo
         rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptKlassenkonferenz.rdlc";
         rpt.reportViewer.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(subrptEventHandler);
         // Parameter PA liefert die Nummer des PA --> für Berichtsüberschrift
-        rpt.reportViewer.LocalReport.SetParameters(new ReportParameter("PA", IsPA ? (Zugriff.Instance.aktZeitpunkt - 2).ToString() + ". Prüfungsausschuss" : "Klassenkonferenz"));
+        rpt.reportViewer.LocalReport.SetParameters(new ReportParameter("PA", IsPA ? "Prüfungsausschuss nach der " +(Zugriff.Instance.aktZeitpunkt == (int)Zeitpunkt.ZweitePA ? "SAP" : "MAP") : "Klassenkonferenz"));
       }
       else
         rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptNotenCheck.rdlc";

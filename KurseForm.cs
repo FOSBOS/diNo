@@ -87,7 +87,7 @@ namespace diNo
       if (q != null)
       {
         q.Data.Bezeichnung = edBezeichnung.Text;
-        // = edKurzbez.Text;        
+        q.Data.Kurzbez = edKurzbez.Text;        
         if (edZweig.Text == "") q.Data.SetZweigNull(); else q.Data.Zweig = edZweig.Text;
         if (opUndef.Checked) q.Data.SetGeschlechtNull();
         else if (opMaennlich.Checked) q.Data.Geschlecht = "M";
