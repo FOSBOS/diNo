@@ -70,6 +70,7 @@
       this.edSuchen = new System.Windows.Forms.TextBox();
       this.btnSuchen = new System.Windows.Forms.Button();
       this.lbSuchen = new System.Windows.Forms.Label();
+      this.btnMail = new System.Windows.Forms.Button();
       this.tabControl1.SuspendLayout();
       this.tabPageStammdaten.SuspendLayout();
       this.tabPageNotenbogen.SuspendLayout();
@@ -97,6 +98,7 @@
       this.imageList1.Images.SetKeyName(7, "Refresh.png");
       this.imageList1.Images.SetKeyName(8, "Ablage.png");
       this.imageList1.Images.SetKeyName(9, "lupe.jpg");
+      this.imageList1.Images.SetKeyName(10, "Mail.png");
       // 
       // tabControl1
       // 
@@ -330,7 +332,7 @@
       // 
       this.btnCheck.ImageIndex = 1;
       this.btnCheck.ImageList = this.imageList1;
-      this.btnCheck.Location = new System.Drawing.Point(519, 87);
+      this.btnCheck.Location = new System.Drawing.Point(565, 87);
       this.btnCheck.Name = "btnCheck";
       this.btnCheck.Size = new System.Drawing.Size(40, 40);
       this.btnCheck.TabIndex = 5;
@@ -343,7 +345,7 @@
       this.btnBrief.Enabled = false;
       this.btnBrief.ImageIndex = 2;
       this.btnBrief.ImageList = this.imageList1;
-      this.btnBrief.Location = new System.Drawing.Point(473, 88);
+      this.btnBrief.Location = new System.Drawing.Point(519, 88);
       this.btnBrief.Name = "btnBrief";
       this.btnBrief.Size = new System.Drawing.Size(40, 40);
       this.btnBrief.TabIndex = 4;
@@ -414,7 +416,7 @@
       // 
       this.labelHinweise.AutoSize = true;
       this.labelHinweise.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelHinweise.Location = new System.Drawing.Point(569, 88);
+      this.labelHinweise.Location = new System.Drawing.Point(629, 93);
       this.labelHinweise.Name = "labelHinweise";
       this.labelHinweise.Size = new System.Drawing.Size(449, 34);
       this.labelHinweise.TabIndex = 36;
@@ -524,12 +526,25 @@
       this.lbSuchen.TabIndex = 46;
       this.lbSuchen.Text = "Schüler suchen";
       // 
+      // btnMail
+      // 
+      this.btnMail.ImageIndex = 10;
+      this.btnMail.ImageList = this.imageList1;
+      this.btnMail.Location = new System.Drawing.Point(473, 88);
+      this.btnMail.Name = "btnMail";
+      this.btnMail.Size = new System.Drawing.Size(40, 40);
+      this.btnMail.TabIndex = 47;
+      this.toolTipButtons.SetToolTip(this.btnMail, "Mail an alle betroffenen Lehrer");
+      this.btnMail.UseVisualStyleBackColor = true;
+      this.btnMail.Click += new System.EventHandler(this.btnMail_Click);
+      // 
       // Klassenansicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
       this.ClientSize = new System.Drawing.Size(1185, 645);
+      this.Controls.Add(this.btnMail);
       this.Controls.Add(this.lbSuchen);
       this.Controls.Add(this.btnSuchen);
       this.Controls.Add(this.edSuchen);
@@ -612,5 +627,6 @@
         private System.Windows.Forms.ToolStripMenuItem druNotenbogen;
         private System.Windows.Forms.ToolStripMenuItem druLegastheniker;
         private System.Windows.Forms.ToolStripMenuItem druKlassenliste;
+        private System.Windows.Forms.Button btnMail;
     }
 }
