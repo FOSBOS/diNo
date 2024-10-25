@@ -332,7 +332,7 @@
       // 
       this.btnCheck.ImageIndex = 1;
       this.btnCheck.ImageList = this.imageList1;
-      this.btnCheck.Location = new System.Drawing.Point(565, 87);
+      this.btnCheck.Location = new System.Drawing.Point(580, 88);
       this.btnCheck.Name = "btnCheck";
       this.btnCheck.Size = new System.Drawing.Size(40, 40);
       this.btnCheck.TabIndex = 5;
@@ -345,7 +345,7 @@
       this.btnBrief.Enabled = false;
       this.btnBrief.ImageIndex = 2;
       this.btnBrief.ImageList = this.imageList1;
-      this.btnBrief.Location = new System.Drawing.Point(519, 88);
+      this.btnBrief.Location = new System.Drawing.Point(530, 88);
       this.btnBrief.Name = "btnBrief";
       this.btnBrief.Size = new System.Drawing.Size(40, 40);
       this.btnBrief.TabIndex = 4;
@@ -358,7 +358,7 @@
       this.btnPrint.ContextMenuStrip = this.contextMenuPrint;
       this.btnPrint.ImageIndex = 3;
       this.btnPrint.ImageList = this.imageList1;
-      this.btnPrint.Location = new System.Drawing.Point(427, 88);
+      this.btnPrint.Location = new System.Drawing.Point(430, 88);
       this.btnPrint.Name = "btnPrint";
       this.btnPrint.Size = new System.Drawing.Size(40, 40);
       this.btnPrint.TabIndex = 3;
@@ -404,7 +404,7 @@
       // 
       this.btnNotenabgeben.ImageIndex = 5;
       this.btnNotenabgeben.ImageList = this.imageList1;
-      this.btnNotenabgeben.Location = new System.Drawing.Point(282, 88);
+      this.btnNotenabgeben.Location = new System.Drawing.Point(280, 88);
       this.btnNotenabgeben.Name = "btnNotenabgeben";
       this.btnNotenabgeben.Size = new System.Drawing.Size(40, 40);
       this.btnNotenabgeben.TabIndex = 1;
@@ -466,7 +466,7 @@
       // 
       this.btnRefresh.ImageIndex = 7;
       this.btnRefresh.ImageList = this.imageList1;
-      this.btnRefresh.Location = new System.Drawing.Point(381, 88);
+      this.btnRefresh.Location = new System.Drawing.Point(380, 88);
       this.btnRefresh.Name = "btnRefresh";
       this.btnRefresh.Size = new System.Drawing.Size(40, 40);
       this.btnRefresh.TabIndex = 41;
@@ -490,7 +490,7 @@
       // 
       this.btnLNWabgeben.ImageIndex = 8;
       this.btnLNWabgeben.ImageList = this.imageList1;
-      this.btnLNWabgeben.Location = new System.Drawing.Point(328, 88);
+      this.btnLNWabgeben.Location = new System.Drawing.Point(330, 88);
       this.btnLNWabgeben.Name = "btnLNWabgeben";
       this.btnLNWabgeben.Size = new System.Drawing.Size(40, 40);
       this.btnLNWabgeben.TabIndex = 43;
@@ -530,7 +530,7 @@
       // 
       this.btnMail.ImageIndex = 10;
       this.btnMail.ImageList = this.imageList1;
-      this.btnMail.Location = new System.Drawing.Point(473, 88);
+      this.btnMail.Location = new System.Drawing.Point(480, 88);
       this.btnMail.Name = "btnMail";
       this.btnMail.Size = new System.Drawing.Size(40, 40);
       this.btnMail.TabIndex = 47;
