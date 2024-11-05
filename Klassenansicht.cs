@@ -354,24 +354,9 @@ namespace diNo
     private void btnMail_Click(object sender, EventArgs e)
     {
       var obj = treeListView1.SelectedObjects;
-      if (obj == null) MessageBox.Show("Bitte einen Schüler oder eine Klasse auswählen.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation); ;
-      try
-      { 
-        if (obj[0] is Klasse)
-        {
-          Klasse k = (Klasse)obj[0];
-          OpenOutlook.NewMail(k);
-        }          
-        else 
-        {
-          Schueler s = (Schueler)obj[0];
-          OpenOutlook.NewMail(s.Kurse, s.VornameName + ", " + s.getKlasse.Bezeichnung);
-        }
-      }
-      catch (Exception ex)
-      {
-        MessageBox.Show("Öffnen von Outlook war nicht möglich.\n" + ex.ToString(), "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-      }
+      if (obj == null) MessageBox.Show("Bitte einen Schüler oder eine Klasse auswählen.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+      else
+        OpenOutlook.BetroffeneLehrer(obj[0]);
     }
   }
 }
