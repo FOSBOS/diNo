@@ -192,7 +192,7 @@ namespace diNo
 
       row.SchulischeVorbildung = cleanArray[schulischeVorbildungSpalte];
       row.BeruflicheVorbildung = cleanArray[beruflicheVorbildungSpalte];
-      row.LRSStoerung = cleanArray[lrsStoerungSpalte] == "1";
+      row.LRSStoerung = false; // cleanArray[lrsStoerungSpalte] == "1"; // wird nicht übernommen, sondern erst nachdem der Bescheid ausgestellt wurde
       row.VerwandtschaftsbezeichnungEltern1 = cleanArray[verwandtschaftsbezeichnungEltern1Spalte];
       row.NachnameEltern1 = cleanArray[nachnameEltern1Spalte];
       row.VornameEltern1 = cleanArray[vornameEltern1Spalte];

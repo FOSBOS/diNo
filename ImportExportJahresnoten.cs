@@ -94,6 +94,14 @@ namespace diNo
               + schueler.Data.LRSZuschlagMin + Sep
               + schueler.Data.LRSZuschlagMax + Sep
               + "0");
+
+          // Andere Fremdsprache aus RS
+          if (!(schueler.Data.IsAndereFremdspr2NoteNull() || schueler.Data.IsAndereFremdspr2FachNull()))
+            writer.WriteLine(schueler.Id + Sep + "-2" + Sep + "0" + Sep
+              + schueler.Data.AndereFremdspr2Note + Sep
+              + schueler.Data.AndereFremdspr2Fach + Sep
+              + schueler.Data.AndereFremdspr2Art
+              );
         }
       }
     }
@@ -186,6 +194,27 @@ namespace diNo
             catch
             {
               writer.WriteLine("LRS: " + orignal);
+            }
+            continue; // nächste Zeile
+          }
+
+          if (line[1] == "-2") // Fremdsprachen aus vorigen Schulen (frühere Eingabe)
+          {
+            try
+            {
+              int note, fach,art;
+              note = int.Parse(line[3]);
+              fach = int.Parse(line[4]);
+              art = int.Parse(line[5]);
+              schueler.Data.AndereFremdspr2Note = note;
+              schueler.Data.AndereFremdspr2Fach = fach;
+              schueler.Data.AndereFremdspr2Art = art;
+
+              schueler.Save();
+            }
+            catch
+            {
+              writer.WriteLine("Andere Fremdsprache: " + orignal);
             }
             continue; // nächste Zeile
           }
