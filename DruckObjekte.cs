@@ -18,6 +18,7 @@ namespace diNo
     ZusatzAllgHSR,
     Notenbogen,
     Klassenliste,
+    Auswahlliste,
     Legastheniker,
     EinserAbi
   }
@@ -84,7 +85,11 @@ namespace diNo
       HideVorHj = !s.hatVorHj; // nur bei F12 anzeigen
       HideAbi = jg < 12 || Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.ErstePA;
 
-      if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6)
+      if (b==Bericht.Auswahlliste){
+        Vorkommnis v = s.getVorkommnis(Zugriff.Instance.selectedVorkommnisart);
+        Bemerkung = v.Bemerkung;
+      }
+      else if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6)
       {
         int anzProbleme = s.getNoten.AnzahlProbleme();
         Bemerkung = "Sie benötigen bei " + (anzProbleme > 2 ? 2 : anzProbleme) + " Gesamtergebnissen unter 4 Punkten mindestens " + s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 : 5) + " Punkte, um zu bestehen. ";
@@ -117,6 +122,7 @@ namespace diNo
         case Bericht.Einbringung: return "rptEinbringung";
 
         case Bericht.Klassenliste: return "rptKlassenliste";
+        case Bericht.Auswahlliste: return "rptAuswahlliste";
         case Bericht.Legastheniker: return "rptLegastheniker";
         case Bericht.EinserAbi: return "rptEinserAbi";
         default: return "";

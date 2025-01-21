@@ -164,8 +164,8 @@ namespace diNo
          new SubreportProcessingEventHandler(subrptEventHandler);
 
       // In einer Klassenliste wird ein Titel ausgegeben, wenn die Schüler über bestimmte Vorkommnisse selektiert wurden
-      if (rptTyp == Bericht.Klassenliste && Zugriff.Instance.markierteSchueler.Count > 0)
-        {
+      if ((rptTyp == Bericht.Klassenliste || rptTyp == Bericht.Auswahlliste) && Zugriff.Instance.markierteSchueler.Count > 0)
+      {
         rpt.reportViewer.LocalReport.SetParameters(new ReportParameter("Titel", Vorkommnisse.Instance.VorkommnisText(Zugriff.Instance.selectedVorkommnisart)));
       }
     }

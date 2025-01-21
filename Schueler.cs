@@ -513,6 +513,14 @@ public int APFaktor
       return false;
     }
 
+    public Vorkommnis getVorkommnis(Vorkommnisart art){
+      foreach (var v in Vorkommnisse)
+      {
+        if (v.Art == art) return v;
+      }
+      return null;
+    }
+
     // nur für 13. Klasse: hat erfolgreich die 2. FS besucht
     public bool HatZweiteFremdsprache()
     {

@@ -359,6 +359,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
     <EmbeddedResource Include="rptKlassenkonferenz.rdlc" />
+    <EmbeddedResource Include="rptAuswahlliste.rdlc" />
     <EmbeddedResource Include="rptLegastheniker.rdlc" />
     <EmbeddedResource Include="rptLehrerRolle.rdlc" />
     <EmbeddedResource Include="rptEinserAbi.rdlc" />
