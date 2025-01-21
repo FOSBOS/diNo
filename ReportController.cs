@@ -251,7 +251,23 @@ namespace diNo
     public override void Init()
     {
       // suche alle Schüler mit Gefährdungen
+      bool einzelfall = false;
       bindingDataSource = new List<BriefDaten>();
+      if (orgdataSource.Count == 1) // nur einen konkreten Schüler ausgewählt ==> allg. Gefährdungsschreiben vor PZ
+      {
+        Schueler s = orgdataSource[0];
+        if (!s.hatVorkommnis(Vorkommnisart.BeiWeiteremAbsinken) && !s.hatVorkommnis(Vorkommnisart.starkeGefaehrdungsmitteilung))
+        {
+          einzelfall = true;
+          var b = new BriefDaten(s, BriefTyp.Gefaehrdung);
+          b.Inhalt = "Das Bestehen der Probezeit ist sehr gefährdet.";
+          b.Inhalt2 = s.VornameName + " hat bei einem Punktedurchschnitt von " + String.Format("{0:0.00}", s.getNoten.Punkteschnitt) + " in den folgenden Fächern nur die angeführten Leistungen erzielt:";
+          bindingDataSource.Add(b);
+
+        }
+      }
+
+      if (!einzelfall)
       foreach (var s in orgdataSource)
       {
         if (s.hatVorkommnis(Vorkommnisart.BeiWeiteremAbsinken) || s.hatVorkommnis(Vorkommnisart.starkeGefaehrdungsmitteilung))

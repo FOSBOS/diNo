@@ -46,11 +46,13 @@ namespace diNo
       if (opVerweis.Checked || opVerschVerweis.Checked) typ = BriefTyp.Verweis;
       else if (opMEP.Checked || opSEP.Checked) typ = BriefTyp.Ersatzpruefung;
       else if (opAttestpflicht.Checked) typ = BriefTyp.Attestpflicht;
+      else if (opMitteilung.Checked) typ = BriefTyp.Mitteilung;
       b = new BriefDaten(s, typ);
       if (typ == BriefTyp.Verweis) VerweisText(opVerschVerweis.Checked);
       else if (opSA.Checked || opKA.Checked) NachterminText();
       else if (typ == BriefTyp.Ersatzpruefung) ErsatzprText();
       else if (typ == BriefTyp.Attestpflicht) AttestpflichtText();
+      else if (typ == BriefTyp.Mitteilung) MitteilungText();
       else NacharbeitText();
 
       Hide();
@@ -67,14 +69,14 @@ namespace diNo
         s.AddVorkommnis(Vorkommnisart.Nacharbeit, edInhalt.Text, true);
         frmKlasse.RefreshVorkommnisse();
       }
-    }
+    } 
 
 
     private void radioButton_CheckedChanged(object sender, EventArgs e)
     {
       pnlVersaeumtAm.Enabled = opSA.Checked || opKA.Checked;
-      pnlNachterminAm.Enabled = !(opVerweis.Checked || opVerschVerweis.Checked || opAttestpflicht.Checked);
-      pnlInhalt.Enabled = opVerweis.Checked || opVerschVerweis.Checked || opNacharbeit.Checked || opSEP.Checked || opMEP.Checked;
+      pnlNachterminAm.Enabled = !(opVerweis.Checked || opVerschVerweis.Checked || opAttestpflicht.Checked || opMitteilung.Checked);
+      pnlInhalt.Enabled = opVerweis.Checked || opVerschVerweis.Checked || opNacharbeit.Checked || opSEP.Checked || opMEP.Checked || opMitteilung.Checked;
       labelInhalt.Text = (opSEP.Checked || opMEP.Checked) ? "Prüfungsstoff" : "Grund";
     }
 
@@ -152,6 +154,12 @@ namespace diNo
 
       s.AddVorkommnis(Vorkommnisart.Attestpflicht, "", false);
     }
+
+    public void MitteilungText(){
+      b.Betreff = (s.Data.Geschlecht == "M" ? "Ihr Sohn " : "Ihre Tochter ") + s.VornameName; ;
+      b.Inhalt += edInhalt.Text + "<br><br>Freundliche Grüße";
+    }
+
   }
 
   public class BriefDaten
@@ -177,7 +185,7 @@ namespace diNo
     public BriefDaten(Schueler s, BriefTyp typ)
     {
       Lehrer lehrer;
-      IstU18 = s.Alter() < 18 && (typ != BriefTyp.Standard); // Schüleradresse bei normalen Nachterminen
+      IstU18 = s.Alter() < 18 && (typ != BriefTyp.Standard) || typ==BriefTyp.Mitteilung; // Schüleradresse bei normalen Nachterminen
       bool UnterschriftKL = typ == BriefTyp.Gefaehrdung || typ == BriefTyp.Attestpflicht; // hier nicht der angemeldete Benutzer
 
       Id = s.Id;
@@ -245,7 +253,8 @@ namespace diNo
     Verweis = 1,
     Ersatzpruefung = 2,
     Gefaehrdung = 3,
-    Attestpflicht = 4
+    Attestpflicht = 4,
+    Mitteilung = 5
   }
 
 }

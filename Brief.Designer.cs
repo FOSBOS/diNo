@@ -31,6 +31,8 @@
       this.btnOK = new System.Windows.Forms.Button();
       this.btnEsc = new System.Windows.Forms.Button();
       this.boxAuswahl = new System.Windows.Forms.GroupBox();
+      this.opMitteilung = new System.Windows.Forms.RadioButton();
+      this.opAttestpflicht = new System.Windows.Forms.RadioButton();
       this.opVerschVerweis = new System.Windows.Forms.RadioButton();
       this.opNacharbeit = new System.Windows.Forms.RadioButton();
       this.opVerweis = new System.Windows.Forms.RadioButton();
@@ -53,7 +55,6 @@
       this.pnlInhalt = new System.Windows.Forms.Panel();
       this.labelInhalt = new System.Windows.Forms.Label();
       this.edInhalt = new System.Windows.Forms.TextBox();
-      this.opAttestpflicht = new System.Windows.Forms.RadioButton();
       this.boxAuswahl.SuspendLayout();
       this.pnlNachterminAm.SuspendLayout();
       this.pnlVersaeumtAm.SuspendLayout();
@@ -83,6 +84,7 @@
       // 
       // boxAuswahl
       // 
+      this.boxAuswahl.Controls.Add(this.opMitteilung);
       this.boxAuswahl.Controls.Add(this.opAttestpflicht);
       this.boxAuswahl.Controls.Add(this.opVerschVerweis);
       this.boxAuswahl.Controls.Add(this.opNacharbeit);
@@ -94,9 +96,31 @@
       this.boxAuswahl.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.boxAuswahl.Location = new System.Drawing.Point(39, 38);
       this.boxAuswahl.Name = "boxAuswahl";
-      this.boxAuswahl.Size = new System.Drawing.Size(193, 213);
+      this.boxAuswahl.Size = new System.Drawing.Size(193, 242);
       this.boxAuswahl.TabIndex = 0;
       this.boxAuswahl.TabStop = false;
+      // 
+      // opMitteilung
+      // 
+      this.opMitteilung.AutoSize = true;
+      this.opMitteilung.Location = new System.Drawing.Point(16, 198);
+      this.opMitteilung.Name = "opMitteilung";
+      this.opMitteilung.Size = new System.Drawing.Size(147, 21);
+      this.opMitteilung.TabIndex = 10;
+      this.opMitteilung.Text = "Mitteilung an Eltern";
+      this.opMitteilung.UseVisualStyleBackColor = true;
+      this.opMitteilung.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+      // 
+      // opAttestpflicht
+      // 
+      this.opAttestpflicht.AutoSize = true;
+      this.opAttestpflicht.Location = new System.Drawing.Point(16, 176);
+      this.opAttestpflicht.Name = "opAttestpflicht";
+      this.opAttestpflicht.Size = new System.Drawing.Size(99, 21);
+      this.opAttestpflicht.TabIndex = 9;
+      this.opAttestpflicht.Text = "Attestpflicht";
+      this.opAttestpflicht.UseVisualStyleBackColor = true;
+      this.opAttestpflicht.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
       // 
       // opVerschVerweis
       // 
@@ -107,6 +131,7 @@
       this.opVerschVerweis.TabIndex = 6;
       this.opVerschVerweis.Text = "verschärfter Verweis";
       this.opVerschVerweis.UseVisualStyleBackColor = true;
+      this.opVerschVerweis.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
       // 
       // opNacharbeit
       // 
@@ -301,7 +326,7 @@
       // 
       this.pnlInhalt.Controls.Add(this.labelInhalt);
       this.pnlInhalt.Controls.Add(this.edInhalt);
-      this.pnlInhalt.Location = new System.Drawing.Point(22, 277);
+      this.pnlInhalt.Location = new System.Drawing.Point(22, 286);
       this.pnlInhalt.Name = "pnlInhalt";
       this.pnlInhalt.Size = new System.Drawing.Size(663, 135);
       this.pnlInhalt.TabIndex = 3;
@@ -325,23 +350,13 @@
       this.edInhalt.Size = new System.Drawing.Size(632, 104);
       this.edInhalt.TabIndex = 5;
       // 
-      // opAttestpflicht
-      // 
-      this.opAttestpflicht.AutoSize = true;
-      this.opAttestpflicht.Location = new System.Drawing.Point(16, 176);
-      this.opAttestpflicht.Name = "opAttestpflicht";
-      this.opAttestpflicht.Size = new System.Drawing.Size(99, 21);
-      this.opAttestpflicht.TabIndex = 9;
-      this.opAttestpflicht.Text = "Attestpflicht";
-      this.opAttestpflicht.UseVisualStyleBackColor = true;
-      // 
       // Brief
       // 
       this.AcceptButton = this.btnOK;
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.CancelButton = this.btnEsc;
-      this.ClientSize = new System.Drawing.Size(697, 487);
+      this.ClientSize = new System.Drawing.Size(697, 508);
       this.Controls.Add(this.pnlInhalt);
       this.Controls.Add(this.pnlVersaeumtAm);
       this.Controls.Add(this.pnlNachterminAm);
@@ -390,5 +405,6 @@
     private System.Windows.Forms.TextBox edRaum;
     private System.Windows.Forms.RadioButton opVerschVerweis;
     private System.Windows.Forms.RadioButton opAttestpflicht;
-  }
+        private System.Windows.Forms.RadioButton opMitteilung;
+    }
 }
