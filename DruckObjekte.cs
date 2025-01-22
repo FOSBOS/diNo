@@ -86,9 +86,28 @@ namespace diNo
       HideAbi = jg < 12 || Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.ErstePA;
 
       if (b==Bericht.Auswahlliste){
-        Vorkommnis v = s.getVorkommnis(Zugriff.Instance.selectedVorkommnisart);
-        Bemerkung = v.Bemerkung;
-      }
+            switch (Zugriff.Instance.selectedAuswahlart)
+            {
+                case Auswahlart.Vorkommnis:
+                    Vorkommnis v = s.getVorkommnis(Zugriff.Instance.selectedVorkommnisart);
+                    Bemerkung = v.Bemerkung;
+                    break;
+                case Auswahlart.Probezeit:
+                    Bemerkung = s.Data.ProbezeitBis.ToString("dd.MM.yyyy");
+                    break;
+                case Auswahlart.Zubringerschule:
+                    Bemerkung = s.Data.SchulischeVorbildung;
+                    break;
+                case Auswahlart.Fremdsprache2:
+                    Bemerkung = Zugriff.Instance.FachRep.Find(s.Data.AndereFremdspr2Fach).Bezeichnung 
+                        + (s.Data.IsAndereFremdspr2NoteNull() ? "" : " " + s.Data.AndereFremdspr2Note)
+                        + (s.Data.AndereFremdspr2Art==0 ? " ("+ s.Data.SchulischeVorbildung + ")"  :"");
+                    break;
+                case Auswahlart.Wiederholer:
+                    Bemerkung = s.getWiederholungen();
+                    break;
+                }
+            }
       else if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6)
       {
         int anzProbleme = s.getNoten.AnzahlProbleme();
