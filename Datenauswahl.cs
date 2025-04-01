@@ -24,13 +24,18 @@ namespace diNo
       var liste = new List<Schueler>();
 
       // TODO: Andere Fälle auswerten, Wert aus cbAuswahl an DruckObjekte durchreichen.
-
+      Zugriff.Instance.selectedAuswahlart = (Auswahlart)cbAuswahl.SelectedIndex;
       Zugriff.Instance.selectedVorkommnisart = (Vorkommnisart)cbVorkommnisArt.SelectedValue;
       erg.Clear();
       foreach (var k in Zugriff.Instance.Klassen)
         foreach (var s in k.Schueler)
         {
-          if (s.hatVorkommnis(Zugriff.Instance.selectedVorkommnisart))
+          if (Zugriff.Instance.selectedAuswahlart==Auswahlart.Vorkommnis && s.hatVorkommnis(Zugriff.Instance.selectedVorkommnisart) ||
+            Zugriff.Instance.selectedAuswahlart == Auswahlart.Zubringerschule && s.Data.SchulischeVorbildung.StartsWith(cbZubringerschule.Text) ||
+            Zugriff.Instance.selectedAuswahlart == Auswahlart.Probezeit && !s.Data.IsProbezeitBisNull() ||
+            Zugriff.Instance.selectedAuswahlart == Auswahlart.Wiederholer && s.Wiederholt() ||
+            Zugriff.Instance.selectedAuswahlart == Auswahlart.Fremdsprache2 && !s.Data.IsAndereFremdspr2FachNull()
+          )
           {
             erg.Add(s.Id, s);
             liste.Add(s); // je nach Verwendungszweck andere Liste
@@ -48,4 +53,12 @@ namespace diNo
       cbZubringerschule.Enabled = cbAuswahl.SelectedIndex == 1;
     }
   }
+    public enum Auswahlart
+    {
+        Vorkommnis,
+        Zubringerschule,
+        Wiederholer,
+        Probezeit,
+        Fremdsprache2
+    }
 }
