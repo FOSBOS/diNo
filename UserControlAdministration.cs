@@ -519,6 +519,11 @@ namespace diNo
     {
       new ImportLoginnamen();
     }
+
+    private void btnAbsenzen_Click(object sender, EventArgs e)
+    {
+      new AbsenzenMail();
+    }
   }
 }
 

@@ -142,6 +142,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbsenzenMail.cs" />
     <Compile Include="Auswertungen.cs" />
     <Compile Include="CopyLNW.cs">
       <SubType>Form</SubType>

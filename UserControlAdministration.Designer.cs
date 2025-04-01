@@ -86,6 +86,7 @@
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
       this.btnCopy11 = new System.Windows.Forms.Button();
+      this.btnAbsenzen = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -272,6 +273,7 @@
       // 
       // groupBoxExport
       // 
+      this.groupBoxExport.Controls.Add(this.btnAbsenzen);
       this.groupBoxExport.Controls.Add(this.btnExportKurswahl);
       this.groupBoxExport.Controls.Add(this.btnSeStatistik);
       this.groupBoxExport.Controls.Add(this.btnMBStatistik);
@@ -730,6 +732,16 @@
       this.btnCopy11.UseVisualStyleBackColor = true;
       this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
       // 
+      // btnAbsenzen
+      // 
+      this.btnAbsenzen.Location = new System.Drawing.Point(20, 135);
+      this.btnAbsenzen.Name = "btnAbsenzen";
+      this.btnAbsenzen.Size = new System.Drawing.Size(182, 23);
+      this.btnAbsenzen.TabIndex = 10;
+      this.btnAbsenzen.Text = "Absenzenübersicht versenden";
+      this.btnAbsenzen.UseVisualStyleBackColor = true;
+      this.btnAbsenzen.Click += new System.EventHandler(this.btnAbsenzen_Click);
+      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -826,5 +838,6 @@
     private System.Windows.Forms.Button btnImportCheck;
         private System.Windows.Forms.CheckBox chkRptDruck;
         private System.Windows.Forms.Button btnImportLoginnamen;
+        private System.Windows.Forms.Button btnAbsenzen;
     }
 }

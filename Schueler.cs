@@ -23,12 +23,14 @@ namespace diNo
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
     public Zweig Zweig;
     public Punktesumme punktesumme;
+    public List<string> absenzen;
 
     public Schueler(int id)
     {
       this.Id = id;
       this.Refresh();
       punktesumme = new Punktesumme(this);
+      absenzen = new List<string>();
     }
 
     public Schueler(diNoDataSet.SchuelerRow s)
@@ -36,6 +38,7 @@ namespace diNo
       this.Id = s.Id;
       this.data = s;
       punktesumme = new Punktesumme(this);
+      absenzen = new List<string>();
       Zweig = Faecherkanon.GetZweig(data.Ausbildungsrichtung);
     }
 
