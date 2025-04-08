@@ -1,4 +1,6 @@
 ﻿using diNo.diNoDataSetTableAdapters;
+using diNo.Xml.Mbstatistik;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,12 +38,14 @@ namespace diNo
 
     private void SendAbsenzen(string fileName)
     {
+      MailTools mail = new MailTools();
+
       using (StreamWriter writer = new StreamWriter(new FileStream(fileName + "_send.txt", FileMode.Create, FileAccess.ReadWrite)))
       {
         foreach (int i in sList)
         {
           Schueler s = Zugriff.Instance.SchuelerRep.Find(i);
-          if (s.Data.IsNotfalltelefonnummerNull())
+          if (s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer=="")
           {
             err.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
             continue;
@@ -59,15 +63,41 @@ namespace diNo
           }
 
           Lehrer kl = s.getKlasse.Klassenleiter;
-          body += "\nBei Unstimmigkeiten wenden Sie sich bitte per Mail an " 
-            + (kl.Data.Geschlecht=="M" ? "den Klassenleiter Herrn " : "die Klassenleiterin Frau ")
-            + kl.Data.Nachname + "\n" + kl.Data.EMail;
+          body += "\nBei Unstimmigkeiten wenden Sie sich bitte per Mail an mich:"             
+            +  "\n" + kl.Data.EMail;
 
-          body += "\n\nMit freundlichen Grüßen\nWer auch immer, OStD";
+          body += "\n\nMit freundlichen Grüßen\n" + kl.NameDienstbezeichnung;
+          body += "\n" + kl.KLString;
           body = body.Replace("<br>", "\n");
           writer.WriteLine(body);
           writer.WriteLine("------------------");
           s.absenzen.Clear();
+
+          // Versendeprozess:
+          try
+          {
+            var msg = new MimeKit.MimeMessage()
+            {
+              Sender = new MimeKit.MailboxAddress("FOS Kempten", mail.MailFrom),
+              Subject = "Absenzenübersicht " + s.VornameName
+            };
+
+            msg.From.Add(new MimeKit.MailboxAddress("FOS Kempten", mail.MailFrom));
+            //msg.To.Add(new MimeKit.MailboxAddress(s.Data.Notfalltelefonnummer,s.Data.Notfalltelefonnummer));
+            msg.To.Add(new MimeKit.MailboxAddress("Claus Konrad" , "claus.konrad@fosbos-kempten.de"));
+
+            var builder = new MimeKit.BodyBuilder();
+            builder.TextBody = body;
+            msg.Body = builder.ToMessageBody();
+
+            //mailServer.Timeout = 1000;
+            mail.mailServer.Send(msg);
+          }
+          catch (Exception ex)
+          {
+            if (MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+              throw;
+          }
         }        
       }
     }

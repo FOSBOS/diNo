@@ -20,9 +20,9 @@ namespace diNo
 
     string smtp = Zugriff.Instance.getString(GlobaleStrings.SMTP);
     int port = int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port));
-    string MailFrom = Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail);
+    public string MailFrom = Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail);
     string MailPwd = Zugriff.Instance.getString(GlobaleStrings.MailPasswort);
-    MailKit.Net.Smtp.SmtpClient mailServer;
+    public MailKit.Net.Smtp.SmtpClient mailServer;
     public string InfoFile; // Datei inkl. Pfad mit dem Mailtext
     string BodyText;
     string MailTo;
