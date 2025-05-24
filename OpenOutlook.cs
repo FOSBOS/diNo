@@ -88,7 +88,7 @@ namespace diNo
           NewMail(s.Kurse, s.VornameName + ", " + s.getKlasse.Bezeichnung);
         }
       }
-      catch (Exception ex)
+      catch (Exception)
       {
         string erg="";
         foreach (Kurs k in kurse)
