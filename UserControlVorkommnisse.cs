@@ -1,14 +1,19 @@
-﻿using diNo.Properties;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using diNo.Properties;
 
 namespace diNo
 {
   public partial class UserControlVorkommnisse : UserControl
   {
-    private Schueler schueler;
-    private Vorkommnisart[] notenRelevanteVorkommnisse = new[] { Vorkommnisart.Gefaehrdungsmitteilung, Vorkommnisart.starkeGefaehrdungsmitteilung, Vorkommnisart.BeiWeiteremAbsinken, Vorkommnisart.KeineVorrueckungserlaubnis, Vorkommnisart.NichtZurPruefungZugelassen, Vorkommnisart.Notenausgleich, Vorkommnisart.ProbezeitNichtBestanden, Vorkommnisart.NichtBestanden, Vorkommnisart.nichtBestandenMAPnichtZugelassen, Vorkommnisart.VorrueckenAufProbe };
+    private Schueler schueler;    
+    private Vorkommnisart[] notenRelevanteVorkommnisse = new[] { Vorkommnisart.Gefaehrdungsmitteilung,Vorkommnisart.starkeGefaehrdungsmitteilung,Vorkommnisart.BeiWeiteremAbsinken, Vorkommnisart.KeineVorrueckungserlaubnis, Vorkommnisart.NichtZurPruefungZugelassen, Vorkommnisart.Notenausgleich, Vorkommnisart.ProbezeitNichtBestanden, Vorkommnisart.NichtBestanden, Vorkommnisart.nichtBestandenMAPnichtZugelassen, Vorkommnisart.VorrueckenAufProbe };
 
     public UserControlVorkommnisse()
     {
@@ -54,7 +59,7 @@ namespace diNo
 
       if (!Vorkommnisse.Instance.Liste.ContainsKey(vorkommnis.Art))
       {
-        throw new InvalidOperationException("Unbekannte Vorkommnisart " + vorkommnis.Art);
+        throw new InvalidOperationException("Unbekannte Vorkommnisart "+vorkommnis.Art);
       }
 
       return Vorkommnisse.Instance.Liste[vorkommnis.Art];
@@ -110,14 +115,14 @@ namespace diNo
     {
       if (!(this.comboBoxArt.SelectedValue is Vorkommnisart)) // beim Init wird das Ereignis einmal mit einem KeyValuePaar ausgelöst - seltsames Verhalten
         return;
-      if (schueler == null) return;
-      VorbelegungVorkommnistext();
+      if (schueler==null) return;
+      VorbelegungVorkommnistext();      
     }
 
     private void VorbelegungVorkommnistext()
     {
       var art = (Vorkommnisart)this.comboBoxArt.SelectedValue;
-
+      
       if (notenRelevanteVorkommnisse.Contains(art))
       {
         edVorkommnisBemerkung.Text = schueler.getNoten.Unterpunktungen;

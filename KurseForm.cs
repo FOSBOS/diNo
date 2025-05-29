@@ -11,7 +11,7 @@ namespace diNo
     private Kurs q;
     private List<Kurs> t;
     private KursTableAdapter ta = new KursTableAdapter();
-
+    
     public KurseForm()
     {
       InitializeComponent();
@@ -28,7 +28,7 @@ namespace diNo
       var dt = ta.GetData();
       foreach (var d in dt)
         t.Add(new Kurs(d));
-
+      
       t.Sort((x, y) => x.Kursbezeichnung.CompareTo(y.Kursbezeichnung));
       liste.DataSource = t;
 
@@ -55,7 +55,7 @@ namespace diNo
     {
       q = liste.SelectedItem as Kurs;
       edBezeichnung.Text = q.Data.Bezeichnung;
-      edKurzbez.Text = q.Data.IsKurzbezNull() ? "" : q.Data.Kurzbez;
+      edKurzbez.Text = q.Data.IsKurzbezNull() ? "" :  q.Data.Kurzbez;
       edId.Text = q.Data.Id.ToString();
       edZweig.Text = (q.Data.IsZweigNull() ? "" : q.Data.Zweig);
       opUndef.Checked = q.Data.IsGeschlechtNull();
@@ -65,15 +65,10 @@ namespace diNo
       cbLehrer.SelectedValue = q.getLehrer.Id; // in der ComboBox muss als ValueMember Id stehen!!
       cbFach.SelectedValue = q.getFach.Id;
 
-      bool isWPF = q.getFach.Typ == FachTyp.WPF;
-      btnDeleteSchueler.Enabled = !isWPF;
-      btnSchuelerZuteilen.Enabled = !isWPF;
-
       for (int i = 0; i < checkedListBoxKlassen.Items.Count; i++)
       {
         checkedListBoxKlassen.SetItemChecked(i, q.Klassen.Contains(checkedListBoxKlassen.Items[i]));
       }
-      InitSchueler();
     }
 
     private string F(TextBox t)
@@ -84,10 +79,10 @@ namespace diNo
 
     private void btnSave_Click(object sender, EventArgs e)
     {
-      if (q != null)
+      if (q!=null) 
       {
         q.Data.Bezeichnung = edBezeichnung.Text;
-        q.Data.Kurzbez = edKurzbez.Text;        
+        // = edKurzbez.Text;        
         if (edZweig.Text == "") q.Data.SetZweigNull(); else q.Data.Zweig = edZweig.Text;
         if (opUndef.Checked) q.Data.SetGeschlechtNull();
         else if (opMaennlich.Checked) q.Data.Geschlecht = "M";
@@ -101,18 +96,18 @@ namespace diNo
         ta.Update(q.Data);
 
         q.Klassen.Clear();
-        foreach (Klasse klasse in checkedListBoxKlassen.CheckedItems)
+        foreach(Klasse klasse in checkedListBoxKlassen.CheckedItems)
         {
           q.Klassen.Add(klasse);
         }
         q.SaveKlassenzuordnung();
       }
       else
-      {
+      {        
         try
-        {
-          ta.Insert(int.Parse(edId.Text), F(edBezeichnung), (int)cbLehrer.SelectedValue, (int)cbFach.SelectedValue, F(edZweig), (opUndef.Checked ? null : (opMaennlich.Checked ? "M" : "W")), (edKurzbez.Text == "" ? null : edKurzbez.Text));
-          Init();
+        {       
+          ta.Insert(int.Parse(edId.Text), F(edBezeichnung), (int)cbLehrer.SelectedValue, (int)cbFach.SelectedValue, F(edZweig), (opUndef.Checked ? null : (opMaennlich.Checked ? "M" : "W")), (edKurzbez.Text=="" ? null : edKurzbez.Text));
+          Init();         
         }
         catch (Exception ex)
         {
@@ -124,9 +119,9 @@ namespace diNo
 
     private void btnDel_Click(object sender, EventArgs e)
     {
-      if (q != null)
-      {
-        if (MessageBox.Show("Soll der Kurs " + q.Data.Bezeichnung + " gelöscht werden?", "Löschen?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+      if (q!=null)
+      {        
+        if (MessageBox.Show("Soll der Kurs " + q.Data.Bezeichnung +" gelöscht werden?", "Löschen?", MessageBoxButtons.YesNo) == DialogResult.Yes)
         {
           try
           {
@@ -152,47 +147,13 @@ namespace diNo
       opUndef.Checked = true;
       opMaennlich.Checked = false;
       opWeiblich.Checked = false;
-      edId.Text = "";
-      for (int i = 0; i < checkedListBoxKlassen.Items.Count; i++)
-      {
-        checkedListBoxKlassen.SetItemChecked(i, false);
-      }
+      edId.Text = "";      
     }
 
     private void btnErzeugeExcel_Click(object sender, EventArgs e)
     {
       var datei = new ErzeugeNeueExcelDatei(q.Data);
       datei.Dispose();
-    }
-
-    private void InitSchueler()
-    {
-      listSchueler.DataSource = q.Schueler;
-      lbAnzSchueler.Text = q.Schueler.Count + " Schüler im Kurs";
-    }
-
-    private void btnDeleteSchueler_Click(object sender, EventArgs e)
-    {
-      foreach (Schueler s in q.Schueler)
-      {
-        s.MeldeAb(q);
-      }
-      q.ResetSchueler();
-      InitSchueler();
-    }
-
-    private void btnSchuelerZuteilen_Click(object sender, EventArgs e)
-    {
-      foreach (Klasse k in q.Klassen)
-      {
-        foreach (Schueler s in k.Schueler)
-        {
-          if (s.KursPasstZumSchueler(q))
-            s.MeldeAn(q);
-        }
-      }
-      q.ResetSchueler();
-      InitSchueler();
     }
   }
 }

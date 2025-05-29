@@ -3,8 +3,8 @@ using diNo.diNoDataSetTableAdapters;
 using diNo.Properties;
 using System;
 using System.Collections.Generic;
+using System.Resources;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace diNo
 {
@@ -21,16 +21,16 @@ namespace diNo
     private diNoDataSet.FpaDataTable fpaDT; // wird zum Speichern benötigt: FPA-Halbjahr 1 und 2
     private diNoDataSet.SeminarfachnoteRow seminar;
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
-    public Zweig Zweig;
+    public Zweig Zweig;    
     public Punktesumme punktesumme;
-    public List<string> absenzen;
+    bool BekommtAllgHSR = false; // wird true, sobald eine 2. Fremdsprache mit Niveau B1 vorliegt.
+
 
     public Schueler(int id)
     {
       this.Id = id;
       this.Refresh();
       punktesumme = new Punktesumme(this);
-      absenzen = new List<string>();
     }
 
     public Schueler(diNoDataSet.SchuelerRow s)
@@ -38,7 +38,6 @@ namespace diNo
       this.Id = s.Id;
       this.data = s;
       punktesumme = new Punktesumme(this);
-      absenzen = new List<string>();
       Zweig = Faecherkanon.GetZweig(data.Ausbildungsrichtung);
     }
 
@@ -105,11 +104,6 @@ namespace diNo
       return Id;
     }
 
-    public string Comparer()
-    {
-      return NameVorname; // wird nicht verwendet (nur fürs Interface)
-    }
-
     [OLVColumn(Title = "Rufname", Width = 100, DisplayIndex = 3)]
     public string benutzterVorname
     {
@@ -140,21 +134,13 @@ namespace diNo
       get
       {
         var k = getKlasse;
-        if (k.Zweig == Zweig.None)
-          return k.Bezeichnung + ((k.Zweig == Zweig.None && data.Ausbildungsrichtung != "V") ? "_" + data.Ausbildungsrichtung : "");
-        else if (k.Bezeichnung.Substring(0, 2) == "FB")
+        if (k.Bezeichnung.Substring(0, 2) == "FB")
           return k.Bezeichnung + "_" + Data.Schulart;
-        else return k.Bezeichnung;
+        else
+          return k.Bezeichnung + ((k.Zweig == Zweig.None && data.Ausbildungsrichtung != "V") ? "_" + data.Ausbildungsrichtung : "");
       }
     }
 
-    public string KlasseName
-    {
-      get
-      {
-        return getKlasse.Bezeichnung + ", " + Data.Name + ", " + Data.Rufname;
-      }
-    }
 
 
     [OLVColumn(Title = "Name", Width = 100, DisplayIndex = 1)]
@@ -176,23 +162,18 @@ namespace diNo
     }
 
     /// <summary>
-    /// Ob der Schüler Notenschutz hat
+    /// Ob der Schüler Legastheniker ist (so dass in Englisch und Französisch 1:1 gewertet werden muss).
     /// </summary>
     [OLVColumn(Title = "Legasthenie", Width = 80)]
-    public bool HatNachteilsausgleich
+    public bool IsLegastheniker
     {
-      get { return this.data.LRSStoerung || data.LRSZuschlagMax>0; }      
+      get { return this.data.LRSStoerung; }
+      set
+      {
+        this.data.LRSStoerung = value;
+      }
     }
 
-    public String getNTAText
-    {
-       get
-       {
-          return (Data.LRSStoerung ? "Notenschutz" : "")
-            + (Data.LRSStoerung && Data.LRSZuschlagMax > 0 ? ", " : "")
-            + (Data.LRSZuschlagMax > 0 ? "Zeitzuschlag von " + Data.LRSZuschlagMin + "% bis " + Data.LRSZuschlagMax + "%" : "");
-        }
-    }
     /// <summary>
     /// Die Klassenbezeichnung 
     /// </summary>
@@ -216,11 +197,10 @@ namespace diNo
     }
 
     public bool hatVorHj
-    { get { return (!Data.SonderfallNur2Hj) && (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Zwoelf) && (Data.Schulart == "F"); }
-}
+    { get { return  (!Data.SonderfallNur2Hj) && (getKlasse.Jahrgangsstufe==Jahrgangsstufe.Zwoelf) && (Data.Schulart == "F"); } }
 
-public int APFaktor
-    { get { return (hatVorHj ? 3 : 2); } }
+    public int APFaktor
+    { get { return (hatVorHj?3:2); } }
 
     /// <summary>
     /// FPA-Noten
@@ -255,7 +235,7 @@ public int APFaktor
       return res;
     }
 
-
+    
 
     public diNoDataSet.SeminarfachnoteRow Seminarfachnote
     {
@@ -292,6 +272,52 @@ public int APFaktor
       return wh;
     }
 
+    /// <summary>
+    /// Liefert entweder
+    /// F für Wahlfach Französisch
+    /// F-Wi für fortgeführtes Französisch
+    /// einen Leerstring für Schüler die gar kein Französisch haben
+    /// 
+    /// Achtung: Beim Setzen wird auch gleich der Kurs umgemeldet!
+    /// </summary>
+    [OLVColumn(Title = "Wahlpflichtfach", Width = 100)]
+    public string Wahlpflichtfach
+    {
+      get
+      {
+        return this.Data.IsWahlpflichtfachNull() ? "" : this.Data.Wahlpflichtfach;
+      }
+      set
+      {
+        if (!this.Data.IsWahlpflichtfachNull())
+          MeldeAb(this.Data.Wahlpflichtfach);
+        MeldeAn(value);
+        this.Data.Wahlpflichtfach = value;
+        Save();
+      }
+    }
+
+    /// <summary>
+    /// Liefert oder setzt den Fremdsprache2-Eintrag.
+    /// 
+    /// Achtung: Beim Setzen wird auch gleich der Kurs umgemeldet!
+    /// </summary>
+    [OLVColumn(Title = "Fremdsprache2", Width = 100)]
+    public string Fremdsprache2
+    {
+      get
+      {
+        return this.Data.IsFremdsprache2Null() ? "" : this.Data.Fremdsprache2;
+      }
+      set
+      {
+        if (!this.Data.IsFremdsprache2Null())
+          MeldeAb(this.Data.Fremdsprache2);
+        MeldeAn(value);
+        this.Data.Fremdsprache2 = value;
+        Save();
+      }
+    }
 
     /// <summary>
     /// Liefert entweder
@@ -376,7 +402,7 @@ public int APFaktor
           noten = new SchuelerNoten(this);
         }
         return noten;
-      }
+      }      
     }
 
     public void ReloadNoten()
@@ -516,21 +542,14 @@ public int APFaktor
       return false;
     }
 
-    public Vorkommnis getVorkommnis(Vorkommnisart art){
-      foreach (var v in Vorkommnisse)
-      {
-        if (v.Art == art) return v;
-      }
-      return null;
-    }
-
     // nur für 13. Klasse: hat erfolgreich die 2. FS besucht
     public bool HatZweiteFremdsprache()
     {
+      if (!Data.IsAndereFremdspr2NoteNull()) return true; // erfolgreiche Ergänzungsprüfung liegt vor
       foreach (var f in getNoten.alleSprachen)
       {
         if (f.getFach.getKursniveau() == Kursniveau.Englisch) continue;
-        if (Fremdsprachen.HjToSprachniveau(f) >= Sprachniveau.B1) return true;
+        if (Fremdsprachen.HjToSprachniveau(f) >= Sprachniveau.B1) return true;        
       }
 
       return false;
@@ -592,8 +611,8 @@ public int APFaktor
       Status = Schuelerstatus.Abgemeldet;
       data.Austrittsdatum = when;
       Save();
-      //if (Wiederholt())  
-      //  AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen, ""); // wird aus Gefahr der Abweisung generiert.
+      if (Wiederholt())
+        AddVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen,"");
     }
 
     /// <summary>
@@ -610,9 +629,9 @@ public int APFaktor
     }
 
     public void MeldeAb(string vonFachKuerzel)
-    {
+    {      
       foreach (var kurs in this.Kurse)
-      {
+      {        
         if (kurs.getFach.Kuerzel == vonFachKuerzel)
         {
           MeldeAb(kurs);
@@ -662,7 +681,7 @@ public int APFaktor
       }
       else
       {
-        return k.Data.Zweig.Contains(Data.Ausbildungsrichtung);
+        return k.Data.Zweig == Data.Ausbildungsrichtung;
       }
     }
 
@@ -683,11 +702,12 @@ public int APFaktor
       }
     }
 
-    private bool KursPasstOhneGeschlechtspruefung(Kurs k)
+    private bool KursPasstOhneGeschlechtspruefung (Kurs k)
     {
       string kuerzel = k.getFach.Kuerzel;
       string reli = getReliKuerzel();
-      
+
+      // Ku ist bei uns immer Pflichtfach
       if (kuerzel == "K" || kuerzel == "Ev" || kuerzel == "Eth") return (kuerzel == reli);
       /* obsolet mit WPF
       else if (kuerzel == "F") return !Data.IsFremdsprache2Null() && (kuerzel == Data.Fremdsprache2);
@@ -698,7 +718,9 @@ public int APFaktor
       else if (kuerzel == "F-Wi" || kuerzel == "WIn") return (kuerzel == Data.Wahlpflichtfach);
       */
       else return KursPasstZumZweig(k);
-    }
+  }
+
+
 
 
     // wandelt das beim Schüler gespeicherte Bekenntnis in das Fachkürzel um
@@ -734,13 +756,16 @@ public int APFaktor
     }
 
     // wenn dem Schüler ein neuer Kurs hinzugefügt wird, z.B. kath. Religion, dann wird automatisch das
-    // Feld ReligionOderEthik angepasst
+    // Feld ReligionOderEthik angepasst, anlog für Französisch etc.
     public void PasseWahlfachschluesselAn(Kurs k)
     {
       string kuerzel = k.getFach.Kuerzel;
       if (kuerzel == "K") Data.ReligionOderEthik = "RK";
       else if (kuerzel == "Ev") Data.ReligionOderEthik = "EV";
       else if (kuerzel == "Eth") Data.ReligionOderEthik = "Eth";
+      else if (kuerzel == "F") Data.Fremdsprache2 = "F";
+      else if (kuerzel == "F-Wi" || kuerzel == "WIn" || kuerzel == "Ku")
+        Data.Wahlpflichtfach = kuerzel;
     }
 
 
@@ -772,25 +797,19 @@ public int APFaktor
       {
         return 16;
       }
-
       if (!hatVorHj)
       {
         return 17;
       }
 
-      return 25;
-    }
-
-    public ZweiteFSArt getZweiteFSArt()
-    {
-      return (ZweiteFSArt)(getNoten.ZweiteFSalt != null ? 2 : Data.AndereFremdspr2Art);
+      return 25; //FOS11
     }
 
     public int Alter()
-    {
+    {      
       return Alter(DateTime.Now);
     }
-
+    
     public int Alter(DateTime datum)
     {
       int jahre = datum.Year - data.Geburtsdatum.Year;
@@ -799,7 +818,7 @@ public int APFaktor
       return jahre;
     }
 
-    public string getErSie(bool Satzanfang = false)
+    public string getErSie(bool Satzanfang=false)
     {
       if (Satzanfang) return (Data.Geschlecht == "M" ? "Er" : "Sie");
       else return (Data.Geschlecht == "M" ? "er" : "sie");
@@ -830,7 +849,7 @@ public int APFaktor
 
     private string erzAnr(string anrede, string nachname)
     {
-      if (anrede == "M" || anrede == "H")
+      if (anrede == "M" || anrede =="H")
         return "Sehr geehrter Herr " + nachname + ",<br>";
       else
         return "Sehr geehrte Frau " + nachname + ",<br>";
@@ -840,7 +859,7 @@ public int APFaktor
     {
       if (ElternadresseVerwenden)
       {
-        string s = "";
+        string s="";        
         if (Data.AnredeEltern1 != "") s = erzAnr(Data.AnredeEltern1, data.NachnameEltern1);
         if (Data.AnredeEltern2 != "") s += erzAnr(Data.AnredeEltern2, data.NachnameEltern2);
         s += "<br>";
@@ -855,11 +874,11 @@ public int APFaktor
     // Adresse von Minderjährigen mit den Eltern
     public string ErzeugeAdresse(bool ElternadresseVerwenden)
     {
-      string s = "";
+      string s="";
       if (ElternadresseVerwenden)
       {
         // wenn beide Eltern getrennt gespeichert sind, muss die Anrede in dieselbe Zeile, sonst extra:
-        s = getHerrnFrau(Data.AnredeEltern1) + (Data.AnredeEltern2 == "" ? "\n" : "") + Data.VornameEltern1 + " " + Data.NachnameEltern1 + "\n";
+        s = getHerrnFrau(Data.AnredeEltern1) + (Data.AnredeEltern2 == "" ? "\n" :"") + Data.VornameEltern1 + " " + Data.NachnameEltern1 + "\n";
         if (Data.AnredeEltern2 != "")
           s += getHerrnFrau(Data.AnredeEltern2) + Data.VornameEltern2 + " " + Data.NachnameEltern2 + "\n";
       }
@@ -871,13 +890,6 @@ public int APFaktor
       return s;
     }
 
-    public string getLoginname()
-    {      
-        string s = Data.MailSchule;
-        int i = s.IndexOf("@");
-        if (i < 1) return s;
-        return s.Substring(0,i);      
-    }    
   }
 
   public static class SchulnummernHolder
@@ -903,9 +915,8 @@ public int APFaktor
     }
 
     public static string GetSchulname(int schulnummer)
-    {      
-      bool b = schulenInBayern.ContainsKey(schulnummer);
-      return b ? schulenInBayern[schulnummer] : "";      
+    {
+      return (schulenInBayern.ContainsKey(schulnummer)) ? schulenInBayern[schulnummer] : "";
     }
   }
 

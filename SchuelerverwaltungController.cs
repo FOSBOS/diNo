@@ -1,6 +1,7 @@
 ﻿using BrightIdeasSoftware;
 using System;
 using System.Collections;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace diNo
@@ -109,7 +110,7 @@ namespace diNo
     {
       picker.Format = DateTimePickerFormat.Custom;
       picker.ValueChanged += (s, eventArgs) => { picker.CustomFormat = (picker.Checked && picker.Value != picker.MinDate) ? "dd.MM.yyyy" : " "; };
-    }
+    }  
 
   }
 }

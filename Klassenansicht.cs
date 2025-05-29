@@ -1,24 +1,19 @@
-﻿using diNo.Xml.Mbstatistik;
-using log4net;
-using log4net.Layout;
+﻿using log4net;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Windows.Forms;
 
 namespace diNo
 {
   public partial class Klassenansicht : BasisForm
   {
-    private Schueler schueler = null;
+    private Schueler schueler=null;
     private SchuelerverwaltungController verwaltungController;
-    private Brief frmBrief = null;
+    private Brief frmBrief=null;
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-    private List<Schueler> SuchListe;
-    private int SuchIndex=-1;
 
     public Klassenansicht()
     {
@@ -33,37 +28,21 @@ namespace diNo
         this.treeListView1.IsSimpleDragSource = true;
         this.treeListView1.IsSimpleDropSink = true;
         this.treeListView1.ModelCanDrop += this.verwaltungController.treeListView1_ModelCanDrop;
-        this.treeListView1.ModelDropped += this.verwaltungController.treeListView1_ModelDropped;
+        this.treeListView1.ModelDropped += this.verwaltungController.treeListView1_ModelDropped;               
       }
       else
-      {
+      { 
         tabControl1.Controls.Remove(tabPageKurszuordnungen); // man kann die Seite nicht unsichtbar machen, nur entfernen
         tabControl1.Controls.Remove(tabPageAdministration);
         tabControl1.Controls.Remove(tabPageSekretariat);
       }
-      edSuchen.Visible = Zugriff.Instance.SiehtAlles;
-      btnSuchen.Visible = Zugriff.Instance.SiehtAlles;
-      lbSuchen.Visible = Zugriff.Instance.SiehtAlles;
 
-      // Kontextmenü für das Drucken von Kurslisten erzeugen
-      foreach (var k in Zugriff.Instance.eigeneKurse)
-      {
-        Fach f = k.getFach;
-        if (f.Typ == FachTyp.WPF || f.Kuerzel == "K" || f.Kuerzel == "Ev" || f.Kuerzel == "Eth")
-        {
-          var itm = new ToolStripMenuItem("Kursliste " + k.Kursbezeichnung, null, druKursliste);
-          itm.Tag = k;
-          contextMenuPrint.Items.Add(itm);   
-        }
-      }
-
-      lbTest.Visible = Zugriff.Instance.IsTestDB;
+      lbTest.Visible = Zugriff.Instance.IsTestDB;    
       log.Debug("Klassenansicht fertig.");
     }
 
     public void RefreshTabs()
     {
-      schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); 
       SetSchueler();
       //userControlSchueleransicht1.Schueler = null;
       //treeListView1_SelectedIndexChanged(this, null);
@@ -75,15 +54,15 @@ namespace diNo
       userControlVorkommnisse1.Schueler = schueler;
       userControlFPAundSeminar1.Schueler = schueler;
       if (schueler == null) return;
-      userControlNotenbogen1.Schueler = schueler;
+        userControlNotenbogen1.Schueler = schueler;
 
       nameLabel.Text = schueler.NameVorname;
       klasseLabel.Text = schueler.KlassenBezeichnung;
       Image imageToUse = schueler.Data.Geschlecht == "W" ? global::diNo.Properties.Resources.avatarFrau : global::diNo.Properties.Resources.avatarMann;
       pictureBoxImage.Image = new Bitmap(imageToUse, pictureBoxImage.Size);
-      btnBrief.Enabled = true;      
+      btnBrief.Enabled = true;
 
-      labelHinweise.Text = schueler.getNTAText;
+      labelHinweise.Text = (schueler.IsLegastheniker ? "Legasthenie" : "");
       labelHinweise.ForeColor = Color.Red;
 
       if (Zugriff.Instance.HatVerwaltungsrechte)
@@ -96,31 +75,23 @@ namespace diNo
 
     private void treeListView1_SelectedIndexChanged(object sender, EventArgs e)
     {
-      int id=0;
       Zugriff.Instance.markierteSchueler.Clear();
       if (treeListView1.SelectedObject is Schueler)
-      {
-        id = (treeListView1.SelectedObject as Schueler).Id; // nur Id auslesen, falls Refresh das Objekt verändert hat.
-
-        if ((schueler == null) || (schueler.Id != id))
-        {
-          schueler = Zugriff.Instance.SchuelerRep.Find(id);
-          SetSchueler();
-        }
-      }
-
-      /*
+        schueler = treeListView1.SelectedObject as Schueler;      
+      
       if (schueler != null)
       {
         // aus irgendwelchen Gründen kommt das Ereignis beim Wechseln des Schülers zwei Mal,
         // davon einmal mit dem alten Schüler (sinnloser Refresh, sollte verhindert werden?)
         if (this.userControlSchueleransicht1.Schueler == null || this.userControlSchueleransicht1.Schueler.Id != schueler.Id)
         {
-          //
+          SetSchueler();
         }
-      }     */ 
-    }
+      }
 
+      btnPrint.Enabled = true;
+    }
+    
     private void Klassenansicht_Load(object sender, EventArgs e)
     {
       btnNotenabgeben.Enabled = Zugriff.Instance.Sperre != Sperrtyp.Notenschluss || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin);
@@ -132,8 +103,13 @@ namespace diNo
       Zugriff.Instance.Refresh(chkNurAktive.Checked);
       this.treeListView1.Roots = Zugriff.Instance.Klassen;
       this.treeListView1.CanExpandGetter = delegate (object x) { return (x is Klasse); };
-      this.treeListView1.ChildrenGetter = delegate (object x) { return ((Klasse)x).Schueler; };      
-      toolStripStatusLabel1.Text = "";
+      this.treeListView1.ChildrenGetter = delegate (object x) { return ((Klasse)x).eigeneSchueler; };
+      /*
+      nameLabel.Text = "";
+      klasseLabel.Text = "";
+      pictureBoxImage.Image = null; 
+      */
+      toolStripStatusLabel1.Text = "";     
     }
 
     private void btnNotenabgeben_Click(object sender, EventArgs e)
@@ -150,21 +126,21 @@ namespace diNo
         Cursor.Current = Cursors.WaitCursor;
         foreach (string fileName in fileDialog.FileNames)
         {
-          new LeseNotenAusExcel(fileName, notenReader_OnStatusChange);
+          new LeseNotenAusExcel(fileName, notenReader_OnStatusChange, false);
         }
-        
-        Zugriff.Instance.Refresh();
+
+        RefreshTreeView(); // Noten neu laden
         if (schueler != null)
         {
           schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); // neues Objekt setzen
           SetSchueler();
         }
-        MessageBox.Show("Die Notendateien wurden übertragen.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageBox.Show("Die Notendateien wurden übertragen.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
         toolStripStatusLabel1.Text = "";
         Cursor.Current = Cursors.Default;
       }
     }
-
+            
     /// <summary>
     /// Event Handler für Statusmeldungen vom Notenleser.
     /// </summary>
@@ -172,78 +148,20 @@ namespace diNo
     /// <param name="sender">Der Sender des Events.</param>
     void notenReader_OnStatusChange(Object sender, StatusChangedEventArgs e)
     {
-        try
-        {
-            toolStripStatusLabel1.Text = e.Meldung;
-        }
-        catch { 
-           ;
-        }
+          toolStripStatusLabel1.Text = e.Meldung;
     }
 
-    // bei Click auf den Druck-Button öffnet sich das Kontextmenü mit verschiedenen Berichten
+    // normale Lehrer können über den Druckbutton einen Notenbogen ausdrucken, oder bei Wahl
+    // einer Klasse die Klassenliste
     private void btnPrint_Click(object sender, EventArgs e)
     {
-      contextMenuPrint.Show(btnPrint,20,40);
-    }
-    
-    private void druKlassenliste_Click(object sender, EventArgs e)
-    {
-      
-      var obj = treeListView1.SelectedObjects;
-      if (obj.Count > 0 && obj[0] is Klasse)
-      {
-        Klasse k = (Klasse)obj[0];
-        new ReportSchuelerdruck(k.Schueler, Bericht.Klassenliste).Show();
-      }
-      else
-      {
-        MessageBox.Show("Bitte erst eine Klasse auswählen.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-      }
-    }
-
-    // WPF oder Relikurse, die über das Kontextmenü ausgedruckt werden können
-    private void druKursliste(Object itm,EventArgs args)
-    {      
-      Kurs k = (Kurs)((ToolStripMenuItem)itm).Tag;
-      new ReportSchuelerdruck(k.Schueler, Bericht.Klassenliste).Show();
-    }
-
-
-    private void druNotenbogen_Click(object sender, EventArgs e)
-    {
+      Bericht rpt;
       var obj = SelectedObjects();
-      if (obj.Count == 0 || !Zugriff.Instance.HatVerwaltungsrechte && obj.Count > 1)
-      {
-        MessageBox.Show("Bitte erst einen Schüler auswählen.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        return;
-      }
-      
-      new ReportSchuelerdruck(obj, Bericht.Notenbogen).Show();
-    }
-
-    private void druLegastheniker_Click(object sender, EventArgs e)
-    {
-       List<Schueler> lst = new List<Schueler>();
-       foreach (Schueler s in Zugriff.Instance.SchuelerRep.getList())
-       {
-        if (s.HatNachteilsausgleich)
-          lst.Add(s);
-       }
-      new ReportSchuelerdruck(lst, Bericht.Legastheniker).Show();
-    }
-    
-    // nur vom Adminbereich aus aufrufbar
-    public List<Klasse> SelectedKlassen()
-    {
-      var res = new List<Klasse>();
-      var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
-      if (obj.Count > 0 && obj[0] is Klasse)
-      {
-        foreach (Klasse k in obj)
-          res.Add(k);
-      }
-      return res;
+      if (Zugriff.Instance.HatVerwaltungsrechte || obj.Count == 1)
+        rpt = Bericht.Notenbogen;
+      else
+        rpt = Bericht.Klassenliste;
+      new ReportSchuelerdruck(obj, rpt).Show();
     }
 
     // liefert den angeklickten Schüler, oder eine Liste von Klassen (nur für Admins)
@@ -253,19 +171,19 @@ namespace diNo
       var obj = treeListView1.SelectedObjects; // Multiselect im Klassenbereich
 
       // Schüler, die über NotenCheck gewählt wurden
-      if (Zugriff.Instance.HatVerwaltungsrechte && Zugriff.Instance.markierteSchueler.Count > 0)
+      if (Zugriff.Instance.HatVerwaltungsrechte && Zugriff.Instance.markierteSchueler.Count > 0) 
       {
         foreach (Schueler s in Zugriff.Instance.markierteSchueler.Values)
         {
           res.Add(s);
         }
       }
-      else if (obj.Count > 0 && obj[0] is Klasse)
+      else if (obj.Count>0 && obj[0] is Klasse)
       {
         foreach (Klasse k in obj)
         {
-          foreach (Schueler s in k.Schueler)
-          {
+          foreach (Schueler s in k.eigeneSchueler)
+          {               
             res.Add(s);
           }
         }
@@ -277,15 +195,15 @@ namespace diNo
           res.Add(s);
         }
       }
-      else if (schueler != null)
+      else if (schueler!=null)
         res.Add(schueler); // nur aktuell ausgewählter Schüler
 
       return res;
-    }
+    } 
 
     private void btnBrief_Click(object sender, EventArgs e)
     {
-      if (frmBrief == null) frmBrief = new Brief(this);
+      if (frmBrief== null) frmBrief = new Brief(this);
       frmBrief.Anzeigen(schueler);
     }
 
@@ -297,14 +215,14 @@ namespace diNo
       {
         foreach (Klasse k in obj)
           SelKlassen.Add(k);
-      }
+      }  
       var c = new NotenCheckForm(SelKlassen);
       c.Show();
       btnPrint.Enabled = btnPrint.Enabled || Zugriff.Instance.HatVerwaltungsrechte;
     }
 
     public void RefreshVorkommnisse()
-    {
+    {          
       userControlVorkommnisse1.RefreshVorkommnisse();
     }
 
@@ -318,45 +236,50 @@ namespace diNo
       RefreshTreeView();
     }
 
-    private void btnLNWabgeben_Click(object sender, EventArgs e)
+    private void btnCorona_Click(object sender, EventArgs e)
     {
-      new CopyLNW();
-    }
+      //if (MessageBox.Show("Wähle alle Notendateien aus, bei denen fehlende Halbjahresleistungen automatisch für das Corona-Abitur aus dem 1. Halbjahr übernommen werden sollen.", "diNo", MessageBoxButtons.OKCancel, MessageBoxIcon.Information)!=DialogResult.OK) return;
+      if (MessageBox.Show("Wähle nur die Notendateien aus, bei denen ALLE Ersatzprüfungen vollständig eingetragen worden sind.", "diNo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK) return;
 
-    private void btnSuchen_Click(object sender, EventArgs e)
-    {
-      // klappt leider nicht direkt, weil nur geöffnete Klassen durchsucht werden
-      // ListViewItem s = treeListView1.FindItemWithText(edSuchen.Text,true,0,true);
-      string cmp = edSuchen.Text;
-      int c = 0;      
-      if (SuchListe == null)  SuchListe = Zugriff.Instance.SchuelerRep.getList();
-      int max = SuchListe.Count;
-      lbSuchen.ForeColor = Color.Black;
+      var fileDialog = new OpenFileDialog();
+      fileDialog.Filter = "Exceldateien|*.xls*";
+      fileDialog.Multiselect = true;
+      // Call the ShowDialog method to show the dialog box.
+      if (fileDialog.ShowDialog() != DialogResult.OK) return;
 
-      do
+      Cursor.Current = Cursors.WaitCursor;
+      foreach (string fileName in fileDialog.FileNames)
       {
-        SuchIndex++;
-        if (SuchIndex >= max) SuchIndex = 0; // wieder von vorn anfangen
-        c++; // Endlosschleife verhindern
-
-        if (SuchListe[SuchIndex].Name.StartsWith(cmp, StringComparison.OrdinalIgnoreCase))
+        toolStripStatusLabel1.Text = "Erzeuge Coronadatei für " + fileName;
+        string datei = Path.GetFileName(fileName);
+        string verz = fileName.Substring(0, fileName.LastIndexOf('\\'));
+        if (verz.Contains("Corona1") || verz.Contains("Corona2"))
         {
-          schueler = SuchListe[SuchIndex];
-          SetSchueler();
-          break;
+          MessageBox.Show("Notendateien aus den Corona-Verzeichnissen dienen zur Sicherung. Bitte die Datei aus dem Hauptverzeichnis verwenden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+          Cursor.Current = Cursors.Default;
+          return;
         }
-      }
-      while (c < max);
-      if (c>=max)
-        lbSuchen.ForeColor = Color.Red;
-    }
+        verz += "\\Corona2\\";
+        if (!Directory.Exists(verz))
+          Directory.CreateDirectory(verz);
+        File.Copy(fileName, verz+datei, true);
 
-    private void btnMail_Click(object sender, EventArgs e)
-    {
-      var obj = treeListView1.SelectedObjects;
-      if (obj == null) MessageBox.Show("Bitte einen Schüler oder eine Klasse auswählen.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-      else
-        OpenOutlook.BetroffeneLehrer(obj[0]);
+        // dieser Aufruf kopiert die Noten und gibt die neuen Noten dann auch gleich ab.
+        //new CoronaNoten(verz + datei, notenReader_OnStatusChange);
+
+        // nach der ersten Woche:        
+        new CoronaNoten(fileName, notenReader_OnStatusChange);
+      }
+
+      RefreshTreeView(); // Noten neu laden
+      if (schueler != null)
+      {
+        schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); // neues Objekt setzen
+        SetSchueler();
+      }
+      Cursor.Current = Cursors.Default;
+      MessageBox.Show("Die Notendateien wurden kopiert und auch schon eingelesen, eine Abgabe ist nicht mehr notwendig. Bitte kontrolliere aber die Noten auf Plausibilität.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      toolStripStatusLabel1.Text = "";
     }
   }
 }

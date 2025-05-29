@@ -1,11 +1,12 @@
-﻿using diNo.diNoDataSetTableAdapters;
-using log4net;
+﻿using log4net;
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Runtime.InteropServices;
+
 using Excel = Microsoft.Office.Interop.Excel;
+using diNo.diNoDataSetTableAdapters;
+using System.Runtime.InteropServices;
+using System.Data;
+using System.Collections.Generic;
 
 namespace diNo
 {
@@ -39,7 +40,7 @@ namespace diNo
       }
       int lastRow = sheet.get_Range("A" + sheet.Rows.Count, "B" + sheet.Rows.Count).get_End(Excel.XlDirection.xlUp).Row;
       string lastFach = "";
-      int nextKursId = 9001; // für automatisch generierte U-Nr bei Kursen ohne ID
+      int nextKursId=9001; // für automatisch generierte U-Nr bei Kursen ohne ID
       for (int zeile = 5; zeile <= lastRow; zeile++)
       {
         string kursIdStr = ReadValue(sheet, "A" + zeile);
@@ -59,20 +60,20 @@ namespace diNo
           log.Debug("Unterricht Ohne Fach wird ignoriert in Zeile " + zeile);
           continue;
         }
-        if (new string[] { "SSL", "SNT", "SWI", "KL", "AWU", "ME", "PR", "SL", "SF", "TEAM", "FAHRT", "MEDIA", "PP_FA", "PROJ" }.Contains(fach.ToUpper()))
+        if (new string[] { "SSL", "SNT", "SWI", "KL", "AWU", "ME" ,"PR", "SL", "SF", "TEAM", "FAHRT", "MEDIA", "PP_FA" ,  "PROJ" }.Contains(fach.ToUpper()))
         {
           log.Debug("Ignoriere Fach " + fach);
           continue;
         }
 
         bool weiter = false;
-        foreach (var substr in new string[] { "FPU", "FPA", "FPB", "FBB", "FPV", "-Fö", "GK_", "GK-", "_Ü", "-Ü", "CHÜ", "PRAK" })
+        foreach (var substr in new string[] { "FPU", "FPA", "FPB", "FBB", "FPV", "-Fö", "GK_", "GK-", "_Ü" , "-Ü" , "CHÜ", "PRAK" })
         {
           if (fach.ToUpper().Contains(substr))
           {
             log.Debug("Ignoriere Fach " + fach);
             weiter = true;
-            break;
+            break; 
           }
         }
         if (weiter) continue; // die äußere for-Schleife weiter!
@@ -111,7 +112,7 @@ namespace diNo
           {
             kursId = nextKursId;
             nextKursId++;
-            log.Debug("Kursteilung mit unterschiedlichem Fach wird mit angelegt: ID=" + kursId + " Fach " + fach + " " + klassenString);
+            log.Debug("Kursteilung mit unterschiedlichem Fach wird mit angelegt: ID=" + kursId +" Fach "+ fach + " " + klassenString);
           }
           else
           {
@@ -133,16 +134,16 @@ namespace diNo
         bool isWPF = dbFach.Typ == (byte)FachTyp.WPF;
         string bezeichnung = isWPF ? fach : dbFach.Bezeichnung.Trim() + " " + klassenString;
         if (!CreateKurs(kursId, bezeichnung, dblehrer.Id, fach, zweig, isWPF)) continue;
-
+        
         foreach (var klasseKvp in unterschiedlicheKlassen)
-        {
+        {          
           // nur die eigentliche Klasse als Klasse erzeugen, nicht die Klassenteile
           var dbKlasse = FindOrCreateKlasse(klasseKvp.Key, true);
 
           if (klasseKursAdapter.ScalarQueryCountByKlasseAndKurs(dbKlasse.Id, kursId) == 0)
           {
             klasseKursAdapter.Insert(dbKlasse.Id, kursId);
-          }
+          }          
         }
         lastFach = fach;
       }
@@ -152,11 +153,11 @@ namespace diNo
       excelApp.Quit();
 
       // nochmal alle Klasse mit ihren Schülern durchgehen: Die Kurse werden nun zugewiesen.
-      foreach (Klasse k in Zugriff.Instance.Klassen)
+      foreach ( Klasse k in Zugriff.Instance.Klassen)
       {
-        foreach (Schueler s in k.Schueler)
+        foreach (Schueler s in k.eigeneSchueler)
           s.WechsleKlasse(k);
-      }
+      }      
     }
 
     /// <summary>
@@ -243,7 +244,7 @@ namespace diNo
           kurse = kursAdapter.GetDataById(kursid); // WPF gibt es immer nur 1x in der Liste (ID ist eindeutig)
         else
           kurse = kursAdapter.GetDataByBezeichnung(aKursBezeichung); // teilweise gibt es einen Kurs als mehrfachen Eintrag, z.B. bei unterschiedlichen Räumen      
-
+        
         if (kurse.Count == 0)
         {
           // suche Fach in der Datenbank
@@ -255,7 +256,7 @@ namespace diNo
           kursAdapter.Insert(kursid, aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht, aFach + " (" + lehrer.Kuerzel + ")");
           return true;
         }
-
+        
         return false;
       }
     }
@@ -295,7 +296,7 @@ namespace diNo
         {
           if (createIfNotFound)
           {
-            Klasse.Insert(aklasse);
+            new KlasseTableAdapter().Insert(aklasse, null);
           }
           else
           {
@@ -314,7 +315,7 @@ namespace diNo
     /// <returns>Die Zeile des Faches in der Datenbank.</returns>
     public static diNoDataSet.FachRow FindOrCreateFach(string aFach)
     {
-      string fachOhneZahl = aFach.Trim(new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '_' });
+      string fachOhneZahl = aFach.Trim(new char[] { '1','2','3','4','5','6','7','8','9','0','_' });
       using (var fachAdapter = new FachTableAdapter())
       {
         var faecher = fachAdapter.GetDataByKuerzel(fachOhneZahl);
@@ -322,7 +323,7 @@ namespace diNo
         {
           // wenn so nicht gefunden, dann neu anlegen
           // Fach voller Name muss in der Datenbank angepasst werden
-          new FachTableAdapter().Insert(fachOhneZahl, fachOhneZahl, 999, 0, null, false, 0, null, null,null);
+          new FachTableAdapter().Insert(fachOhneZahl, fachOhneZahl, 999, 0, null, false,0,null,null);
           faecher = new FachTableAdapter().GetDataByKuerzel(fachOhneZahl);
         }
         return faecher[0];

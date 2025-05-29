@@ -1,6 +1,6 @@
-﻿using diNo.diNoDataSetTableAdapters;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
@@ -50,7 +50,7 @@ namespace diNo
 
     public string ArtDruck
     {
-      get { return Vorkommnisse.Instance.VorkommnisText((Vorkommnisart)data.Art); }
+      get {return Vorkommnisse.Instance.VorkommnisText((Vorkommnisart)data.Art); }
     }
   }
 
@@ -110,30 +110,27 @@ namespace diNo
   }
 
   public class Vorkommnisse
-  {
-    private static Vorkommnisse _Instance = null;
+  {  
+    private static Vorkommnisse _Instance=null;
     public Dictionary<Vorkommnisart, string> Liste;
 
-    public static Vorkommnisse Instance
-    {
-      get
-      {
-        if (_Instance == null)
-        {
-          _Instance = new Vorkommnisse();
+    public static Vorkommnisse Instance {
+        get {
+          if (_Instance == null) {
+            _Instance = new Vorkommnisse();
+          }
+          return _Instance;
         }
-        return _Instance;
       }
-    }
-
+    
     public Vorkommnisse()
-    {
+    {      
       Liste = new Dictionary<Vorkommnisart, string>();
-      Liste.Add(Vorkommnisart.NotSet, "");
+      Liste.Add(Vorkommnisart.NotSet,"");
       var dt = (new VorkommnisartTableAdapter()).GetData();
       foreach (var v in dt)
-      {
-        Liste.Add((Vorkommnisart)v.Id, v.Bezeichnung);
+      {        
+        Liste.Add((Vorkommnisart)v.Id,v.Bezeichnung);
       }
     }
 

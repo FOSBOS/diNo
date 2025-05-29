@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace diNo
 {
   // alle Repository-Objekte müssen dieses Interface implementieren. Es liefert die ID des Objekts
   public interface IRepositoryObject
   {
-    int GetId();
-    string Comparer(); // diese Methode liefert ein im Objekt festgelegtes Attribut um es mit einem anderen zu vgl. (z.B. Kürzel bei Lehrer)
+    int GetId();    
   }
-
-
+  
   // Schüler, Kurse, Klassen, ... sollen effizient verwaltet werden, 
   // indem sie nur einmal aus der DB geladen werden
   public class Repository<T> where T : IRepositoryObject
@@ -21,14 +22,14 @@ namespace diNo
     public Repository(CreateObj creator)
     {
       Liste = new Dictionary<int, T>();
-      konstruktorT = creator;
+      konstruktorT=creator;
     }
-
+    
     public void Add(T obj)
     {
       try
       {
-        Liste.Add(obj.GetId(), obj);
+        Liste.Add(obj.GetId(),obj);
       }
       catch
       {
@@ -36,7 +37,6 @@ namespace diNo
       }
     }
 
-    // sucht, ob es ein Objekt mit dieser ID gibt und legt es sonst an
     public T Find(int id)
     {
       T res;
@@ -49,19 +49,8 @@ namespace diNo
         // gibt es diese id nicht, so wird dieses Objekt angelegt
         res = konstruktorT(id);
         Add(res);
-        return res;
-      }
-    }
-
-    // sucht, ob es ein Objekt mit dem zugehörigen Kürzel gibt (wird im Objekt festgelegt)
-    public T Find(string kuerzel)
-    {
-      foreach (T t in Liste.Values)
-      {
-        if (t.Comparer() == kuerzel)
-          return t;
-      }
-      return default(T);
+        return res;        
+      }        
     }
 
     public bool Contains(int id)
@@ -73,18 +62,18 @@ namespace diNo
     {
       Liste.Clear();
     }
-
+    
     public void Remove(int id)
     {
       Liste.Remove(id);
     }
 
-    public List<T> getList()
+    public List<T>getList()
     {
       var q = new List<T>();
       foreach (var e in Liste.Values)
         q.Add(e);
       return q;
-    }
+    }  
   }
 }

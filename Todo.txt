@@ -1,6 +1,13 @@
 ﻿todos für diNo
 --------------
 
+- Umgang mit Legasthenikern in neuer SchO nachlesen und ggf. programmieren
+
+- neue Notendatei
+  --> Schriftgröße für Gewicht kleiner, so dass 0,5 möglich sit
+  --> Notenschlüssel für AP in Englisch vorbelegen (Reiter AP)
+
 - Statistiken ?
+   --> die letzten zwei Punkte sind N2H, die wir programmieren, wenn sonst alles läuft und uns nix besseres einfällt. ;-)
 
-
+- neue Vorrücken- und Bestehensregeln

@@ -1,44 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 //using System.Threading.Tasks.Parallel;
 using System.Windows.Forms;
+using diNo;
+using diNo.diNoDataSetTableAdapters;
+using System.Collections.Concurrent;
 
 namespace diNo
 {
   public partial class NotenCheckForm : BasisForm
   {
-    private Dictionary<NotenCheckModus, string> NotenCheckModusDict;
+    private Dictionary<NotenCheckModus,string> NotenCheckModusDict;
     private List<Klasse> SelObj;
     public NotenCheckForm(List<Klasse> obj)
     {
       InitializeComponent();
       SelObj = obj;
       lbStatus.Text = "";
-      NotenCheckModusDict = new Dictionary<NotenCheckModus, string>();
-      NotenCheckModusDict.Add(NotenCheckModus.EigeneNotenVollstaendigkeit, "eigene Noten vollständig?");
-      if (Zugriff.Instance.lehrer.KlassenleiterVon != null)
-        NotenCheckModusDict.Add(NotenCheckModus.EigeneKlasse, "eigene Klasse prüfen");
+      NotenCheckModusDict = new Dictionary<NotenCheckModus,string>();
+      NotenCheckModusDict.Add(NotenCheckModus.EigeneNotenVollstaendigkeit,"eigene Noten vollständig?");
+      if (Zugriff.Instance.lehrer.KlassenleiterVon!=null)
+        NotenCheckModusDict.Add(NotenCheckModus.EigeneKlasse,"eigene Klasse prüfen");
 
-      NotenCheckModusDict.Add(NotenCheckModus.Gesamtpruefung, "Gesamtprüfung");
+      NotenCheckModusDict.Add(NotenCheckModus.Gesamtpruefung,"Gesamtprüfung");
       if (Zugriff.Instance.lehrer.HatRolle(Rolle.Admin))
       {
-        NotenCheckModusDict.Add(NotenCheckModus.KonferenzVorbereiten, "Konferenz vorbereiten");
+        NotenCheckModusDict.Add(NotenCheckModus.KonferenzVorbereiten,"Konferenz vorbereiten");
         NotenCheckModusDict.Add(NotenCheckModus.Protokolle, "Protokolle Klassenkonferenz");
-      }
+      }   
       comboBoxCheckModus.BeginUpdate();
       comboBoxCheckModus.DataSource = NotenCheckModusDict.ToList();
       comboBoxCheckModus.DisplayMember = "Value";
       comboBoxCheckModus.ValueMember = "Key";
-      comboBoxCheckModus.EndUpdate();
+      comboBoxCheckModus.EndUpdate();        
 
-      comboBoxZeitpunkt.SelectedIndex = Zugriff.Instance.aktZeitpunkt - 1;
-
-      comboBoxZeitpunkt.Enabled = Zugriff.Instance.HatVerwaltungsrechte || Zugriff.Instance.HatRolle(Rolle.Schulleitung);
+      comboBoxZeitpunkt.SelectedIndex = Zugriff.Instance.aktZeitpunkt-1;            
     }
 
     private void btnStart_Click(object sender, EventArgs e)
-    {
+    {            
       StarteNotenCheck();
     }
 
@@ -64,12 +70,12 @@ namespace diNo
     */
 
     private void StarteNotenCheck()
-    {
-      var contr = new NotenCheckController(GetZeitpunkt(), (NotenCheckModus)comboBoxCheckModus.SelectedValue, chkKurzfassung.Checked, progressBarChecks, SelObj);
+    {                        
+      var contr = new NotenCheckController(GetZeitpunkt(),(NotenCheckModus)comboBoxCheckModus.SelectedValue,progressBarChecks, SelObj);
       progressBarChecks.Maximum = contr.AnzahlSchueler;
       if (contr.zuPruefendeKlassen.Count == 0)
       {
-        MessageBox.Show("Diese Klasse muss zu diesem Zeitpunkt nicht geprüft werden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageBox.Show("Diese Klasse muss zu diesem Zeitpunkt nicht geprüft werden.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
         return;
       }
 
@@ -81,25 +87,25 @@ namespace diNo
        }
        );
        */
-
+      
       foreach (var k in contr.zuPruefendeKlassen)
       {
         lbStatus.Text = "Prüfe Klasse " + k.Bezeichnung;
         Refresh(); // Formular aktualisieren
-        contr.CheckKlasse(k);
+        contr.CheckKlasse(k);                      
       }
-
+                     
       Close();
       contr.ShowResults();
-
+      
 
       if ((NotenCheckModus)comboBoxCheckModus.SelectedValue == NotenCheckModus.KonferenzVorbereiten)
-        Zugriff.Instance.Refresh();
+        Zugriff.Instance.SchuelerRep.Clear(); // Berechnungsdaten neu laden
     }
-
+    
     private Zeitpunkt GetZeitpunkt()
     {
-      return (Zeitpunkt)(comboBoxZeitpunkt.SelectedIndex + 1);
+      return (Zeitpunkt)(comboBoxZeitpunkt.SelectedIndex+1);
     }
   }
 }

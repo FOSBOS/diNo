@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Linq;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -51,18 +52,20 @@ namespace diNo
       EnableFPA();
       FillFPA();
 
-      pnlSeminar.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn &&
-        (Zugriff.Instance.lehrer.HatRolle(Rolle.Seminarfach) || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin));
+      pnlSeminar.Enabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn && 
+        (Zugriff.Instance.lehrer.HatRolle(Rolle.Seminarfach) || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin));        
       if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
       {
         var sem = schueler.Seminarfachnote;
         numSeminarpunkte.Value = sem.IsGesamtnoteNull() ? null : (decimal?)sem.Gesamtnote;
-        textBoxSeminarfachthema.Text = sem.IsThemaNull() ? "" : sem.Thema;
+        textBoxSeminarfachthemaKurz.Text = sem.IsThemaKurzNull() ? "" : sem.ThemaKurz;
+        textBoxSeminarfachthemaLang.Text = sem.IsThemaLangNull() ? "" : sem.ThemaLang;
       }
       else
       {
         numSeminarpunkte.Value = null;
-        textBoxSeminarfachthema.Text = "";        
+        textBoxSeminarfachthemaKurz.Text = "";
+        textBoxSeminarfachthemaLang.Text = "";
       }
     }
 
@@ -75,7 +78,7 @@ namespace diNo
       jahrespunkte.Value = fpANoten[1].IsJahrespunkteNull() ? null : (byte?)fpANoten[1].Jahrespunkte;
     }
 
-    private void FillFPAHj(diNoDataSet.FpaRow r, NumericUpDownNullable betrieb, NumericUpDownNullable anleitung,
+    private void FillFPAHj(diNoDataSet.FpaRow r,NumericUpDownNullable betrieb, NumericUpDownNullable anleitung,
       NumericUpDownNullable vertiefung1, NumericUpDownNullable vertiefung2, NumericUpDownNullable vertiefung, NumericUpDownNullable gesamt,
       TextBox stelle, TextBox bemerkung)
     {
@@ -98,7 +101,7 @@ namespace diNo
       }
     }
 
-    private void EnableFPAHj(NumericUpDownNullable vertiefung1, NumericUpDownNullable vertiefung2,
+    private void EnableFPAHj(NumericUpDownNullable vertiefung1, NumericUpDownNullable vertiefung2, 
           NumericUpDownNullable vertiefung, Label lbV1, Label lbV2, Label lbV)
     {
       // S, U mit 2 Vertiefungsfächern
@@ -119,7 +122,7 @@ namespace diNo
         lbV2.Text = "Ernährung (1/2)";
         lbV.Text = "Vertiefung gesamt (25%)";
       }
-      else
+      else       
       {
         lbV1.Text = "Vertiefung 1";
         lbV2.Text = "Vertiefung 2";
@@ -168,7 +171,7 @@ namespace diNo
       if (vertiefung2.Value == null) r.SetVertiefung2Null(); else r.Vertiefung2 = (byte)vertiefung2.Value;
       if (gesamt.Value == null) r.SetGesamtNull(); else r.Gesamt = (byte)gesamt.Value;
       if (stelle.Text == "") r.SetStelleNull(); else r.Stelle = stelle.Text;
-      if (bemerkung.Text == "") r.SetBemerkungNull(); else r.Bemerkung = bemerkung.Text;
+      if (bemerkung.Text == "") r.SetBemerkungNull(); else r.Bemerkung = bemerkung.Text;      
     }
 
     private void btnSaveFPA_Click(object sender, System.EventArgs e)
@@ -176,16 +179,17 @@ namespace diNo
       var fpANoten = schueler.FPANoten;
       SaveFPAHj(fpANoten[0], numBetrieb1, numAnleitung1, numVertiefung11, numVertiefung21, numVertiefung1, numGesamt1, edStelle1, edBemerkung1);
       SaveFPAHj(fpANoten[1], numBetrieb2, numAnleitung2, numVertiefung12, numVertiefung22, numVertiefung2, numGesamt2, edStelle2, edBemerkung2);
-      FPA.Save(schueler.FPANoten, schueler.Zweig);
+      FPA.Save(schueler.FPANoten,schueler.Zweig);      
       schueler.Save();
       FillFPA();
     }
 
     private void btnSaveSeminar_Click(object sender, System.EventArgs e)
-    {
+    {      
       var sem = schueler.Seminarfachnote;
       if (numSeminarpunkte.Value == null) sem.SetGesamtnoteNull(); else sem.Gesamtnote = (int)numSeminarpunkte.Value;
-      if (textBoxSeminarfachthema.Text == "") sem.SetThemaNull(); else sem.Thema = textBoxSeminarfachthema.Text;
+      if (textBoxSeminarfachthemaKurz.Text == "") sem.SetThemaKurzNull(); else sem.ThemaKurz = textBoxSeminarfachthemaKurz.Text;
+      if (textBoxSeminarfachthemaLang.Text == "") sem.SetThemaLangNull(); else sem.ThemaLang = textBoxSeminarfachthemaLang.Text;
       schueler.Save();
     }
   }

@@ -1,7 +1,8 @@
-﻿using diNo.diNoDataSetTableAdapters;
-using diNo.Xml.Mbstatistik;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
@@ -15,11 +16,8 @@ namespace diNo
     Zwischenzeugnis,
     Jahreszeugnis,
     Abiturzeugnis,
-    ZusatzAllgHSR,
     Notenbogen,
     Klassenliste,
-    Auswahlliste,
-    Legastheniker,
     EinserAbi
   }
 
@@ -68,7 +66,7 @@ namespace diNo
       Vorname = s.Vorname;
       Rufname = s.Data.Rufname;
       Anrede = s.getHerrFrau();
-      Klasse = b==Bericht.EinserAbi ? s.KlassenBezeichnung : s.getKlasse.Bezeichnung;
+      Klasse = s.getKlasse.Bezeichnung;
 
       var KL = s.getKlasse.Klassenleiter;
       Klassenleiter = KL.NameDienstbezeichnung;
@@ -85,47 +83,14 @@ namespace diNo
       HideVorHj = !s.hatVorHj; // nur bei F12 anzeigen
       HideAbi = jg < 12 || Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.ErstePA;
 
-      if (b==Bericht.Auswahlliste){
-            switch (Zugriff.Instance.selectedAuswahlart)
-            {
-                case Auswahlart.Vorkommnis:
-                    Vorkommnis v = s.getVorkommnis(Zugriff.Instance.selectedVorkommnisart);
-                    Bemerkung = v.Bemerkung;
-                    break;
-                case Auswahlart.Probezeit:
-                    Bemerkung = s.Data.ProbezeitBis.ToString("dd.MM.yyyy");
-                    break;
-                case Auswahlart.Zubringerschule:
-                    Bemerkung = s.Data.SchulischeVorbildung;
-                    break;
-                case Auswahlart.Fremdsprache2:
-                    Bemerkung = Zugriff.Instance.FachRep.Find(s.Data.AndereFremdspr2Fach).Bezeichnung 
-                        + (s.Data.IsAndereFremdspr2NoteNull() ? "" : " " + s.Data.AndereFremdspr2Note)
-                        + (s.Data.AndereFremdspr2Art==0 ? " ("+ s.Data.SchulischeVorbildung + ")"  :"");
-                    break;
-                case Auswahlart.Wiederholer:
-                    Bemerkung = s.getWiederholungen();
-                    break;
-                }
-            }
-      else if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6)
+      if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6)
       {
         int anzProbleme = s.getNoten.AnzahlProbleme();
         Bemerkung = "Sie benötigen bei " + (anzProbleme > 2 ? 2 : anzProbleme) + " Gesamtergebnissen unter 4 Punkten mindestens " + s.punktesumme.Anzahl(PunktesummeArt.Gesamt) * (anzProbleme > 1 ? 6 : 5) + " Punkte, um zu bestehen. ";
-      }
-      else if (b == Bericht.Einbringung)
-      {
-        Bemerkung = (Zugriff.Instance.IsFBKempten ? "dem Oberstufenbetreuer oder " : "")
-          + "der Schulleitung bis spätestens " +
-          Zugriff.Instance.Zeugnisdatum.ToString("dddd, dd.MM.yyyy"); // Abgabedatum von Einbringungsänderungen
-      }
-      else if (b == Bericht.Legastheniker)
-      {
-          Bemerkung = s.getNTAText;
-      }
+      }        
     }
 
-      public static string GetBerichtsname(Bericht b)
+    public static string GetBerichtsname(Bericht b)
     {
       switch (b)
       {
@@ -134,15 +99,12 @@ namespace diNo
         case Bericht.Zwischenzeugnis:
         case Bericht.Jahreszeugnis: return "rptZeugnis";
         case Bericht.Abiturzeugnis: return "rptAbiturzeugnis";
-        case Bericht.ZusatzAllgHSR: return "rptZusatzAllgHSR";
         case Bericht.Gefaehrdung: return "rptGefaehrdung";
         case Bericht.Abiergebnisse: return "rptAbiergebnisse";
         case Bericht.Notenmitteilung: return "rptNotenmitteilung";
         case Bericht.Einbringung: return "rptEinbringung";
 
         case Bericht.Klassenliste: return "rptKlassenliste";
-        case Bericht.Auswahlliste: return "rptAuswahlliste";
-        case Bericht.Legastheniker: return "rptLegastheniker";
         case Bericht.EinserAbi: return "rptEinserAbi";
         default: return "";
       }
@@ -158,7 +120,6 @@ namespace diNo
         case Bericht.Jahreszeugnis:
         case Bericht.Abiturzeugnis:
         case Bericht.Gefaehrdung: return new ZeugnisDruck(s, b, u);
-        case Bericht.ZusatzAllgHSR: return new ZusatzAllgHSRDruck(s);
         case Bericht.EinserAbi:
         case Bericht.Notenmitteilung: return new NotenmitteilungDruck(s, b);
         default: return new SchuelerDruck(s, b);
@@ -196,14 +157,14 @@ namespace diNo
       // Wiederholungen
       string tmp = s.getWiederholungen();
       if (tmp != "") Laufbahn += "<br>Wiederholungen: " + tmp;
-      if (s.Data.LRSStoerung) Laufbahn += "<br><b>" + s.getNTAText + "</b>";
+      if (s.Data.LRSStoerung) Laufbahn += "<br><b>Legasthenie</b>";
 
       if (jg == 13)
       {
-        if (!s.Seminarfachnote.IsThemaNull())
+        if (!s.Seminarfachnote.IsThemaKurzNull())
         {
           Bemerkung = "<b>Thema der Seminararbeit:</b><br>";
-          Bemerkung += s.Seminarfachnote.Thema + "<br><br>";
+          Bemerkung += s.Seminarfachnote.ThemaKurz + "<br><br>";
         }
       }
 
@@ -244,8 +205,7 @@ namespace diNo
       if (!s.Data.IsDNoteNull() && !s.hatVorkommnis(Vorkommnisart.NichtBestanden))
       {
         if (Bemerkung != "") Bemerkung += "<br>";
-        DNote = (b == Bericht.EinserAbi ? s.punktesumme.Summe(PunktesummeArt.Gesamt) + " von " + 15*s.punktesumme.Anzahl(PunktesummeArt.Gesamt) + " P.    "
-          : "Durchschnittsnote*: ") + String.Format("{0:0.0}", s.Data.DNote);
+        DNote = (b == Bericht.EinserAbi ? "" : "Durchschnittsnote*: ") + String.Format("{0:0.0}", s.Data.DNote);
 
         if (!s.Data.IsDNoteFachgebHSRNull())
         {
@@ -258,16 +218,15 @@ namespace diNo
   public class ZeugnisDruck : SchuelerDruck
   {
     public string KlasseAR { get; private set; }
-    public string GeborenInAm { get; private set; }
+    public string GeborenInAm { get; private set; }    
     public string ZeugnisArt { get; private set; }
     public string DatumZeugnis { get; private set; }
     public bool ShowKenntnisGenommen { get; private set; } // Minderjährige beim Zwischenzeugnis
     public bool ShowGezSL { get; private set; } // statt eigenhändige Unterschrift erscheint gez. Helga Traut
-    public bool ShowFOBOSOHinweis { get; protected set; } // Diesem Zeungnis liegt die Schulordnung ...
+    public bool ShowFOBOSOHinweis { get; private set; } // Diesem Zeungnis liegt die Schulordnung ...
     public string Siegel { get; private set; } // (Siegel) andrucken
     public bool IstJahreszeugnis { get; private set; }
     public string BestandenText { get; private set; } // nur für Abizeugnis
-    public string AlternatZweiteFS { get; private set; } // nur für Abizeugnis: gibt Text für fachgeb. HSR mit alternative Einbringung aus
 
     public ZeugnisDruck(Schueler s, Bericht b, UnterschriftZeugnis u) : base(s, b)
     {
@@ -275,46 +234,37 @@ namespace diNo
       {
         BestandenText = "hat die " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " bestanden. Der Prüfungsausschuss hat ";
         BestandenText += (s.Data.Geschlecht == "M" ? "ihm" : "ihr") + " die";
-        
+
         if (jg == 12) ZeugnisArt = "Fachhochschulreife";
         else if (s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife)) ZeugnisArt = "allgemeine Hochschulreife";
         else ZeugnisArt = "fachgebundene Hochschulreife";
-        IstJahreszeugnis = SprachniveauDruck.HatFremdsprachen(s); // verbogen für "---" im Fremdsprachenblock des Abizeugnisses, falls keine Sprachen da sind
-        if (s.getNoten.AlternatZweiteFS != null && !s.Data.IsDNoteFachgebHSRNull() && s.Data.DNoteFachgebHSR < s.Data.DNote)
-          AlternatZweiteFS = "Für die fachgebundene Hochschulreife wird anstelle des Halbjahresergebnisses 13/" +
-            (s.getNoten.AlternatZweiteFS.Art == HjArt.Hj1 ? 1 : 2) + " in " + s.getNoten.AlternatZweiteFS.getFach.BezZeugnis +
-            " das Halbjahresergebnis 13/" +
-            (s.getNoten.AlternatEinbr.Art == HjArt.Hj1 ? 1 : 2) + " in " + s.getNoten.AlternatEinbr.getFach.BezZeugnis +
-            " eingebracht.";
+        IstJahreszeugnis = SprachniveauDruck.HatFremdsprachen(s); // verbogen für "---" im Fremdpsrachenblock des Abizeugnisses, falls keine Sprachen da sind
       }
       else
       {
         if (b == Bericht.Bescheinigung) ZeugnisArt = "Bescheinigung";
         else if (b == Bericht.Zwischenzeugnis) ZeugnisArt = "Zwischenzeugnis";
         else if (b == Bericht.Jahreszeugnis) ZeugnisArt = "Jahreszeugnis";
-        else ZeugnisArt = "Zeugnis";
         ZeugnisArt = ZeugnisArt.ToUpper();
         IstJahreszeugnis = (b == Bericht.Jahreszeugnis);
       }
-
+      
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
-      KlasseAR = (b == Bericht.Zwischenzeugnis || b == Bericht.Bescheinigung && s.Status == Schuelerstatus.Aktiv ? "besucht" : "besuchte") + " im " + Schuljahr;
+      KlasseAR = (b == Bericht.Zwischenzeugnis ? "besucht" : "besuchte") + " im " + Schuljahr;
       KlasseAR += " die " + s.getKlasse.JahrgangsstufeZeugnis + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
       if (b == Bericht.Abiturzeugnis)
-        KlasseAR += " und unterzog sich als Schüler" + (s.Data.Geschlecht == "M" ? "" : "in") + " der Klasse " + s.getKlasse.Bezeichnung + " der " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " in der Ausbildungsrichtung " + Faecherkanon.GetZweigText(s) + ".";
+        KlasseAR += " und unterzog sich als Schüler" + (s.Data.Geschlecht == "M" ? "":"in") + " der Klasse " + s.getKlasse.Bezeichnung + " der Fachabiturprüfung in der Ausbildungsrichtung " + Faecherkanon.GetZweigText(s) + ".";
       else
       {
         if (s.Data.Ausbildungsrichtung != "V") // IV idR. ohne AR
           KlasseAR += ",\nAusbildungsrichtung " + Faecherkanon.GetZweigText(s);
         KlasseAR += " in der Klasse " + s.getKlasse.Bezeichnung;
-        if (b == Bericht.Bescheinigung && s.Status == Schuelerstatus.Abgemeldet)
+        if (b == Bericht.Bescheinigung)
           KlasseAR += "\nund ist heute aus der Schule ausgetreten. \n\nIm laufenden Schulhalbjahr erzielte " + s.getErSie() + " bis zum Austritt folgende Leistungen:";
-        else if (b == Bericht.Bescheinigung)
-          KlasseAR += ". \n\nIm laufenden Schulhalbjahr erzielte " + s.getErSie() + " folgende Leistungen:";
         else
           KlasseAR += ".";
       }
-      DatumZeugnis = Zugriff.Instance.getString(GlobaleStrings.SchulOrt) + ", den " + Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy");
+      DatumZeugnis = Zugriff.Instance.getString(GlobaleStrings.SchulOrt) +", den " + Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy");
       ShowGezSL = (u == UnterschriftZeugnis.gez);
       if (u == UnterschriftZeugnis.Stv)
       {
@@ -326,55 +276,26 @@ namespace diNo
         Schulleiter = Zugriff.Instance.getString(GlobaleStrings.Schulleiter);
         SchulleiterText = Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
       }
-
+   
       // allgemeine Zeugnisbemerkungen (als HTML-Text!)
-      if (jg == 11 && b == Bericht.Jahreszeugnis)
-      {
-        Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.";
-        Bemerkung += "<br><br>Bemerkungen:";
-      }
-      else if (b != Bericht.Abiturzeugnis)
+      if (jg == 11 && b==Bericht.Jahreszeugnis)
+        Bemerkung = "Die fachpraktische Ausbildung wurde im Umfang eines halben Schuljahres in außerschulischen Betrieben bzw. schuleigenen Werkstätten abgeleistet.<br><br>Bemerkungen:";
+      else if (b!=Bericht.Abiturzeugnis)
         Bemerkung = "Bemerkungen:";
 
       if (!s.Data.IsZeugnisbemerkungNull())
         Bemerkung += "<br>" + s.Data.Zeugnisbemerkung;
-      // if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && Zugriff.Instance.IsFBKempten)
-      //   Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden."; // nicht in SF
-      if (s.Data.LRSStoerung)
-      {
-        if (jg>11 && (b==Bericht.Abiturzeugnis || b==Bericht.Jahreszeugnis))
-          Bemerkung += "<br>Die Rechtschreibleistungen wurden mit Ausnahme " + (jg == 12 ? "des Fachreferats" : "der Seminararbeit") + " nicht bewertet.";
-        else
-          Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
-      }
-      
-      var sport = s.getNoten.FindeSportnote();
-      if (sport != null)
-      {
-        bool keinHj1 = sport.getHjLeistung(HjArt.Hj1) == null || sport.getHjLeistung(HjArt.Hj1).Status == HjStatus.Ungueltig;
-        bool keinHj2 = (sport.getHjLeistung(HjArt.Hj2) == null || sport.getHjLeistung(HjArt.Hj2).Status == HjStatus.Ungueltig) && (b != Bericht.Zwischenzeugnis && b != Bericht.Bescheinigung);          
+      if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse && Zugriff.Instance.getString(GlobaleStrings.SchulPLZ)=="87435")
+        Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden."; // nicht in SF
+      if (s.IsLegastheniker)
+        Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
+      if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
+        Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " war vom Unterricht im Fach Sport befreit.";
 
-        if (keinHj1 || keinHj2)
-        {
-          if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
-          {
-            Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin")
-              + " war vom Unterricht im Fach Sport " + (keinHj1 && keinHj2 ? "" : "teilweise ") + "befreit.";
-          }
-          else
-          {
-            Bemerkung += "<br>Der Unterricht im Fach Sport konnte ";
-            if (!keinHj1) Bemerkung += "im 2. Halbjahr ";
-            if (!keinHj2) Bemerkung += "im 1. Halbjahr ";
-            Bemerkung += "nicht erteilt werden.";
-          }
-        }
-      }
-
-      if (Zugriff.Instance.IsFBKempten)
+      if (Zugriff.Instance.getString(GlobaleStrings.SchulPLZ) == "87435")
       {
-        bool hatIPo = s.getNoten.FindeFach("IPo") != null;
-        bool hatIBS = s.getNoten.FindeFach("IBS") != null;
+        bool hatIPo = s.getNoten.FindeFach("IPo", false) != null;
+        bool hatIBS = s.getNoten.FindeFach("IBS", false) != null;
         if (hatIBS && hatIPo)
           Bemerkung += "<br>Die Fächer International Business Studies und Internationale Politik wurden bilingual unterrichtet.";
         else if (hatIBS)
@@ -386,12 +307,7 @@ namespace diNo
       if (s.hatVorkommnis(Vorkommnisart.MittlereReife))
         Bemerkung += "<br><b>Dieses Zeugnis verleiht den mittleren Schulabschluss gemäß Art. 25 Abs. 1 Satz 2 Nr. 6 BayEUG.</b>";
       if (jg == 11 && b == Bericht.Jahreszeugnis)
-      {
-        string zusatz = "";
-        if (s.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis)) zusatz = " nicht";
-        else if (s.hatVorkommnis(Vorkommnisart.VorrueckenAufProbe)) zusatz = " auf Probe";
-        Bemerkung += "<br><b>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 12 hat " + s.getErSie() + zusatz + " erhalten.</b>";
-      }
+        Bemerkung += "<br><b>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 12 hat " + s.getErSie() + (s.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis) ? " nicht" : "") + " erhalten.</b>";
       if (jg >= 12 && b == Bericht.Jahreszeugnis)
       {
         if (jg == 12 && s.Data.Schulart == "B")
@@ -400,9 +316,9 @@ namespace diNo
         if (s.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen))
           Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " wurde nach § 31 Abs. 2 FOBOSO nicht zur Prüfung zugelassen. ";
         else //if (s.Status == Schuelerstatus.Aktiv) // abgebrochen. bzw BOS12 nicht angetreten
-          Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " hat sich der " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " ohne Erfolg unterzogen. ";
+          Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " hat sich der Fachabiturprüfung ohne Erfolg unterzogen. ";
 
-        Bemerkung += s.getErSie(true) + " darf die Prüfung gemäß Art. 54 Abs. 5 Satz 1 BayEUG " + (s.hatVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen) ? "nicht mehr" : "noch einmal") + " wiederholen.";
+          Bemerkung += s.getErSie(true) + " darf die Prüfung gemäß Art. 54 Abs. 5 Satz 1 BayEUG " + (s.hatVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen) ? "nicht mehr" : "noch einmal") + " wiederholen.";
       }
       if (b == Bericht.Abiturzeugnis)
         Bemerkung = (Bemerkung == null ? "---" : Bemerkung.Substring(4) + " ---");
@@ -415,33 +331,6 @@ namespace diNo
     }
   }
 
-  public class ZusatzAllgHSRDruck : ZeugnisDruck
-  {
-    public string DatumFachgebHSR { get; private set; }
-    public string Sprache { get; private set; }
-    public string Note { get; private set; }
-    public string Punkte { get; private set; }
-    public string DNote { get; private set; }
-    public string KMK { get; private set; }
-
-    public ZusatzAllgHSRDruck(Schueler s) : base(s, Bericht.ZusatzAllgHSR, UnterschriftZeugnis.SL)
-    {
-      DatumFachgebHSR = Schulart.Replace("Staatliche", "staatlichen") + " vom " + Zugriff.Instance.Zeugnisdatum.ToString("dd.MM.yyyy") + " ";
-      if (!s.Data.IsAndereFremdspr2FachNull())
-      {
-        Fach f = Zugriff.Instance.FachRep.Find(s.Data.AndereFremdspr2Fach);
-        Sprache = f.BezZeugnis;
-        Punkte = s.Data.AndereFremdspr2Note.ToString("D2");
-        Note = NotenZeugnisDruck.getJNText(s.Data.AndereFremdspr2Note);
-        if (!s.Data.IsDNoteNull())
-          DNote = string.Format("{0:F1}", s.Data.DNote) + "(" + ZeugnisTools.ZahlToText(s.Data.DNote) + ")";
-        KMK = (s.Data.Schulart == "B") ? "Berufsoberschule - Beschluss der Kultusministerkonferenz vom 25. November 1976 " :
-          "Fachoberschule - Beschluss der Kultusministerkonferenz vom 16. Dezember 2004 ";
-      }
-
-      ShowFOBOSOHinweis = true;
-    }
-  }
   /*
 *****************************************************************************************************
 **********************************  Unterberichtsdaten **********************************************
@@ -476,7 +365,7 @@ namespace diNo
     public string fachBez { get; protected set; }
     public string Hj1 { get; protected set; }  // Halbjahrespunktzahl 1.Hj
     public string Hj2 { get; protected set; }
-    public string GE { get; protected set; } // Gesamtergebnis
+    public string GE { get; private set; } // Gesamtergebnis
     public string SGE { get; private set; } // Schnitt-Gesamtergebnis (2 Dez)
     protected HjLeistung hj1, hj2;
 
@@ -524,13 +413,13 @@ namespace diNo
       Hj2 = h.Punkte.ToString();
       GE = h.Punkte.ToString();
     }
-
+    
 
     public static NotenDruck CreateNotenDruck(FachSchuelerNoten s, Bericht b)
     {
       if (b == Bericht.Abiergebnisse) return new NotenAbiDruck(s);
       if (b == Bericht.Notenbogen && (byte)s.schueler.getKlasse.Jahrgangsstufe < 12) return new NotenSjDruck(s);
-      return new NotenHjDruck(s, b);
+      return new NotenHjDruck(s,b);
     }
 
     protected string putHj(FachSchuelerNoten s, HjArt a)
@@ -543,13 +432,13 @@ namespace diNo
     {
       if (hjl == null || hjl.Status == HjStatus.Ungueltig) return "";
       if (hjl.Status == HjStatus.NichtEinbringen || hjl.Status == HjStatus.AlternativeEinbr) return "(" + hjl.Punkte.ToString() + ")";
-      return hjl.Punkte.ToString();
+      return hjl.Punkte.ToString();      
     }
 
     // Liefert die erste Note einer Notenliste (v.a. bei einelementigen Noten, wie SAP,...)
     protected string getFirst(IList<int> n)
     {
-      if (n != null && n.Count > 0)
+      if (n!=null && n.Count > 0)
         return n[0].ToString();
       else
         return "";
@@ -599,28 +488,15 @@ namespace diNo
       APG = putHj(s, HjArt.AP);
     }
 
-    public NotenHjDruck(diNoDataSet.SeminarfachnoteRow s)
-    {
-      fachBez = "Seminar";
-      if (!s.IsGesamtnoteNull())
-      {
-        GE = s.Gesamtnote.ToString();
-      }
-    }
-
-    public NotenHjDruck(HjLeistung hj) : base(hj)
+    public NotenHjDruck(HjLeistung h) : base(h)
     {
     }
-    public NotenHjDruck()
-    {
-    }
-
 
     public NotenHjDruck(diNoDataSet.FpaDataTable f)
     {
-      fachBez = "Fachpraktische Ausbildung";
-      Hj1 = putFpa(f[0], out string s1);
-      Hj2 = putFpa(f[1], out string s2);
+      fachBez = "Fachpraktische Ausbildung";      
+      Hj1 = putFpa(f[0], out string s1);      
+      Hj2 = putFpa(f[1], out string s2);      
       if (Zugriff.Instance.aktHalbjahr == Halbjahr.Erstes) sL = s1; else sL = s2;
       if (f[1] != null && !f[1].IsJahrespunkteNull()) JN = f[1].Jahrespunkte.ToString();
     }
@@ -658,18 +534,18 @@ namespace diNo
         SsL2 = hj2.SchnittMdl == null ? "" : String.Format("{0:f2}", hj2.SchnittMdl);
         S2 = hj2.Punkte2Dez == null ? "" : String.Format("{0:f2}", hj2.Punkte2Dez);
       }
-      JN = putHj(s, HjArt.JN);
+      JN = putHj(s, HjArt.JN);      
     }
 
     public NotenSjDruck(diNoDataSet.FpaDataTable f)
-    {
-      fachBez = "Fachpraktische Ausbildung";
-      Hj1 = putFpa(f[0], out string s1);
+    {      
+      fachBez = "Fachpraktische Ausbildung";      
+      Hj1 = putFpa(f[0],out string s1);
       sL1 = s1;
       Hj2 = putFpa(f[1], out string s2);
       sL2 = s2;
-      if (f[1] != null && !f[1].IsJahrespunkteNull()) JN = f[1].Jahrespunkte.ToString();
-    }
+      if (f[1]!= null && !f[1].IsJahrespunkteNull()) JN = f[1].Jahrespunkte.ToString();      
+    }    
   }
 
   // Abiergebnisse
@@ -686,19 +562,10 @@ namespace diNo
     public NotenAbiDruck(HjLeistung h) : base(h)
     {
     }
-
-    public NotenAbiDruck(diNoDataSet.SeminarfachnoteRow s) : base()
-    {
-      fachBez = "Seminar";
-      if (!s.IsGesamtnoteNull())
-      {
-        GE = s.Gesamtnote.ToString();
-      }
-    }
   }
 
   public class NotenZeugnisDruck : NotenDruck
-  {
+    {
     public string fachGruppe { get; private set; }
     public string JN { get; set; } // Jahresnote oder Gesamtergebnis
     public string JNText { get; set; }
@@ -718,18 +585,17 @@ namespace diNo
         default: fachGruppe = "Wahlpflichtfächer"; break;
       }
       fachBez = s.getFach.BezZeugnis;
-      bool isSport = fachBez == "Sport"; // Sportbefreiungen machen Ärger
       if (rpt == Bericht.Abiturzeugnis)
       {
-        if (s.getFach.NichtNC) { fachBez += "*"; hatNichtNC = true; }
+        if (s.getFach.NichtNC) { fachBez += "*"; hatNichtNC = true; }        
       }
       if (s.schueler.hatVorHj)
       {
         VorHj1 = HjToZeugnis(s.getVorHjLeistung(HjArt.Hj1));
         VorHj2 = HjToZeugnis(s.getVorHjLeistung(HjArt.Hj2));
       }
-      Hj1 = HjToZeugnis(s.getHjLeistung(HjArt.Hj1), isSport);
-      Hj2 = HjToZeugnis(s.getHjLeistung(HjArt.Hj2), isSport);
+      Hj1 = HjToZeugnis(s.getHjLeistung(HjArt.Hj1));
+      Hj2 = HjToZeugnis(s.getHjLeistung(HjArt.Hj2));
       if (rpt == Bericht.Abiturzeugnis)
       {
         JNToZeugnis(s.getHjLeistung(HjArt.GesErg));
@@ -762,7 +628,7 @@ namespace diNo
 
     public NotenZeugnisDruck(diNoDataSet.SeminarfachnoteRow s)
     {
-      if (!s.IsThemaNull()) Seminarthema = s.Thema;
+      if (!s.IsThemaKurzNull()) Seminarthema = s.ThemaKurz;
       else Seminarthema = "";
       fachGruppe = "Wahlpflichtfächer";
       fachBez = "<b>Seminar</b>";
@@ -770,14 +636,14 @@ namespace diNo
       {
         JN = s.Gesamtnote.ToString("D2");
         JNToZeugnis((byte)s.Gesamtnote);
-      }
+      }            
     }
 
-    private string HjToZeugnis(HjLeistung t, bool isSport = false)
+    private string HjToZeugnis(HjLeistung t) // für NeueFOBOSO
     {
-      if (t == null) return (rpt == Bericht.Abiturzeugnis && !isSport) ? "" : "--";
+      if (t == null) return rpt == Bericht.Abiturzeugnis ? "" : "--";
       else if (t.Status == HjStatus.Ungueltig) return "--";
-      else if (rpt == Bericht.Abiturzeugnis && (t.Status == HjStatus.NichtEinbringen || t.Status == HjStatus.AlternativeEinbr))
+      else if (rpt == Bericht.Abiturzeugnis && (t.Status == HjStatus.NichtEinbringen || t.Status == HjStatus.AlternativeEinbr)) 
         return "(" + t.Punkte.ToString("D2") + ")";
       else return t.Punkte.ToString("D2");
     }
@@ -803,19 +669,12 @@ namespace diNo
         return;
       }
       JN = p.GetValueOrDefault().ToString("D2");
-      JNText = getJNText(p.GetValueOrDefault());
-    }
-
-    public static string getJNText(int p)
-    {
-      string JNText;
       if (p == 0) JNText = "ungenügend";
       else if (p <= 3) JNText = "mangelhaft";
       else if (p <= 6) JNText = "ausreichend";
       else if (p <= 9) JNText = "befriedigend";
       else if (p <= 12) JNText = "gut";
       else JNText = "sehr gut";
-      return JNText;
     }
   }
 
@@ -838,23 +697,16 @@ namespace diNo
       Punktesumme p = s.punktesumme;
       foreach (PunktesummeArt a in Enum.GetValues(typeof(PunktesummeArt)))
       {
-        if (p.Anzahl(a) > 0 && a != PunktesummeArt.GesamtFachgebHSR)
+        if (p.Anzahl(a) > 0)
         {
           list.Add(new PunkteSummeDruck(ArtToText(a, p, s), p.Summe(a).ToString(), ""));
         }
       }
-      if (!s.Data.IsDNoteNull() && b != Bericht.Einbringung)
+      if (!s.Data.IsDNoteNull() && b!=Bericht.Einbringung)
       {
-        list.Add(new PunkteSummeDruck("", "", "")); // Leerzeile      
-
-        if (!s.Data.IsDNoteFachgebHSRNull() && s.Data.DNoteFachgebHSR < s.Data.DNote)
-        {
-          list.Add(new PunkteSummeDruck("Durchschnittsnote allgemeine Hochschulreife", string.Format("{0:F1}", s.Data.DNote), ZeugnisTools.ZahlToText(s.Data.DNote)));
-          list.Add(new PunkteSummeDruck("Durchschnittsnote fachgebundene Hochschulreife", string.Format("{0:F1}", s.Data.DNoteFachgebHSR), ZeugnisTools.ZahlToText(s.Data.DNoteFachgebHSR)));
-        }
-        else
-          list.Add(new PunkteSummeDruck("Durchschnittsnote", string.Format("{0:F1}", s.Data.DNote), ZeugnisTools.ZahlToText(s.Data.DNote)));
-      }
+        list.Add(new PunkteSummeDruck("", "", "")); // Leerzeile
+        list.Add(new PunkteSummeDruck("Durchschnittsnote", string.Format("{0:F1}", s.Data.DNote), ZahlToText(s.Data.DNote)));
+      }      
       return list;
     }
 
@@ -866,68 +718,14 @@ namespace diNo
         case PunktesummeArt.FPA: return "- Punktesumme der fachpraktischen Ausbildung aus 11/1 und 11/2";
         case PunktesummeArt.FR: return "- Ergebnis des Fachreferats";
         case PunktesummeArt.HjLeistungen: return "- Punktesumme aus " + p.Anzahl(art) + " einzubringenden Halbjahresergebnissen";
-        case PunktesummeArt.Seminar: return "- Ergebnis des Seminars (zweifach)";
-        case PunktesummeArt.FremdspracheErgPr: return "- Ergebnis der Ergänzungsprüfung (zweifach)";
-        case PunktesummeArt.FremdspracheAus12: return "- Punktesumme der zweiten Fremdsprache";
+        case PunktesummeArt.Seminar: return "Ergebnis des Seminars (zweifach)";
+        case PunktesummeArt.FremdspracheErgPr: return "Ergebnis der Ergänzungsprüfung (zweifach)";
+        case PunktesummeArt.FremdspracheAus12: return "Punktesumme der zweiten Fremdsprache";
         case PunktesummeArt.Gesamt: return "Summe";
         default: return "";
       }
     }
 
-
-  }
-
-  public class SprachniveauDruck
-  {
-    public string fachBez { get; private set; }
-    public string Stufe { get; private set; }
-
-    public SprachniveauDruck(FachSchuelerNoten f)
-    {
-      int i;
-      fachBez = f.getFach.BezZeugnis;
-      i = fachBez.IndexOf(" "); // wegen (fortgef.) raus
-      if (i > 0) fachBez = fachBez.Substring(0, i);
-      Stufe = Fremdsprachen.NiveauText(Fremdsprachen.HjToSprachniveau(f));
-    }
-
-    public static bool HatFremdsprachen(Schueler s)
-    {
-      foreach (var f in s.getNoten.alleSprachen)
-      {
-        if (f.getHjLeistung(HjArt.Sprachenniveau) != null)
-        {
-          return true;
-        }
-      }
-      return false;
-    }
-
-    public static List<SprachniveauDruck> Create(Schueler s)
-    {
-      List<SprachniveauDruck> list = new List<SprachniveauDruck>();
-      foreach (var f in s.getNoten.alleSprachen)
-      {
-        if (f.getHjLeistung(HjArt.Sprachenniveau) != null)
-        {
-          list.Add(new SprachniveauDruck(f));
-        }
-      }
-      /*
-      if (s.getZweiteFSArt() == ZweiteFSArt.ErgPr && !s.Data.IsAndereFremdspr2FachNull())
-      {
-        list.Add(new SprachniveauDruck(Zugriff.Instance.FachRep.Find(s.Data.AndereFremdspr2Fach)));
-      }*/
-      /* sollte schon in alleSprachen stehen (Sprachniveau aus Import)
-      if (s.getZweiteFSArt() == ZweiteFSArt.FFAlt)
-      {
-        list.Add(new SprachniveauDruck(s.getNoten.ZweiteFSalt));
-      }*/
-      return list;
-    }
-  }
-  public static class ZeugnisTools
-  {
     public static string ZahlToText(decimal zahl)
     {
       int vk = (int)Math.Floor(zahl);
@@ -953,60 +751,47 @@ namespace diNo
       }
     }
   }
-
-  // stellt die Daten der Ergänzungsprüfung oder eines früheren Besuchs von Französisch (fortgef) bereit
-  public class ZusZweiteFSDruck
+  
+  public class SprachniveauDruck
   {
-    public bool hideHj { get; private set; }
-    public string JgKurz { get; private set; }
-    public string Kopfzeile { get; private set; }
     public string fachBez { get; private set; }
-    public string Hj1 { get; set; }
-    public string Hj2 { get; set; }
-    public string JN { get; set; }
-    public string JNText { get; set; }
+    public string Stufe { get; private set; }
 
-    public ZusZweiteFSDruck(int fachID, int punkte)
+    public SprachniveauDruck(FachSchuelerNoten f)
     {
-      hideHj = true;
-      Kopfzeile = "Ergänzungsprüfung in";
-      fachBez = Zugriff.Instance.FachRep.Find(fachID).BezZeugnis;
-      JN = punkte.ToString("D2");
-      JNText = NotenZeugnisDruck.getJNText(punkte);
+      int i;
+      fachBez = f.getFach.BezZeugnis;
+      i = fachBez.IndexOf(" ");
+      if (i > 0) fachBez = fachBez.Substring(0,i); 
+      Stufe = Fremdsprachen.NiveauText(Fremdsprachen.HjToSprachniveau(f));
     }
 
-    public ZusZweiteFSDruck(FachSchuelerNoten f)
+    public static bool HatFremdsprachen(Schueler s)
     {
-      hideHj = false;
-      int jg = (int)f.getHjLeistung(HjArt.Hj1).JgStufe;
-      JgKurz = jg.ToString();
-      if (jg == 13)
-        Kopfzeile = "Übernommen aus früherem Besuch der Jahrgangsstufe 13";
-      else
-        Kopfzeile = "Wahlpflichtunterricht in der Jahrgangsstufe " + JgKurz;
-      fachBez = f.getFach.Bezeichnung;
-      byte jn = f.getHjLeistung(HjArt.Hj1).Punkte;
-      Hj1 = jn.ToString("D2");
-      jn += f.getHjLeistung(HjArt.Hj2).Punkte;
-      Hj2 = f.getHjLeistung(HjArt.Hj2).Punkte.ToString("D2");
-      jn = Notentools.RundeJF((decimal)jn / 2);
-      JN = jn.ToString("D2");
-      JNText = NotenZeugnisDruck.getJNText(jn);
+      foreach (var f in s.getNoten.alleSprachen)
+      {
+        if (f.getHjLeistung(HjArt.Sprachenniveau) != null)
+        {
+          return true;
+        }
+      }
+      return false;
     }
 
-    public static List<ZusZweiteFSDruck> CreateZusZweiteFSDruck(Schueler s)
+    public static List<SprachniveauDruck> Create(Schueler s)
     {
-      List<ZusZweiteFSDruck> list = new List<ZusZweiteFSDruck>();
-      if (s.getZweiteFSArt() == ZweiteFSArt.ErgPr && !s.Data.IsAndereFremdspr2NoteNull())
-        list.Add(new ZusZweiteFSDruck(s.Data.AndereFremdspr2Fach, s.Data.AndereFremdspr2Note));
-      else if (s.getNoten.ZweiteFSalt != null && s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
-        list.Add(new ZusZweiteFSDruck(s.getNoten.ZweiteFSalt));
-
+      List<SprachniveauDruck> list = new List<SprachniveauDruck>();
+      foreach (var f in s.getNoten.alleSprachen)
+      {
+        if (f.getHjLeistung(HjArt.Sprachenniveau)!=null)
+        {
+          list.Add(new SprachniveauDruck(f));
+        }
+      }
       return list;
     }
   }
-
-
+  
   public class LehrerRolleDruck
   {
     public string RechteBezeichnung { get; private set; }
@@ -1030,7 +815,7 @@ namespace diNo
   }
 
   public class LehrerDerKlasseDruck
-  {
+  {    
     public string LehrerName { get; private set; }
     public string FachBez { get; private set; }
 
@@ -1048,17 +833,17 @@ namespace diNo
       foreach (var k in klasse.Kurse)
       {
         Fach f = k.getFach;
-        if ((f.Typ == FachTyp.Allgemein && f.Kuerzel != "K" && f.Kuerzel != "Ev" && f.Kuerzel != "Eth") || f.Typ == FachTyp.Profilfach)
+        if ((f.Typ == FachTyp.Allgemein && f.Kuerzel != "K" && f.Kuerzel != "Ev" && f.Kuerzel != "Eth" )  || f.Typ == FachTyp.Profilfach)
           liste.Add(new LehrerDerKlasseDruck(k.getLehrer.Name, k.getFach.Bezeichnung));
       }
-      if (klasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
+      if (klasse.Jahrgangsstufe==Jahrgangsstufe.Elf)
         liste.Add(new LehrerDerKlasseDruck("", "FPA"));
 
       return liste;
     }
   }
 }
-
+  
 
 
 

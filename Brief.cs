@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace diNo
 {
@@ -42,17 +47,15 @@ namespace diNo
 
     private void btnOK_Click(object sender, EventArgs e)
     {
-      BriefTyp typ = BriefTyp.Standard;
+      BriefTyp typ=BriefTyp.Standard;
       if (opVerweis.Checked || opVerschVerweis.Checked) typ = BriefTyp.Verweis;
       else if (opMEP.Checked || opSEP.Checked) typ = BriefTyp.Ersatzpruefung;
       else if (opAttestpflicht.Checked) typ = BriefTyp.Attestpflicht;
-      else if (opMitteilung.Checked) typ = BriefTyp.Mitteilung;
       b = new BriefDaten(s, typ);
       if (typ == BriefTyp.Verweis) VerweisText(opVerschVerweis.Checked);
       else if (opSA.Checked || opKA.Checked) NachterminText();
       else if (typ == BriefTyp.Ersatzpruefung) ErsatzprText();
       else if (typ == BriefTyp.Attestpflicht) AttestpflichtText();
-      else if (typ == BriefTyp.Mitteilung) MitteilungText();
       else NacharbeitText();
 
       Hide();
@@ -69,14 +72,14 @@ namespace diNo
         s.AddVorkommnis(Vorkommnisart.Nacharbeit, edInhalt.Text, true);
         frmKlasse.RefreshVorkommnisse();
       }
-    } 
+    }
 
 
     private void radioButton_CheckedChanged(object sender, EventArgs e)
     {
       pnlVersaeumtAm.Enabled = opSA.Checked || opKA.Checked;
-      pnlNachterminAm.Enabled = !(opVerweis.Checked || opVerschVerweis.Checked || opAttestpflicht.Checked || opMitteilung.Checked);
-      pnlInhalt.Enabled = opVerweis.Checked || opVerschVerweis.Checked || opNacharbeit.Checked || opSEP.Checked || opMEP.Checked || opMitteilung.Checked;
+      pnlNachterminAm.Enabled = !(opVerweis.Checked || opVerschVerweis.Checked || opAttestpflicht.Checked);
+      pnlInhalt.Enabled = opVerweis.Checked || opVerschVerweis.Checked || opNacharbeit.Checked || opSEP.Checked || opMEP.Checked;
       labelInhalt.Text = (opSEP.Checked || opMEP.Checked) ? "Prüfungsstoff" : "Grund";
     }
 
@@ -120,7 +123,7 @@ namespace diNo
       b.Betreff = "Nachholung von Leistungsnachweisen";
       if (b.IstU18) b.Inhalt += (s.Data.Geschlecht == "M" ? "Ihr Sohn " : "Ihre Tochter ") + s.benutzterVorname
         + " konnte in diesem Schuljahr im Fach " + cbFach.Text + " wegen " + (s.Data.Geschlecht == "M" ? "seiner " : "ihrer ");
-      else
+      else 
         b.Inhalt += "Sie konnten in diesem Schuljahr im Fach " + cbFach.Text + " wegen Ihrer ";
       b.Inhalt += "Versäumnisse nicht hinreichend geprüft werden.<br><br>Gemäß § 20 (2) FOBOSO wird hiermit eine " + lnwart + " Ersatzprüfung angesetzt.<br><br>";
       b.Inhalt += "Prüfungsstoff wird sein: <br>" + edInhalt.Text + "<br><br>";
@@ -142,7 +145,7 @@ namespace diNo
     }
 
     public void AttestpflichtText()
-    {
+    {      
       b.Betreff = "Attestpflicht";
       b.Inhalt += "da sich im laufenden Schuljahr bei ";
       if (b.IstU18) b.Inhalt += (s.Data.Geschlecht == "M" ? "Ihrem Sohn " : "Ihrer Tochter ") + s.VornameName;
@@ -154,12 +157,6 @@ namespace diNo
 
       s.AddVorkommnis(Vorkommnisart.Attestpflicht, "", false);
     }
-
-    public void MitteilungText(){
-      b.Betreff = (s.Data.Geschlecht == "M" ? "Ihr Sohn " : "Ihre Tochter ") + s.VornameName; ;
-      b.Inhalt += edInhalt.Text + "<br><br>Freundliche Grüße";
-    }
-
   }
 
   public class BriefDaten
@@ -185,7 +182,7 @@ namespace diNo
     public BriefDaten(Schueler s, BriefTyp typ)
     {
       Lehrer lehrer;
-      IstU18 = s.Alter() < 18 && (typ != BriefTyp.Standard) || typ==BriefTyp.Mitteilung; // Schüleradresse bei normalen Nachterminen
+      IstU18 = s.Alter() < 18 && (typ != BriefTyp.Standard); // Schüleradresse bei normalen Nachterminen
       bool UnterschriftKL = typ == BriefTyp.Gefaehrdung || typ == BriefTyp.Attestpflicht; // hier nicht der angemeldete Benutzer
 
       Id = s.Id;
@@ -196,16 +193,15 @@ namespace diNo
       Telefon = "Telefon: " + Zugriff.Instance.getString(GlobaleStrings.SchulTel) + "\nTelefax: " + Zugriff.Instance.getString(GlobaleStrings.SchulFax);
       Telefon += "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulWeb) + "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulMail);
 
-      Adressfeld = s.ErzeugeAdresse(IstU18);
+      Adressfeld = s.ErzeugeAdresse(IstU18); 
       Name = s.Name;
       VornameName = s.VornameName;
       Klasse = s.getKlasse.Bezeichnung;
-      DateTime dat = (typ == BriefTyp.Gefaehrdung ? Zugriff.Instance.Zeugnisdatum : DateTime.Today);
-      OrtDatum = Zugriff.Instance.getString(GlobaleStrings.SchulOrt) + ", den " + dat.ToString("dd.MM.yyyy");
+      OrtDatum = Zugriff.Instance.getString(GlobaleStrings.SchulOrt) + ", den " + DateTime.Today.ToString("dd.MM.yyyy");
 
       if (UnterschriftKL)
       {
-        lehrer = s.getKlasse.Klassenleiter;
+        lehrer = s.getKlasse.Klassenleiter;        
       }
       else
         lehrer = Zugriff.Instance.lehrer;
@@ -247,14 +243,13 @@ namespace diNo
     }
   }
 
-  public enum BriefTyp
+  public enum BriefTyp 
   {
     Standard = 0,
     Verweis = 1,
     Ersatzpruefung = 2,
     Gefaehrdung = 3,
-    Attestpflicht = 4,
-    Mitteilung = 5
+    Attestpflicht = 4
   }
 
 }

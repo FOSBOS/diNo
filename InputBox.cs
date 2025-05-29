@@ -1,4 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace diNo
@@ -15,7 +22,7 @@ namespace diNo
       var i = new InputBox();
       i.lbInput.Text = label;
       i.edInput.Text = wert;
-      if (i.ShowDialog() == DialogResult.Cancel) return "";
+      if (i.ShowDialog()==DialogResult.Cancel) return "";
       return i.edInput.Text;
     }
 
@@ -30,5 +37,5 @@ namespace diNo
     }
   }
 
-
+  
 }

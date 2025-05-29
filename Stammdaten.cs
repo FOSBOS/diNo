@@ -1,16 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
 
 namespace diNo
 {
-  // war mal als abstrakte Basisklasse für Stammdatenformulare gedacht, aber der Designer macht da riesen Ärger
-  // jetzt Kopiervorlage
+   // war mal als abstrakte Basisklasse für Stammdatenformulare gedacht, aber der Designer macht da riesen Ärger
+   // jetzt Kopiervorlage
 
   public partial class Stammdaten : BasisForm
   {
     public Stammdaten()
     {
       InitializeComponent();
-
+      
     }
 
     protected void ValueChanged(IRepositoryObject obj) {; }
@@ -21,7 +28,7 @@ namespace diNo
     private void liste_SelectedValueChanged(object sender, EventArgs e)
     {
       var t = liste.SelectedItem as IRepositoryObject;
-      if (t != null)
+      if (t!=null)
         ValueChanged(liste.SelectedItem as IRepositoryObject);
     }
 

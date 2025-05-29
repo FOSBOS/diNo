@@ -29,11 +29,10 @@
     private void InitializeComponent()
     {
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
-      this.btnSchnitte = new System.Windows.Forms.Button();
+      this.btnWPF = new System.Windows.Forms.Button();
       this.btnEinserAbi = new System.Windows.Forms.Button();
       this.btnSelect = new System.Windows.Forms.Button();
       this.groupBoxDrucken = new System.Windows.Forms.GroupBox();
-      this.chkRptDruck = new System.Windows.Forms.CheckBox();
       this.gbUnterschrift = new System.Windows.Forms.GroupBox();
       this.opGez = new System.Windows.Forms.RadioButton();
       this.opStv = new System.Windows.Forms.RadioButton();
@@ -44,15 +43,12 @@
       this.btnKlassenliste = new System.Windows.Forms.Button();
       this.btnNotendruck = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
-      this.btnExportKurswahl = new System.Windows.Forms.Button();
       this.btnSeStatistik = new System.Windows.Forms.Button();
       this.btnMBStatistik = new System.Windows.Forms.Button();
       this.btnSendExcelFiles = new System.Windows.Forms.Button();
       this.btnCreateExcels = new System.Windows.Forms.Button();
       this.exportNoten = new System.Windows.Forms.Button();
       this.groupBoxImport = new System.Windows.Forms.GroupBox();
-      this.btnImportLoginnamen = new System.Windows.Forms.Button();
-      this.btnImportCheck = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
       this.btnReadWahlpflichtfaecher = new System.Windows.Forms.Button();
       this.btnImportKlassenleiter = new System.Windows.Forms.Button();
@@ -60,7 +56,6 @@
       this.btnImportUnterricht = new System.Windows.Forms.Button();
       this.importNoten = new System.Windows.Forms.Button();
       this.groupBoxStammdaten = new System.Windows.Forms.GroupBox();
-      this.btnKlassen = new System.Windows.Forms.Button();
       this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.btnGlobales = new System.Windows.Forms.Button();
       this.btnLehrer = new System.Windows.Forms.Button();
@@ -78,15 +73,12 @@
       this.lblStatus = new System.Windows.Forms.Label();
       this.btnHjLeistungenWuerfeln = new System.Windows.Forms.Button();
       this.groupboxTest = new System.Windows.Forms.GroupBox();
-      this.btnNotenmailSchueler = new System.Windows.Forms.Button();
-      this.btnNotenmitteilung = new System.Windows.Forms.Button();
       this.groupBoxReparatur = new System.Windows.Forms.GroupBox();
       this.btnKurseZuweisen = new System.Windows.Forms.Button();
       this.btnGesErg = new System.Windows.Forms.Button();
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
-      this.btnCopy11 = new System.Windows.Forms.Button();
-      this.btnAbsenzen = new System.Windows.Forms.Button();
+      this.btnExportKurswahl = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -101,7 +93,7 @@
       // 
       // groupBoxAnalyse
       // 
-      this.groupBoxAnalyse.Controls.Add(this.btnSchnitte);
+      this.groupBoxAnalyse.Controls.Add(this.btnWPF);
       this.groupBoxAnalyse.Controls.Add(this.btnEinserAbi);
       this.groupBoxAnalyse.Controls.Add(this.btnSelect);
       this.groupBoxAnalyse.Location = new System.Drawing.Point(19, 268);
@@ -111,15 +103,15 @@
       this.groupBoxAnalyse.TabStop = false;
       this.groupBoxAnalyse.Text = "Datenanalyse";
       // 
-      // btnSchnitte
+      // btnWPF
       // 
-      this.btnSchnitte.Location = new System.Drawing.Point(21, 81);
-      this.btnSchnitte.Name = "btnSchnitte";
-      this.btnSchnitte.Size = new System.Drawing.Size(132, 23);
-      this.btnSchnitte.TabIndex = 3;
-      this.btnSchnitte.Text = "Schnitte je Klasse";
-      this.btnSchnitte.UseVisualStyleBackColor = true;
-      this.btnSchnitte.Click += new System.EventHandler(this.btnSchnitte_Click);
+      this.btnWPF.Location = new System.Drawing.Point(21, 81);
+      this.btnWPF.Name = "btnWPF";
+      this.btnWPF.Size = new System.Drawing.Size(132, 23);
+      this.btnWPF.TabIndex = 2;
+      this.btnWPF.Text = "Fehlende WPF";
+      this.btnWPF.UseVisualStyleBackColor = true;
+      this.btnWPF.Click += new System.EventHandler(this.btnWPF_Click);
       // 
       // btnEinserAbi
       // 
@@ -127,7 +119,7 @@
       this.btnEinserAbi.Name = "btnEinserAbi";
       this.btnEinserAbi.Size = new System.Drawing.Size(132, 23);
       this.btnEinserAbi.TabIndex = 1;
-      this.btnEinserAbi.Text = "Abi-Besten";
+      this.btnEinserAbi.Text = "Einser-Abi";
       this.btnEinserAbi.UseVisualStyleBackColor = true;
       this.btnEinserAbi.Click += new System.EventHandler(this.btnEinserAbi_Click);
       // 
@@ -143,7 +135,6 @@
       // 
       // groupBoxDrucken
       // 
-      this.groupBoxDrucken.Controls.Add(this.chkRptDruck);
       this.groupBoxDrucken.Controls.Add(this.gbUnterschrift);
       this.groupBoxDrucken.Controls.Add(this.lbZeugnis);
       this.groupBoxDrucken.Controls.Add(this.dateZeugnis);
@@ -156,18 +147,6 @@
       this.groupBoxDrucken.TabIndex = 3;
       this.groupBoxDrucken.TabStop = false;
       this.groupBoxDrucken.Text = "Drucken";
-      // 
-      // chkRptDruck
-      // 
-      this.chkRptDruck.AutoSize = true;
-      this.chkRptDruck.Location = new System.Drawing.Point(21, 184);
-      this.chkRptDruck.Name = "chkRptDruck";
-      this.chkRptDruck.Size = new System.Drawing.Size(165, 43);
-      this.chkRptDruck.TabIndex = 31;
-      this.chkRptDruck.Text = "Mit dem Reportviewer öffnen \r\n(für Zeugnisse, Bildschirm-\r\nAuflösung auf 100% ste" +
-    "llen)";
-      this.chkRptDruck.UseVisualStyleBackColor = true;
-      this.chkRptDruck.CheckedChanged += new System.EventHandler(this.chkRptDruck_CheckedChanged);
       // 
       // gbUnterschrift
       // 
@@ -244,8 +223,7 @@
             "Bescheinigung",
             "Zwischenzeugnis",
             "Jahreszeugnis",
-            "Abiturzeugnis",
-            "Zusatz allg. HSR"});
+            "Abiturzeugnis"});
       this.cbNotendruck.Location = new System.Drawing.Point(21, 102);
       this.cbNotendruck.Name = "cbNotendruck";
       this.cbNotendruck.Size = new System.Drawing.Size(132, 21);
@@ -253,7 +231,7 @@
       // 
       // btnKlassenliste
       // 
-      this.btnKlassenliste.Location = new System.Drawing.Point(21, 146);
+      this.btnKlassenliste.Location = new System.Drawing.Point(21, 166);
       this.btnKlassenliste.Name = "btnKlassenliste";
       this.btnKlassenliste.Size = new System.Drawing.Size(132, 23);
       this.btnKlassenliste.TabIndex = 4;
@@ -273,7 +251,6 @@
       // 
       // groupBoxExport
       // 
-      this.groupBoxExport.Controls.Add(this.btnAbsenzen);
       this.groupBoxExport.Controls.Add(this.btnExportKurswahl);
       this.groupBoxExport.Controls.Add(this.btnSeStatistik);
       this.groupBoxExport.Controls.Add(this.btnMBStatistik);
@@ -286,16 +263,6 @@
       this.groupBoxExport.TabIndex = 4;
       this.groupBoxExport.TabStop = false;
       this.groupBoxExport.Text = "Export";
-      // 
-      // btnExportKurswahl
-      // 
-      this.btnExportKurswahl.Location = new System.Drawing.Point(20, 106);
-      this.btnExportKurswahl.Name = "btnExportKurswahl";
-      this.btnExportKurswahl.Size = new System.Drawing.Size(182, 23);
-      this.btnExportKurswahl.TabIndex = 9;
-      this.btnExportKurswahl.Text = "Datei für Kurswahl";
-      this.btnExportKurswahl.UseVisualStyleBackColor = true;
-      this.btnExportKurswahl.Click += new System.EventHandler(this.btnExportKurswahl_Click);
       // 
       // btnSeStatistik
       // 
@@ -313,7 +280,7 @@
       this.btnMBStatistik.Name = "btnMBStatistik";
       this.btnMBStatistik.Size = new System.Drawing.Size(182, 23);
       this.btnMBStatistik.TabIndex = 7;
-      this.btnMBStatistik.Text = "AP-Statistik erstellen";
+      this.btnMBStatistik.Text = "MB-Statistik erstellen";
       this.btnMBStatistik.UseVisualStyleBackColor = true;
       this.btnMBStatistik.Click += new System.EventHandler(this.btnMBStatistik_Click);
       // 
@@ -349,8 +316,6 @@
       // 
       // groupBoxImport
       // 
-      this.groupBoxImport.Controls.Add(this.btnImportLoginnamen);
-      this.groupBoxImport.Controls.Add(this.btnImportCheck);
       this.groupBoxImport.Controls.Add(this.label3);
       this.groupBoxImport.Controls.Add(this.btnReadWahlpflichtfaecher);
       this.groupBoxImport.Controls.Add(this.btnImportKlassenleiter);
@@ -364,30 +329,10 @@
       this.groupBoxImport.TabStop = false;
       this.groupBoxImport.Text = "Import (in dieser Reihenfolge)";
       // 
-      // btnImportLoginnamen
-      // 
-      this.btnImportLoginnamen.Location = new System.Drawing.Point(120, 135);
-      this.btnImportLoginnamen.Name = "btnImportLoginnamen";
-      this.btnImportLoginnamen.Size = new System.Drawing.Size(82, 23);
-      this.btnImportLoginnamen.TabIndex = 10;
-      this.btnImportLoginnamen.Text = "Mail (Schule)";
-      this.btnImportLoginnamen.UseVisualStyleBackColor = true;
-      this.btnImportLoginnamen.Click += new System.EventHandler(this.btnImportLoginnamen_Click);
-      // 
-      // btnImportCheck
-      // 
-      this.btnImportCheck.Location = new System.Drawing.Point(22, 195);
-      this.btnImportCheck.Name = "btnImportCheck";
-      this.btnImportCheck.Size = new System.Drawing.Size(182, 23);
-      this.btnImportCheck.TabIndex = 9;
-      this.btnImportCheck.Text = "Import-Kontrolle";
-      this.btnImportCheck.UseVisualStyleBackColor = true;
-      this.btnImportCheck.Click += new System.EventHandler(this.btnImportCheck_Click);
-      // 
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(16, 171);
+      this.label3.Location = new System.Drawing.Point(6, 186);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(198, 13);
       this.label3.TabIndex = 8;
@@ -399,7 +344,7 @@
       this.btnReadWahlpflichtfaecher.Name = "btnReadWahlpflichtfaecher";
       this.btnReadWahlpflichtfaecher.Size = new System.Drawing.Size(182, 23);
       this.btnReadWahlpflichtfaecher.TabIndex = 7;
-      this.btnReadWahlpflichtfaecher.Text = "Wahlpflichtfächer";
+      this.btnReadWahlpflichtfaecher.Text = "Wahlpflichtfächer aus Untis";
       this.btnReadWahlpflichtfaecher.UseVisualStyleBackColor = true;
       this.btnReadWahlpflichtfaecher.Click += new System.EventHandler(this.btnReadWahlpflichtfaecher_Click);
       // 
@@ -407,9 +352,9 @@
       // 
       this.btnImportKlassenleiter.Location = new System.Drawing.Point(20, 135);
       this.btnImportKlassenleiter.Name = "btnImportKlassenleiter";
-      this.btnImportKlassenleiter.Size = new System.Drawing.Size(87, 23);
+      this.btnImportKlassenleiter.Size = new System.Drawing.Size(182, 23);
       this.btnImportKlassenleiter.TabIndex = 6;
-      this.btnImportKlassenleiter.Text = "Klassenleiter";
+      this.btnImportKlassenleiter.Text = "Import Klassenleiter aus Excel";
       this.btnImportKlassenleiter.UseVisualStyleBackColor = true;
       this.btnImportKlassenleiter.Click += new System.EventHandler(this.btnImportKlassenleiter_Click);
       // 
@@ -429,7 +374,7 @@
       this.btnImportUnterricht.Name = "btnImportUnterricht";
       this.btnImportUnterricht.Size = new System.Drawing.Size(182, 23);
       this.btnImportUnterricht.TabIndex = 4;
-      this.btnImportUnterricht.Text = "Kurse aus Untis (GPU002)";
+      this.btnImportUnterricht.Text = "Kurse aus Untis-Excel";
       this.btnImportUnterricht.UseVisualStyleBackColor = true;
       this.btnImportUnterricht.Click += new System.EventHandler(this.btnImportUnterricht_Click);
       // 
@@ -445,7 +390,6 @@
       // 
       // groupBoxStammdaten
       // 
-      this.groupBoxStammdaten.Controls.Add(this.btnKlassen);
       this.groupBoxStammdaten.Controls.Add(this.btnBerechtigungen);
       this.groupBoxStammdaten.Controls.Add(this.btnGlobales);
       this.groupBoxStammdaten.Controls.Add(this.btnLehrer);
@@ -456,16 +400,6 @@
       this.groupBoxStammdaten.TabIndex = 5;
       this.groupBoxStammdaten.TabStop = false;
       this.groupBoxStammdaten.Text = "Stammdaten";
-      // 
-      // btnKlassen
-      // 
-      this.btnKlassen.Location = new System.Drawing.Point(18, 85);
-      this.btnKlassen.Name = "btnKlassen";
-      this.btnKlassen.Size = new System.Drawing.Size(174, 23);
-      this.btnKlassen.TabIndex = 6;
-      this.btnKlassen.Text = "Klassen";
-      this.btnKlassen.UseVisualStyleBackColor = true;
-      this.btnKlassen.Click += new System.EventHandler(this.btnKlassen_Click);
       // 
       // btnBerechtigungen
       // 
@@ -573,9 +507,9 @@
       this.comboBoxZeitpunkt.Items.AddRange(new object[] {
             "Probezeit BOS",
             "Halbjahr",
-            "Zulassung Abitur",
-            "SAP",
-            "MAP",
+            "1. PA",
+            "2. PA",
+            "3. PA",
             "Jahresende"});
       this.comboBoxZeitpunkt.Location = new System.Drawing.Point(16, 97);
       this.comboBoxZeitpunkt.Name = "comboBoxZeitpunkt";
@@ -639,8 +573,6 @@
       // 
       // groupboxTest
       // 
-      this.groupboxTest.Controls.Add(this.btnNotenmailSchueler);
-      this.groupboxTest.Controls.Add(this.btnNotenmitteilung);
       this.groupboxTest.Controls.Add(this.btnHjLeistungenWuerfeln);
       this.groupboxTest.Location = new System.Drawing.Point(746, 277);
       this.groupboxTest.Name = "groupboxTest";
@@ -648,26 +580,6 @@
       this.groupboxTest.TabIndex = 8;
       this.groupboxTest.TabStop = false;
       this.groupboxTest.Text = "Testverfahren";
-      // 
-      // btnNotenmailSchueler
-      // 
-      this.btnNotenmailSchueler.Location = new System.Drawing.Point(15, 125);
-      this.btnNotenmailSchueler.Name = "btnNotenmailSchueler";
-      this.btnNotenmailSchueler.Size = new System.Drawing.Size(163, 23);
-      this.btnNotenmailSchueler.TabIndex = 14;
-      this.btnNotenmailSchueler.Text = "Notenmitteilung an Schüler";
-      this.btnNotenmailSchueler.UseVisualStyleBackColor = true;
-      this.btnNotenmailSchueler.Click += new System.EventHandler(this.btnNotenmailSchueler_Click);
-      // 
-      // btnNotenmitteilung
-      // 
-      this.btnNotenmitteilung.Location = new System.Drawing.Point(15, 96);
-      this.btnNotenmitteilung.Name = "btnNotenmitteilung";
-      this.btnNotenmitteilung.Size = new System.Drawing.Size(163, 23);
-      this.btnNotenmitteilung.TabIndex = 13;
-      this.btnNotenmitteilung.Text = "Notenmitteilung an KL";
-      this.btnNotenmitteilung.UseVisualStyleBackColor = true;
-      this.btnNotenmitteilung.Click += new System.EventHandler(this.btnNotenmitteilung_Click);
       // 
       // groupBoxReparatur
       // 
@@ -722,25 +634,15 @@
       this.btnEinbringung.UseVisualStyleBackColor = true;
       this.btnEinbringung.Click += new System.EventHandler(this.btnEinbringung_Click);
       // 
-      // btnCopy11
+      // btnExportKurswahl
       // 
-      this.btnCopy11.Location = new System.Drawing.Point(15, 168);
-      this.btnCopy11.Name = "btnCopy11";
-      this.btnCopy11.Size = new System.Drawing.Size(163, 23);
-      this.btnCopy11.TabIndex = 12;
-      this.btnCopy11.Text = "Corona-11/1 nach 11/2 kopieren";
-      this.btnCopy11.UseVisualStyleBackColor = true;
-      this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
-      // 
-      // btnAbsenzen
-      // 
-      this.btnAbsenzen.Location = new System.Drawing.Point(20, 135);
-      this.btnAbsenzen.Name = "btnAbsenzen";
-      this.btnAbsenzen.Size = new System.Drawing.Size(182, 23);
-      this.btnAbsenzen.TabIndex = 10;
-      this.btnAbsenzen.Text = "Absenzenübersicht versenden";
-      this.btnAbsenzen.UseVisualStyleBackColor = true;
-      this.btnAbsenzen.Click += new System.EventHandler(this.btnAbsenzen_Click);
+      this.btnExportKurswahl.Location = new System.Drawing.Point(20, 106);
+      this.btnExportKurswahl.Name = "btnExportKurswahl";
+      this.btnExportKurswahl.Size = new System.Drawing.Size(182, 23);
+      this.btnExportKurswahl.TabIndex = 9;
+      this.btnExportKurswahl.Text = "Datei für Kurswahl";
+      this.btnExportKurswahl.UseVisualStyleBackColor = true;
+      this.btnExportKurswahl.Click += new System.EventHandler(this.btnExportKurswahl_Click);
       // 
       // UserControlAdministration
       // 
@@ -827,17 +729,9 @@
     private System.Windows.Forms.Button btnGesErg;
     private System.Windows.Forms.Button btnMBStatistik;
     private System.Windows.Forms.Button btnSeStatistik;
+    private System.Windows.Forms.Button btnWPF;
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.Button btnKurseZuweisen;
     private System.Windows.Forms.Button btnExportKurswahl;
-    private System.Windows.Forms.Button btnKlassen;
-    private System.Windows.Forms.Button btnNotenmitteilung;
-    private System.Windows.Forms.Button btnCopy11;
-    private System.Windows.Forms.Button btnNotenmailSchueler;
-    private System.Windows.Forms.Button btnSchnitte;
-    private System.Windows.Forms.Button btnImportCheck;
-        private System.Windows.Forms.CheckBox chkRptDruck;
-        private System.Windows.Forms.Button btnImportLoginnamen;
-        private System.Windows.Forms.Button btnAbsenzen;
-    }
+  }
 }

@@ -1,6 +1,12 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
 
 namespace diNo
 {
@@ -17,7 +23,7 @@ namespace diNo
       var dt = ta.GetData();
       liste.DataSource = dt;
     }
-
+    
     private void liste_SelectedValueChanged(object sender, EventArgs e)
     {
       q = ((DataRowView)liste.SelectedItem).Row as diNoDataSet.GlobaleStringsRow;
@@ -30,7 +36,7 @@ namespace diNo
 
     private void btnSave_Click(object sender, EventArgs e)
     {
-      q.Wert = edWert.Text;
+      q.Wert = edWert.Text;                  
       ta.Update(q);
       Zugriff.Instance.RefreshGlobalesStrings();
     }

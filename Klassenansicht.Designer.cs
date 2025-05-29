@@ -53,10 +53,6 @@
       this.btnCheck = new System.Windows.Forms.Button();
       this.btnBrief = new System.Windows.Forms.Button();
       this.btnPrint = new System.Windows.Forms.Button();
-      this.contextMenuPrint = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.druKlassenliste = new System.Windows.Forms.ToolStripMenuItem();
-      this.druNotenbogen = new System.Windows.Forms.ToolStripMenuItem();
-      this.druLegastheniker = new System.Windows.Forms.ToolStripMenuItem();
       this.btnNotenabgeben = new System.Windows.Forms.Button();
       this.labelHinweise = new System.Windows.Forms.Label();
       this.pictureBoxImage = new System.Windows.Forms.PictureBox();
@@ -66,11 +62,7 @@
       this.chkNurAktive = new System.Windows.Forms.CheckBox();
       this.btnRefresh = new System.Windows.Forms.Button();
       this.lbTest = new System.Windows.Forms.Label();
-      this.btnLNWabgeben = new System.Windows.Forms.Button();
-      this.edSuchen = new System.Windows.Forms.TextBox();
-      this.btnSuchen = new System.Windows.Forms.Button();
-      this.lbSuchen = new System.Windows.Forms.Label();
-      this.btnMail = new System.Windows.Forms.Button();
+      this.btnCorona = new System.Windows.Forms.Button();
       this.tabControl1.SuspendLayout();
       this.tabPageStammdaten.SuspendLayout();
       this.tabPageNotenbogen.SuspendLayout();
@@ -80,7 +72,6 @@
       this.tabPageSekretariat.SuspendLayout();
       this.tabPageAdministration.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).BeginInit();
-      this.contextMenuPrint.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).BeginInit();
       this.statusStrip1.SuspendLayout();
       this.SuspendLayout();
@@ -94,11 +85,9 @@
       this.imageList1.Images.SetKeyName(3, "print.png");
       this.imageList1.Images.SetKeyName(4, "Save.png");
       this.imageList1.Images.SetKeyName(5, "Excel.png");
-      this.imageList1.Images.SetKeyName(6, "Admin.png");
+      this.imageList1.Images.SetKeyName(6, "424px-User-admin.png");
       this.imageList1.Images.SetKeyName(7, "Refresh.png");
-      this.imageList1.Images.SetKeyName(8, "Ablage.png");
-      this.imageList1.Images.SetKeyName(9, "lupe.jpg");
-      this.imageList1.Images.SetKeyName(10, "Mail.png");
+      this.imageList1.Images.SetKeyName(8, "Virus.png");
       // 
       // tabControl1
       // 
@@ -310,11 +299,11 @@
             this.olvColumnBezeichnung});
       this.treeListView1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.treeListView1.HideSelection = false;
-      this.treeListView1.Location = new System.Drawing.Point(12, 87);
+      this.treeListView1.Location = new System.Drawing.Point(12, 43);
       this.treeListView1.Name = "treeListView1";
       this.treeListView1.OwnerDraw = true;
       this.treeListView1.ShowGroups = false;
-      this.treeListView1.Size = new System.Drawing.Size(240, 529);
+      this.treeListView1.Size = new System.Drawing.Size(240, 586);
       this.treeListView1.TabIndex = 0;
       this.treeListView1.UseCompatibleStateImageBehavior = false;
       this.treeListView1.View = System.Windows.Forms.View.Details;
@@ -332,7 +321,7 @@
       // 
       this.btnCheck.ImageIndex = 1;
       this.btnCheck.ImageList = this.imageList1;
-      this.btnCheck.Location = new System.Drawing.Point(580, 88);
+      this.btnCheck.Location = new System.Drawing.Point(466, 88);
       this.btnCheck.Name = "btnCheck";
       this.btnCheck.Size = new System.Drawing.Size(40, 40);
       this.btnCheck.TabIndex = 5;
@@ -345,7 +334,7 @@
       this.btnBrief.Enabled = false;
       this.btnBrief.ImageIndex = 2;
       this.btnBrief.ImageList = this.imageList1;
-      this.btnBrief.Location = new System.Drawing.Point(530, 88);
+      this.btnBrief.Location = new System.Drawing.Point(420, 89);
       this.btnBrief.Name = "btnBrief";
       this.btnBrief.Size = new System.Drawing.Size(40, 40);
       this.btnBrief.TabIndex = 4;
@@ -355,10 +344,10 @@
       // 
       // btnPrint
       // 
-      this.btnPrint.ContextMenuStrip = this.contextMenuPrint;
+      this.btnPrint.Enabled = false;
       this.btnPrint.ImageIndex = 3;
       this.btnPrint.ImageList = this.imageList1;
-      this.btnPrint.Location = new System.Drawing.Point(430, 88);
+      this.btnPrint.Location = new System.Drawing.Point(374, 89);
       this.btnPrint.Name = "btnPrint";
       this.btnPrint.Size = new System.Drawing.Size(40, 40);
       this.btnPrint.TabIndex = 3;
@@ -366,45 +355,11 @@
       this.btnPrint.UseVisualStyleBackColor = true;
       this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
       // 
-      // contextMenuPrint
-      // 
-      this.contextMenuPrint.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.druKlassenliste,
-            this.druNotenbogen,
-            this.druLegastheniker});
-      this.contextMenuPrint.Name = "contextMenuPrint";
-      this.contextMenuPrint.ShowImageMargin = false;
-      this.contextMenuPrint.Size = new System.Drawing.Size(176, 70);
-      // 
-      // druKlassenliste
-      // 
-      this.druKlassenliste.Name = "druKlassenliste";
-      this.druKlassenliste.Size = new System.Drawing.Size(175, 22);
-      this.druKlassenliste.Tag = "1";
-      this.druKlassenliste.Text = "Klassenliste";
-      this.druKlassenliste.Click += new System.EventHandler(this.druKlassenliste_Click);
-      // 
-      // druNotenbogen
-      // 
-      this.druNotenbogen.Name = "druNotenbogen";
-      this.druNotenbogen.Size = new System.Drawing.Size(175, 22);
-      this.druNotenbogen.Tag = "2";
-      this.druNotenbogen.Text = "Notenbogen";
-      this.druNotenbogen.Click += new System.EventHandler(this.druNotenbogen_Click);
-      // 
-      // druLegastheniker
-      // 
-      this.druLegastheniker.Name = "druLegastheniker";
-      this.druLegastheniker.Size = new System.Drawing.Size(175, 22);
-      this.druLegastheniker.Tag = "3";
-      this.druLegastheniker.Text = "Übersicht Legastheniker";
-      this.druLegastheniker.Click += new System.EventHandler(this.druLegastheniker_Click);
-      // 
       // btnNotenabgeben
       // 
       this.btnNotenabgeben.ImageIndex = 5;
       this.btnNotenabgeben.ImageList = this.imageList1;
-      this.btnNotenabgeben.Location = new System.Drawing.Point(280, 88);
+      this.btnNotenabgeben.Location = new System.Drawing.Point(282, 88);
       this.btnNotenabgeben.Name = "btnNotenabgeben";
       this.btnNotenabgeben.Size = new System.Drawing.Size(40, 40);
       this.btnNotenabgeben.TabIndex = 1;
@@ -416,12 +371,12 @@
       // 
       this.labelHinweise.AutoSize = true;
       this.labelHinweise.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelHinweise.Location = new System.Drawing.Point(629, 93);
+      this.labelHinweise.Location = new System.Drawing.Point(569, 88);
       this.labelHinweise.Name = "labelHinweise";
-      this.labelHinweise.Size = new System.Drawing.Size(449, 34);
+      this.labelHinweise.Size = new System.Drawing.Size(509, 34);
       this.labelHinweise.TabIndex = 36;
-      this.labelHinweise.Text = "Notendateien können über die Excel-Schaltfläche abgegeben werden.\r\nÜber den Stift" +
-    " können z.B. Verweise gedruckt werden.\r\n";
+      this.labelHinweise.Text = "Notendateien können ab sofort über die Excel-Schaltfläche abgegeben werden.\r\nÜber" +
+    " den Stift können z.B. Verweise gedruckt werden.\r\n";
       // 
       // pictureBoxImage
       // 
@@ -454,7 +409,7 @@
       this.chkNurAktive.AutoSize = true;
       this.chkNurAktive.Checked = true;
       this.chkNurAktive.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.chkNurAktive.Location = new System.Drawing.Point(12, 64);
+      this.chkNurAktive.Location = new System.Drawing.Point(16, 20);
       this.chkNurAktive.Name = "chkNurAktive";
       this.chkNurAktive.Size = new System.Drawing.Size(185, 17);
       this.chkNurAktive.TabIndex = 40;
@@ -466,7 +421,7 @@
       // 
       this.btnRefresh.ImageIndex = 7;
       this.btnRefresh.ImageList = this.imageList1;
-      this.btnRefresh.Location = new System.Drawing.Point(380, 88);
+      this.btnRefresh.Location = new System.Drawing.Point(328, 89);
       this.btnRefresh.Name = "btnRefresh";
       this.btnRefresh.Size = new System.Drawing.Size(40, 40);
       this.btnRefresh.TabIndex = 41;
@@ -486,57 +441,17 @@
       this.lbTest.Text = "Testdatenbank";
       this.lbTest.Visible = false;
       // 
-      // btnLNWabgeben
+      // btnCorona
       // 
-      this.btnLNWabgeben.ImageIndex = 8;
-      this.btnLNWabgeben.ImageList = this.imageList1;
-      this.btnLNWabgeben.Location = new System.Drawing.Point(330, 88);
-      this.btnLNWabgeben.Name = "btnLNWabgeben";
-      this.btnLNWabgeben.Size = new System.Drawing.Size(40, 40);
-      this.btnLNWabgeben.TabIndex = 43;
-      this.toolTipButtons.SetToolTip(this.btnLNWabgeben, "Angabe und Lösung von LNW abgeben");
-      this.btnLNWabgeben.UseVisualStyleBackColor = true;
-      this.btnLNWabgeben.Click += new System.EventHandler(this.btnLNWabgeben_Click);
-      // 
-      // edSuchen
-      // 
-      this.edSuchen.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.edSuchen.Location = new System.Drawing.Point(12, 30);
-      this.edSuchen.Name = "edSuchen";
-      this.edSuchen.Size = new System.Drawing.Size(194, 22);
-      this.edSuchen.TabIndex = 44;
-      // 
-      // btnSuchen
-      // 
-      this.btnSuchen.ImageKey = "lupe.jpg";
-      this.btnSuchen.ImageList = this.imageList1;
-      this.btnSuchen.Location = new System.Drawing.Point(211, 14);
-      this.btnSuchen.Name = "btnSuchen";
-      this.btnSuchen.Size = new System.Drawing.Size(41, 40);
-      this.btnSuchen.TabIndex = 45;
-      this.btnSuchen.UseVisualStyleBackColor = true;
-      this.btnSuchen.Click += new System.EventHandler(this.btnSuchen_Click);
-      // 
-      // lbSuchen
-      // 
-      this.lbSuchen.AutoSize = true;
-      this.lbSuchen.Location = new System.Drawing.Point(9, 14);
-      this.lbSuchen.Name = "lbSuchen";
-      this.lbSuchen.Size = new System.Drawing.Size(81, 13);
-      this.lbSuchen.TabIndex = 46;
-      this.lbSuchen.Text = "Schüler suchen";
-      // 
-      // btnMail
-      // 
-      this.btnMail.ImageIndex = 10;
-      this.btnMail.ImageList = this.imageList1;
-      this.btnMail.Location = new System.Drawing.Point(480, 88);
-      this.btnMail.Name = "btnMail";
-      this.btnMail.Size = new System.Drawing.Size(40, 40);
-      this.btnMail.TabIndex = 47;
-      this.toolTipButtons.SetToolTip(this.btnMail, "Mail an alle betroffenen Lehrer");
-      this.btnMail.UseVisualStyleBackColor = true;
-      this.btnMail.Click += new System.EventHandler(this.btnMail_Click);
+      this.btnCorona.ImageKey = "Virus.png";
+      this.btnCorona.ImageList = this.imageList1;
+      this.btnCorona.Location = new System.Drawing.Point(512, 89);
+      this.btnCorona.Name = "btnCorona";
+      this.btnCorona.Size = new System.Drawing.Size(40, 40);
+      this.btnCorona.TabIndex = 43;
+      this.toolTipButtons.SetToolTip(this.btnCorona, "Notendateien für Corona vorbereiten");
+      this.btnCorona.UseVisualStyleBackColor = true;
+      this.btnCorona.Click += new System.EventHandler(this.btnCorona_Click);
       // 
       // Klassenansicht
       // 
@@ -544,11 +459,7 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
       this.ClientSize = new System.Drawing.Size(1185, 645);
-      this.Controls.Add(this.btnMail);
-      this.Controls.Add(this.lbSuchen);
-      this.Controls.Add(this.btnSuchen);
-      this.Controls.Add(this.edSuchen);
-      this.Controls.Add(this.btnLNWabgeben);
+      this.Controls.Add(this.btnCorona);
       this.Controls.Add(this.lbTest);
       this.Controls.Add(this.btnRefresh);
       this.Controls.Add(this.chkNurAktive);
@@ -577,7 +488,6 @@
       this.tabPageSekretariat.ResumeLayout(false);
       this.tabPageAdministration.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.treeListView1)).EndInit();
-      this.contextMenuPrint.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImage)).EndInit();
       this.statusStrip1.ResumeLayout(false);
       this.statusStrip1.PerformLayout();
@@ -619,14 +529,6 @@
     private System.Windows.Forms.TabPage tabPageSekretariat;
     private UserControlSekretariat userControlSekretariat1;
     private System.Windows.Forms.Label lbTest;
-    private System.Windows.Forms.Button btnLNWabgeben;
-    private System.Windows.Forms.TextBox edSuchen;
-    private System.Windows.Forms.Button btnSuchen;
-    private System.Windows.Forms.Label lbSuchen;
-        private System.Windows.Forms.ContextMenuStrip contextMenuPrint;
-        private System.Windows.Forms.ToolStripMenuItem druNotenbogen;
-        private System.Windows.Forms.ToolStripMenuItem druLegastheniker;
-        private System.Windows.Forms.ToolStripMenuItem druKlassenliste;
-        private System.Windows.Forms.Button btnMail;
-    }
+    private System.Windows.Forms.Button btnCorona;
+  }
 }

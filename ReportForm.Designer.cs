@@ -28,54 +28,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-      this.components = new System.ComponentModel.Container();
-      Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
-      this.BerichtBindingSource = new System.Windows.Forms.BindingSource(this.components);
-      this.diNoDataSet = new diNo.diNoDataSet();
-      this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
-      ((System.ComponentModel.ISupportInitialize)(this.BerichtBindingSource)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.diNoDataSet)).BeginInit();
-      this.SuspendLayout();
-      // 
-      // BerichtBindingSource
-      // 
-      this.BerichtBindingSource.DataSource = this.diNoDataSet;
-      this.BerichtBindingSource.Position = 0;
-      // 
-      // diNoDataSet
-      // 
-      this.diNoDataSet.DataSetName = "diNoDataSet";
-      this.diNoDataSet.EnforceConstraints = false;
-      this.diNoDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-      // 
-      // reportViewer
-      // 
-      this.reportViewer.AutoScroll = true;
-      this.reportViewer.AutoSize = true;
-      this.reportViewer.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-      this.reportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-      reportDataSource1.Name = "DataSet1";
-      reportDataSource1.Value = this.BerichtBindingSource;
-      this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
-      this.reportViewer.Location = new System.Drawing.Point(0, 0);
-      this.reportViewer.Name = "reportViewer";
-      this.reportViewer.ServerReport.BearerToken = null;
-      this.reportViewer.Size = new System.Drawing.Size(455, 280);
-      this.reportViewer.TabIndex = 0;
-      // 
-      // ReportForm
-      // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(455, 280);
-      this.Controls.Add(this.reportViewer);
-      this.Name = "ReportForm";
-      this.Text = "Drucken...";
-      this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-      ((System.ComponentModel.ISupportInitialize)(this.BerichtBindingSource)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.diNoDataSet)).EndInit();
-      this.ResumeLayout(false);
-      this.PerformLayout();
+            this.components = new System.ComponentModel.Container();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            this.reportViewer = new Microsoft.Reporting.WinForms.ReportViewer();
+            this.diNoDataSet = new diNo.diNoDataSet();
+            this.BerichtBindingSource = new System.Windows.Forms.BindingSource(this.components);
+         // this.BerichtTableAdapter = new diNo.diNoDataSetTableAdapters.LehrerTableAdapter();
+            ((System.ComponentModel.ISupportInitialize)(this.diNoDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BerichtBindingSource)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // reportViewer
+            // 
+            this.reportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
+            reportDataSource2.Name = "DataSet1";
+            reportDataSource2.Value = this.BerichtBindingSource;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource2);
+        //  this.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptLehrerliste.rdlc";
+            this.reportViewer.Location = new System.Drawing.Point(0, 0);
+            this.reportViewer.Name = "reportViewer";
+            this.reportViewer.Size = new System.Drawing.Size(284, 262);
+            this.reportViewer.TabIndex = 0;
+            // 
+            // diNoDataSet
+            // 
+            this.diNoDataSet.DataSetName = "diNoDataSet";
+            this.diNoDataSet.EnforceConstraints = false;
+            this.diNoDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // LehrerBindingSource
+            // 
+        //  this.BerichtBindingSource.DataMember = "Lehrer";
+            this.BerichtBindingSource.DataSource = this.diNoDataSet;
+            // 
+            // LehrerTableAdapter
+            // 
+         //   this.BerichtTableAdapter.ClearBeforeFill = true;
+            // 
+            // ReportForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Controls.Add(this.reportViewer);
+            this.Name = "ReportForm";
+            this.Text = "Drucken...";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+         // this.Load += new System.EventHandler(this.ReportForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.diNoDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BerichtBindingSource)).EndInit();
+            this.ResumeLayout(false);
 
         }
 

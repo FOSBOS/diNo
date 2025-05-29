@@ -1,9 +1,11 @@
-﻿using System;
+﻿using diNo.diNoDataSetTableAdapters;
+using System;
+using System.Collections.Generic;
 
 namespace diNo
 {
   public class KlassenTreeViewController
-  {
+  {    
     public static object SelectValueCol1(Object rowObject)
     {
       if (rowObject is Klasse)

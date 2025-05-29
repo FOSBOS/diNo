@@ -1,7 +1,8 @@
-﻿using diNo.diNoDataSetTableAdapters;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
+using System.Linq;
+using System.Text;
+using diNo.diNoDataSetTableAdapters;
 
 namespace diNo
 {
@@ -16,25 +17,12 @@ namespace diNo
 
     public void Refresh()
     {
-      dic = new Dictionary<int, string>();      
-      try
-      {        
-        dic.Clear();
-        // Erster Datenbankzugriff beim Programmstart: 1. Globale Daten, dann Logindaten
-        var ta = new GlobaleStringsTableAdapter();
-        var dt = ta.GetData();
-
-        foreach (var d in dt)
-        {
-          dic.Add(d.ID, d.Wert);
-        }
-      }
-      catch (Exception e)
+      dic = new Dictionary<int, string>();
+      var ta = new GlobaleStringsTableAdapter();
+      var dt = ta.GetData();
+      foreach (var d in dt)
       {
-        Cursor.Current = Cursors.Default;
-        MessageBox.Show("Keine Verbindung zur Datenbank!\nBitte wenden Sie sich an einen Administrator.\n\n" + e.Message, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        Application.ExitThread();
-        Environment.Exit(1);
+        dic.Add(d.ID, d.Wert);
       }
     }
 
@@ -43,9 +31,9 @@ namespace diNo
       string s;
       dic.TryGetValue((int)g, out s);
       return s;
-    }
+    }   
   }
-
+  
   public enum GlobaleStrings
   {
     Backuppfad = 1,
@@ -69,13 +57,7 @@ namespace diNo
     Port,
     SendExcelViaMail,
     MailPasswort,
-    VerzeichnisExceldateien,
-    SchulnummerFOS,
-    SchulnummerBOS,
-    CopyUserLoginname,
-    CopyUserPwd,
-    CopyUserDomain,
-    LNWAblagePfad
+    VerzeichnisExceldateien
   }
-
+  
 }

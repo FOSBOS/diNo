@@ -5,7 +5,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
 namespace diNo
 {
@@ -73,10 +72,7 @@ namespace diNo
     /// </summary>
     /// <param name="fileName">Der Dateiname.</param>
     public static void ReadSchueler(string fileName)
-    {
-      int anzSpalten=0;
-      int zeile = 0;
-      int anzS = 0;
+    {          
       using (StreamReader reader = new StreamReader(fileName, Encoding.GetEncoding("iso-8859-1")))
       using (SchuelerTableAdapter tableAdapter = new SchuelerTableAdapter())
       using (KlasseTableAdapter klasseTableAdapter = new KlasseTableAdapter())
@@ -91,13 +87,6 @@ namespace diNo
           }
 
           string[] array = line.Split(new string[] { "\t" }, StringSplitOptions.None);
-          zeile++;
-          if (anzSpalten == 0) anzSpalten = array.Length;
-          else if (anzSpalten != array.Length)
-          {
-            if (MessageBox.Show("Ungültige Spaltenzahl in Zeile " + zeile, "diNo", MessageBoxButtons.RetryCancel)==DialogResult.Cancel) 
-              return;
-          }
           string[] cleanArray = array.Select(aString => aString.Trim(new char[] { '\"', ' ', '\n' })).ToArray();
 
           var klasse = GetKlasseId(klasseTableAdapter, cleanArray[klasseSpalte].Trim());
@@ -114,7 +103,6 @@ namespace diNo
           if (table.Count == 0)
           {
             table.AddSchuelerRow(row);
-            anzS++;
           }
 
           tableAdapter.Update(row);
@@ -123,7 +111,6 @@ namespace diNo
           new Schueler(row).WechsleKlasse(new Klasse(klasse));
         }
       }
-      MessageBox.Show(zeile + " Zeilen mit " + anzS + " Schülern importiert.", "diNo", MessageBoxButtons.OK);
     }
 
     /// <summary>
@@ -137,7 +124,7 @@ namespace diNo
       row.Id = int.Parse(cleanArray[schuelerIdSpalte]);
       row.Name = cleanArray[nachnameSpalte];
       row.Vorname = cleanArray[vornameSpalte];
-      row.KlasseId = klasse.Id;
+      row.KlasseId = klasse.Id;      
       row.Schulart = klasse.Bezeichnung.StartsWith("B") ? "B" : "F";
       row.Rufname = cleanArray[rufnameSpalte];
       row.Geschlecht = cleanArray[geschlechtSpalte];
@@ -161,15 +148,30 @@ namespace diNo
       row.AnschriftStrasse = cleanArray[anschr1StrasseSpalte];
       row.AnschriftTelefonnummer = cleanArray[anschr1TelefonSpalte];
       row.Ausbildungsrichtung = ChangeAusbildungsrichtung(cleanArray[ausbildungsrichtungSpalte]);
+      row.Fremdsprache2 = cleanArray[fremdsprache2Spalte];
       row.ReligionOderEthik = cleanArray[reliOderEthikSpalte];
 
+      if (cleanArray[wahlpflichtfachSpalte] == "F")
+      {
+        // normales Französisch wird als Fremdsprache2 importiert, aber nicht als Wahlpflichtfach
+        row.Fremdsprache2 = "F";
+        row.Wahlpflichtfach = "";
+      }
+      else 
+      {
+        row.Wahlpflichtfach = ChangeFranz(cleanArray[wahlpflichtfachSpalte]);
+      }
+
+      row.Wahlfach1 = ChangeFranz(cleanArray[wahlfach1Spalte]);
+      row.Wahlfach2 = ChangeFranz(cleanArray[wahlfach2Spalte]);
+      row.Wahlfach3 = ChangeFranz(cleanArray[wahlfach3Spalte]);
+      row.Wahlfach4 = ChangeFranz(cleanArray[wahlfach4Spalte]);
       row.Wiederholung1Jahrgangsstufe = cleanArray[wdh1JahrgangsstufeSpalte];
       row.Wiederholung2Jahrgangsstufe = cleanArray[wdh2JahrgangsstufeSpalte];
       row.Wiederholung1Grund = cleanArray[wdh1GrundSpalte];
       row.Wiederholung2Grund = cleanArray[wdh2GrundSpalte];
-      
       DateTime? probezeit = ParseDate(cleanArray[probezeitBisSpalte]);
-      if (probezeit == null)
+      if (probezeit == null || probezeit <= DateTime.Now)
       {
         row.SetProbezeitBisNull();
       }
@@ -177,7 +179,7 @@ namespace diNo
       {
         row.ProbezeitBis = (DateTime)probezeit;
       }
-      
+
       DateTime? austrittsdatum = ParseDate(cleanArray[austrittsdatumSpalte]);
       if (austrittsdatum == null)
       {
@@ -192,7 +194,7 @@ namespace diNo
 
       row.SchulischeVorbildung = cleanArray[schulischeVorbildungSpalte];
       row.BeruflicheVorbildung = cleanArray[beruflicheVorbildungSpalte];
-      row.LRSStoerung = false; // cleanArray[lrsStoerungSpalte] == "1"; // wird nicht übernommen, sondern erst nachdem der Bescheid ausgestellt wurde
+      row.LRSStoerung = cleanArray[lrsStoerungSpalte] == "1";
       row.VerwandtschaftsbezeichnungEltern1 = cleanArray[verwandtschaftsbezeichnungEltern1Spalte];
       row.NachnameEltern1 = cleanArray[nachnameEltern1Spalte];
       row.VornameEltern1 = cleanArray[vornameEltern1Spalte];
@@ -202,8 +204,6 @@ namespace diNo
       row.AnredeEltern2 = cleanArray[anredeEltern2Spalte];
       row.VerwandtschaftsbezeichnungEltern2 = cleanArray[verwandtschaftsbezeichnungEltern2Spalte];
       row.EintrittJahrgangsstufe = cleanArray[eintrittJgstSpalte];
-      row.LRSZuschlagMin = 0;
-      row.LRSZuschlagMax = 0;
 
       DateTime? eintrittDatum = ParseDate(cleanArray[eintrittDatumSpalte]);
       if (eintrittDatum == null)
@@ -219,8 +219,18 @@ namespace diNo
       row.Email = cleanArray[emailSpalte];
       row.Notfalltelefonnummer = cleanArray[notfallrufnummerSpalte];
 
+      row.SonderfallNur2Hj = false;
       row.Berechungsstatus = (int)Berechnungsstatus.Unberechnet;
-      row.AndereFremdspr2Art = 0;
+    }
+
+    /// <summary>
+    /// Ändert Fachbezeichnungen beim Import. Zur Zeit: F3 wird zu F-Wi.
+    /// </summary>
+    /// <param name="aFachString">Der alte Fachstring.</param>
+    /// <returns>Der neue Fachstring.</returns>
+    private static string ChangeFranz(string aFachString)
+    {
+      return aFachString == "F3" ? "F-Wi" : aFachString;
     }
 
     /// <summary>
@@ -243,13 +253,13 @@ namespace diNo
         // AHR, FHR: Klassen des vergangenen Jahres
         // Abm: Abmeldungen
         // Ex, Import: ?
-        if (klasse.EndsWith("-N") || klasse.Contains("Rest") || klasse.Contains("AHR") || klasse.Contains("FHR") || klasse.Contains("Abm") || klasse.Equals("Ex") || klasse.Equals("Import"))
+        if (klasse.EndsWith("-N") || klasse.Contains("AHR") || klasse.Contains("FHR") || klasse.Contains("Abm") || klasse.Equals("Ex") || klasse.Equals("Import"))
         {
           return null;
         }
         else
         {
-          Klasse.Insert(klasse);
+          klasseTableAdapter.Insert(klasse, null);
           var neueKlasse = klasseTableAdapter.GetDataByBezeichnung(klasse);
           return neueKlasse[0];
         }

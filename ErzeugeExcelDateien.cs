@@ -43,10 +43,107 @@ namespace diNo
         }
       }
 
-      statusChangedHandler?.Invoke(this, new StatusChangedEventArgs() { Meldung = count + " Dateien erfolgreich erzeugt" });
+      statusChangedHandler?.Invoke(this, new StatusChangedEventArgs() { Meldung = count + " Dateien erfolgreich erzeugt" });      
     }
   }
-  
+
+  /// <summary>
+  /// Klasse zum automatisierten verschicken der Excel-Dateien an alle Lehrer.
+  /// </summary>
+  public class SendExcelMails : IDisposable
+  {
+    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    private string bodyText ="";
+    private MailAddress from = new MailAddress(Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail), "Digitale Notenverwaltung");
+    private SmtpClient mailServer;
+
+    /// <summary>
+    /// Konstruktor.
+    /// </summary>
+    /// <param name="statusChangedHandler">Handler für Statusmeldungen. Kann auch null sein.</param>
+    public SendExcelMails(StatusChanged statusChangedHandler)
+    {
+      string infoFile = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + "Mail.txt";
+      if (MessageBox.Show("Mailservereinstellungen müssen unter globale Texte angegeben werden.\nEin in der Mail zu versendender Infotext kann in der Datei " + infoFile + " abgelegt werden.", "Notendateien versenden", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+      try
+      {
+        mailServer = new SmtpClient(Zugriff.Instance.getString(GlobaleStrings.SMTP), int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port)));
+        mailServer.EnableSsl = true;
+        mailServer.UseDefaultCredentials = false;
+        mailServer.Credentials = new System.Net.NetworkCredential(Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail), Zugriff.Instance.getString(GlobaleStrings.MailPasswort));        
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        return;
+      }
+     
+      if (File.Exists(infoFile))
+      {
+        bodyText = File.ReadAllText(infoFile);
+      }
+      
+      LehrerTableAdapter ada = new LehrerTableAdapter();
+      var rows = ada.GetData();      
+      foreach (diNoDataSet.LehrerRow row in rows)
+      {        
+
+        string directoryName = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + row.Kuerzel;
+        if (!Directory.Exists(directoryName) || Directory.GetFiles(directoryName).Count() == 0)
+        {
+          log.Warn("Unterrichtet der Lehrer " + row.Kuerzel + " nix ?");
+          continue;
+        }
+
+        string dienstlicheMailAdresse = row.IsEMailNull() ? "" : row.EMail;
+        if (!string.IsNullOrEmpty(dienstlicheMailAdresse))
+        {
+          statusChangedHandler(this, new StatusChangedEventArgs() { Meldung = "Versende " + row.Kuerzel });
+          SendMail(dienstlicheMailAdresse, Directory.GetFiles(directoryName));
+        }
+      }
+    }
+
+    public void Dispose()
+    {
+      if (mailServer != null)
+      {
+        mailServer.Dispose();
+        mailServer = null;
+      }
+    }
+
+    /// <summary>
+    /// Schickt eine Mail mit den übergebenen Excel-Files.
+    /// </summary>
+    /// <param name="to">Der Empfänger.</param>
+    /// <param name="fileNames">Die Dateinamen.</param>
+    private void SendMail(string to, IEnumerable<string> fileNames)
+    {
+      try
+      {
+        string subject = "Notentabellen";      
+        MailMessage msg = new MailMessage();
+        msg.From = from;
+        msg.To.Add(new MailAddress(to));
+        msg.Subject = subject;
+        msg.Body = bodyText;
+        foreach (string fileName in fileNames)
+        {
+          msg.Attachments.Add(new Attachment(fileName));
+        }
+        
+        mailServer.Send(msg);
+      }
+      catch (Exception ex)
+      {
+        if (MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+          throw;
+      }
+    }
+  }
+
+
   /// <summary>
   /// Legt eine neue Exceldatei zum übergebenen Kurs an.
   /// </summary>
@@ -56,7 +153,7 @@ namespace diNo
     private OpenNotendatei xls;
     private Kurs kurs;
     private string fileName;
-    private List<Schueler> alleSchueler;
+    private IList<diNoDataSet.SchuelerRow> alleSchueler;
 
     /// <summary>
     /// Aus dem übergebenen Kurs wird eine Exceldatei mit allen Schülerdaten generiert
@@ -70,8 +167,10 @@ namespace diNo
         return; // es gibt auch Kurse ohne Lehrer, z. B. übernommene Noten aus 11ter Klasse
       }
 
-      alleSchueler = kurs.Schueler;
-      alleSchueler.Sort((x, y) => (x.Name + x.Vorname).CompareTo(y.Name + y.Vorname));
+      List<diNoDataSet.SchuelerRow> dieSchueler= new List<diNoDataSet.SchuelerRow>(kurs.getSchueler(true));
+      dieSchueler.Sort((x, y) => (x.Name + x.Vorname).CompareTo(y.Name + y.Vorname));
+      alleSchueler = dieSchueler;
+      
 
       if (alleSchueler.Count == 0)
       {
@@ -106,19 +205,10 @@ namespace diNo
 
     public void Dispose()
     {
-      Dispose(true);
-      GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-      if (disposing)
+      if (xls != null)
       {
-        if (xls != null)
-        {
-          xls.Dispose();
-          xls = null;
-        }
+        xls.Dispose();
+        xls = null;
       }
     }
 
@@ -148,29 +238,36 @@ namespace diNo
     {
       var klassen = new List<string>(); // sammelt alle Klassennamen dieses Kurses (z.B. für Ethik spannend)
                                         // Schulart, SA-Wertung wird dem ersten Schüler entnommen
-     
+
+      Schueler ersterSchueler = new Schueler(alleSchueler[0]); // muss existieren, da nur Kurse mit Schülern erzeugt werden
+
+      Schulart schulart = ersterSchueler.getKlasse.Schulart;
+
       // schreibe Notenbogen - Kopf
       xls.WriteValue(xls.notenbogen, "E1", kurs.getFach.Bezeichnung);
       xls.WriteValueProtectedCell(xls.notenbogen, "I1", GetLehrerOderLehrerin(kurs));
       xls.WriteValue(xls.notenbogen, "K1", kurs.getLehrer.Name);
-      xls.WriteValueProtectedCell(xls.AP, "B1", "Abschlussprüfung " + (Zugriff.Instance.Schuljahr + 1));
+      xls.WriteValueProtectedCell(xls.AP, "B1", "Abschlussprüfung " +  (Zugriff.Instance.Schuljahr+1));
       xls.WriteValueProtectedCell(xls.sid, "F2", kurs.Id.ToString());
 
       int zeile = 4;
       int zeileFuerSId = CellConstant.zeileSIdErsterSchueler;
 
-      foreach (var schueler in alleSchueler)
-      {        
+      foreach (var s in alleSchueler)
+      {
+        Schueler schueler = Zugriff.Instance.SchuelerRep.Find(s.Id);
+
         if (!klassen.Contains(schueler.getKlasse.Data.Bezeichnung))
         {
           klassen.Add(schueler.getKlasse.Data.Bezeichnung);
         }
 
         // Schüler in die Exceldatei schreiben
-        xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name + ", " + schueler.benutzterVorname);
+        xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name+", "+ schueler.benutzterVorname);
         xls.WriteValueProtectedCell(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
+        //xls.WriteValueProtectedCell(xls.sid, CellConstant.Regelung + zeileFuerSId, schueler.hatVorHj ? "FOS" : "BOS");
 
-        zeile++;
+        zeile ++;
         zeileFuerSId++;
       }
 
@@ -194,11 +291,11 @@ namespace diNo
     /// <param name="kurs">Der Kurs.</param>
     /// <returns>Den Text Lehrer oder Lehrerin.</returns>
     private string GetLehrerOderLehrerin(Kurs kurs)
-    {
+    {      
       if (kurs.getLehrer != null)
       {
-        if (kurs.getLehrer.Data.Geschlecht == "W")
-          return "Lehrerin:";
+        if (kurs.getLehrer.Data.Geschlecht=="W")
+           return "Lehrerin:";
       }
       return "Lehrer:";
     }
@@ -208,15 +305,12 @@ namespace diNo
     /// </summary>
     private void SwitchNotenschluessel()
     {
-      string schluessel, ug, og, eingabe = "BE";
+      string schluessel, ug, og, eingabe="BE";
 
       switch (kurs.getFach.Kuerzel)
       {
         case "E":
         case "EBC": //English Book Club
-        case "Sp":
-        case "F":
-        case "F-f":
           schluessel = "E";
           ug = "34";
           og = "49";
@@ -227,8 +321,8 @@ namespace diNo
         case "VWL":
         case "Wl":
         case "Rl":
-        case "Inf": //Informatik im Wirtschaftszweig
-        case "InfW_SU": // Informatik Wahlfach für ABU, Soziale (für InfW_T gilt der Matheschlüssel)
+        case "Inf": //Informatik für Sozial-13
+        case "Inf_W_AS": // Informatik Wahlfach für ABU, Soziale (für Inf_T gilt der Matheschlüssel)
         case "WAk": // Wirtschaft aktuell
         case "WR": // Wirtschaft und Recht
         case "IBS": // International Business Studies
@@ -260,16 +354,6 @@ namespace diNo
         xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfObergrenze, og);
         xls.WriteValue(pruefungssheet, CellConstant.EingabeUeber, eingabe);
       }
-
-        try
-        {
-            if (kurs.Klassen[0].Jahrgangsstufe == Jahrgangsstufe.IntVk)
-            {
-                xls.WriteValue(xls.notenbogen2, "M39", "2");  // 2. SA im 2. Hj zählt doppelt
-            }
-        }
-        catch
-        { }
     }
   }
 }

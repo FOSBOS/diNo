@@ -76,7 +76,9 @@
       this.numSeminarpunkte = new diNo.NumericUpDownNullable();
       this.label11 = new System.Windows.Forms.Label();
       this.label10 = new System.Windows.Forms.Label();
-      this.textBoxSeminarfachthema = new System.Windows.Forms.TextBox();
+      this.textBoxSeminarfachthemaKurz = new System.Windows.Forms.TextBox();
+      this.textBoxSeminarfachthemaLang = new System.Windows.Forms.TextBox();
+      this.label5 = new System.Windows.Forms.Label();
       this.label4 = new System.Windows.Forms.Label();
       this.pnlFPA.SuspendLayout();
       this.groupBox1.SuspendLayout();
@@ -628,7 +630,9 @@
       this.pnlSeminar.Controls.Add(this.numSeminarpunkte);
       this.pnlSeminar.Controls.Add(this.label11);
       this.pnlSeminar.Controls.Add(this.label10);
-      this.pnlSeminar.Controls.Add(this.textBoxSeminarfachthema);
+      this.pnlSeminar.Controls.Add(this.textBoxSeminarfachthemaKurz);
+      this.pnlSeminar.Controls.Add(this.textBoxSeminarfachthemaLang);
+      this.pnlSeminar.Controls.Add(this.label5);
       this.pnlSeminar.Controls.Add(this.label4);
       this.pnlSeminar.Enabled = false;
       this.pnlSeminar.Location = new System.Drawing.Point(15, 374);
@@ -640,7 +644,7 @@
       // 
       this.btnSaveSeminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.btnSaveSeminar.Image = global::diNo.Properties.Resources.Save;
-      this.btnSaveSeminar.Location = new System.Drawing.Point(488, 127);
+      this.btnSaveSeminar.Location = new System.Drawing.Point(482, 136);
       this.btnSaveSeminar.Name = "btnSaveSeminar";
       this.btnSaveSeminar.Size = new System.Drawing.Size(40, 40);
       this.btnSaveSeminar.TabIndex = 66;
@@ -681,26 +685,45 @@
       this.label10.TabIndex = 64;
       this.label10.Text = "Seminararbeit";
       // 
-      // textBoxSeminarfachthema
+      // textBoxSeminarfachthemaKurz
       // 
-      this.textBoxSeminarfachthema.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxSeminarfachthema.Location = new System.Drawing.Point(18, 104);
-      this.textBoxSeminarfachthema.MaxLength = 1024;
-      this.textBoxSeminarfachthema.Multiline = true;
-      this.textBoxSeminarfachthema.Name = "textBoxSeminarfachthema";
-      this.textBoxSeminarfachthema.Size = new System.Drawing.Size(461, 63);
-      this.textBoxSeminarfachthema.TabIndex = 2;
+      this.textBoxSeminarfachthemaKurz.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxSeminarfachthemaKurz.Location = new System.Drawing.Point(15, 82);
+      this.textBoxSeminarfachthemaKurz.MaxLength = 117;
+      this.textBoxSeminarfachthemaKurz.Name = "textBoxSeminarfachthemaKurz";
+      this.textBoxSeminarfachthemaKurz.Size = new System.Drawing.Size(461, 23);
+      this.textBoxSeminarfachthemaKurz.TabIndex = 1;
+      // 
+      // textBoxSeminarfachthemaLang
+      // 
+      this.textBoxSeminarfachthemaLang.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxSeminarfachthemaLang.Location = new System.Drawing.Point(15, 136);
+      this.textBoxSeminarfachthemaLang.MaxLength = 1024;
+      this.textBoxSeminarfachthemaLang.Multiline = true;
+      this.textBoxSeminarfachthemaLang.Name = "textBoxSeminarfachthemaLang";
+      this.textBoxSeminarfachthemaLang.Size = new System.Drawing.Size(461, 63);
+      this.textBoxSeminarfachthemaLang.TabIndex = 2;
+      // 
+      // label5
+      // 
+      this.label5.AutoSize = true;
+      this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label5.Location = new System.Drawing.Point(12, 65);
+      this.label5.Name = "label5";
+      this.label5.Size = new System.Drawing.Size(144, 15);
+      this.label5.TabIndex = 61;
+      this.label5.Text = "Thema (bis 117 Zeichen)";
       // 
       // label4
       // 
       this.label4.AutoSize = true;
       this.label4.Cursor = System.Windows.Forms.Cursors.Default;
       this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label4.Location = new System.Drawing.Point(15, 87);
+      this.label4.Location = new System.Drawing.Point(12, 119);
       this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(46, 15);
+      this.label4.Size = new System.Drawing.Size(402, 15);
       this.label4.TabIndex = 60;
-      this.label4.Text = "Thema";
+      this.label4.Text = "Thema (lang; muss nur ausgefüllt werden, wenn länger als 117 Zeichen)";
       // 
       // UserControlFPAundSeminar
       // 
@@ -752,7 +775,9 @@
         private System.Windows.Forms.Panel pnlSeminar;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBoxSeminarfachthema;
+        private System.Windows.Forms.TextBox textBoxSeminarfachthemaKurz;
+        private System.Windows.Forms.TextBox textBoxSeminarfachthemaLang;
+        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private NumericUpDownNullable numSeminarpunkte;
     private System.Windows.Forms.Button btnSaveSeminar;

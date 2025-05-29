@@ -2,7 +2,8 @@
 using Microsoft.Office.Interop.Excel;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 // erwartet in Spalte C das Lehrerkürzel und in Spalte D einen Klassennamen, falls dieser Lehrer eine KL hat.
@@ -12,31 +13,29 @@ namespace diNo
 {
   public class ImportKlassenleiter
   {
+    private OpenExcel xls;
     private Dictionary<string, int> LehrerListe = new Dictionary<string, int>(); // verwaltet Kürzel, LehrerId
 
     public ImportKlassenleiter()
     {
-      MessageBox.Show("Benötigt wird eine Textdatei, bei der in Spalte 2 das Lehrerkürzel und in Spalte 3 die Klasse steht.\nDie Klassen müssen schon angelegt worden sein.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      MessageBox.Show("Benötigt wird eine Excelliste, bei der in Spalte 3 das Kürzel und in Spalte 4 die Klasse steht.\nAb Zeile 2 müssen Daten enthalten sein.\nDie Klassen müssen schon angelegt worden sein.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
       var fileDialog = new OpenFileDialog();
-      fileDialog.Filter = "Textdateien|*.*";
-
+      fileDialog.Filter = "Excel Files|*.xls*";
+            
       if (fileDialog.ShowDialog() == DialogResult.OK)
       {
-        using (FileStream stream = new FileStream(fileDialog.FileName, FileMode.Open, FileAccess.Read))
-        using (StreamReader reader = new StreamReader(stream))
-        {
-          LoadLehrer();
-          LeseKlassenleiter(reader);
-        }
-        MessageBox.Show("Bitte im Klassendialog prüfen, ob alle Klassen richtig angelegt wurden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-        
+        xls = new OpenExcel(fileDialog.FileName);
+        LoadLehrer();
+        LeseKlassenleiter();
+        MessageBox.Show("Bitte in der Datenbank prüfen, ob alle Klassen richtig angelegt wurden.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+        xls.Dispose();
       }
     }
 
 
     private void LoadLehrer()
     {
-      diNoDataSet.LehrerDataTable dt;
+      diNoDataSet.LehrerDataTable dt;      
       var ta = new LehrerTableAdapter();
       dt = ta.GetData();
 
@@ -46,30 +45,34 @@ namespace diNo
       }
     }
 
-    private void LeseKlassenleiter(StreamReader reader)
-    {
-      KlasseTableAdapter ta = new KlasseTableAdapter();
-      while (!reader.EndOfStream)
-      {
-        string orignal = reader.ReadLine();        
-        string[] line = orignal.Split(new string[] { "\t" }, StringSplitOptions.None);
-        string kuerzel, klasse;
-        int lehrerid;
+    private void LeseKlassenleiter()
+    {      
+      KlasseTableAdapter ta  = new KlasseTableAdapter();
+      Worksheet s = xls.workbook.Worksheets[1];
+      //Worksheet s = wb.ActiveSheet;
+      int zeile=2;
+      string kuerzel, klasse;
+      int lehrerid;
 
-        kuerzel = line[1];
-        klasse = line[2];
-        if (klasse == "")
-          continue;
-        
-        LehrerListe.TryGetValue(kuerzel, out lehrerid);
-        var dt = ta.GetDataByBezeichnung(klasse);
-        if (dt.Count > 0)
+      kuerzel = (string)(s.Cells[zeile,3].Value);
+      klasse = (string)(s.Cells[zeile,4].Value);
+      while (kuerzel!=null)
+      {
+        if (klasse!=null)
         {
-          var klassenRow = dt[0];
-          klassenRow.KlassenleiterId = lehrerid;
-          ta.Update(klassenRow);
+          LehrerListe.TryGetValue(kuerzel,out lehrerid);
+          var dt = ta.GetDataByBezeichnung(klasse);
+          if (dt.Count>0)
+          {
+            var klassenRow = dt[0];
+            klassenRow.KlassenleiterId = lehrerid;
+            ta.Update(klassenRow);
+          }
         }
+        zeile++;
+        kuerzel = (string)(s.Cells[zeile,3].Value);
+        klasse = (string)(s.Cells[zeile,4].Value);
       }
     }
-  }
+  }  
 }

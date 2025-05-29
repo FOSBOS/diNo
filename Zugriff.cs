@@ -1,9 +1,11 @@
-﻿using diNo.diNoDataSetTableAdapters;
-using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.Linq;
+using System.Text;
+using diNo.diNoDataSetTableAdapters;
 using System.Windows.Forms;
+using System.Configuration;
+using log4net;
 
 namespace diNo
 {
@@ -16,11 +18,8 @@ namespace diNo
     public Lehrer lehrer = null; // angemeldeter Lehrer
     public List<Klasse> Klassen { get; private set; } // Liste der angezeigten Klassen
     public List<Fach> eigeneFaecher { get; private set; }
-    private List<Kurs> _eigeneKurse = null; // alle Kurse, die der angemeldete Lehrer unterrichtet
     public Klasse eigeneKlasse { get; private set; } // Verweis auf die Klasse, in der der User Klassenleiter ist
     public Dictionary<int, Schueler> markierteSchueler { get; private set; } // Schüler, die z.B. beim NotenCheck eine Meldung erzeugt haben
-    public Vorkommnisart selectedVorkommnisart; // für den Auswahldialog
-    public Auswahlart selectedAuswahlart; // für den Auswahldialog
     public int AnzahlSchueler { get; private set; }
 
     // folgende Nachschlagelisten dienen v.a. der Performance, damit die Objekte insgesamt nur 1x im Speicher angelegt werden müssen!
@@ -29,21 +28,18 @@ namespace diNo
     public Repository<Klasse> KlassenRep = new Repository<Klasse>(Klasse.CreateKlasse);
     public Repository<Lehrer> LehrerRep = new Repository<Lehrer>(Lehrer.CreateLehrer); // aktuell nicht verwendet
     public Repository<Fach> FachRep = new Repository<Fach>(Fach.CreateFach);
-
+    
     public diNoDataSet.GlobaleKonstantenRow globaleKonstanten;
     private GlobaleStringsContainer globaleStrings = new GlobaleStringsContainer();
     public int Schuljahr { get { return globaleKonstanten.Schuljahr; } }
     public Sperrtyp Sperre { get { return (Sperrtyp)globaleKonstanten.Sperre; } }
     public int aktZeitpunkt { get { return globaleKonstanten.aktZeitpunkt; } }
-    public Halbjahr aktHalbjahr { get { return (globaleKonstanten.aktZeitpunkt <= 2 ? Halbjahr.Erstes : Halbjahr.Zweites); } }
+    public Halbjahr aktHalbjahr { get { return (globaleKonstanten.aktZeitpunkt <= 2 ? Halbjahr.Erstes : Halbjahr.Zweites); } }    
     public DateTime Zeugnisdatum { get { return globaleKonstanten.Zeugnisdatum; } }
-    public LesemodusExcel Lesemodus { get { return (LesemodusExcel)globaleKonstanten.LeseModusExcel; } }
-    public bool SiehtAlles { get; private set; }
-    public bool HatVerwaltungsrechte { get; private set; }
-    public bool RptDruck = false;
-    public bool IsFBKempten = false;
+    public LesemodusExcel Lesemodus { get { return (LesemodusExcel)globaleKonstanten.LeseModusExcel ; } }
+    public bool SiehtAlles{ get; private set; }
+    public bool HatVerwaltungsrechte{ get; private set; }
     public bool IsTestDB { get; private set; }
-    private bool NurAktive = true;
 
     private Zugriff()
     {
@@ -59,25 +55,29 @@ namespace diNo
 
       try
       {
-        Cursor.Current = Cursors.WaitCursor;
         Klassen = new List<Klasse>();
         markierteSchueler = new Dictionary<int, Schueler>();
         Username = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+        // TODO: Username ToUpper verwenden, dann muss aber die DB passen
+        if (Username == "MARKUS\\Markus")
+        {
+          Username = "FOSBOS\\msiegel";
+        }
         if (Username == "CLAUSPC\\Claus")
         {
-          Username = "SN\\ckonrad";
+          Username = "FOSBOS\\ckonrad";
         }
 
         Username = Username.ToLower();
         int pos = Username.IndexOf("\\"); // Domänennamen abschneiden     
-        Username = Username.Remove(0, pos + 1);
+        Username = Username.Remove(0,pos+1);
 
         log.Debug("Anmeldeversuch mit Benutzer=" + Username);
         var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
         if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
         else
         {
-          MessageBox.Show("Keine Zugriffsberechtigung für Benutzer "+ Username + "!\nBitte wenden Sie sich an einen Administrator.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+          MessageBox.Show("Keine Zugriffsberechtigung!\nBitte wenden Sie sich an einen Administrator.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
           Application.ExitThread();
           Environment.Exit(1);
         }
@@ -90,16 +90,11 @@ namespace diNo
         LoadLehrer();
         log.Debug("Lehrer geladen.");
         LoadGlobaleKonstanten();
-        IsFBKempten = getString(GlobaleStrings.SchulPLZ) == "87435";
         log.Debug("Globales geladen.");
       }
       catch (Exception e)
       {
         MessageBox.Show(e.Message + "\n" + e.StackTrace, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-      }
-      finally
-      {
-        Cursor.Current = Cursors.Default;
       }
     }
 
@@ -115,14 +110,8 @@ namespace diNo
       }
     }
 
-    public void Refresh()
-    {
-      Refresh(NurAktive);
-    }
-
     public void Refresh(bool nurAktive)
     {
-      NurAktive = nurAktive;
       SchuelerRep.Clear();
       KlassenRep.Clear();
       KursRep.Clear();
@@ -139,20 +128,20 @@ namespace diNo
         return this.lehrer.rollen.Count == 0;
       }
     }
-
-    public void LoadSchueler(bool nurAktive = true)
+   
+    public void LoadSchueler(bool nurAktive=true)
     {
       log.Debug("Schüler werden geladen.");
       diNoDataSet.SchuelerDataTable sListe;
-      int NotStatus = nurAktive ? 1 : 255; // Status=1 bedeutet abgemeldet,
+      int NotStatus = nurAktive?1:255; // Status=1 bedeutet abgemeldet,
 
       var ta = new SchuelerTableAdapter();
       if (SiehtAlles)
         sListe = ta.GetDataByStatus(NotStatus); // alle Schüler reinladen
       else if (IstNurNormalerLehrer)
-        sListe = ta.GetDataByLehrerId(NotStatus, lehrer.Id); //  nur eigene Schüler            
+        sListe = ta.GetDataByLehrerId(NotStatus,lehrer.Id); //  nur eigene Schüler            
       else
-        sListe = ta.GetDataByLehrerIdFPASem(NotStatus, lehrer.Id); // Lehrer mit erweiterten Rollen
+        sListe = ta.GetDataByLehrerIdFPASem(NotStatus,lehrer.Id); // Lehrer mit erweiterten Rollen
 
       AnzahlSchueler = sListe.Count;
       log.Debug(AnzahlSchueler + " Schüler gefunden.");
@@ -173,21 +162,20 @@ namespace diNo
           KlassenRep.Add(k);
         }
         s.getKlasse = k; // dem Schüler die Klasseninstanz zuweisen, damit die nicht jedesmal neu erzeugt werden muss!
-        k.Schueler.Add(s); // und umgekehrt dieser Klasse den Schüler hinzufügen        
+        k.eigeneSchueler.Add(s); // und umgekehrt dieser Klasse den Schüler hinzufügen        
       }
 
       // alles sortieren
       Klassen.Sort((x, y) => x.Bezeichnung.CompareTo(y.Bezeichnung));
       foreach (var klasse in Klassen)
       {
-        klasse.Schueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
+        klasse.eigeneSchueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
         if (klasse.KlassenleiterId == lehrer.Id) eigeneKlasse = klasse;
       }
       log.Debug("Schüler geladen.");
     }
 
-    // lädt Fächer des angemeldeten Lehrers
-    public void LoadFaecher()
+    private void LoadFaecher()
     {
       eigeneFaecher = new List<Fach>();
       var ta = new FachTableAdapter();
@@ -200,33 +188,15 @@ namespace diNo
       }
     }
 
-    public List<Kurs>eigeneKurse
-    {  get {  
-        if (_eigeneKurse==null) // ausgelagert um eine Endlosschleife zu vermeiden
-        {
-          _eigeneKurse = new List<Kurs>();
-          var kta = new KursTableAdapter();
-          var dtKurs = kta.GetDataByLehrerId(lehrer.Id);
-          foreach (var rKurs in dtKurs)
-          {
-            Kurs k = new Kurs(rKurs);
-            _eigeneKurse.Add(k);
-            KursRep.Add(k);
-          }
-        }
-        return _eigeneKurse;
-      }
-    }
-
     public void LoadLehrer()
     {
-      diNoDataSet.LehrerDataTable dt;
+      diNoDataSet.LehrerDataTable dt;      
       var ta = new LehrerTableAdapter();
       dt = ta.GetData();
 
       foreach (var r in dt)
       {
-        LehrerRep.Add(new Lehrer(r));
+        LehrerRep.Add(new Lehrer(r));        
       }
     }
 
@@ -234,7 +204,7 @@ namespace diNo
     {
       globaleKonstanten = new GlobaleKonstantenTableAdapter().GetData()[0];
     }
-
+    
     public string getString(GlobaleStrings g)
     {
       return globaleStrings.getString(g);

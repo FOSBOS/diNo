@@ -1,4 +1,10 @@
-﻿namespace diNo
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace diNo
 {
   public static class Fremdsprachen
   {
@@ -15,28 +21,26 @@
       }
     }
 
-    public static Sprachniveau GetSprachniveau(Kursniveau k, Jahrgangsstufe jg, HjLeistung bisherigesNiveau)
+    public static Sprachniveau GetSprachniveau(Kursniveau k, Jahrgangsstufe jg)
     {
-      if (jg != Jahrgangsstufe.Dreizehn)
-        switch (k)
-        {
-          case Kursniveau.Anfaenger: return Sprachniveau.A2;
-          case Kursniveau.Fortg: return Sprachniveau.B1;
-          case Kursniveau.FortgIW: return Sprachniveau.B1p;
-          case Kursniveau.Englisch: return Sprachniveau.B2;
-          default: return Sprachniveau.None;
-        }
+      if (jg!=Jahrgangsstufe.Dreizehn)
+      switch (k)
+      {
+        case Kursniveau.Anfaenger: return Sprachniveau.A2;
+        case Kursniveau.Fortg: return Sprachniveau.B1;
+        case Kursniveau.FortgIW: return Sprachniveau.B1p;
+        case Kursniveau.Englisch: return Sprachniveau.B2;
+        default: return Sprachniveau.None;
+      }
       else
-        switch (k)
-        {
-          case Kursniveau.Anfaenger: return Sprachniveau.B1;
-          // B1+ gibt es bei fortgeführtem Kurs nur, wenn er auch in der 12. belegt wurde
-          case Kursniveau.Fortg: return (bisherigesNiveau!=null && bisherigesNiveau.Punkte == (byte)Sprachniveau.B1 && bisherigesNiveau.JgStufe==Jahrgangsstufe.Zwoelf)
-            ? Sprachniveau.B1p : Sprachniveau.B1;
-          case Kursniveau.FortgIW: return Sprachniveau.B2;
-          case Kursniveau.Englisch: return Sprachniveau.B2p;
-          default: return Sprachniveau.None;
-        }
+      switch (k)
+      {
+        case Kursniveau.Anfaenger: return Sprachniveau.B1;
+        case Kursniveau.Fortg: return Sprachniveau.B1p;
+        case Kursniveau.FortgIW: return Sprachniveau.B2;
+        case Kursniveau.Englisch: return Sprachniveau.B2p;
+        default: return Sprachniveau.None;
+      }
     }
 
     public static Sprachniveau HjToSprachniveau(FachSchuelerNoten f)
@@ -64,12 +68,5 @@
     B1p = 3,
     B2 = 4,
     B2p = 5,
-  }
-
-  public enum ZweiteFSArt
-  {
-    RS = 0,
-    ErgPr = 1,
-    FFAlt = 2
   }
 }

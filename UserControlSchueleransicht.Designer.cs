@@ -70,8 +70,6 @@ namespace diNo
       this.labelVorigeSchule = new System.Windows.Forms.Label();
       this.textBoxBeruflicheVorbildung = new System.Windows.Forms.TextBox();
       this.labelBeruflicheVorbildung = new System.Windows.Forms.Label();
-      this.textBoxMailSchule = new System.Windows.Forms.TextBox();
-      this.label1 = new System.Windows.Forms.Label();
       this.SuspendLayout();
       // 
       // lblAdresse
@@ -141,6 +139,7 @@ namespace diNo
       // 
       // textBoxGeburtsort
       // 
+      this.textBoxGeburtsort.Enabled = false;
       this.textBoxGeburtsort.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxGeburtsort.Location = new System.Drawing.Point(118, 252);
       this.textBoxGeburtsort.Name = "textBoxGeburtsort";
@@ -421,17 +420,17 @@ namespace diNo
       // 
       this.textBoxVorigeSchule.Enabled = false;
       this.textBoxVorigeSchule.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxVorigeSchule.Location = new System.Drawing.Point(318, 291);
+      this.textBoxVorigeSchule.Location = new System.Drawing.Point(318, 252);
       this.textBoxVorigeSchule.Multiline = true;
       this.textBoxVorigeSchule.Name = "textBoxVorigeSchule";
-      this.textBoxVorigeSchule.Size = new System.Drawing.Size(240, 60);
+      this.textBoxVorigeSchule.Size = new System.Drawing.Size(240, 34);
       this.textBoxVorigeSchule.TabIndex = 85;
       // 
       // labelVorigeSchule
       // 
       this.labelVorigeSchule.AutoSize = true;
       this.labelVorigeSchule.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelVorigeSchule.Location = new System.Drawing.Point(315, 276);
+      this.labelVorigeSchule.Location = new System.Drawing.Point(315, 236);
       this.labelVorigeSchule.Name = "labelVorigeSchule";
       this.labelVorigeSchule.Size = new System.Drawing.Size(72, 13);
       this.labelVorigeSchule.TabIndex = 86;
@@ -441,7 +440,7 @@ namespace diNo
       // 
       this.textBoxBeruflicheVorbildung.Enabled = false;
       this.textBoxBeruflicheVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxBeruflicheVorbildung.Location = new System.Drawing.Point(318, 252);
+      this.textBoxBeruflicheVorbildung.Location = new System.Drawing.Point(318, 213);
       this.textBoxBeruflicheVorbildung.Name = "textBoxBeruflicheVorbildung";
       this.textBoxBeruflicheVorbildung.Size = new System.Drawing.Size(240, 20);
       this.textBoxBeruflicheVorbildung.TabIndex = 84;
@@ -449,39 +448,18 @@ namespace diNo
       // labelBeruflicheVorbildung
       // 
       this.labelBeruflicheVorbildung.AutoSize = true;
-      this.labelBeruflicheVorbildung.Enabled = false;
       this.labelBeruflicheVorbildung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.labelBeruflicheVorbildung.Location = new System.Drawing.Point(318, 237);
+      this.labelBeruflicheVorbildung.Location = new System.Drawing.Point(318, 197);
       this.labelBeruflicheVorbildung.Name = "labelBeruflicheVorbildung";
       this.labelBeruflicheVorbildung.Size = new System.Drawing.Size(106, 13);
       this.labelBeruflicheVorbildung.TabIndex = 83;
       this.labelBeruflicheVorbildung.Text = "berufliche Vorbildung";
-      // 
-      // textBoxMailSchule
-      // 
-      this.textBoxMailSchule.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxMailSchule.Location = new System.Drawing.Point(318, 213);
-      this.textBoxMailSchule.Name = "textBoxMailSchule";
-      this.textBoxMailSchule.Size = new System.Drawing.Size(240, 20);
-      this.textBoxMailSchule.TabIndex = 87;
-      // 
-      // label1
-      // 
-      this.label1.AutoSize = true;
-      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label1.Location = new System.Drawing.Point(316, 199);
-      this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(118, 13);
-      this.label1.TabIndex = 88;
-      this.label1.Text = "Schulische Mailadresse";
       // 
       // UserControlSchueleransicht
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.AutoScroll = true;
-      this.Controls.Add(this.textBoxMailSchule);
-      this.Controls.Add(this.label1);
       this.Controls.Add(this.textBoxVorigeSchule);
       this.Controls.Add(this.labelVorigeSchule);
       this.Controls.Add(this.textBoxBeruflicheVorbildung);
@@ -570,7 +548,5 @@ namespace diNo
     private System.Windows.Forms.Label labelVorigeSchule;
     private System.Windows.Forms.TextBox textBoxBeruflicheVorbildung;
     private System.Windows.Forms.Label labelBeruflicheVorbildung;
-        private System.Windows.Forms.TextBox textBoxMailSchule;
-        private System.Windows.Forms.Label label1;
-    }
+  }
 }

@@ -317,7 +317,7 @@
               </Parameter>
             </Parameters>
             <Top>2.75192cm</Top>
-            <Height>4.53274cm</Height>
+            <Height>5.45878cm</Height>
             <Width>17cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -326,31 +326,8 @@
               </Border>
             </Style>
           </Subreport>
-          <Subreport Name="subrptZusZweiteFS">
-            <ReportName>subrptZusZweiteFS</ReportName>
-            <Parameters>
-              <Parameter Name="SId">
-                <Value>=Fields!Id.Value</Value>
-              </Parameter>
-              <Parameter Name="JgKurz">
-                <Value>=Fields!JgKurz.Value</Value>
-              </Parameter>
-              <Parameter Name="HideVorHj">
-                <Value>=Fields!HideVorHj.Value</Value>
-              </Parameter>
-            </Parameters>
-            <Top>7.35521cm</Top>
-            <Height>0.64336cm</Height>
-            <Width>17cm</Width>
-            <ZIndex>2</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-            </Style>
-          </Subreport>
         </ReportItems>
-        <Height>8.28962cm</Height>
+        <Height>8.2107cm</Height>
         <Style>
           <Border>
             <Color>White</Color>

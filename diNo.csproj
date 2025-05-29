@@ -10,14 +10,12 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>diNo</RootNamespace>
     <AssemblyName>diNo</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -42,7 +40,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -60,14 +57,8 @@
     <ApplicationIcon>stegosaurus-304011__180 klein.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BouncyCastle.Crypto, Version=1.9.0.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
-      <HintPath>packages\Portable.BouncyCastle.1.9.0\lib\net40\BouncyCastle.Crypto.dll</HintPath>
-    </Reference>
     <Reference Include="log4net">
       <HintPath>log4net\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="MailKit, Version=3.1.0.0, Culture=neutral, PublicKeyToken=4e064fe7c44a8f1b, processorArchitecture=MSIL">
-      <HintPath>packages\MailKit.3.1.1\lib\net452\MailKit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
@@ -85,49 +76,12 @@
       <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.140.1000.523\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+      <HintPath>packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
-    <Reference Include="MimeKit, Version=3.1.0.0, Culture=neutral, PublicKeyToken=bede1c8a46c66814, processorArchitecture=MSIL">
-      <HintPath>packages\MimeKit.3.1.1\lib\net452\MimeKit.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.AdvApi32, Version=0.7.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
-      <HintPath>packages\PInvoke.AdvApi32.0.7.104\lib\net45\PInvoke.AdvApi32.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.Kernel32, Version=0.7.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
-      <HintPath>packages\PInvoke.Kernel32.0.7.104\lib\net45\PInvoke.Kernel32.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.User32, Version=0.7.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
-      <HintPath>packages\PInvoke.User32.0.7.104\lib\net45\PInvoke.User32.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.Windows.Core, Version=0.7.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
-      <HintPath>packages\PInvoke.Windows.Core.0.7.104\lib\net45\PInvoke.Windows.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="PInvoke.Windows.ShellScalingApi, Version=0.7.0.0, Culture=neutral, PublicKeyToken=9e300f9f87f04a7a, processorArchitecture=MSIL">
-      <HintPath>packages\PInvoke.Windows.ShellScalingApi.0.7.104\lib\net45\PInvoke.Windows.ShellScalingApi.dll</HintPath>
-    </Reference>
-    <Reference Include="SevenZipSharp, Version=1.0.19.0, Culture=neutral, PublicKeyToken=c8ff6ba0184838bb, processorArchitecture=MSIL">
-      <HintPath>packages\SevenZipSharp.Net45.1.0.19\lib\net45\SevenZipSharp.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Buffers.4.5.1\lib\netstandard1.1\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Memory.4.5.4\lib\netstandard1.1\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security" />
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -137,29 +91,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Validation, Version=2.4.0.0, Culture=neutral, PublicKeyToken=2fc06f0d701809a7, processorArchitecture=MSIL">
-      <HintPath>packages\Validation.2.4.15\lib\net45\Validation.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbsenzenMail.cs" />
-    <Compile Include="Auswertungen.cs" />
-    <Compile Include="CopyLNW.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CopyLNW.Designer.cs">
-      <DependentUpon>CopyLNW.cs</DependentUpon>
-    </Compile>
     <Compile Include="ExportKurswahl.cs" />
-    <Compile Include="ImportCheck.cs" />
-    <Compile Include="ImportLoginnamen.cs" />
-    <Compile Include="ImportUnterricht.cs" />
-    <Compile Include="KlasseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="KlasseForm.Designer.cs">
-      <DependentUpon>KlasseForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="ListeForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,8 +136,6 @@
     <Compile Include="LehrerForm.Designer.cs">
       <DependentUpon>LehrerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MailTools.cs" />
-    <Compile Include="OpenOutlook.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -218,13 +150,16 @@
     <Compile Include="GlobalesForm.Designer.cs">
       <DependentUpon>GlobalesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs" />
-    <Compile Include="SqlServerTypes\Loader.cs" />
-    <Compile Include="UserImpersonation.cs" />
-    <Compile Include="Xml\abschlusspruefung_1_5.cs" />
+    <Compile Include="Xml\abschlusspruefung_1_3.cs" />
     <Compile Include="Xml\MBStatistik.cs" />
     <Compile Include="Xml\schulerfolg_1_1.cs" />
     <Compile Include="Xml\Schulerfolgsstatistik.cs" />
+    <Compile Include="Stammdaten.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stammdaten.Designer.cs">
+      <DependentUpon>Stammdaten.cs</DependentUpon>
+    </Compile>
     <Compile Include="Testdaten.cs" />
     <Compile Include="UserControlAdministration.cs">
       <SubType>UserControl</SubType>
@@ -333,17 +268,11 @@
     <EmbeddedResource Include="BasisForm.resx">
       <DependentUpon>BasisForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CopyLNW.resx">
-      <DependentUpon>CopyLNW.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Datenauswahl.resx">
       <DependentUpon>Datenauswahl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InputBox.resx">
       <DependentUpon>InputBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="KlasseForm.resx">
-      <DependentUpon>KlasseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Klassenansicht.resx">
       <DependentUpon>Klassenansicht.cs</DependentUpon>
@@ -360,13 +289,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
     <EmbeddedResource Include="rptKlassenkonferenz.rdlc" />
-    <EmbeddedResource Include="rptAuswahlliste.rdlc" />
-    <EmbeddedResource Include="rptLegastheniker.rdlc" />
     <EmbeddedResource Include="rptLehrerRolle.rdlc" />
     <EmbeddedResource Include="rptEinserAbi.rdlc" />
     <EmbeddedResource Include="rptAbiturzeugnis.rdlc" />
     <EmbeddedResource Include="rptEinbringung.rdlc" />
-    <EmbeddedResource Include="rptZusatzAllgHSR.rdlc" />
     <EmbeddedResource Include="rptZeugnis.rdlc" />
     <EmbeddedResource Include="rptGefaehrdungen.rdlc" />
     <EmbeddedResource Include="rptKlassenliste.rdlc" />
@@ -375,9 +301,11 @@
     <EmbeddedResource Include="GlobalesForm.resx">
       <DependentUpon>GlobalesForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Stammdaten.resx">
+      <DependentUpon>Stammdaten.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="subrptAbiLinkeSeite.rdlc" />
     <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />
-    <EmbeddedResource Include="subrptZusZweiteFS.rdlc" />
     <EmbeddedResource Include="subrptLehrerDerKlasse.rdlc" />
     <EmbeddedResource Include="subrptPunktesummeNB.rdlc" />
     <EmbeddedResource Include="subrptPunktesumme.rdlc" />
@@ -492,8 +420,6 @@
     <None Include="Properties\DataSources\Schueler.datasource" />
     <None Include="Properties\DataSources\SprachniveauDruck.datasource" />
     <None Include="Properties\DataSources\ZeugnisDruck.datasource" />
-    <None Include="Properties\DataSources\ZusatzAllgHSRDruck.datasource" />
-    <None Include="Properties\DataSources\ZusZweiteFSDruck.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -503,11 +429,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Xml\abschlusspruefung_1.5.dtd" />
-    <None Include="Xml\abschlusspruefung_1.5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Xml\schulerfolg_1.1.dtd" />
+    <None Include="Xml\abschlusspruefung_1.3.dtd" />
     <None Include="Xml\schulerfolg_1.1.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -526,24 +448,6 @@
       <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
       <VersionMajor>1</VersionMajor>
       <VersionMinor>7</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="Microsoft.Office.Interop.Outlook">
-      <Guid>{00062FFF-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>9</VersionMajor>
-      <VersionMinor>6</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="stdole">
-      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>primary</WrapperTool>
       <Isolated>False</Isolated>
@@ -608,19 +512,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Lupe.png" />
-    <Content Include="SqlServerTypes\readme.htm" />
-    <Content Include="SqlServerTypes\x64\msvcr120.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x86\msvcr120.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="stegosaurus-304011__180 klein.ico" />
   </ItemGroup>
   <ItemGroup>

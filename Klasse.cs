@@ -1,5 +1,5 @@
-﻿using diNo.diNoDataSetTableAdapters;
-using System;
+﻿using System;
+using diNo.diNoDataSetTableAdapters;
 using System.Collections.Generic;
 
 namespace diNo
@@ -9,7 +9,7 @@ namespace diNo
     None = 0,
     Vorkurs = 8, // funktioniert noch nicht
     IntVk = 9,
-    Vorklasse = 10,
+    Vorklasse = 10,    
     Elf = 11,
     Zwoelf = 12,
     Dreizehn = 13,
@@ -29,10 +29,10 @@ namespace diNo
     Sozial = 1,
     Technik = 2,
     Wirtschaft = 3,
-    Umwelt = 4
+    Umwelt = 4    
   }
 
-  public class Klasse : IRepositoryObject
+  public class Klasse :  IRepositoryObject
   {
     private diNoDataSet.KlasseRow data;
     private diNoDataSet.SchuelerDataTable schueler;
@@ -40,11 +40,11 @@ namespace diNo
     private Jahrgangsstufe jg;
     private Zweig zweig;
     private Schulart schulart;
-    public List<Schueler> Schueler;
+    public List<Schueler> eigeneSchueler;
     private List<Kurs> kurse = null;
 
     public Klasse(int id)
-    {
+    {   
       var rst = new KlasseTableAdapter().GetDataById(id);
       if (rst.Count == 1)
       {
@@ -56,25 +56,37 @@ namespace diNo
         throw new InvalidOperationException("Konstruktor Klasse: Ungültige ID=" + id);
       }
     }
-
+    
     public Klasse(diNoDataSet.KlasseRow klasseR)
-    {
+    {      
       data = klasseR;
       Init();
     }
 
     private void Init()
     {
-      Schueler = new List<Schueler>();
-      jg = (Jahrgangsstufe)data.JgStufe;
-      if (jg==Jahrgangsstufe.None) 
-      {
-        throw new Exception("Jahrgangstufe bei Klasse " + data.Bezeichnung + " nicht belegt.");
-        //jg = Jahrgangsstufe.Dreizehn;
-      }
-      if (data.IsZweigNull() || data.Zweig.Length != 1) zweig = Zweig.None;
-      else zweig = CharToZweig(data.Zweig);
-      schulart = data.IsSchulartNull() ? Schulart.None : (Schulart)data.Schulart;
+      eigeneSchueler = new List<Schueler>();
+      jg = Faecherkanon.GetJahrgangsstufe(data.Bezeichnung);
+      
+      // Zweig der Klasse (None für Mischklassen)
+      string bez = this.Bezeichnung;
+      if (bez.Contains("_"))
+        zweig = CharToZweig(bez.Substring(bez.Length - 1, 1)); // Teilklasse      
+      else if      (bez.Contains("W") && !bez.Contains("S") && !bez.Contains("U") && !bez.Contains("T"))
+        zweig = Zweig.Wirtschaft;
+      else if (bez.Contains("S") && !bez.Contains("W") && !bez.Contains("U") && !bez.Contains("T"))
+        zweig = Zweig.Sozial;
+      else if (bez.Contains("T") && !bez.Contains("S") && !bez.Contains("U") && !bez.Contains("W"))
+        zweig = Zweig.Technik;
+      else if (bez.Contains("U") && !bez.Contains("S") && !bez.Contains("T") && !bez.Contains("W"))
+        zweig = Zweig.Umwelt;
+      else //hier stehen nur noch die Klassen, deren Zweig nicht eindeutig ist, z. B. Vorkurs BOS oder Mischklassen      
+        zweig = Zweig.None;
+      
+      if (bez.StartsWith("B") || bez.StartsWith("b"))
+        schulart = Schulart.BOS;
+      else
+        schulart = Schulart.FOS;
     }
 
     public static Klasse CreateKlasse(int id)
@@ -85,11 +97,6 @@ namespace diNo
     public int GetId()
     {
       return data.Id;
-    }
-
-    public string Comparer()
-    {
-      return Bezeichnung;
     }
 
     public diNoDataSet.KlasseRow Data
@@ -123,8 +130,8 @@ namespace diNo
         if (Jahrgangsstufe == Jahrgangsstufe.Vorklasse) return "Vorklasse";
         return "Jahrgangsstufe " + ((int)Jahrgangsstufe);
       }
-    }
-
+    }    
+    
     public Schulart Schulart
     {
       get { return schulart; }
@@ -134,17 +141,17 @@ namespace diNo
     {
       switch (c)
       {
-        case "S": return Zweig.Sozial;
-        case "T": return Zweig.Technik;
-        case "W": return Zweig.Wirtschaft;
-        case "U": return Zweig.Umwelt;
-        default: return Zweig.None;
+        case "S" : return Zweig.Sozial;
+        case "T" : return Zweig.Technik;
+        case "W" : return Zweig.Wirtschaft;
+        case "A" : return Zweig.Umwelt;
+        default: return Zweig.None; 
       }
     }
-
+           
     public int KlassenleiterId
     {
-      get { return Data.IsKlassenleiterIdNull() ? 0 : Data.KlassenleiterId; }
+      get { return Data.IsKlassenleiterIdNull() ? 0 : Data.KlassenleiterId;  }
     }
 
 
@@ -154,9 +161,7 @@ namespace diNo
       {
         if (klassenleiter == null)
         {
-          if (Data.IsKlassenleiterIdNull())
-            throw new Exception("Klassenleiter fehlt bei Klasse " + Bezeichnung);
-          klassenleiter = Zugriff.Instance.LehrerRep.Find(Data.KlassenleiterId);
+          klassenleiter = Zugriff.Instance.LehrerRep.Find(Data.KlassenleiterId);          
         }
 
         return klassenleiter;
@@ -173,7 +178,7 @@ namespace diNo
     {
       get
       {
-        if (kurse == null)
+        if (kurse==null)
         {
           var ta = new KursTableAdapter();
           kurse = new List<Kurs>();
@@ -183,18 +188,12 @@ namespace diNo
             Kurs k = new Kurs(kursRow);
             kurse.Add(k);
             // Kurse werden normalerweise nur in einer Klasse angeboten, daher hier ins Rep aufnehmen
-            Zugriff.Instance.KursRep.Add(k);
+            Zugriff.Instance.KursRep.Add(k); 
           }
           kurse.Sort((x, y) => (x.getFach.Sortierung(Zweig)).CompareTo(y.getFach.Sortierung(Zweig)));
         }
         return kurse;
       }
-    }
-
-    public void RefreshKurse()
-    {
-      Zugriff.Instance.KursRep.Clear();
-      kurse = null;
     }
 
     public diNoDataSet.SchuelerDataTable getSchueler
@@ -209,27 +208,7 @@ namespace diNo
         return schueler;
       }
     }
-
-    public static void Insert(string bez)
-    {
-      var ta = new KlasseTableAdapter();
-      Schulart schulart = (bez.StartsWith("B") || bez.StartsWith("b")) ? schulart = Schulart.BOS : Schulart.FOS;
-      Jahrgangsstufe jg = Faecherkanon.GetJahrgangsstufe(bez);
-      string zweig = "";
-      if (bez.Contains("S")) zweig = "S";
-      if (bez.Contains("T")) zweig += "T";
-      if (bez.Contains("U")) zweig += "U";
-      if (bez.Contains("W")) zweig += "W";
-      ta.Insert(bez, null, (byte)jg, (byte)schulart, zweig);
-    }
-
-    public void Save()
-    {
-      var ta = new KlasseTableAdapter();
-      ta.Update(data);
-      klassenleiter = null;
-      Init();
-    }
+    
   }
 
   /// <summary>
@@ -238,7 +217,7 @@ namespace diNo
   public class Kurs : IRepositoryObject
   {
     private diNoDataSet.KursRow data;
-    private List<Schueler> schueler;
+    private diNoDataSet.SchuelerDataTable schueler;
     private List<Klasse> klassen;
     private Fach fach;
     private Lehrer lehrer;
@@ -281,11 +260,6 @@ namespace diNo
       private set;
     }
 
-    public string Comparer()
-    {
-      return Kurzbez;
-    }
-
     public int GetId()
     {
       return Id;
@@ -301,7 +275,23 @@ namespace diNo
       get { return data.Kurzbez; }
     }
 
-   
+    /// <summary>
+    /// Die Liste der Schüler dieser Kurses (sortiert via SQL)
+    /// </summary>
+    public diNoDataSet.SchuelerDataTable Schueler
+    {
+      get
+      {
+        if (schueler == null)
+        {
+          SchuelerTableAdapter sa = new SchuelerTableAdapter();
+          schueler = sa.GetDataByKursId(Id);
+        }
+
+        return schueler;
+      }
+    }
+
     /// <summary>
     /// Die Liste der Klassen dieser Kurses
     /// </summary>
@@ -323,7 +313,7 @@ namespace diNo
         return klassen;
       }
     }
-
+    
     /// <summary>
     /// Speichert die aktuelle Klassenzuordnung in die Datenbank.
     /// </summary>
@@ -334,39 +324,33 @@ namespace diNo
       foreach (Klasse k in klassen)
       {
         kka.Insert(k.Data.Id, Id);
-      }
+      }      
     }
 
     /// <summary>
-    /// Die Liste der Schüler dieser Kurses
+    /// Die Liste der Schüler dieser Kurses (sortiert via SQL).
     /// </summary>
-    public List<Schueler> Schueler
-    {      
-      get
+    /// <param name="excludeAusgetretene">Ob Ausgetretene ausgeschlossen werden sollen.</param>
+    /// <returns>Liste mit den SchuelerRows.</returns>
+    public IList<diNoDataSet.SchuelerRow> getSchueler(bool excludeAusgetretene)
+    {
+      if (excludeAusgetretene)
       {
-        if (schueler == null)
+        IList<diNoDataSet.SchuelerRow> result = new List<diNoDataSet.SchuelerRow>();
+        foreach (var schueler in this.Schueler)
         {
-          schueler = new List<Schueler>();
-          Schueler s;
-          var ta = new SchuelerKursTableAdapter();
-          var dt = ta.GetDataByKursId(this.Id);
-
-          foreach (var d in dt)
+          if (schueler.IsAustrittsdatumNull())
           {
-            s = Zugriff.Instance.SchuelerRep.Find(d.SchuelerId);
-            if (s.Status == Schuelerstatus.Aktiv)
-              schueler.Add(s);
+            result.Add(schueler);
           }
-          schueler.Sort((x, y) => x.NameVorname.CompareTo(y.NameVorname));
         }
 
-        return schueler;
+        return result;
       }
-    }
-
-    public void ResetSchueler()
-    {
-      schueler = null;
+      else
+      {
+        return new List<diNoDataSet.SchuelerRow>(this.Schueler);
+      }
     }
 
     /// <summary>
@@ -403,7 +387,7 @@ namespace diNo
         {
           lehrer = Zugriff.Instance.LehrerRep.Find(data.LehrerId);
         }
-        return lehrer;
+        return lehrer;        
       }
     }
 
@@ -417,7 +401,7 @@ namespace diNo
       get { return getFach.Kuerzel + " " + Id; }
       //get { return Data.Kurzbez; }
     }
-
+    
     public string Kursbezeichnung
     {
       get { return Data.Bezeichnung; }
@@ -439,7 +423,7 @@ namespace diNo
 
     private void Init()
     {
-      var rst = new NoteTableAdapter().GetKAByKursId(Id, (byte)Zugriff.Instance.aktHalbjahr);
+      var rst = new NoteTableAdapter().GetKAByKursId(Id,(byte)Zugriff.Instance.aktHalbjahr);
       schreibtKA = rst.Count > 0;
 
       var ta = new KlasseTableAdapter();
@@ -452,15 +436,9 @@ namespace diNo
         if (k.Jahrgangsstufe > JgStufe)
         {
           JgStufe = k.Jahrgangsstufe;
-          Zweig z;
-          if (Schueler.Count > 0)
-            z = Faecherkanon.GetZweig(Schueler[0].Data.Ausbildungsrichtung);
-          else
-            z = Zweig.None;
-
-          IstSAPKurs = (JgStufe == Jahrgangsstufe.Zwoelf || JgStufe == Jahrgangsstufe.Dreizehn) && getFach.IstSAPFach(z);
+          IstSAPKurs = (JgStufe == Jahrgangsstufe.Zwoelf || JgStufe == Jahrgangsstufe.Dreizehn) && getFach.IstSAPFach(k.Zweig);
         }
-      }
+      }      
     }
 
     public void SetzeNeuenLehrer(Lehrer lehrer)

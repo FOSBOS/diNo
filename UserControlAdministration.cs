@@ -1,10 +1,7 @@
-﻿using diNo.diNoDataSetTableAdapters;
-using log4net;
-using Microsoft.Reporting.WinForms;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System;
 using System.Windows.Forms;
+using diNo.diNoDataSetTableAdapters;
+using System.Collections.Generic;
 
 namespace diNo
 {
@@ -26,13 +23,13 @@ namespace diNo
         groupBoxReparatur.Visible = false;
       }
       else
-      {
+      {                
         chkSperre.Checked = konstanten.Sperre == 1;
         edSchuljahr.Text = konstanten.Schuljahr.ToString();
-        comboBoxZeitpunkt.SelectedIndex = konstanten.aktZeitpunkt - 1;
+        comboBoxZeitpunkt.SelectedIndex = konstanten.aktZeitpunkt-1;        
         opNurAktuelleNoten.Checked = konstanten.LeseModusExcel == 0;
         opVollstaendig.Checked = konstanten.LeseModusExcel == 1;
-      }
+      }      
       groupboxTest.Visible = Zugriff.Instance.IsTestDB;
       dateZeugnis.Value = konstanten.Zeugnisdatum;
       cbNotendruck.SelectedIndex = 0;
@@ -58,9 +55,9 @@ namespace diNo
     private List<Schueler> getSelectedObjects()
     {
       // Elternreihenfolge: usercontrol -> Tabpage -> pageControl -> Form Klassenansicht
-      var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
-      if (obj.Count == 0)
-        MessageBox.Show("Bitte zuerst einen Schüler oder eine/mehrere Klassen markieren.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      var obj =  ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
+      if (obj.Count==0)
+        MessageBox.Show("Bitte zuerst einen Schüler oder eine/mehrere Klassen markieren.","diNo",MessageBoxButtons.OK,MessageBoxIcon.Information);
       return obj;
     }
 
@@ -83,31 +80,20 @@ namespace diNo
       if (dia.ShowDialog() == DialogResult.OK)
       {
         Cursor = Cursors.WaitCursor;
-        ImportExportJahresnoten.ImportiereHJLeistungen(dia.FileName);
+        ImportExportJahresnoten.ImportierteHJLeistungen(dia.FileName);
         Cursor = Cursors.Default;
       }
     }
 
     private void btnImportUnterricht_Click(object sender, EventArgs e)
     {
-      /*    if (MessageBox.Show("Die Unterrichtsmatrix muss als Exceldatei in Tabelle1 vorliegen (via Untis-Export).\nBitte kontrollieren, ob Daten ab Zeile 5 vorhanden sind\nund ob Spalte A die Unterrichtsnummer, Spalte E das Lehrerkürzel, Spalte F das Fach und Spalte G alle zugeordneten Klassen enthält.", "Import Unterrichtsmatrix", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
-            OpenFileDialog dia = new OpenFileDialog();
-            dia.Title = "Dateiname wählen";
-            if (dia.ShowDialog() == DialogResult.OK)
-            {
-              Cursor = Cursors.WaitCursor;
-              UnterrichtExcelReader.ReadUnterricht(dia.FileName);
-              Cursor = Cursors.Default;
-            }*/
-      if (MessageBox.Show("Die Unterrichtdaten müssen als GPU002.txt aus Untis vorliegen.\nDatenbank unbedingt vorher sichern, da der Import ohne Fehler durchlaufen sollte.\n" +
-      "Dazu die Error-Datei im selben Verzeichnis beachten.", "Import Unterrichtsmatrix", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+      if (MessageBox.Show("Die Unterrichtsmatrix muss als Exceldatei in Tabelle1 vorliegen (via Untis-Export).\nBitte kontrollieren, ob Daten ab Zeile 5 vorhanden sind\nund ob Spalte A die Unterrichtsnummer, Spalte E das Lehrerkürzel, Spalte F das Fach und Spalte G alle zugeordneten Klassen enthält.", "Import Unterrichtsmatrix", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       OpenFileDialog dia = new OpenFileDialog();
       dia.Title = "Dateiname wählen";
       if (dia.ShowDialog() == DialogResult.OK)
       {
         Cursor = Cursors.WaitCursor;
-        var iu = new ImportUnterricht(dia.FileName);
-        iu.Import();
+        UnterrichtExcelReader.ReadUnterricht(dia.FileName);
         Cursor = Cursors.Default;
       }
     }
@@ -126,14 +112,15 @@ namespace diNo
 
     private void btnImportKlassenleiter_Click(object sender, EventArgs e)
     {
+      if (MessageBox.Show("Die Exceldatei muss folgendes Format haben:\nDaten sind ab Zeile 2 vorhanden.\nSpalte C enthält das Lehrerkürzel, Spalte D die Klasse.", "Import Klassenleiter", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       new ImportKlassenleiter();
     }
-
+       
     private void btnSave_Click(object sender, EventArgs e)
     {
       konstanten.Sperre = chkSperre.Checked ? 1 : 0;
       konstanten.Schuljahr = int.Parse(edSchuljahr.Text);
-      konstanten.aktZeitpunkt = comboBoxZeitpunkt.SelectedIndex + 1;
+      konstanten.aktZeitpunkt = comboBoxZeitpunkt.SelectedIndex+1;      
       konstanten.Zeugnisdatum = dateZeugnis.Value;
       konstanten.LeseModusExcel = opVollstaendig.Checked ? 1 : 0;
       (new GlobaleKonstantenTableAdapter()).Update(konstanten);
@@ -148,39 +135,8 @@ namespace diNo
     }
 
     private void btnSendMail_Click(object sender, EventArgs e)
-    {
-      if (MessageBox.Show("Die Dateien werden versendet!", "Notendateien versenden", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
-      Cursor = Cursors.WaitCursor;
-      try
-      {
-        var snd = new MailTools();
-        snd.Betreff = "Notendateien";
-        // Produktiv:
-        List<Lehrer> lehrer = Zugriff.Instance.LehrerRep.getList();
-
-        // Test:
-        //List<Lehrer> lehrer = new List<Lehrer>(); lehrer.Add(Zugriff.Instance.LehrerRep.Find("Kon"));
-
-        foreach (Lehrer l in lehrer)
-        {
-          onStatusChange(this, new StatusChangedEventArgs() { Meldung = "Versende " + l.Kuerzel });
-          string directoryName = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + l.Kuerzel;
-          try
-          {
-            string[] dateien = Directory.GetFiles(directoryName);
-            if (dateien.Length > 0)
-              snd.Send(l,dateien);
-          }
-          catch
-          {
-            LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType).Warn("Senden an " + l.Kuerzel + " fehlgeschlagen.");// Lehrer unterrichtet nicht.
-          }
-        }
-      }
-      finally
-      {
-        Cursor = Cursors.Default;
-      }
+    {      
+      new SendExcelMails(this.onStatusChange);     
     }
 
     void onStatusChange(Object sender, StatusChangedEventArgs e)
@@ -197,7 +153,7 @@ namespace diNo
     {
       new Datenauswahl().ShowDialog();
     }
-
+    
     private UnterschriftZeugnis getUnterschriftZeugnis()
     {
       if (opStv.Checked) return UnterschriftZeugnis.Stv;
@@ -210,20 +166,20 @@ namespace diNo
     {
       konstanten.Zeugnisdatum = dateZeugnis.Value; // lokale Übernahme (Speichern nur durch Übernehmen-Button)
       var obj = getSelectedObjects();
-      if (obj.Count > 0)
+      if (obj.Count>0)
       {
         if (cbNotendruck.SelectedIndex == 1)
         {
           if (Zugriff.Instance.aktZeitpunkt == (int)Zeitpunkt.HalbjahrUndProbezeitFOS)
             new ReportGefaehrdungen(obj).Show(); // Gefährdungen werden anders selektiert
           else
-            MessageBox.Show("Gefährdungen können nur zum Halbjahr gedruckt werden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show("Gefährdungen können nur zum Halbjahr gedruckt werden.","diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
         else
         {
-          new ReportSchuelerdruck(obj, (Bericht)cbNotendruck.SelectedIndex, getUnterschriftZeugnis()).Show();
+          new ReportSchuelerdruck(obj, (Bericht) cbNotendruck.SelectedIndex, getUnterschriftZeugnis()).Show();
         }
-      }
+      }          
     }
 
     private void btnLehrer_Click(object sender, EventArgs e)
@@ -243,7 +199,14 @@ namespace diNo
 
     private void btnEinserAbi_Click(object sender, EventArgs e)
     {
-      Auswertungen.AbiBesten();
+      List<Schueler> alle = Zugriff.Instance.SchuelerRep.getList();
+      List<Schueler> liste = new List<Schueler>();
+
+      foreach (var s in alle)
+      {
+        if (!s.Data.IsDNoteNull() && (double)s.Data.DNote < 2.0) liste.Add(s);
+      }
+      new ReportSchuelerdruck(liste, Bericht.EinserAbi).Show();
     }
 
     private void btnBerechtigungen_Click(object sender, EventArgs e)
@@ -253,7 +216,7 @@ namespace diNo
 
     private void btnReadWahlpflichtfaecher_Click(object sender, EventArgs e)
     {
-      if (MessageBox.Show("Die WPF und ggf. auch die Religionskurse müssen als Textdatei (csv mit ; als Trennzeichen) vorliegen:\nSpalte 2 die Unterrichtsnummer des WPF, Spalte 1 enthält die Schüler-ID, weitere Spalten werden ignoriert.\nIst eine Schüler-ID nicht vorhanden, so kann behelfsmäßig über Spalte 1 (eindeutiger Schülername) importiert werden. Dazu muss vorher eine Zuordnungsdatei im selben Verzeichnis mit dem Namen ZuordnungSchueler.txt abgelegt sein.\nDie Zuordnungsdatei enthält im csv-Format in Spalte 1 die Schüler-ID, in Spalte 5 den eindeutigen Namen wie in der Importdatei.", "Import Wahlpflichtfächer", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+      if (MessageBox.Show("Die WPF und ggf. auch die Religionskurse müssen als Textdatei (csv mit ; als Trennzeichen) vorliegen:\nSpalte 2 die Unterrichtsnummer des WPF, Spalte 7 enthält die Schüler-ID, weitere Spalten werden ignoriert.\nIst eine Schüler-ID nicht vorhanden, so kann behelfsmäßig über Spalte 1 (eindeutiger Schülername) importiert werden. Dazu muss vorher eine Zuordnungsdatei im selben Verzeichnis mit dem Namen ZuordnungSchueler.txt abgelegt sein.\nDie Zuordnungsdatei enthält im csv-Format in Spalte 1 die Schüler-ID, in Spalte 5 den eindeutigen Namen wie in der Importdatei.", "Import Wahlpflichtfächer", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       OpenFileDialog dia = new OpenFileDialog();
       dia.Title = "Dateiname wählen";
       if (dia.ShowDialog() == DialogResult.OK)
@@ -288,12 +251,12 @@ namespace diNo
           b.BerechneSchueler(s);
 
         RefreshNotenbogen();
-      }
+      }      
       finally
       {
         Cursor = Cursors.Default;
       }
-    }
+}
 
     private void DelEinbr(HjLeistung hj)
     {
@@ -308,15 +271,12 @@ namespace diNo
         foreach (var f in s.getNoten.alleFaecher)
         {
           DelEinbr(f.getHjLeistung(HjArt.Hj1));
-          DelEinbr(f.getHjLeistung(HjArt.Hj2));
+          DelEinbr(f.getHjLeistung(HjArt.Hj2));          
           DelEinbr(f.getVorHjLeistung(HjArt.Hj1));
           DelEinbr(f.getVorHjLeistung(HjArt.Hj2));
         }
         s.Data.Berechungsstatus = (byte)Berechnungsstatus.Unberechnet;
         s.Save();
-        var ta = new PunktesummeTableAdapter();
-        ta.DeleteBySchuelerId(schueler.Id); // berechnete Punktesumme löschen
-        s.Refresh();
       }
       RefreshNotenbogen();
     }
@@ -350,13 +310,9 @@ namespace diNo
     {
       SaveFileDialog dia = new SaveFileDialog();
       dia.Title = "Dateiname wählen";
-      dia.FileName = "S" + Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_AP" + (Zugriff.Instance.Schuljahr - 2000 +1) + ".xml";
       if (dia.ShowDialog() == DialogResult.OK)
       {
-        Cursor = Cursors.WaitCursor;
         Xml.MBStatistik.Serialize(dia.FileName);
-        Cursor = Cursors.Default;
-        MessageBox.Show("Fertig. Bitte in Zeile 3 der Datei die Attribute löschen, so dass dort nur noch <abschlusspruefungsstatistik> steht.\nAnschließend das Prüfprogramm verwenden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
     }
 
@@ -364,14 +320,34 @@ namespace diNo
     {
       SaveFileDialog dia = new SaveFileDialog();
       dia.Title = "Dateiname wählen";
-      dia.FileName = "S" + Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_Erfolg" + (Zugriff.Instance.Schuljahr - 2000 + 1) + ".xml";
       if (dia.ShowDialog() == DialogResult.OK)
       {
-        Cursor = Cursors.WaitCursor;
         Xml.SEStatistik.Serialize(dia.FileName);
-        Cursor = Cursors.Default;
-        MessageBox.Show("Fertig. Bitte in Zeile 3 der Datei die Attribute löschen, so dass dort nur noch <schulerfolg> steht.\nAnschließend das Prüfprogramm verwenden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
+    }
+
+    private void btnWPF_Click(object sender, EventArgs e)
+    {
+      List<Schueler> alle = Zugriff.Instance.SchuelerRep.getList();
+      List<Schueler> liste = new List<Schueler>();
+
+      foreach (var s in alle)
+      {
+        Jahrgangsstufe jg = s.getKlasse.Jahrgangsstufe;
+        if (jg < Jahrgangsstufe.Zwoelf) continue;
+        byte notw = 1;
+        if (jg == Jahrgangsstufe.Zwoelf && s.Data.Schulart == "F") // FOS 12
+          notw = 2;
+
+        byte anz = 0;
+        foreach (var k in s.Kurse)
+        {
+          if (k.getFach.Typ == FachTyp.WPF) anz++;
+        }
+        if (anz < notw) liste.Add(s);
+      }
+      if (liste.Count == 0) MessageBox.Show("Alles in Ordnung.", "diNo", MessageBoxButtons.OK);
+      else new ReportSchuelerdruck(liste, Bericht.Klassenliste).Show();
     }
 
     private void btnKurseZuweisen_Click(object sender, EventArgs e)
@@ -380,7 +356,7 @@ namespace diNo
       Cursor = Cursors.WaitCursor;
       foreach (Klasse k in Zugriff.Instance.Klassen)
       {
-        foreach (Schueler s in k.Schueler)
+        foreach (Schueler s in k.eigeneSchueler)
           s.WechsleKlasse(k);
       }
       Cursor = Cursors.Default;
@@ -397,132 +373,13 @@ namespace diNo
       {
         ek.ExportSchueler(dia.FileName);
       }
-
+      
       dia.Title = "Alte Kurse exportieren";
       dia.FileName = "AlteKurse.txt";
       if (dia.ShowDialog() == DialogResult.OK)
       {
         ek.ExportAlteWPF(dia.FileName);
       }
-
-      dia.Title = "Schüler-IDs zum Abgleich für Account-DB";
-      dia.FileName = "SchuelerID.txt";      
-      if (dia.ShowDialog() == DialogResult.OK)
-      {
-        ek.ExportSchuelerID(dia.FileName);
-      }
-
-    }
-
-
-    // zum Ende des 1. Hj 2020/21 müssen die 11/2 Noten mit einer Günstigerprüfung mit 12/1 abgeglichen werden
-    private void btnCorona2HJKlonen_Click(object sender, EventArgs e)
-    {
-      foreach (var klasse in Zugriff.Instance.Klassen)
-      {
-        if (klasse.Jahrgangsstufe != Jahrgangsstufe.Zwoelf)
-          continue;
-
-        foreach (var schueler in klasse.Schueler)
-        {
-          foreach (var noten in schueler.getNoten.alleKurse)
-          {
-            var hj11_2 = noten.getVorHjLeistung(HjArt.Hj2);
-            var hj12_1 = noten.getHjLeistung(HjArt.Hj1);
-
-            // nur kopierte Noten werden überprüft (Kennzeichen 21)!
-            if (hj11_2 == null || hj12_1 == null || hj11_2.SchnittMdl != 21) continue;
-
-            if (hj12_1.Punkte > hj11_2.Punkte)
-            {
-              hj11_2.Punkte = hj12_1.Punkte;
-              hj11_2.WriteToDB();
-            }
-          }
-        }
-      }
-    }
-
-    private void btnKlassen_Click(object sender, EventArgs e)
-    {
-      new KlasseForm().ShowDialog();
-    }
-
-    private void btnNotenmitteilung_Click(object sender, EventArgs e)
-    {
-      Cursor.Current = Cursors.WaitCursor;
-      var klassen = ((Klassenansicht)(Parent.Parent.Parent)).SelectedKlassen();
-      if (klassen.Count > 0){
-        MailTools m = new MailTools();
-        m.MailToKlassenleiter(klassen);
-      }
-      Cursor.Current = Cursors.Default;
-    }
-
-    private void btnNotenmailSchueler_Click(object sender, EventArgs e)
-    {
-      Cursor.Current = Cursors.WaitCursor;
-      var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
-      if (obj.Count > 0){
-        MailTools m = new MailTools();
-        m.MailToSchueler(obj);
-      }
-      Cursor.Current = Cursors.Default;
-    }
-
-    private void btnCopy11_Click(object sender, EventArgs e)
-    {
-      foreach (var klasse in Zugriff.Instance.Klassen)
-      {
-        if (klasse.Jahrgangsstufe > Jahrgangsstufe.Elf)
-          continue;
-
-        foreach (var schueler in klasse.Schueler)
-        {
-          foreach (var noten in schueler.getNoten.alleKurse)
-          {
-            var hj1 = noten.getHjLeistung(HjArt.Hj1);
-            if (hj1 == null) continue;
-
-            HjLeistung hj2 = new HjLeistung(schueler.Id, hj1.getFach, HjArt.Hj2, hj1.JgStufe);
-            hj2.Punkte = hj1.Punkte;
-            hj2.SchnittMdl = 21; //Kennzeichen für kopierte Note
-            hj2.WriteToDB();
-
-            HjLeistung jn = new HjLeistung(schueler.Id, hj1.getFach, HjArt.JN, hj1.JgStufe);
-            jn.Punkte = hj1.Punkte;
-            jn.WriteToDB();
-
-          }
-        }
-      }
-    }
-
-    private void btnSchnitte_Click(object sender, EventArgs e)
-    {
-      Auswertungen.AbiSchnitte();
-    }
-
-    private void btnImportCheck_Click(object sender, EventArgs e)
-    {
-      Cursor = Cursors.WaitCursor;
-      new ImportCheck();
-      Cursor = Cursors.Default;
-    }
-
-    private void chkRptDruck_CheckedChanged(object sender, EventArgs e)
-    {
-      Zugriff.Instance.RptDruck = chkRptDruck.Checked;
-    }
-
-    private void btnImportLoginnamen_Click(object sender, EventArgs e)
-    {
-      new ImportLoginnamen();
-    }
-
-    private void btnAbsenzen_Click(object sender, EventArgs e)
-    {
-      new AbsenzenMail();
     }
   }
 }

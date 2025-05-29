@@ -17,10 +17,6 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="AlternatZweiteFS">
-          <DataField>AlternatZweiteFS</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="Anrede">
           <DataField>Anrede</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -296,7 +292,7 @@
                     <MarkupType>HTML</MarkupType>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
-                      <FontSize>12pt</FontSize>
+                      <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
@@ -322,43 +318,12 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
-                    <MarkupType>HTML</MarkupType>
-                    <Style>
-                      <FontFamily>Gadugi</FontFamily>
-                      <FontSize>8pt</FontSize>
-                      <FontWeight>Normal</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Left</TextAlign>
-                </Style>
-              </Paragraph>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
                     <Value>verliehen.</Value>
                     <MarkupType>HTML</MarkupType>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Normal</FontWeight>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style>
-                  <TextAlign>Left</TextAlign>
-                </Style>
-              </Paragraph>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value />
-                    <Style>
-                      <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -461,18 +426,6 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
-                    <Style>
-                      <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
                     <Value>.....................................................................               </Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
@@ -527,7 +480,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>Diesem Zeugnis liegt die Schulordnung für die Berufliche Oberschule - Fachoberschulen und Berufsoberschulen - in der jeweils geltenden Fassung zugrunde.</Value>
                     <Style>
                       <FontStyle>Normal</FontStyle>
                       <FontFamily>Gadugi</FontFamily>
@@ -542,7 +495,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox1</rd:DefaultName>
             <Top>4.30953cm</Top>
-            <Height>10.68229cm</Height>
+            <Height>11.60833cm</Height>
             <Width>16cm</Width>
             <Style>
               <Border>
@@ -658,40 +611,8 @@
               <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
-          <Textbox Name="Textbox4">
-            <CanGrow>true</CanGrow>
-            <KeepTogether>true</KeepTogether>
-            <Paragraphs>
-              <Paragraph>
-                <TextRuns>
-                  <TextRun>
-                    <Value>=Fields!AlternatZweiteFS.Value</Value>
-                    <Style>
-                      <FontFamily>Gadugi</FontFamily>
-                    </Style>
-                  </TextRun>
-                </TextRuns>
-                <Style />
-              </Paragraph>
-            </Paragraphs>
-            <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>1.27908cm</Top>
-            <Left>0.03013cm</Left>
-            <Height>0.46771cm</Height>
-            <Width>15.96987cm</Width>
-            <ZIndex>5</ZIndex>
-            <Style>
-              <Border>
-                <Style>None</Style>
-              </Border>
-              <PaddingLeft>2pt</PaddingLeft>
-              <PaddingRight>2pt</PaddingRight>
-              <PaddingTop>2pt</PaddingTop>
-              <PaddingBottom>2pt</PaddingBottom>
-            </Style>
-          </Textbox>
         </ReportItems>
-        <Height>14.99182cm</Height>
+        <Height>15.91786cm</Height>
         <Style>
           <Border>
             <Color>White</Color>
@@ -702,7 +623,7 @@
       <Width>16.03013cm</Width>
       <Page>
         <PageFooter>
-          <Height>0.02646cm</Height>
+          <Height>2.24896cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <Style>

@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace diNo
@@ -15,50 +19,21 @@ namespace diNo
       cbVorkommnisArt.DisplayMember = "Value";
       cbVorkommnisArt.ValueMember = "Key";
       cbVorkommnisArt.EndUpdate();
-      cbAuswahl.SelectedIndex = 0;
     }
 
     private void btnOK_Click(object sender, EventArgs e)
     {
       var erg = Zugriff.Instance.markierteSchueler;
-      var liste = new List<Schueler>();
-
-      // TODO: Andere Fälle auswerten, Wert aus cbAuswahl an DruckObjekte durchreichen.
-      Zugriff.Instance.selectedAuswahlart = (Auswahlart)cbAuswahl.SelectedIndex;
-      Zugriff.Instance.selectedVorkommnisart = (Vorkommnisart)cbVorkommnisArt.SelectedValue;
       erg.Clear();
       foreach (var k in Zugriff.Instance.Klassen)
-        foreach (var s in k.Schueler)
+        foreach (var s in k.eigeneSchueler)
         {
-          if (Zugriff.Instance.selectedAuswahlart==Auswahlart.Vorkommnis && s.hatVorkommnis(Zugriff.Instance.selectedVorkommnisart) ||
-            Zugriff.Instance.selectedAuswahlart == Auswahlart.Zubringerschule && s.Data.SchulischeVorbildung.StartsWith(cbZubringerschule.Text) ||
-            Zugriff.Instance.selectedAuswahlart == Auswahlart.Probezeit && !s.Data.IsProbezeitBisNull() ||
-            Zugriff.Instance.selectedAuswahlart == Auswahlart.Wiederholer && s.Wiederholt() ||
-            Zugriff.Instance.selectedAuswahlart == Auswahlart.Fremdsprache2 && !s.Data.IsAndereFremdspr2FachNull()
-          )
-          {
+          if (s.hatVorkommnis((Vorkommnisart)cbVorkommnisArt.SelectedValue))
             erg.Add(s.Id, s);
-            liste.Add(s); // je nach Verwendungszweck andere Liste
-          }
         }
 
       Hide();
-      if (MessageBox.Show("Es wurden " + erg.Count + " Schüler ausgewählt.\nSoll die Standardübersicht ausgegeben werden? \nKlicken Sie nein für einen individuellen Druckvorgang.","dino",MessageBoxButtons.YesNo,MessageBoxIcon.Question)== DialogResult.Yes)
-        new ReportSchuelerdruck(liste,Bericht.Auswahlliste).Show();
-    }
-
-    private void cbAuswahl_SelectedIndexChanged(object sender, EventArgs e)
-    {
-      cbVorkommnisArt.Enabled = cbAuswahl.SelectedIndex == 0;
-      cbZubringerschule.Enabled = cbAuswahl.SelectedIndex == 1;
+      MessageBox.Show("Es wurden " + erg.Count + " Schüler ausgewählt.\nWählen Sie nun einen Menüpunkt unter Drucken.");
     }
   }
-    public enum Auswahlart
-    {
-        Vorkommnis,
-        Zubringerschule,
-        Wiederholer,
-        Probezeit,
-        Fremdsprache2
-    }
 }

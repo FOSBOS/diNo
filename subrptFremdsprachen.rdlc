@@ -198,12 +198,6 @@
                 </TablixMember>
                 <TablixMember>
                   <Group Name="Group1" />
-                  <SortExpressions>
-                    <SortExpression>
-                      <Value>=Fields!Stufe.Value</Value>
-                      <Direction>Descending</Direction>
-                    </SortExpression>
-                  </SortExpressions>
                   <TablixHeader>
                     <Size>8.70193cm</Size>
                     <CellContents>
