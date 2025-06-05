@@ -60,21 +60,14 @@ namespace diNo
       lbTest.Visible = Zugriff.Instance.IsTestDB;
       log.Debug("Klassenansicht fertig.");
     }
-
-    public void RefreshTabs()
+   
+    public void SetSchueler()
     {
-      schueler = Zugriff.Instance.SchuelerRep.Find(schueler.Id); 
-      SetSchueler();
-      //userControlSchueleransicht1.Schueler = null;
-      //treeListView1_SelectedIndexChanged(this, null);
-    }
-
-    private void SetSchueler()
-    {
+      if (schueler == null)
+        return;
       userControlSchueleransicht1.Schueler = schueler;
       userControlVorkommnisse1.Schueler = schueler;
-      userControlFPAundSeminar1.Schueler = schueler;
-      if (schueler == null) return;
+      userControlFPAundSeminar1.Schueler = schueler;      
       userControlNotenbogen1.Schueler = schueler;
 
       nameLabel.Text = schueler.NameVorname;
@@ -246,7 +239,7 @@ namespace diNo
       return res;
     }
 
-    // liefert den angeklickten Schüler, oder eine Liste von Klassen (nur für Admins)
+    // liefert den angeklickten Schüler, oder eine Liste von Schülern in den angeclickten von Klassen (nur für Admins)
     public List<Schueler> SelectedObjects()
     {
       var res = new List<Schueler>();

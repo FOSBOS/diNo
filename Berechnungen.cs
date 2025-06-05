@@ -149,8 +149,7 @@ namespace diNo
           }
           // Sortieren, nur eine davon kann gestrichen werden
           if (hjLeistungen.Count > 0)
-          {
-            HJLSortierung(hjLeistungen);
+          {            
             if (anzUngueltig > 0)
             {
               einbringen.AddRange(hjLeistungen);
@@ -165,6 +164,7 @@ namespace diNo
             }
             else
             {
+              HJLSortierung(hjLeistungen);
               hjLeistungen.Sort((x, y) => y.Sortierung.CompareTo(x.Sortierung));
               einbringen.AddRange(hjLeistungen.GetRange(0, hjLeistungen.Count - 1)); // bis auf eine müssen eingebracht werden
 

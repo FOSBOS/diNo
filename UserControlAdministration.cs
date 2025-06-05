@@ -303,6 +303,7 @@ namespace diNo
     private void btnDelEinbringung_Click(object sender, EventArgs e)
     {
       var obj = getSelectedObjects();
+      var ta = new PunktesummeTableAdapter();
       foreach (var s in obj)
       {
         foreach (var f in s.getNoten.alleFaecher)
@@ -313,9 +314,8 @@ namespace diNo
           DelEinbr(f.getVorHjLeistung(HjArt.Hj2));
         }
         s.Data.Berechungsstatus = (byte)Berechnungsstatus.Unberechnet;
-        s.Save();
-        var ta = new PunktesummeTableAdapter();
-        ta.DeleteBySchuelerId(schueler.Id); // berechnete Punktesumme löschen
+        s.Save();        
+        ta.DeleteBySchuelerId(s.Id); // berechnete Punktesumme löschen
         s.Refresh();
       }
       RefreshNotenbogen();
@@ -343,7 +343,7 @@ namespace diNo
 
     private void RefreshNotenbogen()
     {
-      ((Klassenansicht)(Parent.Parent.Parent)).RefreshTabs();
+      ((Klassenansicht)(Parent.Parent.Parent)).SetSchueler();
     }
 
     private void btnMBStatistik_Click(object sender, EventArgs e)
