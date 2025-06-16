@@ -33,12 +33,7 @@ namespace diNo
   {
     private StreamWriter writer;
     private List<Schueler> list;
-    string sep = ",";
-
-    private string qt(string t)
-    {
-      return "'" + t + "'";
-    }
+    string sep = ";";
 
     // erstellt eine csv-Datei, die direkt als Sql-String eingelesen werden kann vom Kursmodul->ImportAct.php
     public ExportKurswahl(List<Schueler> aList)
@@ -50,6 +45,8 @@ namespace diNo
     {
       FileStream stream = new FileStream(datei, FileMode.Create, FileAccess.Write);
       writer = new StreamWriter(stream);
+      // erste Zeile = Feldnamen
+      writer.WriteLine("ID;Username;Pwd;Nachname;Vorname;Klasse;JgStufe;Zweig;Schulart;ZweigRS;Mail");
       foreach (Schueler s in list)
       {
         /*
@@ -65,11 +62,11 @@ namespace diNo
         int jgstufe = (int)s.getKlasse.Jahrgangsstufe;
         if (jgstufe < 11 && s.getKlasse.Schulart==Schulart.BOS) jgstufe = 12; // BOS-Vorklasse
         else if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites && jgstufe < 13) jgstufe++; // Wahl idR für das nächste Schuljahr
-
-        //SchülerID;'Username';'Pwd';'Nachname';'Vorname';'Klasse';JgStufe;'Zweig';'Schulart';'ZweigRS';'Mail'
-        writer.WriteLine(s.Id + sep + qt(username) + sep + qt(pwd) + sep + qt(s.Name.Replace("'", " ")) + sep + qt(s.Data.Rufname) + sep
-          + qt(s.getKlasse.Bezeichnung) + sep + jgstufe + sep + qt(s.Data.Ausbildungsrichtung) + sep + qt(s.Data.Schulart) + sep + qt(s.Data.SchulischeVorbildung)
-          + sep + qt(s.Data.MailSchule));
+        
+        //SchülerID; 'Username'; 'Pwd'; 'Nachname'; 'Vorname'; 'Klasse'; JgStufe; 'Zweig'; 'Schulart'; 'ZweigRS'; 'Mail'
+        writer.WriteLine(s.Id + sep + username + sep + pwd + sep + s.Name.Replace("'", " ") + sep + s.Data.Rufname + sep
+          + s.getKlasse.Bezeichnung + sep + jgstufe + sep + s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep + s.Data.SchulischeVorbildung
+          + sep + s.Data.MailSchule);
       }
       writer.Close();
     }
@@ -92,26 +89,6 @@ namespace diNo
       }
       writer.Close();
     }
-
-    public void ExportSchuelerID(string datei)
-    {
-      FileStream stream = new FileStream(datei, FileMode.Create, FileAccess.Write);
-      writer = new StreamWriter(stream);
-      sep = ";";
-      writer.WriteLine("ID;Nachname;Vorname;Klasse;JgStufe;Zweig;Schulart;SchulischeVorbildung");
-      foreach (Schueler s in list)
-      {
-        int jgstufe = (int)s.getKlasse.Jahrgangsstufe;
-        if (jgstufe < 11) jgstufe = 12; // BOS-Vorklasse
-        else if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites && jgstufe < 13) jgstufe++; // Wahl idR für das nächste Schuljahr
-
-        writer.WriteLine(s.Id + sep + s.Name + sep + s.Data.Rufname + sep + s.getKlasse.Bezeichnung + sep + jgstufe + sep +
-          s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep + s.Data.SchulischeVorbildung);
-
-      }
-      writer.Close();
-    }   
-       
     #region IDisposable Support
     private bool disposedValue = false; // Dient zur Erkennung redundanter Aufrufe.
 

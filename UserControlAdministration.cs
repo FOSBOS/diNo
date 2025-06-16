@@ -404,14 +404,6 @@ namespace diNo
       {
         ek.ExportAlteWPF(dia.FileName);
       }
-
-      dia.Title = "Schüler-IDs zum Abgleich für Account-DB";
-      dia.FileName = "SchuelerID.txt";      
-      if (dia.ShowDialog() == DialogResult.OK)
-      {
-        ek.ExportSchuelerID(dia.FileName);
-      }
-
     }
 
 
