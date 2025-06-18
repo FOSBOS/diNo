@@ -29,16 +29,15 @@ namespace diNo
       if (dia.ShowDialog() == DialogResult.OK)
       {
         ImportCSV(dia.FileName);
-        if (MessageBox.Show("Bitte die Fehlerdatei prüfen.\nSollen die Absenzen jetzt gemailt werden?", "diNo", MessageBoxButtons.OKCancel, MessageBoxIcon.Question)==DialogResult.OK)
-        {
-          SendAbsenzen(dia.FileName);
-        }
+        SendAbsenzen(dia.FileName,
+          MessageBox.Show("Bitte die Fehlerdatei prüfen.\nSollen die Absenzen jetzt gemailt werden (Nein für Test)?", "diNo", MessageBoxButtons.YesNo, MessageBoxIcon.Question)!=DialogResult.Yes);
       }
     }
 
-    private void SendAbsenzen(string fileName)
+    private void SendAbsenzen(string fileName, bool isTest)
     {
       MailTools mail = new MailTools();
+      bool erstesMal = true;
 
       using (StreamWriter writer = new StreamWriter(new FileStream(fileName + "_send.txt", FileMode.Create, FileAccess.ReadWrite)))
       {
@@ -74,29 +73,37 @@ namespace diNo
           s.absenzen.Clear();
 
           // Versendeprozess:
-          try
+          if (!isTest || erstesMal) // bei Test nur ein Mail schicken, aber ganze Datei erzeugen
           {
-            var msg = new MimeKit.MimeMessage()
+            try
             {
-              Sender = new MimeKit.MailboxAddress("FOS Kempten", mail.MailFrom),
-              Subject = "Absenzenübersicht " + s.VornameName
-            };
+              erstesMal = false;
+              var msg = new MimeKit.MimeMessage()
+              {
+                Sender = new MimeKit.MailboxAddress("FOS Kempten", mail.MailFrom),
+                Subject = "Absenzenübersicht " + s.VornameName
+              };
 
-            msg.From.Add(new MimeKit.MailboxAddress("FOS Kempten", mail.MailFrom));
-            //msg.To.Add(new MimeKit.MailboxAddress(s.Data.Notfalltelefonnummer,s.Data.Notfalltelefonnummer));
-            msg.To.Add(new MimeKit.MailboxAddress("Claus Konrad" , "claus.konrad@fosbos-kempten.de"));
+              msg.From.Add(new MimeKit.MailboxAddress("FOS Kempten", mail.MailFrom));
+              if (isTest)
+                msg.To.Add(new MimeKit.MailboxAddress("Claus Konrad", "claus.konrad@fosbos-kempten.de"));
+              else
+                msg.To.Add(new MimeKit.MailboxAddress(s.Data.Notfalltelefonnummer, s.Data.Notfalltelefonnummer));
 
-            var builder = new MimeKit.BodyBuilder();
-            builder.TextBody = body;
-            msg.Body = builder.ToMessageBody();
+              msg.ReplyTo.Add(new MimeKit.MailboxAddress(kl.VornameName, kl.Data.EMail));
 
-            //mailServer.Timeout = 1000;
-            mail.mailServer.Send(msg);
-          }
-          catch (Exception ex)
-          {
-            if (MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
-              throw;
+              var builder = new MimeKit.BodyBuilder();
+              builder.TextBody = body;
+              msg.Body = builder.ToMessageBody();
+
+              //mailServer.Timeout = 1000;
+              mail.mailServer.Send(msg);
+            }
+            catch (Exception ex)
+            {
+              if (MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+                throw;
+            }
           }
         }        
       }
