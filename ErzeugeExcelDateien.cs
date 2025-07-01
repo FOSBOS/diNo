@@ -132,7 +132,7 @@ namespace diNo
       {
         Directory.CreateDirectory(directoryName);
       }
-      fileName = directoryName + "\\" + kurs.Data.Bezeichnung.Replace('/', ' ') + ".xlsx";
+      fileName = directoryName + "\\" + kurs.Data.Bezeichnung.Replace("/", "") + ".xlsx";
       if (File.Exists(fileName))
       {
         File.Delete(fileName); // bisherige Datei löschen

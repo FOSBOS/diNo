@@ -126,7 +126,7 @@ namespace diNo
       {
         try
         {
-          verz += "\\" + kurs.getLehrer.Kuerzel + "_" + kurs.Kursbezeichnung + "\\";
+          verz += "\\" + kurs.getLehrer.Kuerzel + "_" + kurs.Kursbezeichnung.Replace("/","") + "\\";
           if (!Directory.Exists(verz))
             Directory.CreateDirectory(verz);
 
