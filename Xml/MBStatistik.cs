@@ -59,7 +59,7 @@ namespace diNo.Xml
         foreach (var schueler in k.Schueler)
         {
           // nur Schüler in MB-Statistik, die die Prüfung vollständig abgelegt haben
-          if (schueler.Status == Schuelerstatus.Abgemeldet || schueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen) || schueler.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
+          if (schueler.Status == Schuelerstatus.Abgemeldet || schueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen)) // || schueler.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
             continue;
           
           SchulartZweig sz = new SchulartZweig(schueler.Data.Schulart, schueler.Zweig);
@@ -334,16 +334,14 @@ namespace diNo.Xml
     private static void FuelleAPGrunddaten(Schueler unserSchueler, schueler xmlSchueler)
     {
       xmlSchueler.abschlusspruefung = new abschlusspruefung();
-      if (unserSchueler.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
+      
+      if (unserSchueler.hatVorkommnis(Vorkommnisart.ErhaeltNachtermin))
       {
-        if (unserSchueler.hatVorkommnis(Vorkommnisart.ErhaeltNachtermin))
-        {
-          xmlSchueler.abschlusspruefung.abgelegt = abschlusspruefungAbgelegt.Item1; // abgebrochen - erhaelt nachprüfung
-        }
-        else
-        {
-          xmlSchueler.abschlusspruefung.abgelegt = abschlusspruefungAbgelegt.Item2; // abgebrochen - selbst schuld
-        }
+        xmlSchueler.abschlusspruefung.abgelegt = abschlusspruefungAbgelegt.Item1; // abgebrochen - erhaelt nachprüfung
+      }
+      else if(unserSchueler.hatVorkommnis(Vorkommnisart.PruefungAbgebrochen))
+      {
+        xmlSchueler.abschlusspruefung.abgelegt = abschlusspruefungAbgelegt.Item2; // abgebrochen - selbst schuld
       }
       else
       {

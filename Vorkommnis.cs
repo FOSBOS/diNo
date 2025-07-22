@@ -93,7 +93,6 @@ namespace diNo
     Fachabiturzeugnis = 45,
     fachgebundeneHochschulreife = 46,
     allgemeineHochschulreife = 47,
-    EnglischNiveauB2 = 48,
     MittlereReife = 49,
 
     // Ordnungsmaßnahmen

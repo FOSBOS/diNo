@@ -661,8 +661,8 @@ namespace diNo
       if (v == Vorkommnisart.NotSet) return;
 
       schueler.AddVorkommnis(v, Zugriff.Instance.Zeugnisdatum, ""); // Zeugnis als Vorkommnis anlegen
-      if (v == Vorkommnisart.allgemeineHochschulreife)
-        contr.Add(v, ""); // zusätzliche Ausgabe für die Meldungsliste        
+      // if (v == Vorkommnisart.allgemeineHochschulreife)
+      //   contr.Add(null,"Zeugnis über allgemeine Hochschulreife"); // zusätzliche Ausgabe für die Meldungsliste        
     }
   }
 }
