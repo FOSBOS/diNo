@@ -391,6 +391,8 @@ namespace diNo
         if (s.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis)) zusatz = " nicht";
         else if (s.hatVorkommnis(Vorkommnisart.VorrueckenAufProbe)) zusatz = " auf Probe";
         Bemerkung += "<br><b>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 12 hat " + s.getErSie() + zusatz + " erhalten.</b>";
+        if (s.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis))
+          Bemerkung += "<br>" + s.getErSie(true) + " darf die Jahrgangsstufe gemäß Art. 54 Abs. 5 Satz 1 BayEUG " + (s.hatVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen) ? "nicht mehr" : "noch einmal") + " wiederholen.";
       }
       if (jg >= 12 && b == Bericht.Jahreszeugnis)
       {
