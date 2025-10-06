@@ -16,7 +16,7 @@ namespace diNo
 
     public ImportKlassenleiter()
     {
-      MessageBox.Show("Benötigt wird eine Textdatei, bei der in Spalte 2 das Lehrerkürzel und in Spalte 3 die Klasse steht.\nDie Klassen müssen schon angelegt worden sein.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      MessageBox.Show("Benötigt wird eine Textdatei, bei der in Spalte 2 das Lehrerkürzel und in Spalte 3 die Klasse steht.\nDie Klassen müssen schon angelegt worden sein.\nSpalten durch ; getrennt, aus Excel speichern unter im Format csv mit Trennzeichen.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       var fileDialog = new OpenFileDialog();
       fileDialog.Filter = "Textdateien|*.*";
 
@@ -52,7 +52,7 @@ namespace diNo
       while (!reader.EndOfStream)
       {
         string orignal = reader.ReadLine();        
-        string[] line = orignal.Split(new string[] { "\t" }, StringSplitOptions.None);
+        string[] line = orignal.Split(new string[] { ";" }, StringSplitOptions.None);
         string kuerzel, klasse;
         int lehrerid;
 

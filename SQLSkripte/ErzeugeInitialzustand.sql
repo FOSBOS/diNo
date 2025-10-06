@@ -1,7 +1,7 @@
 use [diNo]
 
 -- Lehrer manuell korrigieren
-update GlobaleKonstanten set Schuljahr=YEAR(CURRENT_TIMESTAMP), aktZeitpunkt=1, Sperre=0
+update GlobaleKonstanten set Schuljahr=YEAR(CURRENT_TIMESTAMP), aktZeitpunkt=2, Sperre=0
 
 delete from Fpa
 

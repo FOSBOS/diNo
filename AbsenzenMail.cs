@@ -25,7 +25,7 @@ namespace diNo
     public AbsenzenMail(){
 
       OpenFileDialog dia = new OpenFileDialog();
-      dia.Title = "CSV-Datei aus WebUntis wählen";
+      dia.Title = "CSV-Datei aus WebUntis mit allen Absenzen dieses Monats wählen";
       if (dia.ShowDialog() == DialogResult.OK)
       {
         ImportCSV(dia.FileName);
@@ -44,17 +44,24 @@ namespace diNo
         foreach (int i in sList)
         {
           Schueler s = Zugriff.Instance.SchuelerRep.Find(i);
-          if (s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer=="")
+          bool isBOS = s.Data.Schulart == "B";
+          if (isBOS)
+            writer.WriteLine("Mail an " + s.Data.MailSchule);
+          else if (s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer=="")
           {
             err.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
             continue;
           }
-          writer.WriteLine("Mail an " + s.Data.Notfalltelefonnummer);
+          else
+          {
+            writer.WriteLine("Mail an " + s.Data.Notfalltelefonnummer);
+          }
 
-          string body = s.ErzeugeAnrede(true);
-          body += "im Folgenden dürfen wir Sie über die aktuellen Absenzen " 
-            + (s.Data.Geschlecht=="M" ? "Ihres Sohnes " : "Ihrer Tochter ")
-            + s.Data.Rufname + " an der FOS Kempten informieren.\n\n";
+          string body = s.ErzeugeAnrede(!isBOS);
+          body += "im Folgenden dürfen wir Sie über die Absenzen ";
+          if (!isBOS)
+            body +=  (s.Data.Geschlecht == "M" ? "Ihres Sohnes " : "Ihrer Tochter ") + s.Data.Rufname + " ";
+          body += "im letzten Monat an der FOSBOS Kempten informieren.\n\n";
 
           foreach (string a in s.absenzen)
           {
@@ -80,15 +87,20 @@ namespace diNo
               erstesMal = false;
               var msg = new MimeKit.MimeMessage()
               {
-                Sender = new MimeKit.MailboxAddress("FOS Kempten", mail.MailFrom),
+                Sender = new MimeKit.MailboxAddress("FOSBOS Kempten", mail.MailFrom),
                 Subject = "Absenzenübersicht " + s.VornameName
               };
 
-              msg.From.Add(new MimeKit.MailboxAddress("FOS Kempten", mail.MailFrom));
+              msg.From.Add(new MimeKit.MailboxAddress("FOSBOS Kempten", mail.MailFrom));
               if (isTest)
                 msg.To.Add(new MimeKit.MailboxAddress("Claus Konrad", "claus.konrad@fosbos-kempten.de"));
+              else if (isBOS)
+                msg.To.Add(new MimeKit.MailboxAddress(s.Data.MailSchule, s.Data.MailSchule));
               else
+              {
                 msg.To.Add(new MimeKit.MailboxAddress(s.Data.Notfalltelefonnummer, s.Data.Notfalltelefonnummer));
+                msg.Cc.Add(new MimeKit.MailboxAddress(s.Data.MailSchule, s.Data.MailSchule));
+              }
 
               msg.ReplyTo.Add(new MimeKit.MailboxAddress(kl.VornameName, kl.Data.EMail));
 
@@ -133,9 +145,6 @@ namespace diNo
             Schueler s = Zugriff.Instance.SchuelerRep.Find(schuelerId);
             if (s.Name != line[0]) // falscher Name?
               err.WriteLine("NAME! " + original);
-
-            if (s.Data.Schulart == "B")  // BOSler kriegen keine Aufstellung
-              continue;
 
             /*
             Datenstruktur für Absenzeneintrag oder gleich eine Textzeile?         

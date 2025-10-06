@@ -22,7 +22,7 @@ namespace diNo
         else if (jg == Jahrgangsstufe.Zwoelf) notw = 10;
         else if (jg == Jahrgangsstufe.Dreizehn) notw = 9;
         else if (jg == Jahrgangsstufe.Vorklasse) notw = 7; // 6 ohne Reli
-        else if (jg == Jahrgangsstufe.IntVk) notw = 5;
+        else if (jg == Jahrgangsstufe.IntVk) notw = 8;
         else notw = 7;
         if (s.Kurse.Count != notw) err.list.Add(new NotenCheckResult(s, null, s.Kurse.Count + " statt " + notw + " Kurse"));
         else
