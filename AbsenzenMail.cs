@@ -38,6 +38,7 @@ namespace diNo
     {
       MailTools mail = new MailTools();
       bool erstesMal = true;
+      string mailTo;
 
       using (StreamWriter writer = new StreamWriter(new FileStream(fileName + "_send.txt", FileMode.Create, FileAccess.ReadWrite)))
       {
@@ -46,7 +47,7 @@ namespace diNo
           Schueler s = Zugriff.Instance.SchuelerRep.Find(i);
           bool isBOS = s.Data.Schulart == "B";
           if (isBOS)
-            writer.WriteLine("Mail an " + s.Data.MailSchule);
+            mailTo = s.Data.MailSchule;
           else if (s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer=="")
           {
             err.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
@@ -54,8 +55,9 @@ namespace diNo
           }
           else
           {
-            writer.WriteLine("Mail an " + s.Data.Notfalltelefonnummer);
+            mailTo = s.Data.Notfalltelefonnummer.Replace(",",";");
           }
+          writer.WriteLine("Mail an " + mailTo);
 
           string body = s.ErzeugeAnrede(!isBOS);
           body += "im Folgenden dürfen wir Sie über die Absenzen ";
@@ -94,11 +96,10 @@ namespace diNo
               msg.From.Add(new MimeKit.MailboxAddress("FOSBOS Kempten", mail.MailFrom));
               if (isTest)
                 msg.To.Add(new MimeKit.MailboxAddress("Claus Konrad", "claus.konrad@fosbos-kempten.de"));
-              else if (isBOS)
-                msg.To.Add(new MimeKit.MailboxAddress(s.Data.MailSchule, s.Data.MailSchule));
-              else
+              else 
+                msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
+              if (!isBOS)
               {
-                msg.To.Add(new MimeKit.MailboxAddress(s.Data.Notfalltelefonnummer, s.Data.Notfalltelefonnummer));
                 msg.Cc.Add(new MimeKit.MailboxAddress(s.Data.MailSchule, s.Data.MailSchule));
               }
 
