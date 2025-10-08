@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -40,10 +41,13 @@ namespace diNo
       bool erstesMal = true;
       string mailTo;
 
+      int abID = Int32.Parse(InputBox.Show("Ab welcher Schüler-ID soll gemailt werden (0 für alle)?", "0"));
+
       using (StreamWriter writer = new StreamWriter(new FileStream(fileName + "_send.txt", FileMode.Create, FileAccess.ReadWrite)))
       {
-        foreach (int i in sList)
+        foreach (int i in sList) // Liste ist nach ID sortiert
         {
+          if (i < abID) continue;
           Schueler s = Zugriff.Instance.SchuelerRep.Find(i);
           bool isBOS = s.Data.Schulart == "B";
           if (isBOS)
@@ -56,6 +60,16 @@ namespace diNo
           else
           {
             mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();            
+          }
+
+          try
+          {
+            MailAddress address = new MailAddress(mailTo);
+          }
+          catch (FormatException)
+          {
+            err.WriteLine("MAILADRESSE " + mailTo + " ungültig bei " + s.VornameName);
+            continue;
           }
           writer.WriteLine("Mail an " + mailTo);
 
@@ -77,8 +91,7 @@ namespace diNo
           body += "\n\nMit freundlichen Grüßen\n" + kl.NameDienstbezeichnung;
           body += "\n" + kl.KLString;
           body = body.Replace("<br>", "\n");
-          writer.WriteLine(body);
-          writer.WriteLine("------------------");
+          writer.WriteLine(body);          
           s.absenzen.Clear();
 
           // Versendeprozess:
@@ -111,13 +124,16 @@ namespace diNo
 
               //mailServer.Timeout = 1000;
               mail.mailServer.Send(msg);
+              writer.WriteLine("Mail versendet für Schüler " + s.VornameName);
             }
             catch (Exception ex)
             {
-              if (MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+              err.WriteLine("Fehler bei Schüler " + s.VornameName + " mit ID=" + s.Id);
+              if (MessageBox.Show(s.VornameName + "\n" + ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
                 throw;
             }
           }
+          writer.WriteLine("------------------ " + s.Id);
         }        
       }
     }
@@ -170,6 +186,7 @@ namespace diNo
           catch {
             err.WriteLine("EXCEPTION! " + original);
           }
+          sList.Sort();
         }
       }
     }
