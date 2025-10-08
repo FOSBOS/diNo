@@ -48,14 +48,14 @@ namespace diNo
           bool isBOS = s.Data.Schulart == "B";
           if (isBOS)
             mailTo = s.Data.MailSchule;
-          else if (s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer=="")
+          else if (s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer == "")
           {
             err.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
             continue;
           }
           else
           {
-            mailTo = s.Data.Notfalltelefonnummer.Replace(",",";");
+            mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();            
           }
           writer.WriteLine("Mail an " + mailTo);
 
