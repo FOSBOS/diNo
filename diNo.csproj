@@ -202,6 +202,12 @@
     <Compile Include="LehrerForm.Designer.cs">
       <DependentUpon>LehrerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MailDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MailDialog.Designer.cs">
+      <DependentUpon>MailDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MailTools.cs" />
     <Compile Include="OpenOutlook.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -357,6 +363,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ListeForm.resx">
       <DependentUpon>ListeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MailDialog.resx">
+      <DependentUpon>MailDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
     <EmbeddedResource Include="rptKlassenkonferenz.rdlc" />

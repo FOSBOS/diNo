@@ -324,9 +324,9 @@ namespace diNo
       this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.label9.Location = new System.Drawing.Point(26, 140);
       this.label9.Name = "label9";
-      this.label9.Size = new System.Drawing.Size(106, 13);
+      this.label9.Size = new System.Drawing.Size(111, 13);
       this.label9.TabIndex = 49;
-      this.label9.Text = "Notfalltelefonnummer";
+      this.label9.Text = "Mailadresse der Eltern";
       // 
       // textBoxJahrgangsstufe
       // 

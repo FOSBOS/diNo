@@ -33,7 +33,7 @@ namespace diNo
         SendAbsenzen(dia.FileName,
           MessageBox.Show("Bitte die Fehlerdatei prüfen.\nSollen die Absenzen jetzt gemailt werden (Nein für Test)?", "diNo", MessageBoxButtons.YesNo, MessageBoxIcon.Question)!=DialogResult.Yes);
       }
-    }
+    } 
 
     private void SendAbsenzen(string fileName, bool isTest)
     {
@@ -59,7 +59,7 @@ namespace diNo
           }
           else
           {
-            mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();            
+            mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
           }
 
           try

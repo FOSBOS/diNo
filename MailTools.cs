@@ -9,25 +9,35 @@ using SevenZip;
 using System.Windows.Forms;
 using MailKit.Net;
 using System.Net.Mail;
+using diNo.Xml.Mbstatistik;
+using Microsoft.Office.Interop.Excel;
 
 namespace diNo
 {
   public class MailTools
   {
-    public string Betreff = "Aktuelle Notenübersicht";
+    public string Betreff = "";
     Bericht rptTyp = Bericht.Notenmitteilung;  // Bericht.Einbringung; // ggf. ändern
     public string Pfad = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien); // @"C:\tmp\"; // Pfad, in dem die temporären Dateien abgelegt werden
+    public StreamWriter log;
 
     string smtp = Zugriff.Instance.getString(GlobaleStrings.SMTP);
     int port = int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port));
     public string MailFrom = Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail);
     string MailPwd = Zugriff.Instance.getString(GlobaleStrings.MailPasswort);
-    public MailKit.Net.Smtp.SmtpClient mailServer;
-    public string InfoFile; // Datei inkl. Pfad mit dem Mailtext
-    string BodyText;
+    public MailKit.Net.Smtp.SmtpClient mailServer;    
+    public string BodyText;
+    public string DateiAnhang="";
     string MailTo;
     string MailToVorname;
     string MailToNachname;
+   
+    public enum ReplyTyp 
+    {
+      dino=0,
+      Sekretariat=1,
+      Klassenleiter=2
+    }
 
     public MailTools()
     {
@@ -36,6 +46,7 @@ namespace diNo
         mailServer = new MailKit.Net.Smtp.SmtpClient();
         mailServer.Connect(smtp, port, MailKit.Security.SecureSocketOptions.StartTls);
         mailServer.Authenticate(MailFrom, MailPwd);
+        log = new StreamWriter(new FileStream(Pfad + "Mail_log.txt", FileMode.Create, FileAccess.ReadWrite));
       }
       catch (Exception ex)
       {
@@ -43,10 +54,57 @@ namespace diNo
         return;
       }
 
-      InfoFile = Pfad + "Mail.txt";
-      if (File.Exists(InfoFile))
+      
+    }
+
+    // Versendet ein Mail an diesen Schüler (ggf. an die Elternadresse)
+    public void SendMail(Schueler s, bool anEltern,ReplyTyp replyTyp, bool isTest)
+    {
+      try
       {
-        BodyText = File.ReadAllText(InfoFile);
+        var msg = new MimeKit.MimeMessage()
+        {
+          Sender = new MimeKit.MailboxAddress("FOSBOS", MailFrom),
+          Subject = Betreff
+        };
+
+        msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), MailFrom));
+        if (isTest)
+          MailTo = Zugriff.Instance.lehrer.Data.EMail;
+        else if (anEltern)
+          MailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
+        else
+          MailTo = s.Data.MailSchule;
+
+        msg.To.Add(new MimeKit.MailboxAddress(MailTo, MailTo));
+
+        var builder = new MimeKit.BodyBuilder();
+        builder.TextBody = (s.ErzeugeAnrede(anEltern) + BodyText).Replace("<br>", "\n");
+
+        if (DateiAnhang != "")
+          builder.Attachments.Add(DateiAnhang);
+        msg.Body = builder.ToMessageBody();
+
+        if (replyTyp == ReplyTyp.Klassenleiter)
+        {
+          Lehrer kl = s.getKlasse.Klassenleiter;
+          msg.ReplyTo.Add(new MimeKit.MailboxAddress(kl.VornameName, kl.Data.EMail));
+        }
+        else if (replyTyp == ReplyTyp.Sekretariat)
+        {
+          msg.ReplyTo.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), Zugriff.Instance.getString(GlobaleStrings.SchulMail)));
+        }
+
+        mailServer.Send(msg);
+        log.WriteLine(s.NameVorname + ", Mail versendet an " + MailTo);
+        log.Flush();
+      }
+      catch (Exception ex)
+      {
+        log.WriteLine("Fehler bei Schüler " + s.NameVorname + ": " + ex.Message);
+        log.Flush();
+        if (MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+          throw;
       }
     }
 
@@ -81,7 +139,7 @@ namespace diNo
       Send(new string[] { datei });
     }
 
-    public void Send(Lehrer l, string[] dateien)
+    public void SendNotendateien(Lehrer l, string[] dateien)
     {
       MailTo = l.Data.EMail;
       MailToNachname = l.Name;

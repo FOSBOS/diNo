@@ -169,7 +169,7 @@ namespace diNo
           {
             string[] dateien = Directory.GetFiles(directoryName);
             if (dateien.Length > 0)
-              snd.Send(l,dateien);
+              snd.SendNotendateien(l,dateien);
           }
           catch
           {
@@ -515,6 +515,11 @@ namespace diNo
     private void btnAbsenzen_Click(object sender, EventArgs e)
     {
       new AbsenzenMail();
+    }
+
+    private void btnMails_Click(object sender, EventArgs e)
+    {
+      new MailDialog(getSelectedObjects()).ShowDialog();
     }
   }
 }

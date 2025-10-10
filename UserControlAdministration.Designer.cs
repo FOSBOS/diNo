@@ -44,6 +44,7 @@
       this.btnKlassenliste = new System.Windows.Forms.Button();
       this.btnNotendruck = new System.Windows.Forms.Button();
       this.groupBoxExport = new System.Windows.Forms.GroupBox();
+      this.btnAbsenzen = new System.Windows.Forms.Button();
       this.btnExportKurswahl = new System.Windows.Forms.Button();
       this.btnSeStatistik = new System.Windows.Forms.Button();
       this.btnMBStatistik = new System.Windows.Forms.Button();
@@ -86,7 +87,7 @@
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
       this.btnCopy11 = new System.Windows.Forms.Button();
-      this.btnAbsenzen = new System.Windows.Forms.Button();
+      this.btnMails = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -287,6 +288,16 @@
       this.groupBoxExport.TabStop = false;
       this.groupBoxExport.Text = "Export";
       // 
+      // btnAbsenzen
+      // 
+      this.btnAbsenzen.Location = new System.Drawing.Point(20, 135);
+      this.btnAbsenzen.Name = "btnAbsenzen";
+      this.btnAbsenzen.Size = new System.Drawing.Size(182, 23);
+      this.btnAbsenzen.TabIndex = 10;
+      this.btnAbsenzen.Text = "Absenzenübersicht versenden";
+      this.btnAbsenzen.UseVisualStyleBackColor = true;
+      this.btnAbsenzen.Click += new System.EventHandler(this.btnAbsenzen_Click);
+      // 
       // btnExportKurswahl
       // 
       this.btnExportKurswahl.Location = new System.Drawing.Point(20, 106);
@@ -445,6 +456,7 @@
       // 
       // groupBoxStammdaten
       // 
+      this.groupBoxStammdaten.Controls.Add(this.btnMails);
       this.groupBoxStammdaten.Controls.Add(this.btnKlassen);
       this.groupBoxStammdaten.Controls.Add(this.btnBerechtigungen);
       this.groupBoxStammdaten.Controls.Add(this.btnGlobales);
@@ -459,7 +471,7 @@
       // 
       // btnKlassen
       // 
-      this.btnKlassen.Location = new System.Drawing.Point(18, 85);
+      this.btnKlassen.Location = new System.Drawing.Point(18, 77);
       this.btnKlassen.Name = "btnKlassen";
       this.btnKlassen.Size = new System.Drawing.Size(174, 23);
       this.btnKlassen.TabIndex = 6;
@@ -469,7 +481,7 @@
       // 
       // btnBerechtigungen
       // 
-      this.btnBerechtigungen.Location = new System.Drawing.Point(18, 153);
+      this.btnBerechtigungen.Location = new System.Drawing.Point(18, 135);
       this.btnBerechtigungen.Name = "btnBerechtigungen";
       this.btnBerechtigungen.Size = new System.Drawing.Size(173, 23);
       this.btnBerechtigungen.TabIndex = 5;
@@ -479,7 +491,7 @@
       // 
       // btnGlobales
       // 
-      this.btnGlobales.Location = new System.Drawing.Point(18, 124);
+      this.btnGlobales.Location = new System.Drawing.Point(18, 106);
       this.btnGlobales.Name = "btnGlobales";
       this.btnGlobales.Size = new System.Drawing.Size(173, 23);
       this.btnGlobales.TabIndex = 3;
@@ -489,7 +501,7 @@
       // 
       // btnLehrer
       // 
-      this.btnLehrer.Location = new System.Drawing.Point(16, 27);
+      this.btnLehrer.Location = new System.Drawing.Point(16, 19);
       this.btnLehrer.Name = "btnLehrer";
       this.btnLehrer.Size = new System.Drawing.Size(174, 23);
       this.btnLehrer.TabIndex = 2;
@@ -499,7 +511,7 @@
       // 
       // btnKurse
       // 
-      this.btnKurse.Location = new System.Drawing.Point(17, 56);
+      this.btnKurse.Location = new System.Drawing.Point(17, 48);
       this.btnKurse.Name = "btnKurse";
       this.btnKurse.Size = new System.Drawing.Size(174, 23);
       this.btnKurse.TabIndex = 0;
@@ -732,15 +744,15 @@
       this.btnCopy11.UseVisualStyleBackColor = true;
       this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
       // 
-      // btnAbsenzen
+      // btnMails
       // 
-      this.btnAbsenzen.Location = new System.Drawing.Point(20, 135);
-      this.btnAbsenzen.Name = "btnAbsenzen";
-      this.btnAbsenzen.Size = new System.Drawing.Size(182, 23);
-      this.btnAbsenzen.TabIndex = 10;
-      this.btnAbsenzen.Text = "Absenzenübersicht versenden";
-      this.btnAbsenzen.UseVisualStyleBackColor = true;
-      this.btnAbsenzen.Click += new System.EventHandler(this.btnAbsenzen_Click);
+      this.btnMails.Location = new System.Drawing.Point(18, 192);
+      this.btnMails.Name = "btnMails";
+      this.btnMails.Size = new System.Drawing.Size(174, 23);
+      this.btnMails.TabIndex = 11;
+      this.btnMails.Text = "automatisierte Mails";
+      this.btnMails.UseVisualStyleBackColor = true;
+      this.btnMails.Click += new System.EventHandler(this.btnMails_Click);
       // 
       // UserControlAdministration
       // 
@@ -839,5 +851,6 @@
         private System.Windows.Forms.CheckBox chkRptDruck;
         private System.Windows.Forms.Button btnImportLoginnamen;
         private System.Windows.Forms.Button btnAbsenzen;
+        private System.Windows.Forms.Button btnMails;
     }
 }
