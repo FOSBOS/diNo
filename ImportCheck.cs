@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.Reporting.Map.WebForms.BingMaps;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -32,8 +34,23 @@ namespace diNo
             notw = (s.Data.Ausbildungsrichtung=="S" || s.Data.Ausbildungsrichtung == "W") ? 15 : 14;
           }
           if (s.getNoten.alleFaecher.Count != notw) err.list.Add(new NotenCheckResult(s, null, s.getNoten.alleFaecher.Count + " statt " + notw + " Fächer")); ;
-        }        
+        }
+        Regex regex = new Regex(@"^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$");
+        //@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+
+        Match match = regex.Match(s.Data.Email);
+        if (!match.Success)
+          err.list.Add(new NotenCheckResult(s, null,"Ungültige Mailadresse: "+ s.Data.Email));
+
+        if (!(s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer==""))
+        {
+          string elternmail = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
+          match = regex.Match(elternmail);
+          if (!match.Success)
+            err.list.Add(new NotenCheckResult(s, null, "Ungültige Mailadresse: " + elternmail));
+        }
       }
+
 
       if (err.list.Count == 0) MessageBox.Show("Alles in Ordnung.", "diNo", MessageBoxButtons.OK);
       else new ReportNotencheck(err,false).Show();
