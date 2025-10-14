@@ -59,6 +59,7 @@ namespace diNo
         Zubringerschule,
         Wiederholer,
         Probezeit,
-        Fremdsprache2
+        Fremdsprache2,
+        Abschluss // Hier werden alle links selektierten Schüler gedruckt.
     }
 }

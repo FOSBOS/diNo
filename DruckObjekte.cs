@@ -86,28 +86,40 @@ namespace diNo
       HideAbi = jg < 12 || Zugriff.Instance.aktZeitpunkt <= (int)Zeitpunkt.ErstePA;
 
       if (b==Bericht.Auswahlliste){
-            switch (Zugriff.Instance.selectedAuswahlart)
-            {
-                case Auswahlart.Vorkommnis:
-                    Vorkommnis v = s.getVorkommnis(Zugriff.Instance.selectedVorkommnisart);
-                    Bemerkung = v.Bemerkung;
-                    break;
-                case Auswahlart.Probezeit:
-                    Bemerkung = s.Data.ProbezeitBis.ToString("dd.MM.yyyy");
-                    break;
-                case Auswahlart.Zubringerschule:
-                    Bemerkung = s.Data.SchulischeVorbildung;
-                    break;
-                case Auswahlart.Fremdsprache2:
-                    Bemerkung = Zugriff.Instance.FachRep.Find(s.Data.AndereFremdspr2Fach).Bezeichnung 
-                        + (s.Data.IsAndereFremdspr2NoteNull() ? "" : " " + s.Data.AndereFremdspr2Note)
-                        + (s.Data.AndereFremdspr2Art==0 ? " ("+ s.Data.SchulischeVorbildung + ")"  :"");
-                    break;
-                case Auswahlart.Wiederholer:
-                    Bemerkung = s.getWiederholungen();
-                    break;
-                }
-            }
+        switch (Zugriff.Instance.selectedAuswahlart)
+        {
+          case Auswahlart.Vorkommnis:
+            Vorkommnis v = s.getVorkommnis(Zugriff.Instance.selectedVorkommnisart);
+            Bemerkung = v.Bemerkung;
+            break;
+          case Auswahlart.Probezeit:
+            Bemerkung = s.Data.ProbezeitBis.ToString("dd.MM.yyyy");
+            break;
+          case Auswahlart.Zubringerschule:
+            Bemerkung = s.Data.SchulischeVorbildung;
+            break;
+          case Auswahlart.Fremdsprache2:
+            Bemerkung = Zugriff.Instance.FachRep.Find(s.Data.AndereFremdspr2Fach).Bezeichnung 
+                + (s.Data.IsAndereFremdspr2NoteNull() ? "" : " " + s.Data.AndereFremdspr2Note)
+                + (s.Data.AndereFremdspr2Art==0 ? " ("+ s.Data.SchulischeVorbildung + ")"  :"");
+            break;
+          case Auswahlart.Wiederholer:
+            Bemerkung = s.getWiederholungen();
+            break;
+          case Auswahlart.Abschluss:
+            if (s.hatVorkommnis(Vorkommnisart.Jahreszeugnis))
+              Bemerkung = "Jahreszeugnis";
+            else if (s.hatVorkommnis(Vorkommnisart.KeineVorrueckungserlaubnis))
+              Bemerkung = "darf nicht vorrücken";
+            else if (s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife))
+              Bemerkung = "allgemeine Hochschulreife";
+            else if (s.hatVorkommnis(Vorkommnisart.fachgebundeneHochschulreife))
+              Bemerkung = "fachgebundene Hochschulreife";
+            else if (s.hatVorkommnis(Vorkommnisart.Fachabiturzeugnis))
+              Bemerkung = "Fachhochschulreife";
+            break;
+        }
+      }
       else if (b == Bericht.Abiergebnisse && s.getNoten.HatNichtBestanden() && s.getNoten.Punkteschnitt < 6)
       {
         int anzProbleme = s.getNoten.AnzahlProbleme();

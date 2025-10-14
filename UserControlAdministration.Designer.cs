@@ -61,6 +61,7 @@
       this.btnImportUnterricht = new System.Windows.Forms.Button();
       this.importNoten = new System.Windows.Forms.Button();
       this.groupBoxStammdaten = new System.Windows.Forms.GroupBox();
+      this.btnMails = new System.Windows.Forms.Button();
       this.btnKlassen = new System.Windows.Forms.Button();
       this.btnBerechtigungen = new System.Windows.Forms.Button();
       this.btnGlobales = new System.Windows.Forms.Button();
@@ -87,7 +88,7 @@
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
       this.btnCopy11 = new System.Windows.Forms.Button();
-      this.btnMails = new System.Windows.Forms.Button();
+      this.btnAbschluss = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -102,6 +103,7 @@
       // 
       // groupBoxAnalyse
       // 
+      this.groupBoxAnalyse.Controls.Add(this.btnAbschluss);
       this.groupBoxAnalyse.Controls.Add(this.btnSchnitte);
       this.groupBoxAnalyse.Controls.Add(this.btnEinserAbi);
       this.groupBoxAnalyse.Controls.Add(this.btnSelect);
@@ -469,6 +471,16 @@
       this.groupBoxStammdaten.TabStop = false;
       this.groupBoxStammdaten.Text = "Stammdaten";
       // 
+      // btnMails
+      // 
+      this.btnMails.Location = new System.Drawing.Point(18, 192);
+      this.btnMails.Name = "btnMails";
+      this.btnMails.Size = new System.Drawing.Size(174, 23);
+      this.btnMails.TabIndex = 11;
+      this.btnMails.Text = "automatisierte Mails";
+      this.btnMails.UseVisualStyleBackColor = true;
+      this.btnMails.Click += new System.EventHandler(this.btnMails_Click);
+      // 
       // btnKlassen
       // 
       this.btnKlassen.Location = new System.Drawing.Point(18, 77);
@@ -744,15 +756,15 @@
       this.btnCopy11.UseVisualStyleBackColor = true;
       this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
       // 
-      // btnMails
+      // btnAbschluss
       // 
-      this.btnMails.Location = new System.Drawing.Point(18, 192);
-      this.btnMails.Name = "btnMails";
-      this.btnMails.Size = new System.Drawing.Size(174, 23);
-      this.btnMails.TabIndex = 11;
-      this.btnMails.Text = "automatisierte Mails";
-      this.btnMails.UseVisualStyleBackColor = true;
-      this.btnMails.Click += new System.EventHandler(this.btnMails_Click);
+      this.btnAbschluss.Location = new System.Drawing.Point(21, 110);
+      this.btnAbschluss.Name = "btnAbschluss";
+      this.btnAbschluss.Size = new System.Drawing.Size(132, 23);
+      this.btnAbschluss.TabIndex = 4;
+      this.btnAbschluss.Text = "erreichter Abschluss";
+      this.btnAbschluss.UseVisualStyleBackColor = true;
+      this.btnAbschluss.Click += new System.EventHandler(this.btnAbschluss_Click);
       // 
       // UserControlAdministration
       // 
@@ -852,5 +864,6 @@
         private System.Windows.Forms.Button btnImportLoginnamen;
         private System.Windows.Forms.Button btnAbsenzen;
         private System.Windows.Forms.Button btnMails;
+        private System.Windows.Forms.Button btnAbschluss;
     }
 }

@@ -521,6 +521,16 @@ namespace diNo
     {
       new MailDialog(getSelectedObjects()).ShowDialog();
     }
+
+    private void btnAbschluss_Click(object sender, EventArgs e)
+    {
+      var obj = getSelectedObjects();
+      if (obj.Count > 0)
+      {
+        Zugriff.Instance.selectedAuswahlart = Auswahlart.Abschluss;
+        new ReportSchuelerdruck(getSelectedObjects(), Bericht.Auswahlliste).Show();      
+      }
+    }
   }
 }
 
