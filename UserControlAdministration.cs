@@ -531,6 +531,11 @@ namespace diNo
         new ReportSchuelerdruck(getSelectedObjects(), Bericht.Auswahlliste).Show();      
       }
     }
+
+    private void btnImportFPA_Click(object sender, EventArgs e)
+    {
+
+    }
   }
 }
 

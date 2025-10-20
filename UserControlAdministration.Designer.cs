@@ -29,6 +29,7 @@
     private void InitializeComponent()
     {
       this.groupBoxAnalyse = new System.Windows.Forms.GroupBox();
+      this.btnAbschluss = new System.Windows.Forms.Button();
       this.btnSchnitte = new System.Windows.Forms.Button();
       this.btnEinserAbi = new System.Windows.Forms.Button();
       this.btnSelect = new System.Windows.Forms.Button();
@@ -88,7 +89,7 @@
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
       this.btnCopy11 = new System.Windows.Forms.Button();
-      this.btnAbschluss = new System.Windows.Forms.Button();
+      this.btnImportFPA = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -113,6 +114,16 @@
       this.groupBoxAnalyse.TabIndex = 4;
       this.groupBoxAnalyse.TabStop = false;
       this.groupBoxAnalyse.Text = "Datenanalyse";
+      // 
+      // btnAbschluss
+      // 
+      this.btnAbschluss.Location = new System.Drawing.Point(21, 110);
+      this.btnAbschluss.Name = "btnAbschluss";
+      this.btnAbschluss.Size = new System.Drawing.Size(132, 23);
+      this.btnAbschluss.TabIndex = 4;
+      this.btnAbschluss.Text = "erreichter Abschluss";
+      this.btnAbschluss.UseVisualStyleBackColor = true;
+      this.btnAbschluss.Click += new System.EventHandler(this.btnAbschluss_Click);
       // 
       // btnSchnitte
       // 
@@ -362,6 +373,7 @@
       // 
       // groupBoxImport
       // 
+      this.groupBoxImport.Controls.Add(this.btnImportFPA);
       this.groupBoxImport.Controls.Add(this.btnImportLoginnamen);
       this.groupBoxImport.Controls.Add(this.btnImportCheck);
       this.groupBoxImport.Controls.Add(this.label3);
@@ -410,7 +422,7 @@
       // 
       this.btnReadWahlpflichtfaecher.Location = new System.Drawing.Point(20, 106);
       this.btnReadWahlpflichtfaecher.Name = "btnReadWahlpflichtfaecher";
-      this.btnReadWahlpflichtfaecher.Size = new System.Drawing.Size(182, 23);
+      this.btnReadWahlpflichtfaecher.Size = new System.Drawing.Size(87, 23);
       this.btnReadWahlpflichtfaecher.TabIndex = 7;
       this.btnReadWahlpflichtfaecher.Text = "Wahlpflichtfächer";
       this.btnReadWahlpflichtfaecher.UseVisualStyleBackColor = true;
@@ -756,15 +768,15 @@
       this.btnCopy11.UseVisualStyleBackColor = true;
       this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
       // 
-      // btnAbschluss
+      // btnImportFPA
       // 
-      this.btnAbschluss.Location = new System.Drawing.Point(21, 110);
-      this.btnAbschluss.Name = "btnAbschluss";
-      this.btnAbschluss.Size = new System.Drawing.Size(132, 23);
-      this.btnAbschluss.TabIndex = 4;
-      this.btnAbschluss.Text = "erreichter Abschluss";
-      this.btnAbschluss.UseVisualStyleBackColor = true;
-      this.btnAbschluss.Click += new System.EventHandler(this.btnAbschluss_Click);
+      this.btnImportFPA.Location = new System.Drawing.Point(120, 106);
+      this.btnImportFPA.Name = "btnImportFPA";
+      this.btnImportFPA.Size = new System.Drawing.Size(82, 23);
+      this.btnImportFPA.TabIndex = 11;
+      this.btnImportFPA.Text = "FPA-Stellen";
+      this.btnImportFPA.UseVisualStyleBackColor = true;
+      this.btnImportFPA.Click += new System.EventHandler(this.btnImportFPA_Click);
       // 
       // UserControlAdministration
       // 
@@ -865,5 +877,6 @@
         private System.Windows.Forms.Button btnAbsenzen;
         private System.Windows.Forms.Button btnMails;
         private System.Windows.Forms.Button btnAbschluss;
+        private System.Windows.Forms.Button btnImportFPA;
     }
 }

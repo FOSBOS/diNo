@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="ExportKurswahl.cs" />
     <Compile Include="ImportCheck.cs" />
+    <Compile Include="ImportFPAStellen.cs" />
     <Compile Include="ImportLoginnamen.cs" />
     <Compile Include="ImportUnterricht.cs" />
     <Compile Include="KlasseForm.cs">
