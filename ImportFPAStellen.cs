@@ -52,6 +52,7 @@ namespace diNo
             {
               f.Stelle = stelle;
               ta.Update(s.FPANoten);
+              c++;
             }
           }
         }
