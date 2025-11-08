@@ -44,6 +44,7 @@ namespace diNo
     public bool IsFBKempten = false;
     public bool IsTestDB { get; private set; }
     private bool NurAktive = true;
+    public bool AbsenzenEingelesen = false;
 
     private Zugriff()
     {

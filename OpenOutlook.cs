@@ -96,7 +96,7 @@ namespace diNo
           erg += k.getLehrer.Data.EMail + "; ";          
         }
         Clipboard.SetText(erg);
-        MessageBox.Show("Öffnen von Outlook war nicht möglich.\nErstellen Sie ein neues Mail und fügen Sie über Strg+V die Empfänger ein.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        MessageBox.Show("Diese Outlook-Version wird nicht unterstützt.\nDie Empfänger wurden aber in die Zwischenablage kopiert. Erstellen Sie ein neues Mail und fügen Sie über Strg+V die Empfänger ein.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
       }
     }
   }
