@@ -188,7 +188,7 @@ namespace diNo
       string body = s.ErzeugeAnrede(!isBOS);
       body += "im Folgenden dürfen wir Sie über die Absenzen ";
       if (!isBOS)
-        body += (s.Data.Geschlecht == "M" ? "Ihres Sohnes " : "Ihrer Tochter ") + s.Data.Rufname + " ";
+        body += s.getIhrSohn(2) + s.Data.Rufname + " ";
       body += "im letzten Monat an der FOSBOS Kempten informieren.\n\n";
 
       foreach (string a in s.absenzen)
@@ -204,7 +204,8 @@ namespace diNo
       body += "\n" + kl.KLString;
       body = body.Replace("<br>", "\n");
       log.WriteLine(body);
-      s.absenzen.Clear();
+      if (!isTest)
+        s.absenzen.Clear(); // dieser Schüler ist erledigt
 
       // Versendeprozess:
       if (!isTest || erstesMal) // bei Test nur ein Mail schicken, aber ganze Datei erzeugen

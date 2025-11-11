@@ -131,6 +131,7 @@ namespace diNo
       markierteSchueler.Clear();
       eigeneKlasse = null;
       LoadSchueler(nurAktive);
+      AbsenzenEingelesen = false;
     }
 
     public bool IstNurNormalerLehrer

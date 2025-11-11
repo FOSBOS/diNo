@@ -25,9 +25,6 @@ namespace diNo
       InitializeComponent();
       lbAnzahl.Text = sList.Count + " Schüler ausgewählt.";
       
-      string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-      string verzeichnis = Path.Combine(userProfilePath, "Downloads");
-      err = new StreamWriter(new FileStream(Path.Combine(verzeichnis, "Absenzen_Reader.txt"), FileMode.Create, FileAccess.ReadWrite));
       //log = new StreamWriter(new FileStream(Path.Combine(verzeichnis, "Mail_log.txt"), FileMode.Create, FileAccess.ReadWrite));
       
     }
@@ -153,6 +150,9 @@ namespace diNo
       dia.Title = "CSV-Datei aus WebUntis (Klassenbuch/Abwesenheiten/Berichte als csv) mit allen Absenzen dieses Monats wählen.";
       if (dia.ShowDialog() != DialogResult.OK)
         return;
+      string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+      string verzeichnis = Path.Combine(userProfilePath, "Downloads");
+      err = new StreamWriter(new FileStream(Path.Combine(verzeichnis, "Absenzen_Reader_err.txt"), FileMode.Create, FileAccess.ReadWrite));
 
       using (FileStream stream = new FileStream(dia.FileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(stream))

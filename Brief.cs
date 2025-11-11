@@ -118,8 +118,8 @@ namespace diNo
     {
       string lnwart = opSEP.Checked ? "schriftliche" : "mündliche";
       b.Betreff = "Nachholung von Leistungsnachweisen";
-      if (b.IstU18) b.Inhalt += (s.Data.Geschlecht == "M" ? "Ihr Sohn " : "Ihre Tochter ") + s.benutzterVorname
-        + " konnte in diesem Schuljahr im Fach " + cbFach.Text + " wegen " + (s.Data.Geschlecht == "M" ? "seiner " : "ihrer ");
+      if (b.IstU18) b.Inhalt += s.getIhrSohn() + " " + s.benutzterVorname
+        + " konnte in diesem Schuljahr im Fach " + cbFach.Text + " wegen " + (s.Data.Geschlecht != "W" ? "seiner " : "ihrer ");
       else
         b.Inhalt += "Sie konnten in diesem Schuljahr im Fach " + cbFach.Text + " wegen Ihrer ";
       b.Inhalt += "Versäumnisse nicht hinreichend geprüft werden.<br><br>Gemäß § 20 (2) FOBOSO wird hiermit eine " + lnwart + " Ersatzprüfung angesetzt.<br><br>";
@@ -145,7 +145,7 @@ namespace diNo
     {
       b.Betreff = "Attestpflicht";
       b.Inhalt += "da sich im laufenden Schuljahr bei ";
-      if (b.IstU18) b.Inhalt += (s.Data.Geschlecht == "M" ? "Ihrem Sohn " : "Ihrer Tochter ") + s.VornameName;
+      if (b.IstU18) b.Inhalt += s.getIhrSohn(3) + " " + s.VornameName;
       else b.Inhalt += "Ihnen";
       b.Inhalt += " die krankheitsbedingten Schulversäumnisse häufen, werden Sie gemäß § 20 (2) BaySchO dazu verpflichtet, künftig jede weitere krankheitsbedingte Abwesenheit ";
       b.Inhalt += "durch ein aktuelles ärztliches Zeugnis (Schulunfähigkeitsbescheinigung) zu belegen.<br><br>";
@@ -156,7 +156,7 @@ namespace diNo
     }
 
     public void MitteilungText(){
-      b.Betreff = (s.Data.Geschlecht == "M" ? "Ihr Sohn " : "Ihre Tochter ") + s.VornameName; ;
+      b.Betreff = s.getIhrSohn() + " " + s.VornameName; ;
       b.Inhalt += edInhalt.Text + "<br><br>Freundliche Grüße";
     }
 
