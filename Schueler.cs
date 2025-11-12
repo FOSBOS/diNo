@@ -3,6 +3,8 @@ using diNo.diNoDataSetTableAdapters;
 using diNo.Properties;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Resources;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
@@ -801,13 +803,48 @@ public int APFaktor
 
     public string getErSie(bool Satzanfang = false)
     {
+      if (Data.Geschlecht == "D") return data.Vorname + " " + data.Name;
       if (Satzanfang) return (Data.Geschlecht == "M" ? "Er" : "Sie");
       else return (Data.Geschlecht == "M" ? "er" : "sie");
+    }
+    public string getIhmIhr()
+    {
+      switch (Data.Geschlecht)
+      {
+        case "M": return "ihm";
+        case "W": return "ihr";
+        default: return data.Vorname + " " + data.Name;
+      }
     }
 
     public string getHerrFrau()
     {
-      return (Data.Geschlecht == "M" ? "Herr" : "Frau");
+      switch (Data.Geschlecht)
+      {
+        case "M": return "Herr ";
+        case "W": return "Frau ";
+        default: return "";
+      }
+    }
+
+    public string getDerSchueler()
+    {
+      switch (Data.Geschlecht)
+      {
+        case "M": return "Der Schüler";
+        case "W": return "Die Schülerin";
+        default: return data.Vorname + " " + data.Name;
+      }
+    }
+
+    public string getIhrSohn(int fall=1)
+    {
+      switch (Data.Geschlecht)
+      {
+        case "M": return (fall==2) ? "Ihres Sohnes" : ((fall==3) ? "Ihrem Sohn" : "Ihr Sohn");
+        case "W": return (fall==1) ? "Ihre Tochter" : "Ihrer Tochter";
+        default: return "";
+      }
     }
 
     public string getHerrnFrau()

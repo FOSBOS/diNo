@@ -1,82 +1,135 @@
-﻿using Microsoft.Reporting.WinForms;
+﻿using MailKit.Net.Smtp;
+using MailKit.Security;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SevenZip;
 using System.Windows.Forms;
-using MailKit.Net;
-using System.Net.Mail;
-using diNo.Xml.Mbstatistik;
-using Microsoft.Office.Interop.Excel;
 
 namespace diNo
 {
-  public class MailTools
+
+  public enum ReplyTyp
   {
-    public string Betreff = "";
-    Bericht rptTyp = Bericht.Notenmitteilung;  // Bericht.Einbringung; // ggf. ändern
-    public string Pfad = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien); // @"C:\tmp\"; // Pfad, in dem die temporären Dateien abgelegt werden
-    public StreamWriter log;
+    dino = 0,
+    Sekretariat = 1,
+    Klassenleiter = 2
+  }
 
-    string smtp = Zugriff.Instance.getString(GlobaleStrings.SMTP);
-    int port = int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port));
-    public string MailFrom = Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail);
-    string MailPwd = Zugriff.Instance.getString(GlobaleStrings.MailPasswort);
-    public MailKit.Net.Smtp.SmtpClient mailServer;    
-    public string BodyText;
-    public string DateiAnhang="";
-    string MailTo;
-    string MailToVorname;
-    string MailToNachname;
-   
-    public enum ReplyTyp 
-    {
-      dino=0,
-      Sekretariat=1,
-      Klassenleiter=2
-    }
+  public class MailTools : IDisposable
+  {
+    private readonly SmtpClient mailServer;
+    private readonly StreamWriter log;
+    private readonly object logLock = new object();
+    private readonly object mailLock = new object();
+    private bool disposed = false;
+    private bool erstesMal = true;
 
-    public MailTools()
+    // SMTP-Konfigurationsfelder
+    private readonly string smtpHost;
+    private readonly int smtpPort;
+    private readonly string mailFrom;
+    private readonly string mailPwd;
+
+    // Öffentliche Einstellungsfelder
+    public string Betreff { get; set; } = "";
+    public string DateiAnhang { get; set; } = "";
+    public string BodyText { get; set; } = "";
+
+    // Parameterloser Konstruktor: lädt Settings aus Zugriff.Instance
+    public MailTools(string logDirectory = null)
     {
+      // SMTP-Settings aus eurer Konfiguration (konkret aus dem Projekt)    
+      smtpHost = Zugriff.Instance.getString(GlobaleStrings.SMTP);
+      smtpPort = int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port));
+      mailFrom = Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail);
+      mailPwd = Zugriff.Instance.getString(GlobaleStrings.MailPasswort);
+
+      if (string.IsNullOrWhiteSpace(smtpHost) || smtpPort <= 0 ||
+          string.IsNullOrWhiteSpace(mailFrom) || string.IsNullOrWhiteSpace(mailPwd))
+        throw new InvalidOperationException("SMTP-Settings unvollständig (SmtpHost/Port, SchulMail, SmtpPwd).");
+
+      // Log-Datei (wie gehabt)
       try
       {
-        mailServer = new MailKit.Net.Smtp.SmtpClient();
-        mailServer.Connect(smtp, port, MailKit.Security.SecureSocketOptions.StartTls);
-        mailServer.Authenticate(MailFrom, MailPwd);
-        log = new StreamWriter(new FileStream(Pfad + "Mail_log.txt", FileMode.Create, FileAccess.ReadWrite));
+        if (string.IsNullOrEmpty(logDirectory))
+        {
+          string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+          logDirectory = Path.Combine(userProfilePath, "Downloads");
+        }
+        Directory.CreateDirectory(logDirectory);
+        string logPath = Path.Combine(logDirectory, "Mail_log.txt");
+        log = new StreamWriter(new FileStream(logPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
+        {
+          AutoFlush = true
+        };
       }
       catch (Exception ex)
       {
-        MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        return;
+        throw new InvalidOperationException("Konnte Log-Datei nicht anlegen: " + ex.Message, ex);
       }
 
-      
+      mailServer = new SmtpClient
+      {
+        Timeout = 60000 // optionaler Timeout
+      };
+
+      // Wichtig: Kein Connect/Authenticate hier, um den Konstruktor leicht zu halten.
+      WriteLog("mailTools initialisiert (ohne Verbindung).");
     }
 
-    // Versendet ein Mail an diesen Schüler (ggf. an die Elternadresse)
-    public void SendMail(Schueler s, bool anEltern,ReplyTyp replyTyp, bool isTest)
+    private void WriteLog(string text)
     {
+      lock (logLock)
+      {
+        try { var entry = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {text}"; log.WriteLine(entry); }
+        catch { }
+      }
+    }
+
+    private void EnsureConnected()
+    {
+      lock (mailLock)
+      {
+        if (disposed) throw new ObjectDisposedException(nameof(MailTools));
+        if (mailServer == null) throw new InvalidOperationException("SMTP-Client nicht initialisiert.");
+
+        if (!mailServer.IsConnected)
+        {
+          try
+          {
+            mailServer.Connect(smtpHost, smtpPort, SecureSocketOptions.StartTls);
+            mailServer.Authenticate(mailFrom, mailPwd);
+            WriteLog("SMTP verbunden und authentifiziert.");
+          }
+          catch (Exception ex)
+          {
+            WriteLog("FEHLER beim Verbinden/Authentifizieren: " + ex.Message);
+            throw;
+          }
+        }
+      }
+    }
+    // Versendet ein Mail an diesen Schüler (ggf. an die Elternadresse)
+    public void SendMail(Schueler s, bool anEltern, ReplyTyp replyTyp, bool isTest)
+    {
+      string mailTo;
       try
       {
         var msg = new MimeKit.MimeMessage()
         {
-          Sender = new MimeKit.MailboxAddress("FOSBOS", MailFrom),
+          Sender = new MimeKit.MailboxAddress("FOSBOS", mailFrom),
           Subject = Betreff
         };
 
-        msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), MailFrom));
+        msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), mailFrom));
         if (isTest)
-          MailTo = Zugriff.Instance.lehrer.Data.EMail;
+          mailTo = Zugriff.Instance.lehrer.Data.EMail;
         else if (anEltern)
-          MailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
+          mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
         else
-          MailTo = s.Data.MailSchule;
+          mailTo = s.Data.MailSchule;
 
-        msg.To.Add(new MimeKit.MailboxAddress(MailTo, MailTo));
+        msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
 
         var builder = new MimeKit.BodyBuilder();
         builder.TextBody = (s.ErzeugeAnrede(anEltern) + BodyText).Replace("<br>", "\n");
@@ -94,195 +147,134 @@ namespace diNo
         {
           msg.ReplyTo.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), Zugriff.Instance.getString(GlobaleStrings.SchulMail)));
         }
-
+        EnsureConnected();
         mailServer.Send(msg);
-        log.WriteLine(s.NameVorname + ", Mail versendet an " + MailTo);
+        log.WriteLine(s.NameVorname + ", Mail versendet an " + mailTo);
         log.Flush();
       }
       catch (Exception ex)
       {
-        log.WriteLine("Fehler bei Schüler " + s.NameVorname + ": " + ex.Message);
+        log.WriteLine("FEHLER bei Schüler " + s.NameVorname + ": " + ex.Message);
         log.Flush();
         if (MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
           throw;
       }
     }
 
-    public void MailToKlassenleiter(List<Klasse> klassen)
+    public void SendAbsenzen(Schueler s, bool isTest)
     {
-      string datei;
-      foreach (Klasse k in klassen)
+      string mailTo;
+
+      bool isBOS = s.Data.Schulart == "B";
+      if (isBOS)
+        mailTo = s.Data.MailSchule;
+      else if (s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer == "")
       {
-        datei = Pfad + k.Bezeichnung + ".pdf";
-        CreatePdf(k, datei);
-        Zip(k.Klassenleiter, datei);
-        Send(k.Klassenleiter, datei + ".zip");
+        log.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
+        return;
       }
-    }
-
-    public void MailToSchueler(List<Schueler> schueler)
-    {
-      foreach (Schueler s in schueler)
+      else
       {
-        string datei = Pfad + s.getKlasse.Bezeichnung + "_" + Tools.ErsetzeUmlaute(s.Name + s.benutzterVorname) + ".pdf";
-        CreatePdf(s, datei);
-        Zip(s, datei);
-        Send(s, datei + ".zip");
+        mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
       }
-    }
-    
-    public void Send(Lehrer l, string datei)
-    {
-      MailTo = l.Data.EMail;
-      MailToNachname = l.Name;
-      MailToVorname = l.Data.Vorname;
-      Send(new string[] { datei });
-    }
 
-    public void SendNotendateien(Lehrer l, string[] dateien)
-    {
-      MailTo = l.Data.EMail;
-      MailToNachname = l.Name;
-      MailToVorname = l.Data.Vorname;
-      Send(dateien);
-    }
+      if (!MimeKit.MailboxAddress.TryParse(mailTo, out _))
+      {
+        WriteLog($"MAILADRESSE ungültig ({mailTo}) bei {s.VornameName}");
+        return;
+      }
+      log.WriteLine("Mail an " + mailTo);
 
-    private void Send (Schueler s, string datei)
-    {
-      MailTo = s.Data.MailSchule;
-      MailToNachname = s.Name;
-      MailToVorname = s.benutzterVorname;
-      Send(new string[] { datei });
-    }
+      string body = s.ErzeugeAnrede(!isBOS);
+      body += "im Folgenden dürfen wir Sie über die Absenzen ";
+      if (!isBOS)
+        body += s.getIhrSohn(2) + s.Data.Rufname + " ";
+      body += "im letzten Monat an der FOSBOS Kempten informieren.\n\n";
 
-    private void Send(string[] dateien)
-    {
-      // Test
-      // MailTo = "claus.konrad@fosbos-kempten.de";
+      foreach (string a in s.absenzen)
+      {
+        body += a + "\n";
+      }
 
-      if (!string.IsNullOrEmpty(MailTo))
+      Lehrer kl = s.getKlasse.Klassenleiter;
+      body += "\nBei Unstimmigkeiten wenden Sie sich bitte per Mail an mich:"
+        + "\n" + kl.Data.EMail;
+
+      body += "\n\nMit freundlichen Grüßen\n" + kl.NameDienstbezeichnung;
+      body += "\n" + kl.KLString;
+      body = body.Replace("<br>", "\n");
+      log.WriteLine(body);
+      if (!isTest)
+        s.absenzen.Clear(); // dieser Schüler ist erledigt
+
+      // Versendeprozess:
+      if (!isTest || erstesMal) // bei Test nur ein Mail schicken, aber ganze Datei erzeugen
       {
         try
         {
+          erstesMal = false;
           var msg = new MimeKit.MimeMessage()
           {
-            Sender = new MimeKit.MailboxAddress("Digitale Notenverwaltung", MailFrom),
-            Subject = Betreff
+            Sender = new MimeKit.MailboxAddress("FOSBOS Kempten", mailFrom),
+            Subject = "Absenzenübersicht " + s.VornameName
           };
 
-          msg.From.Add(new MimeKit.MailboxAddress("Digitale Notenverwaltung", MailFrom));
-          msg.To.Add(new MimeKit.MailboxAddress(MailToVorname + " " + MailToNachname, MailTo));       
+          msg.From.Add(new MimeKit.MailboxAddress("FOSBOS Kempten", mailFrom));
+          if (isTest)
+            msg.To.Add(new MimeKit.MailboxAddress("Claus Konrad", "claus.konrad@fosbos-kempten.de"));
+          else
+            msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
+          if (!isBOS && !isTest)
+          {
+            msg.Cc.Add(new MimeKit.MailboxAddress(s.Data.MailSchule, s.Data.MailSchule));
+          }
+
+          msg.ReplyTo.Add(new MimeKit.MailboxAddress(kl.VornameName, kl.Data.EMail));
 
           var builder = new MimeKit.BodyBuilder();
-          builder.TextBody = "Hallo " + MailToVorname + "," + BodyText;
-          foreach (var d in dateien)
-            builder.Attachments.Add(d);
+          builder.TextBody = body;
           msg.Body = builder.ToMessageBody();
 
-          //mailServer.Timeout = 1000;
+          EnsureConnected();
           mailServer.Send(msg);
+          log.WriteLine("Mail versendet für Schüler " + s.VornameName);
         }
         catch (Exception ex)
         {
-          if (MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
-            throw;
+          log.WriteLine("FEHLER bei Schüler " + s.VornameName + " mit ID=" + s.Id + "\n" + ex.Message);
         }
       }
+      log.WriteLine("------------------ " + s.Id);
     }
+   
 
-    public void Zip(Lehrer l, string inFile)
+    public void Dispose()
     {
-      Zip(inFile, "1949");
-    }
+      if (disposed) return; disposed = true;
 
-    public void Zip(Schueler s, string inFile)
-    {
-      Zip(inFile, "FB-" + s.Data.Geburtsdatum.ToString("yyyyMMdd"));
-    }
-    
-    private void Zip(string inFile, string passwort)
-    {
-      // Es muss das NuGet-Package SevenZipSharp installiert sein. Diesem muss man den DLL-Pfad der 7z.dll mitgeben: 
-
-      string outFile = inFile + ".zip";
-      string dll = @"F:\diNo\packages\SevenZipSharp.Net45.1.0.19\lib\net45\7z.dll";
-      SevenZipCompressor.SetLibraryPath(dll);
-
-      SevenZipCompressor szc = new SevenZipCompressor
+      try
       {
-        CompressionMethod = CompressionMethod.Deflate,
-        CompressionLevel = CompressionLevel.Normal,
-        CompressionMode = CompressionMode.Create,
-        DirectoryStructure = true,
-        PreserveDirectoryRoot = false,
-        ArchiveFormat = OutArchiveFormat.Zip
-      };
-
-      szc.CompressFilesEncrypted(outFile, passwort, new string[] { inFile });
-    }
-
-    // erzeugt eine Notenmitteilung in PDF-Form (einzelner Schüler oder eine ganze Klasse)
-    public void CreatePdf(Schueler s, string targetFile)
-    {
-      List<SchuelerDruck> liste = new List<SchuelerDruck>();
-      liste.Add(SchuelerDruck.CreateSchuelerDruck(s, Bericht.Notenmitteilung, UnterschriftZeugnis.SL));
-      CreatePdf(liste, targetFile);
-    }
-
-    public void CreatePdf(Klasse k, string targetFile)
-    {
-      List<SchuelerDruck> liste = new List<SchuelerDruck>();
-      foreach (Schueler s in k.Schueler)
-        liste.Add(SchuelerDruck.CreateSchuelerDruck(s, Bericht.Notenmitteilung, UnterschriftZeugnis.SL));
-      CreatePdf(liste, targetFile);
-    }
-
-    private void CreatePdf(List<SchuelerDruck> liste, string targetFile)
-    {
-      //ReportViewer im Hintergrund erstellen, um PDF zu drucken, und Report zuweisen.
-      ReportViewer rpt = new ReportViewer();
-      ReportDataSource dataSource = new ReportDataSource();
-      dataSource.Name = "DataSet1";
-
-      //Report als Embedded Resource mit dem Namen "Report.rdlc" ... entsprechend anpassen
-      rpt.LocalReport.ReportEmbeddedResource = "diNo." + SchuelerDruck.GetBerichtsname(rptTyp) + ".rdlc"; //"diNo.rptNotenmitteilung.rdlc";
-
-      // Unterberichte einbinden
-      rpt.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(subrptEventHandler);
-
-      //Report mit Daten befüllen
-
-      dataSource.Value = liste;
-      rpt.LocalReport.DataSources.Add(dataSource);
-
-      //Report als PDF in Datei speichern
-      byte[] PDF = rpt.LocalReport.Render("PDF");
-      FileStream fsReport = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None);
-      fsReport.Write(PDF, 0, PDF.Length);
-      fsReport.Close();
-
-      rpt.Dispose();
-    }
-
-    void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
-    {
-      string subrpt = e.ReportPath; // jeder Unterbericht ruft diesen EventHandler auf; hier steht drin welcher es ist.
-      int schuelerId;
-      int.TryParse(e.Parameters[0].Values[0], out schuelerId);
-      if (schuelerId > 0)
-      {
-        Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-        if (subrpt == "subrptPunktesumme" || subrpt == "subrptPunktesummeNB")
+        lock (mailLock)
         {
-          e.DataSources.Add(new ReportDataSource("DataSet1", PunkteSummeDruck.Create(schueler, rptTyp)));
-        }
-        else
-        {
-          IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenDruck(Bericht.Notenmitteilung);
-          e.DataSources.Add(new ReportDataSource("DataSet1", noten));
+          if (mailServer != null)
+          {
+            try { if (mailServer.IsConnected) mailServer.Disconnect(true); } catch { }
+            try { mailServer.Dispose(); } catch { }
+          }
         }
       }
-    }
+      catch { }
 
+      try
+      {
+        lock (logLock)
+        {
+          try { log?.Flush(); } catch { }
+          try { log?.Close(); } catch { }
+          try { log?.Dispose(); } catch { }
+        }
+      }
+      catch { }
+    }
   }
 }

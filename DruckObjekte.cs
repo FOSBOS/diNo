@@ -65,9 +65,9 @@ namespace diNo
 
       Id = s.Id;//.ToString();
       Nachname = s.Name;
-      Vorname = s.Vorname;
+      Vorname = s.getHerrFrau() + s.Vorname;
       Rufname = s.Data.Rufname;
-      Anrede = s.getHerrFrau();
+      Anrede = ""; // in Vorname integriert
       Klasse = b==Bericht.EinserAbi ? s.KlassenBezeichnung : s.getKlasse.Bezeichnung;
 
       var KL = s.getKlasse.Klassenleiter;
@@ -286,7 +286,7 @@ namespace diNo
       if (b == Bericht.Abiturzeugnis) // dort nicht mit Großbuchstaben
       {
         BestandenText = "hat die " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " bestanden. Der Prüfungsausschuss hat ";
-        BestandenText += (s.Data.Geschlecht == "M" ? "ihm" : "ihr") + " die";
+        BestandenText += s.getIhmIhr() + " die";
         
         if (jg == 12) ZeugnisArt = "Fachhochschulreife";
         else if (s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife)) ZeugnisArt = "allgemeine Hochschulreife";
@@ -313,7 +313,7 @@ namespace diNo
       KlasseAR = (b == Bericht.Zwischenzeugnis || b == Bericht.Bescheinigung && s.Status == Schuelerstatus.Aktiv ? "besucht" : "besuchte") + " im " + Schuljahr;
       KlasseAR += " die " + s.getKlasse.JahrgangsstufeZeugnis + " der " + (s.Data.Schulart == "B" ? "Berufsoberschule" : "Fachoberschule");
       if (b == Bericht.Abiturzeugnis)
-        KlasseAR += " und unterzog sich als Schüler" + (s.Data.Geschlecht == "M" ? "" : "in") + " der Klasse " + s.getKlasse.Bezeichnung + " der " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " in der Ausbildungsrichtung " + Faecherkanon.GetZweigText(s) + ".";
+        KlasseAR += " und unterzog sich in der Klasse " + s.getKlasse.Bezeichnung + " der " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " in der Ausbildungsrichtung " + Faecherkanon.GetZweigText(s) + ".";
       else
       {
         if (s.Data.Ausbildungsrichtung != "V") // IV idR. ohne AR
@@ -370,7 +370,7 @@ namespace diNo
         {
           if (s.hatVorkommnis(Vorkommnisart.Sportbefreiung))
           {
-            Bemerkung += "<br>" + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin")
+            Bemerkung += "<br>" + s.getDerSchueler()
               + " war vom Unterricht im Fach Sport " + (keinHj1 && keinHj2 ? "" : "teilweise ") + "befreit.";
           }
           else
@@ -412,9 +412,9 @@ namespace diNo
           Bemerkung += "<br>Die Erlaubnis zum Vorrücken in die Jahrgangsstufe 13 hat " + s.getErSie() + (!s.hatVorkommnis(Vorkommnisart.VorrueckenBOS13moeglich) ? " nicht" : "") + " erhalten.";
 
         if (s.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen))
-          Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " wurde nach § 31 Abs. 2 FOBOSO nicht zur Prüfung zugelassen. ";
+          Bemerkung += "<br> " + s.getDerSchueler() + " wurde nach § 31 Abs. 2 FOBOSO nicht zur Prüfung zugelassen. ";
         else //if (s.Status == Schuelerstatus.Aktiv) // abgebrochen. bzw BOS12 nicht angetreten
-          Bemerkung += "<br> " + (s.Data.Geschlecht == "M" ? "Der Schüler" : "Die Schülerin") + " hat sich der " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " ohne Erfolg unterzogen. ";
+          Bemerkung += "<br> " + s.getDerSchueler() + " hat sich der " + (jg == 12 ? "Fachabiturprüfung" : "Abiturprüfung") + " ohne Erfolg unterzogen. ";
 
         Bemerkung += s.getErSie(true) + " darf die Prüfung gemäß Art. 54 Abs. 5 Satz 1 BayEUG " + (s.hatVorkommnis(Vorkommnisart.DarfNichtMehrWiederholen) ? "nicht mehr" : "noch einmal") + " wiederholen.";
       }

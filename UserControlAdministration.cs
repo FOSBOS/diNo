@@ -149,6 +149,8 @@ namespace diNo
 
     private void btnSendMail_Click(object sender, EventArgs e)
     {
+      MessageBox.Show("Funktion wird aktuell nicht unterstützt!", "Notendateien versenden", MessageBoxButtons.OK);
+      /*
       if (MessageBox.Show("Die Dateien werden versendet!", "Notendateien versenden", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
       Cursor = Cursors.WaitCursor;
       try
@@ -180,7 +182,7 @@ namespace diNo
       finally
       {
         Cursor = Cursors.Default;
-      }
+      }*/
     }
 
     void onStatusChange(Object sender, StatusChangedEventArgs e)
@@ -442,6 +444,8 @@ namespace diNo
 
     private void btnNotenmitteilung_Click(object sender, EventArgs e)
     {
+      MessageBox.Show("Funktion wird aktuell nicht unterstützt!", "Notendateien versenden", MessageBoxButtons.OK);
+      /*
       Cursor.Current = Cursors.WaitCursor;
       var klassen = ((Klassenansicht)(Parent.Parent.Parent)).SelectedKlassen();
       if (klassen.Count > 0){
@@ -449,10 +453,13 @@ namespace diNo
         m.MailToKlassenleiter(klassen);
       }
       Cursor.Current = Cursors.Default;
+      */
     }
 
     private void btnNotenmailSchueler_Click(object sender, EventArgs e)
     {
+      MessageBox.Show("Funktion wird aktuell nicht unterstützt!", "Notendateien versenden", MessageBoxButtons.OK);
+      /*
       Cursor.Current = Cursors.WaitCursor;
       var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
       if (obj.Count > 0){
@@ -460,6 +467,7 @@ namespace diNo
         m.MailToSchueler(obj);
       }
       Cursor.Current = Cursors.Default;
+      */
     }
 
     private void btnCopy11_Click(object sender, EventArgs e)
@@ -514,7 +522,7 @@ namespace diNo
 
     private void btnAbsenzen_Click(object sender, EventArgs e)
     {
-      new AbsenzenMail();
+      //new AbsenzenMail();
     }
 
     private void btnMails_Click(object sender, EventArgs e)
