@@ -75,7 +75,8 @@ namespace diNo
     CopyUserLoginname,
     CopyUserPwd,
     CopyUserDomain,
-    LNWAblagePfad
+    LNWAblagePfad,
+    MailAdresseTest
   }
 
 }
