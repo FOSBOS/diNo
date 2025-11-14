@@ -63,11 +63,11 @@ namespace diNo
       else if (s.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Vorklasse) JgKurz = "Vk";
       else JgKurz = jg.ToString();
 
-      Id = s.Id;//.ToString();
+      Id = s.Id;
       Nachname = s.Name;
-      Vorname = s.getHerrFrau() + s.Vorname;
+      Vorname = s.Vorname;
       Rufname = s.Data.Rufname;
-      Anrede = ""; // in Vorname integriert
+      Anrede = s.getHerrFrau() + s.Vorname + " " + s.Name;
       Klasse = b==Bericht.EinserAbi ? s.KlassenBezeichnung : s.getKlasse.Bezeichnung;
 
       var KL = s.getKlasse.Klassenleiter;

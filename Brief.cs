@@ -96,7 +96,10 @@ namespace diNo
       else
       {
         b.Betreff = "Verweis";
-        b.Unterschrift2 = Zugriff.Instance.getString(GlobaleStrings.Schulleiter) + ", " + Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
+        if (b.Unterschrift.Contains("OStD"))
+          b.Unterschrift += "\n" + Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
+        else
+          b.Unterschrift2 = Zugriff.Instance.getString(GlobaleStrings.Schulleiter) + ", " + Zugriff.Instance.getString(GlobaleStrings.SchulleiterText);
       }
       b.Inhalt = "Hiermit wird " + s.getHerrnFrau() + s.VornameName + " gemäß Art. 86 (2) BayEUG ein ";
       b.Inhalt += (verschaerft ? "verschärfter Verweis durch die Schulleitung" : "Verweis") + " erteilt.<br><br>";

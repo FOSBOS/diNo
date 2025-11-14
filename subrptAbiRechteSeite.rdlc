@@ -233,23 +233,7 @@
                     </Style>
                   </TextRun>
                   <TextRun>
-                    <Value>=Fields!Vorname.Value</Value>
-                    <Style>
-                      <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                    </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value xml:space="preserve"> </Value>
-                    <Style>
-                      <FontFamily>Gadugi</FontFamily>
-                      <FontSize>11pt</FontSize>
-                      <FontWeight>Bold</FontWeight>
-                    </Style>
-                  </TextRun>
-                  <TextRun>
-                    <Value>=Fields!Nachname.Value</Value>
+                    <Value>=Fields!Anrede.Value</Value>
                     <Style>
                       <FontFamily>Gadugi</FontFamily>
                       <FontSize>11pt</FontSize>

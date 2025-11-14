@@ -98,23 +98,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Vorname.Value</Value>
-                              <Style>
-                                <FontFamily>gadugi</FontFamily>
-                                <FontSize>16pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value xml:space="preserve"> </Value>
-                              <Style>
-                                <FontFamily>gadugi</FontFamily>
-                                <FontSize>16pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>=Fields!Nachname.Value</Value>
+                              <Value>=Fields!Anrede.Value</Value>
                               <Style>
                                 <FontFamily>gadugi</FontFamily>
                                 <FontSize>16pt</FontSize>

@@ -92,38 +92,6 @@
                                 <FontWeight>Normal</FontWeight>
                               </Style>
                             </TextRun>
-                            <TextRun>
-                              <Value xml:space="preserve"> </Value>
-                              <Style>
-                                <FontFamily>gadugi</FontFamily>
-                                <FontSize>16pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>=Fields!Vorname.Value</Value>
-                              <Style>
-                                <FontFamily>gadugi</FontFamily>
-                                <FontSize>16pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value xml:space="preserve"> </Value>
-                              <Style>
-                                <FontFamily>gadugi</FontFamily>
-                                <FontSize>16pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
-                            <TextRun>
-                              <Value>=Fields!Nachname.Value</Value>
-                              <Style>
-                                <FontFamily>gadugi</FontFamily>
-                                <FontSize>16pt</FontSize>
-                                <FontWeight>Normal</FontWeight>
-                              </Style>
-                            </TextRun>
                           </TextRuns>
                           <Style>
                             <LineHeight>15pt</LineHeight>
@@ -1057,7 +1025,7 @@
         <PageBreak>
           <BreakLocation>End</BreakLocation>
         </PageBreak>
-        <Height>15.23172cm</Height>
+        <Height>15.23173cm</Height>
         <Width>16.44979cm</Width>
         <Style>
           <Border>
@@ -1068,7 +1036,7 @@
         </Style>
       </Tablix>
     </ReportItems>
-    <Height>15.23172cm</Height>
+    <Height>15.23173cm</Height>
     <Style />
   </Body>
   <Width>16.5cm</Width>
