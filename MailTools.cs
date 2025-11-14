@@ -221,7 +221,7 @@ namespace diNo
 
           msg.From.Add(new MimeKit.MailboxAddress("FOSBOS Kempten", mailFrom));
           if (isTest)
-            msg.To.Add(new MimeKit.MailboxAddress("Claus Konrad", "claus.konrad@fosbos-kempten.de"));
+            msg.To.Add(new MimeKit.MailboxAddress("Testadresse", Zugriff.Instance.getString(GlobaleStrings.MailAdresseTest)));
           else
             msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
           if (!isBOS && !isTest)
