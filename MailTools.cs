@@ -156,7 +156,7 @@ namespace diNo
       {
         log.WriteLine("FEHLER bei Schüler " + s.NameVorname + ": " + ex.Message);
         log.Flush();
-        if (MessageBox.Show(ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+        if (MessageBox.Show(s.NameVorname + "\nKlicke auf Wiederholen, dann kommt der nächste Schüler dran.\n" + ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
           throw;
       }
     }
@@ -188,7 +188,7 @@ namespace diNo
       string body = s.ErzeugeAnrede(!isBOS);
       body += "im Folgenden dürfen wir Sie über die Absenzen ";
       if (!isBOS)
-        body += s.getIhrSohn(2) + s.Data.Rufname + " ";
+        body += s.getIhrSohn(2) + " " + s.Data.Rufname + " ";
       body += "im letzten Monat an der FOSBOS Kempten informieren.\n\n";
 
       foreach (string a in s.absenzen)

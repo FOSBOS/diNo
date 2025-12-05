@@ -177,12 +177,15 @@ namespace diNo
            
             string a = "";
             string grund = line[9];
+            string text = line[10];
+            string status = line[12];
+            if (status != "") status = ", " + status;
             if (grund == "krank")
-              a = VonBis(line[4], line[6]) + " krank";
+              a = VonBis(line[4], line[6]) + " krank" + status + " " + text;
             else if (grund == "Befreiung" || grund == "krank (Unt)" || grund == "Verspätung")
-              a = VonBis(line[4], line[6], line[5], line[7]) + " " + grund + " " + line[10];
+              a = VonBis(line[4], line[6], line[5], line[7]) + " " + grund + " " + text;
             else if (grund == "unentschuldigt")
-              a = VonBis(line[4], line[6]) + " UNENTSCHULDIGT";
+              a = VonBis(line[4], line[6]) + " unentschuldigt " + text;
             else err.WriteLine("GRUND! " + original);
 
             if (a != "")
