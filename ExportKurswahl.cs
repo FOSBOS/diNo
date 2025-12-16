@@ -62,10 +62,14 @@ namespace diNo
         int jgstufe = (int)s.getKlasse.Jahrgangsstufe;
         if (jgstufe < 11 && s.getKlasse.Schulart==Schulart.BOS) jgstufe = 12; // BOS-Vorklasse
         else if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites && jgstufe < 13) jgstufe++; // Wahl idR für das nächste Schuljahr
-        
+
+        string zweigRS = s.Data.SchulischeVorbildung;
+        if (!s.Data.IsAndereFremdspr2FachNull() && s.Data.AndereFremdspr2Fach == 11)
+           zweigRS = "R3a";  // Sonderfälle Talentklasse u.ä. werden 
+
         //SchülerID; 'Username'; 'Pwd'; 'Nachname'; 'Vorname'; 'Klasse'; JgStufe; 'Zweig'; 'Schulart'; 'ZweigRS'; 'Mail'
         writer.WriteLine(s.Id + sep + username + sep + pwd + sep + s.Name.Replace("'", " ") + sep + s.Data.Rufname + sep
-          + s.getKlasse.Bezeichnung + sep + jgstufe + sep + s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep + s.Data.SchulischeVorbildung
+          + s.getKlasse.Bezeichnung + sep + jgstufe + sep + s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep + zweigRS
           + sep + s.Data.MailSchule);
       }
       writer.Close();
