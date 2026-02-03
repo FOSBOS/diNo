@@ -6,10 +6,10 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>9.22042cm</Width>
+              <Width>8.26792cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>8.38854cm</Width>
+              <Width>9.34104cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -293,7 +293,6 @@
                       </Style>
                     </Subreport>
                     <ColSpan>2</ColSpan>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
                 <TablixCell />
