@@ -112,17 +112,7 @@ namespace diNo
       }
     }
 
-    private void btnImportSchueler_Click(object sender, EventArgs e)
-    {
-      OpenFileDialog dia = new OpenFileDialog();
-      dia.Title = "Dateiname wählen";
-      if (dia.ShowDialog() == DialogResult.OK)
-      {
-        Cursor = Cursors.WaitCursor;
-        WinSVSchuelerReader.ReadSchueler(dia.FileName);
-        Cursor = Cursors.Default;
-      }
-    }
+
 
     private void btnImportKlassenleiter_Click(object sender, EventArgs e)
     {
@@ -543,6 +533,31 @@ namespace diNo
     private void btnImportFPA_Click(object sender, EventArgs e)
     {
       new ImportFPAStellen();
+    }
+
+    private void btnImportASVID_Click(object sender, EventArgs e)
+    {
+      // 1. ASVImporter erstellen
+      var importer = new ASVImporter();
+
+      // 2. XML-Datei importieren
+      OpenFileDialog dia = new OpenFileDialog();
+      dia.Title = "Dateiname wählen";
+      
+      if (dia.ShowDialog() != DialogResult.OK)
+        return;      
+      int anzahlErfolgreich = importer.ImportiereASVDaten(dia.FileName);
+
+      // 3. Protokoll ausgeben
+      Console.WriteLine(importer.GetKompletteProtokoll());
+
+      // 4. Optional: Protokolle in Dateien speichern
+      importer.SpeichereFehlerProtokoll(@"C:\tmp\fehlerprotokoll.txt");
+      importer.SpeichereErfolgsProtokoll(@"C:\tmp\erfolgsprotokoll.txt");
+
+      // 5. Ergebnis anzeigen
+      MessageBox.Show($"Import abgeschlossen: {anzahlErfolgreich} Schüler erfolgreich zugeordnet. Protokolle unter C:\\tmp");
+
     }
   }
 }

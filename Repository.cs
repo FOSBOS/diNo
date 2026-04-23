@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace diNo
 {
@@ -86,5 +87,20 @@ namespace diNo
         q.Add(e);
       return q;
     }
+
+
+    // Verwendung:
+    // Schueler s = Zugriff.Instance.SchuelerRep.FindBy(x => x.AsvId == "53r6r98jfo");
+    public T FindBy(Func<T, bool> predicate)
+    {
+      foreach (T t in Liste.Values)
+      {
+        if (predicate(t))
+          return t;
+      }
+      return default(T);
+    }
+
+
   }
 }

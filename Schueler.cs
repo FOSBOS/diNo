@@ -1,6 +1,7 @@
 ﻿using BrightIdeasSoftware;
 using diNo.diNoDataSetTableAdapters;
 using diNo.Properties;
+using diNo.Xml.Schulerfolgsstatistik;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
@@ -128,6 +129,13 @@ namespace diNo
         return this.Data.Name + ", " + benutzterVorname;
       }
     }
+
+    /// <summary>
+    /// ASV-ID (lokales_differenzierungsmerkmal) aus dem ASV-Export
+    /// Eindeutig und gleichbleibend für jeden Schüler innerhalb einer ASV-Datenbasis
+    /// </summary>
+    public string AsvId { get; set; }
+
 
     public string VornameName
     {

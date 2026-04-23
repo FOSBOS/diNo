@@ -53,12 +53,13 @@
       this.btnCreateExcels = new System.Windows.Forms.Button();
       this.exportNoten = new System.Windows.Forms.Button();
       this.groupBoxImport = new System.Windows.Forms.GroupBox();
+      this.btnImportFPA = new System.Windows.Forms.Button();
       this.btnImportLoginnamen = new System.Windows.Forms.Button();
       this.btnImportCheck = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
       this.btnReadWahlpflichtfaecher = new System.Windows.Forms.Button();
       this.btnImportKlassenleiter = new System.Windows.Forms.Button();
-      this.btnImportSchueler = new System.Windows.Forms.Button();
+      this.btnImportASVID = new System.Windows.Forms.Button();
       this.btnImportUnterricht = new System.Windows.Forms.Button();
       this.importNoten = new System.Windows.Forms.Button();
       this.groupBoxStammdaten = new System.Windows.Forms.GroupBox();
@@ -89,7 +90,6 @@
       this.btnDelEinbringung = new System.Windows.Forms.Button();
       this.btnEinbringung = new System.Windows.Forms.Button();
       this.btnCopy11 = new System.Windows.Forms.Button();
-      this.btnImportFPA = new System.Windows.Forms.Button();
       this.groupBoxAnalyse.SuspendLayout();
       this.groupBoxDrucken.SuspendLayout();
       this.gbUnterschrift.SuspendLayout();
@@ -379,7 +379,7 @@
       this.groupBoxImport.Controls.Add(this.label3);
       this.groupBoxImport.Controls.Add(this.btnReadWahlpflichtfaecher);
       this.groupBoxImport.Controls.Add(this.btnImportKlassenleiter);
-      this.groupBoxImport.Controls.Add(this.btnImportSchueler);
+      this.groupBoxImport.Controls.Add(this.btnImportASVID);
       this.groupBoxImport.Controls.Add(this.btnImportUnterricht);
       this.groupBoxImport.Controls.Add(this.importNoten);
       this.groupBoxImport.Location = new System.Drawing.Point(504, 28);
@@ -388,6 +388,16 @@
       this.groupBoxImport.TabIndex = 3;
       this.groupBoxImport.TabStop = false;
       this.groupBoxImport.Text = "Import (in dieser Reihenfolge)";
+      // 
+      // btnImportFPA
+      // 
+      this.btnImportFPA.Location = new System.Drawing.Point(120, 106);
+      this.btnImportFPA.Name = "btnImportFPA";
+      this.btnImportFPA.Size = new System.Drawing.Size(82, 23);
+      this.btnImportFPA.TabIndex = 11;
+      this.btnImportFPA.Text = "FPA-Stellen";
+      this.btnImportFPA.UseVisualStyleBackColor = true;
+      this.btnImportFPA.Click += new System.EventHandler(this.btnImportFPA_Click);
       // 
       // btnImportLoginnamen
       // 
@@ -438,15 +448,15 @@
       this.btnImportKlassenleiter.UseVisualStyleBackColor = true;
       this.btnImportKlassenleiter.Click += new System.EventHandler(this.btnImportKlassenleiter_Click);
       // 
-      // btnImportSchueler
+      // btnImportASVID
       // 
-      this.btnImportSchueler.Location = new System.Drawing.Point(20, 21);
-      this.btnImportSchueler.Name = "btnImportSchueler";
-      this.btnImportSchueler.Size = new System.Drawing.Size(182, 23);
-      this.btnImportSchueler.TabIndex = 5;
-      this.btnImportSchueler.Text = "Schülerdaten aus WinSV";
-      this.btnImportSchueler.UseVisualStyleBackColor = true;
-      this.btnImportSchueler.Click += new System.EventHandler(this.btnImportSchueler_Click);
+      this.btnImportASVID.Location = new System.Drawing.Point(20, 21);
+      this.btnImportASVID.Name = "btnImportASVID";
+      this.btnImportASVID.Size = new System.Drawing.Size(87, 23);
+      this.btnImportASVID.TabIndex = 5;
+      this.btnImportASVID.Text = "ID aus ASV";
+      this.btnImportASVID.UseVisualStyleBackColor = true;
+      this.btnImportASVID.Click += new System.EventHandler(this.btnImportASVID_Click);
       // 
       // btnImportUnterricht
       // 
@@ -768,16 +778,6 @@
       this.btnCopy11.UseVisualStyleBackColor = true;
       this.btnCopy11.Click += new System.EventHandler(this.btnCopy11_Click);
       // 
-      // btnImportFPA
-      // 
-      this.btnImportFPA.Location = new System.Drawing.Point(120, 106);
-      this.btnImportFPA.Name = "btnImportFPA";
-      this.btnImportFPA.Size = new System.Drawing.Size(82, 23);
-      this.btnImportFPA.TabIndex = 11;
-      this.btnImportFPA.Text = "FPA-Stellen";
-      this.btnImportFPA.UseVisualStyleBackColor = true;
-      this.btnImportFPA.Click += new System.EventHandler(this.btnImportFPA_Click);
-      // 
       // UserControlAdministration
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -823,7 +823,7 @@
     private System.Windows.Forms.Button exportNoten;
     private System.Windows.Forms.Button importNoten;
     private System.Windows.Forms.Button btnImportUnterricht;
-    private System.Windows.Forms.Button btnImportSchueler;
+    private System.Windows.Forms.Button btnImportASVID;
     private System.Windows.Forms.Button btnImportKlassenleiter;
     private System.Windows.Forms.GroupBox groupBoxStammdaten;
     private System.Windows.Forms.Button btnKurse;
