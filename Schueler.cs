@@ -134,7 +134,10 @@ namespace diNo
     /// ASV-ID (lokales_differenzierungsmerkmal) aus dem ASV-Export
     /// Eindeutig und gleichbleibend für jeden Schüler innerhalb einer ASV-Datenbasis
     /// </summary>
-    public string AsvId { get; set; }
+    public string AsvId 
+    { 
+      get { return Data.asv_id; }
+    }
 
 
     public string VornameName

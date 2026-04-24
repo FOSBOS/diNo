@@ -26,7 +26,8 @@ namespace diNo.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=diNo;Integrated Security=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=clauspc;Database=diNo;Integrated Security=True;TrustServerCertificate=True" +
+            "")]
         public string diNoConnectionString {
             get {
                 return ((string)(this["diNoConnectionString"]));
