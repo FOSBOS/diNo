@@ -1,58 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using System.IO;
+using System.Net;
 
 namespace diNo
 {
   /// <summary>
-  /// Importiert ASV-Daten aus einer XML-Datei und ordnet jedem Schüler die ASV-ID zu.
-  /// Matching erfolgt über: Familienname, Vornamen und Geburtsdatum
+  /// Importiert ASV-Daten aus einer XML-Datei und weist jedem Schüler die ASV-ID zu.
+  /// Matching erfolgt über Familienname, Vornamen und Geburtsdatum.
+  /// Namen und Vornamen werden als wechselseitige Teilstrings geprüft.
   /// </summary>
   public class ASVImporter
   {
-    private List<string> fehlerProtokoll;
-    private List<string> erfolgsProtokoll;
+    private StringBuilder fehlerProtokoll;
+    private StringBuilder erfolgsProtokoll;
     private int anzahlGesamt;
     private int anzahlErfolgreich;
     private int anzahlNichtGefunden;
-    private int anzahlMehrfach;
+    //private int anzahlMehrfach;
+    private List<Schueler> alleSchueler;
 
     public ASVImporter()
     {
-      fehlerProtokoll = new List<string>();
-      erfolgsProtokoll = new List<string>();
+      fehlerProtokoll = new StringBuilder();
+      erfolgsProtokoll = new StringBuilder();
       anzahlGesamt = 0;
       anzahlErfolgreich = 0;
       anzahlNichtGefunden = 0;
-      anzahlMehrfach = 0;
+      //anzahlMehrfach = 0;
+      alleSchueler = Zugriff.Instance.SchuelerRep.getList();
     }
 
     /// <summary>
-    /// Importiert die ASV-Daten aus der XML-Datei und ordnet jedem Schüler die ASV-ID zu
+    /// Importiert die ASV-Daten aus der angegebenen XML-Datei.
     /// </summary>
     /// <param name="xmlDateiPfad">Pfad zur ASV-XML-Datei</param>
     /// <returns>Anzahl der erfolgreich zugeordneten Schüler</returns>
     public int ImportiereASVDaten(string xmlDateiPfad)
     {
-      // Protokolle zurücksetzen
-      fehlerProtokoll.Clear();
-      erfolgsProtokoll.Clear();
-      anzahlGesamt = 0;
-      anzahlErfolgreich = 0;
-      anzahlNichtGefunden = 0;
-      anzahlMehrfach = 0;
-
       try
       {
         // XML-Datei laden
         XDocument doc = XDocument.Load(xmlDateiPfad);
         XNamespace ns = "http://www.asv.bayern.de/import";
 
-        // Alle Schülerinnen und Schüler aus der XML-Datei extrahieren
+        // Alle Schülerinnen-Elemente finden
         var schuelerElemente = doc.Descendants(ns + "schuelerin");
         anzahlGesamt = schuelerElemente.Count();
 
@@ -60,18 +55,16 @@ namespace diNo
         {
           VerarbeiteSchueler(schuelerElement, ns);
         }
+
+        return anzahlErfolgreich;
       }
       catch (Exception ex)
       {
-        fehlerProtokoll.Add($"KRITISCHER FEHLER beim Laden der XML-Datei: {ex.Message}");
+        fehlerProtokoll.AppendLine($"KRITISCHER FEHLER beim Laden der XML-Datei: {ex.Message}");
+        return 0;
       }
-
-      return anzahlErfolgreich;
     }
 
-    /// <summary>
-    /// Verarbeitet einen einzelnen Schüler aus der XML-Datei
-    /// </summary>
     private void VerarbeiteSchueler(XElement schuelerElement, XNamespace ns)
     {
       try
@@ -83,179 +76,165 @@ namespace diNo
         string geburtsdatumStr = schuelerElement.Element(ns + "geburtsdatum")?.Value?.Trim();
 
         // Validierung
-        if (string.IsNullOrEmpty(asvId))
+        if (string.IsNullOrEmpty(asvId) || string.IsNullOrEmpty(familienname) ||
+            string.IsNullOrEmpty(vornamen) || string.IsNullOrEmpty(geburtsdatumStr))
         {
-          fehlerProtokoll.Add($"FEHLER: Schüler ohne ASV-ID gefunden (Name: {familienname} {vornamen})");
+          fehlerProtokoll.AppendLine($"FEHLER: Unvollständige Daten in XML - ASV-ID: {asvId ?? "leer"}");
+          anzahlNichtGefunden++;
           return;
         }
 
-        if (string.IsNullOrEmpty(familienname) || string.IsNullOrEmpty(vornamen))
-        {
-          fehlerProtokoll.Add($"FEHLER: Schüler mit unvollständigen Daten - ASV-ID: {asvId}");
-          return;
-        }
-
-        // Geburtsdatum parsen (Format: dd.MM.yyyy, z.B. 21.09.2009)
+        // Geburtsdatum parsen (Format: dd.MM.yyyy)
         DateTime geburtsdatum;
-        if (!DateTime.TryParseExact(geburtsdatumStr, "dd.MM.yyyy",
-            CultureInfo.InvariantCulture, DateTimeStyles.None, out geburtsdatum))
+        if (!DateTime.TryParseExact(geburtsdatumStr, "dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture,
+            System.Globalization.DateTimeStyles.None, out geburtsdatum))
         {
-          fehlerProtokoll.Add($"FEHLER: Ungültiges Geburtsdatum '{geburtsdatumStr}' - {familienname} {vornamen} - ASV-ID: {asvId}");
+          fehlerProtokoll.AppendLine($"FEHLER: Ungültiges Geburtsdatum '{geburtsdatumStr}' - {familienname}, {vornamen} - ASV-ID: {asvId}");
+          anzahlNichtGefunden++;
           return;
         }
 
         // Schüler im Repository suchen
-        var gefundeneSchueler = FindeSchueler(familienname, vornamen, geburtsdatum);
+        
+        var gefundeneSchueler = new List<Schueler>();
+        var ersatzSchueler = new List<Schueler>();
 
-        if (gefundeneSchueler.Count == 0)
+        foreach (var s in alleSchueler)
         {
-          // Kein Schüler gefunden
-          anzahlNichtGefunden++;
-          fehlerProtokoll.Add($"FEHLER: Schüler nicht gefunden - {familienname} {vornamen} (Geb: {geburtsdatum:dd.MM.yyyy}) - ASV-ID: {asvId}");
+          // Name: Wechselseitige Teilstring-Prüfung (beide Richtungen)
+          bool namePasst = familienname.Contains(s.Name) || s.Name.Contains(familienname);
+
+          // Vorname: Wechselseitige Teilstring-Prüfung (beide Richtungen)
+          bool vornamePasst = vornamen.Contains(s.Vorname) || s.Vorname.Contains(vornamen);
+
+          // Geburtsdatum: Exakte Übereinstimmung (nur Datum, ohne Uhrzeit)
+          bool geburtsdatumPasst = s.Data.Geburtsdatum.Date == geburtsdatum.Date;
+
+          if (namePasst && vornamePasst && geburtsdatumPasst)
+          { 
+            gefundeneSchueler.Add(s);
+          }
+          else if ((namePasst || vornamePasst) && geburtsdatumPasst)
+          {
+            ersatzSchueler.Add(s);
+          }
         }
-        else if (gefundeneSchueler.Count == 1)
+
+        // Auswertung
+        Schueler schueler;
+        if (gefundeneSchueler.Count == 1)
+          schueler = gefundeneSchueler[0];
+        else if (ersatzSchueler.Count == 1)
         {
-          // Genau ein Schüler gefunden - ASV-ID zuweisen
-          Schueler schueler = gefundeneSchueler[0];
-          schueler.Data.asv_id = asvId;
-          schueler.Save();
-          anzahlErfolgreich++;
-          erfolgsProtokoll.Add($"ERFOLG: {familienname} {vornamen} (Geb: {geburtsdatum:dd.MM.yyyy}) - ID: {schueler.Id} - ASV-ID: {asvId}");
+          schueler = ersatzSchueler[0];
         }
         else
         {
-          // Mehrere Schüler gefunden
-          anzahlMehrfach++;
-          string ids = string.Join(", ", gefundeneSchueler.Select(s => s.Id));
-          fehlerProtokoll.Add($"FEHLER: Mehrere Schüler gefunden ({gefundeneSchueler.Count}x) - {familienname} {vornamen} (Geb: {geburtsdatum:dd.MM.yyyy}) - ASV-ID: {asvId}");
-          fehlerProtokoll.Add($"  IDs: {ids}");
+          // Kein Schüler gefunden
+          fehlerProtokoll.AppendLine($"FEHLER: Schüler nicht gefunden (Anzahl: {gefundeneSchueler.Count}/{ersatzSchueler.Count}) - {familienname}, {vornamen} (Geb: {geburtsdatumStr}) - ASV-ID: {asvId}");
+          anzahlNichtGefunden++;
+          return;
+        }        
+        
+        // Genau ein Schüler gefunden - ASV-ID zuweisen           
+        schueler.Data.asv_id = asvId;
+        schueler.Save();
+        anzahlErfolgreich++;
+
+        // Erfolgsprotokoll mit Abweichungshinweisen
+        StringBuilder erfolgsMeldung = new StringBuilder();
+        erfolgsMeldung.AppendLine($"ERFOLG: {familienname}, {vornamen} (Geb: {geburtsdatumStr}) - ID: {schueler.Id} - ASV-ID: {asvId}");
+
+        // Prüfen auf Namensabweichung
+        if (!string.Equals(schueler.Name, familienname, StringComparison.OrdinalIgnoreCase))
+        {
+          erfolgsMeldung.AppendLine($"  HINWEIS: Namensabweichung - ASV: '{familienname}' vs. diNo: '{schueler.Name}'");
         }
+
+        // Prüfen auf Vornamenabweichung
+        if (!string.Equals(schueler.Vorname, vornamen, StringComparison.OrdinalIgnoreCase))
+        {
+          erfolgsMeldung.AppendLine($"  HINWEIS: Vornamenabweichung - ASV: '{vornamen}' vs. diNo: '{schueler.Vorname}'");
+        }
+
+        erfolgsProtokoll.Append(erfolgsMeldung.ToString());
+        
+        /*
+        else
+        {
+          // Mehrere Schüler gefunden
+          var ids = string.Join(", ", gefundeneSchueler.Select(s => s.Id));
+          fehlerProtokoll.AppendLine($"FEHLER: Mehrere Schüler gefunden ({gefundeneSchueler.Count}x) - {familienname}, {vornamen} (Geb: {geburtsdatumStr}) - ASV-ID: {asvId}");
+          fehlerProtokoll.AppendLine($"  IDs: {ids}");
+          anzahlMehrfach++;
+        }*/
       }
       catch (Exception ex)
       {
-        fehlerProtokoll.Add($"FEHLER bei der Verarbeitung eines Schülers: {ex.Message}");
+        fehlerProtokoll.AppendLine($"FEHLER bei Verarbeitung eines Schülers: {ex.Message}");
+        anzahlNichtGefunden++;
       }
     }
 
     /// <summary>
-    /// Sucht Schüler im Repository anhand von Familienname, Vornamen und Geburtsdatum
-    /// </summary>
-    private List<Schueler> FindeSchueler(string familienname, string vornamen, DateTime geburtsdatum)
-    {
-      var gefundeneSchueler = new List<Schueler>();
-
-      // Alle Schüler aus dem Repository durchsuchen
-      var alleSchueler = Zugriff.Instance.SchuelerRep.getList();
-
-      foreach (var schueler in alleSchueler)
-      {
-        // Vergleich: Familienname, Vornamen und Geburtsdatum (nur Datum, ohne Uhrzeit)
-        bool namePasst = string.Equals(schueler.Name, familienname, StringComparison.OrdinalIgnoreCase);
-        bool vornamePasst = string.Equals(schueler.Vorname, vornamen, StringComparison.OrdinalIgnoreCase);
-        bool geburtsdatumPasst = schueler.Data.Geburtsdatum.Date == geburtsdatum.Date;
-
-        if (namePasst && vornamePasst && geburtsdatumPasst)
-        {
-          gefundeneSchueler.Add(schueler);
-        }
-      }
-
-      return gefundeneSchueler;
-    }
-
-    /// <summary>
-    /// Gibt das komplette Protokoll (Zusammenfassung + Fehler + Erfolge) zurück
+    /// Gibt das komplette Protokoll (Zusammenfassung + Fehler + Erfolge) zurück.
     /// </summary>
     public string GetKompletteProtokoll()
     {
-      StringBuilder sb = new StringBuilder();
+      StringBuilder komplett = new StringBuilder();
 
-      // Zusammenfassung
-      sb.AppendLine("=== ZUSAMMENFASSUNG ===");
-      sb.AppendLine($"Gesamt in XML: {anzahlGesamt}");
-      sb.AppendLine($"Erfolgreich zugeordnet: {anzahlErfolgreich}");
-      sb.AppendLine($"Nicht gefunden: {anzahlNichtGefunden}");
-      sb.AppendLine($"Mehrfach gefunden: {anzahlMehrfach}");
-      sb.AppendLine();
+      komplett.AppendLine("=== ZUSAMMENFASSUNG ===");
+      komplett.AppendLine($"Gesamt in XML: {anzahlGesamt}");
+      komplett.AppendLine($"Erfolgreich zugeordnet: {anzahlErfolgreich}");
+      komplett.AppendLine($"Nicht gefunden: {anzahlNichtGefunden}");
+      //komplett.AppendLine($"Mehrfach gefunden: {anzahlMehrfach}");
+      komplett.AppendLine();
 
-      // Fehlerprotokoll
-      if (fehlerProtokoll.Count > 0)
+      if (fehlerProtokoll.Length > 0)
       {
-        sb.AppendLine("=== FEHLERPROTOKOLL ===");
-        foreach (var fehler in fehlerProtokoll)
-        {
-          sb.AppendLine(fehler);
-        }
-        sb.AppendLine();
+        komplett.AppendLine("=== FEHLERPROTOKOLL ===");
+        komplett.Append(fehlerProtokoll.ToString());
+        komplett.AppendLine();
       }
 
-      // Erfolgsprotokoll
-      if (erfolgsProtokoll.Count > 0)
+      if (erfolgsProtokoll.Length > 0)
       {
-        sb.AppendLine("=== ERFOLGSPROTOKOLL ===");
-        foreach (var erfolg in erfolgsProtokoll)
-        {
-          sb.AppendLine(erfolg);
-        }
+        komplett.AppendLine("=== ERFOLGSPROTOKOLL ===");
+        komplett.Append(erfolgsProtokoll.ToString());
       }
 
-      return sb.ToString();
+      return komplett.ToString();
     }
 
     /// <summary>
-    /// Gibt nur das Fehlerprotokoll zurück
+    /// Gibt nur das Fehlerprotokoll zurück.
     /// </summary>
     public string GetFehlerProtokoll()
     {
-      StringBuilder sb = new StringBuilder();
-      sb.AppendLine("=== ZUSAMMENFASSUNG ===");
-      sb.AppendLine($"Gesamt in XML: {anzahlGesamt}");
-      sb.AppendLine($"Erfolgreich zugeordnet: {anzahlErfolgreich}");
-      sb.AppendLine($"Nicht gefunden: {anzahlNichtGefunden}");
-      sb.AppendLine($"Mehrfach gefunden: {anzahlMehrfach}");
-      sb.AppendLine();
-
-      if (fehlerProtokoll.Count > 0)
-      {
-        sb.AppendLine("=== FEHLER ===");
-        foreach (var fehler in fehlerProtokoll)
-        {
-          sb.AppendLine(fehler);
-        }
-      }
-      else
-      {
-        sb.AppendLine("Keine Fehler aufgetreten.");
-      }
-
-      return sb.ToString();
+      StringBuilder result = new StringBuilder();
+      result.AppendLine("=== FEHLERPROTOKOLL ===");
+      result.AppendLine($"Nicht gefunden: {anzahlNichtGefunden}");
+      //result.AppendLine($"Mehrfach gefunden: {anzahlMehrfach}");
+      result.AppendLine();
+      result.Append(fehlerProtokoll.ToString());
+      return result.ToString();
     }
 
     /// <summary>
-    /// Gibt nur das Erfolgsprotokoll zurück
+    /// Gibt nur das Erfolgsprotokoll zurück.
     /// </summary>
     public string GetErfolgsProtokoll()
     {
-      StringBuilder sb = new StringBuilder();
-      sb.AppendLine($"=== ERFOLGREICH ZUGEORDNET ({anzahlErfolgreich}) ===");
-
-      if (erfolgsProtokoll.Count > 0)
-      {
-        foreach (var erfolg in erfolgsProtokoll)
-        {
-          sb.AppendLine(erfolg);
-        }
-      }
-      else
-      {
-        sb.AppendLine("Keine erfolgreichen Zuordnungen.");
-      }
-
-      return sb.ToString();
+      StringBuilder result = new StringBuilder();
+      result.AppendLine("=== ERFOLGSPROTOKOLL ===");
+      result.AppendLine($"Erfolgreich zugeordnet: {anzahlErfolgreich}");
+      result.AppendLine();
+      result.Append(erfolgsProtokoll.ToString());
+      return result.ToString();
     }
 
     /// <summary>
-    /// Speichert das komplette Protokoll in eine Datei
+    /// Speichert das komplette Protokoll in eine Datei.
     /// </summary>
     public void SpeichereKomplettesProtokoll(string dateiPfad)
     {
@@ -263,7 +242,7 @@ namespace diNo
     }
 
     /// <summary>
-    /// Speichert nur das Fehlerprotokoll in eine Datei
+    /// Speichert nur das Fehlerprotokoll in eine Datei.
     /// </summary>
     public void SpeichereFehlerProtokoll(string dateiPfad)
     {
@@ -271,31 +250,11 @@ namespace diNo
     }
 
     /// <summary>
-    /// Speichert nur das Erfolgsprotokoll in eine Datei
+    /// Speichert nur das Erfolgsprotokoll in eine Datei.
     /// </summary>
     public void SpeichereErfolgsProtokoll(string dateiPfad)
     {
       File.WriteAllText(dateiPfad, GetErfolgsProtokoll(), Encoding.UTF8);
     }
-
-    /// <summary>
-    /// Gibt die Anzahl der erfolgreich zugeordneten Schüler zurück
-    /// </summary>
-    public int AnzahlErfolgreich => anzahlErfolgreich;
-
-    /// <summary>
-    /// Gibt die Anzahl der nicht gefundenen Schüler zurück
-    /// </summary>
-    public int AnzahlNichtGefunden => anzahlNichtGefunden;
-
-    /// <summary>
-    /// Gibt die Anzahl der mehrfach gefundenen Schüler zurück
-    /// </summary>
-    public int AnzahlMehrfach => anzahlMehrfach;
-
-    /// <summary>
-    /// Gibt die Gesamtanzahl der Schüler in der XML-Datei zurück
-    /// </summary>
-    public int AnzahlGesamt => anzahlGesamt;
   }
 }

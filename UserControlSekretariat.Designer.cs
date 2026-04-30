@@ -36,7 +36,6 @@
         private System.Windows.Forms.CheckBox checkBoxLegasthenie;
         private System.Windows.Forms.ComboBox cbSchulischeVorbildung;
         private System.Windows.Forms.GroupBox grpGrunddaten;
-        private System.Windows.Forms.CheckBox chkSonderfallNur2Hj;
         private System.Windows.Forms.TextBox textBoxFB;
         private System.Windows.Forms.Label lbFB;
         private System.Windows.Forms.TextBox textBoxAR;
@@ -49,5 +48,7 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox textBoxNachname;
         private System.Windows.Forms.Label label7;
-    }
+    private System.Windows.Forms.TextBox textBoxASVID;
+    private System.Windows.Forms.Label label1;
+  }
 }

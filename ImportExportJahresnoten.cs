@@ -75,7 +75,7 @@ namespace diNo
               if (fpaZeile.IsGesamtNull())
                 continue;
 
-              writer.WriteLine(schueler.Id + Sep + fpa.Id + Sep + "11" + Sep + fpaZeile.Gesamt + Sep + fpaZeile.Halbjahr + Sep
+              writer.WriteLine(schueler.AsvId + Sep + fpa.Id + Sep + "11" + Sep + fpaZeile.Gesamt + Sep + fpaZeile.Halbjahr + Sep
                 + fpaZeile.Gesamt + Sep + fpaZeile.Gesamt + Sep + schueler.NameVorname + Sep + fpa.Kuerzel);
 
             }
@@ -83,21 +83,21 @@ namespace diNo
 
           // Noten aus der Realschule         FachID      JgStufe      
           if (!(schueler.Data.IsMittlereReifeDeutschnoteNull() || schueler.Data.IsMittlereReifeEnglischnoteNull() || schueler.Data.IsMittlereReifeMathenoteNull()))
-            writer.WriteLine(schueler.Id + Sep + "0" + Sep + "0" + Sep
+            writer.WriteLine(schueler.AsvId + Sep + "0" + Sep + "0" + Sep
               + schueler.Data.MittlereReifeDeutschnote + Sep
               + schueler.Data.MittlereReifeEnglischnote + Sep
               + schueler.Data.MittlereReifeMathenote);
 
           // Legastheniezuschläge
           if (schueler.Data.LRSZuschlagMax > 0)
-            writer.WriteLine(schueler.Id + Sep + "-1" + Sep + "0" + Sep
+            writer.WriteLine(schueler.AsvId + Sep + "-1" + Sep + "0" + Sep
               + schueler.Data.LRSZuschlagMin + Sep
               + schueler.Data.LRSZuschlagMax + Sep
               + "0");
 
           // Andere Fremdsprache aus RS
           if (!(schueler.Data.IsAndereFremdspr2NoteNull() || schueler.Data.IsAndereFremdspr2FachNull()))
-            writer.WriteLine(schueler.Id + Sep + "-2" + Sep + "0" + Sep
+            writer.WriteLine(schueler.AsvId + Sep + "-2" + Sep + "0" + Sep
               + schueler.Data.AndereFremdspr2Note + Sep
               + schueler.Data.AndereFremdspr2Fach + Sep
               + schueler.Data.AndereFremdspr2Art
@@ -112,7 +112,7 @@ namespace diNo
       {
         // Erzeugt eine Zeile mit 10 durch ; getrennten Werten
         //                   0                       1                       2                       3                    4                       5                  6                         7                                      8                               9
-        writer.WriteLine(schueler.Id + Sep + note.getFach.Id + Sep + (int)note.JgStufe + Sep + note.Punkte + Sep + (byte)note.Art + Sep + note.SchnittMdl + Sep + note.Punkte2Dez + Sep + schueler.NameVorname + " " + schueler.getKlasse.Bezeichnung + Sep + note.getFach.Kuerzel);
+        writer.WriteLine(schueler.AsvId + Sep + note.getFach.Id + Sep + (int)note.JgStufe + Sep + note.Punkte + Sep + (byte)note.Art + Sep + note.SchnittMdl + Sep + note.Punkte2Dez + Sep + schueler.NameVorname + " " + schueler.getKlasse.Bezeichnung + Sep + note.getFach.Kuerzel);
       }
     }
 
@@ -151,14 +151,14 @@ namespace diNo
             writer.WriteLine(orignal);
             continue;
           }*/
-          int schuelerId = int.Parse(line[0]);
-          var schuelerGefunden = schuelerAdapter.GetDataById(schuelerId);
-          if (schuelerGefunden == null || schuelerGefunden.Count == 0)
+          string schuelerASVId = line[0];
+          Schueler schueler = Zugriff.Instance.SchuelerRep.FindBy(x => x.AsvId == schuelerASVId);
+          //schuelerAdapter.GetDataById(schuelerId);
+          if (schueler == null)
           {
             continue; // das ist normal. Schließlich sind auch die Halbjahresleistungen der letzten Absolventen noch mit in der Datei
           }
-
-          Schueler schueler = new Schueler(schuelerGefunden[0]);
+          
           Jahrgangsstufe jgSchueler = schueler.getKlasse.Jahrgangsstufe;
           if (line[1] == "0") // Noten aus der RS importieren (frühere Eingabe)
           {

@@ -81,7 +81,7 @@ namespace diNo
           textBoxRufname.Text = schueler.Data.Rufname;
           textBoxAR.Text = schueler.Data.Ausbildungsrichtung;
           textBoxFB.Text = schueler.Data.Schulart;
-          chkSonderfallNur2Hj.Checked = schueler.Data.SonderfallNur2Hj;
+          textBoxASVID.Text = schueler.AsvId;
         }
       }
     }
@@ -119,7 +119,7 @@ namespace diNo
       schueler.Data.Rufname = textBoxRufname.Text;
       schueler.Data.Ausbildungsrichtung = textBoxAR.Text;
       schueler.Data.Schulart = textBoxFB.Text;
-      schueler.Data.SonderfallNur2Hj = chkSonderfallNur2Hj.Checked;
+      schueler.Data.asv_id = textBoxASVID.Text;
 
       schueler.Save();
     }
@@ -156,7 +156,6 @@ namespace diNo
       this.label5 = new System.Windows.Forms.Label();
       this.checkBoxLegasthenie = new System.Windows.Forms.CheckBox();
       this.grpGrunddaten = new System.Windows.Forms.GroupBox();
-      this.chkSonderfallNur2Hj = new System.Windows.Forms.CheckBox();
       this.textBoxFB = new System.Windows.Forms.TextBox();
       this.lbFB = new System.Windows.Forms.Label();
       this.textBoxAR = new System.Windows.Forms.TextBox();
@@ -169,6 +168,8 @@ namespace diNo
       this.label18 = new System.Windows.Forms.Label();
       this.textBoxNachname = new System.Windows.Forms.TextBox();
       this.label7 = new System.Windows.Forms.Label();
+      this.textBoxASVID = new System.Windows.Forms.TextBox();
+      this.label1 = new System.Windows.Forms.Label();
       this.groupBoxMittlereReife.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMathe)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEnglisch)).BeginInit();
@@ -565,7 +566,8 @@ namespace diNo
       // 
       // grpGrunddaten
       // 
-      this.grpGrunddaten.Controls.Add(this.chkSonderfallNur2Hj);
+      this.grpGrunddaten.Controls.Add(this.textBoxASVID);
+      this.grpGrunddaten.Controls.Add(this.label1);
       this.grpGrunddaten.Controls.Add(this.textBoxFB);
       this.grpGrunddaten.Controls.Add(this.lbFB);
       this.grpGrunddaten.Controls.Add(this.textBoxAR);
@@ -585,20 +587,10 @@ namespace diNo
       this.grpGrunddaten.TabStop = false;
       this.grpGrunddaten.Text = "Grunddaten";
       // 
-      // chkSonderfallNur2Hj
-      // 
-      this.chkSonderfallNur2Hj.AutoSize = true;
-      this.chkSonderfallNur2Hj.Location = new System.Drawing.Point(18, 148);
-      this.chkSonderfallNur2Hj.Name = "chkSonderfallNur2Hj";
-      this.chkSonderfallNur2Hj.Size = new System.Drawing.Size(148, 17);
-      this.chkSonderfallNur2Hj.TabIndex = 107;
-      this.chkSonderfallNur2Hj.Text = "Sonderfall nur 2 Halbjahre";
-      this.chkSonderfallNur2Hj.UseVisualStyleBackColor = true;
-      // 
       // textBoxFB
       // 
       this.textBoxFB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxFB.Location = new System.Drawing.Point(160, 113);
+      this.textBoxFB.Location = new System.Drawing.Point(160, 157);
       this.textBoxFB.MaxLength = 1;
       this.textBoxFB.Name = "textBoxFB";
       this.textBoxFB.Size = new System.Drawing.Size(88, 20);
@@ -608,7 +600,7 @@ namespace diNo
       // 
       this.lbFB.AutoSize = true;
       this.lbFB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lbFB.Location = new System.Drawing.Point(157, 99);
+      this.lbFB.Location = new System.Drawing.Point(157, 143);
       this.lbFB.Name = "lbFB";
       this.lbFB.Size = new System.Drawing.Size(46, 13);
       this.lbFB.TabIndex = 106;
@@ -617,17 +609,17 @@ namespace diNo
       // textBoxAR
       // 
       this.textBoxAR.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxAR.Location = new System.Drawing.Point(160, 75);
+      this.textBoxAR.Location = new System.Drawing.Point(17, 157);
       this.textBoxAR.MaxLength = 1;
       this.textBoxAR.Name = "textBoxAR";
-      this.textBoxAR.Size = new System.Drawing.Size(88, 20);
+      this.textBoxAR.Size = new System.Drawing.Size(117, 20);
       this.textBoxAR.TabIndex = 103;
       // 
       // label20
       // 
       this.label20.AutoSize = true;
       this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label20.Location = new System.Drawing.Point(157, 61);
+      this.label20.Location = new System.Drawing.Point(14, 141);
       this.label20.Name = "label20";
       this.label20.Size = new System.Drawing.Size(102, 13);
       this.label20.TabIndex = 104;
@@ -705,6 +697,24 @@ namespace diNo
       this.label7.Size = new System.Drawing.Size(59, 13);
       this.label7.TabIndex = 96;
       this.label7.Text = "Nachname";
+      // 
+      // textBoxASVID
+      // 
+      this.textBoxASVID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxASVID.Location = new System.Drawing.Point(160, 76);
+      this.textBoxASVID.Name = "textBoxASVID";
+      this.textBoxASVID.Size = new System.Drawing.Size(88, 20);
+      this.textBoxASVID.TabIndex = 107;
+      // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label1.Location = new System.Drawing.Point(157, 63);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(42, 13);
+      this.label1.TabIndex = 108;
+      this.label1.Text = "ASV-ID";
       // 
       // UserControlSekretariat
       // 
