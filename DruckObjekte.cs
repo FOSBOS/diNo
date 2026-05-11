@@ -374,11 +374,11 @@ namespace diNo
               + " war vom Unterricht im Fach Sport " + (keinHj1 && keinHj2 ? "" : "teilweise ") + "befreit.";
           }
           else
-          {
+          {/*
             Bemerkung += "<br>Der Unterricht im Fach Sport konnte ";
             if (!keinHj1) Bemerkung += "im 2. Halbjahr ";
             if (!keinHj2) Bemerkung += "im 1. Halbjahr ";
-            Bemerkung += "nicht erteilt werden.";
+            Bemerkung += "nicht erteilt werden.";*/
           }
         }
       }
