@@ -157,6 +157,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ASVExport.cs" />
     <Compile Include="ASVImporter.cs" />
     <Compile Include="Auswertungen.cs" />
     <Compile Include="CopyLNW.cs">
