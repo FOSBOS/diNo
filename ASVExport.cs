@@ -15,8 +15,8 @@ namespace diNo
     
     public ASVExport(string exportDateiPfad)
     {
-      ExportiereASVDaten(true, exportDateiPfad + "_Fachabitur");
-      ExportiereASVDaten(false, exportDateiPfad + "_Abitur");
+      ExportiereASVDaten(true, exportDateiPfad + "_Fachabitur.xml");
+      ExportiereASVDaten(false, exportDateiPfad + "_Abitur.xml");
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ namespace diNo
               new XElement("Teil", GetTeilCode(fr)),
               new XElement("Belegart", "1038_35"), // Sondercode FR
               new XElement("Zeugnisart", "1198_25"),
-              new XElement("Jahrgangsstufe", "JAHRGA_101"),
+              new XElement("Jahrgangsstufe", "JAHRGA_121"),
               new XElement("Einbringung", "1"),
               new XElement("Schuljahr", "SCHULJAHR_" + Zugriff.Instance.Schuljahr),
               new XElement("Sonderfall", (fr.Status == HjStatus.Ungueltig).ToString().ToLower())
@@ -185,7 +185,7 @@ namespace diNo
 
       if (hj != null)
       {
-        string asvid = (fach.kurs==null || fach.kurs.Data.Isschule_fach_idNull()) ? $"DUMMY_{fach.kursId}" : fach.kurs.Data.schule_fach_id;
+        string asvid = (fach.kurs==null || fach.kurs.Data.Isschule_fach_idNull()) ? $"DUMMY_{fach.getFach.Kuerzel}" : fach.kurs.Data.schule_fach_id;
         einzeldaten.Add(new XElement("Einzeldaten",
           new XElement("ExtendedPruefungsteil",
               new XElement("Note", hj.Punkte),
@@ -195,7 +195,7 @@ namespace diNo
               //new XElement("Zeugnisart", GetZeugnisart(halbjahr)),
               new XElement("Jahrgangsstufe", GetJahrgangsstufe(hj)),
               new XElement("Einbringung", hj.Status == HjStatus.Einbringen ? 1 : 0),
-              new XElement("Schuljahr", "SCHULJAHR_" + Zugriff.Instance.Schuljahr),
+              new XElement("Schuljahr", "SCHULJAHR_" + (Zugriff.Instance.Schuljahr - (vorJahr ? 1 : 0))),
               new XElement("Sonderfall", (hj.Status == HjStatus.Ungueltig).ToString().ToLower())
           )
       ));
@@ -295,7 +295,7 @@ namespace diNo
     {
       // 1038_34 = Seminar
       // 1038_35 = Fachreferat
-      if (fach.Typ == FachTyp.WPF) return "1038_14"; // Wahlpflichtfach
+      if (fach.Typ == FachTyp.WPF) return "1038_26"; // Wahlpflichtfach
       return "1038_13"; // Pflichtfach
     }
 
@@ -315,11 +315,11 @@ namespace diNo
     /// </summary>
     private string GetJahrgangsstufe(HjLeistung hj)
     {
-      return "JAHRGA_" + (int)hj.JgStufe + 89;
+      return "JAHRGA_" + (int)hj.JgStufe + "1";
       /*
-      JAHRGA_100 // Klasse 11
-      JAHRGA_101 // Klasse 12
-      JAHRGA_102 // Klasse 13
+      JAHRGA_111 // Klasse 11
+      JAHRGA_121 // Klasse 12
+      JAHRGA_131 // Klasse 13
       */
       
     }

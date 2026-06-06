@@ -342,7 +342,7 @@ namespace diNo
     {
       SaveFileDialog dia = new SaveFileDialog();
       dia.Title = "Dateiname wählen";
-      dia.FileName = "S" + Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + (Zugriff.Instance.Schuljahr - 2000 +1) + ".xml";
+      dia.FileName = "S" + Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + (Zugriff.Instance.Schuljahr - 2000 +1);
       if (dia.ShowDialog() == DialogResult.OK)
       {
         Cursor = Cursors.WaitCursor;
