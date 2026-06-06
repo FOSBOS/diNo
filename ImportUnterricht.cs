@@ -150,7 +150,7 @@ namespace diNo
           string geschlecht = null;
           if (fach.Kuerzel == "Sw") geschlecht = "W";
           if (fach.Kuerzel == "Sm") geschlecht = "M";
-          kursTa.Insert(UNr, KursBezeichung, lehrer.Id, fach.Id, zweig, geschlecht, (fach.Typ == FachTyp.WPF ? fachOrg : fach.Kuerzel) + " (" + lehrer.Kuerzel + ")");
+          kursTa.Insert(UNr, KursBezeichung, lehrer.Id, fach.Id, zweig, geschlecht, (fach.Typ == FachTyp.WPF ? fachOrg : fach.Kuerzel) + " (" + lehrer.Kuerzel + ")","","");
           klasseKursTa.Insert(klasse.Data.Id, UNr);
 
           Kurs kurs = Zugriff.Instance.KursRep.Find(UNr); // das Repository aktualisieren

@@ -342,13 +342,15 @@ namespace diNo
     {
       SaveFileDialog dia = new SaveFileDialog();
       dia.Title = "Dateiname wählen";
-      dia.FileName = "S" + Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_AP" + (Zugriff.Instance.Schuljahr - 2000 +1) + ".xml";
+      dia.FileName = "S" + Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_" + (Zugriff.Instance.Schuljahr - 2000 +1) + ".xml";
       if (dia.ShowDialog() == DialogResult.OK)
       {
         Cursor = Cursors.WaitCursor;
-        Xml.MBStatistik.Serialize(dia.FileName);
+        //Xml.MBStatistik.Serialize(dia.FileName);
+        new ASVExport(dia.FileName);
         Cursor = Cursors.Default;
-        MessageBox.Show("Fertig. Bitte in Zeile 3 der Datei die Attribute löschen, so dass dort nur noch <abschlusspruefungsstatistik> steht.\nAnschließend das Prüfprogramm verwenden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        MessageBox.Show("Fertig.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        //MessageBox.Show("Fertig. Bitte in Zeile 3 der Datei die Attribute löschen, so dass dort nur noch <abschlusspruefungsstatistik> steht.\nAnschließend das Prüfprogramm verwenden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       }
     }
 

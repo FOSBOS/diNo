@@ -136,7 +136,7 @@ namespace diNo
     /// </summary>
     public string AsvId 
     { 
-      get { return Data.asv_id; }
+      get { return Data.Isasv_idNull() ? "" : Data.asv_id; }
     }
 
 

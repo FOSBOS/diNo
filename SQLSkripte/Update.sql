@@ -1,8 +1,12 @@
 use diNo;
 
-insert into GlobaleStrings values (29,'MailAdresseTest','stefan.hein@fos-sonthofen-cloud.de')
-ALTER TABLE Schueler ADD CONSTRAINT chk_schueler_geschlecht CHECK (Geschlecht IN ('M','W','D'));
-ALTER TABLE Schueler ADD asv_id NVARCHAR(40);
+ALTER TABLE Kurs ADD schuelerfach_id NVARCHAR(40);
+ALTER TABLE Kurs ADD schule_fach_id NVARCHAR(40);
+
+--insert into GlobaleStrings values (29,'MailAdresseTest','stefan.hein@fos-sonthofen-cloud.de')
+--ALTER TABLE Schueler ADD CONSTRAINT chk_schueler_geschlecht CHECK (Geschlecht IN ('M','W','D'));
+--ALTER TABLE Schueler ADD asv_id NVARCHAR(40);
+
 
 -- bereits im Produktivsystem eingespielte Änderungen:
 -- ALTER TABLE KlasseKurs ADD PRIMARY KEY (KursId,KlasseId)

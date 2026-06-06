@@ -40,7 +40,7 @@ namespace diNo
 
       foreach (var kurs in schueler.Kurse)
       {
-        var fsn = new FachSchuelerNoten(schueler, kurs.Id, this);
+        var fsn = new FachSchuelerNoten(schueler, kurs, this);
         alleFaecher.Add(fsn);
         alleKurse.Add(fsn);
         AddSprache(fsn);
@@ -472,10 +472,10 @@ namespace diNo
     private Fach fach = null;
     public bool BerechnungFehlt = false;
     public bool NoteUngueltig = false;
+    public Kurs kurs;
     public int kursId
     {
-      get;
-      private set;
+      get => kurs == null ? 0 : kurs.Id;      
     }
     //private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -485,9 +485,9 @@ namespace diNo
     private HjLeistung[] hjLeistung = new HjLeistung[Enum.GetValues(typeof(HjArt)).Length];
     private HjLeistung[] vorHjLeistung = new HjLeistung[2]; // enthält nur 11/1 und 11/2
 
-    public FachSchuelerNoten(Schueler aschueler, int akursid, SchuelerNoten aschuelernoten)
+    public FachSchuelerNoten(Schueler aschueler, Kurs akurs, SchuelerNoten aschuelernoten)
     {
-      kursId = akursid;
+      kurs = akurs;
       schueler = aschueler;
       schuelernoten = aschuelernoten;
 
@@ -506,7 +506,7 @@ namespace diNo
     public FachSchuelerNoten(Schueler aschueler, Fach aFach, SchuelerNoten aschuelernoten)
     {
       fach = aFach;
-      kursId = 0;
+      kurs = null;
       schueler = aschueler;
       schuelernoten = aschuelernoten;
 

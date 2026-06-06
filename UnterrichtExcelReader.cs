@@ -252,7 +252,7 @@ namespace diNo
           if (fach.Kuerzel == "Sw") geschlecht = "W";
           if (fach.Kuerzel == "Sm") geschlecht = "M";
           Lehrer lehrer = Zugriff.Instance.LehrerRep.Find(aLehrerId);
-          kursAdapter.Insert(kursid, aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht, aFach + " (" + lehrer.Kuerzel + ")");
+          kursAdapter.Insert(kursid, aKursBezeichung, aLehrerId, fach.Id, aZweig, geschlecht, aFach + " (" + lehrer.Kuerzel + ")", "", "");
           return true;
         }
 

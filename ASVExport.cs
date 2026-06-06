@@ -1,6 +1,4 @@
-﻿using diNo;
-using diNo.Xml.Mbstatistik;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -15,18 +13,17 @@ namespace diNo
   public class ASVExport
   {
     
-    private readonly string _exportDateiPfad;
-
     public ASVExport(string exportDateiPfad)
-    {      
-      _exportDateiPfad = exportDateiPfad;
+    {
+      ExportiereASVDaten(true, exportDateiPfad + "_Fachabitur");
+      ExportiereASVDaten(false, exportDateiPfad + "_Abitur");
     }
 
     /// <summary>
     /// Hauptmethode zum Exportieren der ASV-Daten
     /// zwei Aufrufe nötig einmal mit true und mit false
     /// </summary>
-    public void ExportiereASVDaten(bool pruefungsartFachabi)
+    public void ExportiereASVDaten(bool pruefungsartFachabi, string exportDateiPfad)
     {
       // 064 = Fachabitur, 074 = Abitur
       string pruefungsart = pruefungsartFachabi ? "064" : "074";
@@ -46,7 +43,7 @@ namespace diNo
           root
       );
 
-      doc.Save(_exportDateiPfad);
+      doc.Save(exportDateiPfad);
     }
 
     private XElement ErstelleSchulInformationen()
@@ -60,8 +57,8 @@ namespace diNo
     private IEnumerable<XElement> ErstelleSchuelerListe(bool pruefungsartFachabi)
     {
       var schuelerListe = Zugriff.Instance.SchuelerRep.getList()
-          .Where(s => s.getKlasse.Jahrgangsstufe == (pruefungsartFachabi ? Jahrgangsstufe.Zwoelf : Jahrgangsstufe.Dreizehn))
-          .Where(s => !s.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen));
+          .Where(s => s.getKlasse.Jahrgangsstufe == (pruefungsartFachabi ? Jahrgangsstufe.Zwoelf : Jahrgangsstufe.Dreizehn));
+          //.Where(s => !s.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen));
 
       foreach (var schueler in schuelerListe)
       {
@@ -83,7 +80,7 @@ namespace diNo
       return new XElement("Person",
           new XElement("Rufname", schueler.benutzterVorname),
           new XElement("Familienname", schueler.Name),
-          new XElement("LDM", schueler.Data.asv_id ?? $"DUMMY_LDM_{schueler.Id}")
+          new XElement("LDM", schueler.Data.Isasv_idNull() ? $"DUMMY_LDM_{schueler.Id}" : schueler.Data.asv_id)
       );
     }
 
@@ -96,7 +93,7 @@ namespace diNo
       {
         zusatzinfo.Add(new XElement("Gesamtleistung",
             new XElement("Gesamtpunkte", schueler.punktesumme.Summe(PunktesummeArt.Gesamt)),
-            new XElement("Gesamtnote", schueler.Data.DNote.ToString("F2"))
+            new XElement("Gesamtnote", schueler.Data.DNote)//.ToString("F1"))
         ));
       }
 
@@ -109,53 +106,33 @@ namespace diNo
       return zusatzinfo;
     }
 
+    // Alle Einzeldaten des Schülers
     private IEnumerable<XElement> ErstelleEinzeldaten(Schueler schueler)
     {
       var einzeldaten = new List<XElement>();
-
-      // Halbjahresleistungen (11.1 bis 13.2)
-      einzeldaten.AddRange(ErstelleHalbjahresleistungen(schueler));
-
-      // Abschlussprüfungsnoten
-      //einzeldaten.AddRange(ErstelleAbschlusspruefungsnoten(schueler));
-
-      return einzeldaten;
-    }
-
-    private IEnumerable<XElement> ErstelleHalbjahresleistungen(Schueler schueler)
-    {      
-      var einzeldaten = new List<XElement>();
-
+      
       foreach (var fach in schueler.getNoten.alleFaecher)
       {
         // Sport-Befreiung berücksichtigen
         if (fach.getFach.BezZeugnis.StartsWith("Sport", StringComparison.OrdinalIgnoreCase) && schueler.hatVorkommnis(Vorkommnisart.Sportbefreiung))
             continue;
-
-        foreach (HjArt art in new[] { HjArt.Hj1, HjArt.Hj2 }) // 11. Klasse
+        if (schueler.Data.Schulart != "B") // 11. Klasse
         {
-          HjLeistung hj = fach.getVorHjLeistung(art);
-          if (hj != null)
-          {
-            einzeldaten.Add(ErstelleExtendedPruefungsteil(schueler, fach.getFach, hj));
-          }
+          ErstelleExtendedPruefungsteil(einzeldaten, schueler, fach, HjArt.Hj1, true);
+          ErstelleExtendedPruefungsteil(einzeldaten, schueler, fach, HjArt.Hj2, true);
         }
-        foreach (HjArt art in Enum.GetValues(typeof(HjArt))) // 12./13. Klasse
-        {
-          if (art == HjArt.FR || art == HjArt.Sprachenniveau || art == HjArt.GesErgSprache) continue; // werden nicht oder nicht hier übermittelt
-
-          HjLeistung hj = fach.getHjLeistung(art);
-          if (hj != null)
-          {
-            einzeldaten.Add(ErstelleExtendedPruefungsteil(schueler, fach.getFach, hj));
-          }
-        }
-
+        ErstelleExtendedPruefungsteil(einzeldaten, schueler, fach, HjArt.Hj1);
+        ErstelleExtendedPruefungsteil(einzeldaten, schueler, fach, HjArt.Hj2);
+        
         // alle AP-Ergebnisse
         if (fach.getFach.IstSAPFach(schueler.Zweig))
-        {
-          //einzeldaten.Add(ErstelleBasePruefungsteil(fach));
+        {          
+          ErstelleBasePruefungsteil(einzeldaten, fach.kurs, fach.getNote(Halbjahr.Zweites, Notentyp.APSchriftlich), 414);
+          ErstelleBasePruefungsteil(einzeldaten, fach.kurs, fach.getNote(Halbjahr.Zweites, Notentyp.APMuendlich), 418);
+          ErstelleBasePruefungsteil(einzeldaten, fach.kurs, fach.getHjLeistung(HjArt.AP), 490);
         }
+        // immer das Gesamtergebnis:
+        ErstelleBasePruefungsteil(einzeldaten, fach.kurs, fach.getHjLeistung(HjArt.GesErg), 491);
       }
 
       // Fachreferat
@@ -197,12 +174,22 @@ namespace diNo
       return einzeldaten;
     }
 
-    private XElement ErstelleExtendedPruefungsteil(Schueler schueler, Fach fach, HjLeistung hj)
+    private void ErstelleExtendedPruefungsteil(List<XElement> einzeldaten,
+      Schueler schueler, FachSchuelerNoten fach, HjArt art, bool vorJahr = false)
     {
-      return new XElement("Einzeldaten",
+      HjLeistung hj;
+      if (vorJahr)
+        hj = fach.getVorHjLeistung(art);
+      else
+        hj = fach.getHjLeistung(art);
+
+      if (hj != null)
+      {
+        string asvid = (fach.kurs==null || fach.kurs.Data.Isschule_fach_idNull()) ? $"DUMMY_{fach.kursId}" : fach.kurs.Data.schule_fach_id;
+        einzeldaten.Add(new XElement("Einzeldaten",
           new XElement("ExtendedPruefungsteil",
               new XElement("Note", hj.Punkte),
-              new XElement("SchuleFach", fach.Id), // TODO: GUID b9be4cf6/a3a0/4652/ab7c/55afd7d73cec
+              new XElement("SchuleFach", asvid), 
               new XElement("Teil", GetTeilCode(hj)),
               new XElement("Belegart", GetBelegart(hj.getFach)),
               //new XElement("Zeugnisart", GetZeugnisart(halbjahr)),
@@ -211,56 +198,40 @@ namespace diNo
               new XElement("Schuljahr", "SCHULJAHR_" + Zugriff.Instance.Schuljahr),
               new XElement("Sonderfall", (hj.Status == HjStatus.Ungueltig).ToString().ToLower())
           )
-      );
+      ));
+      }
     }
-    /*
-    private IEnumerable<XElement> ErstelleAbschlusspruefungsnoten(Schueler schueler)
+    
+    // für AP schriftlich und mündlich
+    private void ErstelleBasePruefungsteil(List<XElement> einzeldaten, Kurs kurs, int? note, int teil)
     {
-      var einzeldaten = new List<XElement>();
-
-      // Schriftliche Prüfungen
-      var schriftlicheNoten = _repository.GetAbschlusspruefungsnotenSchriftlich(schueler.Id);
-      foreach (var note in schriftlicheNoten)
+      if (note != null)
       {
-        einzeldaten.Add(ErstelleBasePruefungsteil(schueler, note, "1243_116")); // Schriftlich
-      }
-
-      // Mündliche Prüfungen
-      var muendlicheNoten = _repository.GetAbschlusspruefungsnotenMuendlich(schueler.Id);
-      foreach (var note in muendlicheNoten)
-      {
-        einzeldaten.Add(ErstelleBasePruefungsteil(schueler, note, "1243_117")); // Mündlich
-      }
-
-      return einzeldaten;
-    }
-
-    private XElement ErstelleBasePruefungsteil(Schueler schueler, Note note, string teilCode)
-    {
-     var apGesamt = fach.getHjLeistung(HjArt.AP);
-      var apmuendlich = fach.getNote(Halbjahr.Zweites, Notentyp.APMuendlich);
-      var apschriftlich = fach.getNote(Halbjahr.Zweites, Notentyp.APSchriftlich);
-      if (apGesamt != null)
-      {
-        // nur, wenn alle Noten vorhanden sind
-        var apObject = CreateXMLAPObject(xmlSchueler.abschlusspruefung, fach.getFach, unserSchueler);
-        if (apmuendlich != null)
-        {
-          apObject.GetType().GetProperty("muendlich").SetValue(apObject, apmuendlich.Value.ToString());
-        }
-        apObject.GetType().GetProperty("schriftlich").SetValue(apObject, apschriftlich.Value.ToString());
-        apObject.GetType().GetProperty("gesamt").SetValue(apObject, apGesamt.Punkte.ToString());
-      }
-
-      return new XElement("Einzeldaten",
+        string asvid = kurs.Data.Isschuelerfach_idNull() ? $"DUMMY_{kurs.Id}" : kurs.Data.schuelerfach_id;
+        einzeldaten.Add(new XElement("Einzeldaten",
           new XElement("BasePruefungsteil",
-              new XElement("Note", note.Punkte), // Bereits 0-15 Punkte
-              new XElement("Schuelerfach", GetSchuelerFachID(note.Fach)),
-              new XElement("Teil", teilCode)
-          )
-      );
+              new XElement("Note", note),
+              new XElement("Schuelerfach", asvid),
+              new XElement("Teil", "1243_" + teil)
+          )));
+      }
     }
-    */
+
+    // für AP Gesamt und GesErg
+    private void ErstelleBasePruefungsteil(List<XElement> einzeldaten, Kurs kurs, HjLeistung hj, int teil)
+    {
+      if (hj!=null)
+      {
+        string asvid = kurs==null || kurs.Data.Isschuelerfach_idNull() ? "DUMMY" : kurs.Data.schuelerfach_id;
+        einzeldaten.Add(new XElement("Einzeldaten",
+          new XElement("BasePruefungsteil",
+              new XElement("Note", hj.Punkte),
+              new XElement("Schuelerfach", asvid),
+              new XElement("Teil", "1243_" + teil)
+          )));
+      }
+    }
+       
     // ==================== HELPER-METHODEN ====================
 
     /// <summary>
@@ -277,39 +248,6 @@ namespace diNo
       return $"DUMMY_SCHULE_FACH_{fach.Id}";
     }
 
-    /// <summary>
-    /// Berechnet die SchuelerFachId aus der SchuleFachId (SchuleFachId + 1)
-    /// Beispiel: 8a498182-999d87d3-0199-9ea7ca92-5187 -> 8a498182-999d87d3-0199-9ea7ca92-5188
-    /// </summary>
-    private string GetSchuelerFachID(Fach fach)
-    {
-      var schuleFachId = GetSchuleFachID(fach);
-
-      if (schuleFachId.StartsWith("DUMMY_"))
-      {
-        return schuleFachId.Replace("DUMMY_SCHULE_FACH_", "DUMMY_SCHUELER_FACH_");
-      }
-
-      try
-      {
-        // UUID in Teile zerlegen
-        var parts = schuleFachId.Split('-');
-        var lastPart = parts[parts.Length - 1];
-
-        // Letzten Teil als Hex-Zahl parsen und um 1 erhöhen
-        var incremented = (int.Parse(lastPart, System.Globalization.NumberStyles.HexNumber) + 1)
-            .ToString("x4");
-
-        // UUID wieder zusammensetzen
-        parts[parts.Length - 1] = incremented;
-        return string.Join("-", parts);
-      }
-      catch
-      {
-        // Fallback bei Parsing-Fehler
-        return $"DUMMY_SCHUELER_FACH_{fach.Id}";
-      }
-    }
 
     /// <summary>
     /// Mapping: Halbjahr -> ASV Teil-Code (1243_XXX)
@@ -399,8 +337,9 @@ namespace diNo
       1139_30 = bestanden
       */      
       if (schueler.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen)) return "1139_10";
-      if (schueler.hatVorkommnis(Vorkommnisart.NichtBestanden)) return "1139_20";
-      return "1139_30";
+      //if (schueler.hatVorkommnis(Vorkommnisart.NichtBestanden)) return "1139_20";
+      //return "1139_30";
+      return "1139_15";
     }
   }
 }

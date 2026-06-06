@@ -1893,6 +1893,10 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnKurzbez;
             
+            private global::System.Data.DataColumn columnschuelerfach_id;
+            
+            private global::System.Data.DataColumn columnschule_fach_id;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public KursDataTable() {
@@ -1984,6 +1988,22 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn schuelerfach_idColumn {
+                get {
+                    return this.columnschuelerfach_id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn schule_fach_idColumn {
+                get {
+                    return this.columnschule_fach_id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2019,7 +2039,7 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public KursRow AddKursRow(string Bezeichnung, LehrerRow parentLehrerRowByFK_Kurs_Lehrer, FachRow parentFachRowByFK_Kurs_Fach, string Zweig, string Geschlecht, string Kurzbez) {
+            public KursRow AddKursRow(string Bezeichnung, LehrerRow parentLehrerRowByFK_Kurs_Lehrer, FachRow parentFachRowByFK_Kurs_Fach, string Zweig, string Geschlecht, string Kurzbez, string schuelerfach_id, string schule_fach_id) {
                 KursRow rowKursRow = ((KursRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -2028,7 +2048,9 @@ namespace diNo {
                         null,
                         Zweig,
                         Geschlecht,
-                        Kurzbez};
+                        Kurzbez,
+                        schuelerfach_id,
+                        schule_fach_id};
                 if ((parentLehrerRowByFK_Kurs_Lehrer != null)) {
                     columnValuesArray[2] = parentLehrerRowByFK_Kurs_Lehrer[0];
                 }
@@ -2071,6 +2093,8 @@ namespace diNo {
                 this.columnZweig = base.Columns["Zweig"];
                 this.columnGeschlecht = base.Columns["Geschlecht"];
                 this.columnKurzbez = base.Columns["Kurzbez"];
+                this.columnschuelerfach_id = base.Columns["schuelerfach_id"];
+                this.columnschule_fach_id = base.Columns["schule_fach_id"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2090,6 +2114,10 @@ namespace diNo {
                 base.Columns.Add(this.columnGeschlecht);
                 this.columnKurzbez = new global::System.Data.DataColumn("Kurzbez", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnKurzbez);
+                this.columnschuelerfach_id = new global::System.Data.DataColumn("schuelerfach_id", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnschuelerfach_id);
+                this.columnschule_fach_id = new global::System.Data.DataColumn("schule_fach_id", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnschule_fach_id);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AutoIncrement = true;
@@ -2102,6 +2130,8 @@ namespace diNo {
                 this.columnFachId.AllowDBNull = false;
                 this.columnZweig.MaxLength = 5;
                 this.columnKurzbez.MaxLength = 50;
+                this.columnschuelerfach_id.MaxLength = 40;
+                this.columnschule_fach_id.MaxLength = 40;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9326,6 +9356,38 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string schuelerfach_id {
+                get {
+                    try {
+                        return ((string)(this[this.tableKurs.schuelerfach_idColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte schuelerfach_id in Tabelle Kurs ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableKurs.schuelerfach_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string schule_fach_id {
+                get {
+                    try {
+                        return ((string)(this[this.tableKurs.schule_fach_idColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte schule_fach_id in Tabelle Kurs ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableKurs.schule_fach_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public LehrerRow LehrerRow {
                 get {
                     return ((LehrerRow)(this.GetParentRow(this.Table.ParentRelations["FK_Kurs_Lehrer"])));
@@ -9392,6 +9454,30 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void SetKurzbezNull() {
                 this[this.tableKurs.KurzbezColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool Isschuelerfach_idNull() {
+                return this.IsNull(this.tableKurs.schuelerfach_idColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void Setschuelerfach_idNull() {
+                this[this.tableKurs.schuelerfach_idColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool Isschule_fach_idNull() {
+                return this.IsNull(this.tableKurs.schule_fach_idColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void Setschule_fach_idNull() {
+                this[this.tableKurs.schule_fach_idColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14925,10 +15011,12 @@ SELECT Id, Bezeichnung, KlassenleiterId, JgStufe, Schulart, Zweig FROM Klasse WH
             tableMapping.ColumnMappings.Add("Zweig", "Zweig");
             tableMapping.ColumnMappings.Add("Geschlecht", "Geschlecht");
             tableMapping.ColumnMappings.Add("Kurzbez", "Kurzbez");
+            tableMapping.ColumnMappings.Add("schuelerfach_id", "schuelerfach_id");
+            tableMapping.ColumnMappings.Add("schule_fach_id", "schule_fach_id");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Kurs] WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ((@IsNull_LehrerId = 1 AND [LehrerId] IS NULL) OR ([LehrerId] = @Original_LehrerId)) AND ([FachId] = @Original_FachId) AND ((@IsNull_Zweig = 1 AND [Zweig] IS NULL) OR ([Zweig] = @Original_Zweig)) AND ((@IsNull_Geschlecht = 1 AND [Geschlecht] IS NULL) OR ([Geschlecht] = @Original_Geschlecht)) AND ((@IsNull_Kurzbez = 1 AND [Kurzbez] IS NULL) OR ([Kurzbez] = @Original_Kurzbez)))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [Kurs] WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ((@IsNull_LehrerId = 1 AND [LehrerId] IS NULL) OR ([LehrerId] = @Original_LehrerId)) AND ([FachId] = @Original_FachId) AND ((@IsNull_Zweig = 1 AND [Zweig] IS NULL) OR ([Zweig] = @Original_Zweig)) AND ((@IsNull_Geschlecht = 1 AND [Geschlecht] IS NULL) OR ([Geschlecht] = @Original_Geschlecht)) AND ((@IsNull_Kurzbez = 1 AND [Kurzbez] IS NULL) OR ([Kurzbez] = @Original_Kurzbez)) AND ((@IsNull_schuelerfach_id = 1 AND [schuelerfach_id] IS NULL) OR ([schuelerfach_id] = @Original_schuelerfach_id)) AND ((@IsNull_schule_fach_id = 1 AND [schule_fach_id] IS NULL) OR ([schule_fach_id] = @Original_schule_fach_id)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -14941,10 +15029,14 @@ SELECT Id, Bezeichnung, KlassenleiterId, JgStufe, Schulart, Zweig FROM Klasse WH
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Geschlecht", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geschlecht", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Kurzbez", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kurzbez", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Kurzbez", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kurzbez", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_schuelerfach_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schuelerfach_id", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_schuelerfach_id", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schuelerfach_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_schule_fach_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schule_fach_id", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_schule_fach_id", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schule_fach_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Kurs] ([Id], [Bezeichnung], [LehrerId], [FachId], [Zweig], [Geschlecht], [Kurzbez]) VALUES (@Id, @Bezeichnung, @LehrerId, @FachId, @Zweig, @Geschlecht, @Kurzbez);
-SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs WHERE (Id = @Id)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Kurs] ([Id], [Bezeichnung], [LehrerId], [FachId], [Zweig], [Geschlecht], [Kurzbez], [schuelerfach_id], [schule_fach_id]) VALUES (@Id, @Bezeichnung, @LehrerId, @FachId, @Zweig, @Geschlecht, @Kurzbez, @schuelerfach_id, @schule_fach_id);
+SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez, schuelerfach_id, schule_fach_id FROM Kurs WHERE (Id = @Id)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -14953,10 +15045,12 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Zweig", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Zweig", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geschlecht", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geschlecht", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Kurzbez", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kurzbez", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@schuelerfach_id", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schuelerfach_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@schule_fach_id", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schule_fach_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [Kurs] SET [Id] = @Id, [Bezeichnung] = @Bezeichnung, [LehrerId] = @LehrerId, [FachId] = @FachId, [Zweig] = @Zweig, [Geschlecht] = @Geschlecht, [Kurzbez] = @Kurzbez WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ((@IsNull_LehrerId = 1 AND [LehrerId] IS NULL) OR ([LehrerId] = @Original_LehrerId)) AND ([FachId] = @Original_FachId) AND ((@IsNull_Zweig = 1 AND [Zweig] IS NULL) OR ([Zweig] = @Original_Zweig)) AND ((@IsNull_Geschlecht = 1 AND [Geschlecht] IS NULL) OR ([Geschlecht] = @Original_Geschlecht)) AND ((@IsNull_Kurzbez = 1 AND [Kurzbez] IS NULL) OR ([Kurzbez] = @Original_Kurzbez)));
-SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Kurs] SET [Id] = @Id, [Bezeichnung] = @Bezeichnung, [LehrerId] = @LehrerId, [FachId] = @FachId, [Zweig] = @Zweig, [Geschlecht] = @Geschlecht, [Kurzbez] = @Kurzbez, [schuelerfach_id] = @schuelerfach_id, [schule_fach_id] = @schule_fach_id WHERE (([Id] = @Original_Id) AND ([Bezeichnung] = @Original_Bezeichnung) AND ((@IsNull_LehrerId = 1 AND [LehrerId] IS NULL) OR ([LehrerId] = @Original_LehrerId)) AND ([FachId] = @Original_FachId) AND ((@IsNull_Zweig = 1 AND [Zweig] IS NULL) OR ([Zweig] = @Original_Zweig)) AND ((@IsNull_Geschlecht = 1 AND [Geschlecht] IS NULL) OR ([Geschlecht] = @Original_Geschlecht)) AND ((@IsNull_Kurzbez = 1 AND [Kurzbez] IS NULL) OR ([Kurzbez] = @Original_Kurzbez)) AND ((@IsNull_schuelerfach_id = 1 AND [schuelerfach_id] IS NULL) OR ([schuelerfach_id] = @Original_schuelerfach_id)) AND ((@IsNull_schule_fach_id = 1 AND [schule_fach_id] IS NULL) OR ([schule_fach_id] = @Original_schule_fach_id)));
+SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez, schuelerfach_id, schule_fach_id FROM Kurs WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -14965,6 +15059,8 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Zweig", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Zweig", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Geschlecht", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geschlecht", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Kurzbez", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kurzbez", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@schuelerfach_id", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schuelerfach_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@schule_fach_id", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schule_fach_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Bezeichnung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_LehrerId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -14976,6 +15072,10 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Geschlecht", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Geschlecht", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Kurzbez", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kurzbez", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Kurzbez", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Kurzbez", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_schuelerfach_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schuelerfach_id", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_schuelerfach_id", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schuelerfach_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_schule_fach_id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schule_fach_id", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_schule_fach_id", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "schule_fach_id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -15000,13 +15100,14 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT * FROM Kurs WHERE (Bezeichnung = @bezeichnung)";
+            this._commandCollection[2].CommandText = "SELECT Bezeichnung, FachId, Geschlecht, Id, Kurzbez, LehrerId, Zweig, schuelerfac" +
+                "h_id, schule_fach_id FROM Kurs WHERE (Bezeichnung = @bezeichnung)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@bezeichnung", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "SELECT Bezeichnung, FachId, Geschlecht, Id, Kurzbez, LehrerId, Zweig FROM Kurs WH" +
-                "ERE (Id = @id)";
+            this._commandCollection[3].CommandText = "SELECT Bezeichnung, FachId, Geschlecht, Id, Kurzbez, LehrerId, Zweig, schuelerfac" +
+                "h_id, schule_fach_id FROM Kurs WHERE (Id = @id)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
@@ -15017,13 +15118,13 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
             this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[5] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[5].Connection = this.Connection;
-            this._commandCollection[5].CommandText = "SELECT * \r\nFROM Kurs WHERE (LehrerId = @LehrerId)";
+            this._commandCollection[5].CommandText = "SELECT Bezeichnung, FachId, Geschlecht, Id, Kurzbez, LehrerId, Zweig, schuelerfac" +
+                "h_id, schule_fach_id FROM Kurs WHERE (LehrerId = @LehrerId)";
             this._commandCollection[5].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[5].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[6] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[6].Connection = this.Connection;
-            this._commandCollection[6].CommandText = "SELECT Kurs.*\r\nFROM Kurs INNER JOIN SchuelerKurs ON Kurs.Id = SchuelerKurs.KursId" +
-                " WHERE (SchuelerKurs.SchuelerId = @SchuelerId)";
+            this._commandCollection[6].CommandText = @"SELECT Kurs.Bezeichnung, Kurs.FachId, Kurs.Geschlecht, Kurs.Id, Kurs.Kurzbez, Kurs.LehrerId, Kurs.Zweig, Kurs.schuelerfach_id, Kurs.schule_fach_id FROM Kurs INNER JOIN SchuelerKurs ON Kurs.Id = SchuelerKurs.KursId WHERE (SchuelerKurs.SchuelerId = @SchuelerId)";
             this._commandCollection[6].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SchuelerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "SchuelerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[7] = new global::System.Data.SqlClient.SqlCommand();
@@ -15037,8 +15138,9 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
             this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Zweig", global::System.Data.SqlDbType.NVarChar, 1, global::System.Data.ParameterDirection.Input, 0, 0, "Zweig", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[8] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[8].Connection = this.Connection;
-            this._commandCollection[8].CommandText = "SELECT * \r\nFROM Kurs \r\nWHERE (Bezeichnung LIKE @Bezeichnung) ORDER BY Bezeichnung" +
-                "";
+            this._commandCollection[8].CommandText = "SELECT Bezeichnung, FachId, Geschlecht, Id, Kurzbez, LehrerId, Zweig, schuelerfac" +
+                "h_id, schule_fach_id FROM Kurs WHERE (Bezeichnung LIKE @Bezeichnung) ORDER BY Be" +
+                "zeichnung";
             this._commandCollection[8].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[8].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Bezeichnung", global::System.Data.SqlDbType.NVarChar, 256, global::System.Data.ParameterDirection.Input, 0, 0, "Bezeichnung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -15205,7 +15307,7 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, string Original_Bezeichnung, global::System.Nullable<int> Original_LehrerId, int Original_FachId, string Original_Zweig, string Original_Geschlecht, string Original_Kurzbez) {
+        public virtual int Delete(int Original_Id, string Original_Bezeichnung, global::System.Nullable<int> Original_LehrerId, int Original_FachId, string Original_Zweig, string Original_Geschlecht, string Original_Kurzbez, string Original_schuelerfach_id, string Original_schule_fach_id) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             if ((Original_Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Original_Bezeichnung");
@@ -15246,6 +15348,22 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
                 this.Adapter.DeleteCommand.Parameters[9].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[10].Value = ((string)(Original_Kurzbez));
             }
+            if ((Original_schuelerfach_id == null)) {
+                this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[12].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[11].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[12].Value = ((string)(Original_schuelerfach_id));
+            }
+            if ((Original_schule_fach_id == null)) {
+                this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[14].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[13].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[14].Value = ((string)(Original_schule_fach_id));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -15266,7 +15384,7 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int Id, string Bezeichnung, global::System.Nullable<int> LehrerId, int FachId, string Zweig, string Geschlecht, string Kurzbez) {
+        public virtual int Insert(int Id, string Bezeichnung, global::System.Nullable<int> LehrerId, int FachId, string Zweig, string Geschlecht, string Kurzbez, string schuelerfach_id, string schule_fach_id) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(Id));
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
@@ -15299,6 +15417,18 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
             else {
                 this.Adapter.InsertCommand.Parameters[6].Value = ((string)(Kurzbez));
             }
+            if ((schuelerfach_id == null)) {
+                this.Adapter.InsertCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[7].Value = ((string)(schuelerfach_id));
+            }
+            if ((schule_fach_id == null)) {
+                this.Adapter.InsertCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[8].Value = ((string)(schule_fach_id));
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -15319,7 +15449,25 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int Id, string Bezeichnung, global::System.Nullable<int> LehrerId, int FachId, string Zweig, string Geschlecht, string Kurzbez, int Original_Id, string Original_Bezeichnung, global::System.Nullable<int> Original_LehrerId, int Original_FachId, string Original_Zweig, string Original_Geschlecht, string Original_Kurzbez) {
+        public virtual int Update(
+                    int Id, 
+                    string Bezeichnung, 
+                    global::System.Nullable<int> LehrerId, 
+                    int FachId, 
+                    string Zweig, 
+                    string Geschlecht, 
+                    string Kurzbez, 
+                    string schuelerfach_id, 
+                    string schule_fach_id, 
+                    int Original_Id, 
+                    string Original_Bezeichnung, 
+                    global::System.Nullable<int> Original_LehrerId, 
+                    int Original_FachId, 
+                    string Original_Zweig, 
+                    string Original_Geschlecht, 
+                    string Original_Kurzbez, 
+                    string Original_schuelerfach_id, 
+                    string Original_schule_fach_id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(Id));
             if ((Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Bezeichnung");
@@ -15352,45 +15500,73 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
             else {
                 this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Kurzbez));
             }
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_Id));
+            if ((schuelerfach_id == null)) {
+                this.Adapter.UpdateCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[7].Value = ((string)(schuelerfach_id));
+            }
+            if ((schule_fach_id == null)) {
+                this.Adapter.UpdateCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(schule_fach_id));
+            }
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_Id));
             if ((Original_Bezeichnung == null)) {
                 throw new global::System.ArgumentNullException("Original_Bezeichnung");
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[8].Value = ((string)(Original_Bezeichnung));
+                this.Adapter.UpdateCommand.Parameters[10].Value = ((string)(Original_Bezeichnung));
             }
             if ((Original_LehrerId.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Original_LehrerId.Value));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(Original_LehrerId.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[9].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[10].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[12].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((int)(Original_FachId));
+            this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(Original_FachId));
             if ((Original_Zweig == null)) {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[13].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[12].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[13].Value = ((string)(Original_Zweig));
-            }
-            if ((Original_Geschlecht == null)) {
                 this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[15].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[14].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(Original_Geschlecht));
+                this.Adapter.UpdateCommand.Parameters[15].Value = ((string)(Original_Zweig));
             }
-            if ((Original_Kurzbez == null)) {
+            if ((Original_Geschlecht == null)) {
                 this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[17].Value = global::System.DBNull.Value;
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[16].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[17].Value = ((string)(Original_Kurzbez));
+                this.Adapter.UpdateCommand.Parameters[17].Value = ((string)(Original_Geschlecht));
+            }
+            if ((Original_Kurzbez == null)) {
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[18].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((string)(Original_Kurzbez));
+            }
+            if ((Original_schuelerfach_id == null)) {
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[21].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((string)(Original_schuelerfach_id));
+            }
+            if ((Original_schule_fach_id == null)) {
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[23].Value = ((string)(Original_schule_fach_id));
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -15412,8 +15588,25 @@ SELECT Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez FROM Kurs W
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Bezeichnung, global::System.Nullable<int> LehrerId, int FachId, string Zweig, string Geschlecht, string Kurzbez, int Original_Id, string Original_Bezeichnung, global::System.Nullable<int> Original_LehrerId, int Original_FachId, string Original_Zweig, string Original_Geschlecht, string Original_Kurzbez) {
-            return this.Update(Original_Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez, Original_Id, Original_Bezeichnung, Original_LehrerId, Original_FachId, Original_Zweig, Original_Geschlecht, Original_Kurzbez);
+        public virtual int Update(
+                    string Bezeichnung, 
+                    global::System.Nullable<int> LehrerId, 
+                    int FachId, 
+                    string Zweig, 
+                    string Geschlecht, 
+                    string Kurzbez, 
+                    string schuelerfach_id, 
+                    string schule_fach_id, 
+                    int Original_Id, 
+                    string Original_Bezeichnung, 
+                    global::System.Nullable<int> Original_LehrerId, 
+                    int Original_FachId, 
+                    string Original_Zweig, 
+                    string Original_Geschlecht, 
+                    string Original_Kurzbez, 
+                    string Original_schuelerfach_id, 
+                    string Original_schule_fach_id) {
+            return this.Update(Original_Id, Bezeichnung, LehrerId, FachId, Zweig, Geschlecht, Kurzbez, schuelerfach_id, schule_fach_id, Original_Id, Original_Bezeichnung, Original_LehrerId, Original_FachId, Original_Zweig, Original_Geschlecht, Original_Kurzbez, Original_schuelerfach_id, Original_schule_fach_id);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
