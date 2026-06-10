@@ -220,9 +220,10 @@ namespace diNo
     // für AP Gesamt und GesErg
     private void ErstelleBasePruefungsteil(List<XElement> einzeldaten, Kurs kurs, HjLeistung hj, int teil)
     {
-      if (hj!=null)
+      
+      if (hj != null)
       {
-        string asvid = kurs==null || kurs.Data.Isschuelerfach_idNull() ? "DUMMY" : kurs.Data.schuelerfach_id;
+        string asvid = kurs == null || kurs.Data.Isschuelerfach_idNull() ? "DUMMY" : kurs.Data.schuelerfach_id;
         einzeldaten.Add(new XElement("Einzeldaten",
           new XElement("BasePruefungsteil",
               new XElement("Note", hj.Punkte),

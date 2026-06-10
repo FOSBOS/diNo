@@ -159,6 +159,7 @@
   <ItemGroup>
     <Compile Include="ASVExport.cs" />
     <Compile Include="ASVImporter.cs" />
+    <Compile Include="AsvXmlKursMapper.cs" />
     <Compile Include="Auswertungen.cs" />
     <Compile Include="CopyLNW.cs">
       <SubType>Form</SubType>
