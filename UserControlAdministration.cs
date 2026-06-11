@@ -539,15 +539,15 @@ namespace diNo
 
     private void btnImportASVID_Click(object sender, EventArgs e)
     {
-      // 1. ASVImporter erstellen
-      var importer = new ASVImporter();
 
-      // 2. XML-Datei importieren
+      // XML-Datei importieren
       OpenFileDialog dia = new OpenFileDialog();
       dia.Title = "Dateiname wählen";
       
       if (dia.ShowDialog() != DialogResult.OK)
-        return;      
+        return;
+      /*      
+      var importer = new ASVImporter();
       int anzahlErfolgreich = importer.ImportiereASVDaten(dia.FileName);
 
       // 3. Protokoll ausgeben
@@ -556,9 +556,14 @@ namespace diNo
       // 4. Optional: Protokolle in Dateien speichern
       importer.SpeichereFehlerProtokoll(@"C:\tmp\fehlerprotokoll.txt");
       importer.SpeichereErfolgsProtokoll(@"C:\tmp\erfolgsprotokoll.txt");
+      */
+
+
+      var asvkurs = new AsvXmlKursMapper();
+      asvkurs.VerarbeiteXml(dia.FileName);
 
       // 5. Ergebnis anzeigen
-      MessageBox.Show($"Import abgeschlossen: {anzahlErfolgreich} Schüler erfolgreich zugeordnet. Protokolle unter C:\\tmp");
+      MessageBox.Show($"Import abgeschlossen. Protokolle unter C:\\tmp");
 
     }
   }

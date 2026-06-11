@@ -101,7 +101,7 @@ namespace diNo
     public void VerarbeiteXml(string xmlDateiPfad)
     {
       Directory.CreateDirectory(@"C:\tmp");
-      string logPfad = $@"C:\tmp\AsvXmlKursMapper_{DateTime.Now:yyyyMMdd_HHmmss}.log";
+      string logPfad = $@"C:\tmp\AsvXmlKursMapper.log"; //_{DateTime.Now:yyyyMMdd_HHmmss}
 
       using (_log = new StreamWriter(logPfad, append: false, encoding: System.Text.Encoding.UTF8))
       {
@@ -133,17 +133,18 @@ namespace diNo
         var lehrkraefte = LeseLehrkraefte(schule);
         var faecher = LeseFaecher(schule);
         var ues = LeseUnterrichtselemente(schule);
-        var schuelerinnen = LeseSchuelerinnen(schule);
+        var schueler = LeseSchuelerinnen(schule);
 
         Log($"Lehrkräfte:          {lehrkraefte.Count}");
         Log($"Fächer:              {faecher.Count}");
         Log($"Unterrichtselemente: {ues.Count}");
-        Log($"Schülerinnen:        {schuelerinnen.Count}");
+        Log($"Schüler:             {schueler.Count}");
 
         var lehrkraftById = lehrkraefte.ToDictionary(l => l.XmlId);
         var fachById = faecher.ToDictionary(f => f.XmlId);
 
         // Kurse holen
+        Zugriff.Instance.LoadKurse();
         var kurse = Zugriff.Instance.KursRep.getList();
         if (kurse == null || !kurse.Any())
         {
@@ -164,7 +165,7 @@ namespace diNo
           string kursInfo = $"[{lehrerKuerzel} / {fachKuerzel}]";
 
           var ue = SucheUnterrichtselement(
-              k, ues, lehrkraftById, fachById, schuelerinnen,
+              k, ues, lehrkraftById, fachById, schueler,
               kursInfo, out string hinweis);
 
           if (ue != null)

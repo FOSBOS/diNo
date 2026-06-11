@@ -1,4 +1,5 @@
 ﻿using diNo.diNoDataSetTableAdapters;
+using diNo.Xml.Mbstatistik;
 using log4net;
 using System;
 using System.Collections.Generic;
@@ -229,6 +230,17 @@ namespace diNo
       foreach (var r in dt)
       {
         LehrerRep.Add(new Lehrer(r));
+      }
+    }
+
+    // führt zu Endlosschleife, weil Kurse und Klassen sich gegenseitig laden
+    public void LoadKurse()
+    {
+      var ta = new KursTableAdapter();
+      var dt = ta.GetData();
+      foreach (var kursRow in dt)
+      {        
+        KursRep.Add(new Kurs(kursRow));
       }
     }
 

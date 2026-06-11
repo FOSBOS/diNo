@@ -101,6 +101,16 @@ namespace diNo
       return default(T);
     }
 
+    public List<T> FindAllBy(Func<T, bool> predicate)
+    {
+      var q = new List<T>();
+      foreach (T t in Liste.Values)
+      {
+        if (predicate(t))
+          q.Add(t);
+      }
+      return q;
+    }
 
   }
 }
