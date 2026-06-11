@@ -56,6 +56,10 @@
       this.btnDeleteSchueler = new System.Windows.Forms.Button();
       this.btnSchuelerZuteilen = new System.Windows.Forms.Button();
       this.lbAnzSchueler = new System.Windows.Forms.Label();
+      this.edSchuleFachID = new System.Windows.Forms.TextBox();
+      this.label5 = new System.Windows.Forms.Label();
+      this.edSchuelerFachID = new System.Windows.Forms.TextBox();
+      this.label6 = new System.Windows.Forms.Label();
       this.gbGeschlecht.SuspendLayout();
       this.SuspendLayout();
       // 
@@ -74,7 +78,7 @@
       // edBezeichnung
       // 
       this.edBezeichnung.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.edBezeichnung.Location = new System.Drawing.Point(319, 46);
+      this.edBezeichnung.Location = new System.Drawing.Point(319, 27);
       this.edBezeichnung.Name = "edBezeichnung";
       this.edBezeichnung.Size = new System.Drawing.Size(350, 20);
       this.edBezeichnung.TabIndex = 1;
@@ -83,7 +87,7 @@
       // 
       this.lblBez.AutoSize = true;
       this.lblBez.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lblBez.Location = new System.Drawing.Point(316, 28);
+      this.lblBez.Location = new System.Drawing.Point(316, 13);
       this.lblBez.Name = "lblBez";
       this.lblBez.Size = new System.Drawing.Size(69, 13);
       this.lblBez.TabIndex = 9;
@@ -92,7 +96,7 @@
       // edKurzbez
       // 
       this.edKurzbez.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.edKurzbez.Location = new System.Drawing.Point(319, 86);
+      this.edKurzbez.Location = new System.Drawing.Point(319, 65);
       this.edKurzbez.Name = "edKurzbez";
       this.edKurzbez.Size = new System.Drawing.Size(350, 20);
       this.edKurzbez.TabIndex = 2;
@@ -101,7 +105,7 @@
       // 
       this.lbkurzbez.AutoSize = true;
       this.lbkurzbez.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lbkurzbez.Location = new System.Drawing.Point(316, 69);
+      this.lbkurzbez.Location = new System.Drawing.Point(316, 50);
       this.lbkurzbez.Name = "lbkurzbez";
       this.lbkurzbez.Size = new System.Drawing.Size(89, 13);
       this.lbkurzbez.TabIndex = 11;
@@ -113,7 +117,7 @@
       this.liste.FormattingEnabled = true;
       this.liste.Location = new System.Drawing.Point(25, 27);
       this.liste.Name = "liste";
-      this.liste.Size = new System.Drawing.Size(257, 420);
+      this.liste.Size = new System.Drawing.Size(257, 472);
       this.liste.TabIndex = 0;
       this.liste.SelectedValueChanged += new System.EventHandler(this.listLehrer_SelectedValueChanged);
       // 
@@ -121,7 +125,7 @@
       // 
       this.btnDel.ImageIndex = 7;
       this.btnDel.ImageList = this.imageList1;
-      this.btnDel.Location = new System.Drawing.Point(71, 462);
+      this.btnDel.Location = new System.Drawing.Point(71, 509);
       this.btnDel.Name = "btnDel";
       this.btnDel.Size = new System.Drawing.Size(40, 40);
       this.btnDel.TabIndex = 10;
@@ -132,7 +136,7 @@
       // 
       this.btnAdd.ImageIndex = 6;
       this.btnAdd.ImageList = this.imageList1;
-      this.btnAdd.Location = new System.Drawing.Point(25, 462);
+      this.btnAdd.Location = new System.Drawing.Point(25, 509);
       this.btnAdd.Name = "btnAdd";
       this.btnAdd.Size = new System.Drawing.Size(40, 40);
       this.btnAdd.TabIndex = 9;
@@ -143,7 +147,7 @@
       // 
       this.btnSave.ImageIndex = 4;
       this.btnSave.ImageList = this.imageList1;
-      this.btnSave.Location = new System.Drawing.Point(319, 462);
+      this.btnSave.Location = new System.Drawing.Point(319, 509);
       this.btnSave.Name = "btnSave";
       this.btnSave.Size = new System.Drawing.Size(40, 40);
       this.btnSave.TabIndex = 8;
@@ -153,7 +157,7 @@
       // edZweig
       // 
       this.edZweig.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.edZweig.Location = new System.Drawing.Point(319, 236);
+      this.edZweig.Location = new System.Drawing.Point(319, 298);
       this.edZweig.Name = "edZweig";
       this.edZweig.Size = new System.Drawing.Size(59, 20);
       this.edZweig.TabIndex = 5;
@@ -162,7 +166,7 @@
       // 
       this.label1.AutoSize = true;
       this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label1.Location = new System.Drawing.Point(316, 219);
+      this.label1.Location = new System.Drawing.Point(316, 281);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(36, 13);
       this.label1.TabIndex = 28;
@@ -171,7 +175,7 @@
       // edId
       // 
       this.edId.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.edId.Location = new System.Drawing.Point(319, 279);
+      this.edId.Location = new System.Drawing.Point(319, 341);
       this.edId.Name = "edId";
       this.edId.Size = new System.Drawing.Size(59, 20);
       this.edId.TabIndex = 6;
@@ -180,7 +184,7 @@
       // 
       this.label2.AutoSize = true;
       this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label2.Location = new System.Drawing.Point(316, 262);
+      this.label2.Location = new System.Drawing.Point(316, 324);
       this.label2.Name = "label2";
       this.label2.Size = new System.Drawing.Size(16, 13);
       this.label2.TabIndex = 30;
@@ -191,7 +195,7 @@
       this.gbGeschlecht.Controls.Add(this.opUndef);
       this.gbGeschlecht.Controls.Add(this.opWeiblich);
       this.gbGeschlecht.Controls.Add(this.opMaennlich);
-      this.gbGeschlecht.Location = new System.Drawing.Point(438, 219);
+      this.gbGeschlecht.Location = new System.Drawing.Point(438, 281);
       this.gbGeschlecht.Name = "gbGeschlecht";
       this.gbGeschlecht.Size = new System.Drawing.Size(95, 80);
       this.gbGeschlecht.TabIndex = 7;
@@ -233,7 +237,7 @@
       // label3
       // 
       this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(316, 125);
+      this.label3.Location = new System.Drawing.Point(316, 187);
       this.label3.Name = "label3";
       this.label3.Size = new System.Drawing.Size(37, 13);
       this.label3.TabIndex = 33;
@@ -243,7 +247,7 @@
       // 
       this.cbLehrer.DisplayMember = "KompletterName";
       this.cbLehrer.FormattingEnabled = true;
-      this.cbLehrer.Location = new System.Drawing.Point(319, 141);
+      this.cbLehrer.Location = new System.Drawing.Point(319, 203);
       this.cbLehrer.Name = "cbLehrer";
       this.cbLehrer.Size = new System.Drawing.Size(214, 21);
       this.cbLehrer.TabIndex = 3;
@@ -252,7 +256,7 @@
       // label4
       // 
       this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(316, 167);
+      this.label4.Location = new System.Drawing.Point(316, 229);
       this.label4.Name = "label4";
       this.label4.Size = new System.Drawing.Size(31, 13);
       this.label4.TabIndex = 35;
@@ -262,7 +266,7 @@
       // 
       this.cbFach.DisplayMember = "Bezeichnung";
       this.cbFach.FormattingEnabled = true;
-      this.cbFach.Location = new System.Drawing.Point(319, 183);
+      this.cbFach.Location = new System.Drawing.Point(319, 245);
       this.cbFach.Name = "cbFach";
       this.cbFach.Size = new System.Drawing.Size(214, 21);
       this.cbFach.TabIndex = 4;
@@ -272,7 +276,7 @@
       // 
       this.checkedListBoxKlassen.CheckOnClick = true;
       this.checkedListBoxKlassen.FormattingEnabled = true;
-      this.checkedListBoxKlassen.Location = new System.Drawing.Point(319, 316);
+      this.checkedListBoxKlassen.Location = new System.Drawing.Point(319, 375);
       this.checkedListBoxKlassen.Name = "checkedListBoxKlassen";
       this.checkedListBoxKlassen.Size = new System.Drawing.Size(214, 124);
       this.checkedListBoxKlassen.TabIndex = 36;
@@ -280,7 +284,7 @@
       // textBox1
       // 
       this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-      this.textBox1.Location = new System.Drawing.Point(553, 316);
+      this.textBox1.Location = new System.Drawing.Point(551, 375);
       this.textBox1.Multiline = true;
       this.textBox1.Name = "textBox1";
       this.textBox1.ReadOnly = true;
@@ -293,7 +297,7 @@
       // 
       this.btnErzeugeExcel.ImageIndex = 5;
       this.btnErzeugeExcel.ImageList = this.imageList1;
-      this.btnErzeugeExcel.Location = new System.Drawing.Point(365, 462);
+      this.btnErzeugeExcel.Location = new System.Drawing.Point(365, 509);
       this.btnErzeugeExcel.Name = "btnErzeugeExcel";
       this.btnErzeugeExcel.Size = new System.Drawing.Size(40, 40);
       this.btnErzeugeExcel.TabIndex = 39;
@@ -307,14 +311,14 @@
       this.listSchueler.FormattingEnabled = true;
       this.listSchueler.Location = new System.Drawing.Point(730, 27);
       this.listSchueler.Name = "listSchueler";
-      this.listSchueler.Size = new System.Drawing.Size(243, 420);
+      this.listSchueler.Size = new System.Drawing.Size(243, 472);
       this.listSchueler.TabIndex = 40;
       // 
       // btnDeleteSchueler
       // 
       this.btnDeleteSchueler.ImageIndex = 0;
       this.btnDeleteSchueler.ImageList = this.imageList1;
-      this.btnDeleteSchueler.Location = new System.Drawing.Point(730, 462);
+      this.btnDeleteSchueler.Location = new System.Drawing.Point(730, 509);
       this.btnDeleteSchueler.Name = "btnDeleteSchueler";
       this.btnDeleteSchueler.Size = new System.Drawing.Size(40, 40);
       this.btnDeleteSchueler.TabIndex = 41;
@@ -326,7 +330,7 @@
       // 
       this.btnSchuelerZuteilen.ImageIndex = 1;
       this.btnSchuelerZuteilen.ImageList = this.imageList1;
-      this.btnSchuelerZuteilen.Location = new System.Drawing.Point(776, 462);
+      this.btnSchuelerZuteilen.Location = new System.Drawing.Point(776, 509);
       this.btnSchuelerZuteilen.Name = "btnSchuelerZuteilen";
       this.btnSchuelerZuteilen.Size = new System.Drawing.Size(40, 40);
       this.btnSchuelerZuteilen.TabIndex = 42;
@@ -344,11 +348,51 @@
       this.lbAnzSchueler.TabIndex = 43;
       this.lbAnzSchueler.Text = "Anzahl Schüler";
       // 
+      // edSchuleFachID
+      // 
+      this.edSchuleFachID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.edSchuleFachID.Location = new System.Drawing.Point(319, 111);
+      this.edSchuleFachID.Name = "edSchuleFachID";
+      this.edSchuleFachID.Size = new System.Drawing.Size(350, 20);
+      this.edSchuleFachID.TabIndex = 44;
+      // 
+      // label5
+      // 
+      this.label5.AutoSize = true;
+      this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label5.Location = new System.Drawing.Point(316, 96);
+      this.label5.Name = "label5";
+      this.label5.Size = new System.Drawing.Size(79, 13);
+      this.label5.TabIndex = 45;
+      this.label5.Text = "schule_fach_id";
+      // 
+      // edSchuelerFachID
+      // 
+      this.edSchuelerFachID.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.edSchuelerFachID.Location = new System.Drawing.Point(319, 150);
+      this.edSchuelerFachID.Name = "edSchuelerFachID";
+      this.edSchuelerFachID.Size = new System.Drawing.Size(350, 20);
+      this.edSchuelerFachID.TabIndex = 46;
+      // 
+      // label6
+      // 
+      this.label6.AutoSize = true;
+      this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label6.Location = new System.Drawing.Point(316, 135);
+      this.label6.Name = "label6";
+      this.label6.Size = new System.Drawing.Size(82, 13);
+      this.label6.TabIndex = 47;
+      this.label6.Text = "schuelerfach_id";
+      // 
       // KurseForm
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1015, 524);
+      this.ClientSize = new System.Drawing.Size(1015, 563);
+      this.Controls.Add(this.edSchuelerFachID);
+      this.Controls.Add(this.label6);
+      this.Controls.Add(this.edSchuleFachID);
+      this.Controls.Add(this.label5);
       this.Controls.Add(this.lbAnzSchueler);
       this.Controls.Add(this.btnSchuelerZuteilen);
       this.Controls.Add(this.btnDeleteSchueler);
@@ -410,5 +454,9 @@
     private System.Windows.Forms.Button btnDeleteSchueler;
     private System.Windows.Forms.Button btnSchuelerZuteilen;
     private System.Windows.Forms.Label lbAnzSchueler;
+    private System.Windows.Forms.TextBox edSchuleFachID;
+    private System.Windows.Forms.Label label5;
+    private System.Windows.Forms.TextBox edSchuelerFachID;
+    private System.Windows.Forms.Label label6;
   }
 }

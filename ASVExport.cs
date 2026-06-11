@@ -1,5 +1,7 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -12,11 +14,29 @@ namespace diNo
   /// </summary>
   public class ASVExport
   {
-    
+    private StreamWriter _log;
+
     public ASVExport(string exportDateiPfad)
     {
-      ExportiereASVDaten(true, exportDateiPfad + "_Fachabitur.xml");
-      ExportiereASVDaten(false, exportDateiPfad + "_Abitur.xml");
+      Directory.CreateDirectory(@"C:\tmp");
+      string logPfad = $@"C:\tmp\ASVExport.log";
+
+      using (_log = new StreamWriter(logPfad, append: false, encoding: System.Text.Encoding.UTF8))
+      {
+        Log($"=== ASVExport gestartet ===");
+        Log($"XML-Datei: {exportDateiPfad}");
+
+        ExportiereASVDaten(true, exportDateiPfad + "_Fachabitur.xml");
+        ExportiereASVDaten(false, exportDateiPfad + "_Abitur.xml");
+      }
+    }
+    
+
+    private void Log(string message)
+    {
+      string line = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}";
+      _log.WriteLine(line);
+      _log.Flush();
     }
 
     /// <summary>
@@ -77,6 +97,10 @@ namespace diNo
 
     private XElement ErstellePersonendaten(Schueler schueler)
     {
+      if (schueler.Data.Isasv_idNull())
+      {
+        Log(schueler.NameVorname + " hat keine LDM-ID");
+      }
       return new XElement("Person",
           new XElement("Rufname", schueler.benutzterVorname),
           new XElement("Familienname", schueler.Name),
@@ -183,13 +207,18 @@ namespace diNo
       else
         hj = fach.getHjLeistung(art);
 
-      if (hj != null)
+      if (hj != null && fach.kurs != null)
       {
-        string asvid = (fach.kurs==null || fach.kurs.Data.Isschule_fach_idNull()) ? $"DUMMY_{fach.getFach.Kuerzel}" : fach.kurs.Data.schule_fach_id;
+        if (fach.kurs.Data.Isschule_fach_idNull())
+        {
+          Log(fach.kurs.Kursbezeichnung + " hat keine schule_fach_id");
+          return;
+        }        
+        //string asvid = (fach.kurs==null || fach.kurs.Data.Isschule_fach_idNull()) ? $"DUMMY_{fach.getFach.Kuerzel}" : fach.kurs.Data.schule_fach_id;
         einzeldaten.Add(new XElement("Einzeldaten",
           new XElement("ExtendedPruefungsteil",
               new XElement("Note", hj.Punkte),
-              new XElement("SchuleFach", asvid), 
+              new XElement("SchuleFach", fach.kurs.Data.schule_fach_id), 
               new XElement("Teil", GetTeilCode(hj)),
               new XElement("Belegart", GetBelegart(hj.getFach)),
               //new XElement("Zeugnisart", GetZeugnisart(halbjahr)),
@@ -207,11 +236,16 @@ namespace diNo
     {
       if (note != null)
       {
-        string asvid = kurs.Data.Isschuelerfach_idNull() ? $"DUMMY_{kurs.Id}" : kurs.Data.schuelerfach_id;
+        if (kurs.Data.Isschuelerfach_idNull())
+        {
+          Log(kurs.Kursbezeichnung + " hat keine schuelerfach_id");
+          return;
+        }
+        //string asvid = kurs.Data.Isschuelerfach_idNull() ? $"DUMMY_{kurs.Id}" : kurs.Data.schuelerfach_id;
         einzeldaten.Add(new XElement("Einzeldaten",
           new XElement("BasePruefungsteil",
               new XElement("Note", note),
-              new XElement("Schuelerfach", asvid),
+              new XElement("Schuelerfach", kurs.Data.schuelerfach_id),
               new XElement("Teil", "1243_" + teil)
           )));
       }
@@ -221,13 +255,18 @@ namespace diNo
     private void ErstelleBasePruefungsteil(List<XElement> einzeldaten, Kurs kurs, HjLeistung hj, int teil)
     {
       
-      if (hj != null)
+      if (hj != null && kurs != null)
       {
-        string asvid = kurs == null || kurs.Data.Isschuelerfach_idNull() ? "DUMMY" : kurs.Data.schuelerfach_id;
+        if (kurs.Data.Isschuelerfach_idNull())
+        {
+          Log(kurs.Kursbezeichnung + " hat keine schuelerfach_id");
+          return;
+        }
+        //string asvid = kurs == null || kurs.Data.Isschuelerfach_idNull() ? "DUMMY" : kurs.Data.schuelerfach_id;
         einzeldaten.Add(new XElement("Einzeldaten",
           new XElement("BasePruefungsteil",
               new XElement("Note", hj.Punkte),
-              new XElement("Schuelerfach", asvid),
+              new XElement("Schuelerfach", kurs.Data.schuelerfach_id),
               new XElement("Teil", "1243_" + teil)
           )));
       }
@@ -235,21 +274,7 @@ namespace diNo
        
     // ==================== HELPER-METHODEN ====================
 
-    /// <summary>
-    /// Gibt die SchuleFachId aus der Datenbank zurück
-    /// </summary>
-    private string GetSchuleFachID(Fach fach)
-    {/*
-      if (!string.IsNullOrEmpty(fach.Data.SchuleFachId))
-      {
-        return fach.Data.SchuleFachId;
-      }*/
-
-      // Fallback: Dummy-Wert
-      return $"DUMMY_SCHULE_FACH_{fach.Id}";
-    }
-
-
+   
     /// <summary>
     /// Mapping: Halbjahr -> ASV Teil-Code (1243_XXX)
     /// Quelle: Prüfungsteil (1243).txt
