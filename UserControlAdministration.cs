@@ -546,7 +546,7 @@ namespace diNo
       
       if (dia.ShowDialog() != DialogResult.OK)
         return;
-            
+      /*      
       var importer = new ASVImporter();
       int anzahlErfolgreich = importer.ImportiereASVDaten(dia.FileName);
 
@@ -556,6 +556,7 @@ namespace diNo
       // 4. Optional: Protokolle in Dateien speichern
       importer.SpeichereFehlerProtokoll(@"C:\tmp\fehlerprotokoll.txt");
       importer.SpeichereErfolgsProtokoll(@"C:\tmp\erfolgsprotokoll.txt");
+      */
 
 
       var asvkurs = new AsvXmlKursMapper();
