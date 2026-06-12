@@ -82,7 +82,7 @@ namespace diNo
         // Fachweise nicht die Punkte suchen        
         if (!fachNoten.getFach.NichtNC)
         {
-          var kuerzel = fachNoten.getFach.Kuerzel;
+          bool isFPA = fachNoten.getFach.Typ == FachTyp.FPA;
           HjLeistung hjLeistung;
           byte anzUngueltig = 0;
           byte anzLeer = 0;
@@ -107,7 +107,7 @@ namespace diNo
               continue;
             }
 
-            if (hjLeistung.Art == HjArt.AP || hjLeistung.Art == HjArt.FR || kuerzel == "FpA" /*TODO: Oder Seminarfach*/)
+            if (hjLeistung.Art == HjArt.AP || hjLeistung.Art == HjArt.FR || isFPA)
             {
               sowiesoPflicht.Add(hjLeistung);
             }
@@ -123,7 +123,7 @@ namespace diNo
             hjLeistung = fachNoten.getVorHjLeistung(HjArt.Hj1); // Leistung aus 11/1
             if (hjLeistung != null)
             {
-              if (kuerzel == "FpA") hjLeistung.SetStatus(HjStatus.Einbringen);
+              if (isFPA) hjLeistung.SetStatus(HjStatus.Einbringen);
               else if (hjLeistungen.Count == 0) // in 12 nicht vorhanden --> einbringbar
               {
                 if (hjLeistung.Status == HjStatus.Ungueltig) anzUngueltig++;
@@ -135,7 +135,7 @@ namespace diNo
             hjLeistung = fachNoten.getVorHjLeistung(HjArt.Hj2);
             if (hjLeistung != null)
             {
-              if (kuerzel == "FpA") hjLeistung.SetStatus(HjStatus.Einbringen);
+              if (isFPA) hjLeistung.SetStatus(HjStatus.Einbringen);
               else if (hjLeistung.Status == HjStatus.Ungueltig) anzUngueltig++;
               else hjLeistungen.Add(hjLeistung); // 11/2 vorhanden --> einbringbar            
             }

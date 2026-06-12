@@ -166,7 +166,7 @@ namespace diNo
         new XElement("Einzeldaten",
           new XElement("ExtendedPruefungsteil",
               new XElement("Note", fr.Punkte),
-              //new XElement("SchuleFach", fach.Id),
+              new XElement("SchuleFach", fr.getFach.Data.schule_fach_id),
               new XElement("Teil", GetTeilCode(fr)),
               new XElement("Belegart", "1038_35"), // Sondercode FR
               new XElement("Zeugnisart", "1198_25"),
@@ -209,7 +209,7 @@ namespace diNo
       else
         hj = fach.getHjLeistung(art);
 
-      if (hj != null && fach.kurs != null)
+      if (hj != null)
       {
         if (fach.getFach.Data.Isschule_fach_idNull())
         {
@@ -223,7 +223,7 @@ namespace diNo
               new XElement("SchuleFach", fach.getFach.Data.schule_fach_id), 
               new XElement("Teil", GetTeilCode(hj)),
               new XElement("Belegart", GetBelegart(hj.getFach)),
-              //new XElement("Zeugnisart", GetZeugnisart(halbjahr)),
+              new XElement("Zeugnisart", GetZeugnisart(hj)),
               new XElement("Jahrgangsstufe", GetJahrgangsstufe(hj)),
               new XElement("Einbringung", hj.Status == HjStatus.Einbringen ? 1 : 0),
               new XElement("Schuljahr", "SCHULJAHR_" + (Zugriff.Instance.Schuljahr - (vorJahr ? 1 : 0))),
@@ -236,7 +236,7 @@ namespace diNo
     // für AP schriftlich und mündlich
     private void ErstelleBasePruefungsteil(List<XElement> einzeldaten, Kurs kurs, int? note, int teil)
     {
-      if (note != null)
+      if (note != null && kurs != null)
       {
         if (kurs.getFach.Data.Isschuelerfach_idNull())
         {
@@ -290,7 +290,7 @@ namespace diNo
         case HjArt.Hj1:
         case HjArt.Hj2:
           c = (hj.Art == HjArt.Hj1) ? 450 : 451;
-          if (hj.getFach.Kuerzel == "FpA") c -= 20;
+          if (hj.getFach.Typ == FachTyp.FPA) c -= 20;
           else if (hj.JgStufe == Jahrgangsstufe.Zwoelf) c += 2;
           else if (hj.JgStufe == Jahrgangsstufe.Dreizehn) c += 4;
 
@@ -331,10 +331,17 @@ namespace diNo
     /// Mapping: Halbjahr -> ASV Zeugnisart (1198_XX)
     /// Quelle: Zeugnisart (1038).txt
     /// </summary>
-    private string GetZeugnisart(string halbjahr)
+    private string GetZeugnisart(HjLeistung hj)
     {
-      // muss bei FR und Seminar so gesetzt werden
-      return "1198_25"; // Jahreszeugnis FOS/BOS
+      int c;
+      if (hj.JgStufe == Jahrgangsstufe.Elf) c = 76;
+      else if (hj.JgStufe == Jahrgangsstufe.Dreizehn) c = 58;
+      else c = 78; // 12. Klasse
+
+      if (hj.Art == HjArt.Hj2)
+        c++;
+
+      return "1198_" + c; // Jahreszeugnis FOS/BOS
     }
 
     /// <summary>
