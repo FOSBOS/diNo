@@ -56,7 +56,7 @@ namespace diNo
           if (fach == null)
           {
             writer.WriteLine("Fach " + f + " wird angelegt.");
-            new FachTableAdapter().Insert(f, f, 999, 0, null, false, 0, null, null,null);
+            new FachTableAdapter().Insert(f, f, 999, 0, null, false, 0, null, null,null,null,null);
             Zugriff.Instance.FachRep.Clear();
             Zugriff.Instance.LoadFaecher();
             fach = Zugriff.Instance.FachRep.Find(f);
@@ -150,7 +150,7 @@ namespace diNo
           string geschlecht = null;
           if (fach.Kuerzel == "Sw") geschlecht = "W";
           if (fach.Kuerzel == "Sm") geschlecht = "M";
-          kursTa.Insert(UNr, KursBezeichung, lehrer.Id, fach.Id, zweig, geschlecht, (fach.Typ == FachTyp.WPF ? fachOrg : fach.Kuerzel) + " (" + lehrer.Kuerzel + ")","","");
+          kursTa.Insert(UNr, KursBezeichung, lehrer.Id, fach.Id, zweig, geschlecht, (fach.Typ == FachTyp.WPF ? fachOrg : fach.Kuerzel) + " (" + lehrer.Kuerzel + ")");
           klasseKursTa.Insert(klasse.Data.Id, UNr);
 
           Kurs kurs = Zugriff.Instance.KursRep.Find(UNr); // das Repository aktualisieren

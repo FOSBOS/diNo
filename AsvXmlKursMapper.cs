@@ -23,13 +23,6 @@ namespace diNo
     // Interne Hilfsklassen
     // ---------------------------------------------------------------
 
-
-    private class XmlLehrkraft
-    {
-      public int XmlId { get; set; }
-      public string Namenskuerzel { get; set; }
-    }
-
     private class XmlFach
     {
       public int XmlId { get; set; }
@@ -43,13 +36,6 @@ namespace diNo
       public int FachId { get; set; }
       public string SchuelerfachId { get; set; }
       public string SchuleFachId { get; set; }
-    }
-
-    private class XmlSchuelerinInfo
-    {
-      public int XmlId { get; set; }
-      public string Klassenname { get; set; }
-      public List<int> UnterrichtselementIds { get; set; } = new List<int>();
     }
 
     // ---------------------------------------------------------------
@@ -130,57 +116,49 @@ namespace diNo
         Log($"Schule gefunden: {(string)El(schule, "schulnummer") ?? "unbekannt"}");
 
         // Lookup-Tabellen aufbauen
-        var lehrkraefte = LeseLehrkraefte(schule);
         var faecher = LeseFaecher(schule);
         var ues = LeseUnterrichtselemente(schule);
-        var schueler = LeseSchuelerinnen(schule);
 
-        Log($"Lehrkräfte:          {lehrkraefte.Count}");
         Log($"Fächer:              {faecher.Count}");
         Log($"Unterrichtselemente: {ues.Count}");
-        Log($"Schüler:             {schueler.Count}");
 
-        var lehrkraftById = lehrkraefte.ToDictionary(l => l.XmlId);
         var fachById = faecher.ToDictionary(f => f.XmlId);
-
-        // Kurse holen
-        Zugriff.Instance.LoadKurse();
-        var kurse = Zugriff.Instance.KursRep.getList();
-        if (kurse == null || !kurse.Any())
+       
+        var fachliste = Zugriff.Instance.FachRep.getList();
+        if (fachliste == null || !fachliste.Any())
         {
-          Log("WARNUNG: Keine Kurse in der Notenverwaltung gefunden.");
+          Log("WARNUNG: Keine Fächer in der Notenverwaltung gefunden.");
           return;
         }
 
-        Log($"Kurse in Notenverwaltung: {kurse.Count()}");
+        Log($"Fächer in Notenverwaltung: {fachliste.Count()}");
         Log(new string('-', 60));
 
+        
         int gefunden = 0, nichtGefunden = 0;
-         KursTableAdapter ta = new KursTableAdapter();
+        FachTableAdapter ta = new FachTableAdapter();
 
-        foreach (var k in kurse)
+        foreach (Fach f in fachliste)
         {
-          string lehrerKuerzel = k.getLehrer?.Kuerzel ?? string.Empty;
-          string fachKuerzel = k.getFach?.Kuerzel ?? string.Empty;
-          string kursInfo = $"[{lehrerKuerzel} / {fachKuerzel}]";
+          string fachKuerzel = f.Kuerzel;
 
           var ue = SucheUnterrichtselement(
-              k, ues, lehrkraftById, fachById, schueler,
-              kursInfo, out string hinweis);
+              f, ues, fachById, 
+              out string hinweis);
 
           if (ue != null)
           {
-            k.Data.schuelerfach_id = ue.SchuelerfachId;
-            k.Data.schule_fach_id = ue.SchuleFachId;            
-            ta.Update(k.Data); // Save()
-
-            Log($"OK      {kursInfo} → schuelerfach_id={ue.SchuelerfachId}, " +
+            f.Data.schuelerfach_id = ue.SchuelerfachId;
+            f.Data.schule_fach_id = ue.SchuleFachId;            
+            ta.Update(f.Data); // Save()
+            
+            Log($"OK      {f.Kuerzel} → schuelerfach_id={ue.SchuelerfachId}, " +
                 $"schule_fach_id={ue.SchuleFachId} | {hinweis}");
             gefunden++;
           }
           else
           {
-            Log($"FEHLER  {kursInfo} → nicht gefunden | {hinweis}");
+            Log($"FEHLER  {f.Kuerzel} → nicht gefunden | {hinweis}");
             nichtGefunden++;
           }
         }
@@ -197,105 +175,58 @@ namespace diNo
     // ---------------------------------------------------------------
 
     private XmlUnterrichtselement SucheUnterrichtselement(
-        dynamic kurs,
-        List<XmlUnterrichtselement> alleUes,
-        Dictionary<int, XmlLehrkraft> lehrkraftById,
-        Dictionary<int, XmlFach> fachById,
-        List<XmlSchuelerinInfo> schuelerinnen,
-        string kursInfo,
-        out string hinweis)
+    Fach f,
+    List<XmlUnterrichtselement> alleUes,
+    Dictionary<int, XmlFach> fachById,
+    out string hinweis)
     {
-      string lehrerKuerzel = kurs.getLehrer?.Kuerzel as string ?? string.Empty;
-      string fachKuerzel = kurs.getFach?.Kuerzel as string ?? string.Empty;
+      hinweis = null;
 
-      // --- Schritt 1: Nach Lehrkraft filtern ---
+      // --- Alle Unterrichtselemente mit diesem Fach filtern ---
       var kandidaten = alleUes.Where(ue =>
       {
-        if (!ue.LehrkraftId.HasValue) return false;
-        if (!lehrkraftById.TryGetValue(ue.LehrkraftId.Value, out var lk)) return false;
-        return string.Equals(lk.Namenskuerzel, lehrerKuerzel,
-                             StringComparison.OrdinalIgnoreCase);
-      }).ToList();
-
-      // --- Schritt 2: Nach Fach filtern ---
-      kandidaten = kandidaten.Where(ue =>
-      {
         if (!fachById.TryGetValue(ue.FachId, out var fach)) return false;
-        return string.Equals(fach.Kurzform, fachKuerzel,
+        return string.Equals(fach.Kurzform, f.Kuerzel,
                              StringComparison.OrdinalIgnoreCase);
       }).ToList();
 
-      if (kandidaten.Count == 0)
+      if (!kandidaten.Any())
       {
-        hinweis = $"Kein Unterrichtselement für Lehrer '{lehrerKuerzel}' / Fach '{fachKuerzel}' gefunden.";
+        hinweis = "Kein Unterrichtselement gefunden für Fach " + f.Bezeichnung + " " + f.Kuerzel;
         return null;
       }
-
-      if (kandidaten.Count == 1)
-      {
-        hinweis = "Eindeutig über Lehrer + Fach gefunden.";
-        return kandidaten[0];
-      }
-
-      // --- Schritt 3: Mehrdeutig → Klassen-Abgleich über Schülerinnen ---
-      var kursKlassen = new List<string>();
-      try
-      {
-        foreach (var klasse in kurs.Klassen)
-          kursKlassen.Add(klasse.Bezeichnung as string ?? string.Empty);
-      }
-      catch { /* Klassen nicht verfügbar */ }
-
-      if (!kursKlassen.Any())
-      {
-        hinweis = $"Mehrdeutig ({kandidaten.Count} Treffer), keine Klasse verfügbar – ersten Kandidaten gewählt.";
-        return kandidaten[0];
-      }
-
-      // Für jeden Kandidaten zählen, wie viele Schülerinnen
-      // (a) dieses Unterrichtselement besuchen UND (b) in einer Kursklasse sitzen
-      var gewertet = kandidaten
-          .Select(ue =>
-          {
-            int treffer = schuelerinnen.Count(s =>
-                  s.UnterrichtselementIds.Contains(ue.XmlId) &&
-                  kursKlassen.Any(kk =>
-                      string.Equals(kk, s.Klassenname, StringComparison.OrdinalIgnoreCase)));
-            return (Ue: ue, Treffer: treffer);
-          })
-          .OrderByDescending(x => x.Treffer)
+      // --- Gruppieren nach SchuelerfachId und Häufigkeit zählen ---
+      var gruppen = kandidaten
+          .GroupBy(ue => ue.SchuelerfachId)
+          .Select(g => new { SchuelerfachId = g.Key, Anzahl = g.Count(), Element = g.First() })
+          .OrderByDescending(g => g.Anzahl)
           .ToList();
 
-      var bester = gewertet[0];
+      // --- Zur Kontrolle: auch bei schulefachid ---
+      var gruppen2 = kandidaten
+          .GroupBy(ue => ue.SchuleFachId)
+          .Select(g => new { SchuleFachId = g.Key, Anzahl = g.Count(), Element = g.First() })
+          .OrderByDescending(g => g.Anzahl)
+          .ToList();
 
-      if (bester.Treffer == 0)
-      {
-        hinweis = $"Mehrdeutig ({kandidaten.Count} Treffer), kein Schüler-Klassen-Treffer – ersten Kandidaten gewählt.";
-        return bester.Ue;
-      }
+      // --- Eindeutig: alle haben dieselbe SchuelerfachId ---
+      if (gruppen.Count == 1 && gruppen2.Count == 1)
+        return gruppen[0].Element;
 
-      bool eindeutig = gewertet.Count < 2 || gewertet[0].Treffer > gewertet[1].Treffer;
-      hinweis = eindeutig
-          ? $"Über Schüler-Klassen-Abgleich eindeutig bestimmt ({bester.Treffer} Treffer)."
-          : $"Bester Kandidat mit {bester.Treffer} Treffern gewählt (Gleichstand möglich, Klassen: {string.Join(", ", kursKlassen)}).";
+      // --- Mehrdeutig: häufigstes Element zurückgeben ---
+      var haeufigste = gruppen[0];
+      hinweis = $"Mehrdeutige SchuelerfachId für Fach '{f.Kuerzel}': " +
+                $"'{haeufigste.SchuelerfachId}' ({haeufigste.Anzahl}x) wurde gewählt. " +
+                $"Weitere: {string.Join(", ", gruppen.Skip(1).Select(g => $"'{g.SchuelerfachId}' ({g.Anzahl}x)"))}" +
+                $"schulefachid: {string.Join(", ", gruppen2.Select(g => $"'{g.SchuleFachId}' ({g.Anzahl}x)"))}";
 
-      return bester.Ue;
+      return haeufigste.Element;
     }
+
 
     // ---------------------------------------------------------------
     // XML-Lese-Hilfsmethoden
     // ---------------------------------------------------------------
-
-    private List<XmlLehrkraft> LeseLehrkraefte(XElement schule)
-    {
-      return Els(El(schule, "lehrkraefte"), "lehrkraft")
-          .Select(lk => new XmlLehrkraft
-          {
-            XmlId = ParseInt(El(lk, "xml_id")),
-            Namenskuerzel = (string)El(lk, "namenskuerzel") ?? string.Empty
-          })
-          .ToList();
-    }
 
     private List<XmlFach> LeseFaecher(XElement schule)
     {
@@ -320,35 +251,6 @@ namespace diNo
             SchuleFachId = (string)El(ue, "schule_fach_id") ?? string.Empty
           })
           .ToList();
-    }
-
-    private List<XmlSchuelerinInfo> LeseSchuelerinnen(XElement schule)
-    {
-      var result = new List<XmlSchuelerinInfo>();
-
-      foreach (var s in Desc(schule, "schuelerin"))
-      {
-        var info = new XmlSchuelerinInfo
-        {
-          XmlId = ParseInt(El(s, "xml_id"))
-        };
-
-        // Aktuellsten Klassennamen aus schullaufbahnliste holen
-        var letzterEintrag = Els(El(s, "schullaufbahnliste"), "schullaufbahn").LastOrDefault();
-        if (letzterEintrag != null)
-          info.Klassenname = (string)El(letzterEintrag, "klassenname") ?? string.Empty;
-
-        // Alle besuchten unterrichtselement_ids sammeln
-        foreach (var ueId in Desc(s, "unterrichtselement_id"))
-        {
-          if (int.TryParse((string)ueId, out int id))
-            info.UnterrichtselementIds.Add(id);
-        }
-
-        result.Add(info);
-      }
-
-      return result;
     }
 
     // ---------------------------------------------------------------

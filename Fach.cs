@@ -29,6 +29,11 @@ namespace diNo
       InitSortierung();
     }
 
+    public diNoDataSet.FachRow Data
+    {
+      get { return data; }
+    }
+
     public Kursniveau getKursniveau()
     {
       return (Kursniveau)data.Kursniveau;
