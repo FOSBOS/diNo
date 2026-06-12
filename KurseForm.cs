@@ -28,8 +28,7 @@ namespace diNo
       var dt = ta.GetData();
       foreach (var d in dt)
         t.Add(new Kurs(d));
-      
-      // t = Zugriff.Instance.KursRep.getList(); // TODO:  wäre besser
+
       t.Sort((x, y) => x.Kursbezeichnung.CompareTo(y.Kursbezeichnung));
       liste.DataSource = t;
 
@@ -57,8 +56,6 @@ namespace diNo
       q = liste.SelectedItem as Kurs;
       edBezeichnung.Text = q.Data.Bezeichnung;
       edKurzbez.Text = q.Data.IsKurzbezNull() ? "" : q.Data.Kurzbez;
-      edSchuleFachID.Text = q.Data.Isschule_fach_idNull() ? "" : q.Data.schule_fach_id;
-      edSchuelerFachID.Text = q.Data.Isschuelerfach_idNull() ? "" : q.Data.schuelerfach_id;
       edId.Text = q.Data.Id.ToString();
       edZweig.Text = (q.Data.IsZweigNull() ? "" : q.Data.Zweig);
       opUndef.Checked = q.Data.IsGeschlechtNull();
@@ -90,9 +87,7 @@ namespace diNo
       if (q != null)
       {
         q.Data.Bezeichnung = edBezeichnung.Text;
-        q.Data.Kurzbez = edKurzbez.Text;
-        q.Data.schule_fach_id = edSchuleFachID.Text;
-        q.Data.schuelerfach_id= edSchuelerFachID.Text;
+        q.Data.Kurzbez = edKurzbez.Text;        
         if (edZweig.Text == "") q.Data.SetZweigNull(); else q.Data.Zweig = edZweig.Text;
         if (opUndef.Checked) q.Data.SetGeschlechtNull();
         else if (opMaennlich.Checked) q.Data.Geschlecht = "M";
