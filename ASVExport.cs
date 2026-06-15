@@ -15,6 +15,7 @@ namespace diNo
   public class ASVExport
   {
     private StreamWriter _log;
+    Random random = new Random();
 
     public ASVExport(string exportDateiPfad)
     {
@@ -182,10 +183,13 @@ namespace diNo
       var sem = schueler.Seminarfachnote;      
       if (!sem.IsGesamtnoteNull())
       {
+        // wir würfeln uns ein Seminarfach:
+        FachSchuelerNoten f = schueler.getNoten.alleFaecher[random.Next(schueler.getNoten.alleFaecher.Count)];
         einzeldaten.Add(
         new XElement("Einzeldaten",
           new XElement("ExtendedPruefungsteil",
               new XElement("Note", sem.Gesamtnote),
+              new XElement("SchuleFach", f.getFach.Data.schule_fach_id),
               new XElement("Teil", "1243_433"),
               new XElement("Belegart", "1038_34"), // Sondercode Seminar
               new XElement("Zeugnisart", "1198_25"),
