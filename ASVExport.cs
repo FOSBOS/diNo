@@ -118,7 +118,7 @@ namespace diNo
       {
         zusatzinfo.Add(new XElement("Gesamtleistung",
             new XElement("Gesamtpunkte", schueler.punktesumme.Summe(PunktesummeArt.Gesamt)),
-            new XElement("Gesamtnote", schueler.Data.DNote)//.ToString("F1"))
+            new XElement("Gesamtnote", schueler.Data.DNote.ToString("F1"))//
         ));
       }
 
@@ -154,10 +154,10 @@ namespace diNo
         {          
           ErstelleBasePruefungsteil(einzeldaten, fach.kurs, fach.getNote(Halbjahr.Zweites, Notentyp.APSchriftlich), 414);
           ErstelleBasePruefungsteil(einzeldaten, fach.kurs, fach.getNote(Halbjahr.Zweites, Notentyp.APMuendlich), 418);
-          ErstelleBasePruefungsteil(einzeldaten, fach.kurs, fach.getHjLeistung(HjArt.AP), 490);
+          ErstelleBasePruefungsteil(einzeldaten, fach.getHjLeistung(HjArt.AP), 490);
         }
         // immer das Gesamtergebnis:
-        ErstelleBasePruefungsteil(einzeldaten, fach.kurs, fach.getHjLeistung(HjArt.GesErg), 491);
+        ErstelleBasePruefungsteil(einzeldaten, fach.getHjLeistung(HjArt.GesErg), 491);
       }
 
       // Fachreferat
@@ -258,21 +258,20 @@ namespace diNo
     }
 
     // für AP Gesamt und GesErg
-    private void ErstelleBasePruefungsteil(List<XElement> einzeldaten, Kurs kurs, HjLeistung hj, int teil)
+    private void ErstelleBasePruefungsteil(List<XElement> einzeldaten, HjLeistung hj, int teil)
     {
       
-      if (hj != null && kurs != null)
+      if (hj != null)
       {
-        if (kurs.getFach.Data.Isschuelerfach_idNull())
+        if (hj.getFach.Data.Isschuelerfach_idNull())
         {
-          Log(kurs.Kursbezeichnung + " hat keine schuelerfach_id");
+          Log(hj.getFach.Kuerzel + " hat keine schuelerfach_id");
           return;
         }
-        //string asvid = kurs == null || kurs.Data.Isschuelerfach_idNull() ? "DUMMY" : kurs.Data.schuelerfach_id;
         einzeldaten.Add(new XElement("Einzeldaten",
           new XElement("BasePruefungsteil",
               new XElement("Note", hj.Punkte),
-              new XElement("Schuelerfach", kurs.getFach.Data.schuelerfach_id),
+              new XElement("Schuelerfach", hj.getFach.Data.schuelerfach_id),
               new XElement("Teil", "1243_" + teil)
           )));
       }

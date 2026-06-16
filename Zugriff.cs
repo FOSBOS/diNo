@@ -52,7 +52,7 @@ namespace diNo
       try // macht ggf. Ärger im Designer
       {
         string con = ConfigurationManager.ConnectionStrings[1].ConnectionString;
-        IsTestDB = con.Contains("localhost");
+        IsTestDB = con.Contains("localhost") || con.Contains("clauspc");
       }
       catch
       {
