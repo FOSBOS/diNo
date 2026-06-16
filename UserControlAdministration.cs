@@ -546,10 +546,12 @@ namespace diNo
       
       if (dia.ShowDialog() != DialogResult.OK)
         return;
-            
-      var importer = new ASVImporter();
-      int anzahlErfolgreich = importer.ImportiereASVDaten(dia.FileName);
 
+      WinSVSchuelerReader.ReadSchueler(dia.FileName);
+
+      /*var importer = new ASVImporter();
+      int anzahlErfolgreich = importer.ImportiereASVDaten(dia.FileName);
+      
       // 3. Protokoll ausgeben
       Console.WriteLine(importer.GetKompletteProtokoll());
 
@@ -561,7 +563,7 @@ namespace diNo
 
       var asvkurs = new AsvXmlKursMapper();
       asvkurs.VerarbeiteXml(dia.FileName);
-
+      */
       // 5. Ergebnis anzeigen
       MessageBox.Show($"Import abgeschlossen. Protokolle unter C:\\tmp");
 

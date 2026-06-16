@@ -59,7 +59,7 @@
       this.label3 = new System.Windows.Forms.Label();
       this.btnReadWahlpflichtfaecher = new System.Windows.Forms.Button();
       this.btnImportKlassenleiter = new System.Windows.Forms.Button();
-      this.btnImportASVID = new System.Windows.Forms.Button();
+      this.btnImportWinSV = new System.Windows.Forms.Button();
       this.btnImportUnterricht = new System.Windows.Forms.Button();
       this.importNoten = new System.Windows.Forms.Button();
       this.groupBoxStammdaten = new System.Windows.Forms.GroupBox();
@@ -379,7 +379,7 @@
       this.groupBoxImport.Controls.Add(this.label3);
       this.groupBoxImport.Controls.Add(this.btnReadWahlpflichtfaecher);
       this.groupBoxImport.Controls.Add(this.btnImportKlassenleiter);
-      this.groupBoxImport.Controls.Add(this.btnImportASVID);
+      this.groupBoxImport.Controls.Add(this.btnImportWinSV);
       this.groupBoxImport.Controls.Add(this.btnImportUnterricht);
       this.groupBoxImport.Controls.Add(this.importNoten);
       this.groupBoxImport.Location = new System.Drawing.Point(504, 28);
@@ -448,15 +448,15 @@
       this.btnImportKlassenleiter.UseVisualStyleBackColor = true;
       this.btnImportKlassenleiter.Click += new System.EventHandler(this.btnImportKlassenleiter_Click);
       // 
-      // btnImportASVID
+      // btnImportWinSV
       // 
-      this.btnImportASVID.Location = new System.Drawing.Point(20, 21);
-      this.btnImportASVID.Name = "btnImportASVID";
-      this.btnImportASVID.Size = new System.Drawing.Size(87, 23);
-      this.btnImportASVID.TabIndex = 5;
-      this.btnImportASVID.Text = "ID aus ASV";
-      this.btnImportASVID.UseVisualStyleBackColor = true;
-      this.btnImportASVID.Click += new System.EventHandler(this.btnImportASVID_Click);
+      this.btnImportWinSV.Location = new System.Drawing.Point(20, 21);
+      this.btnImportWinSV.Name = "btnImportWinSV";
+      this.btnImportWinSV.Size = new System.Drawing.Size(182, 23);
+      this.btnImportWinSV.TabIndex = 5;
+      this.btnImportWinSV.Text = "Import aus WinSV";
+      this.btnImportWinSV.UseVisualStyleBackColor = true;
+      this.btnImportWinSV.Click += new System.EventHandler(this.btnImportASVID_Click);
       // 
       // btnImportUnterricht
       // 
@@ -823,7 +823,7 @@
     private System.Windows.Forms.Button exportNoten;
     private System.Windows.Forms.Button importNoten;
     private System.Windows.Forms.Button btnImportUnterricht;
-    private System.Windows.Forms.Button btnImportASVID;
+    private System.Windows.Forms.Button btnImportWinSV;
     private System.Windows.Forms.Button btnImportKlassenleiter;
     private System.Windows.Forms.GroupBox groupBoxStammdaten;
     private System.Windows.Forms.Button btnKurse;
