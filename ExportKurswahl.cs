@@ -69,8 +69,7 @@ namespace diNo
 
         //SchülerID; 'Username'; 'Pwd'; 'Nachname'; 'Vorname'; 'Klasse'; JgStufe; 'Zweig'; 'Schulart'; 'ZweigRS'; 'Mail'
         writer.WriteLine(s.Id + sep + username + sep + pwd + sep + s.Name.Replace("'", " ") + sep + s.Data.Rufname + sep
-          + s.getKlasse.Bezeichnung + sep + jgstufe + sep + s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep + zweigRS
-          + sep + s.Data.MailSchule);
+          + s.getKlasse.Bezeichnung + sep + jgstufe + sep + s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep + zweigRS);
       }
       writer.Close();
     }

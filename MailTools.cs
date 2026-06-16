@@ -127,7 +127,7 @@ namespace diNo
         else if (anEltern)
           mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
         else
-          mailTo = s.Data.MailSchule;
+          mailTo = "s.Data.MailSchule";
 
         msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
 
@@ -167,7 +167,7 @@ namespace diNo
 
       bool isBOS = s.Data.Schulart == "B";
       if (isBOS)
-        mailTo = s.Data.MailSchule;
+        mailTo = "s.Data.MailSchule";
       else if (s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer == "")
       {
         log.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
@@ -226,7 +226,7 @@ namespace diNo
             msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
           if (!isBOS && !isTest)
           {
-            msg.Cc.Add(new MimeKit.MailboxAddress(s.Data.MailSchule, s.Data.MailSchule));
+            msg.Cc.Add(new MimeKit.MailboxAddress("s.Data.MailSchule", "s.Data.MailSchule"));
           }
 
           msg.ReplyTo.Add(new MimeKit.MailboxAddress(kl.VornameName, kl.Data.EMail));

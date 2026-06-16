@@ -48,8 +48,8 @@ namespace diNo
           s = Zugriff.Instance.SchuelerRep.Find(sid);
           if (s != null)
           {
-            s.Data.MailSchule = mail;
-            s.Save();
+            //s.Data.MailSchule = mail;
+            //s.Save();
             c++;
           }
         }

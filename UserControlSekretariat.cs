@@ -118,8 +118,7 @@ namespace diNo
       schueler.Data.Vorname = textBoxVorname.Text;
       schueler.Data.Rufname = textBoxRufname.Text;
       schueler.Data.Ausbildungsrichtung = textBoxAR.Text;
-      schueler.Data.Schulart = textBoxFB.Text;
-      schueler.Data.asv_id = textBoxASVID.Text;
+      schueler.Data.Schulart = textBoxFB.Text;      
 
       schueler.Save();
     }

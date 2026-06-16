@@ -50,7 +50,7 @@ namespace diNo
           dateTimeProbezeit.Value = schueler.Data.IsProbezeitBisNull() ? dateTimeProbezeit.MinDate : schueler.Data.ProbezeitBis;
           dateTimeAustritt.Value = schueler.Data.IsAustrittsdatumNull() ? dateTimeAustritt.MinDate : schueler.Data.Austrittsdatum;
           textBoxEmail.Text = schueler.Data.Email;
-          textBoxMailSchule.Text = schueler.Data.IsMailSchuleNull() ? "" : schueler.Data.MailSchule;
+          textBoxMailSchule.Text = "";
           cbStatus.SelectedIndex = schueler.Data.Status;
         }        
       }
@@ -73,8 +73,7 @@ namespace diNo
       else schueler.Data.Austrittsdatum = dateTimeAustritt.Value;
 
       schueler.Data.Email = textBoxEmail.Text;
-      schueler.Data.Geburtsort = textBoxGeburtsort.Text;
-      schueler.Data.MailSchule = textBoxMailSchule.Text;
+      schueler.Data.Geburtsort = textBoxGeburtsort.Text;      
       schueler.Data.Status = cbStatus.SelectedIndex;
 
       schueler.Save();

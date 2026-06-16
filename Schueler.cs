@@ -136,7 +136,7 @@ namespace diNo
     /// </summary>
     public string AsvId 
     { 
-      get { return Data.Isasv_idNull() ? "" : Data.asv_id; }
+      get { return null; }
     }
 
 
@@ -921,7 +921,7 @@ public int APFaktor
 
     public string getLoginname()
     {      
-        string s = Data.MailSchule;
+        string s = "Data.MailSchule";
         int i = s.IndexOf("@");
         if (i < 1) return s;
         return s.Substring(0,i);      

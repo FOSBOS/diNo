@@ -346,8 +346,7 @@ namespace diNo
       if (dia.ShowDialog() == DialogResult.OK)
       {
         Cursor = Cursors.WaitCursor;
-        //Xml.MBStatistik.Serialize(dia.FileName);
-        new ASVExport(dia.FileName);
+        Xml.MBStatistik.Serialize(dia.FileName);        
         Cursor = Cursors.Default;
         MessageBox.Show("Fertig.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         //MessageBox.Show("Fertig. Bitte in Zeile 3 der Datei die Attribute löschen, so dass dort nur noch <abschlusspruefungsstatistik> steht.\nAnschließend das Prüfprogramm verwenden.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
