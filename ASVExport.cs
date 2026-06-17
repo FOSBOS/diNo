@@ -217,7 +217,7 @@ namespace diNo
       {
         if (fach.getFach.Data.Isschule_fach_idNull())
         {
-          Log(fach.kurs.Kursbezeichnung + " hat keine schule_fach_id");
+          Log(fach.getFach.Bezeichnung + " hat keine schule_fach_id");
           return;
         }        
         //string asvid = (fach.kurs==null || fach.kurs.Data.Isschule_fach_idNull()) ? $"DUMMY_{fach.getFach.Kuerzel}" : fach.kurs.Data.schule_fach_id;
