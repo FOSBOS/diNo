@@ -118,7 +118,7 @@ namespace diNo
       {
         zusatzinfo.Add(new XElement("Gesamtleistung",
             new XElement("Gesamtpunkte", schueler.punktesumme.Summe(PunktesummeArt.Gesamt)),
-            new XElement("Gesamtnote", schueler.Data.DNote.ToString("F1"))//
+            new XElement("Gesamtnote", schueler.Data.DNote) //.ToString("F1")
         ));
       }
 
