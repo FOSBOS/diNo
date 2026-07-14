@@ -15,6 +15,14 @@ namespace diNo
     Klassenleiter = 2
   }
 
+  public enum AnhangTyp
+  {
+    Keiner = 0,
+    Noten = 1,
+    PDF = 2,
+    Absenzen = 3    
+  }
+
   public class MailTools : IDisposable
   {
     private readonly SmtpClient mailServer;
@@ -34,6 +42,10 @@ namespace diNo
     public string Betreff { get; set; } = "";
     public string DateiAnhang { get; set; } = "";
     public string BodyText { get; set; } = "";
+    public AnhangTyp anhangTyp;
+    public ReplyTyp replyTyp;
+    public bool anEltern = false;
+    public bool isTest = false;
 
     // Parameterloser Konstruktor: lädt Settings aus Zugriff.Instance
     public MailTools(string logDirectory = null)
@@ -110,7 +122,7 @@ namespace diNo
       }
     }
     // Versendet ein Mail an diesen Schüler (ggf. an die Elternadresse)
-    public void SendMail(Schueler s, bool anEltern, ReplyTyp replyTyp, bool isTest)
+    public void SendMail(Schueler s)
     {
       string mailTo;
       try
@@ -134,7 +146,11 @@ namespace diNo
         var builder = new MimeKit.BodyBuilder();
         builder.TextBody = (s.ErzeugeAnrede(anEltern) + BodyText).Replace("<br>", "\n");
 
-        if (DateiAnhang != "")
+        if (anhangTyp==AnhangTyp.Noten)
+        {
+
+        }
+        else if (anhangTyp == AnhangTyp.PDF && DateiAnhang != "")
           builder.Attachments.Add(DateiAnhang);
         msg.Body = builder.ToMessageBody();
 
@@ -143,7 +159,7 @@ namespace diNo
           Lehrer kl = s.getKlasse.Klassenleiter;
           msg.ReplyTo.Add(new MimeKit.MailboxAddress(kl.VornameName, kl.Data.EMail));
         }
-        else if (replyTyp == ReplyTyp.Sekretariat)
+        else if (replyTyp  == ReplyTyp.Sekretariat)
         {
           msg.ReplyTo.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), Zugriff.Instance.getString(GlobaleStrings.SchulMail)));
         }
@@ -161,7 +177,7 @@ namespace diNo
       }
     }
 
-    public void SendAbsenzen(Schueler s, bool isTest)
+    public void SendAbsenzen(Schueler s)
     {
       string mailTo;
 
