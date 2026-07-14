@@ -47,7 +47,7 @@ namespace diNo
 
       try
       {
-        var subject = txtSubject.Text;
+        string subject = opAnhangNoten.Checked ? "Notenmitteilung" : txtSubject.Text;
         var isTest = chkTest.Checked;
 
         var replyTyp =

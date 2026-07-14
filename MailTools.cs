@@ -1,6 +1,8 @@
 ﻿using MailKit.Net.Smtp;
 using MailKit.Security;
+using Microsoft.Reporting.WinForms;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -31,6 +33,7 @@ namespace diNo
     private readonly object mailLock = new object();
     private bool disposed = false;
     private bool erstesMal = true;
+    private string tmpDatei = @"C:\tmp\Notenmitteilung.pdf";
 
     // SMTP-Konfigurationsfelder
     private readonly string smtpHost;
@@ -144,14 +147,16 @@ namespace diNo
         msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
 
         var builder = new MimeKit.BodyBuilder();
-        builder.TextBody = (s.ErzeugeAnrede(anEltern) + BodyText).Replace("<br>", "\n");
+        builder.TextBody = (s.ErzeugeAnrede(anEltern,true) + BodyText).Replace("<br>", "\n");
 
         if (anhangTyp==AnhangTyp.Noten)
         {
-
+          CreatePdf(s, tmpDatei);
+          builder.Attachments.Add(tmpDatei);
         }
         else if (anhangTyp == AnhangTyp.PDF && DateiAnhang != "")
           builder.Attachments.Add(DateiAnhang);
+
         msg.Body = builder.ToMessageBody();
 
         if (replyTyp == ReplyTyp.Klassenleiter)
@@ -262,7 +267,61 @@ namespace diNo
       }
       log.WriteLine("------------------ " + s.Id);
     }
-   
+
+    // erzeugt eine Notenmitteilung in PDF-Form (einzelner Schüler oder eine ganze Klasse)
+    public void CreatePdf(Schueler s, string targetFile)
+    {
+      Bericht rptTyp = Bericht.Notenmitteilung;
+      List<SchuelerDruck> liste = new List<SchuelerDruck>();
+      liste.Add(SchuelerDruck.CreateSchuelerDruck(s, rptTyp, UnterschriftZeugnis.SL));
+      
+      //ReportViewer im Hintergrund erstellen, um PDF zu drucken, und Report zuweisen.
+      ReportViewer rpt = new ReportViewer();
+      ReportDataSource dataSource = new ReportDataSource();
+      dataSource.Name = "DataSet1";
+
+      //Report als Embedded Resource mit dem Namen "Report.rdlc" ... entsprechend anpassen
+      rpt.LocalReport.ReportEmbeddedResource = "diNo." + SchuelerDruck.GetBerichtsname(rptTyp) + ".rdlc"; //"diNo.rptNotenmitteilung.rdlc";
+
+      // Unterberichte einbinden
+      rpt.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(subrptEventHandler);
+
+      //Report mit Daten befüllen
+
+      dataSource.Value = liste;
+      rpt.LocalReport.DataSources.Add(dataSource);
+
+      //Report als PDF in Datei speichern
+      byte[] PDF = rpt.LocalReport.Render("PDF");
+      FileStream fsReport = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None);
+      fsReport.Write(PDF, 0, PDF.Length);
+      fsReport.Close();
+
+      rpt.Dispose();
+    }
+
+    void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
+    {
+      string subrpt = e.ReportPath; // jeder Unterbericht ruft diesen EventHandler auf; hier steht drin welcher es ist.
+      int schuelerId;
+      int.TryParse(e.Parameters[0].Values[0], out schuelerId);
+      if (schuelerId > 0)
+      {
+        Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
+        /*
+        if (subrpt == "subrptPunktesumme" || subrpt == "subrptPunktesummeNB")
+        {
+          e.DataSources.Add(new ReportDataSource("DataSet1", PunkteSummeDruck.Create(schueler, rptTyp)));
+        }
+        else*/
+        {
+          IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenDruck(Bericht.Notenmitteilung);
+          e.DataSources.Add(new ReportDataSource("DataSet1", noten));
+        }
+      }
+    }
+
+
 
     public void Dispose()
     {
