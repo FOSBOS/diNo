@@ -216,20 +216,19 @@ namespace diNo
         case "EBC": //English Book Club
         case "Sp":
         case "F":
-        case "F-f":
+        case "Ffg":
           schluessel = "E";
           ug = "34";
           og = "49";
           break;
-        case "RSw": //Sozialwirtschaft und Recht
+        case "SuR": //Sozialwirtschaft und Recht
         case "BwR":
-        case "WIn":
         case "VWL":
         case "Wl":
         case "Rl":
         case "Inf": //Informatik im Wirtschaftszweig
         case "InfW_SU": // Informatik Wahlfach für ABU, Soziale (für InfW_T gilt der Matheschlüssel)
-        case "WAk": // Wirtschaft aktuell
+        case "Wak": // Wirtschaft aktuell
         case "WR": // Wirtschaft und Recht
         case "IBS": // International Business Studies
           schluessel = "M";
@@ -237,7 +236,7 @@ namespace diNo
           og = "44";
           break;
         case "D":
-        case "PP":
+        case "Paed":
           schluessel = "M";
           ug = "20";
           og = "40";
@@ -247,7 +246,7 @@ namespace diNo
         default:
           schluessel = "M";
           ug = "20";
-          og = "40";
+          og = "39";
           break;
       }
 

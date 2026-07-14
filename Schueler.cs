@@ -884,7 +884,7 @@ public int APFaktor
         return "Sehr geehrte Frau " + nachname + ",<br>";
     }
 
-    public string ErzeugeAnrede(bool ElternadresseVerwenden)
+    public string ErzeugeAnrede(bool ElternadresseVerwenden, bool Duzen=false)
     {
       if (ElternadresseVerwenden)
       {
@@ -894,6 +894,8 @@ public int APFaktor
         s += "<br>";
         return s;
       }
+      else if (Duzen)
+        return "Hallo " + Data.Rufname + ",<br>";
       else
       {
         return erzAnr(Data.Geschlecht, Data.Name) + "<br>";

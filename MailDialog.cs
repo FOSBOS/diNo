@@ -47,17 +47,19 @@ namespace diNo
 
       try
       {
-        var subject = txtSubject.Text;
-        var withAbsenzen = opAnhangAbsenzen.Checked;
+        string subject = opAnhangNoten.Checked ? "Notenmitteilung" : txtSubject.Text;
         var isTest = chkTest.Checked;
-        var toEltern = opToEltern.Checked;
 
         var replyTyp =
           opSekretariat.Checked ? ReplyTyp.Sekretariat :
           (opReplyKL.Checked ? ReplyTyp.Klassenleiter : ReplyTyp.dino);
 
+        AnhangTyp anhangTyp = opAnhangNoten.Checked ? AnhangTyp.Noten :
+            (opAnhangPDF.Checked ? AnhangTyp.PDF :
+            (opAnhangAbsenzen.Checked ? AnhangTyp.Absenzen : AnhangTyp.Keiner));
         string bodyText = null;
-        if (!withAbsenzen)
+
+        if (!opAnhangAbsenzen.Checked)
         {
           if (chkReadBodyText.Checked)
           {
@@ -83,7 +85,7 @@ namespace diNo
           if (!Zugriff.Instance.AbsenzenEingelesen)
             ImportCSV();
         }
-
+        
         string attachmentPath = null;
         if (opAnhangPDF.Checked)
         {
@@ -107,23 +109,27 @@ namespace diNo
           using (var mail = new MailTools()) // parameterlos – lädt Settings intern
           {
             mail.Betreff = subject;
+            mail.anhangTyp = anhangTyp;
+            mail.replyTyp = replyTyp;
+            mail.anEltern = opToEltern.Checked;
+            mail.isTest = chkTest.Checked;
 
-            if (!withAbsenzen)
-              mail.BodyText = bodyText ?? string.Empty;
+            if (anhangTyp != AnhangTyp.Absenzen) // dort automatisch generiert
+              mail.BodyText = bodyText ?? string.Empty; 
 
             if (!string.IsNullOrWhiteSpace(attachmentPath))
               mail.DateiAnhang = attachmentPath;
 
             foreach (var s in list)
             {
-              if (withAbsenzen)
+              if (anhangTyp == AnhangTyp.Absenzen)
               {
                 if (s.absenzen != null && s.absenzen.Count > 0)
-                  mail.SendAbsenzen(s, isTest);
+                  mail.SendAbsenzen(s);
               }
               else
               {
-                mail.SendMail(s, toEltern, replyTyp, isTest);
+                mail.SendMail(s);
                 if (isTest) break; // nur eine Test-Mail
               }
             }
