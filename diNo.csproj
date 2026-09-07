@@ -244,8 +244,6 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="UserImpersonation.cs" />
-    <Compile Include="Xml\abschlusspruefung_1_5.cs" />
-    <Compile Include="Xml\MBStatistik.cs" />
     <Compile Include="Xml\schulerfolg_1_1.cs" />
     <Compile Include="Xml\Schulerfolgsstatistik.cs" />
     <Compile Include="Testdaten.cs" />
@@ -351,7 +349,6 @@
     </Compile>
     <Compile Include="Vorkommnis.cs" />
     <Compile Include="WahlpflichtfachReader.cs" />
-    <Compile Include="WinSVSchuelerReader.cs" />
     <Compile Include="Zugriff.cs" />
     <EmbeddedResource Include="BasisForm.resx">
       <DependentUpon>BasisForm.cs</DependentUpon>
@@ -529,10 +526,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Xml\abschlusspruefung_1.5.dtd" />
-    <None Include="Xml\abschlusspruefung_1.5.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Xml\schulerfolg_1.1.dtd" />
     <None Include="Xml\schulerfolg_1.1.xsd">
       <SubType>Designer</SubType>

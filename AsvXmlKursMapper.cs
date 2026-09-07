@@ -135,7 +135,7 @@ namespace diNo
         Log(new string('-', 60));
 
         
-        int gefunden = 0, nichtGefunden = 0;
+        int gefunden = 0, nichtGefunden = 0, geaendert = 0;
         FachTableAdapter ta = new FachTableAdapter();
 
         foreach (Fach f in fachliste)
@@ -143,18 +143,29 @@ namespace diNo
           string fachKuerzel = f.Kuerzel;
 
           var ue = SucheUnterrichtselement(
-              f, ues, fachById, 
+              f, ues, fachById,
               out string hinweis);
 
           if (ue != null)
           {
-            f.Data.schuelerfach_id = ue.SchuelerfachId;
-            f.Data.schule_fach_id = ue.SchuleFachId;            
-            ta.Update(f.Data); // Save()
-            
-            Log($"OK      {f.Kuerzel} → schuelerfach_id={ue.SchuelerfachId}, " +
-                $"schule_fach_id={ue.SchuleFachId} | {hinweis}");
             gefunden++;
+            string aktuelleSchuelerfachId = f.Data.Isschuelerfach_idNull() ? "" : f.Data.schuelerfach_id;
+            string aktuelleSchuleFachId = f.Data.Isschule_fach_idNull() ? "" : f.Data.schule_fach_id;
+
+            if (aktuelleSchuelerfachId == ue.SchuelerfachId && aktuelleSchuleFachId == ue.SchuleFachId)
+            {
+              Log($"UNVERÄNDERT {f.Kuerzel} → schuelerfach_id={ue.SchuelerfachId}, " +
+                  $"schule_fach_id={ue.SchuleFachId} | {hinweis}");
+            }
+            else
+            {
+              Log($"GEÄNDERT {f.Kuerzel} → schuelerfach_id: '{aktuelleSchuelerfachId}' -> '{ue.SchuelerfachId}', " +
+                  $"schule_fach_id: '{aktuelleSchuleFachId}' -> '{ue.SchuleFachId}' | {hinweis}");
+              f.Data.schuelerfach_id = ue.SchuelerfachId;
+              f.Data.schule_fach_id = ue.SchuleFachId;
+              ta.Update(f.Data); // Save() - nur bei tatsächlicher Änderung
+              geaendert++;
+            }
           }
           else
           {
@@ -164,7 +175,7 @@ namespace diNo
         }
 
         Log(new string('-', 60));
-        Log($"Ergebnis: {gefunden} gefunden, {nichtGefunden} nicht gefunden.");
+        Log($"Ergebnis: {gefunden} gefunden ({geaendert} geändert), {nichtGefunden} nicht gefunden.");
         Log($"Log-Datei: {logPfad}");
         Log("=== AsvXmlKursMapper beendet ===");
       }

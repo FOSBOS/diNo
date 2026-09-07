@@ -1,5 +1,4 @@
-﻿using diNo.Xml.Mbstatistik;
-using MailKit.Net;
+﻿using MailKit.Net;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Reporting.WinForms;
 using SevenZip;

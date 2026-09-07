@@ -28,10 +28,14 @@ namespace diNo
         this.schueler = value;
         if (this.schueler != null)
         {
-          textBoxStrasse.Text = schueler.Data.AnschriftStrasse;
-          textBoxPLZ.Text = schueler.Data.AnschriftPLZ;
-          textBoxOrt.Text = schueler.Data.AnschriftOrt;
-          textBoxTelefonnummer.Text = schueler.Data.AnschriftTelefonnummer;
+          var eigeneAnschrift = schueler.getEigeneAnschrift();
+          string strasse = eigeneAnschrift == null || eigeneAnschrift.IsStrasseNull() ? "" : eigeneAnschrift.Strasse;
+          if (eigeneAnschrift != null && !eigeneAnschrift.IsHausnummerNull() && eigeneAnschrift.Hausnummer != "")
+            strasse += " " + eigeneAnschrift.Hausnummer;
+          textBoxStrasse.Text = strasse;
+          textBoxPLZ.Text = eigeneAnschrift == null || eigeneAnschrift.IsPLZNull() ? "" : eigeneAnschrift.PLZ;
+          textBoxOrt.Text = eigeneAnschrift == null || eigeneAnschrift.IsOrtNull() ? "" : eigeneAnschrift.Ort;
+          textBoxTelefonnummer.Text = eigeneAnschrift == null || eigeneAnschrift.IsTelefonnummerNull() ? "" : eigeneAnschrift.Telefonnummer;
           textBoxNotfalltelefonnummer.Text = schueler.Data.Notfalltelefonnummer;
 
           textBoxGeburtsdatum.Text = schueler.Data.IsGeburtsdatumNull() ? "" : schueler.Data.Geburtsdatum.ToString("dd.MM.yyyy");
@@ -42,8 +46,10 @@ namespace diNo
 
           textBoxJahrgangsstufe.Text = schueler.EintrittInJahrgangsstufe;
           textBoxEintrittAm.Text = schueler.EintrittAm == null ? "" : schueler.EintrittAm.Value.ToString("dd.MM.yyyy");
-          string kontaktEltern = schueler.Data.VornameEltern1 + " " + schueler.Data.NachnameEltern1;
-          kontaktEltern += string.IsNullOrEmpty(schueler.Data.VornameEltern2) ? "" : "\n" + schueler.Data.VornameEltern2 + " " + schueler.Data.NachnameEltern2;
+          var eltern1 = schueler.getErziehungsberechtigter("1");
+          var eltern2 = schueler.getErziehungsberechtigter("2");
+          string kontaktEltern = eltern1 == null ? "" : eltern1.VornamePerson + " " + eltern1.NachnamePerson;
+          kontaktEltern += (eltern2 == null || string.IsNullOrEmpty(eltern2.VornamePerson)) ? "" : "\n" + eltern2.VornamePerson + " " + eltern2.NachnamePerson;
           textBoxAdresseEltern.Lines = kontaktEltern.Split('\n');
           textBoxBekenntnis.Text = schueler.Data.Bekenntnis;
 
@@ -58,10 +64,7 @@ namespace diNo
 
     private void btnSave_Click(object sender, EventArgs e)
     {
-      schueler.Data.AnschriftStrasse = textBoxStrasse.Text;
-      schueler.Data.AnschriftPLZ = textBoxPLZ.Text;
-      schueler.Data.AnschriftOrt = textBoxOrt.Text;
-      schueler.Data.AnschriftTelefonnummer = textBoxTelefonnummer.Text;
+      schueler.SaveEigeneAnschrift(textBoxStrasse.Text, textBoxPLZ.Text, textBoxOrt.Text, textBoxTelefonnummer.Text);
       schueler.Data.Notfalltelefonnummer = textBoxNotfalltelefonnummer.Text;
 
       schueler.Data.Bekenntnis = textBoxBekenntnis.Text;

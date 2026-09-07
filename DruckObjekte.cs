@@ -1,5 +1,4 @@
 ﻿using diNo.diNoDataSetTableAdapters;
-using diNo.Xml.Mbstatistik;
 using System;
 using System.Collections.Generic;
 
@@ -190,8 +189,9 @@ namespace diNo
 
     public NotenbogenDruck(Schueler s) : base(s, Bericht.Notenbogen)
     {
-      Anschrift = s.Data.AnschriftStrasse + "\n" + s.Data.AnschriftPLZ + " " + s.Data.AnschriftOrt;
-      Telefon = s.Data.AnschriftTelefonnummer;
+      var eigeneAnschrift = s.getEigeneAnschrift();
+      Anschrift = eigeneAnschrift == null ? "" : eigeneAnschrift.Strasse + "\n" + eigeneAnschrift.PLZ + " " + eigeneAnschrift.Ort;
+      Telefon = eigeneAnschrift == null || eigeneAnschrift.IsTelefonnummerNull() ? "" : eigeneAnschrift.Telefonnummer;
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
       KlasseMitZweig = s.KlassenBezeichnung;
       OrtDatum = Zugriff.Instance.getString(GlobaleStrings.SchulOrt) + ", den " + DateTime.Today.ToString("dd.MM.yyyy");

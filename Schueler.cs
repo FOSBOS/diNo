@@ -20,7 +20,9 @@ namespace diNo
     private Klasse klasse;                  // Objektverweis zur Klasse dieses Schülers
     private List<Kurs> kurse; // Recordset-Menge aller Kurse dieses Schülers
     private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
-    private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler    
+    private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler
+    private List<diNoDataSet.SchuelerAnschriftRow> anschriften;       // eigene Anschrift + Erziehungsberechtigte
+    private List<diNoDataSet.SchuelerWiederholungRow> wiederholungen; // Historie über mehrere Schuljahre
     private diNoDataSet.FpaDataTable fpaDT; // wird zum Speichern benötigt: FPA-Halbjahr 1 und 2
     private diNoDataSet.SeminarfachnoteRow seminar;
     private diNoDataSet.SeminarfachnoteDataTable seminarDT;
@@ -70,6 +72,8 @@ namespace diNo
       kurse = null;
       noten = null;
       vorkommnisse = null;
+      anschriften = null;
+      wiederholungen = null;
       punktesumme = new Punktesumme(this);
       Zweig = Faecherkanon.GetZweig(data.Ausbildungsrichtung);
     }
@@ -289,20 +293,37 @@ public int APFaktor
       }
     }
 
+    /// <summary>
+    /// Alle Wiederholungen dieses Schülers (Historie über mehrere Schuljahre/Importe hinweg).
+    /// </summary>
+    public List<diNoDataSet.SchuelerWiederholungRow> getWiederholungenRows()
+    {
+      if (wiederholungen == null)
+      {
+        wiederholungen = new List<diNoDataSet.SchuelerWiederholungRow>();
+        foreach (var row in new SchuelerWiederholungTableAdapter().GetDataBySchuelerId(this.Id))
+          wiederholungen.Add(row);
+      }
+      return wiederholungen;
+    }
+
+    /// <summary>
+    /// Fügt eine neue Wiederholung hinzu (z. B. beim ASV-Import erkannt). Bestehende Wiederholungen bleiben als Historie erhalten.
+    /// </summary>
+    public void AddWiederholung(string schuljahr, string jahrgangsstufe, string grund)
+    {
+      new SchuelerWiederholungTableAdapter().Insert(this.Id, schuljahr, jahrgangsstufe, grund);
+      wiederholungen = null; // damit er die neu lädt
+    }
+
     public bool Wiederholt()
     {
-      bool wh = false;
-      if (!Data.IsWiederholung1JahrgangsstufeNull())
+      foreach (var w in getWiederholungenRows())
       {
-        wh = getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung1Jahrgangsstufe);
+        if (!w.IsJahrgangsstufeNull() && getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(w.Jahrgangsstufe))
+          return true;
       }
-
-      if (!wh && !Data.IsWiederholung2JahrgangsstufeNull())
-      {
-        wh = getKlasse.Jahrgangsstufe == Faecherkanon.GetJahrgangsstufe(Data.Wiederholung2Jahrgangsstufe);
-      }
-
-      return wh;
+      return false;
     }
 
 
@@ -412,15 +433,11 @@ public int APFaktor
     {
       string result = string.Empty;
 
-      if (!this.Data.IsWiederholung1JahrgangsstufeNull() && isAWiederholung(this.Data.Wiederholung1Jahrgangsstufe))
+      foreach (var w in getWiederholungenRows())
       {
-        result += Data.Wiederholung1Jahrgangsstufe;
-        result += " (" + Data.Wiederholung1Grund + ")";
-      }
-      if (!this.Data.IsWiederholung2JahrgangsstufeNull() && isAWiederholung(this.Data.Wiederholung2Jahrgangsstufe))
-      {
-        result += ", " + Data.Wiederholung2Jahrgangsstufe;
-        result += " (" + Data.Wiederholung2Grund + ")";
+        if (w.IsJahrgangsstufeNull() || !isAWiederholung(w.Jahrgangsstufe)) continue;
+        if (result != string.Empty) result += ", ";
+        result += w.Jahrgangsstufe + " (" + (w.IsGrundNull() ? "" : w.Grund) + ")";
       }
 
       return result;
@@ -884,13 +901,76 @@ public int APFaktor
         return "Sehr geehrte Frau " + nachname + ",<br>";
     }
 
+    /// <summary>
+    /// Alle Anschriften dieses Schülers: seine eigene (AnschriftWessen="3") sowie die der Erziehungsberechtigten (1/2) und ggf. weitere (4).
+    /// </summary>
+    public List<diNoDataSet.SchuelerAnschriftRow> getAnschriftenRows()
+    {
+      if (anschriften == null)
+      {
+        anschriften = new List<diNoDataSet.SchuelerAnschriftRow>();
+        foreach (var row in new SchuelerAnschriftTableAdapter().GetDataBySchuelerId(this.Id))
+          anschriften.Add(row);
+      }
+      return anschriften;
+    }
+
+    /// <summary>
+    /// Fügt eine Anschrift hinzu (eigene oder eines Erziehungsberechtigten), z. B. beim ASV-Import.
+    /// </summary>
+    public void AddAnschrift(string anschriftWessen, string anschriftstyp, string nachnamePerson, string vornamePerson, string anredePerson, string verwandtschaftsbezeichnung,
+      string strasse, string hausnummer, string plz, string ort, string telefonnummer, string mobilnummer, string email, bool? hauptAnsprechpartner, bool? auskunftsberechtigt)
+    {
+      new SchuelerAnschriftTableAdapter().Insert(this.Id, anschriftWessen, anschriftstyp, nachnamePerson, vornamePerson, anredePerson, verwandtschaftsbezeichnung,
+        strasse, hausnummer, plz, ort, telefonnummer, mobilnummer, email, hauptAnsprechpartner, auskunftsberechtigt);
+      anschriften = null; // damit er die neu lädt
+    }
+
+    public diNoDataSet.SchuelerAnschriftRow getEigeneAnschrift()
+    {
+      foreach (var a in getAnschriftenRows())
+        if (a.AnschriftWessen == "3") return a;
+      return null;
+    }
+
+    // AnschriftWessen: "1"=Erziehungsberechtigte/r, "2"=weitere/r Erziehungsberechtigte/r
+    public diNoDataSet.SchuelerAnschriftRow getErziehungsberechtigter(string anschriftWessen)
+    {
+      foreach (var a in getAnschriftenRows())
+        if (a.AnschriftWessen == anschriftWessen) return a;
+      return null;
+    }
+
+    /// <summary>
+    /// Legt die eigene Anschrift (AnschriftWessen="3") an oder aktualisiert sie, z. B. aus der Stammdaten-Ansicht.
+    /// Die Hausnummer (aus dem ASV-Import) bleibt dabei unangetastet.
+    /// </summary>
+    public void SaveEigeneAnschrift(string strasse, string plz, string ort, string telefonnummer)
+    {
+      var eigene = getEigeneAnschrift();
+      if (eigene == null)
+      {
+        AddAnschrift("3", null, null, null, null, null, strasse, null, plz, ort, telefonnummer, null, null, null, null);
+      }
+      else
+      {
+        eigene.Strasse = strasse;
+        eigene.PLZ = plz;
+        eigene.Ort = ort;
+        eigene.Telefonnummer = telefonnummer;
+        new SchuelerAnschriftTableAdapter().Update(eigene);
+      }
+    }
+
     public string ErzeugeAnrede(bool ElternadresseVerwenden, bool Duzen=false)
     {
       if (ElternadresseVerwenden)
       {
         string s = "";
-        if (Data.AnredeEltern1 != "") s = erzAnr(Data.AnredeEltern1, data.NachnameEltern1);
-        if (Data.AnredeEltern2 != "") s += erzAnr(Data.AnredeEltern2, data.NachnameEltern2);
+        var eltern1 = getErziehungsberechtigter("1");
+        var eltern2 = getErziehungsberechtigter("2");
+        if (eltern1 != null && !eltern1.IsAnredePersonNull() && eltern1.AnredePerson != "") s = erzAnr(eltern1.AnredePerson, eltern1.NachnamePerson);
+        if (eltern2 != null && !eltern2.IsAnredePersonNull() && eltern2.AnredePerson != "") s += erzAnr(eltern2.AnredePerson, eltern2.NachnamePerson);
         s += "<br>";
         return s;
       }
@@ -908,16 +988,24 @@ public int APFaktor
       string s = "";
       if (ElternadresseVerwenden)
       {
+        var eltern1 = getErziehungsberechtigter("1");
+        var eltern2 = getErziehungsberechtigter("2");
+        string anrede1 = (eltern1 != null && !eltern1.IsAnredePersonNull()) ? eltern1.AnredePerson : "";
+        string anrede2 = (eltern2 != null && !eltern2.IsAnredePersonNull()) ? eltern2.AnredePerson : "";
         // wenn beide Eltern getrennt gespeichert sind, muss die Anrede in dieselbe Zeile, sonst extra:
-        s = getHerrnFrau(Data.AnredeEltern1) + (Data.AnredeEltern2 == "" ? "\n" : "") + Data.VornameEltern1 + " " + Data.NachnameEltern1 + "\n";
-        if (Data.AnredeEltern2 != "")
-          s += getHerrnFrau(Data.AnredeEltern2) + Data.VornameEltern2 + " " + Data.NachnameEltern2 + "\n";
+        s = getHerrnFrau(anrede1) + (anrede2 == "" ? "\n" : "") + (eltern1 != null ? eltern1.VornamePerson + " " + eltern1.NachnamePerson : "") + "\n";
+        if (anrede2 != "")
+          s += getHerrnFrau(anrede2) + eltern2.VornamePerson + " " + eltern2.NachnamePerson + "\n";
       }
       else
         s = getHerrnFrau(Data.Geschlecht) + "\n" + VornameName + "\n";
 
-      s += Data.AnschriftStrasse + "\n";
-      s += Data.AnschriftPLZ + " " + Data.AnschriftOrt;
+      var eigeneAnschrift = getEigeneAnschrift();
+      if (eigeneAnschrift != null)
+      {
+        s += eigeneAnschrift.Strasse + (eigeneAnschrift.IsHausnummerNull() || eigeneAnschrift.Hausnummer == "" ? "" : " " + eigeneAnschrift.Hausnummer) + "\n";
+        s += eigeneAnschrift.PLZ + " " + eigeneAnschrift.Ort;
+      }
       return s;
     }
 

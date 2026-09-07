@@ -1,6 +1,7 @@
 ﻿using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Reporting.WinForms;
+using SevenZip;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -321,6 +322,29 @@ namespace diNo
       }
     }
 
+    /*
+    private void Zip(string inFile, string passwort)
+    {
+      // Es muss das NuGet-Package SevenZipSharp installiert sein. Diesem muss man den DLL-Pfad der 7z.dll mitgeben: 
+
+      string outFile = inFile + ".zip";
+      string dll = @"F:\diNo\packages\SevenZipSharp.Net45.1.0.19\lib\net45\7z.dll";
+      SevenZipCompressor.SetLibraryPath(dll);
+
+      SevenZipCompressor szc = new SevenZipCompressor
+      {
+        CompressionMethod = CompressionMethod.Deflate,
+        CompressionLevel = CompressionLevel.Normal,
+        CompressionMode = CompressionMode.Create,
+        DirectoryStructure = true,
+        PreserveDirectoryRoot = false,
+        ArchiveFormat = OutArchiveFormat.Zip
+      };
+
+      // passwort = "FB-" + s.Data.Geburtsdatum.ToString("yyyyMMdd")
+      szc.CompressFilesEncrypted(outFile, passwort, new string[] { inFile });
+    }
+    */
 
 
     public void Dispose()
