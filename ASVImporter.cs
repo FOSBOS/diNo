@@ -181,6 +181,11 @@ namespace diNo
           verwandtschaft = DecodePersonentyp(El(personElement, "personentyp"));
         }
 
+        // Elternadresse (wessen "1"/"2") nur anlegen, wenn Vor- und Nachname vorhanden sind
+        bool istElternadresse = wessen == "1" || wessen == "2";
+        if (istElternadresse && (string.IsNullOrEmpty(vorname) || string.IsNullOrEmpty(nachname)))
+          continue;
+
         string strasse = null, hausnummer = null, plz = null, ort = null;
         var anschriftElement = a.Element(ns + "anschrift");
         if (anschriftElement != null)

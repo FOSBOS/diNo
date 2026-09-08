@@ -114,7 +114,7 @@ namespace diNo
       // 
       this.lblGeburtsdatum.AutoSize = true;
       this.lblGeburtsdatum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lblGeburtsdatum.Location = new System.Drawing.Point(26, 237);
+      this.lblGeburtsdatum.Location = new System.Drawing.Point(27, 236);
       this.lblGeburtsdatum.Name = "lblGeburtsdatum";
       this.lblGeburtsdatum.Size = new System.Drawing.Size(63, 13);
       this.lblGeburtsdatum.TabIndex = 11;
@@ -124,7 +124,7 @@ namespace diNo
       // 
       this.textBoxGeburtsdatum.Enabled = false;
       this.textBoxGeburtsdatum.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxGeburtsdatum.Location = new System.Drawing.Point(27, 252);
+      this.textBoxGeburtsdatum.Location = new System.Drawing.Point(28, 251);
       this.textBoxGeburtsdatum.Name = "textBoxGeburtsdatum";
       this.textBoxGeburtsdatum.Size = new System.Drawing.Size(83, 20);
       this.textBoxGeburtsdatum.TabIndex = 6;
@@ -183,7 +183,7 @@ namespace diNo
       this.textBoxAdresseEltern.Location = new System.Drawing.Point(27, 291);
       this.textBoxAdresseEltern.Multiline = true;
       this.textBoxAdresseEltern.Name = "textBoxAdresseEltern";
-      this.textBoxAdresseEltern.Size = new System.Drawing.Size(240, 60);
+      this.textBoxAdresseEltern.Size = new System.Drawing.Size(240, 46);
       this.textBoxAdresseEltern.TabIndex = 8;
       // 
       // labelProbezeitBis
@@ -200,7 +200,7 @@ namespace diNo
       // 
       this.lblEmail.AutoSize = true;
       this.lblEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.lblEmail.Location = new System.Drawing.Point(25, 198);
+      this.lblEmail.Location = new System.Drawing.Point(25, 147);
       this.lblEmail.Name = "lblEmail";
       this.lblEmail.Size = new System.Drawing.Size(26, 13);
       this.lblEmail.TabIndex = 34;
@@ -209,7 +209,7 @@ namespace diNo
       // textBoxEmail
       // 
       this.textBoxEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxEmail.Location = new System.Drawing.Point(27, 213);
+      this.textBoxEmail.Location = new System.Drawing.Point(27, 162);
       this.textBoxEmail.Name = "textBoxEmail";
       this.textBoxEmail.Size = new System.Drawing.Size(240, 20);
       this.textBoxEmail.TabIndex = 5;
@@ -285,7 +285,7 @@ namespace diNo
       // textBoxBekenntnis
       // 
       this.textBoxBekenntnis.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxBekenntnis.Location = new System.Drawing.Point(28, 382);
+      this.textBoxBekenntnis.Location = new System.Drawing.Point(318, 202);
       this.textBoxBekenntnis.Name = "textBoxBekenntnis";
       this.textBoxBekenntnis.Size = new System.Drawing.Size(82, 20);
       this.textBoxBekenntnis.TabIndex = 9;
@@ -294,7 +294,7 @@ namespace diNo
       // 
       this.label6.AutoSize = true;
       this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label6.Location = new System.Drawing.Point(26, 366);
+      this.label6.Location = new System.Drawing.Point(316, 186);
       this.label6.Name = "label6";
       this.label6.Size = new System.Drawing.Size(60, 13);
       this.label6.TabIndex = 43;
@@ -313,7 +313,7 @@ namespace diNo
       // textBoxNotfalltelefonnummer
       // 
       this.textBoxNotfalltelefonnummer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxNotfalltelefonnummer.Location = new System.Drawing.Point(27, 155);
+      this.textBoxNotfalltelefonnummer.Location = new System.Drawing.Point(27, 362);
       this.textBoxNotfalltelefonnummer.Name = "textBoxNotfalltelefonnummer";
       this.textBoxNotfalltelefonnummer.Size = new System.Drawing.Size(240, 20);
       this.textBoxNotfalltelefonnummer.TabIndex = 4;
@@ -322,7 +322,7 @@ namespace diNo
       // 
       this.label9.AutoSize = true;
       this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label9.Location = new System.Drawing.Point(26, 140);
+      this.label9.Location = new System.Drawing.Point(26, 347);
       this.label9.Name = "label9";
       this.label9.Size = new System.Drawing.Size(111, 13);
       this.label9.TabIndex = 49;
@@ -370,7 +370,7 @@ namespace diNo
       // 
       this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.btnSave.Image = global::diNo.Properties.Resources.Save;
-      this.btnSave.Location = new System.Drawing.Point(518, 362);
+      this.btnSave.Location = new System.Drawing.Point(518, 342);
       this.btnSave.Name = "btnSave";
       this.btnSave.Size = new System.Drawing.Size(40, 40);
       this.btnSave.TabIndex = 26;
@@ -424,7 +424,7 @@ namespace diNo
       this.textBoxVorigeSchule.Location = new System.Drawing.Point(318, 291);
       this.textBoxVorigeSchule.Multiline = true;
       this.textBoxVorigeSchule.Name = "textBoxVorigeSchule";
-      this.textBoxVorigeSchule.Size = new System.Drawing.Size(240, 60);
+      this.textBoxVorigeSchule.Size = new System.Drawing.Size(240, 46);
       this.textBoxVorigeSchule.TabIndex = 85;
       // 
       // labelVorigeSchule
@@ -460,7 +460,7 @@ namespace diNo
       // textBoxMailSchule
       // 
       this.textBoxMailSchule.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxMailSchule.Location = new System.Drawing.Point(318, 213);
+      this.textBoxMailSchule.Location = new System.Drawing.Point(27, 202);
       this.textBoxMailSchule.Name = "textBoxMailSchule";
       this.textBoxMailSchule.Size = new System.Drawing.Size(240, 20);
       this.textBoxMailSchule.TabIndex = 87;
@@ -469,7 +469,7 @@ namespace diNo
       // 
       this.label1.AutoSize = true;
       this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.label1.Location = new System.Drawing.Point(316, 199);
+      this.label1.Location = new System.Drawing.Point(25, 188);
       this.label1.Name = "label1";
       this.label1.Size = new System.Drawing.Size(118, 13);
       this.label1.TabIndex = 88;

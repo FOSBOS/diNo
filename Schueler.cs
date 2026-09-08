@@ -386,7 +386,7 @@ public int APFaktor
     {
       get
       {
-        return this.Data.EintrittJahrgangsstufe;
+        return Data.IsEintrittJahrgangsstufeNull() ? "" : Data.EintrittJahrgangsstufe;
       }
     }
 
@@ -934,23 +934,24 @@ public int APFaktor
     }
 
     // AnschriftWessen: "1"=Erziehungsberechtigte/r, "2"=weitere/r Erziehungsberechtigte/r
-    public diNoDataSet.SchuelerAnschriftRow getErziehungsberechtigter(string anschriftWessen)
+    // Iteriert über alle Erziehungsberechtigten, unabhängig von deren Anzahl
+    public IEnumerable<diNoDataSet.SchuelerAnschriftRow> getErziehungsberechtigte()
     {
       foreach (var a in getAnschriftenRows())
-        if (a.AnschriftWessen == anschriftWessen) return a;
-      return null;
+        if (a.AnschriftWessen == "1" || a.AnschriftWessen == "2")
+          yield return a;
     }
 
     /// <summary>
     /// Legt die eigene Anschrift (AnschriftWessen="3") an oder aktualisiert sie, z. B. aus der Stammdaten-Ansicht.
     /// Die Hausnummer (aus dem ASV-Import) bleibt dabei unangetastet.
     /// </summary>
-    public void SaveEigeneAnschrift(string strasse, string plz, string ort, string telefonnummer)
+    public void SaveEigeneAnschrift(string strasse, string plz, string ort, string telefonnummer, string email)
     {
       var eigene = getEigeneAnschrift();
       if (eigene == null)
       {
-        AddAnschrift("3", null, null, null, null, null, strasse, null, plz, ort, telefonnummer, null, null, null, null);
+        AddAnschrift("3", null, null, null, null, null, strasse, null, plz, ort, telefonnummer, null, email, null, null);
       }
       else
       {
@@ -958,6 +959,7 @@ public int APFaktor
         eigene.PLZ = plz;
         eigene.Ort = ort;
         eigene.Telefonnummer = telefonnummer;
+        eigene.Email = email;
         new SchuelerAnschriftTableAdapter().Update(eigene);
       }
     }
@@ -967,10 +969,8 @@ public int APFaktor
       if (ElternadresseVerwenden)
       {
         string s = "";
-        var eltern1 = getErziehungsberechtigter("1");
-        var eltern2 = getErziehungsberechtigter("2");
-        if (eltern1 != null && !eltern1.IsAnredePersonNull() && eltern1.AnredePerson != "") s = erzAnr(eltern1.AnredePerson, eltern1.NachnamePerson);
-        if (eltern2 != null && !eltern2.IsAnredePersonNull() && eltern2.AnredePerson != "") s += erzAnr(eltern2.AnredePerson, eltern2.NachnamePerson);
+        foreach (var eltern in getErziehungsberechtigte())
+          if (!eltern.IsAnredePersonNull() && eltern.AnredePerson != "") s += erzAnr(eltern.AnredePerson, eltern.NachnamePerson);
         s += "<br>";
         return s;
       }
@@ -988,14 +988,26 @@ public int APFaktor
       string s = "";
       if (ElternadresseVerwenden)
       {
-        var eltern1 = getErziehungsberechtigter("1");
-        var eltern2 = getErziehungsberechtigter("2");
-        string anrede1 = (eltern1 != null && !eltern1.IsAnredePersonNull()) ? eltern1.AnredePerson : "";
-        string anrede2 = (eltern2 != null && !eltern2.IsAnredePersonNull()) ? eltern2.AnredePerson : "";
-        // wenn beide Eltern getrennt gespeichert sind, muss die Anrede in dieselbe Zeile, sonst extra:
-        s = getHerrnFrau(anrede1) + (anrede2 == "" ? "\n" : "") + (eltern1 != null ? eltern1.VornamePerson + " " + eltern1.NachnamePerson : "") + "\n";
-        if (anrede2 != "")
-          s += getHerrnFrau(anrede2) + eltern2.VornamePerson + " " + eltern2.NachnamePerson + "\n";
+        var elternListe = new List<diNoDataSet.SchuelerAnschriftRow>();
+        foreach (var eltern in getErziehungsberechtigte())
+          elternListe.Add(eltern);
+
+        if (elternListe.Count >= 2)
+        {
+          // bei mehreren Eltern steht die Anrede in derselben Zeile wie der Name:
+          foreach (var eltern in elternListe)
+          {
+            string anrede = !eltern.IsAnredePersonNull() ? eltern.AnredePerson : "";
+            s += getHerrnFrau(anrede) + eltern.VornamePerson + " " + eltern.NachnamePerson + "\n";
+          }
+        }
+        else if (elternListe.Count == 1)
+        {
+          // bei nur einem Elternteil bekommt die Anrede eine eigene Zeile:
+          var eltern = elternListe[0];
+          string anrede = !eltern.IsAnredePersonNull() ? eltern.AnredePerson : "";
+          s = getHerrnFrau(anrede) + "\n" + eltern.VornamePerson + " " + eltern.NachnamePerson + "\n";
+        }
       }
       else
         s = getHerrnFrau(Data.Geschlecht) + "\n" + VornameName + "\n";

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace diNo
@@ -36,26 +37,25 @@ namespace diNo
           textBoxPLZ.Text = eigeneAnschrift == null || eigeneAnschrift.IsPLZNull() ? "" : eigeneAnschrift.PLZ;
           textBoxOrt.Text = eigeneAnschrift == null || eigeneAnschrift.IsOrtNull() ? "" : eigeneAnschrift.Ort;
           textBoxTelefonnummer.Text = eigeneAnschrift == null || eigeneAnschrift.IsTelefonnummerNull() ? "" : eigeneAnschrift.Telefonnummer;
-          textBoxNotfalltelefonnummer.Text = schueler.Data.Notfalltelefonnummer;
+          //textBoxNotfalltelefonnummer.Text = schueler.Data.Notfalltelefonnummer;
 
           textBoxGeburtsdatum.Text = schueler.Data.IsGeburtsdatumNull() ? "" : schueler.Data.Geburtsdatum.ToString("dd.MM.yyyy");
           textBoxGeburtsort.Text = schueler.Data.Geburtsort;
           textBoxWiederholungen.Text = schueler.getWiederholungen();
-          textBoxBeruflicheVorbildung.Text = schueler.Data.BeruflicheVorbildung;
-          textBoxVorigeSchule.Text = schueler.EintrittAusSchulname;
+          //textBoxBeruflicheVorbildung.Text = schueler.Data.BeruflicheVorbildung;
+          //textBoxVorigeSchule.Text = schueler.EintrittAusSchulname;
 
           textBoxJahrgangsstufe.Text = schueler.EintrittInJahrgangsstufe;
           textBoxEintrittAm.Text = schueler.EintrittAm == null ? "" : schueler.EintrittAm.Value.ToString("dd.MM.yyyy");
-          var eltern1 = schueler.getErziehungsberechtigter("1");
-          var eltern2 = schueler.getErziehungsberechtigter("2");
-          string kontaktEltern = eltern1 == null ? "" : eltern1.VornamePerson + " " + eltern1.NachnamePerson;
-          kontaktEltern += (eltern2 == null || string.IsNullOrEmpty(eltern2.VornamePerson)) ? "" : "\n" + eltern2.VornamePerson + " " + eltern2.NachnamePerson;
-          textBoxAdresseEltern.Lines = kontaktEltern.Split('\n');
-          textBoxBekenntnis.Text = schueler.Data.Bekenntnis;
+          var kontaktEltern = new List<string>();
+          foreach (var eltern in schueler.getErziehungsberechtigte())
+            kontaktEltern.Add(eltern.VornamePerson + " " + eltern.NachnamePerson);
+          textBoxAdresseEltern.Lines = kontaktEltern.ToArray();
+          textBoxBekenntnis.Text = schueler.Data.IsBekenntnisNull() ? "" : schueler.Data.Bekenntnis;
 
           dateTimeProbezeit.Value = schueler.Data.IsProbezeitBisNull() ? dateTimeProbezeit.MinDate : schueler.Data.ProbezeitBis;
           dateTimeAustritt.Value = schueler.Data.IsAustrittsdatumNull() ? dateTimeAustritt.MinDate : schueler.Data.Austrittsdatum;
-          textBoxEmail.Text = schueler.Data.Email;
+          textBoxEmail.Text = eigeneAnschrift == null || eigeneAnschrift.IsEmailNull() ? "" : eigeneAnschrift.Email;
           textBoxMailSchule.Text = schueler.Data.IsMailSchuleNull() ? "" : schueler.Data.MailSchule;
           cbStatus.SelectedIndex = schueler.Data.Status;
         }        
@@ -64,7 +64,7 @@ namespace diNo
 
     private void btnSave_Click(object sender, EventArgs e)
     {
-      schueler.SaveEigeneAnschrift(textBoxStrasse.Text, textBoxPLZ.Text, textBoxOrt.Text, textBoxTelefonnummer.Text);
+      schueler.SaveEigeneAnschrift(textBoxStrasse.Text, textBoxPLZ.Text, textBoxOrt.Text, textBoxTelefonnummer.Text, textBoxEmail.Text);
       schueler.Data.Notfalltelefonnummer = textBoxNotfalltelefonnummer.Text;
 
       schueler.Data.Bekenntnis = textBoxBekenntnis.Text;
@@ -75,7 +75,6 @@ namespace diNo
       if (dateTimeAustritt.Value == dateTimeAustritt.MinDate) schueler.Data.SetAustrittsdatumNull();
       else schueler.Data.Austrittsdatum = dateTimeAustritt.Value;
 
-      schueler.Data.Email = textBoxEmail.Text;
       schueler.Data.Geburtsort = textBoxGeburtsort.Text;
       schueler.Data.MailSchule = textBoxMailSchule.Text;
       schueler.Data.Status = cbStatus.SelectedIndex;

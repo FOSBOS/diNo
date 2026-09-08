@@ -38,9 +38,11 @@ namespace diNo
         Regex regex = new Regex(@"^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$");
         //@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
 
-        Match match = regex.Match(s.Data.Email);
+        var eigeneAnschrift = s.getEigeneAnschrift();
+        string email = eigeneAnschrift == null || eigeneAnschrift.IsEmailNull() ? "" : eigeneAnschrift.Email;
+        Match match = regex.Match(email);
         if (!match.Success)
-          err.list.Add(new NotenCheckResult(s, null,"Ungültige Mailadresse: "+ s.Data.Email));
+          err.list.Add(new NotenCheckResult(s, null,"Ungültige Mailadresse: "+ email));
 
         if (!(s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer==""))
         {
