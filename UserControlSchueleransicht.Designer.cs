@@ -55,7 +55,7 @@ namespace diNo
       this.textBoxBekenntnis = new System.Windows.Forms.TextBox();
       this.label6 = new System.Windows.Forms.Label();
       this.label8 = new System.Windows.Forms.Label();
-      this.textBoxNotfalltelefonnummer = new System.Windows.Forms.TextBox();
+      this.textBoxMailEltern = new System.Windows.Forms.TextBox();
       this.label9 = new System.Windows.Forms.Label();
       this.textBoxJahrgangsstufe = new System.Windows.Forms.TextBox();
       this.label10 = new System.Windows.Forms.Label();
@@ -312,11 +312,11 @@ namespace diNo
       // 
       // textBoxNotfalltelefonnummer
       // 
-      this.textBoxNotfalltelefonnummer.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-      this.textBoxNotfalltelefonnummer.Location = new System.Drawing.Point(27, 362);
-      this.textBoxNotfalltelefonnummer.Name = "textBoxNotfalltelefonnummer";
-      this.textBoxNotfalltelefonnummer.Size = new System.Drawing.Size(240, 20);
-      this.textBoxNotfalltelefonnummer.TabIndex = 4;
+      this.textBoxMailEltern.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxMailEltern.Location = new System.Drawing.Point(27, 362);
+      this.textBoxMailEltern.Name = "textBoxNotfalltelefonnummer";
+      this.textBoxMailEltern.Size = new System.Drawing.Size(240, 20);
+      this.textBoxMailEltern.TabIndex = 4;
       // 
       // label9
       // 
@@ -495,7 +495,7 @@ namespace diNo
       this.Controls.Add(this.label10);
       this.Controls.Add(this.textBoxEintrittAm);
       this.Controls.Add(this.label11);
-      this.Controls.Add(this.textBoxNotfalltelefonnummer);
+      this.Controls.Add(this.textBoxMailEltern);
       this.Controls.Add(this.label9);
       this.Controls.Add(this.label8);
       this.Controls.Add(this.textBoxBekenntnis);
@@ -555,7 +555,7 @@ namespace diNo
     private System.Windows.Forms.TextBox textBoxBekenntnis;
     private System.Windows.Forms.Label label6;
     private System.Windows.Forms.Label label8;
-    private System.Windows.Forms.TextBox textBoxNotfalltelefonnummer;
+    private System.Windows.Forms.TextBox textBoxMailEltern;
     private System.Windows.Forms.Label label9;
     private System.Windows.Forms.TextBox textBoxJahrgangsstufe;
     private System.Windows.Forms.Label label10;

@@ -1,7 +1,5 @@
 use diNo;
 
---ALTER TABLE Fach ADD schuelerfach_id NVARCHAR(40);
---ALTER TABLE Fach ADD schule_fach_id NVARCHAR(40);
 
 -- Umbau Anschriften/Wiederholungen auf 1:n-Tabellen (ASV-Import)
 CREATE TABLE SchuelerAnschrift (
@@ -37,12 +35,3 @@ ALTER TABLE Schueler DROP COLUMN NachnameEltern1, VornameEltern1, AnredeEltern1,
 ALTER TABLE Schueler DROP COLUMN NachnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2;
 ALTER TABLE Schueler DROP COLUMN Wiederholung1Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Jahrgangsstufe, Wiederholung2Grund;
 
-
-
---insert into GlobaleStrings values (29,'MailAdresseTest','stefan.hein@fos-sonthofen-cloud.de')
---ALTER TABLE Schueler ADD CONSTRAINT chk_schueler_geschlecht CHECK (Geschlecht IN ('M','W','D'));
---ALTER TABLE Schueler ADD asv_id NVARCHAR(40);
-
--- bereits im Produktivsystem eingespielte Änderungen:
--- ALTER TABLE KlasseKurs ADD PRIMARY KEY (KursId,KlasseId)
--- ALTER TABLE dbo.Schueler ADD MailSchule NVARCHAR(50) NULL DEFAULT ''

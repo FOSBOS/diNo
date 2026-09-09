@@ -37,7 +37,7 @@ namespace diNo
           textBoxPLZ.Text = eigeneAnschrift == null || eigeneAnschrift.IsPLZNull() ? "" : eigeneAnschrift.PLZ;
           textBoxOrt.Text = eigeneAnschrift == null || eigeneAnschrift.IsOrtNull() ? "" : eigeneAnschrift.Ort;
           textBoxTelefonnummer.Text = eigeneAnschrift == null || eigeneAnschrift.IsTelefonnummerNull() ? "" : eigeneAnschrift.Telefonnummer;
-          //textBoxNotfalltelefonnummer.Text = schueler.Data.Notfalltelefonnummer;
+          
 
           textBoxGeburtsdatum.Text = schueler.Data.IsGeburtsdatumNull() ? "" : schueler.Data.Geburtsdatum.ToString("dd.MM.yyyy");
           textBoxGeburtsort.Text = schueler.Data.Geburtsort;
@@ -51,6 +51,7 @@ namespace diNo
           foreach (var eltern in schueler.getErziehungsberechtigte())
             kontaktEltern.Add(eltern.VornamePerson + " " + eltern.NachnamePerson);
           textBoxAdresseEltern.Lines = kontaktEltern.ToArray();
+          textBoxMailEltern.Text = schueler.getMailEltern();
           textBoxBekenntnis.Text = schueler.Data.IsBekenntnisNull() ? "" : schueler.Data.Bekenntnis;
 
           dateTimeProbezeit.Value = schueler.Data.IsProbezeitBisNull() ? dateTimeProbezeit.MinDate : schueler.Data.ProbezeitBis;
@@ -65,8 +66,7 @@ namespace diNo
     private void btnSave_Click(object sender, EventArgs e)
     {
       schueler.SaveEigeneAnschrift(textBoxStrasse.Text, textBoxPLZ.Text, textBoxOrt.Text, textBoxTelefonnummer.Text, textBoxEmail.Text);
-      schueler.Data.Notfalltelefonnummer = textBoxNotfalltelefonnummer.Text;
-
+      
       schueler.Data.Bekenntnis = textBoxBekenntnis.Text;
       // ReliUnterricht via Kurszuordnung wird automatisch gesetzt!       
 

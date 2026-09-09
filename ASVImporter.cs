@@ -325,6 +325,42 @@ namespace diNo
       }
     }
 
+    private enum Religionszugehoerigkeit
+    {
+      OhneAngabe = 0,        // BL - ohne Religionszugehörigkeit
+      RoemischKatholisch = 10, // RK - römisch-katholisch
+      AltKatholisch = 11,      // AK - alt-katholisch
+      Evangelisch = 20,        // EV - evangelisch
+      Siebenten_Tags_Adventisten = 25, // ST - Siebenten-Tags-Adventisten
+      Islamisch = 30,          // IL - islamisch
+      Jesidisch = 31,          // JE - jesidisch
+      Alevitisch = 32,         // AL - alevitisch
+      Orthodox = 40,           // OX - orthodox
+      SyrischOrthodox = 41,    // SO - syrisch-orthodox
+      Israelitisch = 50,       // IS - israelitisch/jüdisch
+      Neuapostolisch = 60,     // NA - neuapostolisch
+      ZeugeJehovas = 70,       // ZJ - Zeuge Jehovas
+      Sonstige = 99            // SR - sonstige Religionszugehörigkeit
+    }
+
+    private readonly Dictionary<int, string> ReligionSchluesselZuKurzform = new Dictionary<int, string>
+        {
+            { 0,  "BL" },
+            { 10, "RK" },
+            { 11, "AK" },
+            { 20, "EV" },
+            { 25, "ST" },
+            { 30, "IL" },
+            { 31, "JE" },
+            { 32, "AL" },
+            { 40, "OX" },
+            { 41, "SO" },
+            { 50, "IS" },
+            { 60, "NA" },
+            { 70, "ZJ" },
+            { 99, "SR" },
+        };
+
     private static bool? ParseBool(string s)
     {
       bool b;

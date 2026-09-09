@@ -942,6 +942,7 @@ public int APFaktor
           yield return a;
     }
 
+  
     /// <summary>
     /// Legt die eigene Anschrift (AnschriftWessen="3") an oder aktualisiert sie, z. B. aus der Stammdaten-Ansicht.
     /// Die Hausnummer (aus dem ASV-Import) bleibt dabei unangetastet.
@@ -962,6 +963,16 @@ public int APFaktor
         eigene.Email = email;
         new SchuelerAnschriftTableAdapter().Update(eigene);
       }
+    }
+
+    public string getMailEltern()
+    {
+      foreach (var eltern in getErziehungsberechtigte())
+      {
+        if (!eltern.IsEmailNull() && eltern.Email !="")
+          return eltern.Email;
+      }
+      return "";
     }
 
     public string ErzeugeAnrede(bool ElternadresseVerwenden, bool Duzen=false)
