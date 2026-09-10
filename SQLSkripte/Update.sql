@@ -34,7 +34,6 @@ ALTER TABLE Schueler DROP COLUMN AnschriftStrasse, AnschriftPLZ, AnschriftOrt, A
 ALTER TABLE Schueler DROP COLUMN NachnameEltern1, VornameEltern1, AnredeEltern1, VerwandtschaftsbezeichnungEltern1;
 ALTER TABLE Schueler DROP COLUMN NachnameEltern2, VornameEltern2, AnredeEltern2, VerwandtschaftsbezeichnungEltern2;
 ALTER TABLE Schueler DROP COLUMN Wiederholung1Jahrgangsstufe, Wiederholung1Grund, Wiederholung2Jahrgangsstufe, Wiederholung2Grund;
-
 ALTER TABLE Schueler DROP COLUMN Notfalltelefonnummer, MittlereReifeDeutschnote, MittlereReifeMathenote, MittlereReifeEnglischnote;
-ALTER TABLE Schueler ADD FranzB1 BIT NULL, SpanischB1 BIT NULL;
+ALTER TABLE Schueler ADD FranzB1 BIT NOT NULL default 0, SpanischB1 BIT NOT NULL default 0;
 
