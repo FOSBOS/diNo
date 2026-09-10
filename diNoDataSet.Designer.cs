@@ -5771,6 +5771,10 @@ namespace diNo {
                 this.columnSonderfallNur2Hj.DefaultValue = ((bool)(false));
                 this.columnMailSchule.MaxLength = 50;
                 this.columnasv_id.MaxLength = 40;
+                this.columnFranzB1.AllowDBNull = false;
+                this.columnFranzB1.DefaultValue = ((bool)(false));
+                this.columnSpanischB1.AllowDBNull = false;
+                this.columnSpanischB1.DefaultValue = ((bool)(false));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -20649,9 +20653,9 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     int LRSZuschlagMin, 
                     int LRSZuschlagMax, 
                     string MailSchule, 
-                    string asv_id, 
-                    global::System.Nullable<bool> FranzB1, 
-                    global::System.Nullable<bool> SpanischB1) {
+                    string asv_id,
+                    bool FranzB1,
+                    bool SpanischB1) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(Id));
             if ((Name == null)) {
                 throw new global::System.ArgumentNullException("Name");
@@ -20827,18 +20831,8 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             else {
                 this.Adapter.InsertCommand.Parameters[34].Value = ((string)(asv_id));
             }
-            if ((FranzB1.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[35].Value = ((bool)(FranzB1.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[35].Value = global::System.DBNull.Value;
-            }
-            if ((SpanischB1.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[36].Value = ((bool)(SpanischB1.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[36].Value = global::System.DBNull.Value;
-            }
+            this.Adapter.InsertCommand.Parameters[35].Value = ((bool)(FranzB1));
+            this.Adapter.InsertCommand.Parameters[36].Value = ((bool)(SpanischB1));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -20894,9 +20888,9 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     int LRSZuschlagMin, 
                     int LRSZuschlagMax, 
                     string MailSchule, 
-                    string asv_id, 
-                    global::System.Nullable<bool> FranzB1, 
-                    global::System.Nullable<bool> SpanischB1, 
+                    string asv_id,
+                    bool FranzB1,
+                    bool SpanischB1,
                     int Original_Id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(Id));
             if ((Name == null)) {
@@ -21073,18 +21067,8 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             else {
                 this.Adapter.UpdateCommand.Parameters[34].Value = ((string)(asv_id));
             }
-            if ((FranzB1.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[35].Value = ((bool)(FranzB1.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[35].Value = global::System.DBNull.Value;
-            }
-            if ((SpanischB1.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[36].Value = ((bool)(SpanischB1.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[36].Value = global::System.DBNull.Value;
-            }
+            this.Adapter.UpdateCommand.Parameters[35].Value = ((bool)(FranzB1));
+            this.Adapter.UpdateCommand.Parameters[36].Value = ((bool)(SpanischB1));
             this.Adapter.UpdateCommand.Parameters[37].Value = ((int)(Original_Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -21140,9 +21124,9 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     int LRSZuschlagMin, 
                     int LRSZuschlagMax, 
                     string MailSchule, 
-                    string asv_id, 
-                    global::System.Nullable<bool> FranzB1, 
-                    global::System.Nullable<bool> SpanischB1, 
+                    string asv_id,
+                    bool FranzB1,
+                    bool SpanischB1,
                     int Original_Id) {
             return this.Update(Original_Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, Ausbildungsrichtung, ReligionOderEthik, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, EintrittJahrgangsstufe, EintrittAm, EintrittAusSchulnummer, DNote, Status, AndereFremdspr2Note, AndereFremdspr2Text, DNoteFachgebHSR, Schulart, SonderfallNur2Hj, Zeugnisbemerkung, EintrittAusSchulart, Berechungsstatus, AndereFremdspr2Art, AndereFremdspr2Fach, LRSZuschlagMin, LRSZuschlagMax, MailSchule, asv_id, FranzB1, SpanischB1, Original_Id);
         }
