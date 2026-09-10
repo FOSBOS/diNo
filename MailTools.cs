@@ -137,13 +137,22 @@ namespace diNo
           Subject = Betreff
         };
 
-        msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), mailFrom));
         if (isTest)
           mailTo = Zugriff.Instance.lehrer.Data.EMail;
         else if (anEltern)
-          mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
+        {
+          mailTo = s.getMailEltern();
+          if (mailTo == "")
+          {
+            log.WriteLine("MAILADRESSE (Eltern) fehlt bei " + s.NameVorname);
+            log.Flush();
+            return;
+          }
+        }
         else
           mailTo = s.Data.MailSchule;
+
+        msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), mailFrom));
 
         msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
 
@@ -190,14 +199,14 @@ namespace diNo
       bool isBOS = s.Data.Schulart == "B";
       if (isBOS)
         mailTo = s.Data.MailSchule;
-      else if (s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer == "")
-      {
-        log.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
-        return;
-      }
       else
       {
-        mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
+        mailTo = s.getMailEltern();
+        if (mailTo == "")
+        {
+          log.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
+          return;
+        }
       }
 
       if (!MimeKit.MailboxAddress.TryParse(mailTo, out _))

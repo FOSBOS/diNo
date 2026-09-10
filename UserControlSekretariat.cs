@@ -68,9 +68,8 @@ namespace diNo
 
           cbSchulischeVorbildung.Text = schueler.Data.IsSchulischeVorbildungNull() ? null : schueler.Data.SchulischeVorbildung;
           //cbEintrittAusSchulart.Text = schueler.Data.IsEintrittAusSchulartNull() ? null : schueler.Data.EintrittAusSchulart;
-          numericUpDownDeutsch.Value = schueler.Data.IsMittlereReifeDeutschnoteNull() ? null : (decimal?)schueler.Data.MittlereReifeDeutschnote;
-          numericUpDownEnglisch.Value = schueler.Data.IsMittlereReifeEnglischnoteNull() ? null : (decimal?)schueler.Data.MittlereReifeEnglischnote;
-          numericUpDownMathe.Value = schueler.Data.IsMittlereReifeMathenoteNull() ? null : (decimal?)schueler.Data.MittlereReifeMathenote;
+          checkBoxFranzB1.Checked = !schueler.Data.IsFranzB1Null() && schueler.Data.FranzB1;
+          checkBoxSpanischB1.Checked = !schueler.Data.IsSpanischB1Null() && schueler.Data.SpanischB1;
 
           textBoxID.Text = schueler.Id.ToString();
           checkBoxLegasthenie.Checked = schueler.Data.LRSStoerung;
@@ -102,13 +101,8 @@ namespace diNo
       else schueler.Data.SchulischeVorbildung = cbSchulischeVorbildung.Text;
       //if (cbEintrittAusSchulart.Text == "") schueler.Data.SetEintrittAusSchulartNull();
       //else schueler.Data.EintrittAusSchulart = cbEintrittAusSchulart.Text;
-
-      if (numericUpDownDeutsch.Value == null) schueler.Data.SetMittlereReifeDeutschnoteNull();
-      else schueler.Data.MittlereReifeDeutschnote = (int)numericUpDownDeutsch.Value.GetValueOrDefault();
-      if (numericUpDownEnglisch.Value == null) schueler.Data.SetMittlereReifeEnglischnoteNull();
-      else schueler.Data.MittlereReifeEnglischnote = (int)numericUpDownEnglisch.Value.GetValueOrDefault();
-      if (numericUpDownMathe.Value == null) schueler.Data.SetMittlereReifeMathenoteNull();
-      else schueler.Data.MittlereReifeMathenote = (int)numericUpDownMathe.Value.GetValueOrDefault();
+      schueler.Data.FranzB1 = checkBoxFranzB1.Checked;
+      schueler.Data.SpanischB1 = checkBoxSpanischB1.Checked;
 
       schueler.Data.LRSStoerung = checkBoxLegasthenie.Checked;
       schueler.Data.LRSZuschlagMin = (int)numLRSZuschlagMin.Value;
@@ -129,13 +123,9 @@ namespace diNo
       this.btnSave = new System.Windows.Forms.Button();
       this.groupBoxMittlereReife = new System.Windows.Forms.GroupBox();
       this.cbSchulischeVorbildung = new System.Windows.Forms.ComboBox();
-      this.numericUpDownMathe = new diNo.NumericUpDownNullable();
-      this.numericUpDownEnglisch = new diNo.NumericUpDownNullable();
-      this.numericUpDownDeutsch = new diNo.NumericUpDownNullable();
       this.lblSchulischeVorbildung = new System.Windows.Forms.Label();
-      this.label4 = new System.Windows.Forms.Label();
-      this.label3 = new System.Windows.Forms.Label();
-      this.label2 = new System.Windows.Forms.Label();
+      this.checkBoxFranzB1 = new System.Windows.Forms.CheckBox();
+      this.checkBoxSpanischB1 = new System.Windows.Forms.CheckBox();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.lbFFalt = new System.Windows.Forms.Label();
       this.gbFS2Art = new System.Windows.Forms.GroupBox();
@@ -171,9 +161,6 @@ namespace diNo
       this.textBoxNachname = new System.Windows.Forms.TextBox();
       this.label7 = new System.Windows.Forms.Label();
       this.groupBoxMittlereReife.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMathe)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEnglisch)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDeutsch)).BeginInit();
       this.groupBox1.SuspendLayout();
       this.gbFS2Art.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.numAndereFremdspr2Note)).BeginInit();
@@ -197,19 +184,15 @@ namespace diNo
       // groupBoxMittlereReife
       // 
       this.groupBoxMittlereReife.Controls.Add(this.cbSchulischeVorbildung);
-      this.groupBoxMittlereReife.Controls.Add(this.numericUpDownMathe);
-      this.groupBoxMittlereReife.Controls.Add(this.numericUpDownEnglisch);
-      this.groupBoxMittlereReife.Controls.Add(this.numericUpDownDeutsch);
       this.groupBoxMittlereReife.Controls.Add(this.lblSchulischeVorbildung);
-      this.groupBoxMittlereReife.Controls.Add(this.label4);
-      this.groupBoxMittlereReife.Controls.Add(this.label3);
-      this.groupBoxMittlereReife.Controls.Add(this.label2);
+      this.groupBoxMittlereReife.Controls.Add(this.checkBoxFranzB1);
+      this.groupBoxMittlereReife.Controls.Add(this.checkBoxSpanischB1);
       this.groupBoxMittlereReife.Location = new System.Drawing.Point(12, 397);
       this.groupBoxMittlereReife.Name = "groupBoxMittlereReife";
       this.groupBoxMittlereReife.Size = new System.Drawing.Size(258, 188);
       this.groupBoxMittlereReife.TabIndex = 28;
       this.groupBoxMittlereReife.TabStop = false;
-      this.groupBoxMittlereReife.Text = "mittlere Reife";
+      this.groupBoxMittlereReife.Text = "Schulische Vorbildung";
       // 
       // cbSchulischeVorbildung
       // 
@@ -245,58 +228,27 @@ namespace diNo
       this.cbSchulischeVorbildung.Name = "cbSchulischeVorbildung";
       this.cbSchulischeVorbildung.Size = new System.Drawing.Size(105, 21);
       this.cbSchulischeVorbildung.TabIndex = 86;
-      // 
-      // numericUpDownMathe
-      // 
-      this.numericUpDownMathe.Location = new System.Drawing.Point(73, 144);
-      this.numericUpDownMathe.Maximum = new decimal(new int[] {
-            6,
-            0,
-            0,
-            0});
-      this.numericUpDownMathe.Name = "numericUpDownMathe";
-      this.numericUpDownMathe.Size = new System.Drawing.Size(49, 20);
-      this.numericUpDownMathe.TabIndex = 7;
-      this.numericUpDownMathe.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-      // 
-      // numericUpDownEnglisch
-      // 
-      this.numericUpDownEnglisch.Location = new System.Drawing.Point(73, 120);
-      this.numericUpDownEnglisch.Maximum = new decimal(new int[] {
-            6,
-            0,
-            0,
-            0});
-      this.numericUpDownEnglisch.Name = "numericUpDownEnglisch";
-      this.numericUpDownEnglisch.Size = new System.Drawing.Size(49, 20);
-      this.numericUpDownEnglisch.TabIndex = 6;
-      this.numericUpDownEnglisch.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-      // 
-      // numericUpDownDeutsch
-      // 
-      this.numericUpDownDeutsch.Location = new System.Drawing.Point(73, 94);
-      this.numericUpDownDeutsch.Maximum = new decimal(new int[] {
-            6,
-            0,
-            0,
-            0});
-      this.numericUpDownDeutsch.Name = "numericUpDownDeutsch";
-      this.numericUpDownDeutsch.Size = new System.Drawing.Size(49, 20);
-      this.numericUpDownDeutsch.TabIndex = 5;
-      this.numericUpDownDeutsch.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-      // 
+      //
+      // checkBoxFranzB1
+      //
+      this.checkBoxFranzB1.AutoSize = true;
+      this.checkBoxFranzB1.Location = new System.Drawing.Point(18, 96);
+      this.checkBoxFranzB1.Name = "checkBoxFranzB1";
+      this.checkBoxFranzB1.Size = new System.Drawing.Size(97, 17);
+      this.checkBoxFranzB1.TabIndex = 100;
+      this.checkBoxFranzB1.Text = "Französisch B1";
+      this.checkBoxFranzB1.UseVisualStyleBackColor = true;
+      //
+      // checkBoxSpanischB1
+      //
+      this.checkBoxSpanischB1.AutoSize = true;
+      this.checkBoxSpanischB1.Location = new System.Drawing.Point(18, 121);
+      this.checkBoxSpanischB1.Name = "checkBoxSpanischB1";
+      this.checkBoxSpanischB1.Size = new System.Drawing.Size(89, 17);
+      this.checkBoxSpanischB1.TabIndex = 101;
+      this.checkBoxSpanischB1.Text = "Spanisch B1";
+      this.checkBoxSpanischB1.UseVisualStyleBackColor = true;
+      //
       // lblSchulischeVorbildung
       // 
       this.lblSchulischeVorbildung.AutoSize = true;
@@ -306,34 +258,7 @@ namespace diNo
       this.lblSchulischeVorbildung.Size = new System.Drawing.Size(112, 13);
       this.lblSchulischeVorbildung.TabIndex = 77;
       this.lblSchulischeVorbildung.Text = "Schulische Vorbildung";
-      // 
-      // label4
-      // 
-      this.label4.AutoSize = true;
-      this.label4.Location = new System.Drawing.Point(15, 146);
-      this.label4.Name = "label4";
-      this.label4.Size = new System.Drawing.Size(37, 13);
-      this.label4.TabIndex = 4;
-      this.label4.Text = "Mathe";
-      // 
-      // label3
-      // 
-      this.label3.AutoSize = true;
-      this.label3.Location = new System.Drawing.Point(15, 122);
-      this.label3.Name = "label3";
-      this.label3.Size = new System.Drawing.Size(47, 13);
-      this.label3.TabIndex = 3;
-      this.label3.Text = "Englisch";
-      // 
-      // label2
-      // 
-      this.label2.AutoSize = true;
-      this.label2.Location = new System.Drawing.Point(15, 96);
-      this.label2.Name = "label2";
-      this.label2.Size = new System.Drawing.Size(47, 13);
-      this.label2.TabIndex = 2;
-      this.label2.Text = "Deutsch";
-      // 
+      //
       // groupBox1
       // 
       this.groupBox1.Controls.Add(this.lbFFalt);
@@ -732,9 +657,6 @@ namespace diNo
       this.Size = new System.Drawing.Size(634, 601);
       this.groupBoxMittlereReife.ResumeLayout(false);
       this.groupBoxMittlereReife.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMathe)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEnglisch)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDeutsch)).EndInit();
       this.groupBox1.ResumeLayout(false);
       this.groupBox1.PerformLayout();
       this.gbFS2Art.ResumeLayout(false);

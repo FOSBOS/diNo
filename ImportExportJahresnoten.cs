@@ -81,13 +81,6 @@ namespace diNo
             }
           }
 
-          // Noten aus der Realschule         FachID      JgStufe      
-          if (!(schueler.Data.IsMittlereReifeDeutschnoteNull() || schueler.Data.IsMittlereReifeEnglischnoteNull() || schueler.Data.IsMittlereReifeMathenoteNull()))
-            writer.WriteLine(schueler.AsvId + Sep + "0" + Sep + "0" + Sep
-              + schueler.Data.MittlereReifeDeutschnote + Sep
-              + schueler.Data.MittlereReifeEnglischnote + Sep
-              + schueler.Data.MittlereReifeMathenote);
-
           // Legastheniezuschläge
           if (schueler.Data.LRSZuschlagMax > 0)
             writer.WriteLine(schueler.AsvId + Sep + "-1" + Sep + "0" + Sep
@@ -160,23 +153,8 @@ namespace diNo
           }
           
           Jahrgangsstufe jgSchueler = schueler.getKlasse.Jahrgangsstufe;
-          if (line[1] == "0") // Noten aus der RS importieren (frühere Eingabe)
+          if (line[1] == "0") // Noten aus der RS (nicht mehr unterstützt)
           {
-            try
-            {
-              byte D, E, M;
-              D = byte.Parse(line[3]);
-              E = byte.Parse(line[4]);
-              M = byte.Parse(line[5]);
-              schueler.Data.MittlereReifeDeutschnote = D;
-              schueler.Data.MittlereReifeEnglischnote = E;
-              schueler.Data.MittlereReifeMathenote = M;
-              schueler.Save();
-            }
-            catch
-            {
-              writer.WriteLine("NotenRS: " + orignal);
-            }
             continue; // nächste Zeile
           }
 

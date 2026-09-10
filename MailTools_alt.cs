@@ -70,13 +70,22 @@ using System.Windows.Forms;
           Subject = Betreff
         };
 
-        msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), MailFrom));
         if (isTest)
           MailTo = Zugriff.Instance.lehrer.Data.EMail;
         else if (anEltern)
-          MailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
+        {
+          MailTo = s.getMailEltern();
+          if (MailTo == "")
+          {
+            log.WriteLine("MAILADRESSE (Eltern) fehlt bei " + s.NameVorname);
+            log.Flush();
+            return;
+          }
+        }
         else
           MailTo = s.Data.MailSchule;
+
+        msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), MailFrom));
 
         msg.To.Add(new MimeKit.MailboxAddress(MailTo, MailTo));
 
@@ -117,14 +126,14 @@ using System.Windows.Forms;
       bool isBOS = s.Data.Schulart == "B";
       if (isBOS)
         mailTo = s.Data.MailSchule;
-      else if (s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer == "")
-      {
-        log.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
-        return;
-      }
       else
       {
-        mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
+        mailTo = s.getMailEltern();
+        if (mailTo == "")
+        {
+          log.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
+          return;
+        }
       }
 
       try

@@ -5113,8 +5113,6 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnEintrittAusSchulnummer;
             
-            private global::System.Data.DataColumn columnNotfalltelefonnummer;
-            
             private global::System.Data.DataColumn columnDNote;
             
             private global::System.Data.DataColumn columnStatus;
@@ -5131,12 +5129,6 @@ namespace diNo {
             
             private global::System.Data.DataColumn columnEintrittAusSchulart;
             
-            private global::System.Data.DataColumn columnMittlereReifeMathenote;
-            
-            private global::System.Data.DataColumn columnMittlereReifeDeutschnote;
-            
-            private global::System.Data.DataColumn columnMittlereReifeEnglischnote;
-            
             private global::System.Data.DataColumn columnBerechungsstatus;
             
             private global::System.Data.DataColumn columnAndereFremdspr2Art;
@@ -5152,6 +5144,10 @@ namespace diNo {
             private global::System.Data.DataColumn columnMailSchule;
             
             private global::System.Data.DataColumn columnasv_id;
+            
+            private global::System.Data.DataColumn columnFranzB1;
+            
+            private global::System.Data.DataColumn columnSpanischB1;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
@@ -5340,14 +5336,6 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn NotfalltelefonnummerColumn {
-                get {
-                    return this.columnNotfalltelefonnummer;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public global::System.Data.DataColumn DNoteColumn {
                 get {
                     return this.columnDNote;
@@ -5407,30 +5395,6 @@ namespace diNo {
             public global::System.Data.DataColumn EintrittAusSchulartColumn {
                 get {
                     return this.columnEintrittAusSchulart;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn MittlereReifeMathenoteColumn {
-                get {
-                    return this.columnMittlereReifeMathenote;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn MittlereReifeDeutschnoteColumn {
-                get {
-                    return this.columnMittlereReifeDeutschnote;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public global::System.Data.DataColumn MittlereReifeEnglischnoteColumn {
-                get {
-                    return this.columnMittlereReifeEnglischnote;
                 }
             }
             
@@ -5500,6 +5464,22 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn FranzB1Column {
+                get {
+                    return this.columnFranzB1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn SpanischB1Column {
+                get {
+                    return this.columnSpanischB1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5555,7 +5535,6 @@ namespace diNo {
                         string EintrittJahrgangsstufe, 
                         System.DateTime EintrittAm, 
                         int EintrittAusSchulnummer, 
-                        string Notfalltelefonnummer, 
                         decimal DNote, 
                         int Status, 
                         int AndereFremdspr2Note, 
@@ -5564,9 +5543,6 @@ namespace diNo {
                         string Schulart, 
                         string Zeugnisbemerkung, 
                         string EintrittAusSchulart, 
-                        int MittlereReifeMathenote, 
-                        int MittlereReifeDeutschnote, 
-                        int MittlereReifeEnglischnote, 
                         byte Berechungsstatus, 
                         int AndereFremdspr2Art, 
                         FachRow parentFachRowByFK_Schueler_AndereFremdspr2Fach, 
@@ -5574,7 +5550,9 @@ namespace diNo {
                         int LRSZuschlagMax, 
                         bool SonderfallNur2Hj, 
                         string MailSchule, 
-                        string asv_id) {
+                        string asv_id, 
+                        bool FranzB1, 
+                        bool SpanischB1) {
                 SchuelerRow rowSchuelerRow = ((SchuelerRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
@@ -5596,7 +5574,6 @@ namespace diNo {
                         EintrittJahrgangsstufe,
                         EintrittAm,
                         EintrittAusSchulnummer,
-                        Notfalltelefonnummer,
                         DNote,
                         Status,
                         AndereFremdspr2Note,
@@ -5605,9 +5582,6 @@ namespace diNo {
                         Schulart,
                         Zeugnisbemerkung,
                         EintrittAusSchulart,
-                        MittlereReifeMathenote,
-                        MittlereReifeDeutschnote,
-                        MittlereReifeEnglischnote,
                         Berechungsstatus,
                         AndereFremdspr2Art,
                         null,
@@ -5615,12 +5589,14 @@ namespace diNo {
                         LRSZuschlagMax,
                         SonderfallNur2Hj,
                         MailSchule,
-                        asv_id};
+                        asv_id,
+                        FranzB1,
+                        SpanischB1};
                 if ((parentKlasseRowByFK_Schueler_ToTable != null)) {
                     columnValuesArray[3] = parentKlasseRowByFK_Schueler_ToTable[0];
                 }
                 if ((parentFachRowByFK_Schueler_AndereFremdspr2Fach != null)) {
-                    columnValuesArray[33] = parentFachRowByFK_Schueler_AndereFremdspr2Fach[0];
+                    columnValuesArray[29] = parentFachRowByFK_Schueler_AndereFremdspr2Fach[0];
                 }
                 rowSchuelerRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSchuelerRow);
@@ -5670,7 +5646,6 @@ namespace diNo {
                 this.columnEintrittJahrgangsstufe = base.Columns["EintrittJahrgangsstufe"];
                 this.columnEintrittAm = base.Columns["EintrittAm"];
                 this.columnEintrittAusSchulnummer = base.Columns["EintrittAusSchulnummer"];
-                this.columnNotfalltelefonnummer = base.Columns["Notfalltelefonnummer"];
                 this.columnDNote = base.Columns["DNote"];
                 this.columnStatus = base.Columns["Status"];
                 this.columnAndereFremdspr2Note = base.Columns["AndereFremdspr2Note"];
@@ -5679,9 +5654,6 @@ namespace diNo {
                 this.columnSchulart = base.Columns["Schulart"];
                 this.columnZeugnisbemerkung = base.Columns["Zeugnisbemerkung"];
                 this.columnEintrittAusSchulart = base.Columns["EintrittAusSchulart"];
-                this.columnMittlereReifeMathenote = base.Columns["MittlereReifeMathenote"];
-                this.columnMittlereReifeDeutschnote = base.Columns["MittlereReifeDeutschnote"];
-                this.columnMittlereReifeEnglischnote = base.Columns["MittlereReifeEnglischnote"];
                 this.columnBerechungsstatus = base.Columns["Berechungsstatus"];
                 this.columnAndereFremdspr2Art = base.Columns["AndereFremdspr2Art"];
                 this.columnAndereFremdspr2Fach = base.Columns["AndereFremdspr2Fach"];
@@ -5690,6 +5662,8 @@ namespace diNo {
                 this.columnSonderfallNur2Hj = base.Columns["SonderfallNur2Hj"];
                 this.columnMailSchule = base.Columns["MailSchule"];
                 this.columnasv_id = base.Columns["asv_id"];
+                this.columnFranzB1 = base.Columns["FranzB1"];
+                this.columnSpanischB1 = base.Columns["SpanischB1"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5733,8 +5707,6 @@ namespace diNo {
                 base.Columns.Add(this.columnEintrittAm);
                 this.columnEintrittAusSchulnummer = new global::System.Data.DataColumn("EintrittAusSchulnummer", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEintrittAusSchulnummer);
-                this.columnNotfalltelefonnummer = new global::System.Data.DataColumn("Notfalltelefonnummer", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNotfalltelefonnummer);
                 this.columnDNote = new global::System.Data.DataColumn("DNote", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDNote);
                 this.columnStatus = new global::System.Data.DataColumn("Status", typeof(int), null, global::System.Data.MappingType.Element);
@@ -5751,12 +5723,6 @@ namespace diNo {
                 base.Columns.Add(this.columnZeugnisbemerkung);
                 this.columnEintrittAusSchulart = new global::System.Data.DataColumn("EintrittAusSchulart", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnEintrittAusSchulart);
-                this.columnMittlereReifeMathenote = new global::System.Data.DataColumn("MittlereReifeMathenote", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnMittlereReifeMathenote);
-                this.columnMittlereReifeDeutschnote = new global::System.Data.DataColumn("MittlereReifeDeutschnote", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnMittlereReifeDeutschnote);
-                this.columnMittlereReifeEnglischnote = new global::System.Data.DataColumn("MittlereReifeEnglischnote", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnMittlereReifeEnglischnote);
                 this.columnBerechungsstatus = new global::System.Data.DataColumn("Berechungsstatus", typeof(byte), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnBerechungsstatus);
                 this.columnAndereFremdspr2Art = new global::System.Data.DataColumn("AndereFremdspr2Art", typeof(int), null, global::System.Data.MappingType.Element);
@@ -5773,6 +5739,10 @@ namespace diNo {
                 base.Columns.Add(this.columnMailSchule);
                 this.columnasv_id = new global::System.Data.DataColumn("asv_id", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnasv_id);
+                this.columnFranzB1 = new global::System.Data.DataColumn("FranzB1", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFranzB1);
+                this.columnSpanischB1 = new global::System.Data.DataColumn("SpanischB1", typeof(bool), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSpanischB1);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AllowDBNull = false;
@@ -5791,7 +5761,6 @@ namespace diNo {
                 this.columnSchulischeVorbildung.MaxLength = 50;
                 this.columnBeruflicheVorbildung.MaxLength = 50;
                 this.columnEintrittJahrgangsstufe.MaxLength = 10;
-                this.columnNotfalltelefonnummer.MaxLength = 256;
                 this.columnAndereFremdspr2Text.MaxLength = 50;
                 this.columnZeugnisbemerkung.MaxLength = 256;
                 this.columnBerechungsstatus.AllowDBNull = false;
@@ -11736,22 +11705,6 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public string Notfalltelefonnummer {
-                get {
-                    try {
-                        return ((string)(this[this.tableSchueler.NotfalltelefonnummerColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte Notfalltelefonnummer in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.NotfalltelefonnummerColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public decimal DNote {
                 get {
                     try {
@@ -11880,54 +11833,6 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int MittlereReifeMathenote {
-                get {
-                    try {
-                        return ((int)(this[this.tableSchueler.MittlereReifeMathenoteColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte MittlereReifeMathenote in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.MittlereReifeMathenoteColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int MittlereReifeDeutschnote {
-                get {
-                    try {
-                        return ((int)(this[this.tableSchueler.MittlereReifeDeutschnoteColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte MittlereReifeDeutschnote in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.MittlereReifeDeutschnoteColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public int MittlereReifeEnglischnote {
-                get {
-                    try {
-                        return ((int)(this[this.tableSchueler.MittlereReifeEnglischnoteColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte MittlereReifeEnglischnote in Tabelle Schueler ist DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableSchueler.MittlereReifeEnglischnoteColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public byte Berechungsstatus {
                 get {
                     return ((byte)(this[this.tableSchueler.BerechungsstatusColumn]));
@@ -12026,6 +11931,38 @@ namespace diNo {
                 }
                 set {
                     this[this.tableSchueler.asv_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool FranzB1 {
+                get {
+                    try {
+                        return ((bool)(this[this.tableSchueler.FranzB1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte FranzB1 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.FranzB1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool SpanischB1 {
+                get {
+                    try {
+                        return ((bool)(this[this.tableSchueler.SpanischB1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Der Wert für Spalte SpanischB1 in Tabelle Schueler ist DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSchueler.SpanischB1Column] = value;
                 }
             }
             
@@ -12233,18 +12170,6 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsNotfalltelefonnummerNull() {
-                return this.IsNull(this.tableSchueler.NotfalltelefonnummerColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetNotfalltelefonnummerNull() {
-                this[this.tableSchueler.NotfalltelefonnummerColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsDNoteNull() {
                 return this.IsNull(this.tableSchueler.DNoteColumn);
             }
@@ -12341,42 +12266,6 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsMittlereReifeMathenoteNull() {
-                return this.IsNull(this.tableSchueler.MittlereReifeMathenoteColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetMittlereReifeMathenoteNull() {
-                this[this.tableSchueler.MittlereReifeMathenoteColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsMittlereReifeDeutschnoteNull() {
-                return this.IsNull(this.tableSchueler.MittlereReifeDeutschnoteColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetMittlereReifeDeutschnoteNull() {
-                this[this.tableSchueler.MittlereReifeDeutschnoteColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public bool IsMittlereReifeEnglischnoteNull() {
-                return this.IsNull(this.tableSchueler.MittlereReifeEnglischnoteColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public void SetMittlereReifeEnglischnoteNull() {
-                this[this.tableSchueler.MittlereReifeEnglischnoteColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsAndereFremdspr2FachNull() {
                 return this.IsNull(this.tableSchueler.AndereFremdspr2FachColumn);
             }
@@ -12409,6 +12298,30 @@ namespace diNo {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public void Setasv_idNull() {
                 this[this.tableSchueler.asv_idColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsFranzB1Null() {
+                return this.IsNull(this.tableSchueler.FranzB1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetFranzB1Null() {
+                this[this.tableSchueler.FranzB1Column] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsSpanischB1Null() {
+                return this.IsNull(this.tableSchueler.SpanischB1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetSpanischB1Null() {
+                this[this.tableSchueler.SpanischB1Column] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -20328,7 +20241,6 @@ WHERE        (SchuelerId = @SchuelerId)";
             tableMapping.ColumnMappings.Add("EintrittJahrgangsstufe", "EintrittJahrgangsstufe");
             tableMapping.ColumnMappings.Add("EintrittAm", "EintrittAm");
             tableMapping.ColumnMappings.Add("EintrittAusSchulnummer", "EintrittAusSchulnummer");
-            tableMapping.ColumnMappings.Add("Notfalltelefonnummer", "Notfalltelefonnummer");
             tableMapping.ColumnMappings.Add("DNote", "DNote");
             tableMapping.ColumnMappings.Add("Status", "Status");
             tableMapping.ColumnMappings.Add("AndereFremdspr2Note", "AndereFremdspr2Note");
@@ -20336,9 +20248,6 @@ WHERE        (SchuelerId = @SchuelerId)";
             tableMapping.ColumnMappings.Add("DNoteAllg", "DNoteFachgebHSR");
             tableMapping.ColumnMappings.Add("Schulart", "Schulart");
             tableMapping.ColumnMappings.Add("Zeugnisbemerkung", "Zeugnisbemerkung");
-            tableMapping.ColumnMappings.Add("MittlereReifeMathenote", "MittlereReifeMathenote");
-            tableMapping.ColumnMappings.Add("MittlereReifeDeutschnote", "MittlereReifeDeutschnote");
-            tableMapping.ColumnMappings.Add("MittlereReifeEnglischnote", "MittlereReifeEnglischnote");
             tableMapping.ColumnMappings.Add("EintrittAusSchulart", "EintrittAusSchulart");
             tableMapping.ColumnMappings.Add("Berechungsstatus", "Berechungsstatus");
             tableMapping.ColumnMappings.Add("DNoteFachgebHSR", "DNoteFachgebHSR");
@@ -20349,6 +20258,8 @@ WHERE        (SchuelerId = @SchuelerId)";
             tableMapping.ColumnMappings.Add("SonderfallNur2Hj", "SonderfallNur2Hj");
             tableMapping.ColumnMappings.Add("MailSchule", "MailSchule");
             tableMapping.ColumnMappings.Add("asv_id", "asv_id");
+            tableMapping.ColumnMappings.Add("FranzB1", "FranzB1");
+            tableMapping.ColumnMappings.Add("SpanischB1", "SpanischB1");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
@@ -20357,7 +20268,7 @@ WHERE        (SchuelerId = @SchuelerId)";
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Schueler] ([Id], [Name], [Vorname], [KlasseId], [Rufname], [Geschlecht], [Geburtsdatum], [Geburtsort], [Bekenntnis], [Ausbildungsrichtung], [ReligionOderEthik], [ProbezeitBis], [Austrittsdatum], [SchulischeVorbildung], [BeruflicheVorbildung], [LRSStoerung], [EintrittJahrgangsstufe], [EintrittAm], [EintrittAusSchulnummer], [Notfalltelefonnummer], [DNote], [Status], [AndereFremdspr2Note], [AndereFremdspr2Text], [DNoteFachgebHSR], [Schulart], [SonderfallNur2Hj], [Zeugnisbemerkung], [EintrittAusSchulart], [MittlereReifeMathenote], [MittlereReifeDeutschnote], [MittlereReifeEnglischnote], [Berechungsstatus], [AndereFremdspr2Art], [AndereFremdspr2Fach], [LRSZuschlagMin], [LRSZuschlagMax], [MailSchule], [asv_id]) VALUES (@Id, @Name, @Vorname, @KlasseId, @Rufname, @Geschlecht, @Geburtsdatum, @Geburtsort, @Bekenntnis, @Ausbildungsrichtung, @ReligionOderEthik, @ProbezeitBis, @Austrittsdatum, @SchulischeVorbildung, @BeruflicheVorbildung, @LRSStoerung, @EintrittJahrgangsstufe, @EintrittAm, @EintrittAusSchulnummer, @Notfalltelefonnummer, @DNote, @Status, @AndereFremdspr2Note, @AndereFremdspr2Text, @DNoteFachgebHSR, @Schulart, @SonderfallNur2Hj, @Zeugnisbemerkung, @EintrittAusSchulart, @MittlereReifeMathenote, @MittlereReifeDeutschnote, @MittlereReifeEnglischnote, @Berechungsstatus, @AndereFremdspr2Art, @AndereFremdspr2Fach, @LRSZuschlagMin, @LRSZuschlagMax, @MailSchule, @asv_id)";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [Schueler] ([Id], [Name], [Vorname], [KlasseId], [Rufname], [Geschlecht], [Geburtsdatum], [Geburtsort], [Bekenntnis], [Ausbildungsrichtung], [ReligionOderEthik], [ProbezeitBis], [Austrittsdatum], [SchulischeVorbildung], [BeruflicheVorbildung], [LRSStoerung], [EintrittJahrgangsstufe], [EintrittAm], [EintrittAusSchulnummer], [DNote], [Status], [AndereFremdspr2Note], [AndereFremdspr2Text], [DNoteFachgebHSR], [Schulart], [SonderfallNur2Hj], [Zeugnisbemerkung], [EintrittAusSchulart], [Berechungsstatus], [AndereFremdspr2Art], [AndereFremdspr2Fach], [LRSZuschlagMin], [LRSZuschlagMax], [MailSchule], [asv_id], [FranzB1], [SpanischB1]) VALUES (@Id, @Name, @Vorname, @KlasseId, @Rufname, @Geschlecht, @Geburtsdatum, @Geburtsort, @Bekenntnis, @Ausbildungsrichtung, @ReligionOderEthik, @ProbezeitBis, @Austrittsdatum, @SchulischeVorbildung, @BeruflicheVorbildung, @LRSStoerung, @EintrittJahrgangsstufe, @EintrittAm, @EintrittAusSchulnummer, @DNote, @Status, @AndereFremdspr2Note, @AndereFremdspr2Text, @DNoteFachgebHSR, @Schulart, @SonderfallNur2Hj, @Zeugnisbemerkung, @EintrittAusSchulart, @Berechungsstatus, @AndereFremdspr2Art, @AndereFremdspr2Fach, @LRSZuschlagMin, @LRSZuschlagMax, @MailSchule, @asv_id, @FranzB1, @SpanischB1)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -20378,7 +20289,6 @@ WHERE        (SchuelerId = @SchuelerId)";
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittJahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittJahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAm", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAm", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAusSchulnummer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAusSchulnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Notfalltelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Notfalltelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DNote", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 1, "DNote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Status", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Note", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Note", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -20388,9 +20298,6 @@ WHERE        (SchuelerId = @SchuelerId)";
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SonderfallNur2Hj", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SonderfallNur2Hj", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Zeugnisbemerkung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Zeugnisbemerkung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAusSchulart", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAusSchulart", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MittlereReifeMathenote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MittlereReifeMathenote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MittlereReifeDeutschnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MittlereReifeDeutschnote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MittlereReifeEnglischnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MittlereReifeEnglischnote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Berechungsstatus", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Berechungsstatus", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Art", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Art", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Fach", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Fach", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -20398,9 +20305,11 @@ WHERE        (SchuelerId = @SchuelerId)";
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSZuschlagMax", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSZuschlagMax", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MailSchule", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MailSchule", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@asv_id", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "asv_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FranzB1", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FranzB1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SpanischB1", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SpanischB1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [Schueler] SET [Id] = @Id, [Name] = @Name, [Vorname] = @Vorname, [KlasseId] = @KlasseId, [Rufname] = @Rufname, [Geschlecht] = @Geschlecht, [Geburtsdatum] = @Geburtsdatum, [Geburtsort] = @Geburtsort, [Bekenntnis] = @Bekenntnis, [Ausbildungsrichtung] = @Ausbildungsrichtung, [ReligionOderEthik] = @ReligionOderEthik, [ProbezeitBis] = @ProbezeitBis, [Austrittsdatum] = @Austrittsdatum, [SchulischeVorbildung] = @SchulischeVorbildung, [BeruflicheVorbildung] = @BeruflicheVorbildung, [LRSStoerung] = @LRSStoerung, [EintrittJahrgangsstufe] = @EintrittJahrgangsstufe, [EintrittAm] = @EintrittAm, [EintrittAusSchulnummer] = @EintrittAusSchulnummer, [Notfalltelefonnummer] = @Notfalltelefonnummer, [DNote] = @DNote, [Status] = @Status, [AndereFremdspr2Note] = @AndereFremdspr2Note, [AndereFremdspr2Text] = @AndereFremdspr2Text, [DNoteFachgebHSR] = @DNoteFachgebHSR, [Schulart] = @Schulart, [SonderfallNur2Hj] = @SonderfallNur2Hj, [Zeugnisbemerkung] = @Zeugnisbemerkung, [EintrittAusSchulart] = @EintrittAusSchulart, [MittlereReifeMathenote] = @MittlereReifeMathenote, [MittlereReifeDeutschnote] = @MittlereReifeDeutschnote, [MittlereReifeEnglischnote] = @MittlereReifeEnglischnote, [Berechungsstatus] = @Berechungsstatus, [AndereFremdspr2Art] = @AndereFremdspr2Art, [AndereFremdspr2Fach] = @AndereFremdspr2Fach, [LRSZuschlagMin] = @LRSZuschlagMin, [LRSZuschlagMax] = @LRSZuschlagMax, [MailSchule] = @MailSchule, [asv_id] = @asv_id WHERE (([Id] = @Original_Id))";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [Schueler] SET [Id] = @Id, [Name] = @Name, [Vorname] = @Vorname, [KlasseId] = @KlasseId, [Rufname] = @Rufname, [Geschlecht] = @Geschlecht, [Geburtsdatum] = @Geburtsdatum, [Geburtsort] = @Geburtsort, [Bekenntnis] = @Bekenntnis, [Ausbildungsrichtung] = @Ausbildungsrichtung, [ReligionOderEthik] = @ReligionOderEthik, [ProbezeitBis] = @ProbezeitBis, [Austrittsdatum] = @Austrittsdatum, [SchulischeVorbildung] = @SchulischeVorbildung, [BeruflicheVorbildung] = @BeruflicheVorbildung, [LRSStoerung] = @LRSStoerung, [EintrittJahrgangsstufe] = @EintrittJahrgangsstufe, [EintrittAm] = @EintrittAm, [EintrittAusSchulnummer] = @EintrittAusSchulnummer, [DNote] = @DNote, [Status] = @Status, [AndereFremdspr2Note] = @AndereFremdspr2Note, [AndereFremdspr2Text] = @AndereFremdspr2Text, [DNoteFachgebHSR] = @DNoteFachgebHSR, [Schulart] = @Schulart, [SonderfallNur2Hj] = @SonderfallNur2Hj, [Zeugnisbemerkung] = @Zeugnisbemerkung, [EintrittAusSchulart] = @EintrittAusSchulart, [Berechungsstatus] = @Berechungsstatus, [AndereFremdspr2Art] = @AndereFremdspr2Art, [AndereFremdspr2Fach] = @AndereFremdspr2Fach, [LRSZuschlagMin] = @LRSZuschlagMin, [LRSZuschlagMax] = @LRSZuschlagMax, [MailSchule] = @MailSchule, [asv_id] = @asv_id, [FranzB1] = @FranzB1, [SpanischB1] = @SpanischB1 WHERE (([Id] = @Original_Id))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -20421,7 +20330,6 @@ WHERE        (SchuelerId = @SchuelerId)";
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittJahrgangsstufe", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittJahrgangsstufe", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAm", global::System.Data.SqlDbType.Date, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAm", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAusSchulnummer", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAusSchulnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Notfalltelefonnummer", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Notfalltelefonnummer", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DNote", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 5, 1, "DNote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Status", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Note", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Note", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -20431,9 +20339,6 @@ WHERE        (SchuelerId = @SchuelerId)";
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SonderfallNur2Hj", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SonderfallNur2Hj", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Zeugnisbemerkung", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Zeugnisbemerkung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@EintrittAusSchulart", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "EintrittAusSchulart", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MittlereReifeMathenote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MittlereReifeMathenote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MittlereReifeDeutschnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MittlereReifeDeutschnote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MittlereReifeEnglischnote", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MittlereReifeEnglischnote", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Berechungsstatus", global::System.Data.SqlDbType.TinyInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Berechungsstatus", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Art", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Art", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AndereFremdspr2Fach", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "AndereFremdspr2Fach", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -20441,6 +20346,8 @@ WHERE        (SchuelerId = @SchuelerId)";
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LRSZuschlagMax", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LRSZuschlagMax", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@MailSchule", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "MailSchule", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@asv_id", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "asv_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FranzB1", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "FranzB1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SpanischB1", global::System.Data.SqlDbType.Bit, 0, global::System.Data.ParameterDirection.Input, 0, 0, "SpanischB1", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
@@ -20462,16 +20369,16 @@ WHERE        (SchuelerId = @SchuelerId)";
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT AndereFremdspr2Art, AndereFremdspr2Fach, AndereFremdspr2Note, AndereFremdspr2Text, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, Berechungsstatus, BeruflicheVorbildung, DNote, DNoteFachgebHSR, EintrittAm, EintrittAusSchulart, EintrittAusSchulnummer, EintrittJahrgangsstufe, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSStoerung, LRSZuschlagMax, LRSZuschlagMin, MailSchule, MittlereReifeDeutschnote, MittlereReifeEnglischnote, MittlereReifeMathenote, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, SonderfallNur2Hj, Status, Vorname, Zeugnisbemerkung, asv_id FROM Schueler";
+            this._commandCollection[1].CommandText = @"SELECT AndereFremdspr2Art, AndereFremdspr2Fach, AndereFremdspr2Note, AndereFremdspr2Text, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, Berechungsstatus, BeruflicheVorbildung, DNote, DNoteFachgebHSR, EintrittAm, EintrittAusSchulart, EintrittAusSchulnummer, EintrittJahrgangsstufe, FranzB1, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSStoerung, LRSZuschlagMax, LRSZuschlagMin, MailSchule, Name, ProbezeitBis, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, SonderfallNur2Hj, SpanischB1, Status, Vorname, Zeugnisbemerkung, asv_id FROM Schueler";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = @"SELECT AndereFremdspr2Art, AndereFremdspr2Fach, AndereFremdspr2Note, AndereFremdspr2Text, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, Berechungsstatus, BeruflicheVorbildung, DNote, DNoteFachgebHSR, EintrittAm, EintrittAusSchulart, EintrittAusSchulnummer, EintrittJahrgangsstufe, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSStoerung, LRSZuschlagMax, LRSZuschlagMin, MailSchule, MittlereReifeDeutschnote, MittlereReifeEnglischnote, MittlereReifeMathenote, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, SonderfallNur2Hj, Status, Vorname, Zeugnisbemerkung, asv_id FROM Schueler WHERE (KlasseId = @KlasseId)";
+            this._commandCollection[2].CommandText = @"SELECT AndereFremdspr2Art, AndereFremdspr2Fach, AndereFremdspr2Note, AndereFremdspr2Text, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, Berechungsstatus, BeruflicheVorbildung, DNote, DNoteFachgebHSR, EintrittAm, EintrittAusSchulart, EintrittAusSchulnummer, EintrittJahrgangsstufe, FranzB1, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSStoerung, LRSZuschlagMax, LRSZuschlagMin, MailSchule, Name, ProbezeitBis, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, SonderfallNur2Hj, SpanischB1, Status, Vorname, Zeugnisbemerkung, asv_id FROM Schueler WHERE (KlasseId = @KlasseId)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = @"SELECT AndereFremdspr2Art, AndereFremdspr2Fach, AndereFremdspr2Note, AndereFremdspr2Text, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, Berechungsstatus, BeruflicheVorbildung, DNote, DNoteFachgebHSR, EintrittAm, EintrittAusSchulart, EintrittAusSchulnummer, EintrittJahrgangsstufe, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSStoerung, LRSZuschlagMax, LRSZuschlagMin, MailSchule, MittlereReifeDeutschnote, MittlereReifeEnglischnote, MittlereReifeMathenote, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, SonderfallNur2Hj, Status, Vorname, Zeugnisbemerkung, asv_id FROM Schueler WHERE (KlasseId = @KlasseId) AND (Ausbildungsrichtung = @Ausbildungsrichtung)";
+            this._commandCollection[3].CommandText = @"SELECT AndereFremdspr2Art, AndereFremdspr2Fach, AndereFremdspr2Note, AndereFremdspr2Text, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, Berechungsstatus, BeruflicheVorbildung, DNote, DNoteFachgebHSR, EintrittAm, EintrittAusSchulart, EintrittAusSchulnummer, EintrittJahrgangsstufe, FranzB1, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSStoerung, LRSZuschlagMax, LRSZuschlagMin, MailSchule, Name, ProbezeitBis, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, SonderfallNur2Hj, SpanischB1, Status, Vorname, Zeugnisbemerkung, asv_id FROM Schueler WHERE (KlasseId = @KlasseId) AND (Ausbildungsrichtung = @Ausbildungsrichtung)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@KlasseId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "KlasseId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Ausbildungsrichtung", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "Ausbildungsrichtung", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -20515,7 +20422,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             this._commandCollection[6].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LehrerId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "LehrerId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[7] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[7].Connection = this.Connection;
-            this._commandCollection[7].CommandText = @"SELECT AndereFremdspr2Art, AndereFremdspr2Fach, AndereFremdspr2Note, AndereFremdspr2Text, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, Berechungsstatus, BeruflicheVorbildung, DNote, DNoteFachgebHSR, EintrittAm, EintrittAusSchulart, EintrittAusSchulnummer, EintrittJahrgangsstufe, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSStoerung, LRSZuschlagMax, LRSZuschlagMin, MailSchule, MittlereReifeDeutschnote, MittlereReifeEnglischnote, MittlereReifeMathenote, Name, Notfalltelefonnummer, ProbezeitBis, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, SonderfallNur2Hj, Status, Vorname, Zeugnisbemerkung, asv_id FROM Schueler WHERE (Status <> @NotStatus)";
+            this._commandCollection[7].CommandText = @"SELECT AndereFremdspr2Art, AndereFremdspr2Fach, AndereFremdspr2Note, AndereFremdspr2Text, Ausbildungsrichtung, Austrittsdatum, Bekenntnis, Berechungsstatus, BeruflicheVorbildung, DNote, DNoteFachgebHSR, EintrittAm, EintrittAusSchulart, EintrittAusSchulnummer, EintrittJahrgangsstufe, FranzB1, Geburtsdatum, Geburtsort, Geschlecht, Id, KlasseId, LRSStoerung, LRSZuschlagMax, LRSZuschlagMin, MailSchule, Name, ProbezeitBis, ReligionOderEthik, Rufname, Schulart, SchulischeVorbildung, SonderfallNur2Hj, SpanischB1, Status, Vorname, Zeugnisbemerkung, asv_id FROM Schueler WHERE (Status <> @NotStatus)";
             this._commandCollection[7].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[7].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@NotStatus", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Status", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[8] = new global::System.Data.SqlClient.SqlCommand();
@@ -20727,7 +20634,6 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     string EintrittJahrgangsstufe, 
                     global::System.Nullable<global::System.DateTime> EintrittAm, 
                     global::System.Nullable<int> EintrittAusSchulnummer, 
-                    string Notfalltelefonnummer, 
                     global::System.Nullable<decimal> DNote, 
                     global::System.Nullable<int> Status, 
                     global::System.Nullable<int> AndereFremdspr2Note, 
@@ -20737,16 +20643,15 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     bool SonderfallNur2Hj, 
                     string Zeugnisbemerkung, 
                     string EintrittAusSchulart, 
-                    global::System.Nullable<int> MittlereReifeMathenote, 
-                    global::System.Nullable<int> MittlereReifeDeutschnote, 
-                    global::System.Nullable<int> MittlereReifeEnglischnote, 
                     byte Berechungsstatus, 
                     int AndereFremdspr2Art, 
                     global::System.Nullable<int> AndereFremdspr2Fach, 
                     int LRSZuschlagMin, 
                     int LRSZuschlagMax, 
                     string MailSchule, 
-                    string asv_id) {
+                    string asv_id, 
+                    global::System.Nullable<bool> FranzB1, 
+                    global::System.Nullable<bool> SpanischB1) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(Id));
             if ((Name == null)) {
                 throw new global::System.ArgumentNullException("Name");
@@ -20851,100 +20756,88 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             else {
                 this.Adapter.InsertCommand.Parameters[18].Value = global::System.DBNull.Value;
             }
-            if ((Notfalltelefonnummer == null)) {
-                this.Adapter.InsertCommand.Parameters[19].Value = global::System.DBNull.Value;
+            if ((DNote.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[19].Value = ((decimal)(DNote.Value));
             }
             else {
-                this.Adapter.InsertCommand.Parameters[19].Value = ((string)(Notfalltelefonnummer));
+                this.Adapter.InsertCommand.Parameters[19].Value = global::System.DBNull.Value;
             }
-            if ((DNote.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[20].Value = ((decimal)(DNote.Value));
+            if ((Status.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[20].Value = ((int)(Status.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[20].Value = global::System.DBNull.Value;
             }
-            if ((Status.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[21].Value = ((int)(Status.Value));
+            if ((AndereFremdspr2Note.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[21].Value = ((int)(AndereFremdspr2Note.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[21].Value = global::System.DBNull.Value;
             }
-            if ((AndereFremdspr2Note.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[22].Value = ((int)(AndereFremdspr2Note.Value));
-            }
-            else {
+            if ((AndereFremdspr2Text == null)) {
                 this.Adapter.InsertCommand.Parameters[22].Value = global::System.DBNull.Value;
             }
-            if ((AndereFremdspr2Text == null)) {
-                this.Adapter.InsertCommand.Parameters[23].Value = global::System.DBNull.Value;
-            }
             else {
-                this.Adapter.InsertCommand.Parameters[23].Value = ((string)(AndereFremdspr2Text));
+                this.Adapter.InsertCommand.Parameters[22].Value = ((string)(AndereFremdspr2Text));
             }
             if ((DNoteFachgebHSR.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[24].Value = ((decimal)(DNoteFachgebHSR.Value));
+                this.Adapter.InsertCommand.Parameters[23].Value = ((decimal)(DNoteFachgebHSR.Value));
             }
             else {
-                this.Adapter.InsertCommand.Parameters[24].Value = global::System.DBNull.Value;
+                this.Adapter.InsertCommand.Parameters[23].Value = global::System.DBNull.Value;
             }
             if ((Schulart == null)) {
-                this.Adapter.InsertCommand.Parameters[25].Value = global::System.DBNull.Value;
+                this.Adapter.InsertCommand.Parameters[24].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[25].Value = ((string)(Schulart));
+                this.Adapter.InsertCommand.Parameters[24].Value = ((string)(Schulart));
             }
-            this.Adapter.InsertCommand.Parameters[26].Value = ((bool)(SonderfallNur2Hj));
+            this.Adapter.InsertCommand.Parameters[25].Value = ((bool)(SonderfallNur2Hj));
             if ((Zeugnisbemerkung == null)) {
+                this.Adapter.InsertCommand.Parameters[26].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[26].Value = ((string)(Zeugnisbemerkung));
+            }
+            if ((EintrittAusSchulart == null)) {
                 this.Adapter.InsertCommand.Parameters[27].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[27].Value = ((string)(Zeugnisbemerkung));
+                this.Adapter.InsertCommand.Parameters[27].Value = ((string)(EintrittAusSchulart));
             }
-            if ((EintrittAusSchulart == null)) {
-                this.Adapter.InsertCommand.Parameters[28].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[28].Value = ((string)(EintrittAusSchulart));
-            }
-            if ((MittlereReifeMathenote.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[29].Value = ((int)(MittlereReifeMathenote.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[29].Value = global::System.DBNull.Value;
-            }
-            if ((MittlereReifeDeutschnote.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[30].Value = ((int)(MittlereReifeDeutschnote.Value));
+            this.Adapter.InsertCommand.Parameters[28].Value = ((byte)(Berechungsstatus));
+            this.Adapter.InsertCommand.Parameters[29].Value = ((int)(AndereFremdspr2Art));
+            if ((AndereFremdspr2Fach.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[30].Value = ((int)(AndereFremdspr2Fach.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[30].Value = global::System.DBNull.Value;
             }
-            if ((MittlereReifeEnglischnote.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[31].Value = ((int)(MittlereReifeEnglischnote.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[31].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.InsertCommand.Parameters[32].Value = ((byte)(Berechungsstatus));
-            this.Adapter.InsertCommand.Parameters[33].Value = ((int)(AndereFremdspr2Art));
-            if ((AndereFremdspr2Fach.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[34].Value = ((int)(AndereFremdspr2Fach.Value));
-            }
-            else {
-                this.Adapter.InsertCommand.Parameters[34].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.InsertCommand.Parameters[35].Value = ((int)(LRSZuschlagMin));
-            this.Adapter.InsertCommand.Parameters[36].Value = ((int)(LRSZuschlagMax));
+            this.Adapter.InsertCommand.Parameters[31].Value = ((int)(LRSZuschlagMin));
+            this.Adapter.InsertCommand.Parameters[32].Value = ((int)(LRSZuschlagMax));
             if ((MailSchule == null)) {
-                this.Adapter.InsertCommand.Parameters[37].Value = global::System.DBNull.Value;
+                this.Adapter.InsertCommand.Parameters[33].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[37].Value = ((string)(MailSchule));
+                this.Adapter.InsertCommand.Parameters[33].Value = ((string)(MailSchule));
             }
             if ((asv_id == null)) {
-                this.Adapter.InsertCommand.Parameters[38].Value = global::System.DBNull.Value;
+                this.Adapter.InsertCommand.Parameters[34].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[38].Value = ((string)(asv_id));
+                this.Adapter.InsertCommand.Parameters[34].Value = ((string)(asv_id));
+            }
+            if ((FranzB1.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[35].Value = ((bool)(FranzB1.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[35].Value = global::System.DBNull.Value;
+            }
+            if ((SpanischB1.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[36].Value = ((bool)(SpanischB1.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[36].Value = global::System.DBNull.Value;
             }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
@@ -20986,7 +20879,6 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     string EintrittJahrgangsstufe, 
                     global::System.Nullable<global::System.DateTime> EintrittAm, 
                     global::System.Nullable<int> EintrittAusSchulnummer, 
-                    string Notfalltelefonnummer, 
                     global::System.Nullable<decimal> DNote, 
                     global::System.Nullable<int> Status, 
                     global::System.Nullable<int> AndereFremdspr2Note, 
@@ -20996,9 +20888,6 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     bool SonderfallNur2Hj, 
                     string Zeugnisbemerkung, 
                     string EintrittAusSchulart, 
-                    global::System.Nullable<int> MittlereReifeMathenote, 
-                    global::System.Nullable<int> MittlereReifeDeutschnote, 
-                    global::System.Nullable<int> MittlereReifeEnglischnote, 
                     byte Berechungsstatus, 
                     int AndereFremdspr2Art, 
                     global::System.Nullable<int> AndereFremdspr2Fach, 
@@ -21006,6 +20895,8 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     int LRSZuschlagMax, 
                     string MailSchule, 
                     string asv_id, 
+                    global::System.Nullable<bool> FranzB1, 
+                    global::System.Nullable<bool> SpanischB1, 
                     int Original_Id) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(Id));
             if ((Name == null)) {
@@ -21111,102 +21002,90 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             else {
                 this.Adapter.UpdateCommand.Parameters[18].Value = global::System.DBNull.Value;
             }
-            if ((Notfalltelefonnummer == null)) {
-                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
+            if ((DNote.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[19].Value = ((decimal)(DNote.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[19].Value = ((string)(Notfalltelefonnummer));
+                this.Adapter.UpdateCommand.Parameters[19].Value = global::System.DBNull.Value;
             }
-            if ((DNote.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[20].Value = ((decimal)(DNote.Value));
+            if ((Status.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[20].Value = ((int)(Status.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[20].Value = global::System.DBNull.Value;
             }
-            if ((Status.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[21].Value = ((int)(Status.Value));
+            if ((AndereFremdspr2Note.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[21].Value = ((int)(AndereFremdspr2Note.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[21].Value = global::System.DBNull.Value;
             }
-            if ((AndereFremdspr2Note.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[22].Value = ((int)(AndereFremdspr2Note.Value));
-            }
-            else {
+            if ((AndereFremdspr2Text == null)) {
                 this.Adapter.UpdateCommand.Parameters[22].Value = global::System.DBNull.Value;
             }
-            if ((AndereFremdspr2Text == null)) {
-                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
-            }
             else {
-                this.Adapter.UpdateCommand.Parameters[23].Value = ((string)(AndereFremdspr2Text));
+                this.Adapter.UpdateCommand.Parameters[22].Value = ((string)(AndereFremdspr2Text));
             }
             if ((DNoteFachgebHSR.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[24].Value = ((decimal)(DNoteFachgebHSR.Value));
+                this.Adapter.UpdateCommand.Parameters[23].Value = ((decimal)(DNoteFachgebHSR.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[23].Value = global::System.DBNull.Value;
             }
             if ((Schulart == null)) {
-                this.Adapter.UpdateCommand.Parameters[25].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[24].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[25].Value = ((string)(Schulart));
+                this.Adapter.UpdateCommand.Parameters[24].Value = ((string)(Schulart));
             }
-            this.Adapter.UpdateCommand.Parameters[26].Value = ((bool)(SonderfallNur2Hj));
+            this.Adapter.UpdateCommand.Parameters[25].Value = ((bool)(SonderfallNur2Hj));
             if ((Zeugnisbemerkung == null)) {
+                this.Adapter.UpdateCommand.Parameters[26].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[26].Value = ((string)(Zeugnisbemerkung));
+            }
+            if ((EintrittAusSchulart == null)) {
                 this.Adapter.UpdateCommand.Parameters[27].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[27].Value = ((string)(Zeugnisbemerkung));
+                this.Adapter.UpdateCommand.Parameters[27].Value = ((string)(EintrittAusSchulart));
             }
-            if ((EintrittAusSchulart == null)) {
-                this.Adapter.UpdateCommand.Parameters[28].Value = global::System.DBNull.Value;
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[28].Value = ((string)(EintrittAusSchulart));
-            }
-            if ((MittlereReifeMathenote.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[29].Value = ((int)(MittlereReifeMathenote.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[29].Value = global::System.DBNull.Value;
-            }
-            if ((MittlereReifeDeutschnote.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[30].Value = ((int)(MittlereReifeDeutschnote.Value));
+            this.Adapter.UpdateCommand.Parameters[28].Value = ((byte)(Berechungsstatus));
+            this.Adapter.UpdateCommand.Parameters[29].Value = ((int)(AndereFremdspr2Art));
+            if ((AndereFremdspr2Fach.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[30].Value = ((int)(AndereFremdspr2Fach.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[30].Value = global::System.DBNull.Value;
             }
-            if ((MittlereReifeEnglischnote.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[31].Value = ((int)(MittlereReifeEnglischnote.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[31].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[32].Value = ((byte)(Berechungsstatus));
-            this.Adapter.UpdateCommand.Parameters[33].Value = ((int)(AndereFremdspr2Art));
-            if ((AndereFremdspr2Fach.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[34].Value = ((int)(AndereFremdspr2Fach.Value));
-            }
-            else {
-                this.Adapter.UpdateCommand.Parameters[34].Value = global::System.DBNull.Value;
-            }
-            this.Adapter.UpdateCommand.Parameters[35].Value = ((int)(LRSZuschlagMin));
-            this.Adapter.UpdateCommand.Parameters[36].Value = ((int)(LRSZuschlagMax));
+            this.Adapter.UpdateCommand.Parameters[31].Value = ((int)(LRSZuschlagMin));
+            this.Adapter.UpdateCommand.Parameters[32].Value = ((int)(LRSZuschlagMax));
             if ((MailSchule == null)) {
-                this.Adapter.UpdateCommand.Parameters[37].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[33].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[37].Value = ((string)(MailSchule));
+                this.Adapter.UpdateCommand.Parameters[33].Value = ((string)(MailSchule));
             }
             if ((asv_id == null)) {
-                this.Adapter.UpdateCommand.Parameters[38].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[34].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[38].Value = ((string)(asv_id));
+                this.Adapter.UpdateCommand.Parameters[34].Value = ((string)(asv_id));
             }
-            this.Adapter.UpdateCommand.Parameters[39].Value = ((int)(Original_Id));
+            if ((FranzB1.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[35].Value = ((bool)(FranzB1.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[35].Value = global::System.DBNull.Value;
+            }
+            if ((SpanischB1.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[36].Value = ((bool)(SpanischB1.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[36].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[37].Value = ((int)(Original_Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -21246,7 +21125,6 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     string EintrittJahrgangsstufe, 
                     global::System.Nullable<global::System.DateTime> EintrittAm, 
                     global::System.Nullable<int> EintrittAusSchulnummer, 
-                    string Notfalltelefonnummer, 
                     global::System.Nullable<decimal> DNote, 
                     global::System.Nullable<int> Status, 
                     global::System.Nullable<int> AndereFremdspr2Note, 
@@ -21256,9 +21134,6 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     bool SonderfallNur2Hj, 
                     string Zeugnisbemerkung, 
                     string EintrittAusSchulart, 
-                    global::System.Nullable<int> MittlereReifeMathenote, 
-                    global::System.Nullable<int> MittlereReifeDeutschnote, 
-                    global::System.Nullable<int> MittlereReifeEnglischnote, 
                     byte Berechungsstatus, 
                     int AndereFremdspr2Art, 
                     global::System.Nullable<int> AndereFremdspr2Fach, 
@@ -21266,8 +21141,10 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                     int LRSZuschlagMax, 
                     string MailSchule, 
                     string asv_id, 
+                    global::System.Nullable<bool> FranzB1, 
+                    global::System.Nullable<bool> SpanischB1, 
                     int Original_Id) {
-            return this.Update(Original_Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, Ausbildungsrichtung, ReligionOderEthik, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, EintrittJahrgangsstufe, EintrittAm, EintrittAusSchulnummer, Notfalltelefonnummer, DNote, Status, AndereFremdspr2Note, AndereFremdspr2Text, DNoteFachgebHSR, Schulart, SonderfallNur2Hj, Zeugnisbemerkung, EintrittAusSchulart, MittlereReifeMathenote, MittlereReifeDeutschnote, MittlereReifeEnglischnote, Berechungsstatus, AndereFremdspr2Art, AndereFremdspr2Fach, LRSZuschlagMin, LRSZuschlagMax, MailSchule, asv_id, Original_Id);
+            return this.Update(Original_Id, Name, Vorname, KlasseId, Rufname, Geschlecht, Geburtsdatum, Geburtsort, Bekenntnis, Ausbildungsrichtung, ReligionOderEthik, ProbezeitBis, Austrittsdatum, SchulischeVorbildung, BeruflicheVorbildung, LRSStoerung, EintrittJahrgangsstufe, EintrittAm, EintrittAusSchulnummer, DNote, Status, AndereFremdspr2Note, AndereFremdspr2Text, DNoteFachgebHSR, Schulart, SonderfallNur2Hj, Zeugnisbemerkung, EintrittAusSchulart, Berechungsstatus, AndereFremdspr2Art, AndereFremdspr2Fach, LRSZuschlagMin, LRSZuschlagMax, MailSchule, asv_id, FranzB1, SpanischB1, Original_Id);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

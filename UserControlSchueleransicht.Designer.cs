@@ -310,11 +310,11 @@ namespace diNo
       this.label8.TabIndex = 47;
       this.label8.Text = "Austritt am";
       // 
-      // textBoxNotfalltelefonnummer
-      // 
+      // textBoxMailEltern
+      //
       this.textBoxMailEltern.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.textBoxMailEltern.Location = new System.Drawing.Point(27, 362);
-      this.textBoxMailEltern.Name = "textBoxNotfalltelefonnummer";
+      this.textBoxMailEltern.Name = "textBoxMailEltern";
       this.textBoxMailEltern.Size = new System.Drawing.Size(240, 20);
       this.textBoxMailEltern.TabIndex = 4;
       // 

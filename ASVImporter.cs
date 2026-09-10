@@ -146,9 +146,19 @@ namespace diNo
       row.Geburtsort = El(schuelerElement, "geburtsort") ?? "";
       row.Ausbildungsrichtung = ErmittleAusbildungsrichtung(kennung, klassenname);
 
+      string bekenntnis;
+      ReligionSchluesselZuKurzform.TryGetValue(int.Parse(El(schuelerElement, "religionszugehoerigkeit")), out bekenntnis);
+      row.Bekenntnis = bekenntnis;
+
       DateTime? eintritt = ParseAsvDatum(El(schuelerElement, "eintrittsdatum"));
       if (eintritt == null) row.SetEintrittAmNull();
       else row.EintrittAm = eintritt.Value;
+
+      row.EintrittJahrgangsstufe = El(schuelerElement, "eintritt_jahrgangsstufe").Substring(0, 2); // 121 bedeutet 12. Klasse
+
+      DateTime? probezeitBis = ParseAsvDatum(El(schuelerElement, "probezeit_bis"));
+      if (probezeitBis == null || probezeitBis.Value <= DateTime.Today) row.SetProbezeitBisNull();
+      else row.ProbezeitBis = probezeitBis.Value;
 
       row.Status = 0; // aktiv
       row.LRSStoerung = false; // wird erst nach Ausstellung des Bescheids gesetzt, s. altes WinSVSchuelerReader-Verhalten

@@ -43,14 +43,6 @@ namespace diNo
         Match match = regex.Match(email);
         if (!match.Success)
           err.list.Add(new NotenCheckResult(s, null,"Ungültige Mailadresse: "+ email));
-
-        if (!(s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer==""))
-        {
-          string elternmail = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
-          match = regex.Match(elternmail);
-          if (!match.Success)
-            err.list.Add(new NotenCheckResult(s, null, "Ungültige Mailadresse: " + elternmail));
-        }
       }
 
 

@@ -8,12 +8,8 @@
     #endregion
     private System.Windows.Forms.Button btnSave;
     private System.Windows.Forms.GroupBox groupBoxMittlereReife;
-    private System.Windows.Forms.Label label2;
-    private System.Windows.Forms.Label label3;
-    private System.Windows.Forms.Label label4;
-    private NumericUpDownNullable numericUpDownMathe;
-    private NumericUpDownNullable numericUpDownEnglisch;
-    private NumericUpDownNullable numericUpDownDeutsch;
+    private System.Windows.Forms.CheckBox checkBoxFranzB1;
+    private System.Windows.Forms.CheckBox checkBoxSpanischB1;
     private System.Windows.Forms.GroupBox groupBox1;
     private System.Windows.Forms.Label label15;
     private System.Windows.Forms.Label label14;
