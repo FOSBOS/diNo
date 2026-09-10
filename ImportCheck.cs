@@ -43,6 +43,15 @@ namespace diNo
         Match match = regex.Match(email);
         if (!match.Success)
           err.list.Add(new NotenCheckResult(s, null,"Ungültige Mailadresse: "+ email));
+
+        if (s.Data.Schulart != "B") // Berufsoberschule hier ignorieren
+        {
+          var eltern = s.getErziehungsberechtigte().ToList();
+          if (s.getMailEltern() == "")
+            err.list.Add(new NotenCheckResult(s, null, "Keine Elternmailadresse angegeben"));
+          if (eltern.Count > 1 && !eltern.Any(e => !e.IsHauptAnsprechpartnerNull() && e.HauptAnsprechpartner))
+            err.list.Add(new NotenCheckResult(s, null, "Kein Hauptansprechpartner markiert"));
+        }
       }
 
 
