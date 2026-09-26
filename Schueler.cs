@@ -996,11 +996,22 @@ public int APFaktor
       }
     }
 
-    public string getMailEltern()
+    /// <summary>
+    /// Liefert die Mailadresse des als Hauptansprechpartner markierten Elternteils.
+    /// Ist keiner als Hauptansprechpartner markiert, wird die Mailadresse desjenigen
+    /// Elternteils geliefert, der eine Mailadresse gespeichert hat.
+    /// </summary>
+    public string GetElternMail()
     {
       foreach (var eltern in getErziehungsberechtigte())
       {
-        if (!eltern.IsEmailNull() && eltern.Email !="")
+        if (!eltern.IsHauptAnsprechpartnerNull() && eltern.HauptAnsprechpartner
+          && !eltern.IsEmailNull() && eltern.Email != "")
+          return eltern.Email;
+      }
+      foreach (var eltern in getErziehungsberechtigte())
+      {
+        if (!eltern.IsEmailNull() && eltern.Email != "")
           return eltern.Email;
       }
       return "";

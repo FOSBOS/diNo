@@ -51,7 +51,7 @@ namespace diNo
           foreach (var eltern in schueler.getErziehungsberechtigte())
             kontaktEltern.Add(eltern.VornamePerson + " " + eltern.NachnamePerson);
           textBoxAdresseEltern.Lines = kontaktEltern.ToArray();
-          textBoxMailEltern.Text = schueler.getMailEltern();
+          textBoxMailEltern.Text = schueler.GetElternMail();
           textBoxBekenntnis.Text = schueler.Data.IsBekenntnisNull() ? "" : schueler.Data.Bekenntnis;
 
           dateTimeProbezeit.Value = schueler.Data.IsProbezeitBisNull() ? dateTimeProbezeit.MinDate : schueler.Data.ProbezeitBis;

@@ -141,7 +141,7 @@ namespace diNo
           mailTo = Zugriff.Instance.lehrer.Data.EMail;
         else if (anEltern)
         {
-          mailTo = s.getMailEltern();
+          mailTo = s.GetElternMail();
           if (mailTo == "")
           {
             log.WriteLine("MAILADRESSE (Eltern) fehlt bei " + s.NameVorname);
@@ -201,7 +201,7 @@ namespace diNo
         mailTo = s.Data.MailSchule;
       else
       {
-        mailTo = s.getMailEltern();
+        mailTo = s.GetElternMail();
         if (mailTo == "")
         {
           log.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);

@@ -74,7 +74,7 @@ using System.Windows.Forms;
           MailTo = Zugriff.Instance.lehrer.Data.EMail;
         else if (anEltern)
         {
-          MailTo = s.getMailEltern();
+          MailTo = s.GetElternMail();
           if (MailTo == "")
           {
             log.WriteLine("MAILADRESSE (Eltern) fehlt bei " + s.NameVorname);
@@ -128,7 +128,7 @@ using System.Windows.Forms;
         mailTo = s.Data.MailSchule;
       else
       {
-        mailTo = s.getMailEltern();
+        mailTo = s.GetElternMail();
         if (mailTo == "")
         {
           log.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);

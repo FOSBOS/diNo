@@ -8,15 +8,12 @@
     #endregion
     private System.Windows.Forms.Button btnSave;
     private System.Windows.Forms.GroupBox groupBoxMittlereReife;
-    private System.Windows.Forms.CheckBox checkBoxFranzB1;
-    private System.Windows.Forms.CheckBox checkBoxSpanischB1;
     private System.Windows.Forms.GroupBox groupBox1;
     private System.Windows.Forms.Label label15;
     private System.Windows.Forms.Label label14;
     private NumericUpDownNullable numAndereFremdspr2Note;
     private System.Windows.Forms.TextBox textBoxZeugnisbemerkung;
     private System.Windows.Forms.Label labelZeugnisbemerkung;
-    private System.Windows.Forms.Label lblSchulischeVorbildung;
     private System.Windows.Forms.ComboBox cbAndereFremdspr2Fach;
     private System.Windows.Forms.Label lbFFalt;
     private System.Windows.Forms.GroupBox gbFS2Art;
@@ -67,5 +64,7 @@
     private System.Windows.Forms.CheckBox checkBoxEltern2Haupt;
     private System.Windows.Forms.Label lblEltern2Email;
     private System.Windows.Forms.TextBox textBoxEltern2Email;
+    private System.Windows.Forms.CheckBox checkBoxFranzB1;
+    private System.Windows.Forms.CheckBox checkBoxSpanischB1;
   }
 }

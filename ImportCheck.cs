@@ -47,7 +47,7 @@ namespace diNo
         if (s.Data.Schulart != "B") // Berufsoberschule hier ignorieren
         {
           var eltern = s.getErziehungsberechtigte().ToList();
-          if (s.getMailEltern() == "")
+          if (s.GetElternMail() == "")
             err.list.Add(new NotenCheckResult(s, null, "Keine Elternmailadresse angegeben"));
           if (eltern.Count > 1 && !eltern.Any(e => !e.IsHauptAnsprechpartnerNull() && e.HauptAnsprechpartner))
             err.list.Add(new NotenCheckResult(s, null, "Kein Hauptansprechpartner markiert"));
