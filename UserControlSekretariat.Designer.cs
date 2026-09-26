@@ -46,5 +46,26 @@
         private System.Windows.Forms.Label label7;
     private System.Windows.Forms.TextBox textBoxASVID;
     private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.GroupBox groupBoxEltern;
+    private System.Windows.Forms.Label lblEltern1;
+    private System.Windows.Forms.Label lblEltern1Vorname;
+    private System.Windows.Forms.Label lblEltern1Nachname;
+    private System.Windows.Forms.TextBox textBoxEltern1Vorname;
+    private System.Windows.Forms.TextBox textBoxEltern1Nachname;
+    private System.Windows.Forms.Label lblEltern1Telefon;
+    private System.Windows.Forms.TextBox textBoxEltern1Telefon;
+    private System.Windows.Forms.CheckBox checkBoxEltern1Haupt;
+    private System.Windows.Forms.Label lblEltern1Email;
+    private System.Windows.Forms.TextBox textBoxEltern1Email;
+    private System.Windows.Forms.Label lblEltern2;
+    private System.Windows.Forms.Label lblEltern2Vorname;
+    private System.Windows.Forms.Label lblEltern2Nachname;
+    private System.Windows.Forms.TextBox textBoxEltern2Vorname;
+    private System.Windows.Forms.TextBox textBoxEltern2Nachname;
+    private System.Windows.Forms.Label lblEltern2Telefon;
+    private System.Windows.Forms.TextBox textBoxEltern2Telefon;
+    private System.Windows.Forms.CheckBox checkBoxEltern2Haupt;
+    private System.Windows.Forms.Label lblEltern2Email;
+    private System.Windows.Forms.TextBox textBoxEltern2Email;
   }
 }

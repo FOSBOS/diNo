@@ -81,8 +81,21 @@ namespace diNo
           textBoxAR.Text = schueler.Data.Ausbildungsrichtung;
           textBoxFB.Text = schueler.Data.Schulart;
           textBoxASVID.Text = schueler.AsvId;
+
+          LadeElternteil("1", textBoxEltern1Vorname, textBoxEltern1Nachname, textBoxEltern1Telefon, textBoxEltern1Email, checkBoxEltern1Haupt);
+          LadeElternteil("2", textBoxEltern2Vorname, textBoxEltern2Nachname, textBoxEltern2Telefon, textBoxEltern2Email, checkBoxEltern2Haupt);
         }
       }
+    }
+
+    private void LadeElternteil(string anschriftWessen, TextBox vorname, TextBox nachname, TextBox telefon, TextBox email, CheckBox hauptAnsprechpartner)
+    {
+      var row = schueler.getAnschriftenRows().FirstOrDefault(a => a.AnschriftWessen == anschriftWessen);
+      vorname.Text = row == null || row.IsVornamePersonNull() ? "" : row.VornamePerson;
+      nachname.Text = row == null || row.IsNachnamePersonNull() ? "" : row.NachnamePerson;
+      telefon.Text = row == null || row.IsTelefonnummerNull() ? "" : row.Telefonnummer;
+      email.Text = row == null || row.IsEmailNull() ? "" : row.Email;
+      hauptAnsprechpartner.Checked = row != null && !row.IsHauptAnsprechpartnerNull() && row.HauptAnsprechpartner;
     }
 
     private void btnSave_Click(object sender, EventArgs e)
@@ -114,6 +127,9 @@ namespace diNo
       schueler.Data.Ausbildungsrichtung = textBoxAR.Text;
       schueler.Data.Schulart = textBoxFB.Text;
       schueler.Data.asv_id = textBoxASVID.Text;
+
+      schueler.SaveErziehungsberechtigter("1", textBoxEltern1Vorname.Text.Trim(), textBoxEltern1Nachname.Text.Trim(), textBoxEltern1Telefon.Text.Trim(), textBoxEltern1Email.Text.Trim(), checkBoxEltern1Haupt.Checked);
+      schueler.SaveErziehungsberechtigter("2", textBoxEltern2Vorname.Text.Trim(), textBoxEltern2Nachname.Text.Trim(), textBoxEltern2Telefon.Text.Trim(), textBoxEltern2Email.Text.Trim(), checkBoxEltern2Haupt.Checked);
 
       schueler.Save();
     }
@@ -160,6 +176,27 @@ namespace diNo
       this.label18 = new System.Windows.Forms.Label();
       this.textBoxNachname = new System.Windows.Forms.TextBox();
       this.label7 = new System.Windows.Forms.Label();
+      this.groupBoxEltern = new System.Windows.Forms.GroupBox();
+      this.lblEltern1 = new System.Windows.Forms.Label();
+      this.lblEltern1Vorname = new System.Windows.Forms.Label();
+      this.lblEltern1Nachname = new System.Windows.Forms.Label();
+      this.textBoxEltern1Vorname = new System.Windows.Forms.TextBox();
+      this.textBoxEltern1Nachname = new System.Windows.Forms.TextBox();
+      this.lblEltern1Telefon = new System.Windows.Forms.Label();
+      this.textBoxEltern1Telefon = new System.Windows.Forms.TextBox();
+      this.checkBoxEltern1Haupt = new System.Windows.Forms.CheckBox();
+      this.lblEltern1Email = new System.Windows.Forms.Label();
+      this.textBoxEltern1Email = new System.Windows.Forms.TextBox();
+      this.lblEltern2 = new System.Windows.Forms.Label();
+      this.lblEltern2Vorname = new System.Windows.Forms.Label();
+      this.lblEltern2Nachname = new System.Windows.Forms.Label();
+      this.textBoxEltern2Vorname = new System.Windows.Forms.TextBox();
+      this.textBoxEltern2Nachname = new System.Windows.Forms.TextBox();
+      this.lblEltern2Telefon = new System.Windows.Forms.Label();
+      this.textBoxEltern2Telefon = new System.Windows.Forms.TextBox();
+      this.checkBoxEltern2Haupt = new System.Windows.Forms.CheckBox();
+      this.lblEltern2Email = new System.Windows.Forms.Label();
+      this.textBoxEltern2Email = new System.Windows.Forms.TextBox();
       this.groupBoxMittlereReife.SuspendLayout();
       this.groupBox1.SuspendLayout();
       this.gbFS2Art.SuspendLayout();
@@ -168,13 +205,14 @@ namespace diNo
       ((System.ComponentModel.ISupportInitialize)(this.numLRSZuschlagMax)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.numLRSZuschlagMin)).BeginInit();
       this.grpGrunddaten.SuspendLayout();
+      this.groupBoxEltern.SuspendLayout();
       this.SuspendLayout();
       // 
       // btnSave
       // 
       this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.btnSave.Image = global::diNo.Properties.Resources.Save;
-      this.btnSave.Location = new System.Drawing.Point(541, 397);
+      this.btnSave.Location = new System.Drawing.Point(541, 727);
       this.btnSave.Name = "btnSave";
       this.btnSave.Size = new System.Drawing.Size(40, 40);
       this.btnSave.TabIndex = 27;
@@ -641,7 +679,220 @@ namespace diNo
       this.label7.Size = new System.Drawing.Size(59, 13);
       this.label7.TabIndex = 96;
       this.label7.Text = "Nachname";
-      // 
+      //
+      // groupBoxEltern
+      //
+      this.groupBoxEltern.Controls.Add(this.lblEltern1);
+      this.groupBoxEltern.Controls.Add(this.lblEltern1Vorname);
+      this.groupBoxEltern.Controls.Add(this.lblEltern1Nachname);
+      this.groupBoxEltern.Controls.Add(this.textBoxEltern1Vorname);
+      this.groupBoxEltern.Controls.Add(this.textBoxEltern1Nachname);
+      this.groupBoxEltern.Controls.Add(this.lblEltern1Telefon);
+      this.groupBoxEltern.Controls.Add(this.textBoxEltern1Telefon);
+      this.groupBoxEltern.Controls.Add(this.checkBoxEltern1Haupt);
+      this.groupBoxEltern.Controls.Add(this.lblEltern1Email);
+      this.groupBoxEltern.Controls.Add(this.textBoxEltern1Email);
+      this.groupBoxEltern.Controls.Add(this.lblEltern2);
+      this.groupBoxEltern.Controls.Add(this.lblEltern2Vorname);
+      this.groupBoxEltern.Controls.Add(this.lblEltern2Nachname);
+      this.groupBoxEltern.Controls.Add(this.textBoxEltern2Vorname);
+      this.groupBoxEltern.Controls.Add(this.textBoxEltern2Nachname);
+      this.groupBoxEltern.Controls.Add(this.lblEltern2Telefon);
+      this.groupBoxEltern.Controls.Add(this.textBoxEltern2Telefon);
+      this.groupBoxEltern.Controls.Add(this.checkBoxEltern2Haupt);
+      this.groupBoxEltern.Controls.Add(this.lblEltern2Email);
+      this.groupBoxEltern.Controls.Add(this.textBoxEltern2Email);
+      this.groupBoxEltern.Location = new System.Drawing.Point(296, 397);
+      this.groupBoxEltern.Name = "groupBoxEltern";
+      this.groupBoxEltern.Size = new System.Drawing.Size(285, 320);
+      this.groupBoxEltern.TabIndex = 109;
+      this.groupBoxEltern.TabStop = false;
+      this.groupBoxEltern.Text = "Eltern";
+      //
+      // lblEltern1
+      //
+      this.lblEltern1.AutoSize = true;
+      this.lblEltern1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lblEltern1.Location = new System.Drawing.Point(11, 20);
+      this.lblEltern1.Name = "lblEltern1";
+      this.lblEltern1.Size = new System.Drawing.Size(127, 13);
+      this.lblEltern1.TabIndex = 110;
+      this.lblEltern1.Text = "1. Erziehungsberechtigte(r)";
+      //
+      // lblEltern1Vorname
+      //
+      this.lblEltern1Vorname.AutoSize = true;
+      this.lblEltern1Vorname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lblEltern1Vorname.Location = new System.Drawing.Point(14, 38);
+      this.lblEltern1Vorname.Name = "lblEltern1Vorname";
+      this.lblEltern1Vorname.Size = new System.Drawing.Size(49, 13);
+      this.lblEltern1Vorname.TabIndex = 111;
+      this.lblEltern1Vorname.Text = "Vorname";
+      //
+      // lblEltern1Nachname
+      //
+      this.lblEltern1Nachname.AutoSize = true;
+      this.lblEltern1Nachname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lblEltern1Nachname.Location = new System.Drawing.Point(146, 38);
+      this.lblEltern1Nachname.Name = "lblEltern1Nachname";
+      this.lblEltern1Nachname.Size = new System.Drawing.Size(59, 13);
+      this.lblEltern1Nachname.TabIndex = 112;
+      this.lblEltern1Nachname.Text = "Nachname";
+      //
+      // textBoxEltern1Vorname
+      //
+      this.textBoxEltern1Vorname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxEltern1Vorname.Location = new System.Drawing.Point(14, 52);
+      this.textBoxEltern1Vorname.Name = "textBoxEltern1Vorname";
+      this.textBoxEltern1Vorname.Size = new System.Drawing.Size(122, 20);
+      this.textBoxEltern1Vorname.TabIndex = 113;
+      //
+      // textBoxEltern1Nachname
+      //
+      this.textBoxEltern1Nachname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxEltern1Nachname.Location = new System.Drawing.Point(146, 52);
+      this.textBoxEltern1Nachname.Name = "textBoxEltern1Nachname";
+      this.textBoxEltern1Nachname.Size = new System.Drawing.Size(122, 20);
+      this.textBoxEltern1Nachname.TabIndex = 114;
+      //
+      // lblEltern1Telefon
+      //
+      this.lblEltern1Telefon.AutoSize = true;
+      this.lblEltern1Telefon.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lblEltern1Telefon.Location = new System.Drawing.Point(14, 78);
+      this.lblEltern1Telefon.Name = "lblEltern1Telefon";
+      this.lblEltern1Telefon.Size = new System.Drawing.Size(45, 13);
+      this.lblEltern1Telefon.TabIndex = 115;
+      this.lblEltern1Telefon.Text = "Telefon";
+      //
+      // textBoxEltern1Telefon
+      //
+      this.textBoxEltern1Telefon.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxEltern1Telefon.Location = new System.Drawing.Point(14, 92);
+      this.textBoxEltern1Telefon.Name = "textBoxEltern1Telefon";
+      this.textBoxEltern1Telefon.Size = new System.Drawing.Size(122, 20);
+      this.textBoxEltern1Telefon.TabIndex = 116;
+      //
+      // checkBoxEltern1Haupt
+      //
+      this.checkBoxEltern1Haupt.AutoSize = true;
+      this.checkBoxEltern1Haupt.Location = new System.Drawing.Point(146, 94);
+      this.checkBoxEltern1Haupt.Name = "checkBoxEltern1Haupt";
+      this.checkBoxEltern1Haupt.Size = new System.Drawing.Size(133, 17);
+      this.checkBoxEltern1Haupt.TabIndex = 117;
+      this.checkBoxEltern1Haupt.Text = "Hauptansprechpartner";
+      this.checkBoxEltern1Haupt.UseVisualStyleBackColor = true;
+      //
+      // lblEltern1Email
+      //
+      this.lblEltern1Email.AutoSize = true;
+      this.lblEltern1Email.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lblEltern1Email.Location = new System.Drawing.Point(14, 118);
+      this.lblEltern1Email.Name = "lblEltern1Email";
+      this.lblEltern1Email.Size = new System.Drawing.Size(34, 13);
+      this.lblEltern1Email.TabIndex = 118;
+      this.lblEltern1Email.Text = "Email";
+      //
+      // textBoxEltern1Email
+      //
+      this.textBoxEltern1Email.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxEltern1Email.Location = new System.Drawing.Point(14, 132);
+      this.textBoxEltern1Email.Name = "textBoxEltern1Email";
+      this.textBoxEltern1Email.Size = new System.Drawing.Size(254, 20);
+      this.textBoxEltern1Email.TabIndex = 119;
+      //
+      // lblEltern2
+      //
+      this.lblEltern2.AutoSize = true;
+      this.lblEltern2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lblEltern2.Location = new System.Drawing.Point(11, 167);
+      this.lblEltern2.Name = "lblEltern2";
+      this.lblEltern2.Size = new System.Drawing.Size(157, 13);
+      this.lblEltern2.TabIndex = 120;
+      this.lblEltern2.Text = "2. Erziehungsberechtigte(r)";
+      //
+      // lblEltern2Vorname
+      //
+      this.lblEltern2Vorname.AutoSize = true;
+      this.lblEltern2Vorname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lblEltern2Vorname.Location = new System.Drawing.Point(14, 185);
+      this.lblEltern2Vorname.Name = "lblEltern2Vorname";
+      this.lblEltern2Vorname.Size = new System.Drawing.Size(49, 13);
+      this.lblEltern2Vorname.TabIndex = 121;
+      this.lblEltern2Vorname.Text = "Vorname";
+      //
+      // lblEltern2Nachname
+      //
+      this.lblEltern2Nachname.AutoSize = true;
+      this.lblEltern2Nachname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lblEltern2Nachname.Location = new System.Drawing.Point(146, 185);
+      this.lblEltern2Nachname.Name = "lblEltern2Nachname";
+      this.lblEltern2Nachname.Size = new System.Drawing.Size(59, 13);
+      this.lblEltern2Nachname.TabIndex = 122;
+      this.lblEltern2Nachname.Text = "Nachname";
+      //
+      // textBoxEltern2Vorname
+      //
+      this.textBoxEltern2Vorname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxEltern2Vorname.Location = new System.Drawing.Point(14, 199);
+      this.textBoxEltern2Vorname.Name = "textBoxEltern2Vorname";
+      this.textBoxEltern2Vorname.Size = new System.Drawing.Size(122, 20);
+      this.textBoxEltern2Vorname.TabIndex = 123;
+      //
+      // textBoxEltern2Nachname
+      //
+      this.textBoxEltern2Nachname.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxEltern2Nachname.Location = new System.Drawing.Point(146, 199);
+      this.textBoxEltern2Nachname.Name = "textBoxEltern2Nachname";
+      this.textBoxEltern2Nachname.Size = new System.Drawing.Size(122, 20);
+      this.textBoxEltern2Nachname.TabIndex = 124;
+      //
+      // lblEltern2Telefon
+      //
+      this.lblEltern2Telefon.AutoSize = true;
+      this.lblEltern2Telefon.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lblEltern2Telefon.Location = new System.Drawing.Point(14, 225);
+      this.lblEltern2Telefon.Name = "lblEltern2Telefon";
+      this.lblEltern2Telefon.Size = new System.Drawing.Size(45, 13);
+      this.lblEltern2Telefon.TabIndex = 125;
+      this.lblEltern2Telefon.Text = "Telefon";
+      //
+      // textBoxEltern2Telefon
+      //
+      this.textBoxEltern2Telefon.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxEltern2Telefon.Location = new System.Drawing.Point(14, 239);
+      this.textBoxEltern2Telefon.Name = "textBoxEltern2Telefon";
+      this.textBoxEltern2Telefon.Size = new System.Drawing.Size(122, 20);
+      this.textBoxEltern2Telefon.TabIndex = 126;
+      //
+      // checkBoxEltern2Haupt
+      //
+      this.checkBoxEltern2Haupt.AutoSize = true;
+      this.checkBoxEltern2Haupt.Location = new System.Drawing.Point(146, 241);
+      this.checkBoxEltern2Haupt.Name = "checkBoxEltern2Haupt";
+      this.checkBoxEltern2Haupt.Size = new System.Drawing.Size(133, 17);
+      this.checkBoxEltern2Haupt.TabIndex = 127;
+      this.checkBoxEltern2Haupt.Text = "Hauptansprechpartner";
+      this.checkBoxEltern2Haupt.UseVisualStyleBackColor = true;
+      //
+      // lblEltern2Email
+      //
+      this.lblEltern2Email.AutoSize = true;
+      this.lblEltern2Email.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.lblEltern2Email.Location = new System.Drawing.Point(14, 265);
+      this.lblEltern2Email.Name = "lblEltern2Email";
+      this.lblEltern2Email.Size = new System.Drawing.Size(34, 13);
+      this.lblEltern2Email.TabIndex = 128;
+      this.lblEltern2Email.Text = "Email";
+      //
+      // textBoxEltern2Email
+      //
+      this.textBoxEltern2Email.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.textBoxEltern2Email.Location = new System.Drawing.Point(14, 279);
+      this.textBoxEltern2Email.Name = "textBoxEltern2Email";
+      this.textBoxEltern2Email.Size = new System.Drawing.Size(254, 20);
+      this.textBoxEltern2Email.TabIndex = 129;
+      //
       // UserControlSekretariat
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -652,9 +903,10 @@ namespace diNo
       this.Controls.Add(this.labelZeugnisbemerkung);
       this.Controls.Add(this.groupBox1);
       this.Controls.Add(this.groupBoxMittlereReife);
+      this.Controls.Add(this.groupBoxEltern);
       this.Controls.Add(this.btnSave);
       this.Name = "UserControlSekretariat";
-      this.Size = new System.Drawing.Size(634, 601);
+      this.Size = new System.Drawing.Size(634, 785);
       this.groupBoxMittlereReife.ResumeLayout(false);
       this.groupBoxMittlereReife.PerformLayout();
       this.groupBox1.ResumeLayout(false);
@@ -668,6 +920,8 @@ namespace diNo
       ((System.ComponentModel.ISupportInitialize)(this.numLRSZuschlagMin)).EndInit();
       this.grpGrunddaten.ResumeLayout(false);
       this.grpGrunddaten.PerformLayout();
+      this.groupBoxEltern.ResumeLayout(false);
+      this.groupBoxEltern.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 

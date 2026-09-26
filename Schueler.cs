@@ -5,6 +5,7 @@ using diNo.Xml.Schulerfolgsstatistik;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
+using System.Linq;
 using System.Resources;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
@@ -962,6 +963,36 @@ public int APFaktor
         eigene.Telefonnummer = telefonnummer;
         eigene.Email = email;
         new SchuelerAnschriftTableAdapter().Update(eigene);
+      }
+    }
+
+    /// <summary>
+    /// Legt einen Erziehungsberechtigten (AnschriftWessen="1" bzw. "2") an, aktualisiert ihn oder löscht ihn wieder,
+    /// je nachdem ob Angaben vorhanden sind, z. B. aus der Sekretariats-Ansicht.
+    /// </summary>
+    public void SaveErziehungsberechtigter(string anschriftWessen, string vorname, string nachname, string telefonnummer, string email, bool hauptAnsprechpartner)
+    {
+      var row = getAnschriftenRows().FirstOrDefault(a => a.AnschriftWessen == anschriftWessen);
+      bool istLeer = string.IsNullOrWhiteSpace(vorname) && string.IsNullOrWhiteSpace(nachname) && string.IsNullOrWhiteSpace(telefonnummer) && string.IsNullOrWhiteSpace(email);
+
+      if (row == null)
+      {
+        if (istLeer) return;
+        AddAnschrift(anschriftWessen, null, nachname, vorname, null, null, null, null, null, null, telefonnummer, null, email, hauptAnsprechpartner, null);
+      }
+      else if (istLeer)
+      {
+        new SchuelerAnschriftTableAdapter().Delete(row.Id);
+        anschriften = null;
+      }
+      else
+      {
+        row.VornamePerson = vorname;
+        row.NachnamePerson = nachname;
+        row.Telefonnummer = telefonnummer;
+        row.Email = email;
+        row.HauptAnsprechpartner = hauptAnsprechpartner;
+        new SchuelerAnschriftTableAdapter().Update(row);
       }
     }
 
