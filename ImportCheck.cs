@@ -38,16 +38,19 @@ namespace diNo
         Regex regex = new Regex(@"^[\w\-\.]+@([\w-]+\.)+[\w-]{2,}$");
         //@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
 
-        Match match = regex.Match(s.Data.Email);
+        var eigeneAnschrift = s.getEigeneAnschrift();
+        string email = eigeneAnschrift == null || eigeneAnschrift.IsEmailNull() ? "" : eigeneAnschrift.Email;
+        Match match = regex.Match(email);
         if (!match.Success)
-          err.list.Add(new NotenCheckResult(s, null,"Ungültige Mailadresse: "+ s.Data.Email));
+          err.list.Add(new NotenCheckResult(s, null,"Ungültige Mailadresse: "+ email));
 
-        if (!(s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer==""))
+        if (s.Data.Schulart != "B") // Berufsoberschule hier ignorieren
         {
-          string elternmail = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
-          match = regex.Match(elternmail);
-          if (!match.Success)
-            err.list.Add(new NotenCheckResult(s, null, "Ungültige Mailadresse: " + elternmail));
+          var eltern = s.getErziehungsberechtigte().ToList();
+          if (s.GetElternMail() == "")
+            err.list.Add(new NotenCheckResult(s, null, "Keine Elternmailadresse angegeben"));
+          if (eltern.Count > 1 && !eltern.Any(e => !e.IsHauptAnsprechpartnerNull() && e.HauptAnsprechpartner))
+            err.list.Add(new NotenCheckResult(s, null, "Kein Hauptansprechpartner markiert"));
         }
       }
 

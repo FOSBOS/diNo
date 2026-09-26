@@ -293,7 +293,8 @@ namespace diNo
         case HjArt.Hj1:
         case HjArt.Hj2:
           c = (hj.Art == HjArt.Hj1) ? 450 : 451;
-          if (hj.getFach.Typ == FachTyp.FPA) c -= 20;
+          if (hj.getFach.Typ == FachTyp.FPA) 
+            c -= 20;
           else if (hj.JgStufe == Jahrgangsstufe.Zwoelf) c += 2;
           else if (hj.JgStufe == Jahrgangsstufe.Dreizehn) c += 4;
 

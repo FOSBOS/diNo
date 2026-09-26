@@ -1,5 +1,4 @@
-﻿using diNo.Xml.Mbstatistik;
-using log4net;
+﻿using log4net;
 using log4net.Layout;
 using System;
 using System.Collections.Generic;

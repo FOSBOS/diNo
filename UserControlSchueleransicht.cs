@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace diNo
@@ -28,28 +29,34 @@ namespace diNo
         this.schueler = value;
         if (this.schueler != null)
         {
-          textBoxStrasse.Text = schueler.Data.AnschriftStrasse;
-          textBoxPLZ.Text = schueler.Data.AnschriftPLZ;
-          textBoxOrt.Text = schueler.Data.AnschriftOrt;
-          textBoxTelefonnummer.Text = schueler.Data.AnschriftTelefonnummer;
-          textBoxNotfalltelefonnummer.Text = schueler.Data.Notfalltelefonnummer;
+          var eigeneAnschrift = schueler.getEigeneAnschrift();
+          string strasse = eigeneAnschrift == null || eigeneAnschrift.IsStrasseNull() ? "" : eigeneAnschrift.Strasse;
+          if (eigeneAnschrift != null && !eigeneAnschrift.IsHausnummerNull() && eigeneAnschrift.Hausnummer != "")
+            strasse += " " + eigeneAnschrift.Hausnummer;
+          textBoxStrasse.Text = strasse;
+          textBoxPLZ.Text = eigeneAnschrift == null || eigeneAnschrift.IsPLZNull() ? "" : eigeneAnschrift.PLZ;
+          textBoxOrt.Text = eigeneAnschrift == null || eigeneAnschrift.IsOrtNull() ? "" : eigeneAnschrift.Ort;
+          textBoxTelefonnummer.Text = eigeneAnschrift == null || eigeneAnschrift.IsTelefonnummerNull() ? "" : eigeneAnschrift.Telefonnummer;
+          
 
           textBoxGeburtsdatum.Text = schueler.Data.IsGeburtsdatumNull() ? "" : schueler.Data.Geburtsdatum.ToString("dd.MM.yyyy");
           textBoxGeburtsort.Text = schueler.Data.Geburtsort;
           textBoxWiederholungen.Text = schueler.getWiederholungen();
-          textBoxBeruflicheVorbildung.Text = schueler.Data.BeruflicheVorbildung;
-          textBoxVorigeSchule.Text = schueler.EintrittAusSchulname;
+          //textBoxBeruflicheVorbildung.Text = schueler.Data.BeruflicheVorbildung;
+          //textBoxVorigeSchule.Text = schueler.EintrittAusSchulname;
 
           textBoxJahrgangsstufe.Text = schueler.EintrittInJahrgangsstufe;
           textBoxEintrittAm.Text = schueler.EintrittAm == null ? "" : schueler.EintrittAm.Value.ToString("dd.MM.yyyy");
-          string kontaktEltern = schueler.Data.VornameEltern1 + " " + schueler.Data.NachnameEltern1;
-          kontaktEltern += string.IsNullOrEmpty(schueler.Data.VornameEltern2) ? "" : "\n" + schueler.Data.VornameEltern2 + " " + schueler.Data.NachnameEltern2;
-          textBoxAdresseEltern.Lines = kontaktEltern.Split('\n');
-          textBoxBekenntnis.Text = schueler.Data.Bekenntnis;
+          var kontaktEltern = new List<string>();
+          foreach (var eltern in schueler.getErziehungsberechtigte())
+            kontaktEltern.Add(eltern.VornamePerson + " " + eltern.NachnamePerson);
+          textBoxAdresseEltern.Lines = kontaktEltern.ToArray();
+          textBoxMailEltern.Text = schueler.GetElternMail();
+          textBoxBekenntnis.Text = schueler.Data.IsBekenntnisNull() ? "" : schueler.Data.Bekenntnis;
 
           dateTimeProbezeit.Value = schueler.Data.IsProbezeitBisNull() ? dateTimeProbezeit.MinDate : schueler.Data.ProbezeitBis;
           dateTimeAustritt.Value = schueler.Data.IsAustrittsdatumNull() ? dateTimeAustritt.MinDate : schueler.Data.Austrittsdatum;
-          textBoxEmail.Text = schueler.Data.Email;
+          textBoxEmail.Text = eigeneAnschrift == null || eigeneAnschrift.IsEmailNull() ? "" : eigeneAnschrift.Email;
           textBoxMailSchule.Text = schueler.Data.IsMailSchuleNull() ? "" : schueler.Data.MailSchule;
           cbStatus.SelectedIndex = schueler.Data.Status;
         }        
@@ -58,12 +65,8 @@ namespace diNo
 
     private void btnSave_Click(object sender, EventArgs e)
     {
-      schueler.Data.AnschriftStrasse = textBoxStrasse.Text;
-      schueler.Data.AnschriftPLZ = textBoxPLZ.Text;
-      schueler.Data.AnschriftOrt = textBoxOrt.Text;
-      schueler.Data.AnschriftTelefonnummer = textBoxTelefonnummer.Text;
-      schueler.Data.Notfalltelefonnummer = textBoxNotfalltelefonnummer.Text;
-
+      schueler.SaveEigeneAnschrift(textBoxStrasse.Text, textBoxPLZ.Text, textBoxOrt.Text, textBoxTelefonnummer.Text, textBoxEmail.Text);
+      
       schueler.Data.Bekenntnis = textBoxBekenntnis.Text;
       // ReliUnterricht via Kurszuordnung wird automatisch gesetzt!       
 
@@ -72,7 +75,6 @@ namespace diNo
       if (dateTimeAustritt.Value == dateTimeAustritt.MinDate) schueler.Data.SetAustrittsdatumNull();
       else schueler.Data.Austrittsdatum = dateTimeAustritt.Value;
 
-      schueler.Data.Email = textBoxEmail.Text;
       schueler.Data.Geburtsort = textBoxGeburtsort.Text;
       schueler.Data.MailSchule = textBoxMailSchule.Text;
       schueler.Data.Status = cbStatus.SelectedIndex;

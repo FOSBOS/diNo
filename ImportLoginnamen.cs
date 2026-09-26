@@ -13,7 +13,7 @@ namespace diNo
 
     public ImportLoginnamen()
     {
-      MessageBox.Show("Benötigt wird eine Textdatei (CSV mit Trennzeichen ; ), bei der in Spalte 1 die Schüler-ID und in Spalte 2 die schulische Mailadresse des Schülers steht.\nDieser Import ist optional und wird nur für interne Automatisierungsprozesse verwendet (Kurswahl).", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      MessageBox.Show("Benötigt wird eine Textdatei (CSV mit Trennzeichen ; ), bei der in Spalte 1 die Schüler-ID (LDM aus ASV) und in Spalte 2 die schulische Mailadresse des Schülers steht.\nDieser Import ist optional und wird nur für interne Automatisierungsprozesse verwendet (Kurswahl).", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       var fileDialog = new OpenFileDialog();
       fileDialog.Filter = "Textdateien|*.*";
 
@@ -35,17 +35,17 @@ namespace diNo
         string orignal = reader.ReadLine();        
         string[] line = orignal.Split(new string[] { ";" }, StringSplitOptions.None);
         string mail;
-        int sid;
+        string asvid;
         
         Schueler s;
 
-        sid = int.Parse(line[0]);
+        asvid = line[0];
         mail = line[1];
-        if (sid == 0)
+        if (asvid == "")
           continue;
         try
-        {
-          s = Zugriff.Instance.SchuelerRep.Find(sid);
+        {          
+          s = Zugriff.Instance.SchuelerRep.FindBy(x => x.AsvId == asvid);
           if (s != null)
           {
             s.Data.MailSchule = mail;

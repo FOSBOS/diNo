@@ -46,7 +46,7 @@ namespace diNo
       FileStream stream = new FileStream(datei, FileMode.Create, FileAccess.Write);
       writer = new StreamWriter(stream);
       // erste Zeile = Feldnamen
-      writer.WriteLine("ID;Username;Pwd;Nachname;Vorname;Klasse;JgStufe;Zweig;Schulart;ZweigRS;Mail");
+      writer.WriteLine("ID;ASV_ID;Username;Pwd;Nachname;Vorname;Klasse;Geburtstag;JgStufe;Zweig;Schulart;Mail;FranzB1;SpanischB1");
       foreach (Schueler s in list)
       {
         /*
@@ -63,14 +63,13 @@ namespace diNo
         if (jgstufe < 11 && s.getKlasse.Schulart==Schulart.BOS) jgstufe = 12; // BOS-Vorklasse
         else if (Zugriff.Instance.aktHalbjahr == Halbjahr.Zweites && jgstufe < 13) jgstufe++; // Wahl idR für das nächste Schuljahr
 
-        string zweigRS = s.Data.SchulischeVorbildung;
-        if (!s.Data.IsAndereFremdspr2FachNull() && s.Data.AndereFremdspr2Fach == 11)
-           zweigRS = "R3a";  // Sonderfälle Talentklasse u.ä. werden 
+        string mail = s.Data.IsMailSchuleNull() ? "" : s.Data.MailSchule;
 
         //SchülerID; 'Username'; 'Pwd'; 'Nachname'; 'Vorname'; 'Klasse'; JgStufe; 'Zweig'; 'Schulart'; 'ZweigRS'; 'Mail'
-        writer.WriteLine(s.Id + sep + username + sep + pwd + sep + s.Name.Replace("'", " ") + sep + s.Data.Rufname + sep
-          + s.getKlasse.Bezeichnung + sep + jgstufe + sep + s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep + zweigRS
-          + sep + s.Data.MailSchule);
+        // ID; ASV_ID; Username; Pwd; Nachname; Vorname; Klasse; Geburtstag; JgStufe; Zweig; Schulart; Mail; FranzB1; SpanischB1
+        writer.WriteLine(s.Id + sep + s.AsvId + sep + username + sep + pwd + sep + s.Name.Replace("'", " ") + sep + s.Data.Rufname + sep +
+          s.getKlasse.Bezeichnung + sep + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + sep + jgstufe + sep + s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep +
+          mail + sep + (s.Data.FranzB1 ? 1 : 0) + sep + (s.Data.SpanischB1 ? 1 : 0));
       }
       writer.Close();
     }

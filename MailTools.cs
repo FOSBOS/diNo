@@ -1,6 +1,7 @@
 ﻿using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Reporting.WinForms;
+using SevenZip;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -136,13 +137,22 @@ namespace diNo
           Subject = Betreff
         };
 
-        msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), mailFrom));
         if (isTest)
           mailTo = Zugriff.Instance.lehrer.Data.EMail;
         else if (anEltern)
-          mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
+        {
+          mailTo = s.GetElternMail();
+          if (mailTo == "")
+          {
+            log.WriteLine("MAILADRESSE (Eltern) fehlt bei " + s.NameVorname);
+            log.Flush();
+            return;
+          }
+        }
         else
           mailTo = s.Data.MailSchule;
+
+        msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), mailFrom));
 
         msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
 
@@ -189,14 +199,14 @@ namespace diNo
       bool isBOS = s.Data.Schulart == "B";
       if (isBOS)
         mailTo = s.Data.MailSchule;
-      else if (s.Data.IsNotfalltelefonnummerNull() || s.Data.Notfalltelefonnummer == "")
-      {
-        log.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
-        return;
-      }
       else
       {
-        mailTo = s.Data.Notfalltelefonnummer.Split(new string[] { ",", ";", " " }, StringSplitOptions.RemoveEmptyEntries).First();
+        mailTo = s.GetElternMail();
+        if (mailTo == "")
+        {
+          log.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
+          return;
+        }
       }
 
       if (!MimeKit.MailboxAddress.TryParse(mailTo, out _))
@@ -321,6 +331,29 @@ namespace diNo
       }
     }
 
+    /*
+    private void Zip(string inFile, string passwort)
+    {
+      // Es muss das NuGet-Package SevenZipSharp installiert sein. Diesem muss man den DLL-Pfad der 7z.dll mitgeben: 
+
+      string outFile = inFile + ".zip";
+      string dll = @"F:\diNo\packages\SevenZipSharp.Net45.1.0.19\lib\net45\7z.dll";
+      SevenZipCompressor.SetLibraryPath(dll);
+
+      SevenZipCompressor szc = new SevenZipCompressor
+      {
+        CompressionMethod = CompressionMethod.Deflate,
+        CompressionLevel = CompressionLevel.Normal,
+        CompressionMode = CompressionMode.Create,
+        DirectoryStructure = true,
+        PreserveDirectoryRoot = false,
+        ArchiveFormat = OutArchiveFormat.Zip
+      };
+
+      // passwort = "FB-" + s.Data.Geburtsdatum.ToString("yyyyMMdd")
+      szc.CompressFilesEncrypted(outFile, passwort, new string[] { inFile });
+    }
+    */
 
 
     public void Dispose()

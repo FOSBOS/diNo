@@ -452,9 +452,9 @@
       // 
       this.btnImportASVID.Location = new System.Drawing.Point(20, 21);
       this.btnImportASVID.Name = "btnImportASVID";
-      this.btnImportASVID.Size = new System.Drawing.Size(87, 23);
+      this.btnImportASVID.Size = new System.Drawing.Size(182, 23);
       this.btnImportASVID.TabIndex = 5;
-      this.btnImportASVID.Text = "ID aus ASV";
+      this.btnImportASVID.Text = "Import aus ASV";
       this.btnImportASVID.UseVisualStyleBackColor = true;
       this.btnImportASVID.Click += new System.EventHandler(this.btnImportASVID_Click);
       // 

@@ -1,5 +1,4 @@
 ﻿using diNo.diNoDataSetTableAdapters;
-using diNo.Xml.Mbstatistik;
 using log4net;
 using System;
 using System.Collections.Generic;

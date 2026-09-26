@@ -37,14 +37,14 @@ namespace diNo
         string[] line = orignal.Split(new string[] { ";" }, StringSplitOptions.None);
         Schueler s;
 
-        int sid = int.Parse(line[0]);
+        string asvid = line[0];
         int hj = int.Parse(line[1]);
         string stelle = line[2];
-        if (sid == 0)
+        if (asvid == "")
           continue;
         try
         {
-          s = Zugriff.Instance.SchuelerRep.Find(sid);
+          s = Zugriff.Instance.SchuelerRep.FindBy(x => x.AsvId == asvid);
           if (s != null)
           {
             var f = s.FPANoten[hj - 1];
