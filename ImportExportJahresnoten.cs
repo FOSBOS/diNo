@@ -95,6 +95,14 @@ namespace diNo
               + schueler.Data.AndereFremdspr2Fach + Sep
               + schueler.Data.AndereFremdspr2Art
               );
+
+          // Sprachniveau B1 Französisch
+          if (!schueler.Data.IsFranzB1Null() && schueler.Data.FranzB1)
+            writer.WriteLine(schueler.AsvId + Sep + "-3" + Sep + "0" + Sep + "1");
+
+          // Sprachniveau B1 Spanisch
+          if (!schueler.Data.IsSpanischB1Null() && schueler.Data.SpanischB1)
+            writer.WriteLine(schueler.AsvId + Sep + "-4" + Sep + "0" + Sep + "1");
         }
       }
     }
@@ -193,6 +201,34 @@ namespace diNo
             catch
             {
               writer.WriteLine("Andere Fremdsprache: " + orignal);
+            }
+            continue; // nächste Zeile
+          }
+
+          if (line[1] == "-3") // Sprachniveau B1 Französisch
+          {
+            try
+            {
+              schueler.Data.FranzB1 = true;
+              schueler.Save();
+            }
+            catch
+            {
+              writer.WriteLine("FranzB1: " + orignal);
+            }
+            continue; // nächste Zeile
+          }
+
+          if (line[1] == "-4") // Sprachniveau B1 Spanisch
+          {
+            try
+            {
+              schueler.Data.SpanischB1 = true;
+              schueler.Save();
+            }
+            catch
+            {
+              writer.WriteLine("SpanischB1: " + orignal);
             }
             continue; // nächste Zeile
           }

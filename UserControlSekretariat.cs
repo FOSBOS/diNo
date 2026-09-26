@@ -625,9 +625,9 @@ namespace diNo
       this.lblEltern1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.lblEltern1.Location = new System.Drawing.Point(11, 20);
       this.lblEltern1.Name = "lblEltern1";
-      this.lblEltern1.Size = new System.Drawing.Size(160, 13);
+      this.lblEltern1.Size = new System.Drawing.Size(152, 13);
       this.lblEltern1.TabIndex = 110;
-      this.lblEltern1.Text = "1. Erziehungsberechtigte(r)";
+      this.lblEltern1.Text = "1. Erziehungsberechtigter";
       // 
       // lblEltern1Vorname
       // 
@@ -717,9 +717,9 @@ namespace diNo
       this.lblEltern2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
       this.lblEltern2.Location = new System.Drawing.Point(11, 167);
       this.lblEltern2.Name = "lblEltern2";
-      this.lblEltern2.Size = new System.Drawing.Size(160, 13);
+      this.lblEltern2.Size = new System.Drawing.Size(152, 13);
       this.lblEltern2.TabIndex = 120;
-      this.lblEltern2.Text = "2. Erziehungsberechtigte(r)";
+      this.lblEltern2.Text = "2. Erziehungsberechtigter";
       // 
       // lblEltern2Vorname
       // 
