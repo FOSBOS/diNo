@@ -797,6 +797,7 @@ public int APFaktor
       return Zeitpunkt.None;
     }
 
+    // keine Änderung mit Fachreferat
     public int GetAnzahlEinbringung()
     {
       if (getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)

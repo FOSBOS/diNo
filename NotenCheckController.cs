@@ -68,7 +68,7 @@ namespace diNo
         alleNotenchecks.Add(new NotenanzahlChecker(this));
       if (azeitpunkt == Zeitpunkt.ErstePA && modus != NotenCheckModus.EigeneNotenVollstaendigkeit) // nur dort FR prüfen
       {
-        alleNotenchecks.Add(new FachreferatChecker(this));
+        //alleNotenchecks.Add(new FachreferatChecker(this));
         alleNotenchecks.Add(new SeminarfachChecker(this));
       }
       if ((azeitpunkt == Zeitpunkt.HalbjahrUndProbezeitFOS || azeitpunkt == Zeitpunkt.Jahresende)

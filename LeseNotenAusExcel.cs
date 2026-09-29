@@ -296,6 +296,7 @@ namespace diNo
         }
 
         // Fachreferat
+        /*
         if (aktiverKurs && jg == Jahrgangsstufe.Zwoelf)
         {
           HjLeistung hjlFR = null;
@@ -323,6 +324,7 @@ namespace diNo
             hjlFR.Delete();
           }
         }
+        */
         schueler.ReloadNoten(); // neu initialisieren
         berechner.AktualisiereGE(schueler); // damit das GE wird konsistent zum Abi wird
 

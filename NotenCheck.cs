@@ -575,7 +575,8 @@ namespace diNo
       // Kontrolle, ob unterwegs nichts verloren gegangen ist (verwirrt aber Kollegen):
       if (contr.zeitpunkt > Zeitpunkt.ErstePA && !contr.Kurzfassung && Zugriff.Instance.SiehtAlles)
       {
-        notw = schueler.hatVorHj ? 40 : 26;
+        //notw = schueler.hatVorHj ? 40 : 26;
+        notw = schueler.hatVorHj ? 39 : (schueler.getKlasse.Jahrgangsstufe==Jahrgangsstufe.Dreizehn ? 26 : 25); // ohne FR
         eing = schueler.punktesumme.Anzahl(PunktesummeArt.Gesamt);
         if (eing != notw)
           contr.Add(null, "Einbringungsfaktor " + eing + " statt " + notw);
