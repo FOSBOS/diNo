@@ -1,5 +1,4 @@
-﻿using BrightIdeasSoftware;
-using diNo.diNoDataSetTableAdapters;
+﻿using diNo.diNoDataSetTableAdapters;
 using diNo.Properties;
 using diNo.Xml.Schulerfolgsstatistik;
 using System;
@@ -101,7 +100,6 @@ namespace diNo
     /// <summary>
     /// Die Id des Schülers in der Datenbank.
     /// </summary>
-    [OLVColumn(Title = "Id", Width = 50, DisplayIndex = 4, TextAlign = HorizontalAlignment.Right)]
     public int Id
     {
       get;
@@ -118,7 +116,6 @@ namespace diNo
       return NameVorname; // wird nicht verwendet (nur fürs Interface)
     }
 
-    [OLVColumn(Title = "Rufname", Width = 100, DisplayIndex = 3)]
     public string benutzterVorname
     {
       get { return string.IsNullOrEmpty(data.Rufname) ? data.Vorname : data.Rufname; }
@@ -175,7 +172,6 @@ namespace diNo
     }
 
 
-    [OLVColumn(Title = "Name", Width = 100, DisplayIndex = 1)]
     public string Name
     {
       get
@@ -184,7 +180,6 @@ namespace diNo
       }
     }
 
-    [OLVColumn(Title = "Vorname", Width = 100, DisplayIndex = 2)]
     public string Vorname
     {
       get
@@ -196,7 +191,6 @@ namespace diNo
     /// <summary>
     /// Ob der Schüler Notenschutz hat
     /// </summary>
-    [OLVColumn(Title = "Legasthenie", Width = 80)]
     public bool HatNachteilsausgleich
     {
       get { return this.data.LRSStoerung || data.LRSZuschlagMax>0; }      
@@ -335,7 +329,6 @@ public int APFaktor
     /// Eth falls der Schüler in Ethik geht
     /// Leerstring falls gar keine Zuordnung
     /// </summary>
-    [OLVColumn(Title = "ReliOderEthik", Width = 100)]
     public string ReliOderEthik
     {
       get

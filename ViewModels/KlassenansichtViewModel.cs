@@ -28,7 +28,6 @@ namespace diNo.ViewModels
     private int suchIndex = -1;
     private diNo.Views.BriefWindow frmBrief;
 
-    public SchuelerverwaltungController VerwaltungController { get; }
     public ObservableCollection<KursDruckItem> KursDruckItems { get; } = new ObservableCollection<KursDruckItem>();
 
     public bool HatVerwaltungsrechte => Zugriff.Instance.HatVerwaltungsrechte;
@@ -56,9 +55,6 @@ namespace diNo.ViewModels
       this.getTreeSelectedObjects = getTreeSelectedObjects;
       this.pushSchuelerToUserControls = pushSchuelerToUserControls;
       this.refreshVorkommnisseTab = refreshVorkommnisseTab;
-
-      if (HatVerwaltungsrechte)
-        VerwaltungController = new SchuelerverwaltungController(RefreshTreeView);
 
       foreach (var k in Zugriff.Instance.eigeneKurse)
       {

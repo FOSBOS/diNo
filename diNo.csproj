@@ -174,73 +174,21 @@
   <ItemGroup>
     <Compile Include="ASVExport.cs" />
     <Compile Include="ASVImporter.cs" />
+    <Compile Include="Auswahlart.cs" />
+    <Compile Include="BriefDaten.cs" />
     <Compile Include="AsvXmlKursMapper.cs" />
     <Compile Include="Auswertungen.cs" />
-    <Compile Include="CopyLNW.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CopyLNW.Designer.cs">
-      <DependentUpon>CopyLNW.cs</DependentUpon>
-    </Compile>
     <Compile Include="ExportKurswahl.cs" />
     <Compile Include="ImportCheck.cs" />
     <Compile Include="ImportFPAStellen.cs" />
     <Compile Include="ImportLoginnamen.cs" />
     <Compile Include="ImportUnterricht.cs" />
-    <Compile Include="KlasseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="KlasseForm.Designer.cs">
-      <DependentUpon>KlasseForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ListeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ListeForm.Designer.cs">
-      <DependentUpon>ListeForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="BasisForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="BasisForm.Designer.cs">
-      <DependentUpon>BasisForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Datenauswahl.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Datenauswahl.Designer.cs">
-      <DependentUpon>Datenauswahl.cs</DependentUpon>
-    </Compile>
     <Compile Include="DruckObjekte.cs" />
     <Compile Include="FPA.cs" />
     <Compile Include="Fremdsprachen.cs" />
     <Compile Include="Globales.cs" />
     <Compile Include="HjLeistung.cs" />
     <Compile Include="ImportKlassenleiter.cs" />
-    <Compile Include="InputBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="InputBox.Designer.cs">
-      <DependentUpon>InputBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="KurseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="KurseForm.Designer.cs">
-      <DependentUpon>KurseForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="LehrerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="LehrerForm.Designer.cs">
-      <DependentUpon>LehrerForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MailDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MailDialog.Designer.cs">
-      <DependentUpon>MailDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="MailTools.cs" />
     <Compile Include="OpenOutlook.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -250,30 +198,11 @@
     </Compile>
     <Compile Include="Punktesumme.cs" />
     <Compile Include="Repository.cs" />
-    <Compile Include="SchuelerverwaltungController.cs" />
-    <Compile Include="GlobalesForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GlobalesForm.Designer.cs">
-      <DependentUpon>GlobalesForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="UserImpersonation.cs" />
     <Compile Include="Xml\schulerfolg_1_1.cs" />
     <Compile Include="Xml\Schulerfolgsstatistik.cs" />
     <Compile Include="Testdaten.cs" />
-    <Compile Include="UserControlAdministration.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControlAdministration.Designer.cs">
-      <DependentUpon>UserControlAdministration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControlKurszuordnungen.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControlKurszuordnungen.Designer.cs">
-      <DependentUpon>UserControlKurszuordnungen.cs</DependentUpon>
-    </Compile>
     <Compile Include="Lehrer.cs" />
     <Compile Include="Berechnungen.cs" />
     <Compile Include="CellConstant.cs" />
@@ -291,29 +220,11 @@
     <Compile Include="ImportExportJahresnoten.cs" />
     <Compile Include="NotenCheck.cs" />
     <Compile Include="Klasse.cs" />
-    <Compile Include="Klassenansicht.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Klassenansicht.Designer.cs">
-      <DependentUpon>Klassenansicht.cs</DependentUpon>
-    </Compile>
     <Compile Include="KlassenTreeViewController.cs" />
     <Compile Include="KursplanReader.cs" />
     <Compile Include="LeseNotenAusExcel.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="NotenCheckController.cs" />
-    <Compile Include="NotenCheckForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="NotenCheckForm.Designer.cs">
-      <DependentUpon>NotenCheckForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="NumericUpDownNullable.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="NumericUpDownNullable.Designer.cs">
-      <DependentUpon>NumericUpDownNullable.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportController.cs" />
@@ -326,76 +237,9 @@
     <Compile Include="Schueler.cs" />
     <Compile Include="SchuelerNoten.cs" />
     <Compile Include="UnterrichtExcelReader.cs" />
-    <Compile Include="UserControlFPAundSeminar.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControlFPAundSeminar.Designer.cs">
-      <DependentUpon>UserControlFPAundSeminar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControlNotenbogen.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControlNotenbogen.Designer.cs">
-      <DependentUpon>UserControlNotenbogen.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControlSchueleransicht.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControlSchueleransicht.Designer.cs">
-      <DependentUpon>UserControlSchueleransicht.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControlSekretariat.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControlSekretariat.Designer.cs">
-      <DependentUpon>UserControlSekretariat.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UserControlVorkommnisse.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControlVorkommnisse.Designer.cs">
-      <DependentUpon>UserControlVorkommnisse.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Brief.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Brief.Designer.cs">
-      <DependentUpon>Brief.cs</DependentUpon>
-    </Compile>
     <Compile Include="Vorkommnis.cs" />
     <Compile Include="WahlpflichtfachReader.cs" />
     <Compile Include="Zugriff.cs" />
-    <EmbeddedResource Include="BasisForm.resx">
-      <DependentUpon>BasisForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CopyLNW.resx">
-      <DependentUpon>CopyLNW.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Datenauswahl.resx">
-      <DependentUpon>Datenauswahl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="InputBox.resx">
-      <DependentUpon>InputBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="KlasseForm.resx">
-      <DependentUpon>KlasseForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Klassenansicht.resx">
-      <DependentUpon>Klassenansicht.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="KurseForm.resx">
-      <DependentUpon>KurseForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LehrerForm.resx">
-      <DependentUpon>LehrerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ListeForm.resx">
-      <DependentUpon>ListeForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MailDialog.resx">
-      <DependentUpon>MailDialog.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
     <EmbeddedResource Include="rptKlassenkonferenz.rdlc" />
     <EmbeddedResource Include="rptAuswahlliste.rdlc" />
@@ -410,9 +254,6 @@
     <EmbeddedResource Include="rptKlassenliste.rdlc" />
     <EmbeddedResource Include="rptNotenbogen.rdlc" />
     <EmbeddedResource Include="rptNotenmitteilung.rdlc" />
-    <EmbeddedResource Include="GlobalesForm.resx">
-      <DependentUpon>GlobalesForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="subrptAbiLinkeSeite.rdlc" />
     <EmbeddedResource Include="subrptAbiRechteSeite.rdlc" />
     <EmbeddedResource Include="subrptZusZweiteFS.rdlc" />
@@ -428,18 +269,6 @@
     <EmbeddedResource Include="subrptJahreszeugnis.rdlc" />
     <EmbeddedResource Include="subrptFremdsprachen.rdlc" />
     <EmbeddedResource Include="subrptZwischenzeugnis.rdlc" />
-    <EmbeddedResource Include="UserControlAdministration.resx">
-      <DependentUpon>UserControlAdministration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControlKurszuordnungen.resx">
-      <DependentUpon>UserControlKurszuordnungen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NotenCheckForm.resx">
-      <DependentUpon>NotenCheckForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="NumericUpDownNullable.resx">
-      <DependentUpon>NumericUpDownNullable.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -453,24 +282,6 @@
     <EmbeddedResource Include="subrptKurs.rdlc" />
     <EmbeddedResource Include="subrptAbiVorkommnis.rdlc" />
     <EmbeddedResource Include="subrptVorkommnis.rdlc" />
-    <EmbeddedResource Include="UserControlFPAundSeminar.resx">
-      <DependentUpon>UserControlFPAundSeminar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControlNotenbogen.resx">
-      <DependentUpon>UserControlNotenbogen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControlSchueleransicht.resx">
-      <DependentUpon>UserControlSchueleransicht.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControlSekretariat.resx">
-      <DependentUpon>UserControlSekretariat.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserControlVorkommnisse.resx">
-      <DependentUpon>UserControlVorkommnisse.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Brief.resx">
-      <DependentUpon>Brief.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="app.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -812,12 +623,6 @@
     <Resource Include="Resources\Mail.png" />
     <Resource Include="Resources\avatarMann.png" />
     <Resource Include="Resources\avatarFrau.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="ObjectListView\ObjectListView2012.csproj">
-      <Project>{18feda0c-d147-4286-b39a-01204808106a}</Project>
-      <Name>ObjectListView2012</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\piktogrammNotenbogen.png" />
