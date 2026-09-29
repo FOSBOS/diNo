@@ -1,4 +1,5 @@
 ﻿using diNo.diNoDataSetTableAdapters;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -24,16 +25,16 @@ namespace diNo
     private Schueler aktSchueler;
     private bool UnterpunktungGedruckt;
     private bool HatFallMitPZ;
-    private ProgressBar progressBar;
+    private Action onProgress;
     private Berechnungen berechnungen = null;
     public int FehlendeBerechnung = 0; // gibt einen Überblick, ob Gesamtergebnisse schon bestimmt sind.
 
-    public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus, bool aKurzfassung, ProgressBar aprogressBar, List<Klasse> obj)
+    public NotenCheckController(Zeitpunkt azeitpunkt, NotenCheckModus amodus, bool aKurzfassung, Action aOnProgress, List<Klasse> obj)
     {
       zeitpunkt = azeitpunkt;
       modus = amodus;
       Kurzfassung = aKurzfassung;
-      progressBar = aprogressBar;
+      onProgress = aOnProgress;
       Zugriff.Instance.markierteSchueler.Clear();
 
       // je nach Modus und Zeitpunkt werden nur bestimmte Klassen ausgewählt
@@ -122,7 +123,7 @@ namespace diNo
       foreach (Schueler s in k.Schueler)
       {
         CheckSchueler(s);
-        progressBar.Increment(1);
+        onProgress?.Invoke();
       }
 
       /* Parallele Threads wären schick, dazu müssten aber die Container klassenweise getrennt instanziiert werden!

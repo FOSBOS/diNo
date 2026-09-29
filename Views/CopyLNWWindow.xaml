@@ -1,0 +1,65 @@
+<Window x:Class="diNo.Views.CopyLNWWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Abgabe von Leistungsnachweisen" Height="560" Width="520"
+        WindowStartupLocation="CenterScreen" FontSize="14">
+  <Grid Margin="16">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="150" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <Label Grid.Row="0" Grid.Column="0" Content="Kurs" />
+    <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Width="280"
+              ItemsSource="{Binding Kurse}" DisplayMemberPath="Value" SelectedValuePath="Key"
+              SelectedValue="{Binding SelectedKursId}" />
+
+    <Label Grid.Row="1" Grid.Column="0" Content="Halbjahr" Margin="0,6,0,0" />
+    <ComboBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" Width="70" Margin="0,6,0,0"
+              ItemsSource="{Binding HalbjahrOptions}" SelectedItem="{Binding SelectedHalbjahr}" />
+
+    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="Bisher abgegebene Dateien (zum Löschen auswählen, dann rechte Maustaste):" Margin="0,16,0,4" TextWrapping="Wrap" />
+    <ListBox Grid.Row="3" Grid.ColumnSpan="2" x:Name="AbgegebenListBox" Height="120"
+             ItemsSource="{Binding AbgegebeneDateien}" SelectedItem="{Binding SelectedAbgegebeneDatei}">
+      <ListBox.ContextMenu>
+        <ContextMenu>
+          <MenuItem Header="Löschen" Command="{Binding PlacementTarget.DataContext.DeleteCommand, RelativeSource={RelativeSource Self}}" />
+        </ContextMenu>
+      </ListBox.ContextMenu>
+    </ListBox>
+
+    <Label Grid.Row="4" Grid.Column="0" Content="Art des Leistungsnachweises" Margin="0,16,0,0" />
+    <ComboBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" Width="70" Margin="0,16,0,0"
+              ItemsSource="{Binding ArtOptions}" SelectedItem="{Binding SelectedArt}" />
+
+    <Label Grid.Row="5" Grid.Column="0" Content="Nummer in diesem Halbjahr" Margin="0,6,0,0" />
+    <ComboBox Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Width="70" Margin="0,6,0,0"
+              ItemsSource="{Binding NummerOptions}" SelectedItem="{Binding SelectedNummer}" />
+
+    <CheckBox Grid.Row="6" Grid.ColumnSpan="2" Content="koordinierte Arbeit (über mehrere Klassen)" Margin="0,10,0,0"
+              IsChecked="{Binding IsKoordiniert}" />
+    <CheckBox Grid.Row="7" Grid.ColumnSpan="2" Content="Nachtermin" Margin="0,6,0,0"
+              IsChecked="{Binding IsNachtermin}" />
+
+    <TextBlock Grid.Row="8" Grid.ColumnSpan="2" TextWrapping="Wrap" Margin="0,10,0,0"
+               Text="Der Erwartungshorizont kann auch in die Angabe integriert werden und muss dann nicht extra abgegeben werden." />
+
+    <StackPanel Grid.Row="10" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,20,0,0">
+      <Button Content="Angabe abgeben" Width="167" Height="60" Command="{Binding AngabeCommand}" />
+      <Button Content="Erwartungshorizont abgeben" Width="170" Height="60" Margin="20,0,0,0" Command="{Binding LsgCommand}" />
+    </StackPanel>
+  </Grid>
+</Window>

@@ -1,0 +1,172 @@
+<UserControl x:Class="diNo.Views.AdministrationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    <Style TargetType="Button">
+      <Setter Property="Margin" Value="0,0,0,6" />
+      <Setter Property="Padding" Value="6,4" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+    </Style>
+    <Style TargetType="GroupBox">
+      <Setter Property="Margin" Value="0,0,12,12" />
+      <Setter Property="Padding" Value="8" />
+      <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+  </UserControl.Resources>
+
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <StackPanel Margin="16">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="220" />
+          <ColumnDefinition Width="220" />
+          <ColumnDefinition Width="220" />
+          <ColumnDefinition Width="220" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Spalte 1: Drucken / Datenanalyse -->
+        <GroupBox Grid.Row="0" Grid.Column="0" Header="Drucken">
+          <StackPanel Width="180">
+            <TextBlock Text="Zeugnisdatum" Margin="0,0,0,2" />
+            <DatePicker SelectedDate="{Binding ZeugnisDatum}" Margin="0,0,0,8" />
+            <ComboBox SelectedIndex="{Binding NotendruckIndex}" Margin="0,0,0,8">
+              <ComboBoxItem Content="Notenmitteilung" />
+              <ComboBoxItem Content="Gefährdungen" />
+              <ComboBoxItem Content="Einbringungsvorschlag" />
+              <ComboBoxItem Content="Abiergebnisse" />
+              <ComboBoxItem Content="Bescheinigung" />
+              <ComboBoxItem Content="Zwischenzeugnis" />
+              <ComboBoxItem Content="Jahreszeugnis" />
+              <ComboBoxItem Content="Abiturzeugnis" />
+              <ComboBoxItem Content="Zusatz allg. HSR" />
+            </ComboBox>
+            <GroupBox Header="Unterschr" Margin="0,0,0,8">
+              <StackPanel>
+                <RadioButton GroupName="Unterschrift" Content="SL" IsChecked="{Binding UnterschriftSL}" />
+                <RadioButton GroupName="Unterschrift" Content="Stv" IsChecked="{Binding UnterschriftStv}" />
+                <RadioButton GroupName="Unterschrift" Content="gez" IsChecked="{Binding UnterschriftGez}" />
+              </StackPanel>
+            </GroupBox>
+            <Button Content="drucken" Command="{Binding NotendruckCommand}" />
+            <Button Content="Klassenliste" Command="{Binding KlassenlisteCommand}" />
+            <CheckBox Width="180" Margin="0,8,0,0" IsChecked="{Binding RptDruck}">
+              <TextBlock Text="Mit dem Reportviewer öffnen (für Zeugnisse, Bildschirm-Auflösung auf 100% stellen)" TextWrapping="Wrap" />
+            </CheckBox>
+          </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="0" Header="Datenanalyse">
+          <StackPanel Width="180">
+            <Button Content="Schüler auswählen" Command="{Binding SelectCommand}" />
+            <Button Content="Abi-Besten" Command="{Binding EinserAbiCommand}" />
+            <Button Content="Schnitte je Klasse" Command="{Binding SchnitteCommand}" />
+            <Button Content="erreichter Abschluss" Command="{Binding AbschlussCommand}" />
+          </StackPanel>
+        </GroupBox>
+
+        <!-- Spalte 2: Globale Einstellungen / Stammdaten -->
+        <GroupBox Grid.Row="0" Grid.Column="1" Header="Globale Einstellungen" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+          <StackPanel Width="180">
+            <CheckBox Content="Notenschluss (Abgabesperre)" IsChecked="{Binding SperreChecked}" Margin="0,0,0,8" />
+            <TextBlock Text="Schuljahresbeginn (Jahreszahl)" TextWrapping="Wrap" Margin="0,0,0,2" />
+            <TextBox Text="{Binding Schuljahr, UpdateSourceTrigger=PropertyChanged}" Width="78" HorizontalAlignment="Left" Margin="0,0,0,8" />
+            <TextBlock Text="aktueller Zeitpunkt" Margin="0,0,0,2" />
+            <ComboBox SelectedIndex="{Binding ZeitpunktIndex}" Margin="0,0,0,8">
+              <ComboBoxItem Content="Probezeit BOS" />
+              <ComboBoxItem Content="Halbjahr" />
+              <ComboBoxItem Content="Zulassung Abitur" />
+              <ComboBoxItem Content="SAP" />
+              <ComboBoxItem Content="MAP" />
+              <ComboBoxItem Content="Jahresende" />
+            </ComboBox>
+            <GroupBox Header="Lesemodus Exceldateien" Margin="0,0,0,8">
+              <StackPanel>
+                <RadioButton GroupName="LeseModus" Content="Nur aktuelle Noten" IsChecked="{Binding LeseModusNurAktuell}" />
+                <RadioButton GroupName="LeseModus" Content="Vollständig einlesen" IsChecked="{Binding LeseModusVollstaendig}" />
+              </StackPanel>
+            </GroupBox>
+            <Button Content="Übernehmen" Command="{Binding SaveCommand}" />
+          </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="1" Header="Stammdaten" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+          <StackPanel Width="180">
+            <Button Content="Lehrer" Command="{Binding LehrerCommand}" />
+            <Button Content="Kurse" Command="{Binding KursCommand}" />
+            <Button Content="Globale Texte" Command="{Binding GlobalesCommand}" />
+            <Button Content="Klassen" Command="{Binding KlassenCommand}" />
+            <Button Content="Berechtigungen" Command="{Binding BerechtigungenCommand}" />
+            <Button Content="automatisierte Mails" Command="{Binding MailsCommand}" />
+          </StackPanel>
+        </GroupBox>
+
+        <!-- Spalte 3: Import / Export -->
+        <GroupBox Grid.Row="0" Grid.Column="2" Header="Import (in dieser Reihenfolge)" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+          <StackPanel Width="180">
+            <Button Content="Import aus ASV" Command="{Binding ImportASVIDCommand}" />
+            <Button Content="Noten abgelegter Fächer aus csv" Command="{Binding ImportNotenCommand}" />
+            <Button Content="Kurse aus Untis (GPU002)" Command="{Binding ImportUnterrichtCommand}" />
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Button Grid.Column="0" Content="Wahlpflichtfächer" Command="{Binding ReadWahlpflichtfaecherCommand}" />
+              <Button Grid.Column="2" Content="Klassenleiter" Command="{Binding ImportKlassenleiterCommand}" />
+            </Grid>
+            <TextBlock Text="Nach jedem Import die Log-Datei prüfen!" TextWrapping="Wrap" Margin="0,0,0,4" />
+            <Button Content="Import-Kontrolle" Command="{Binding ImportCheckCommand}" />
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <Button Grid.Column="0" Content="FPA-Stellen" Command="{Binding ImportFPACommand}" />
+              <Button Grid.Column="2" Content="Mail (Schule)" Command="{Binding ImportLoginnamenCommand}" />
+            </Grid>
+          </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="2" Header="Export" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+          <StackPanel Width="180">
+            <Button Content="Noten und FpA nach csv" Command="{Binding ExportNotenCommand}" />
+            <Button Content="Excel-Dateien erstellen" Command="{Binding CreateExcelsCommand}" />
+            <Button Content="Excel-Dateien versenden" Command="{Binding SendExcelFilesCommand}" />
+            <Button Content="Datei für Kurswahl" Command="{Binding ExportKurswahlCommand}" />
+            <Button Content="AP-Statistik erstellen" Command="{Binding MBStatistikCommand}" />
+            <Button Content="Schulerfolgsstatistik erstellen" Command="{Binding SeStatistikCommand}" />
+            <Button Content="Absenzenübersicht versenden" Command="{Binding AbsenzenCommand}" />
+          </StackPanel>
+        </GroupBox>
+
+        <!-- Spalte 4: Reparaturen / Testverfahren -->
+        <GroupBox Grid.Row="0" Grid.Column="3" Header="Reparaturen" Visibility="{Binding IsAdmin, Converter={StaticResource BoolToVis}}">
+          <StackPanel Width="180">
+            <Button Content="Einbringung berechnen" Command="{Binding EinbringungCommand}" />
+            <Button Content="Einbringung löschen" Command="{Binding DelEinbringungCommand}" />
+            <Button Content="Gesamtergebnis berechnen" Command="{Binding GesErgCommand}" />
+            <Button Content="Kurse neu zuweisen" Command="{Binding KurseZuweisenCommand}" />
+          </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="1" Grid.Column="3" Header="Testverfahren" Visibility="{Binding ShowTest, Converter={StaticResource BoolToVis}}">
+          <StackPanel Width="180">
+            <Button Content="HjLeistungen würfeln" Command="{Binding HjLeistungenWuerfelnCommand}" />
+            <Button Content="Notenmitteilung an KL" Command="{Binding NotenmitteilungCommand}" />
+            <Button Content="Notenmitteilung an Schüler" Command="{Binding NotenmailSchuelerCommand}" />
+          </StackPanel>
+        </GroupBox>
+      </Grid>
+
+      <TextBlock Text="{Binding StatusText}" Margin="0,8,0,0" />
+    </StackPanel>
+  </ScrollViewer>
+</UserControl>

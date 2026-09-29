@@ -154,7 +154,14 @@ namespace diNo
       if (eintritt == null) row.SetEintrittAmNull();
       else row.EintrittAm = eintritt.Value;
 
-      row.EintrittJahrgangsstufe = El(schuelerElement, "eintritt_jahrgangsstufe").Substring(0, 2); // 121 bedeutet 12. Klasse
+      string jgEintritt = El(schuelerElement, "eintritt_jahrgangsstufe"); // 121 bedeutet 12. Klasse
+      if (jgEintritt != null)
+      {
+        if (jgEintritt == "996") jgEintritt = "9"; // IV
+        else jgEintritt = jgEintritt.Substring(0, 2);
+        if (jgEintritt == "99") jgEintritt = "10";
+        row.EintrittJahrgangsstufe = jgEintritt;
+      }
 
       DateTime? probezeitBis = ParseAsvDatum(El(schuelerElement, "probezeit_bis"));
       if (probezeitBis == null || probezeitBis.Value <= DateTime.Today) row.SetProbezeitBisNull();

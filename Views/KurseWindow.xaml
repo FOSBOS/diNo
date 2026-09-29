@@ -1,0 +1,108 @@
+<Window x:Class="diNo.Views.KurseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Kurse" Height="600" Width="1040"
+        WindowStartupLocation="CenterScreen" FontSize="14">
+  <Grid Margin="16">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="270" />
+      <ColumnDefinition Width="380" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <!-- Kurse-Liste -->
+    <ListBox Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Kurse}" DisplayMemberPath="Kursbezeichnung"
+             SelectedItem="{Binding SelectedKurs}" />
+    <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" Margin="0,10,0,0">
+      <Button Width="40" Height="40" Command="{Binding AddCommand}">
+        <Image Source="{StaticResource IconPlus}" Width="20" Height="20" />
+      </Button>
+      <Button Width="40" Height="40" Margin="10,0,0,0" Command="{Binding DeleteCommand}">
+        <Image Source="{StaticResource IconMinus}" Width="20" Height="20" />
+      </Button>
+    </StackPanel>
+
+    <!-- Detailmaske -->
+    <StackPanel Grid.Row="0" Grid.Column="1" Margin="20,0,0,0">
+      <Label Content="Bezeichnung" />
+      <TextBox Text="{Binding Bezeichnung, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+
+      <Label Content="Kurzbezeichnung" />
+      <TextBox Text="{Binding Kurzbez, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" />
+
+      <Label Content="Lehrer" />
+      <ComboBox ItemsSource="{Binding AlleLehrer}" DisplayMemberPath="KompletterName" SelectedValuePath="Id"
+                SelectedValue="{Binding LehrerId}" Margin="0,0,0,10" />
+
+      <Label Content="Fach" />
+      <ComboBox ItemsSource="{Binding AlleFaecher}" DisplayMemberPath="Bezeichnung" SelectedValuePath="Id"
+                SelectedValue="{Binding FachId}" Margin="0,0,0,10" />
+
+      <Grid Margin="0,0,0,10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="70" />
+          <ColumnDefinition Width="70" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+          <Label Content="Zweig" />
+          <TextBox Text="{Binding Zweig, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+          <Label Content="Id" />
+          <TextBox Text="{Binding IdText, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
+        <GroupBox Grid.Column="2" Header="Geschlecht" Margin="10,0,0,0">
+          <StackPanel>
+            <RadioButton GroupName="Geschlecht" Content="koedukativ" IsChecked="{Binding IsUndef}" />
+            <RadioButton GroupName="Geschlecht" Content="männlich" IsChecked="{Binding IsMaennlich}" />
+            <RadioButton GroupName="Geschlecht" Content="weiblich" IsChecked="{Binding IsWeiblich}" />
+          </StackPanel>
+        </GroupBox>
+      </Grid>
+
+      <Label Content="Klassen" />
+      <ListBox ItemsSource="{Binding KlassenItems}" Height="130">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <CheckBox Content="{Binding Bezeichnung}" IsChecked="{Binding IsChecked}" />
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+
+      <TextBlock Margin="0,10,0,0" TextWrapping="Wrap" Foreground="Gray"
+                 Text="Wenn die Klassenzuordnung geändert wird, werden die Schüler nicht automatisch in diesen Kursen angemeldet. Verwende dazu den grünen Haken." />
+    </StackPanel>
+
+    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="0,10,0,0">
+      <Button Width="40" Height="40" Command="{Binding SaveCommand}">
+        <Image Source="{StaticResource IconSave}" Width="24" Height="24" />
+      </Button>
+      <Button Width="40" Height="40" Margin="10,0,0,0" Command="{Binding ErzeugeExcelCommand}" ToolTip="Erzeuge Excel-Datei für diesen Kurs">
+        <Image Source="{StaticResource IconExcel}" Width="24" Height="24" />
+      </Button>
+    </StackPanel>
+
+    <!-- Schüler im Kurs -->
+    <Grid Grid.Row="0" Grid.Column="2" Margin="20,0,0,0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <TextBlock Grid.Row="0" Text="{Binding AnzSchuelerText}" Margin="0,0,0,4" />
+      <ListBox Grid.Row="1" ItemsSource="{Binding KursSchueler}" DisplayMemberPath="KlasseName" />
+    </Grid>
+    <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" Margin="0,10,0,0">
+      <Button Width="40" Height="40" Command="{Binding DeleteSchuelerCommand}" IsEnabled="{Binding IsSchuelerButtonsEnabled}" ToolTip="Alle Schüler aus dem Kurs löschen">
+        <Image Source="{StaticResource IconCancel}" Width="20" Height="20" />
+      </Button>
+      <Button Width="40" Height="40" Margin="10,0,0,0" Command="{Binding SchuelerZuteilenCommand}" IsEnabled="{Binding IsSchuelerButtonsEnabled}" ToolTip="Schüler dem Kurs zuteilen">
+        <Image Source="{StaticResource IconOk}" Width="20" Height="20" />
+      </Button>
+    </StackPanel>
+  </Grid>
+</Window>
