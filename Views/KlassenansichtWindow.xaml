@@ -57,36 +57,36 @@
         </StackPanel>
       </StackPanel>
 
-      <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="16,0,0,0">
+      <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="16,0,0,0">
         <Button x:Name="NotenabgebenButton" Width="40" Height="40" Command="{Binding NotenabgebenCommand}"
                 ToolTip="Notendateien abgeben">
-          <Image Source="{StaticResource IconExcel}" Width="24" Height="24" />
+          <Image Source="{StaticResource IconExcel}" Width="36" Height="36" />
         </Button>
         <Button Width="40" Height="40" Margin="6,0,0,0" Command="{Binding LnwAbgebenCommand}"
                 ToolTip="Angabe und Lösung von LNW abgeben">
-          <Image Source="{StaticResource IconAblage}" Width="24" Height="24" />
+          <Image Source="{StaticResource IconAblage}" Width="36" Height="36" />
         </Button>
         <Button x:Name="PrintButton" Width="40" Height="40" Margin="6,0,0,0" Click="PrintButton_Click"
                 ToolTip="Notenbogen drucken">
-          <Image Source="{StaticResource IconPrint}" Width="24" Height="24" />
+          <Image Source="{StaticResource IconPrint}" Width="36" Height="36" />
           <Button.ContextMenu>
             <ContextMenu x:Name="PrintContextMenu" />
           </Button.ContextMenu>
         </Button>
         <Button Width="40" Height="40" Margin="6,0,0,0" Command="{Binding RefreshCommand}" ToolTip="Daten neu laden">
-          <Image Source="{StaticResource IconRefresh}" Width="24" Height="24" />
+          <Image Source="{StaticResource IconRefresh}" Width="36" Height="36" />
         </Button>
         <Button Width="40" Height="40" Margin="6,0,0,0" Command="{Binding MailCommand}"
                 ToolTip="Mail an alle betroffenen Lehrer">
-          <Image Source="{StaticResource IconMail}" Width="24" Height="24" />
+          <Image Source="{StaticResource IconMail}" Width="36" Height="36" />
         </Button>
         <Button Width="40" Height="40" Margin="6,0,0,0" Command="{Binding BriefCommand}"
                 IsEnabled="{Binding BriefEnabled}" ToolTip="Briefe für Nachtermine und Verweise erstellen">
-          <Image Source="{StaticResource IconEdit}" Width="24" Height="24" />
+          <Image Source="{StaticResource IconEdit}" Width="36" Height="36" />
         </Button>
         <Button Width="40" Height="40" Margin="6,0,0,0" Command="{Binding CheckCommand}"
                 ToolTip="Notenbogen auf Vollständigkeit, Gefährdungen und Vorrücken prüfen">
-          <Image Source="{StaticResource IconOk}" Width="24" Height="24" />
+          <Image Source="{StaticResource IconOk}" Width="36" Height="36" />
         </Button>
         <TextBlock Text="{Binding HinweiseText}" Foreground="Red" Margin="16,0,0,0" Width="260"
                    TextWrapping="Wrap" VerticalAlignment="Center" />
@@ -120,25 +120,46 @@
       </ListBox>
 
       <TabControl Grid.Column="1" Margin="10,0,0,0">
-        <TabItem Header="Schülerdaten">
+        <TabItem>
+          <TabItem.Header>
+            <TextBlock Text="Schülerdaten" FontSize="15" />
+          </TabItem.Header>
           <views:SchueleransichtView x:Name="SchueleransichtView" />
         </TabItem>
-        <TabItem Header="Notenbogen">
+        <TabItem>
+          <TabItem.Header>
+            <TextBlock Text="Notenbogen" FontSize="15" />
+          </TabItem.Header>
           <views:NotenbogenView x:Name="NotenbogenView" />
         </TabItem>
-        <TabItem Header="FPA / Seminar">
+        <TabItem>
+          <TabItem.Header>
+            <TextBlock Text="FPA / Seminar" FontSize="15" />
+          </TabItem.Header>
           <views:FPAundSeminarView x:Name="FPAundSeminarView" />
         </TabItem>
-        <TabItem Header="Vorkommnisse">
+        <TabItem>
+          <TabItem.Header>
+            <TextBlock Text="Vorkommnisse" FontSize="15" />
+          </TabItem.Header>
           <views:VorkommnisseView x:Name="VorkommnisseView" />
         </TabItem>
-        <TabItem Header="Kurszuordnungen" Visibility="{Binding HatVerwaltungsrechte, Converter={StaticResource BoolToVis}}">
+        <TabItem Visibility="{Binding HatVerwaltungsrechte, Converter={StaticResource BoolToVis}}">
+          <TabItem.Header>
+            <TextBlock Text="Kurszuordnungen" FontSize="15" />
+          </TabItem.Header>
           <views:KurszuordnungenView x:Name="KurszuordnungenView" />
         </TabItem>
-        <TabItem Header="Sekretariat" Visibility="{Binding HatVerwaltungsrechte, Converter={StaticResource BoolToVis}}">
+        <TabItem Visibility="{Binding HatVerwaltungsrechte, Converter={StaticResource BoolToVis}}">
+          <TabItem.Header>
+            <TextBlock Text="Sekretariat" FontSize="15" />
+          </TabItem.Header>
           <views:SekretariatView x:Name="SekretariatView" />
         </TabItem>
-        <TabItem Header="Administration" Visibility="{Binding HatVerwaltungsrechte, Converter={StaticResource BoolToVis}}">
+        <TabItem Visibility="{Binding HatVerwaltungsrechte, Converter={StaticResource BoolToVis}}">
+          <TabItem.Header>
+            <TextBlock Text="Administration" FontSize="15" />
+          </TabItem.Header>
           <views:AdministrationView x:Name="AdministrationView" />
         </TabItem>
       </TabControl>

@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Datenauswahl" Height="228" Width="362"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize" ShowInTaskbar="False">
+        ResizeMode="NoResize" ShowInTaskbar="False" FontSize="14">
   <Grid Margin="12">
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
