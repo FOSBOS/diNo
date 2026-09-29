@@ -65,16 +65,7 @@ namespace diNo
           FaecherOhneKurse.Add(fsn);
         }
       }
-
-      // Fachreferat als eigenes Fach führen --> macht leider auch viele Probleme, deshalb erst mal so lassen
-      // (Sollte es mehrere FR geben, bleibt aber nur das letzte übrig, weil alle in denselben Index geschrieben werden).
-      /*
-      if (schueler.Fachreferat.Count>0)
-      {
-        alleFaecher.Add(new  FachSchuelerNoten(schueler, schueler.Fachreferat));  
-      }
-      */
-
+      
       Zweig z = schueler.Zweig; // Profilfächer haben neue Sortierung
       alleFaecher.Sort((x, y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
       alleKurse.Sort((x, y) => x.getFach.Sortierung(z).CompareTo(y.getFach.Sortierung(z)));
@@ -182,13 +173,14 @@ namespace diNo
       {
         liste.Add(NotenDruck.CreateNotenDruck(f, rptName));
       }
+      /*
       foreach (var f in Fachreferat)
       {
         if (rptName == Bericht.Abiergebnisse)
           liste.Add(new NotenAbiDruck(f));
         else
           liste.Add(new NotenHjDruck(f));
-      }
+      }*/
       if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
       {
         if (rptName == Bericht.Abiergebnisse)
@@ -215,11 +207,11 @@ namespace diNo
           if (rptName != Bericht.Gefaehrdung || f.getRelevanteNote(zeitpunkt) <= 4)
             liste.Add(new NotenZeugnisDruck(f, rptName));
         }
-
+      /*
       foreach (var f in Fachreferat)
       {
         liste.Add(new NotenZeugnisDruck(f, "Fachreferat in " + f.getFach.BezZeugnis));
-      }
+      }*/
       if (rptName != Bericht.Gefaehrdung && schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf)
       {
         NotenZeugnisDruck f = new NotenZeugnisDruck(schueler.FPANoten);

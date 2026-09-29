@@ -108,6 +108,7 @@ namespace diNo
         FillCell(dataGridNoten.Rows[lineCount].Cells[17], fach.getHjLeistung(HjArt.GesErg));
         lineCount++;
       }
+      /*
       foreach (HjLeistung fr in schueler.Fachreferat)
       {
         dataGridNoten.Rows.Add();
@@ -116,7 +117,7 @@ namespace diNo
         FillCell(dataGridNoten.Rows[lineCount].Cells[12], fr);
         FillCell(dataGridNoten.Rows[lineCount].Cells[17], fr);
         lineCount++;
-      }
+      }*/
 
       if (dataGridPunktesumme.Visible = schueler.getKlasse.Jahrgangsstufe > Jahrgangsstufe.Elf && (Zugriff.Instance.aktZeitpunkt >= (int)Zeitpunkt.ErstePA || Zugriff.Instance.HatRolle(Rolle.Admin)))
       {

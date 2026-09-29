@@ -354,8 +354,8 @@ namespace diNo
       //   Bemerkung += "<br>Der Unterricht im Fach Religionslehre/Ethik konnte nicht erteilt werden."; // nicht in SF
       if (s.Data.LRSStoerung)
       {
-        if (jg>11 && (b==Bericht.Abiturzeugnis || b==Bericht.Jahreszeugnis))
-          Bemerkung += "<br>Die Rechtschreibleistungen wurden mit Ausnahme " + (jg == 12 ? "des Fachreferats" : "der Seminararbeit") + " nicht bewertet.";
+        if (jg>12 && (b==Bericht.Abiturzeugnis || b==Bericht.Jahreszeugnis))
+          Bemerkung += "<br>Die Rechtschreibleistungen wurden mit Ausnahme der Seminararbeit nicht bewertet.";
         else
           Bemerkung += "<br>Auf die Bewertung des Rechtschreibens wurde verzichtet.";
       }

@@ -33,11 +33,12 @@ namespace diNo
         if (f.getFach.IstSAPFach(s.Zweig))
           Wuerfeln(f, HjArt.AP);
 
+        /*
         if (!FR && r.Next(10) == 9)
         {
           Wuerfeln(f, HjArt.FR);
           FR = true;
-        }
+        }*/
       }
     }
 
