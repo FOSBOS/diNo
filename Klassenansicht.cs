@@ -14,7 +14,7 @@ namespace diNo
   {
     private Schueler schueler = null;
     private SchuelerverwaltungController verwaltungController;
-    private Brief frmBrief = null;
+    private diNo.Views.BriefWindow frmBrief = null;
     private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
     private List<Schueler> SuchListe;
     private int SuchIndex=-1;
@@ -277,7 +277,7 @@ namespace diNo
 
     private void btnBrief_Click(object sender, EventArgs e)
     {
-      if (frmBrief == null) frmBrief = new Brief(this);
+      if (frmBrief == null) frmBrief = new diNo.Views.BriefWindow(RefreshVorkommnisse);
       frmBrief.Anzeigen(schueler);
     }
 
@@ -290,7 +290,7 @@ namespace diNo
         foreach (Klasse k in obj)
           SelKlassen.Add(k);
       }
-      var c = new NotenCheckForm(SelKlassen);
+      var c = new diNo.Views.NotenCheckWindow(SelKlassen);
       c.Show();
       btnPrint.Enabled = btnPrint.Enabled || Zugriff.Instance.HatVerwaltungsrechte;
     }
@@ -312,7 +312,7 @@ namespace diNo
 
     private void btnLNWabgeben_Click(object sender, EventArgs e)
     {
-      new CopyLNW();
+      new diNo.Views.CopyLNWWindow().ShowDialog();
     }
 
     private void btnSuchen_Click(object sender, EventArgs e)

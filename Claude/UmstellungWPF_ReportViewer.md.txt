@@ -1,0 +1,72 @@
+# Vertiefung: ReportViewer-Migration bei WPF-Umstieg (diNo)
+
+## Kontext
+
+Anschluss an die vorherige Machbarkeitsanalyse (`analysiere-ob-die-anwendung-lazy-hejlsberg.md`), die den Microsoft ReportViewer/RDLC-Stack bereits als größten zusätzlichen Blocker neben ObjectListView identifiziert hatte. Diese Datei vertieft gezielt zwei Fragen des Nutzers:
+
+1. Kann der ReportViewer nach einem WPF-Umstieg weiterverwendet werden?
+2. Sind die auf den Millimeter genau ausgerichteten Berichte (Zeugnisse etc.) durch die Migration gefährdet?
+
+Dies ist wieder eine reine Analyse, keine Code-Änderung.
+
+## Ist-Stand (verifiziert im Code)
+
+- Paket: `Microsoft.ReportingServices.ReportViewerControl.Winforms`, Version **150.1652.0**, `targetFramework="net48"` (`packages.config:5`) — das ist die moderne, von Microsoft weiter gepflegte ReportViewer-Generation (Namespace `Microsoft.Reporting.WinForms`), nicht die alte VS2010-Variante.
+- Architektur ist **reines LocalReport-Rendering** (kein SSRS-Server): 31 `.rdlc`-Dateien als eingebettete Ressourcen (`LocalReport.ReportEmbeddedResource`), Subreports über `SubreportProcessing`-Events, Datenquellen als reine In-Memory-Objektlisten/DataTables über `ReportDataSource` (`ReportController.cs`).
+- **Zwei getrennte Ausgabewege**, gesteuert über den Schalter `Zugriff.Instance.RptDruck` (`ReportController.cs:35`):
+  - `RptDruck = true`: interaktive Anzeige über das `ReportViewer`-WinForms-Control (`rpt.reportViewer.Show()`), inkl. Zoom/PrintLayout.
+  - `RptDruck = false` **(Default, siehe `Zugriff.cs:43`)**: reines `LocalReport.Render("PDF", …)` im Speicher → Bytes auf Platte → `Process.Start` öffnet die PDF im Standard-Viewer. Kein Fenster-Handle, kein Bildschirm-DPI, keine WinForms-Control-Instanz beteiligt.
+  - Bemerkenswert: Der Tooltip zum `RptDruck`-Schalter warnt explizit *"Bildschirm-Auflösung auf 100% stellen"* (`UserControlAdministration.Designer.cs:181`) — d. h. **DPI-Skalierungsprobleme des ReportViewer-Controls sind bereits heute in der bestehenden WinForms-App bekannt** und der Grund, warum der PDF-Weg der Standardpfad für die produktionskritischen Zeugnisdrucke ist.
+- Layout-Genauigkeit: Alle geprüften `.rdlc` (z. B. `rptZeugnis.rdlc`) definieren Maße in `cm` mit bis zu 5 Nachkommastellen (`<Width>7.44979cm</Width>`) — echte Feinjustierung, keine gerundeten Werte. Kein `.rdlc` enthält einen eingebetteten `<Code>`-Block (VB-Code-Behind) — nur Standard-Feldausdrücke.
+
+## Kernaussage: Layout-Präzision ist von WPF unabhängig
+
+Das Wichtigste zuerst: **Das mm/cm-genaue Layout ist eine Eigenschaft der `.rdlc`-Definition und der Rendering-Engine, nicht der Host-UI (WinForms vs. WPF).** Die Engine (`LocalReport`) paginiert und rendert intern über ihre eigene GDI+-basierte Pipeline, unabhängig davon, in welchem Fenstertyp sie eingebettet ist. Konkret:
+
+- Der **PDF-Pfad** (heutiger Standardweg, s. o.) läuft komplett ohne Bildschirm/Fenster: `LocalReport.Render()` erzeugt die PDF-Bytes direkt aus der Berichtsdefinition. Dieser Pfad ist **vollständig unberührt** von einem WPF-Umstieg — er bräuchte nicht einmal das `ReportViewer`-Control, nur die `LocalReport`-Klasse.
+- Der **interaktive ReportViewer-Pfad** (Bildschirmanzeige, Zoom, Direktdruck) bleibt ein WinForms-Control. In WPF wird es über `WindowsFormsHost` eingebettet — das ändert nichts an der internen Layoutberechnung, nur an der Fensterintegration (Fokus-Wechsel, Tab-Reihenfolge, gemischte DPI-Awareness zwischen WPF- und WinForms-Teil). Das sind **UX-/Bedienrisiken**, keine Layout-Präzisionsrisiken — und die DPI-Thematik existiert, wie oben gezeigt, bereits heute unabhängig von WPF.
+
+**Antwort auf Frage 2:** Nein, die Migration ist für die Präzision der Berichte selbst *nicht* riskant, solange dieselbe Rendering-Engine (Microsoft-Original oder eine originalgetreue Neukompilierung, siehe unten) weiterverwendet wird. Das Risiko liegt nicht im Layout, sondern in der **Paket-/Plattformverfügbarkeit** dieser Engine.
+
+## Antwort auf Frage 1: Weiterverwendung möglich — aber abhängig von der .NET-Framework-Entscheidung
+
+Das offizielle Microsoft-Paket ist **ausschließlich für .NET Framework** (`net48`) veröffentlicht; es gibt **keine offizielle WPF- oder .NET-Core/.NET-8-Variante** von Microsoft selbst. Das ergibt zwei klar unterschiedliche Pfade, je nachdem, ob der WPF-Umstieg mit einem Wechsel auf modernes .NET gekoppelt wird (vgl. Punkt 4 der letzten Analyse):
+
+**Pfad A — WPF auf .NET Framework 4.8 (Plattform bleibt):**
+- Das bestehende, offizielle Paket (`Microsoft.ReportingServices.ReportViewerControl.Winforms` 150.1652.0) funktioniert **unverändert weiter**, eingebettet via `WindowsFormsHost`.
+- Kein zusätzliches Reporting-Risiko. Das ist der risikoärmste Weg, den ReportViewer-Stack zu erhalten.
+
+**Pfad B — WPF + gleichzeitiger Umstieg auf .NET 8:**
+- Microsofts offizielles Paket läuft dort **nicht**. Recherche (Stand heute) zeigt: Für .NET 6/8/9-WinForms-Projekte existiert **`ReportViewerCore.WinForms`** (Community-Projekt von *lkosson*, GitHub: `lkosson/reportviewercore`) — eine Neukompilierung der originalen Microsoft-Binaries auf .NET Core/.NET 8, die die alten .NET-Framework-Abhängigkeiten entfernt. Funktional soll sie die gleiche Rendering-Pipeline nutzen (also auch hier keine Layout-Abweichung zu erwarten).
+- **Das ist aber kein Microsoft-Produkt**, sondern ein von einer Einzelperson gepflegtes Fork-Projekt. Für eine Schulverwaltungssoftware mit rechtlich verbindlichen Dokumenten (Zeugnisse) ist das ein **Governance-/Langzeitrisiko** (Wartung, Sicherheitsupdates, Kompatibilität mit künftigen .NET-Versionen hängt an einem einzelnen Maintainer), nicht mehr nur ein technisches.
+- Zusatzpunkt aus der Recherche: RDLC-Ausdrücke werden intern über den VB-Compiler ausgewertet; .NET 8 bringt `vbc.exe` nicht mehr automatisch mit. Da eure `.rdlc`-Dateien **keine eigenen `<Code>`-Blöcke** enthalten (nur Standard-Feldausdrücke), ist das Risiko geringer als im Worst Case, aber die Kompilierungs-Pipeline für Ausdrücke hängt weiterhin an dem, was `ReportViewerCore` dafür mitbringt/löst.
+
+## Empfehlung (ergänzt die vorherige Analyse)
+
+1. **Layout-Präzision ist kein Gegenargument gegen WPF.** Die "auf den Millimeter genau"-Sorge betrifft die `.rdlc`-Engine, nicht das Host-Framework — die bleibt in beiden Pfaden identisch.
+2. **Die eigentliche Risikoentscheidung ist die Framework-Frage, nicht die UI-Frage.** Wer das Reporting-Risiko minimieren will, entkoppelt WPF-Umstieg und .NET-8-Umstieg zeitlich: erst WPF auf .NET Framework 4.8 (Pfad A, ReportViewer bleibt offiziell unterstützt), .NET-8-Wechsel als separate, spätere Entscheidung, wenn die Community-Lösung sich als stabil erwiesen hat oder Microsoft nachzieht.
+3. Falls .NET 8 dennoch direkt mitgezogen werden soll (Pfad B): den ReportViewerCore-Fork **vorab an 2–3 der komplexesten Zeugnis-Reports** (Subreports, mehrseitig, z. B. `rptAbiturzeugnis.rdlc`) prototypisch testen, bevor die Migration committet wird — insbesondere Druckausgabe/PDF-Export pixelgenau mit dem aktuellen Output vergleichen.
+4. In jedem Fall: den produktiven **PDF-Export-Pfad** (`RptDruck = false`) als primären Ausgabeweg beibehalten — er ist der unkritischste, host-unabhängigste Teil der gesamten Reporting-Kette und sollte nicht durch die Migration angetastet werden. Der interaktive `RptDruck = true`-Pfad ist ohnehin schon als DPI-heikel bekannt und verdient bei der WPF-Einbettung besondere manuelle Prüfung (Skalierung, Fokus-Verhalten am `WindowsFormsHost`-Rand).
+
+## Nebenfrage des Nutzers: .NET-8-Verteilung auf Clients
+
+Falls der Umstieg auf .NET 8 erfolgt (unabhängig vom Reporting-Thema): Anders als .NET Framework 4.8 (Bestandteil von Windows) ist .NET 8 **nicht vorinstalliert** und muss verteilt werden:
+- **Framework-dependent**: .NET 8 Desktop Runtime muss auf **jedem Client-PC** installiert sein (z. B. über das bestehende Software-Verteilungsverfahren der Schule/des Trägers).
+- **Self-contained Deployment**: Runtime wird in die Anwendung eingebettet, kein separater Installationsschritt auf Clients nötig, aber deutlich größere Installationsgröße pro Client (~100+ MB statt wenigen MB) und pro Update erneut zu verteilen.
+Das ist eine Verteilungsentscheidung, die bei der Framework-Wahl mitgeplant werden muss — unabhängig vom ReportViewer-Thema.
+
+## Referenzierte Dateien (für Rückfragen/Vertiefung)
+
+- `ReportController.cs` (Rendering-Logik, PDF- vs. ReportViewer-Pfad, Subreport-Handling)
+- `ReportForm.Designer.cs` (Einbettung des `Microsoft.Reporting.WinForms.ReportViewer`-Controls)
+- `Zugriff.cs:43` (`RptDruck`-Flag, Default `false`)
+- `UserControlAdministration.cs:503`, `UserControlAdministration.Designer.cs:181` (UI-Schalter samt DPI-Warnhinweis)
+- `packages.config:5` (Paketversion/Zielframework)
+- 31 `.rdlc`-Dateien, u. a. `rptZeugnis.rdlc`, `rptAbiturzeugnis.rdlc` (Layout-Feinheit, keine `<Code>`-Blöcke)
+
+## Quellen (Web-Recherche zur .NET-8-Kompatibilität)
+
+- [ReportViewerCore.WinForms auf NuGet](https://www.nuget.org/packages/ReportViewerCore.WinForms/)
+- [lkosson/reportviewercore auf GitHub](https://github.com/lkosson/reportviewercore)
+- [Microsoft.ReportingServices.ReportViewerControl.Winforms auf NuGet](https://www.nuget.org/packages/Microsoft.ReportingServices.ReportViewerControl.Winforms/)
+- [Microsoft Q&A: RDLC reports on .NET Core 8](https://learn.microsoft.com/en-us/answers/questions/1656043/rdlc-reports-on-net-core-8)

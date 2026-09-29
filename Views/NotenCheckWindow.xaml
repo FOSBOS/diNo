@@ -1,0 +1,39 @@
+<Window x:Class="diNo.Views.NotenCheckWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Notenprüfung durchführen" Height="270" Width="360"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+  <Grid Margin="16">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+
+    <Label Grid.Row="0" Content="Prüfungsmodus" />
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="50" />
+      </Grid.ColumnDefinitions>
+      <ComboBox Grid.Column="0" FontSize="14" ItemsSource="{Binding ModusOptions}" DisplayMemberPath="Value" SelectedValuePath="Key"
+                SelectedValue="{Binding SelectedModus}" />
+      <Button Grid.Column="1" Width="40" Height="40" Margin="10,0,0,0" Command="{Binding StartCommand}">
+        <Image Source="{StaticResource IconOk}" Width="20" Height="20" />
+      </Button>
+    </Grid>
+
+    <Label Grid.Row="2" Content="Prüfungsanlass" Margin="0,10,0,0" />
+    <ComboBox Grid.Row="3" FontSize="14" ItemsSource="{Binding ZeitpunktOptions}" SelectedIndex="{Binding SelectedZeitpunktIndex}"
+              IsEnabled="{Binding IsZeitpunktEnabled}" />
+
+    <CheckBox Grid.Row="4" Content="Nur Problemfälle anzeigen" IsChecked="{Binding IsKurzfassung}" Margin="0,10,0,0" />
+
+    <TextBlock Grid.Row="5" Text="{Binding StatusText}" Margin="0,16,0,4" />
+    <ProgressBar Grid.Row="6" Height="20" Maximum="{Binding ProgressMax}" Value="{Binding ProgressValue}" />
+  </Grid>
+</Window>

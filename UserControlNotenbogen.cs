@@ -162,7 +162,7 @@ namespace diNo
 
     private void EditHjLeistung(HjLeistung hj)
     {
-      string input = InputBox.Show("Neue Notenpunkte:", hj.Punkte.ToString());
+      string input = diNo.Views.InputBoxWindow.Show("Neue Notenpunkte:", hj.Punkte.ToString());
       if (input != "")
       {
         hj.Punkte = Convert.ToByte(input, CultureInfo.CurrentUICulture);

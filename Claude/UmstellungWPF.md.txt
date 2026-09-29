@@ -1,0 +1,72 @@
+# Machbarkeitsanalyse: Umstieg von WinForms auf WPF (diNo)
+
+## Kontext
+
+Die Anwendung `diNo` ist eine WinForms-Desktopanwendung für Schulverwaltung, aktuell auf **.NET Framework 4.8** mit klassischem (nicht-SDK-Style) `.csproj`. Ziel dieser Analyse: einschätzen, ob und mit welchem Aufwand ein Umstieg auf WPF realistisch ist, und welche konkreten Hürden dabei auftreten — mit besonderem Fokus auf das Hauptfenster **Klassenansicht** (das mehrere UserControls einbindet) und den Einsatz von **ObjectListView**.
+
+Dies ist eine reine Analyse, keine Code-Änderung. Die Datei dient als schriftlicher Befund/Report.
+
+## Gesamteinschätzung
+
+**Machbar, aber kein einfacher "Face-Lift".** Die reine View-Ebene ist mit 15 Forms + 8 UserControls überschaubar groß. Das eigentliche Risiko liegt nicht in der Menge der Fenster, sondern in drei WinForms-spezifischen Abhängigkeiten, die **keine direkte WPF-Entsprechung** haben, plus der Tatsache, dass die App auf klassischem .NET Framework 4.8 läuft (ein realistischer WPF-Umstieg zieht meist auch einen Umstieg auf modernes .NET nach sich).
+
+## Architektur-Ausgangslage
+
+- `diNo.csproj`: altes MSBuild-Format (`ToolsVersion="4.0"`), Ziel **.NET Framework 4.8**, `OutputType=WinExe`, `packages.config`-basiertes NuGet (kein `PackageReference`).
+- Durchgehend klassisches WinForms-Designer-Pattern (`.cs`/`.Designer.cs`/`.resx`-Tripel), keine Trennung von View/Logik außer Partial Classes.
+- **15 Forms** (u. a. gemeinsame Basis `BasisForm : Form`), **8 UserControls**, kein MDI (`Application.Run(new Klassenansicht())` als einziges Top-Level-Form).
+- Generiertes typisiertes ADO.NET `DataSet` (`diNoDataSet.Designer.cs`, ~9500 Zeilen) — größtenteils aber **nicht** über `BindingSource`/DataGridView-Binding an die UI gekoppelt; die meisten Controls werden manuell befüllt (`.Text =`, `Rows.Add()` etc.). Das ist für die Migration eher günstig: keine tief verwobene WinForms-Databinding-Infrastruktur, die entwirrt werden müsste — aber auch nichts, was 1:1 wiederverwendet werden kann; alles muss auf MVVM-Bindings umgestellt werden.
+
+## Das Hauptfenster Klassenansicht
+
+`Klassenansicht.cs`/`.Designer.cs` (`: BasisForm : Form`) bindet über ein `TabControl` mit 7 `TabPage`s je genau ein UserControl (`DockStyle.Fill`) ein — rein deklarativ über Designer-Code, keine dynamische Laufzeit-Komposition (Ausnahme: 3 TabPages werden je nach Benutzerrecht zur Laufzeit **entfernt**, da WinForms TabPages nicht ausblendbar sind, nur entfernbar — ein typischer WinForms-Workaround, der in WPF trivial durch `Visibility`-Binding gelöst wird).
+
+Zusätzlich enthält das Hauptfenster außerhalb der Tabs: die `TreeListView` (ObjectListView) als Klassen/Schüler-Navigationsbaum, Toolbar-Buttons, ein `ContextMenuStrip`, `StatusStrip`, `PictureBox`, Suchfeld.
+
+**Konkrete Migrationsprobleme in den 7 UserControls:**
+
+1. **UserControlAdministration** — greift über eine harte Elternhierarchie-Umwandlung auf das Hauptfenster zurück: `((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects()`. Diese Parent-Chain-Kopplung ist ein reines WinForms-Anti-Pattern und funktioniert so in WPF nicht (dort keine garantiert stabile Control-Hierarchie in dieser Form) — muss durch MVVM-Messaging/Commands/Shared-ViewModel ersetzt werden. Startet zudem viele weitere Forms modal/modeless (`ShowDialog()`/`Show()`).
+2. **UserControlNotenbogen** — zwei **ungebundene** `DataGridView`s, komplett prozedural befüllt und gefärbt (`Rows.Add()`, `Cells[i].Value=`, `Style.BackColor=`). Muss zu WPF `DataGrid` mit `ItemsSource`/`CellStyle`-Selectors umgebaut werden — kein automatischer Port.
+3. **UserControlFPAundSeminar** / **UserControlSekretariat** — nutzen den Custom-Control-Subtyp `NumericUpDownNullable` (überschreibt `Value` mit `new` für Nullable-Decimals — WinForms-Member-Hiding-Idiom ohne WPF-Äquivalent; braucht einen echten WPF-Custom-Control oder Value-Converter-Ansatz). `UserControlSekretariat` hat außerdem eine untypische Vermischung von generiertem/handgeschriebenem Code (Designer-Layout liegt in der `.cs`, nicht in `.Designer.cs`).
+4. **UserControlVorkommnisse** — nutzt ObjectListView mit einer "Fake-Button"-Spalte (Lösch-Icon), die über `CellEditStarting`-Interception simuliert wird (Edit wird abgebrochen, Bestätigungsdialog, dann `RemoveObject`). Kein direktes WPF-`DataGrid`-Äquivalent; muss als echte Button-Spalte/DataTemplate neu gebaut werden.
+5. **UserControlKurszuordnungen** — zwei synchronisierte ObjectListViews (verfügbare/zugeordnete Kurse), Verschieben per Doppelklick zwischen den Listen. Konzeptionell einfach auf zwei WPF-`ListBox`/`DataGrid` übertragbar, aber komplett neu zu bauen.
+6. **UserControlSchueleransicht** — vergleichsweise unproblematisch: reine Label/TextBox/ComboBox/DateTimePicker-Maske mit manuellem Get/Set, keine verschachtelten Controls.
+
+Die **Drag-&-Drop-Logik** auf `treeListView1` (Schüler auf Klasse ziehen, um zu versetzen) läuft über ObjectListViews modellobjekt-basiertes `ModelCanDrop`/`ModelDropped`-API (`SchuelerverwaltungController.cs`). WPFs `TreeView`/`TreeViewItem`-Drag&Drop-Modell unterscheidet sich davon grundlegend — das ist der aufwändigste Einzelbaustein der Klassenansicht-Migration.
+
+## Problembereich ObjectListView
+
+- **Nicht per NuGet eingebunden**, sondern als Quellcode im Repo (`F:\diNo\ObjectListView\`, Version 2.8, `BrightIdeasSoftware`-Namespace), per `ProjectReference` eingebunden. Reine WinForms-Bibliothek (baut auf `System.Windows.Forms.ListView` auf) — **kein WPF-Port existiert**, das Projekt selbst ist seit Jahren nicht mehr aktiv weiterentwickelt.
+- Eingesetzt an genau 4 Stellen: `Klassenansicht` (`TreeListView`, hierarchisches Binding via `CanExpandGetter`/`ChildrenGetter`, `VirtualMode`, `OwnerDraw`, Drag&Drop), `UserControlVorkommnisse`, `UserControlKurszuordnungen` (siehe oben).
+- Genutzte Features ohne 1:1-WPF-Entsprechung: `AspectGetter`/`AspectToStringConverter`-Spalten, `CanExpandGetter`/`ChildrenGetter`-Baum-Datenquelle (in WPF wäre das `HierarchicalDataTemplate`, aber mit anderem API-Modell), `CellEditStarting`-Interception, `ModelCanDrop`/`ModelDropped`.
+- **Migrationsoptionen:**
+  - **Ersetzen durch native WPF-Controls** (`TreeView`+`HierarchicalDataTemplate` für die Klassenansicht, `DataGrid`/`ListView` für die beiden ObjectListView-Stellen). Klarster, nachhaltigster Weg, aber alle 4 Stellen müssen konzeptionell neu entworfen werden (Spalten-Templates, Sortierung, Drag&Drop, Delete-Spalte).
+  - **WindowsFormsHost**: die alten WinForms-Controls (inkl. ObjectListView) in ein WPF-Fenster einbetten. Reduziert kurzfristig Portierungsaufwand, ist aber technisch nur ein Interop-Kompromiss (kein "echtes" WPF, Rendering-/Fokus-/DPI-Eigenheiten an der Grenze, Wartungslast der alten Bibliothek bleibt). Empfehlenswert höchstens als Übergangslösung, nicht als Zielzustand.
+  - Drittanbieter-WPF-Grids (z. B. `DataGrid`+Community Toolkit, oder kommerzielle Libraries) prüfen, falls Baumfunktionalität mit Gruppierung/Filterung gewünscht ist — aktuell wird aber weder Gruppierung noch Filterung genutzt (`ShowGroups=false`, kein `ModelFilter`), der reale Funktionsbedarf ist also moderater als das API-Volumen vermuten lässt.
+
+## Weitere Risikobereiche (unabhängig von Klassenansicht/ObjectListView)
+
+- **Microsoft ReportViewer (WinForms)** — der mit Abstand größte zusätzliche Blocker: `Microsoft.ReportingServices.ReportViewerControl.Winforms` mit 31 eingebetteten `.rdlc`-Berichten (Zeugnisse, Notenbögen etc.), verwendet in `ReportForm`/`ReportController`. **Es gibt keine WPF- oder .NET-Core-Variante von Microsoft.** Optionen: über `WindowsFormsHost` einbetten (Interop-Kompromiss wie oben) oder die komplette RDLC-Reporting-Schicht durch eine andere Bibliothek ersetzen (z. B. andere Reporting-Engine mit WPF/Xaml-Unterstützung) — das ist ein eigenständiges Teilprojekt, unabhängig von der reinen Fenster-Migration.
+- **Office-COM-Interop** (`Microsoft.Office.Interop.Excel`, `.Outlook`, `VBIDE`, `stdole`) für Excel-Import/Export und Outlook-Mailversand — UI-Framework-unabhängig, aber ein Desktop-/COM-Abhängigkeitsrisiko, das bei einem gleichzeitigen Umstieg auf modernes .NET erneut validiert werden muss.
+- **.NET Framework 4.8 → modernes .NET**: Ein echter WPF-Umstieg wird in der Praxis kaum isoliert erfolgen — WPF auf .NET Framework 4.8 ist zwar technisch möglich, aber die meisten Migrationsgründe (Tooling, Performance, Langzeitsupport) sprechen für einen gleichzeitigen Wechsel auf .NET 8. Das verdoppelt den Umfang: SDK-Style-`.csproj`, `PackageReference` statt `packages.config`, Neuvalidierung der COM-Referenzen und der `PInvoke.*`-Pakete (Windows-Benutzerimpersonation in `UserImpersonation.cs`).
+- **NumericUpDownNullable** (Custom-Control) — muss als WPF-Pendant neu implementiert werden (siehe oben).
+- Standarddialoge (`OpenFileDialog`/`SaveFileDialog`) sind unkritisch — direkte WPF/`Microsoft.Win32`-Äquivalente vorhanden.
+- **Kein MDI, kein natives Printing, keine `Timer`-Nutzung, keine eigenen GDI+/`OnPaint`-Overrides außerhalb von ObjectListView** — insofern kein zusätzliches Risiko aus diesen sonst häufigen WinForms-Fallen.
+
+## Empfehlung
+
+1. **Kein "Big Bang".** Reihenfolge: zuerst Entscheidung zu .NET-Framework vs. modernem .NET treffen (das ist die teurere, aber unabhängige Vorfrage), dann die UI-Migration planen.
+2. Die eigentliche Fenstermigration (15 Forms + 8 UserControls) ist überschaubar und größtenteils "nur" Fleißarbeit, **mit Ausnahme** der 3 ObjectListView-Stellen und der ReportViewer-Integration — das sind die zwei Stellen mit echtem Konzeptionsaufwand.
+3. Für ObjectListView: native WPF-Neubauten anstreben (Funktionsumfang ist moderat, da Gruppierung/Filterung ungenutzt sind); `WindowsFormsHost` nur als befristete Übergangslösung, nicht als Dauerzustand.
+4. Für ReportViewer/RDLC: separates Teilprojekt einplanen, da hier keine Microsoft-eigene WPF-Lösung existiert.
+5. Die Parent-Chain-Kopplung in `UserControlAdministration` und das manuelle Property-Pushing in allen UserControls sind ein guter Anlass, beim Umbau gleich auf ein MVVM-Muster (ViewModel + Data-Binding statt manueller Zuweisungen) umzustellen — der Migrationsaufwand entsteht ohnehin, ein "1:1"-Nachbau ohne MVVM würde die WPF-Vorteile verschenken.
+
+## Referenzierte Dateien (für Rückfragen/Vertiefung)
+
+- Hauptfenster: `Klassenansicht.cs`, `Klassenansicht.Designer.cs`, `BasisForm.cs`
+- UserControls: `UserControlSchueleransicht.cs`, `UserControlNotenbogen.cs`, `UserControlFPAundSeminar.cs`, `UserControlVorkommnisse.cs`, `UserControlKurszuordnungen.cs`, `UserControlSekretariat.cs`, `UserControlAdministration.cs`
+- Drag&Drop: `SchuelerverwaltungController.cs`, `KlassenTreeViewController.cs`
+- ObjectListView: `ObjectListView\ObjectListView2012.csproj` (Version 2.8, `BrightIdeasSoftware`-Namespace)
+- Reporting: `ReportForm.cs`, `ReportController.cs`, `*.rdlc` (31 Stück)
+- Custom Control: `NumericUpDownNullable.cs`
+- Projekt/Framework: `diNo.csproj`, `diNo.sln`, `app.config`

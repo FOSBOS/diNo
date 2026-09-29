@@ -13,6 +13,13 @@ namespace diNo
     private Schueler schueler;
     private diNoDataSet.GlobaleKonstantenRow konstanten;
 
+    // Ersatz für die frühere Parent-Chain-Kopplung an Klassenansicht (Parent.Parent.Parent-Cast),
+    // die seit der WPF-Umstellung von Klassenansicht (Phase 2) nicht mehr funktioniert, da dieses
+    // UserControl jetzt per WindowsFormsHost in KlassenansichtWindow eingebettet ist. Wird vom
+    // Host-Fenster nach dem Erzeugen gesetzt.
+    public Func<List<Schueler>> SelectedObjectsProvider { get; set; }
+    public Action SchuelerChangedNotifier { get; set; }
+
     public UserControlAdministration()
     {
       InitializeComponent();
@@ -57,8 +64,7 @@ namespace diNo
     // liefert die fürs Drucken ausgewählten Objekte (einzelne Schüler oder ein Menge von Klassen)
     private List<Schueler> getSelectedObjects()
     {
-      // Elternreihenfolge: usercontrol -> Tabpage -> pageControl -> Form Klassenansicht
-      var obj = ((Klassenansicht)(Parent.Parent.Parent)).SelectedObjects();
+      var obj = SelectedObjectsProvider();
       if (obj.Count == 0)
         MessageBox.Show("Bitte zuerst einen Schüler oder eine/mehrere Klassen markieren.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
       return obj;
@@ -187,7 +193,7 @@ namespace diNo
 
     private void btnSelect_Click(object sender, EventArgs e)
     {
-      new Datenauswahl().ShowDialog();
+      new diNo.Views.DatenauswahlWindow().ShowDialog();
     }
 
     private UnterschriftZeugnis getUnterschriftZeugnis()
@@ -220,17 +226,17 @@ namespace diNo
 
     private void btnLehrer_Click(object sender, EventArgs e)
     {
-      new LehrerForm().ShowDialog();
+      new diNo.Views.LehrerWindow().ShowDialog();
     }
 
     private void btnKurs_Click(object sender, EventArgs e)
     {
-      new KurseForm().ShowDialog();
+      new diNo.Views.KurseWindow().ShowDialog();
     }
 
     private void btnGlobales_Click(object sender, EventArgs e)
     {
-      new GlobalesForm().ShowDialog();
+      new diNo.Views.GlobalesWindow().ShowDialog();
     }
 
     private void btnEinserAbi_Click(object sender, EventArgs e)
@@ -335,7 +341,7 @@ namespace diNo
 
     private void RefreshNotenbogen()
     {
-      ((Klassenansicht)(Parent.Parent.Parent)).SetSchueler();
+      SchuelerChangedNotifier?.Invoke();
     }
 
     private void btnMBStatistik_Click(object sender, EventArgs e)
@@ -429,7 +435,7 @@ namespace diNo
 
     private void btnKlassen_Click(object sender, EventArgs e)
     {
-      new KlasseForm().ShowDialog();
+      new diNo.Views.KlasseWindow().ShowDialog();
     }
 
     private void btnNotenmitteilung_Click(object sender, EventArgs e)
@@ -517,7 +523,7 @@ namespace diNo
 
     private void btnMails_Click(object sender, EventArgs e)
     {
-      new MailDialog(getSelectedObjects()).ShowDialog();
+      new diNo.Views.MailDialogWindow(getSelectedObjects()).ShowDialog();
     }
 
     private void btnAbschluss_Click(object sender, EventArgs e)

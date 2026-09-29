@@ -1,0 +1,19 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <BitmapImage x:Key="IconCancel" UriSource="/Resources/Cancel.png" />
+  <BitmapImage x:Key="IconOk" UriSource="/Resources/Ok.png" />
+  <BitmapImage x:Key="IconEdit" UriSource="/Resources/Edit.png" />
+  <BitmapImage x:Key="IconPrint" UriSource="/Resources/print.png" />
+  <BitmapImage x:Key="IconSave" UriSource="/Resources/Save.png" />
+  <BitmapImage x:Key="IconExcel" UriSource="/Resources/Excel.png" />
+  <BitmapImage x:Key="IconPlus" UriSource="/Resources/Plus.png" />
+  <BitmapImage x:Key="IconMinus" UriSource="/Resources/Minus.png" />
+  <BitmapImage x:Key="IconAdmin" UriSource="/Resources/Admin.png" />
+  <BitmapImage x:Key="IconRefresh" UriSource="/Resources/Refresh.png" />
+  <BitmapImage x:Key="IconAblage" UriSource="/Resources/Ablage.png" />
+  <BitmapImage x:Key="IconLupe" UriSource="/Resources/Lupe.png" />
+  <BitmapImage x:Key="IconMail" UriSource="/Resources/Mail.png" />
+  <BitmapImage x:Key="IconMuell" UriSource="/Resources/muell.png" />
+
+</ResourceDictionary>
