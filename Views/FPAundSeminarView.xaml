@@ -136,9 +136,9 @@
           <TextBlock Text="Notenpunkte" Style="{StaticResource FeldLabel}" />
           <StackPanel Orientation="Horizontal">
             <TextBox Style="{StaticResource Zahlenfeld}" Width="60"
-                     Text="{Binding Seminarpunkte, Converter={StaticResource NullableIntConverter}, ConverterParameter={StaticResource Range0To15}}" />
+                     Text="{Binding Seminarpunkte, Converter={StaticResource NullableIntConverter}, ConverterParameter={StaticResource Range0To15}}" Height="22" />
             <Button Width="40" Height="40" Margin="16,0,0,0" Command="{Binding SaveSeminarCommand}" ToolTip="Speichern">
-              <Image Source="{StaticResource IconSave}" Width="24" Height="24" />
+              <Image Source="{StaticResource IconSave}" Width="24" Height="24" HorizontalAlignment="Right" />
             </Button>
           </StackPanel>
           <TextBlock Text="Thema" Style="{StaticResource FeldLabel}" />

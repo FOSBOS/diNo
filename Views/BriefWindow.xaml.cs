@@ -14,7 +14,14 @@ namespace diNo.Views
     {
       InitializeComponent();
       vm = new BriefViewModel(onRefreshVorkommnisse);
-      vm.RequestShow += (s, e) => { Show(); Activate(); };
+      vm.RequestShow += (s, e) =>
+      {
+        Show();
+        // Direkt nach dem ersten Show() existiert das Fensterhandle noch nicht vollständig,
+        // ein sofortiges Activate() geht dann ins Leere und das Fenster bleibt hinter dem
+        // maximierten Hauptfenster verborgen. Daher erst nach Abschluss der Initialisierung aktivieren.
+        Dispatcher.BeginInvoke(new Action(() => Activate()), System.Windows.Threading.DispatcherPriority.ContextIdle);
+      };
       vm.RequestHide += (s, e) => Hide();
       DataContext = vm;
     }

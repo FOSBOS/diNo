@@ -57,7 +57,7 @@
         </StackPanel>
       </StackPanel>
 
-      <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="16,0,0,0">
+      <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="16,0,0,0">
         <Button x:Name="NotenabgebenButton" Width="40" Height="40" Command="{Binding NotenabgebenCommand}"
                 ToolTip="Notendateien abgeben">
           <Image Source="{StaticResource IconExcel}" Width="36" Height="36" />
