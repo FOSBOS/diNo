@@ -10,18 +10,13 @@ namespace diNo.Views
 {
   // WPF-Nachfolger von Klassenansicht.cs (WinForms), Phase 2 der WPF-Umstellung. Der Klassenbaum
   // ist inzwischen eine native, flach gehaltene WPF-ListBox (KlassenBaumViewModel/TreeRow) statt
-  // der WinForms-TreeListView (BrightIdeasSoftware) - siehe Claude\UmstellungWPF.md.txt. Die 4
-  // verbleibenden WinForms-UserControls (Notenbogen, FPAundSeminar, Sekretariat, Administration)
-  // werden vorerst weiter unverändert per WindowsFormsHost eingebunden.
+  // der WinForms-TreeListView (BrightIdeasSoftware) - siehe Claude\UmstellungWPF.md.txt. Mit
+  // AdministrationView ist die gesamte Klassenansicht jetzt natives WPF, keine WinForms-
+  // UserControls mehr per WindowsFormsHost eingebunden.
   public partial class KlassenansichtWindow : Window
   {
     private readonly KlassenansichtViewModel vm;
     private readonly KlassenBaumViewModel baumVm = new KlassenBaumViewModel();
-
-    private readonly UserControlNotenbogen userControlNotenbogen1 = new UserControlNotenbogen();
-    private readonly UserControlFPAundSeminar userControlFPAundSeminar1 = new UserControlFPAundSeminar();
-    private readonly UserControlSekretariat userControlSekretariat1 = new UserControlSekretariat();
-    private readonly UserControlAdministration userControlAdministration1 = new UserControlAdministration();
 
     private Point dragStartPoint;
     private Schueler dragSchueler;
@@ -32,11 +27,6 @@ namespace diNo.Views
 
       BaumListBox.DataContext = baumVm;
 
-      NotenbogenHost.Child = userControlNotenbogen1;
-      FPAundSeminarHost.Child = userControlFPAundSeminar1;
-      SekretariatHost.Child = userControlSekretariat1;
-      AdministrationHost.Child = userControlAdministration1;
-
       vm = new KlassenansichtViewModel(
         roots => baumVm.SetKlassen(roots),
         GetTreeSelectedObjects,
@@ -44,8 +34,8 @@ namespace diNo.Views
         () => VorkommnisseView.RefreshVorkommnisse());
       DataContext = vm;
 
-      userControlAdministration1.SelectedObjectsProvider = vm.SelectedObjects;
-      userControlAdministration1.SchuelerChangedNotifier = vm.RefreshSchuelerAnzeige;
+      AdministrationView.Vm.SelectedObjectsProvider = vm.SelectedObjects;
+      AdministrationView.Vm.SchuelerChangedNotifier = vm.RefreshSchuelerAnzeige;
 
       BuildPrintContextMenu();
     }
@@ -54,14 +44,13 @@ namespace diNo.Views
     {
       SchueleransichtView.SetSchueler(schueler);
       VorkommnisseView.SetSchueler(schueler);
-      userControlFPAundSeminar1.Schueler = schueler;
-      userControlNotenbogen1.Schueler = schueler;
+      FPAundSeminarView.SetSchueler(schueler);
+      NotenbogenView.SetSchueler(schueler);
 
       if (Zugriff.Instance.HatVerwaltungsrechte)
       {
         KurszuordnungenView.SetSchueler(schueler);
-        userControlAdministration1.Schueler = schueler;
-        userControlSekretariat1.Schueler = schueler;
+        SekretariatView.SetSchueler(schueler);
       }
     }
 

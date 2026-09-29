@@ -1,7 +1,6 @@
 <Window x:Class="diNo.Views.KlassenansichtWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
         xmlns:views="clr-namespace:diNo.Views"
         Title="diNo" WindowState="Maximized" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded">
@@ -125,10 +124,10 @@
           <views:SchueleransichtView x:Name="SchueleransichtView" />
         </TabItem>
         <TabItem Header="Notenbogen">
-          <wfi:WindowsFormsHost x:Name="NotenbogenHost" />
+          <views:NotenbogenView x:Name="NotenbogenView" />
         </TabItem>
         <TabItem Header="FPA / Seminar">
-          <wfi:WindowsFormsHost x:Name="FPAundSeminarHost" />
+          <views:FPAundSeminarView x:Name="FPAundSeminarView" />
         </TabItem>
         <TabItem Header="Vorkommnisse">
           <views:VorkommnisseView x:Name="VorkommnisseView" />
@@ -137,10 +136,10 @@
           <views:KurszuordnungenView x:Name="KurszuordnungenView" />
         </TabItem>
         <TabItem Header="Sekretariat" Visibility="{Binding HatVerwaltungsrechte, Converter={StaticResource BoolToVis}}">
-          <wfi:WindowsFormsHost x:Name="SekretariatHost" />
+          <views:SekretariatView x:Name="SekretariatView" />
         </TabItem>
         <TabItem Header="Administration" Visibility="{Binding HatVerwaltungsrechte, Converter={StaticResource BoolToVis}}">
-          <wfi:WindowsFormsHost x:Name="AdministrationHost" />
+          <views:AdministrationView x:Name="AdministrationView" />
         </TabItem>
       </TabControl>
     </Grid>

@@ -762,6 +762,41 @@
     <Compile Include="ViewModels\VorkommnisRow.cs" />
     <Compile Include="ViewModels\TreeRow.cs" />
     <Compile Include="ViewModels\KlassenBaumViewModel.cs" />
+    <Page Include="Views\FPAundSeminarView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\FPAundSeminarView.xaml.cs">
+      <DependentUpon>FPAundSeminarView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\FPAundSeminarViewModel.cs" />
+    <Compile Include="Converters\NullableIntConverter.cs" />
+    <Page Include="Views\SekretariatView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\SekretariatView.xaml.cs">
+      <DependentUpon>SekretariatView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\SekretariatViewModel.cs" />
+    <Page Include="Views\NotenbogenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\NotenbogenView.xaml.cs">
+      <DependentUpon>NotenbogenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\NotenbogenViewModel.cs" />
+    <Compile Include="ViewModels\NotenZelle.cs" />
+    <Compile Include="ViewModels\NotenRow.cs" />
+    <Page Include="Views\AdministrationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\AdministrationView.xaml.cs">
+      <DependentUpon>AdministrationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\AdministrationViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Cancel.png" />

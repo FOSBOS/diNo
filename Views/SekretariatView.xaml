@@ -1,0 +1,174 @@
+<UserControl x:Class="diNo.Views.SekretariatView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    <Style TargetType="TextBlock" x:Key="FeldLabel">
+      <Setter Property="Margin" Value="0,6,0,2" />
+    </Style>
+  </UserControl.Resources>
+
+  <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <Grid Margin="16">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="280" />
+        <ColumnDefinition Width="16" />
+        <ColumnDefinition Width="300" />
+        <ColumnDefinition Width="16" />
+        <ColumnDefinition Width="300" />
+      </Grid.ColumnDefinitions>
+
+      <!-- Grunddaten + Eltern -->
+      <StackPanel Grid.Column="0">
+        <GroupBox Header="Grunddaten">
+          <StackPanel Margin="4">
+            <TextBlock Text="Nachname" Style="{StaticResource FeldLabel}" />
+            <TextBox Text="{Binding Nachname, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Vorname" Style="{StaticResource FeldLabel}" />
+            <TextBox Text="{Binding Vorname, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Rufname" Style="{StaticResource FeldLabel}" />
+            <TextBox Text="{Binding Rufname, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="Schüler-ID" Style="{StaticResource FeldLabel}" />
+            <TextBox Text="{Binding SchuelerId}" IsEnabled="False" Width="108" HorizontalAlignment="Left" />
+            <TextBlock Text="ASV-ID" Style="{StaticResource FeldLabel}" />
+            <TextBox Text="{Binding AsvId}" IsEnabled="False" Width="108" HorizontalAlignment="Left" />
+            <TextBlock Text="Ausbildungsrichtung" Style="{StaticResource FeldLabel}" />
+            <TextBox Text="{Binding Ausbildungsrichtung, UpdateSourceTrigger=PropertyChanged}" MaxLength="1" Width="60" HorizontalAlignment="Left" />
+            <TextBlock Text="Schulart" Style="{StaticResource FeldLabel}" />
+            <TextBox Text="{Binding Schulart, UpdateSourceTrigger=PropertyChanged}" MaxLength="1" Width="60" HorizontalAlignment="Left" />
+          </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="1. Erziehungsberechtigter" Margin="0,10,0,0">
+          <StackPanel Margin="4">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <StackPanel Grid.Column="0">
+                <TextBlock Text="Vorname" Style="{StaticResource FeldLabel}" />
+                <TextBox Text="{Binding Eltern1Vorname, UpdateSourceTrigger=PropertyChanged}" />
+              </StackPanel>
+              <StackPanel Grid.Column="2">
+                <TextBlock Text="Nachname" Style="{StaticResource FeldLabel}" />
+                <TextBox Text="{Binding Eltern1Nachname, UpdateSourceTrigger=PropertyChanged}" />
+              </StackPanel>
+            </Grid>
+            <Grid Margin="0,6,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <StackPanel Grid.Column="0">
+                <TextBlock Text="Telefon" Style="{StaticResource FeldLabel}" />
+                <TextBox Text="{Binding Eltern1Telefon, UpdateSourceTrigger=PropertyChanged}" />
+              </StackPanel>
+              <CheckBox Grid.Column="2" Content="Hauptansprechpartner" IsChecked="{Binding Eltern1Haupt}" VerticalAlignment="Bottom" Margin="0,0,0,4" />
+            </Grid>
+            <TextBlock Text="Email" Style="{StaticResource FeldLabel}" />
+            <TextBox Text="{Binding Eltern1Email, UpdateSourceTrigger=PropertyChanged}" />
+          </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="2. Erziehungsberechtigter" Margin="0,10,0,0">
+          <StackPanel Margin="4">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <StackPanel Grid.Column="0">
+                <TextBlock Text="Vorname" Style="{StaticResource FeldLabel}" />
+                <TextBox Text="{Binding Eltern2Vorname, UpdateSourceTrigger=PropertyChanged}" />
+              </StackPanel>
+              <StackPanel Grid.Column="2">
+                <TextBlock Text="Nachname" Style="{StaticResource FeldLabel}" />
+                <TextBox Text="{Binding Eltern2Nachname, UpdateSourceTrigger=PropertyChanged}" />
+              </StackPanel>
+            </Grid>
+            <Grid Margin="0,6,0,0">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="*" />
+              </Grid.ColumnDefinitions>
+              <StackPanel Grid.Column="0">
+                <TextBlock Text="Telefon" Style="{StaticResource FeldLabel}" />
+                <TextBox Text="{Binding Eltern2Telefon, UpdateSourceTrigger=PropertyChanged}" />
+              </StackPanel>
+              <CheckBox Grid.Column="2" Content="Hauptansprechpartner" IsChecked="{Binding Eltern2Haupt}" VerticalAlignment="Bottom" Margin="0,0,0,4" />
+            </Grid>
+            <TextBlock Text="Email" Style="{StaticResource FeldLabel}" />
+            <TextBox Text="{Binding Eltern2Email, UpdateSourceTrigger=PropertyChanged}" />
+          </StackPanel>
+        </GroupBox>
+      </StackPanel>
+
+      <!-- Andere 2. Fremdsprache + Zeugnisbemerkung -->
+      <StackPanel Grid.Column="2">
+        <GroupBox Header="Andere 2. Fremdsprache">
+          <StackPanel Margin="4">
+            <RadioButton GroupName="FS2Art" Content="aus voriger Schule" IsChecked="{Binding IsRS}" Margin="0,0,0,4" />
+            <RadioButton GroupName="FS2Art" Content="Ergänzungsprüfung" IsChecked="{Binding IsErgPr}" Margin="0,0,0,4" />
+            <RadioButton GroupName="FS2Art" Content="früherer Kurs an unserer Schule" IsChecked="{Binding IsFFalt}" />
+            <TextBlock Text="{Binding FfAltText}" FontSize="11" Margin="0,4,0,0" />
+
+            <TextBlock Text="Sprache" Style="{StaticResource FeldLabel}" />
+            <ComboBox ItemsSource="{Binding FachOptions}" DisplayMemberPath="Value" SelectedValuePath="Key"
+                      SelectedValue="{Binding AndereFremdspr2Fach}" Width="200" HorizontalAlignment="Left" />
+            <TextBlock Text="Notenpunkte" Style="{StaticResource FeldLabel}" />
+            <TextBox Width="60" HorizontalAlignment="Left" IsEnabled="{Binding NichtFFalt}"
+                     Text="{Binding AndereFremdspr2Note, Converter={StaticResource NullableIntConverter}, ConverterParameter={StaticResource Range0To15}}" />
+          </StackPanel>
+        </GroupBox>
+
+        <TextBlock Text="zusätzliche Zeugnisbemerkung" Style="{StaticResource FeldLabel}" Margin="0,10,0,2" />
+        <TextBox Text="{Binding Zeugnisbemerkung, UpdateSourceTrigger=PropertyChanged}" AcceptsReturn="True" TextWrapping="Wrap" Height="80" />
+
+        <GroupBox Header="Legasthenie" Margin="0,10,0,0">
+          <Grid Margin="4">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="150" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <CheckBox Grid.Row="0" Grid.Column="0" Content="Notenschutz" IsChecked="{Binding Legasthenie}" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Zeitzuschlag" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="minimal" VerticalAlignment="Center" />
+            <TextBox Grid.Row="1" Grid.Column="1" Width="50" HorizontalAlignment="Left"
+                     Text="{Binding LrsZuschlagMin, Converter={StaticResource NullableIntConverter}}" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="maximal" VerticalAlignment="Center" />
+            <TextBox Grid.Row="2" Grid.Column="1" Width="50" HorizontalAlignment="Left"
+                     Text="{Binding LrsZuschlagMax, Converter={StaticResource NullableIntConverter}}" />
+          </Grid>
+        </GroupBox>
+
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+          <CheckBox Content="Französisch B1" IsChecked="{Binding FranzB1}" Margin="0,0,16,0" />
+          <CheckBox Content="Spanisch B1" IsChecked="{Binding SpanischB1}" />
+        </StackPanel>
+
+        <Button Width="40" Height="40" HorizontalAlignment="Left" Margin="0,16,0,0"
+                Command="{Binding SaveCommand}" ToolTip="Speichern" Visibility="{Binding ShowSave, Converter={StaticResource BoolToVis}}">
+          <Image Source="{StaticResource IconSave}" Width="24" Height="24" />
+        </Button>
+      </StackPanel>
+
+      <!-- Schulische Vorbildung -->
+      <StackPanel Grid.Column="4">
+        <GroupBox Header="Schulische Vorbildung">
+          <ComboBox Margin="4" IsEditable="True" ItemsSource="{Binding SchulischeVorbildungOptions}"
+                    Text="{Binding SchulischeVorbildung, UpdateSourceTrigger=PropertyChanged}" />
+        </GroupBox>
+      </StackPanel>
+    </Grid>
+  </ScrollViewer>
+</UserControl>

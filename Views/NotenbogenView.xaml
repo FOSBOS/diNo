@@ -1,0 +1,149 @@
+<UserControl x:Class="diNo.Views.NotenbogenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:diNo="clr-namespace:diNo">
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+    <DataTemplate x:Key="ZelleTemplateMitMenu">
+      <Border Background="{Binding Background}" Padding="2">
+        <Border.InputBindings>
+          <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DoubleClickCommand}" />
+        </Border.InputBindings>
+        <Border.ContextMenu>
+          <ContextMenu>
+            <MenuItem Header="undefiniert" Command="{Binding SetStatusCommand}" CommandParameter="{x:Static diNo:HjStatus.None}" />
+            <MenuItem Header="einbringen" Command="{Binding SetStatusCommand}" CommandParameter="{x:Static diNo:HjStatus.Einbringen}" />
+            <MenuItem Header="nicht einbringen" Command="{Binding SetStatusCommand}" CommandParameter="{x:Static diNo:HjStatus.NichtEinbringen}" />
+            <MenuItem Header="ungültig" Command="{Binding SetStatusCommand}" CommandParameter="{x:Static diNo:HjStatus.Ungueltig}" />
+            <MenuItem Header="alternative Einbringung" Command="{Binding SetStatusCommand}" CommandParameter="{x:Static diNo:HjStatus.AlternativeEinbr}" />
+          </ContextMenu>
+        </Border.ContextMenu>
+        <TextBlock Text="{Binding Text}" HorizontalAlignment="Center" FontWeight="Bold" />
+      </Border>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ZelleTemplateOhneMenu">
+      <Border Background="{Binding Background}" Padding="2">
+        <Border.InputBindings>
+          <MouseBinding Gesture="LeftDoubleClick" Command="{Binding DoubleClickCommand}" />
+        </Border.InputBindings>
+        <TextBlock Text="{Binding Text}" HorizontalAlignment="Center" />
+      </Border>
+    </DataTemplate>
+  </UserControl.Resources>
+
+  <DockPanel Margin="12">
+    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,8">
+      <StackPanel>
+        <CheckBox x:Name="ChkShowHj1" Content="1. Halbjahr anzeigen" IsChecked="True" Checked="ShowChanged" Unchecked="ShowChanged" />
+        <CheckBox x:Name="ChkShowHj2" Content="2. Halbjahr anzeigen" IsChecked="True" Checked="ShowChanged" Unchecked="ShowChanged" Margin="0,4,0,0" />
+        <CheckBox x:Name="ChkShowAbi" Content="Abitur anzeigen" Checked="ShowChanged" Unchecked="ShowChanged" Margin="0,4,0,0" />
+      </StackPanel>
+
+      <StackPanel Margin="24,0,0,0" Visibility="{Binding IsAdminEdit, Converter={StaticResource BoolToVis}}">
+        <TextBlock Text="Berechnungsstatus" />
+        <ComboBox SelectedIndex="{Binding BerechnungsstatusIndex}" IsEnabled="False" Width="230" Margin="0,2,0,0">
+          <ComboBoxItem Content="Unberechnet" />
+          <ComboBoxItem Content="Zu wenige HjLeistungen" />
+          <ComboBoxItem Content="Einbringung" />
+          <ComboBoxItem Content="Gesamtergebnis" />
+        </ComboBox>
+        <TextBlock Margin="0,4,0,0" Foreground="#C00000" FontSize="14" TextWrapping="Wrap" Width="430"
+                   Visibility="{Binding ShowHinweise, Converter={StaticResource BoolToVis}}"
+                   Text="Es wurde eine ungültige Zahl an Halbjahresleistungen eingebracht." />
+      </StackPanel>
+    </StackPanel>
+
+    <Grid DockPanel.Dock="Bottom" Margin="0,12,0,0" HorizontalAlignment="Left">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="420" />
+        <ColumnDefinition Width="16" />
+        <ColumnDefinition Width="180" />
+      </Grid.ColumnDefinitions>
+
+      <DataGrid Grid.Column="0" ItemsSource="{Binding PunktesummeRows}" AutoGenerateColumns="False"
+                IsReadOnly="True" CanUserAddRows="False" HeadersVisibility="Column"
+                Visibility="{Binding ShowPunktesumme, Converter={StaticResource BoolToVis}}">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Punktesumme aus" Binding="{Binding Text}" Width="220" />
+          <DataGridTextColumn Header="Punkte" Binding="{Binding Summe}" Width="100" />
+          <DataGridTextColumn Header="Faktor" Binding="{Binding Anzahl}" Width="100" />
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <StackPanel Grid.Column="2" VerticalAlignment="Top">
+        <TextBlock Text="Durchschnittsnote" />
+        <TextBox Text="{Binding DNoteText}" IsEnabled="False" Width="60" HorizontalAlignment="Left" Margin="0,2,0,10" />
+        <TextBlock Text="Durchschnittsnote (fachgeb. HSR)" TextWrapping="Wrap" Width="170" />
+        <TextBox Text="{Binding DNoteFachgebHSRText}" IsEnabled="False" Width="60" HorizontalAlignment="Left" Margin="0,2,0,0" />
+      </StackPanel>
+    </Grid>
+
+    <DataGrid x:Name="NotenGrid" ItemsSource="{Binding Rows}" AutoGenerateColumns="False" IsReadOnly="True"
+              CanUserAddRows="False" HeadersVisibility="Column" RowBackground="{Binding GridBackground}">
+      <DataGrid.Columns>
+        <DataGridTextColumn x:Name="ColFach" Header="Fach" Binding="{Binding FachText}" Width="180" />
+        <DataGridTemplateColumn x:Name="Col11_1" Header="11/1" Width="55">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <ContentPresenter Content="{Binding Zelle11_1}" ContentTemplate="{StaticResource ZelleTemplateMitMenu}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn x:Name="Col11_2" Header="11/2" Width="55">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <ContentPresenter Content="{Binding Zelle11_2}" ContentTemplate="{StaticResource ZelleTemplateMitMenu}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn x:Name="ColSlHj1" Header="sL" Binding="{Binding SlHj1}" Width="140" />
+        <DataGridTextColumn x:Name="ColSchnittMdl1" Header="Ø sL" Binding="{Binding SchnittMdl1}" Width="50" />
+        <DataGridTextColumn x:Name="ColSaHj1" Header="SA" Binding="{Binding SaHj1}" Width="50" />
+        <DataGridTextColumn x:Name="ColPunkte2DezHj1" Header="Ø" Binding="{Binding Punkte2DezHj1}" Width="50" />
+        <DataGridTemplateColumn x:Name="ColHj1" Header="1. Hj" Width="55">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <ContentPresenter Content="{Binding ZelleHj1}" ContentTemplate="{StaticResource ZelleTemplateMitMenu}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn x:Name="ColSlHj2" Header="sL" Binding="{Binding SlHj2}" Width="140" />
+        <DataGridTextColumn x:Name="ColSchnittMdl2" Header="Ø sL" Binding="{Binding SchnittMdl2}" Width="50" />
+        <DataGridTextColumn x:Name="ColSaHj2" Header="SA" Binding="{Binding SaHj2}" Width="50" />
+        <DataGridTextColumn x:Name="ColPunkte2DezHj2" Header="Ø" Binding="{Binding Punkte2DezHj2}" Width="50" />
+        <DataGridTemplateColumn x:Name="ColHj2" Header="2. Hj" Width="55">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <ContentPresenter Content="{Binding ZelleHj2}" ContentTemplate="{StaticResource ZelleTemplateMitMenu}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn x:Name="ColSAP" Header="SAP" Binding="{Binding SAP}" Width="50" />
+        <DataGridTextColumn x:Name="ColMAP" Header="MAP" Binding="{Binding MAP}" Width="50" />
+        <DataGridTemplateColumn x:Name="ColAPG" Header="APG" Width="55">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <ContentPresenter Content="{Binding ZelleAPG}" ContentTemplate="{StaticResource ZelleTemplateOhneMenu}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn x:Name="ColJN" Header="JN" Width="52">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <ContentPresenter Content="{Binding ZelleJN}" ContentTemplate="{StaticResource ZelleTemplateMitMenu}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTemplateColumn x:Name="ColGE" Header="GE" Width="55">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <ContentPresenter Content="{Binding ZelleGE}" ContentTemplate="{StaticResource ZelleTemplateOhneMenu}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+  </DockPanel>
+</UserControl>
