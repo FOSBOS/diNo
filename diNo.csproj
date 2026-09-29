@@ -743,6 +743,25 @@
       <DependentUpon>SchueleransichtView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\SchueleransichtViewModel.cs" />
+    <Page Include="Views\KurszuordnungenView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\KurszuordnungenView.xaml.cs">
+      <DependentUpon>KurszuordnungenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\KurszuordnungenViewModel.cs" />
+    <Page Include="Views\VorkommnisseView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\VorkommnisseView.xaml.cs">
+      <DependentUpon>VorkommnisseView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\VorkommnisseViewModel.cs" />
+    <Compile Include="ViewModels\VorkommnisRow.cs" />
+    <Compile Include="ViewModels\TreeRow.cs" />
+    <Compile Include="ViewModels\KlassenBaumViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Cancel.png" />

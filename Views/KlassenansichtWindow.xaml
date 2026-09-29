@@ -7,6 +7,16 @@
         Loaded="Window_Loaded">
   <Window.Resources>
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    <Style x:Key="BaumZeile" TargetType="TextBlock">
+      <Setter Property="Margin" Value="20,2,0,2" />
+      <Setter Property="FontWeight" Value="Normal" />
+      <Style.Triggers>
+        <DataTrigger Binding="{Binding IstKlasse}" Value="True">
+          <Setter Property="Margin" Value="0,2,0,2" />
+          <Setter Property="FontWeight" Value="Bold" />
+        </DataTrigger>
+      </Style.Triggers>
+    </Style>
   </Window.Resources>
 
   <Grid Margin="12">
@@ -93,7 +103,22 @@
         <ColumnDefinition Width="*" />
       </Grid.ColumnDefinitions>
 
-      <wfi:WindowsFormsHost x:Name="TreeHost" Grid.Column="0" />
+      <ListBox x:Name="BaumListBox" Grid.Column="0" ItemsSource="{Binding Rows}" SelectionMode="Extended" AllowDrop="True"
+               SelectionChanged="BaumListBox_SelectionChanged"
+               PreviewMouseLeftButtonDown="BaumListBox_PreviewMouseLeftButtonDown"
+               PreviewMouseMove="BaumListBox_PreviewMouseMove"
+               DragOver="BaumListBox_DragOver" Drop="BaumListBox_Drop">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <Button Width="16" Height="16" Padding="0" BorderThickness="0" Background="Transparent"
+                      Visibility="{Binding IstKlasse, Converter={StaticResource BoolToVis}}"
+                      Command="{Binding ToggleCommand}" Content="{Binding ExpandGlyph}" FontSize="10" />
+              <TextBlock Text="{Binding Bezeichnung}" Style="{StaticResource BaumZeile}" />
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
 
       <TabControl Grid.Column="1" Margin="10,0,0,0">
         <TabItem Header="Schülerdaten">
@@ -106,10 +131,10 @@
           <wfi:WindowsFormsHost x:Name="FPAundSeminarHost" />
         </TabItem>
         <TabItem Header="Vorkommnisse">
-          <wfi:WindowsFormsHost x:Name="VorkommnisseHost" />
+          <views:VorkommnisseView x:Name="VorkommnisseView" />
         </TabItem>
         <TabItem Header="Kurszuordnungen" Visibility="{Binding HatVerwaltungsrechte, Converter={StaticResource BoolToVis}}">
-          <wfi:WindowsFormsHost x:Name="KurszuordnungenHost" />
+          <views:KurszuordnungenView x:Name="KurszuordnungenView" />
         </TabItem>
         <TabItem Header="Sekretariat" Visibility="{Binding HatVerwaltungsrechte, Converter={StaticResource BoolToVis}}">
           <wfi:WindowsFormsHost x:Name="SekretariatHost" />
