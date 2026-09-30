@@ -51,13 +51,17 @@
     </Grid>
 
     <Grid Grid.Row="0" Grid.Column="1" Margin="24,220,0,0" VerticalAlignment="Top">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="177*"/>
+        <ColumnDefinition Width="97*"/>
+      </Grid.ColumnDefinitions>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto" />
         <RowDefinition Height="Auto" />
       </Grid.RowDefinitions>
-      <Label Grid.Row="0" Content="Klassenleiter" />
+      <Label Grid.Row="1" Content="Klassenleiter" Grid.ColumnSpan="2" Margin="0,68,0,-57" />
       <ComboBox Grid.Row="1" ItemsSource="{Binding AlleLehrer}" DisplayMemberPath="KompletterName" SelectedValuePath="Id"
-                SelectedValue="{Binding KlassenleiterId}" />
+                SelectedValue="{Binding KlassenleiterId}" Grid.ColumnSpan="2" Margin="0,102,0,-90" />
     </Grid>
 
     <Button Grid.Row="1" Grid.Column="1" Width="40" Height="40" HorizontalAlignment="Left" Margin="0,10,0,0"
