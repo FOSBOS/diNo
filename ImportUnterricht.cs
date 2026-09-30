@@ -22,6 +22,7 @@ namespace diNo
       int neueUNr = 5001; // Vergabe von automatischen Kursnummern, wenn anderes Fach zur selben Zeit (z.B. K/Ev/Eth)
       int vorigeUNr = 0;
       List<Kurs> GleicheKursnr = new List<Kurs>();
+      List<string>UnbekanntesFach = new List<string>();
 
       using (FileStream stream = new FileStream(FileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(stream))
@@ -40,26 +41,13 @@ namespace diNo
           string fachOrg = line[6].Trim(new char[] { '"', ' ' });
           string f = line[6].Trim(new char[] { '"', ' ' , '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' }); // Kursnummern weg
           if (string.IsNullOrEmpty(kl) || string.IsNullOrEmpty(le) || string.IsNullOrEmpty(f)) continue;
-
-          foreach (var substr in new string[] { "FP", "FBB", "-Fö", "GK_", "GK-", "_Ü", "-Ü", "BK-", "CHÜ", "PRAK" , "KL", "SF", "AWU", "PROJ", "SOZP" })
-          { // diese Fächer werden ohne Noten unterrichtet
-            if (f.ToUpper().Contains(substr))
-            {
-              writer.WriteLine("Ignoriere " + orignal);
-              weiter = true;
-              break;
-            }
-          }
-          if (weiter) continue;
-
+         
           Fach fach = Zugriff.Instance.FachRep.Find(f);
           if (fach == null)
           {
-            writer.WriteLine("Fach " + f + " wird angelegt.");
-            new FachTableAdapter().Insert(f, f, 999, 0, null, false, 0, null, null,null,null,null);
-            Zugriff.Instance.FachRep.Clear();
-            Zugriff.Instance.LoadFaecher();
-            fach = Zugriff.Instance.FachRep.Find(f);
+            if (!UnbekanntesFach.Contains(f))
+              UnbekanntesFach.Add(f);
+            continue;
           }
           if (fach.Typ == FachTyp.OhneNoten) // nur für in der DB bereits registrierte Fächer 
           {
@@ -156,6 +144,8 @@ namespace diNo
           Kurs kurs = Zugriff.Instance.KursRep.Find(UNr); // das Repository aktualisieren
           GleicheKursnr.Add(kurs);                            
         }
+        if (UnbekanntesFach.Count > 0)
+          writer.WriteLine("Unbekannte Fachkürzel: " + string.Join("; ", UnbekanntesFach));
       }
 
       SchuelerZuweisen();
