@@ -63,7 +63,7 @@ namespace diNo
         
         LehrerListe.TryGetValue(kuerzel, out lehrerid);
         var dt = ta.GetDataByBezeichnung(klasse);
-        if (dt.Count > 0)
+        if (dt.Count > 0 && lehrerid > 0)
         {
           var klassenRow = dt[0];
           klassenRow.KlassenleiterId = lehrerid;
