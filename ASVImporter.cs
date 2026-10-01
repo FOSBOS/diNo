@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Xml.Linq;
 
@@ -150,31 +151,43 @@ namespace diNo
       ReligionSchluesselZuKurzform.TryGetValue(int.Parse(El(schuelerElement, "religionszugehoerigkeit")), out bekenntnis);
       row.Bekenntnis = bekenntnis;
 
-      DateTime? eintritt = ParseAsvDatum(El(schuelerElement, "eintrittsdatum"));
-      if (eintritt == null) row.SetEintrittAmNull();
-      else row.EintrittAm = eintritt.Value;
+        string reliethik;
+        try
+        {
+            if (ReligionSchluesselZuKurzform.TryGetValue(int.Parse(El(schuelerElement, "religion_ethik")), out reliethik))
+                row.ReligionOderEthik = reliethik;
+        }
+        catch
+        {
+            ;
+        }
+        
 
-      string jgEintritt = El(schuelerElement, "eintritt_jahrgangsstufe"); // 121 bedeutet 12. Klasse
-      if (jgEintritt != null)
-      {
-        if (jgEintritt == "996") jgEintritt = "9"; // IV
-        else jgEintritt = jgEintritt.Substring(0, 2);
-        if (jgEintritt == "99") jgEintritt = "10";
-        row.EintrittJahrgangsstufe = jgEintritt;
-      }
+        DateTime? eintritt = ParseAsvDatum(El(schuelerElement, "eintrittsdatum"));
+        if (eintritt == null) row.SetEintrittAmNull();
+        else row.EintrittAm = eintritt.Value;
 
-      DateTime? probezeitBis = ParseAsvDatum(El(schuelerElement, "probezeit_bis"));
-      if (probezeitBis == null || probezeitBis.Value <= DateTime.Today) row.SetProbezeitBisNull();
-      else row.ProbezeitBis = probezeitBis.Value;
+        string jgEintritt = El(schuelerElement, "eintritt_jahrgangsstufe"); // 121 bedeutet 12. Klasse
+        if (jgEintritt != null)
+        {
+            if (jgEintritt == "996") jgEintritt = "9"; // IV
+            else jgEintritt = jgEintritt.Substring(0, 2);
+            if (jgEintritt == "99") jgEintritt = "10";
+            row.EintrittJahrgangsstufe = jgEintritt;
+        }
 
-      row.Status = 0; // aktiv
-      row.LRSStoerung = false; // wird erst nach Ausstellung des Bescheids gesetzt, s. altes WinSVSchuelerReader-Verhalten
-      row.LRSZuschlagMin = 0;
-      row.LRSZuschlagMax = 0;
-      row.Berechungsstatus = (int)Berechnungsstatus.Unberechnet;
-      row.AndereFremdspr2Art = 0;
-      row.asv_id = asvId;
-    }
+        DateTime? probezeitBis = ParseAsvDatum(El(schuelerElement, "probezeit_bis"));
+        if (probezeitBis == null || probezeitBis.Value <= DateTime.Today) row.SetProbezeitBisNull();
+        else row.ProbezeitBis = probezeitBis.Value;
+
+        row.Status = 0; // aktiv
+        row.LRSStoerung = false; // wird erst nach Ausstellung des Bescheids gesetzt, s. altes WinSVSchuelerReader-Verhalten
+        row.LRSZuschlagMin = 0;
+        row.LRSZuschlagMax = 0;
+        row.Berechungsstatus = (int)Berechnungsstatus.Unberechnet;
+        row.AndereFremdspr2Art = 0;
+        row.asv_id = asvId;
+        }
 
     private void ImportiereAnschriften(Schueler schueler, XElement schuelerElement)
     {
@@ -357,6 +370,7 @@ namespace diNo
       Israelitisch = 50,       // IS - israelitisch/jüdisch
       Neuapostolisch = 60,     // NA - neuapostolisch
       ZeugeJehovas = 70,       // ZJ - Zeuge Jehovas
+      Ethik = 80,
       Sonstige = 99            // SR - sonstige Religionszugehörigkeit
     }
 
@@ -375,6 +389,7 @@ namespace diNo
             { 50, "IS" },
             { 60, "NA" },
             { 70, "ZJ" },
+            { 80, "Eth" },
             { 99, "SR" },
         };
 

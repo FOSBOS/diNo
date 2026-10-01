@@ -194,7 +194,7 @@ namespace diNo.ViewModels
     [RelayCommand]
     private void ReadWahlpflichtfaecher()
     {
-      if (!Ask("Die WPF und ggf. auch die Religionskurse müssen als Textdatei (csv mit ; als Trennzeichen) vorliegen:\nSpalte 2 die Unterrichtsnummer des WPF, Spalte 1 enthält die Schüler-ID, weitere Spalten werden ignoriert.\nIst eine Schüler-ID nicht vorhanden, so kann behelfsmäßig über Spalte 1 (eindeutiger Schülername) importiert werden. Dazu muss vorher eine Zuordnungsdatei im selben Verzeichnis mit dem Namen ZuordnungSchueler.txt abgelegt sein.\nDie Zuordnungsdatei enthält im csv-Format in Spalte 1 die Schüler-ID, in Spalte 5 den eindeutigen Namen wie in der Importdatei.", "Import Wahlpflichtfächer")) return;
+      if (!Ask("Die WPF müssen als Textdatei (csv mit ; als Trennzeichen) vorliegen:\nSpalte 1 enthält die ASV-ID, Spalte 2 die Unterrichtsnummer des WPF, weitere Spalten werden ignoriert.", "Import Wahlpflichtfächer")) return;
       var dia = new OpenFileDialog { Title = "Dateiname wählen" };
       if (dia.ShowDialog() != true) return;
       RunBusy(() => WahlpflichtfachReader.Read(dia.FileName));
