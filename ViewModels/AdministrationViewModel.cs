@@ -227,7 +227,11 @@ namespace diNo.ViewModels
     }
 
     [RelayCommand]
-    private void SendExcelFiles() => NichtUnterstuetzt();
+    private void SendExcelFiles()
+    {
+       var mail = new MailTools();
+       mail.SendNotendateien();
+    }
 
     [RelayCommand]
     private void MBStatistik()

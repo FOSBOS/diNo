@@ -1,4 +1,5 @@
-﻿using MailKit.Net.Smtp;
+﻿using diNo.diNoDataSetTableAdapters;
+using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Reporting.WinForms;
 using SevenZip;
@@ -276,6 +277,79 @@ namespace diNo
         }
       }
       log.WriteLine("------------------ " + s.Id);
+    }
+
+    // Sendet ein Mail an einen Lehrer (empfänger) mit allen Dateien, die in directory liegen.
+    public void SendMail(Lehrer lehrer)
+    {            
+        try
+        {
+            var msg = new MimeKit.MimeMessage()
+            {
+                Sender = new MimeKit.MailboxAddress("diNo", mailFrom),
+                Subject = "Notendateien"
+            };
+
+            string directoryName = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + lehrer.Kuerzel;
+            if (!Directory.Exists(directoryName) || Directory.GetFiles(directoryName).Count() == 0)
+            {
+                log.WriteLine("Unterrichtet der Lehrer " + lehrer.Kuerzel + " nix ?");
+                return;
+            }
+
+            string mailTo = lehrer.Data.IsEMailNull() ? "" : lehrer.Data.EMail;
+            if (string.IsNullOrEmpty(mailTo))
+            {
+                log.WriteLine("Lehrer " + lehrer.Kuerzel + " hat keine gültige Mailadresse!");
+                return;
+            }
+
+            msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), mailFrom));
+            msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
+
+            var builder = new MimeKit.BodyBuilder();
+            builder.TextBody = "Hallo " + lehrer.Data.Vorname + ",\n\n" + BodyText;
+                                
+            foreach (string f in Directory.GetFiles(directoryName))
+            {
+                builder.Attachments.Add(f);
+            }
+            msg.Body = builder.ToMessageBody();
+
+            EnsureConnected();
+            mailServer.Send(msg);
+            log.WriteLine("Mail versendet an " + mailTo);
+            log.Flush();
+        }
+        catch (Exception ex)
+        {
+            log.WriteLine("FEHLER bei Lehrer " + lehrer.VornameName + ": " + ex.Message);
+            log.Flush();
+            if (MessageBox.Show(lehrer.VornameName + "\nKlicke auf Wiederholen, dann kommt der nächste Lehrer dran.\n" + ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
+                throw;
+        }
+    }
+
+    public void SendNotendateien()
+    {
+        string infoFile = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + "Mail.txt";
+        if (MessageBox.Show("Mailservereinstellungen müssen unter globale Texte angegeben werden.\nEin in der Mail zu versendender Infotext kann in der Datei " + infoFile + " abgelegt werden.", "Notendateien versenden", MessageBoxButtons.OKCancel) == DialogResult.Cancel) return;
+            
+        if (File.Exists(infoFile))
+        {
+            BodyText = File.ReadAllText(infoFile);
+        }
+        else
+        {
+            MessageBox.Show("Datei " + infoFile + " nicht gefunden! Keine Mails versandt.", "dino", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+
+        foreach (Lehrer lehrer in Zugriff.Instance.LehrerRep.getList())
+        {
+            SendMail(lehrer);
+        }
     }
 
     // erzeugt eine Notenmitteilung in PDF-Form (einzelner Schüler oder eine ganze Klasse)
