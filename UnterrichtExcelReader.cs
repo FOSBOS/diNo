@@ -1,5 +1,4 @@
 ﻿using diNo.diNoDataSetTableAdapters;
-using log4net;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,7 +21,7 @@ namespace diNo
     /// <summary>
     /// log 4 net logger.
     /// </summary>
-    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    private static readonly Logger log = Logger.Instance;
 
     /// <summary>
     /// Die eigentliche Lese-Methode.

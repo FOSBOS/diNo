@@ -1,5 +1,4 @@
-﻿using log4net;
-using Microsoft.Office.Interop.Excel;
+﻿using Microsoft.Office.Interop.Excel;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -69,7 +68,7 @@ namespace diNo
     /// <summary>
     /// Der Logger.
     /// </summary>
-    protected static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    protected static readonly Logger log = Logger.Instance;
 
     /// <summary>
     /// Reflection Missing object. Wird gebraucht, um Daten einzulesen.

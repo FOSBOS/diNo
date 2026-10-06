@@ -1,5 +1,4 @@
 ﻿using diNo.diNoDataSetTableAdapters;
-using log4net;
 using Microsoft.Reporting.Map.WebForms.BingMaps;
 using Microsoft.Reporting.WinForms;
 using Org.BouncyCastle.Utilities.IO;
@@ -17,7 +16,7 @@ namespace diNo
 
   public abstract class ReportController
   {
-    protected static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    protected static readonly Logger log = Logger.Instance;
     protected ReportForm rpt;
     
     public ReportController()

@@ -1,9 +1,7 @@
 using diNo.diNoDataSetTableAdapters;
-using log4net;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -21,7 +19,7 @@ namespace diNo
   public class ASVImporter
   {
     private static readonly XNamespace ns = "http://www.asv.bayern.de/import";
-    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    private static readonly Logger log = Logger.Instance;
 
     private StringBuilder fehlerProtokoll = new StringBuilder();
     private StringBuilder erfolgsProtokoll = new StringBuilder();
@@ -434,38 +432,5 @@ namespace diNo
       return komplett.ToString();
     }
 
-    public string GetFehlerProtokoll()
-    {
-      StringBuilder result = new StringBuilder();
-      result.AppendLine("=== FEHLERPROTOKOLL ===");
-      result.AppendLine();
-      result.Append(fehlerProtokoll.ToString());
-      return result.ToString();
-    }
-
-    public string GetErfolgsProtokoll()
-    {
-      StringBuilder result = new StringBuilder();
-      result.AppendLine("=== ERFOLGSPROTOKOLL ===");
-      result.AppendLine($"Erfolgreich importiert: {anzahlErfolgreich}");
-      result.AppendLine();
-      result.Append(erfolgsProtokoll.ToString());
-      return result.ToString();
-    }
-
-    public void SpeichereKomplettesProtokoll(string dateiPfad)
-    {
-      File.WriteAllText(dateiPfad, GetKompletteProtokoll(), Encoding.UTF8);
-    }
-
-    public void SpeichereFehlerProtokoll(string dateiPfad)
-    {
-      File.WriteAllText(dateiPfad, GetFehlerProtokoll(), Encoding.UTF8);
-    }
-
-    public void SpeichereErfolgsProtokoll(string dateiPfad)
-    {
-      File.WriteAllText(dateiPfad, GetErfolgsProtokoll(), Encoding.UTF8);
-    }
   }
 }

@@ -1,5 +1,4 @@
 using diNo.diNoDataSetTableAdapters;
-using log4net;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,15 +20,14 @@ namespace diNo
   /// </summary>
   public class ErzeugeExcelDateien : IDisposable
   {
-    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    private static readonly Logger log = Logger.Instance;
     private OpenNotendatei xls;
     private string fileName;
 
     /// <summary>
     /// Erzeugt für jeden Kurs mit zugewiesenem Lehrer eine neue Exceldatei.
     /// </summary>
-    /// <param name="statusChangedHandler">Handler für Statusmeldungen. Kann auch null sein.</param>
-    public void ErzeugeAlleExcelDateien(StatusChanged statusChangedHandler)
+    public void ErzeugeAlleExcelDateien()
     {
       KursTableAdapter ta = new KursTableAdapter();
       var kurse = ta.GetData();
@@ -39,7 +37,7 @@ namespace diNo
       {
         if (!kurs.IsLehrerIdNull())
         {
-          statusChangedHandler?.Invoke(this, new StatusChangedEventArgs() { Meldung = "Erzeuge Datei " + count + " von " + kurse.Count });
+          log.Info("Erzeuge " + kurs.Bezeichnung + "(" + count + " von " + kurse.Count +")");
           ErzeugeNeueExcelDatei(kurs);
           count++;
         }
@@ -48,10 +46,13 @@ namespace diNo
       foreach (Klasse k in Zugriff.Instance.KlassenRep.getList())
       {
         if (k.Jahrgangsstufe == Jahrgangsstufe.Elf)
+        {
+          log.Info("Erzeuge FPA-Datei für " + k.Bezeichnung);
           ErzeugeNeueExcelDatei(k);
+        }
       }
 
-      statusChangedHandler?.Invoke(this, new StatusChangedEventArgs() { Meldung = count + " Dateien erfolgreich erzeugt" });
+      log.Info(" Dateien erfolgreich erzeugt.");
     }
 
     /// <summary>

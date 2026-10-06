@@ -1,7 +1,6 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -67,118 +66,103 @@ namespace diNo
     // Logging
     // ---------------------------------------------------------------
 
-    private StreamWriter _log;
-
-    private void Log(string message)
-    {
-      string line = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}";
-      _log.WriteLine(line);
-      _log.Flush();
-    }
+    private static readonly Logger log = Logger.Instance;
 
     // ---------------------------------------------------------------
     // Öffentliche Methode
     // ---------------------------------------------------------------
 
     /// <summary>
-    /// Verarbeitet die XML-Datei, speichert die IDs direkt an den Kursen
-    /// und schreibt alle Meldungen nach C:\tmp\AsvXmlKursMapper_[Datum].log
+    /// Verarbeitet die XML-Datei und speichert die IDs direkt an den Kursen.
     /// </summary>
     public void VerarbeiteXml(string xmlDateiPfad)
     {
-      Directory.CreateDirectory(@"C:\tmp");
-      string logPfad = $@"C:\tmp\AsvXmlKursMapper.log"; //_{DateTime.Now:yyyyMMdd_HHmmss}
+      log.Info($"=== AsvXmlKursMapper gestartet ===");
+      log.Info($"XML-Datei: {xmlDateiPfad}");
 
-      using (_log = new StreamWriter(logPfad, append: false, encoding: System.Text.Encoding.UTF8))
+      XDocument doc;
+      try
       {
-        Log($"=== AsvXmlKursMapper gestartet ===");
-        Log($"XML-Datei: {xmlDateiPfad}");
+        doc = XDocument.Load(xmlDateiPfad);
+      }
+      catch (Exception ex)
+      {
+        log.Error($"FEHLER beim Laden der XML-Datei: {ex.Message}");
+        return;
+      }
 
-        XDocument doc;
-        try
+      // Genau eine Schule
+      var schule = Desc(doc.Root, "schule").FirstOrDefault();
+      if (schule == null)
+      {
+        log.Error("FEHLER: Kein <schule>-Element in der XML-Datei gefunden.");
+        return;
+      }
+
+      log.Info($"Schule gefunden: {(string)El(schule, "schulnummer") ?? "unbekannt"}");
+
+      // Lookup-Tabellen aufbauen
+      var faecher = LeseFaecher(schule);
+      var ues = LeseUnterrichtselemente(schule);
+
+      log.Info($"Fächer:              {faecher.Count}");
+      log.Info($"Unterrichtselemente: {ues.Count}");
+
+      var fachById = faecher.ToDictionary(f => f.XmlId);
+
+      var fachliste = Zugriff.Instance.FachRep.getList();
+      if (fachliste == null || !fachliste.Any())
+      {
+        log.Warn("WARNUNG: Keine Fächer in der Notenverwaltung gefunden.");
+        return;
+      }
+
+      log.Info($"Fächer in Notenverwaltung: {fachliste.Count()}");
+      log.Info(new string('-', 60));
+
+
+      int gefunden = 0, nichtGefunden = 0, geaendert = 0;
+      FachTableAdapter ta = new FachTableAdapter();
+
+      foreach (Fach f in fachliste)
+      {
+        string fachKuerzel = f.Kuerzel;
+
+        var ue = SucheUnterrichtselement(
+            f, ues, fachById,
+            out string hinweis);
+
+        if (ue != null)
         {
-          doc = XDocument.Load(xmlDateiPfad);
-        }
-        catch (Exception ex)
-        {
-          Log($"FEHLER beim Laden der XML-Datei: {ex.Message}");
-          return;
-        }
+          gefunden++;
+          string aktuelleSchuelerfachId = f.Data.Isschuelerfach_idNull() ? "" : f.Data.schuelerfach_id;
+          string aktuelleSchuleFachId = f.Data.Isschule_fach_idNull() ? "" : f.Data.schule_fach_id;
 
-        // Genau eine Schule
-        var schule = Desc(doc.Root, "schule").FirstOrDefault();
-        if (schule == null)
-        {
-          Log("FEHLER: Kein <schule>-Element in der XML-Datei gefunden.");
-          return;
-        }
-
-        Log($"Schule gefunden: {(string)El(schule, "schulnummer") ?? "unbekannt"}");
-
-        // Lookup-Tabellen aufbauen
-        var faecher = LeseFaecher(schule);
-        var ues = LeseUnterrichtselemente(schule);
-
-        Log($"Fächer:              {faecher.Count}");
-        Log($"Unterrichtselemente: {ues.Count}");
-
-        var fachById = faecher.ToDictionary(f => f.XmlId);
-       
-        var fachliste = Zugriff.Instance.FachRep.getList();
-        if (fachliste == null || !fachliste.Any())
-        {
-          Log("WARNUNG: Keine Fächer in der Notenverwaltung gefunden.");
-          return;
-        }
-
-        Log($"Fächer in Notenverwaltung: {fachliste.Count()}");
-        Log(new string('-', 60));
-
-        
-        int gefunden = 0, nichtGefunden = 0, geaendert = 0;
-        FachTableAdapter ta = new FachTableAdapter();
-
-        foreach (Fach f in fachliste)
-        {
-          string fachKuerzel = f.Kuerzel;
-
-          var ue = SucheUnterrichtselement(
-              f, ues, fachById,
-              out string hinweis);
-
-          if (ue != null)
+          if (aktuelleSchuelerfachId == ue.SchuelerfachId && aktuelleSchuleFachId == ue.SchuleFachId)
           {
-            gefunden++;
-            string aktuelleSchuelerfachId = f.Data.Isschuelerfach_idNull() ? "" : f.Data.schuelerfach_id;
-            string aktuelleSchuleFachId = f.Data.Isschule_fach_idNull() ? "" : f.Data.schule_fach_id;
-
-            if (aktuelleSchuelerfachId == ue.SchuelerfachId && aktuelleSchuleFachId == ue.SchuleFachId)
-            {
-              Log($"UNVERÄNDERT {f.Kuerzel} → schuelerfach_id={ue.SchuelerfachId}, " +
-                  $"schule_fach_id={ue.SchuleFachId} | {hinweis}");
-            }
-            else
-            {
-              Log($"GEÄNDERT {f.Kuerzel} → schuelerfach_id: '{aktuelleSchuelerfachId}' -> '{ue.SchuelerfachId}', " +
-                  $"schule_fach_id: '{aktuelleSchuleFachId}' -> '{ue.SchuleFachId}' | {hinweis}");
-              f.Data.schuelerfach_id = ue.SchuelerfachId;
-              f.Data.schule_fach_id = ue.SchuleFachId;
-              ta.Update(f.Data); // Save() - nur bei tatsächlicher Änderung
-              geaendert++;
-            }
+            log.Info($"UNVERÄNDERT {f.Kuerzel} → schuelerfach_id={ue.SchuelerfachId}, " +
+                $"schule_fach_id={ue.SchuleFachId} | {hinweis}");
           }
           else
           {
-            Log($"FEHLER  {f.Kuerzel} → nicht gefunden | {hinweis}");
-            nichtGefunden++;
+            log.Info($"GEÄNDERT {f.Kuerzel} → schuelerfach_id: '{aktuelleSchuelerfachId}' -> '{ue.SchuelerfachId}', " +
+                $"schule_fach_id: '{aktuelleSchuleFachId}' -> '{ue.SchuleFachId}' | {hinweis}");
+            f.Data.schuelerfach_id = ue.SchuelerfachId;
+            f.Data.schule_fach_id = ue.SchuleFachId;
+            ta.Update(f.Data); // Save() - nur bei tatsächlicher Änderung
+            geaendert++;
           }
         }
-
-        Log(new string('-', 60));
-        Log($"Ergebnis: {gefunden} gefunden ({geaendert} geändert), {nichtGefunden} nicht gefunden.");
-        Log($"Log-Datei: {logPfad}");
-        Log("=== AsvXmlKursMapper beendet ===");
+        else
+        {
+          log.Error($"FEHLER  {f.Kuerzel} → nicht gefunden | {hinweis}");
+          nichtGefunden++;
+        }
       }
+
+      log.Info(new string('-', 60));
+      log.Info($"Ergebnis: {gefunden} gefunden ({geaendert} geändert), {nichtGefunden} nicht gefunden.");
+      log.Info("=== AsvXmlKursMapper beendet ===");
     }
 
     // ---------------------------------------------------------------

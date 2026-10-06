@@ -165,8 +165,6 @@
           </StackPanel>
         </GroupBox>
       </Grid>
-
-      <TextBlock Text="{Binding StatusText}" Margin="0,8,0,0" />
     </StackPanel>
   </ScrollViewer>
 </UserControl>

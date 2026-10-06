@@ -1,7 +1,5 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -14,30 +12,16 @@ namespace diNo
   /// </summary>
   public class ASVExport
   {
-    private StreamWriter _log;
+    private static readonly Logger log = Logger.Instance;
     Random random = new Random();
 
     public ASVExport(string exportDateiPfad)
     {
-      Directory.CreateDirectory(@"C:\tmp");
-      string logPfad = $@"C:\tmp\ASVExport.log";
+      log.Info("=== ASVExport gestartet ===");
+      log.Info($"XML-Datei: {exportDateiPfad}");
 
-      using (_log = new StreamWriter(logPfad, append: false, encoding: System.Text.Encoding.UTF8))
-      {
-        Log($"=== ASVExport gestartet ===");
-        Log($"XML-Datei: {exportDateiPfad}");
-
-        ExportiereASVDaten(true, exportDateiPfad + "_Fachabitur.xml");
-        ExportiereASVDaten(false, exportDateiPfad + "_Abitur.xml");
-      }
-    }
-    
-
-    private void Log(string message)
-    {
-      string line = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {message}";
-      _log.WriteLine(line);
-      _log.Flush();
+      ExportiereASVDaten(true, exportDateiPfad + "_Fachabitur.xml");
+      ExportiereASVDaten(false, exportDateiPfad + "_Abitur.xml");
     }
 
     /// <summary>
@@ -100,7 +84,7 @@ namespace diNo
     {
       if (schueler.Data.Isasv_idNull())
       {
-        Log(schueler.NameVorname + " hat keine LDM-ID");
+        log.Warn(schueler.NameVorname + " hat keine LDM-ID");
       }
       return new XElement("Person",
           new XElement("Rufname", schueler.benutzterVorname),
@@ -217,7 +201,7 @@ namespace diNo
       {
         if (fach.getFach.Data.Isschule_fach_idNull())
         {
-          Log(fach.getFach.Bezeichnung + " hat keine schule_fach_id");
+          log.Warn(fach.getFach.Bezeichnung + " hat keine schule_fach_id");
           return;
         }        
         //string asvid = (fach.kurs==null || fach.kurs.Data.Isschule_fach_idNull()) ? $"DUMMY_{fach.getFach.Kuerzel}" : fach.kurs.Data.schule_fach_id;
@@ -244,7 +228,7 @@ namespace diNo
       {
         if (kurs.getFach.Data.Isschuelerfach_idNull())
         {
-          Log(kurs.Kursbezeichnung + " hat keine schuelerfach_id");
+          log.Warn(kurs.Kursbezeichnung + " hat keine schuelerfach_id");
           return;
         }
         //string asvid = kurs.Data.Isschuelerfach_idNull() ? $"DUMMY_{kurs.Id}" : kurs.Data.schuelerfach_id;
@@ -265,7 +249,7 @@ namespace diNo
       {
         if (hj.getFach.Data.Isschuelerfach_idNull())
         {
-          Log(hj.getFach.Kuerzel + " hat keine schuelerfach_id");
+          log.Warn(hj.getFach.Kuerzel + " hat keine schuelerfach_id");
           return;
         }
         einzeldaten.Add(new XElement("Einzeldaten",

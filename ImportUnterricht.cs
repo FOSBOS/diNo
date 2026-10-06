@@ -6,6 +6,8 @@ namespace diNo
 {
   public class ImportUnterricht
   {
+    private static readonly Logger log = Logger.Instance;
+
     string FileName;
     private char SepChar = ';';
 
@@ -23,10 +25,10 @@ namespace diNo
       int vorigeUNr = 0;
       List<Kurs> GleicheKursnr = new List<Kurs>();
       List<string>UnbekanntesFach = new List<string>();
+      log.Info(" ========= Starte Unterrichts-Import =========");
 
       using (FileStream stream = new FileStream(FileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(stream))
-      using (StreamWriter writer = new StreamWriter(new FileStream(FileName + "_err.txt", FileMode.Create, FileAccess.ReadWrite)))
       {
 
         while (!reader.EndOfStream)
@@ -51,7 +53,7 @@ namespace diNo
           }
           if (fach.Typ == FachTyp.OhneNoten) // nur für in der DB bereits registrierte Fächer 
           {
-            writer.WriteLine("Ignoriere Fach ohne Noten " + f);
+            log.Warn("Ignoriere Fach ohne Noten " + f);
             continue;
           }
 
@@ -69,13 +71,13 @@ namespace diNo
           Klasse klasse = Zugriff.Instance.KlassenRep.Find(kl);
           if (klasse==null)
           {
-            writer.WriteLine("Klasse " + kl + " nicht vorhanden.");
+            log.Error("Klasse " + kl + " nicht vorhanden.");
             continue;
           }
           Lehrer lehrer = Zugriff.Instance.LehrerRep.Find(le);
           if (lehrer == null)
           {
-            writer.WriteLine("Lehrer " + le + " nicht vorhanden.");
+            log.Error("Lehrer " + le + " nicht vorhanden.");
             continue;
           }
 
@@ -145,7 +147,7 @@ namespace diNo
           GleicheKursnr.Add(kurs);                            
         }
         if (UnbekanntesFach.Count > 0)
-          writer.WriteLine("Unbekannte Fachkürzel: " + string.Join("; ", UnbekanntesFach));
+          log.Warn("Unbekannte Fachkürzel: " + string.Join("; ", UnbekanntesFach));
       }
 
       SchuelerZuweisen();

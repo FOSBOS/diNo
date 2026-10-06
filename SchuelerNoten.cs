@@ -1,5 +1,4 @@
 ﻿using diNo.diNoDataSetTableAdapters;
-using log4net;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -469,8 +468,6 @@ namespace diNo
     {
       get => kurs == null ? 0 : kurs.Id;      
     }
-    //private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
     // das Array wird über das Halbjahr und den Notentyp indiziert, 
     // jedes Arrayelement enthält eine Liste mit Noten dieses Typs.
     private IList<int>[,] noten = new List<int>[Enum.GetValues(typeof(Halbjahr)).Length, Enum.GetValues(typeof(Notentyp)).Length];
