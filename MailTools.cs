@@ -30,8 +30,7 @@ namespace diNo
   public class MailTools : IDisposable
   {
     private readonly SmtpClient mailServer;
-    private readonly StreamWriter log;
-    private readonly object logLock = new object();
+    private static readonly Logger log = Logger.Instance;
     private readonly object mailLock = new object();
     private bool disposed = false;
     private bool erstesMal = true;
@@ -53,9 +52,9 @@ namespace diNo
     public bool isTest = false;
 
     // Parameterloser Konstruktor: lädt Settings aus Zugriff.Instance
-    public MailTools(string logDirectory = null)
+    public MailTools()
     {
-      // SMTP-Settings aus eurer Konfiguration (konkret aus dem Projekt)    
+      // SMTP-Settings aus eurer Konfiguration (konkret aus dem Projekt)
       smtpHost = Zugriff.Instance.getString(GlobaleStrings.SMTP);
       smtpPort = int.Parse(Zugriff.Instance.getString(GlobaleStrings.Port));
       mailFrom = Zugriff.Instance.getString(GlobaleStrings.SendExcelViaMail);
@@ -65,42 +64,13 @@ namespace diNo
           string.IsNullOrWhiteSpace(mailFrom) || string.IsNullOrWhiteSpace(mailPwd))
         throw new InvalidOperationException("SMTP-Settings unvollständig (SmtpHost/Port, SchulMail, SmtpPwd).");
 
-      // Log-Datei (wie gehabt)
-      try
-      {
-        if (string.IsNullOrEmpty(logDirectory))
-        {
-          string userProfilePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-          logDirectory = Path.Combine(userProfilePath, "Downloads");
-        }
-        Directory.CreateDirectory(logDirectory);
-        string logPath = Path.Combine(logDirectory, "Mail_log.txt");
-        log = new StreamWriter(new FileStream(logPath, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
-        {
-          AutoFlush = true
-        };
-      }
-      catch (Exception ex)
-      {
-        throw new InvalidOperationException("Konnte Log-Datei nicht anlegen: " + ex.Message, ex);
-      }
-
       mailServer = new SmtpClient
       {
         Timeout = 60000 // optionaler Timeout
       };
 
       // Wichtig: Kein Connect/Authenticate hier, um den Konstruktor leicht zu halten.
-      WriteLog("mailTools initialisiert (ohne Verbindung).");
-    }
-
-    private void WriteLog(string text)
-    {
-      lock (logLock)
-      {
-        try { var entry = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss} - {text}"; log.WriteLine(entry); }
-        catch { }
-      }
+      log.Info("mailTools initialisiert (ohne Verbindung).");
     }
 
     private void EnsureConnected()
@@ -116,11 +86,11 @@ namespace diNo
           {
             mailServer.Connect(smtpHost, smtpPort, SecureSocketOptions.StartTls);
             mailServer.Authenticate(mailFrom, mailPwd);
-            WriteLog("SMTP verbunden und authentifiziert.");
+            log.Info("SMTP verbunden und authentifiziert.");
           }
           catch (Exception ex)
           {
-            WriteLog("FEHLER beim Verbinden/Authentifizieren: " + ex.Message);
+            log.Error("FEHLER beim Verbinden/Authentifizieren: " + ex.Message, ex);
             throw;
           }
         }
@@ -145,8 +115,7 @@ namespace diNo
           mailTo = s.GetElternMail();
           if (mailTo == "")
           {
-            log.WriteLine("MAILADRESSE (Eltern) fehlt bei " + s.NameVorname);
-            log.Flush();
+            log.Warn("MAILADRESSE (Eltern) fehlt bei " + s.NameVorname);
             return;
           }
         }
@@ -181,13 +150,11 @@ namespace diNo
         }
         EnsureConnected();
         mailServer.Send(msg);
-        log.WriteLine(s.NameVorname + ", Mail versendet an " + mailTo);
-        log.Flush();
+        log.Info(s.NameVorname + ", Mail versendet an " + mailTo);
       }
       catch (Exception ex)
       {
-        log.WriteLine("FEHLER bei Schüler " + s.NameVorname + ": " + ex.Message);
-        log.Flush();
+        log.Error("FEHLER bei Schüler " + s.NameVorname + ": " + ex.Message, ex);
         if (MessageBox.Show(s.NameVorname + "\nKlicke auf Wiederholen, dann kommt der nächste Schüler dran.\n" + ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
           throw;
       }
@@ -205,17 +172,17 @@ namespace diNo
         mailTo = s.GetElternMail();
         if (mailTo == "")
         {
-          log.WriteLine("MAILADRESSE fehlt bei " + s.VornameName);
+          log.Warn("MAILADRESSE fehlt bei " + s.VornameName);
           return;
         }
       }
 
       if (!MimeKit.MailboxAddress.TryParse(mailTo, out _))
       {
-        WriteLog($"MAILADRESSE ungültig ({mailTo}) bei {s.VornameName}");
+        log.Warn($"MAILADRESSE ungültig ({mailTo}) bei {s.VornameName}");
         return;
       }
-      log.WriteLine("Mail an " + mailTo);
+      log.Info("Mail an " + mailTo);
 
       string body = s.ErzeugeAnrede(!isBOS);
       body += "im Folgenden dürfen wir Sie über die Absenzen ";
@@ -235,7 +202,7 @@ namespace diNo
       body += "\n\nMit freundlichen Grüßen\n" + kl.NameDienstbezeichnung;
       body += "\n" + kl.KLString;
       body = body.Replace("<br>", "\n");
-      log.WriteLine(body);
+      log.Debug(body);
       if (!isTest)
         s.absenzen.Clear(); // dieser Schüler ist erledigt
 
@@ -269,14 +236,14 @@ namespace diNo
 
           EnsureConnected();
           mailServer.Send(msg);
-          log.WriteLine("Mail versendet für Schüler " + s.VornameName);
+          log.Info("Mail versendet für Schüler " + s.VornameName);
         }
         catch (Exception ex)
         {
-          log.WriteLine("FEHLER bei Schüler " + s.VornameName + " mit ID=" + s.Id + "\n" + ex.Message);
+          log.Error("FEHLER bei Schüler " + s.VornameName + " mit ID=" + s.Id, ex);
         }
       }
-      log.WriteLine("------------------ " + s.Id);
+      log.Debug("------------------ " + s.Id);
     }
 
     // Sendet ein Mail an einen Lehrer (empfänger) mit allen Dateien, die in directory liegen.
@@ -293,14 +260,14 @@ namespace diNo
             string directoryName = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + lehrer.Kuerzel;
             if (!Directory.Exists(directoryName) || Directory.GetFiles(directoryName).Count() == 0)
             {
-                log.WriteLine("Unterrichtet der Lehrer " + lehrer.Kuerzel + " nix ?");
+                log.Warn("Unterrichtet der Lehrer " + lehrer.Kuerzel + " nix ?");
                 return;
             }
 
             string mailTo = lehrer.Data.IsEMailNull() ? "" : lehrer.Data.EMail;
             if (string.IsNullOrEmpty(mailTo))
             {
-                log.WriteLine("Lehrer " + lehrer.Kuerzel + " hat keine gültige Mailadresse!");
+                log.Warn("Lehrer " + lehrer.Kuerzel + " hat keine gültige Mailadresse!");
                 return;
             }
 
@@ -318,13 +285,11 @@ namespace diNo
 
             EnsureConnected();
             mailServer.Send(msg);
-            log.WriteLine("Mail versendet an " + mailTo);
-            log.Flush();
+            log.Info("Mail versendet an " + mailTo);
         }
         catch (Exception ex)
         {
-            log.WriteLine("FEHLER bei Lehrer " + lehrer.VornameName + ": " + ex.Message);
-            log.Flush();
+            log.Error("FEHLER bei Lehrer " + lehrer.VornameName + ": " + ex.Message, ex);
             if (MessageBox.Show(lehrer.VornameName + "\nKlicke auf Wiederholen, dann kommt der nächste Lehrer dran.\n" + ex.Message, "diNo", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error) == DialogResult.Cancel)
                 throw;
         }
@@ -443,17 +408,6 @@ namespace diNo
             try { if (mailServer.IsConnected) mailServer.Disconnect(true); } catch { }
             try { mailServer.Dispose(); } catch { }
           }
-        }
-      }
-      catch { }
-
-      try
-      {
-        lock (logLock)
-        {
-          try { log?.Flush(); } catch { }
-          try { log?.Close(); } catch { }
-          try { log?.Dispose(); } catch { }
         }
       }
       catch { }

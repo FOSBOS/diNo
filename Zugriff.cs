@@ -1,5 +1,4 @@
 ﻿using diNo.diNoDataSetTableAdapters;
-using log4net;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,7 +9,7 @@ namespace diNo
   public class Zugriff
   {
     private static Zugriff _Instance = null;
-    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    private static readonly Logger log = Logger.Instance;
 
     public string Username { get; private set; }
     public Lehrer lehrer = null; // angemeldeter Lehrer
@@ -73,7 +72,7 @@ namespace diNo
         int pos = Username.IndexOf("\\"); // Domänennamen abschneiden     
         Username = Username.Remove(0, pos + 1);
 
-        log.Debug("Anmeldeversuch mit Benutzer=" + Username);
+        log.Info("Anmeldung mit Benutzer=" + Username);
         var lehrerResult = new LehrerTableAdapter().GetDataByWindowsname(Username);
         if (lehrerResult.Count > 0) lehrer = new Lehrer(lehrerResult[0]);
         else

@@ -1,9 +1,7 @@
 using diNo.diNoDataSetTableAdapters;
-using log4net;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -13,21 +11,22 @@ namespace diNo
 {
   /// <summary>
   /// Importiert Schülerstammdaten aus einer ASV-Export-XML-Datei (bayerisches Schulverwaltungssystem).
-  /// Ersetzt den früheren WinSVSchuelerReader: die Schülertabelle wird zu Schuljahresbeginn geleert,
-  /// deshalb wird hier jeder Schüler als neuer Datensatz angelegt (keine Suche nach vorhandenen Schülern
-  /// über Name/Geburtsdatum mehr nötig). Als externer Schlüssel dient das lokale Differenzierungsmerkmal (asv_id).
+  /// Ersetzt den früheren WinSVSchuelerReader. Als eindeutiges Merkmal dient das lokale
+  /// Differenzierungsmerkmal (asv_id): Schüler, deren asv_id bereits in diNo vorhanden ist, werden
+  /// aktualisiert; alle anderen werden als neuer Datensatz angelegt.
   /// schullaufbahn und besuchte_faecher werden bewusst nicht importiert.
   /// </summary>
   public class ASVImporter
   {
     private static readonly XNamespace ns = "http://www.asv.bayern.de/import";
-    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    private static readonly Logger log = Logger.Instance;
 
     private StringBuilder fehlerProtokoll = new StringBuilder();
     private StringBuilder erfolgsProtokoll = new StringBuilder();
     private int anzahlGesamt;
     private int anzahlErfolgreich;
     private int nextId; // Schueler.Id ist kein Autoincrement, daher wird die nächste freie Id selbst ermittelt
+    private Dictionary<string, diNoDataSet.SchuelerRow> bestehendeSchuelerNachAsvId;
 
     /// <summary>
     /// Importiert die ASV-Daten aus der angegebenen XML-Datei. Legt für jeden gefundenen Schüler einen neuen
@@ -40,6 +39,7 @@ namespace diNo
       {
         XDocument doc = XDocument.Load(xmlDateiPfad);
         nextId = (new SchuelerTableAdapter().GetMaxId() ?? 0) + 1;
+        bestehendeSchuelerNachAsvId = LadeBestehendeSchuelerNachAsvId();
 
         foreach (var schuleElement in doc.Descendants(ns + "schule"))
         {
@@ -56,7 +56,7 @@ namespace diNo
             foreach (var gruppeElement in klassengruppenElement.Elements(ns + "klassengruppe"))
             {
               string kennung = El(gruppeElement, "kennung");
-              string jahrgangsstufe = El(gruppeElement, "jahrgangsstufe");
+              string jahrgangsstufe = DecodeJahrgangsstufe(El(gruppeElement, "jahrgangsstufe"));
               var schuelerlisteElement = gruppeElement.Element(ns + "schuelerliste");
               if (schuelerlisteElement == null) continue;
 
@@ -83,6 +83,32 @@ namespace diNo
       return parent?.Element(ns + name)?.Value?.Trim();
     }
 
+    /// <summary>
+    /// Dekodiert einen ASV-Jahrgangsstufe-Code (Werteliste 1015), z. B. "121" bedeutet 12. Klasse.
+    /// </summary>
+    private static string DecodeJahrgangsstufe(string code)
+    {
+      if (code == null) return null;
+      if (code == "996") return "9"; // IV
+      string jahrgangsstufe = code.Substring(0, 2);
+      return jahrgangsstufe == "99" ? "10" : jahrgangsstufe;
+    }
+
+    /// <summary>
+    /// Lädt alle bestehenden Schüler und indiziert sie über ihre asv_id, damit ein erneuter Import
+    /// bekannte Schüler aktualisieren statt doppelt anlegen kann.
+    /// </summary>
+    private static Dictionary<string, diNoDataSet.SchuelerRow> LadeBestehendeSchuelerNachAsvId()
+    {
+      var ergebnis = new Dictionary<string, diNoDataSet.SchuelerRow>();
+      foreach (diNoDataSet.SchuelerRow row in new SchuelerTableAdapter().GetData())
+      {
+        if (!row.Isasv_idNull() && !string.IsNullOrEmpty(row.asv_id))
+          ergebnis[row.asv_id] = row;
+      }
+      return ergebnis;
+    }
+
     private void VerarbeiteSchueler(XElement schuelerElement, string klassenname, string kennung, string jahrgangsstufe, string schuljahr)
     {
       string asvId = El(schuelerElement, "lokales_differenzierungsmerkmal");
@@ -104,22 +130,47 @@ namespace diNo
           return;
         }
 
-        var dt = new diNoDataSet.SchuelerDataTable();
-        diNoDataSet.SchuelerRow row = dt.NewSchuelerRow();
-        row.Id = nextId;
-        FuelleRow(row, schuelerElement, klasse, asvId, kennung, klassenname);
-        dt.AddSchuelerRow(row);
-        new SchuelerTableAdapter().Update(row);
-        nextId++;
+        diNoDataSet.SchuelerRow bestehendeRow;
+        bool istUpdate = bestehendeSchuelerNachAsvId.TryGetValue(asvId, out bestehendeRow);
+
+        diNoDataSet.SchuelerRow row;
+        int? bisherigeKlasseId = null;
+        if (istUpdate)
+        {
+          row = bestehendeRow;
+          bisherigeKlasseId = row.KlasseId;
+          FuelleRow(row, schuelerElement, klasse, asvId, kennung, klassenname);
+          new SchuelerTableAdapter().Update(row);
+        }
+        else
+        {
+          var dt = new diNoDataSet.SchuelerDataTable();
+          row = dt.NewSchuelerRow();
+          row.Id = nextId;
+          FuelleRow(row, schuelerElement, klasse, asvId, kennung, klassenname);
+          dt.AddSchuelerRow(row);
+          new SchuelerTableAdapter().Update(row);
+          nextId++;
+        }
 
         var schueler = new Schueler(row);
+
+        if (istUpdate)
+        {
+          ErsetzeAnschriften(schueler);
+          ErsetzeWiederholungen(schueler);
+        }
         ImportiereAnschriften(schueler, schuelerElement);
         ImportiereWiederholung(schueler, schuelerElement, jahrgangsstufe, schuljahr);
 
-        schueler.WechsleKlasse(new Klasse(klasse.Id));
+        // Beim Update nur dann die Klasse wechseln (inkl. Kurs-Neuzuordnung), wenn sie sich tatsächlich
+        // geändert hat - sonst würden bestehende Kurszuordnungen/Noten unnötig zurückgesetzt.
+        if (!istUpdate || bisherigeKlasseId != klasse.Id)
+          schueler.WechsleKlasse(new Klasse(klasse.Id));
 
         anzahlErfolgreich++;
-        erfolgsProtokoll.AppendLine($"ERFOLG: {familienname}, {vornamen} - ID: {row.Id} - ASV-ID: {asvId}");
+        string aktion = istUpdate ? "AKTUALISIERT" : "NEU";
+        erfolgsProtokoll.AppendLine($"{aktion}: {familienname}, {vornamen} - ID: {row.Id} - ASV-ID: {asvId}");
       }
       catch (Exception ex)
       {
@@ -167,14 +218,9 @@ namespace diNo
         if (eintritt == null) row.SetEintrittAmNull();
         else row.EintrittAm = eintritt.Value;
 
-        string jgEintritt = El(schuelerElement, "eintritt_jahrgangsstufe"); // 121 bedeutet 12. Klasse
+        string jgEintritt = DecodeJahrgangsstufe(El(schuelerElement, "eintritt_jahrgangsstufe"));
         if (jgEintritt != null)
-        {
-            if (jgEintritt == "996") jgEintritt = "9"; // IV
-            else jgEintritt = jgEintritt.Substring(0, 2);
-            if (jgEintritt == "99") jgEintritt = "10";
             row.EintrittJahrgangsstufe = jgEintritt;
-        }
 
         DateTime? probezeitBis = ParseAsvDatum(El(schuelerElement, "probezeit_bis"));
         if (probezeitBis == null || probezeitBis.Value <= DateTime.Today) row.SetProbezeitBisNull();
@@ -188,6 +234,27 @@ namespace diNo
         row.AndereFremdspr2Art = 0;
         row.asv_id = asvId;
         }
+
+    /// <summary>
+    /// Löscht beim Update alle bisherigen Anschriften, damit sie anschließend vollständig aus der
+    /// aktuellen ASV-XML neu aufgebaut werden (sonst blieben veraltete/weggefallene Anschriften stehen).
+    /// </summary>
+    private void ErsetzeAnschriften(Schueler schueler)
+    {
+      foreach (var alt in schueler.getAnschriftenRows().ToList())
+        new SchuelerAnschriftTableAdapter().Delete(alt.Id);
+    }
+
+    /// <summary>
+    /// Löscht beim Update alle bisherigen Wiederholungen, damit sie anschließend aus der aktuellen
+    /// ASV-XML neu aufgebaut werden (dadurch kann eine nicht mehr gemeldete Wiederholung auch wieder
+    /// verschwinden, statt als Historie stehen zu bleiben).
+    /// </summary>
+    private void ErsetzeWiederholungen(Schueler schueler)
+    {
+      foreach (var alt in schueler.getWiederholungenRows().ToList())
+        new SchuelerWiederholungTableAdapter().Delete(alt.Id);
+    }
 
     private void ImportiereAnschriften(Schueler schueler, XElement schuelerElement)
     {
@@ -253,11 +320,14 @@ namespace diNo
 
     private void ImportiereWiederholung(Schueler schueler, XElement schuelerElement, string jahrgangsstufe, string schuljahr)
     {
-      // "Grund" wird als ASV-Rohcode übernommen (Werteliste Wiederholungsart_2140 ist schulartabhängig kodiert)
       string wiederholungsart = El(schuelerElement, "wiederholungsart");
       if (string.IsNullOrEmpty(wiederholungsart)) return;
 
-      schueler.AddWiederholung(schuljahr, jahrgangsstufe, wiederholungsart);
+      string grund;
+      if (!WiederholungsartSchluesselZuKurzform.TryGetValue(wiederholungsart, out grund))
+        grund = wiederholungsart;
+
+      schueler.AddWiederholung(schuljahr, jahrgangsstufe, grund);
     }
 
     private diNoDataSet.KlasseRow ErmittleKlasse(string klassenname)
@@ -393,6 +463,15 @@ namespace diNo
             { 99, "SR" },
         };
 
+    // Werteliste Wiederholungsart_2140 (Kurzform statt ASV-Rohcode)
+    private static readonly Dictionary<string, string> WiederholungsartSchluesselZuKurzform = new Dictionary<string, string>
+        {
+            { "01", "P" },
+            { "02", "F" },
+            { "03", "Z" },
+            { "04", "S" },
+        };
+
     private static bool? ParseBool(string s)
     {
       bool b;
@@ -434,38 +513,5 @@ namespace diNo
       return komplett.ToString();
     }
 
-    public string GetFehlerProtokoll()
-    {
-      StringBuilder result = new StringBuilder();
-      result.AppendLine("=== FEHLERPROTOKOLL ===");
-      result.AppendLine();
-      result.Append(fehlerProtokoll.ToString());
-      return result.ToString();
-    }
-
-    public string GetErfolgsProtokoll()
-    {
-      StringBuilder result = new StringBuilder();
-      result.AppendLine("=== ERFOLGSPROTOKOLL ===");
-      result.AppendLine($"Erfolgreich importiert: {anzahlErfolgreich}");
-      result.AppendLine();
-      result.Append(erfolgsProtokoll.ToString());
-      return result.ToString();
-    }
-
-    public void SpeichereKomplettesProtokoll(string dateiPfad)
-    {
-      File.WriteAllText(dateiPfad, GetKompletteProtokoll(), Encoding.UTF8);
-    }
-
-    public void SpeichereFehlerProtokoll(string dateiPfad)
-    {
-      File.WriteAllText(dateiPfad, GetFehlerProtokoll(), Encoding.UTF8);
-    }
-
-    public void SpeichereErfolgsProtokoll(string dateiPfad)
-    {
-      File.WriteAllText(dateiPfad, GetErfolgsProtokoll(), Encoding.UTF8);
-    }
   }
 }

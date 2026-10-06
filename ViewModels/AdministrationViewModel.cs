@@ -21,8 +21,6 @@ namespace diNo.ViewModels
     public bool IsAdmin => Zugriff.Instance.HatRolle(Rolle.Admin);
     public bool ShowTest => Zugriff.Instance.IsTestDB;
 
-    [ObservableProperty] private string statusText = "";
-
     // Globale Einstellungen
     [ObservableProperty] private bool sperreChecked;
     [ObservableProperty] private string schuljahr = "";
@@ -160,14 +158,12 @@ namespace diNo.ViewModels
 
       var importer = new ASVImporter();
       int anzahlErfolgreich = importer.ImportiereASVDaten(dia.FileName);
-      Console.WriteLine(importer.GetKompletteProtokoll());
-      importer.SpeichereFehlerProtokoll(@"C:\tmp\fehlerprotokoll.txt");
-      importer.SpeichereErfolgsProtokoll(@"C:\tmp\erfolgsprotokoll.txt");
+      Logger.Instance.Info(importer.GetKompletteProtokoll());
 
       var asvkurs = new AsvXmlKursMapper();
       asvkurs.VerarbeiteXml(dia.FileName);
 
-      Info($"Import abgeschlossen. {anzahlErfolgreich} Schüler importiert. Protokolle unter C:\\tmp");
+      Info($"ASV-Import abgeschlossen. {anzahlErfolgreich} Schüler importiert. Protokoll unter Downloads.");
     }
 
     [RelayCommand]
@@ -176,16 +172,18 @@ namespace diNo.ViewModels
       var dia = new OpenFileDialog { Title = "Dateiname wählen" };
       if (dia.ShowDialog() != true) return;
       RunBusy(() => ImportExportJahresnoten.ImportiereHJLeistungen(dia.FileName));
+      Info($"Notenimport abgeschlossen. Protokoll unter Downloads.");
     }
 
     [RelayCommand]
     private void ImportUnterricht()
     {
-      if (!Ask("Die Unterrichtdaten müssen als GPU002.txt aus Untis vorliegen.\nDatenbank unbedingt vorher sichern, da der Import ohne Fehler durchlaufen sollte.\n" +
-        "Dazu die Error-Datei im selben Verzeichnis beachten.", "Import Unterrichtsmatrix")) return;
+      if (!Ask("Die Unterrichtdaten müssen als GPU002.txt aus Untis vorliegen.\nDatenbank unbedingt vorher sichern, da der Import ohne Fehler durchlaufen sollte."
+        , "Import Unterrichtsmatrix")) return;
       var dia = new OpenFileDialog { Title = "Dateiname wählen" };
       if (dia.ShowDialog() != true) return;
       RunBusy(() => new ImportUnterricht(dia.FileName).Import());
+      Info($"Unterrichts-Import abgeschlossen. Protokoll unter Downloads.");
     }
 
     [RelayCommand]
@@ -198,6 +196,7 @@ namespace diNo.ViewModels
       var dia = new OpenFileDialog { Title = "Dateiname wählen" };
       if (dia.ShowDialog() != true) return;
       RunBusy(() => WahlpflichtfachReader.Read(dia.FileName));
+      Info($"WPF-Import abgeschlossen.");
     }
 
     [RelayCommand]
@@ -223,7 +222,7 @@ namespace diNo.ViewModels
     private void CreateExcels()
     {
       if (!Ask("Die Dateien werden ins Verzeichnis " + Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + " geschrieben (einstellbar unter globale Texte).\nDort muss auch die Vorlage.xlsx liegen.", "Notendateien erzeugen")) return;
-      RunBusy(() => new ErzeugeAlleExcelDateien(OnStatusChange));
+      RunBusy(() => new ErzeugeExcelDateien().ErzeugeAlleExcelDateien());
     }
 
     [RelayCommand]
@@ -361,8 +360,6 @@ namespace diNo.ViewModels
 
     [RelayCommand]
     private void NotenmailSchueler() => NichtUnterstuetzt();
-
-    private void OnStatusChange(object sender, StatusChangedEventArgs e) => StatusText = e.Meldung;
 
     private static void RunBusy(Action action)
     {

@@ -1,5 +1,4 @@
-﻿using log4net;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -84,7 +83,7 @@ namespace diNo
     /// <summary>
     /// Der Logger.
     /// </summary>
-    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    private static readonly Logger log = Logger.Instance;
 
     /// <summary>
     /// Methode zum Einlesen des Kursplans aus einer Datei.

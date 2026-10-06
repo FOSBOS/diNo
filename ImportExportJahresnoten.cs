@@ -9,6 +9,8 @@ namespace diNo
   /// </summary>
   public class ImportExportJahresnoten
   {
+    private static readonly Logger log = Logger.Instance;
+
     /// <summary>
     /// Trennzeichen für csv-Export als char und string
     /// string benötigt, da sonst glatt Id 55+';'=114 ausgerechnet wird...
@@ -139,7 +141,6 @@ namespace diNo
       HjLeistungTableAdapter ada = new HjLeistungTableAdapter();
       using (FileStream stream = new FileStream(fileName, FileMode.Open, FileAccess.Read))
       using (StreamReader reader = new StreamReader(stream))
-      using (StreamWriter writer = new StreamWriter(new FileStream(fileName + "_err.txt", FileMode.Create, FileAccess.ReadWrite)))
       {
         var schuelerAdapter = new SchuelerTableAdapter();
         while (!reader.EndOfStream)
@@ -179,7 +180,7 @@ namespace diNo
             }
             catch
             {
-              writer.WriteLine("LRS: " + orignal);
+              log.Error("LRS: " + orignal);
             }
             continue; // nächste Zeile
           }
@@ -200,7 +201,7 @@ namespace diNo
             }
             catch
             {
-              writer.WriteLine("Andere Fremdsprache: " + orignal);
+              log.Error("Andere Fremdsprache: " + orignal);
             }
             continue; // nächste Zeile
           }
@@ -214,7 +215,7 @@ namespace diNo
             }
             catch
             {
-              writer.WriteLine("FranzB1: " + orignal);
+              log.Error("FranzB1: " + orignal);
             }
             continue; // nächste Zeile
           }
@@ -228,7 +229,7 @@ namespace diNo
             }
             catch
             {
-              writer.WriteLine("SpanischB1: " + orignal);
+              log.Error("SpanischB1: " + orignal);
             }
             continue; // nächste Zeile
           }
@@ -255,7 +256,7 @@ namespace diNo
           }
           catch
           {
-            writer.WriteLine(orignal);
+            log.Error(orignal);
           }
 
           /*

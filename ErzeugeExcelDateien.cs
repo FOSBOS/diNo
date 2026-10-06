@@ -1,5 +1,4 @@
-﻿using diNo.diNoDataSetTableAdapters;
-using log4net;
+using diNo.diNoDataSetTableAdapters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,15 +16,18 @@ namespace diNo
   public delegate void StatusChanged(object sender, StatusChangedEventArgs eventArgs);
 
   /// <summary>
-  /// Klasse zum Erzeugen der Excel-Dateien.
+  /// Klasse zum Erzeugen der Excel-Dateien (Notenbögen) für Kurse und Klassen.
   /// </summary>
-  public class ErzeugeAlleExcelDateien
+  public class ErzeugeExcelDateien : IDisposable
   {
+    private static readonly Logger log = Logger.Instance;
+    private OpenNotendatei xls;
+    private string fileName;
+
     /// <summary>
-    /// Konstruktor.
+    /// Erzeugt für jeden Kurs mit zugewiesenem Lehrer eine neue Exceldatei.
     /// </summary>
-    /// <param name="statusChangedHandler">Handler für Statusmeldungen. Kann auch null sein.</param>
-    public ErzeugeAlleExcelDateien(StatusChanged statusChangedHandler)
+    public void ErzeugeAlleExcelDateien()
     {
       KursTableAdapter ta = new KursTableAdapter();
       var kurse = ta.GetData();
@@ -33,44 +35,39 @@ namespace diNo
 
       foreach (var kurs in kurse)
       {
-        Kurs derKurs = new Kurs(kurs);
-
         if (!kurs.IsLehrerIdNull())
         {
-          statusChangedHandler?.Invoke(this, new StatusChangedEventArgs() { Meldung = "Erzeuge Datei " + count + " von " + kurse.Count });
-          new ErzeugeNeueExcelDatei(derKurs.Data);
+          log.Info("Erzeuge " + kurs.Bezeichnung + "(" + count + " von " + kurse.Count +")");
+          ErzeugeNeueExcelDatei(kurs);
           count++;
         }
       }
 
-      statusChangedHandler?.Invoke(this, new StatusChangedEventArgs() { Meldung = count + " Dateien erfolgreich erzeugt" });
+      foreach (Klasse k in Zugriff.Instance.KlassenRep.getList())
+      {
+        if (k.Jahrgangsstufe == Jahrgangsstufe.Elf)
+        {
+          log.Info("Erzeuge FPA-Datei für " + k.Bezeichnung);
+          ErzeugeNeueExcelDatei(k);
+        }
+      }
+
+      log.Info(" Dateien erfolgreich erzeugt.");
     }
-  }
-  
-  /// <summary>
-  /// Legt eine neue Exceldatei zum übergebenen Kurs an.
-  /// </summary>
-  public class ErzeugeNeueExcelDatei : IDisposable
-  {
-    private static readonly log4net.ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-    private OpenNotendatei xls;
-    private Kurs kurs;
-    private string fileName;
-    private List<Schueler> alleSchueler;
 
     /// <summary>
-    /// Aus dem übergebenen Kurs wird eine Exceldatei mit allen Schülerdaten generiert
+    /// Legt aus dem übergebenen Kurs eine Exceldatei mit allen Schülerdaten dieses Kurses an.
     /// </summary>
-    public ErzeugeNeueExcelDatei(diNoDataSet.KursRow aKurs)
+    public void ErzeugeNeueExcelDatei(diNoDataSet.KursRow aKurs)
     {
-      kurs = new Kurs(aKurs);
+      Kurs kurs = new Kurs(aKurs);
 
       if (kurs.getLehrer == null)
       {
         return; // es gibt auch Kurse ohne Lehrer, z. B. übernommene Noten aus 11ter Klasse
       }
 
-      alleSchueler = kurs.Schueler;
+      var alleSchueler = kurs.Schueler;
       alleSchueler.Sort((x, y) => (x.Name + x.Vorname).CompareTo(y.Name + y.Vorname));
 
       if (alleSchueler.Count == 0)
@@ -91,17 +88,42 @@ namespace diNo
         return;
       }
 
-      CopyExcelFile();
+      CopyExcelFile(kurs.getLehrer.Kuerzel, kurs.Data.Bezeichnung);
 
       xls = new OpenNotendatei(fileName);
 
-      FillExcelFile();
-      SwitchNotenschluessel();
+      FillKursdaten(kurs);
+      FillSchuelerdaten(alleSchueler);
+      SwitchNotenschluessel(kurs);
 
-      // speichere und schließe Datei
-      xls.workbook.Save();
-      xls.Dispose(); // Destruktor aufrufen
-      xls = null;
+      SpeichernUndSchliessen();
+    }
+
+    /// <summary>
+    /// Legt aus der übergebenen Klasse eine Exceldatei mit allen Schülerdaten dieser Klasse an.
+    /// </summary>
+    public void ErzeugeNeueExcelDatei(Klasse klasse)
+    {
+      var alleSchueler = klasse.Schueler;
+
+      if (alleSchueler == null || alleSchueler.Count == 0)
+      {
+        log.WarnFormat("Die Klasse {0} hat keine Schueler ", klasse.Bezeichnung);
+        return;
+      }
+
+      if (alleSchueler.Count > BasisNotendatei.MaxAnzahlSchueler)
+      {
+        throw new InvalidOperationException("zu viele Schüler " + alleSchueler.Count);
+      }
+
+      CopyExcelFile("FPA", klasse.Bezeichnung);
+
+      xls = new OpenNotendatei(fileName);
+
+      FillSchuelerdaten(alleSchueler);
+
+      SpeichernUndSchliessen();
     }
 
     public void Dispose()
@@ -123,16 +145,16 @@ namespace diNo
     }
 
     /// <summary>
-    /// Legt eine neue Exceldatei für diesen Kurs aus der Vorlage an
+    /// Legt eine neue Exceldatei aus der Vorlage an, im Verzeichnis des übergebenen Lehrerkürzels.
     /// </summary>
-    private void CopyExcelFile()
+    private void CopyExcelFile(string lehrerKuerzel, string bezeichnung)
     {
-      string directoryName = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + kurs.getLehrer.Kuerzel;
+      string directoryName = Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + lehrerKuerzel;
       if (!Directory.Exists(directoryName))
       {
         Directory.CreateDirectory(directoryName);
       }
-      fileName = directoryName + "\\" + kurs.Data.Bezeichnung.Replace("/", "") + ".xlsx";
+      fileName = directoryName + "\\" + bezeichnung.Replace("/", "") + ".xlsx";
       if (File.Exists(fileName))
       {
         File.Delete(fileName); // bisherige Datei löschen
@@ -142,40 +164,15 @@ namespace diNo
     }
 
     /// <summary>
-    /// Füllt die Daten des Kurses (Schülernamen, Klasse,...) in die Exceldatei
+    /// Füllt die kursspezifischen Daten (Fach, Lehrer, Notenschlüssel-Platzhalter,...) in die Exceldatei
     /// </summary>
-    private void FillExcelFile()
+    private void FillKursdaten(Kurs kurs)
     {
-      var klassen = new List<string>(); // sammelt alle Klassennamen dieses Kurses (z.B. für Ethik spannend)
-                                        // Schulart, SA-Wertung wird dem ersten Schüler entnommen
-     
-      // schreibe Notenbogen - Kopf
       xls.WriteValue(xls.notenbogen, "E1", kurs.getFach.Bezeichnung);
-      xls.WriteValueProtectedCell(xls.notenbogen, "I1", GetLehrerOderLehrerin(kurs));
+      xls.WriteValueProtectedCell(xls.notenbogen, "I1", GetLehrerOderLehrerin(kurs.getLehrer));
       xls.WriteValue(xls.notenbogen, "K1", kurs.getLehrer.Name);
       xls.WriteValueProtectedCell(xls.AP, "B1", "Abschlussprüfung " + (Zugriff.Instance.Schuljahr + 1));
       xls.WriteValueProtectedCell(xls.sid, "F2", kurs.Id.ToString());
-
-      int zeile = 4;
-      int zeileFuerSId = CellConstant.zeileSIdErsterSchueler;
-
-      foreach (var schueler in alleSchueler)
-      {        
-        if (!klassen.Contains(schueler.getKlasse.Data.Bezeichnung))
-        {
-          klassen.Add(schueler.getKlasse.Data.Bezeichnung);
-        }
-
-        // Schüler in die Exceldatei schreiben
-        xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name + ", " + schueler.benutzterVorname);
-        xls.WriteValueProtectedCell(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
-
-        zeile++;
-        zeileFuerSId++;
-      }
-
-      // Klassenbezeichnung wird aus allen Schülern gesammelt
-      xls.WriteValue(xls.notenbogen, "B1", klassen.Aggregate((x, y) => x + ", " + y));
 
       if (kurs.getFach.Kuerzel == "E")
       {
@@ -189,15 +186,44 @@ namespace diNo
     }
 
     /// <summary>
+    /// Füllt die Schülerdaten (Namen, SId, Klassenbezeichnung) in die Exceldatei. Wird sowohl für
+    /// die kurs- als auch die klassenbezogene Exceldatei verwendet.
+    /// </summary>
+    private void FillSchuelerdaten(List<Schueler> alleSchueler)
+    {
+      var klassen = new List<string>(); // sammelt alle Klassennamen dieser Schülerliste (z.B. für Ethik spannend)
+
+      int zeile = 4;
+      int zeileFuerSId = CellConstant.zeileSIdErsterSchueler;
+
+      foreach (var schueler in alleSchueler)
+      {
+        if (!klassen.Contains(schueler.getKlasse.Data.Bezeichnung))
+        {
+          klassen.Add(schueler.getKlasse.Data.Bezeichnung);
+        }
+
+        xls.WriteValueProtectedCell(xls.notenbogen, CellConstant.Nachname + zeile, schueler.Data.Name + ", " + schueler.benutzterVorname);
+        xls.WriteValueProtectedCell(xls.sid, CellConstant.SId + zeileFuerSId, schueler.Id.ToString());
+
+        zeile++;
+        zeileFuerSId++;
+      }
+
+      // Klassenbezeichnung wird aus allen Schülern gesammelt
+      xls.WriteValue(xls.notenbogen, "B1", klassen.Aggregate((x, y) => x + ", " + y));
+    }
+
+    /// <summary>
     /// Methode dient zur Zufriedenstellung der Frauenbauftragten :-)
     /// </summary>
-    /// <param name="kurs">Der Kurs.</param>
+    /// <param name="lehrer">Der Lehrer.</param>
     /// <returns>Den Text Lehrer oder Lehrerin.</returns>
-    private string GetLehrerOderLehrerin(Kurs kurs)
+    private string GetLehrerOderLehrerin(Lehrer lehrer)
     {
-      if (kurs.getLehrer != null)
+      if (lehrer != null)
       {
-        if (kurs.getLehrer.Data.Geschlecht == "W")
+        if (lehrer.Data.Geschlecht == "W")
           return "Lehrerin:";
       }
       return "Lehrer:";
@@ -206,7 +232,7 @@ namespace diNo
     /// <summary>
     /// Trägt die korrekten Einstellungen für den Notenschlüssel eines Faches als Vorbelegung ins Excel-Sheet ein.
     /// </summary>
-    private void SwitchNotenschluessel()
+    private void SwitchNotenschluessel(Kurs kurs)
     {
       string schluessel, ug, og, eingabe = "BE";
 
@@ -260,16 +286,25 @@ namespace diNo
         xls.WriteValue(pruefungssheet, CellConstant.EingabeUeber, eingabe);
       }
 
-        try
+      try
+      {
+        if (kurs.Klassen[0].Jahrgangsstufe == Jahrgangsstufe.IntVk)
         {
-            if (kurs.Klassen[0].Jahrgangsstufe == Jahrgangsstufe.IntVk)
-            {
-                xls.WriteValue(xls.notenbogen2, "M39", "2");  // 2. SA im 2. Hj zählt doppelt
-            }
+          xls.WriteValue(xls.notenbogen2, "M39", "2");  // 2. SA im 2. Hj zählt doppelt
         }
-        catch
-        { }
+      }
+      catch
+      { }
+    }
+
+    /// <summary>
+    /// Speichert und schließt die Exceldatei.
+    /// </summary>
+    private void SpeichernUndSchliessen()
+    {
+      xls.workbook.Save();
+      xls.Dispose(); // Destruktor aufrufen
+      xls = null;
     }
   }
 }
-

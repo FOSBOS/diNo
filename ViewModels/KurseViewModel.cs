@@ -173,8 +173,10 @@ namespace diNo.ViewModels
     private void ErzeugeExcel()
     {
       if (SelectedKurs == null) return;
-      var datei = new ErzeugeNeueExcelDatei(SelectedKurs.Data);
-      datei.Dispose();
+      using (var datei = new ErzeugeExcelDateien())
+      {
+        datei.ErzeugeNeueExcelDatei(SelectedKurs.Data);
+      }
     }
 
     [RelayCommand]
