@@ -56,7 +56,7 @@ namespace diNo
             foreach (var gruppeElement in klassengruppenElement.Elements(ns + "klassengruppe"))
             {
               string kennung = El(gruppeElement, "kennung");
-              string jahrgangsstufe = El(gruppeElement, "jahrgangsstufe");
+              string jahrgangsstufe = DecodeJahrgangsstufe(El(gruppeElement, "jahrgangsstufe"));
               var schuelerlisteElement = gruppeElement.Element(ns + "schuelerliste");
               if (schuelerlisteElement == null) continue;
 
@@ -81,6 +81,17 @@ namespace diNo
     private static string El(XElement parent, string name)
     {
       return parent?.Element(ns + name)?.Value?.Trim();
+    }
+
+    /// <summary>
+    /// Dekodiert einen ASV-Jahrgangsstufe-Code (Werteliste 1015), z. B. "121" bedeutet 12. Klasse.
+    /// </summary>
+    private static string DecodeJahrgangsstufe(string code)
+    {
+      if (code == null) return null;
+      if (code == "996") return "9"; // IV
+      string jahrgangsstufe = code.Substring(0, 2);
+      return jahrgangsstufe == "99" ? "10" : jahrgangsstufe;
     }
 
     /// <summary>
@@ -207,14 +218,9 @@ namespace diNo
         if (eintritt == null) row.SetEintrittAmNull();
         else row.EintrittAm = eintritt.Value;
 
-        string jgEintritt = El(schuelerElement, "eintritt_jahrgangsstufe"); // 121 bedeutet 12. Klasse
+        string jgEintritt = DecodeJahrgangsstufe(El(schuelerElement, "eintritt_jahrgangsstufe"));
         if (jgEintritt != null)
-        {
-            if (jgEintritt == "996") jgEintritt = "9"; // IV
-            else jgEintritt = jgEintritt.Substring(0, 2);
-            if (jgEintritt == "99") jgEintritt = "10";
             row.EintrittJahrgangsstufe = jgEintritt;
-        }
 
         DateTime? probezeitBis = ParseAsvDatum(El(schuelerElement, "probezeit_bis"));
         if (probezeitBis == null || probezeitBis.Value <= DateTime.Today) row.SetProbezeitBisNull();
@@ -314,11 +320,14 @@ namespace diNo
 
     private void ImportiereWiederholung(Schueler schueler, XElement schuelerElement, string jahrgangsstufe, string schuljahr)
     {
-      // "Grund" wird als ASV-Rohcode übernommen (Werteliste Wiederholungsart_2140 ist schulartabhängig kodiert)
       string wiederholungsart = El(schuelerElement, "wiederholungsart");
       if (string.IsNullOrEmpty(wiederholungsart)) return;
 
-      schueler.AddWiederholung(schuljahr, jahrgangsstufe, wiederholungsart);
+      string grund;
+      if (!WiederholungsartSchluesselZuKurzform.TryGetValue(wiederholungsart, out grund))
+        grund = wiederholungsart;
+
+      schueler.AddWiederholung(schuljahr, jahrgangsstufe, grund);
     }
 
     private diNoDataSet.KlasseRow ErmittleKlasse(string klassenname)
@@ -452,6 +461,15 @@ namespace diNo
             { 70, "ZJ" },
             { 80, "Eth" },
             { 99, "SR" },
+        };
+
+    // Werteliste Wiederholungsart_2140 (Kurzform statt ASV-Rohcode)
+    private static readonly Dictionary<string, string> WiederholungsartSchluesselZuKurzform = new Dictionary<string, string>
+        {
+            { "01", "P" },
+            { "02", "F" },
+            { "03", "Z" },
+            { "04", "S" },
         };
 
     private static bool? ParseBool(string s)
