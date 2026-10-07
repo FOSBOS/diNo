@@ -84,8 +84,9 @@ namespace diNo
           }
 
           // Legastheniezuschläge
-          if (schueler.Data.LRSZuschlagMax > 0)
-            writer.WriteLine(schueler.AsvId + Sep + "-1" + Sep + "0" + Sep
+          if (schueler.Data.LRSZuschlagMax > 0 || schueler.Data.LRSStoerung)
+            writer.WriteLine(schueler.AsvId + Sep + "-1" + Sep
+              + (schueler.Data.LRSStoerung ? 1:0) + Sep
               + schueler.Data.LRSZuschlagMin + Sep
               + schueler.Data.LRSZuschlagMax + Sep
               + "0");
@@ -171,9 +172,11 @@ namespace diNo
           {
             try
             {
-              byte min, max;
+              byte notenschutz,min, max;
+              notenschutz = byte.Parse(line[2]);
               min = byte.Parse(line[3]);
               max = byte.Parse(line[4]);
+              schueler.Data.LRSStoerung = notenschutz==1;
               schueler.Data.LRSZuschlagMin = min;
               schueler.Data.LRSZuschlagMax = max;
               schueler.Save();
