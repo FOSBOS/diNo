@@ -190,8 +190,14 @@ namespace diNo.ViewModels
           }
           try
           {
-            int schuelerId = int.Parse(line[2]);
-            Schueler s = Zugriff.Instance.SchuelerRep.Find(schuelerId);
+            string asvid = line[2];
+            Schueler s = Zugriff.Instance.SchuelerRep.FindBy(x => x.AsvId == asvid);
+            if (s == null)
+            {
+                err.WriteLine("ASVID unbekannt! " + original);
+                continue;
+            }
+
             if (s.Name != line[0]) // falscher Name?
               err.WriteLine("NAME! " + original);
 
