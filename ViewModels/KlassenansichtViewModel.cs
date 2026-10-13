@@ -207,8 +207,18 @@ namespace diNo.ViewModels
       System.Windows.Input.Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
       try
       {
+        int anzahl = 0;
         foreach (string fileName in fileDialog.FileNames)
+        {
           new LeseNotenAusExcel(fileName, NotenReaderOnStatusChange);
+
+          // Excel baut ueber viele Dateien hinweg intern Ressourcen auf (siehe
+          // ErzeugeExcelDateien.DateienProExcelInstanz), die ab ca. 30 Zyklen in
+          // einer einzigen Excel-Instanz zu einer OutOfMemoryException fuehren.
+          anzahl++;
+          if (anzahl % 20 == 0)
+            OpenExcel.QuitApplication();
+        }
 
         Zugriff.Instance.Refresh();
         if (schueler != null)
