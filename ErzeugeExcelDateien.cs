@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace diNo
@@ -141,6 +142,10 @@ namespace diNo
           xls.Dispose();
           xls = null;
         }
+
+        // beendet die geteilte Excel-Application-Instanz, damit kein EXCEL.EXE-Prozess
+        // als Zombie im Speicher hängen bleibt, wenn dieser Vorgang abgeschlossen ist.
+        OpenNotendatei.QuitApplication();
       }
     }
 
@@ -280,10 +285,17 @@ namespace diNo
       {
         // Trage schon mal den zum Fach passenden Notenschlüssel und die Prozente ein
         var pruefungssheet = xls.getSheet(sheetName);
-        xls.WriteValue(pruefungssheet, CellConstant.SchluesselArt, schluessel);
-        xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfUntergrenze, ug);
-        xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfObergrenze, og);
-        xls.WriteValue(pruefungssheet, CellConstant.EingabeUeber, eingabe);
+        try
+        {
+          xls.WriteValue(pruefungssheet, CellConstant.SchluesselArt, schluessel);
+          xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfUntergrenze, ug);
+          xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfObergrenze, og);
+          xls.WriteValue(pruefungssheet, CellConstant.EingabeUeber, eingabe);
+        }
+        finally
+        {
+          Marshal.ReleaseComObject(pruefungssheet);
+        }
       }
 
       try

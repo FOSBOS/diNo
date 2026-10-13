@@ -221,6 +221,7 @@ namespace diNo.ViewModels
       }
       finally
       {
+        OpenExcel.QuitApplication();
         System.Windows.Input.Mouse.OverrideCursor = null;
       }
     }

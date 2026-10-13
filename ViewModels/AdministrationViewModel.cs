@@ -229,7 +229,13 @@ namespace diNo.ViewModels
     private void CreateExcels()
     {
       if (!Ask("Die Dateien werden ins Verzeichnis " + Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + " geschrieben (einstellbar unter globale Texte).\nDort muss auch die Vorlage.xlsx liegen.", "Notendateien erzeugen")) return;
-      RunBusy(() => new ErzeugeExcelDateien().ErzeugeAlleExcelDateien());
+      RunBusy(() =>
+      {
+        using (var erzeuger = new ErzeugeExcelDateien())
+        {
+          erzeuger.ErzeugeAlleExcelDateien();
+        }
+      });
     }
 
     [RelayCommand]
