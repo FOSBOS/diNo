@@ -15,6 +15,9 @@ namespace diNo
   /// Differenzierungsmerkmal (asv_id): Schüler, deren asv_id bereits in diNo vorhanden ist, werden
   /// aktualisiert; alle anderen werden als neuer Datensatz angelegt.
   /// schullaufbahn und besuchte_faecher werden bewusst nicht importiert.
+  /// Bei einem Update wird die bestehende Row geladen und es werden ausschließlich die Felder
+  /// überschrieben, die tatsächlich aus der ASV-XML importiert werden (s. FuelleASVDaten); rein
+  /// diNo-interne Felder wie LRSZuschlag oder AndereFremdspr2Art bleiben dabei unverändert.
   /// </summary>
   public class ASVImporter
   {
@@ -137,9 +140,13 @@ namespace diNo
         int? bisherigeKlasseId = null;
         if (istUpdate)
         {
+          // Die Row wurde bereits beim Start des Imports geladen (LadeBestehendeSchuelerNachAsvId) und
+          // enthält somit den aktuellen DB-Stand. Es werden ausschließlich die Felder überschrieben, die
+          // tatsächlich aus der ASV-XML stammen - alle übrigen (z. B. LRSZuschlag, AndereFremdspr2Art)
+          // bleiben unangetastet.
           row = bestehendeRow;
           bisherigeKlasseId = row.KlasseId;
-          FuelleRow(row, schuelerElement, klasse, asvId, kennung, klassenname);
+          FuelleASVDaten(row, schuelerElement, klasse, asvId, kennung, klassenname);
           new SchuelerTableAdapter().Update(row);
         }
         else
@@ -147,7 +154,8 @@ namespace diNo
           var dt = new diNoDataSet.SchuelerDataTable();
           row = dt.NewSchuelerRow();
           row.Id = nextId;
-          FuelleRow(row, schuelerElement, klasse, asvId, kennung, klassenname);
+          SetzeStandardwerteFuerNeuenSchueler(row);
+          FuelleASVDaten(row, schuelerElement, klasse, asvId, kennung, klassenname);
           dt.AddSchuelerRow(row);
           new SchuelerTableAdapter().Update(row);
           nextId++;
@@ -179,7 +187,27 @@ namespace diNo
       }
     }
 
-    private void FuelleRow(diNoDataSet.SchuelerRow row, XElement schuelerElement, diNoDataSet.KlasseRow klasse, string asvId, string kennung, string klassenname)
+    /// <summary>
+    /// Setzt Standardwerte, die nicht aus der ASV-XML importiert werden, sondern nur bei der Neuanlage
+    /// eines Schülers initialisiert werden dürfen. Bei einem Update bleiben diese Felder unangetastet,
+    /// damit z. B. ein bereits vergebener LRSZuschlag oder AndereFremdspr2Art nicht zurückgesetzt wird.
+    /// </summary>
+    private void SetzeStandardwerteFuerNeuenSchueler(diNoDataSet.SchuelerRow row)
+    {
+      row.Status = 0; // aktiv
+      row.LRSStoerung = false; // wird erst nach Ausstellung des Bescheids gesetzt, s. altes WinSVSchuelerReader-Verhalten
+      row.LRSZuschlagMin = 0;
+      row.LRSZuschlagMax = 0;
+      row.Berechungsstatus = (int)Berechnungsstatus.Unberechnet;
+      row.AndereFremdspr2Art = 0;
+    }
+
+    /// <summary>
+    /// Schreibt ausschließlich die tatsächlich aus der ASV-XML importierten (bzw. daraus abgeleiteten)
+    /// Felder in die Row. Wird sowohl für Neuanlagen als auch für Updates verwendet, damit ein Update
+    /// keine Felder verändert, die gar nicht Teil des Imports sind.
+    /// </summary>
+    private void FuelleASVDaten(diNoDataSet.SchuelerRow row, XElement schuelerElement, diNoDataSet.KlasseRow klasse, string asvId, string kennung, string klassenname)
     {
       row.Name = El(schuelerElement, "familienname");
       row.Vorname = El(schuelerElement, "vornamen");
@@ -226,12 +254,6 @@ namespace diNo
         if (probezeitBis == null || probezeitBis.Value <= DateTime.Today) row.SetProbezeitBisNull();
         else row.ProbezeitBis = probezeitBis.Value;
 
-        row.Status = 0; // aktiv
-        row.LRSStoerung = false; // wird erst nach Ausstellung des Bescheids gesetzt, s. altes WinSVSchuelerReader-Verhalten
-        row.LRSZuschlagMin = 0;
-        row.LRSZuschlagMax = 0;
-        row.Berechungsstatus = (int)Berechnungsstatus.Unberechnet;
-        row.AndereFremdspr2Art = 0;
         row.asv_id = asvId;
         }
 
