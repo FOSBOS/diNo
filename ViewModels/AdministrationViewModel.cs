@@ -133,7 +133,14 @@ namespace diNo.ViewModels
     [RelayCommand] private void Globales() => new Views.GlobalesWindow().ShowDialog();
     [RelayCommand] private void Klassen() => new Views.KlasseWindow().ShowDialog();
     [RelayCommand] private void Berechtigungen() => new ReportBerechtigungen(LehrerRolleDruck.CreateLehrerRolleDruck()).Show();
-    [RelayCommand] private void Mails() => new Views.MailDialogWindow(GetSelectedObjects()).ShowDialog();
+    private Views.MailDialogWindow frmMail;
+
+    [RelayCommand]
+    private void Mails()
+    {
+      if (frmMail == null) frmMail = new Views.MailDialogWindow();
+      frmMail.Anzeigen(GetSelectedObjects());
+    }
 
     // -------------------- Globale Einstellungen --------------------
 
