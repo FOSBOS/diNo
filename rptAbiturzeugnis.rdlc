@@ -157,7 +157,7 @@
                 <TextRun>
                   <Value>Punkte</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -189,7 +189,7 @@
                 <TextRun>
                   <Value>Notenstufen</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -222,7 +222,7 @@
                 <TextRun>
                   <Value>15</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -258,7 +258,7 @@
                 <TextRun>
                   <Value>1</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -294,7 +294,7 @@
                 <TextRun>
                   <Value>2</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -330,7 +330,7 @@
                 <TextRun>
                   <Value>3</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -366,7 +366,7 @@
                 <TextRun>
                   <Value>4</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -402,7 +402,7 @@
                 <TextRun>
                   <Value>6</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -438,7 +438,7 @@
                 <TextRun>
                   <Value>7</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -474,7 +474,7 @@
                 <TextRun>
                   <Value>5</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -510,7 +510,7 @@
                 <TextRun>
                   <Value>8</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -546,7 +546,7 @@
                 <TextRun>
                   <Value>9</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -582,7 +582,7 @@
                 <TextRun>
                   <Value>10</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -618,7 +618,7 @@
                 <TextRun>
                   <Value>11</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -654,7 +654,7 @@
                 <TextRun>
                   <Value>12</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -690,7 +690,7 @@
                 <TextRun>
                   <Value>13</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -726,7 +726,7 @@
                 <TextRun>
                   <Value>14</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -762,7 +762,7 @@
                 <TextRun>
                   <Value>0</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -798,7 +798,7 @@
                 <TextRun>
                   <Value>sehr gut</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -840,7 +840,7 @@
                 <TextRun>
                   <Value>gut</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -882,7 +882,7 @@
                 <TextRun>
                   <Value>befriedigend</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -924,7 +924,7 @@
                 <TextRun>
                   <Value>ausreichend</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -966,7 +966,7 @@
                 <TextRun>
                   <Value>mangelhaft</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -1008,7 +1008,7 @@
                 <TextRun>
                   <Value>ungenügend</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -1050,7 +1050,7 @@
                 <TextRun>
                   <Value>Zuordnung von Punkten zu Notenstufen:</Value>
                   <Style>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                   </Style>
                 </TextRun>
@@ -1084,7 +1084,7 @@
                   <Value>Diesem Zeugnis liegt die Schulordnung für die Berufliche Oberschule - Fachoberschulen und Berufsoberschulen - in der jeweils geltenden Fassung zugrunde.</Value>
                   <Style>
                     <FontStyle>Normal</FontStyle>
-                    <FontFamily>Gadugi</FontFamily>
+                    <FontFamily>Segoe UI</FontFamily>
                     <FontSize>9pt</FontSize>
                     <FontWeight>Normal</FontWeight>
                     <Color>#000000</Color>

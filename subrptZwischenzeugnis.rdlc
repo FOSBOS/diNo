@@ -81,7 +81,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -114,7 +114,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -147,7 +147,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -185,7 +185,7 @@
                                 <TextRun>
                                   <Value>Halbjahresergebnisse</Value>
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -199,7 +199,7 @@
                                 <TextRun>
                                   <Value>Punkte</Value>
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -213,14 +213,14 @@
                                 <TextRun>
                                   <Value>=Parameters!JgKurz.Value</Value>
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
                                 <TextRun>
                                   <Value>/1</Value>
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                     <FontSize>9pt</FontSize>
                                   </Style>
                                 </TextRun>
@@ -266,7 +266,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -304,7 +304,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -339,7 +339,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -383,7 +383,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -420,7 +420,7 @@
                                 <TextRun>
                                   <Value>=Fields!Hj1.Value</Value>
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -460,7 +460,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                     <FontWeight>Normal</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -791,7 +791,7 @@
                                   <TextRun>
                                     <Value>Erzielte Leistungen:</Value>
                                     <Style>
-                                      <FontFamily>Gadugi</FontFamily>
+                                      <FontFamily>Segoe UI</FontFamily>
                                       <FontWeight>Bold</FontWeight>
                                     </Style>
                                   </TextRun>
@@ -863,7 +863,7 @@
                                   <TextRun>
                                     <Value>Fach</Value>
                                     <Style>
-                                      <FontFamily>Gadugi</FontFamily>
+                                      <FontFamily>Segoe UI</FontFamily>
                                     </Style>
                                   </TextRun>
                                 </TextRuns>
@@ -954,7 +954,7 @@
                                       <TextRun>
                                         <Value>=Fields!fachGruppe.Value</Value>
                                         <Style>
-                                          <FontFamily>Gadugi</FontFamily>
+                                          <FontFamily>Segoe UI</FontFamily>
                                           <FontWeight>Bold</FontWeight>
                                         </Style>
                                       </TextRun>
@@ -1038,7 +1038,7 @@
                                         <Value>=Fields!fachBez.Value</Value>
                                         <MarkupType>HTML</MarkupType>
                                         <Style>
-                                          <FontFamily>Gadugi</FontFamily>
+                                          <FontFamily>Segoe UI</FontFamily>
                                         </Style>
                                       </TextRun>
                                     </TextRuns>
