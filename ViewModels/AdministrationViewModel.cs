@@ -259,19 +259,6 @@ namespace diNo.ViewModels
     }
 
     [RelayCommand]
-    private void SeStatistik()
-    {
-      var dia = new SaveFileDialog
-      {
-        Title = "Dateiname wählen",
-        FileName = "S" + Zugriff.Instance.getString(GlobaleStrings.SchulnummerFOS) + "_Erfolg" + (Zugriff.Instance.Schuljahr - 2000 + 1) + ".xml"
-      };
-      if (dia.ShowDialog() != true) return;
-      RunBusy(() => Xml.SEStatistik.Serialize(dia.FileName));
-      Info("Fertig. Bitte in Zeile 3 der Datei die Attribute löschen, so dass dort nur noch <schulerfolg> steht.\nAnschließend das Prüfprogramm verwenden.");
-    }
-
-    [RelayCommand]
     private void ExportKurswahl()
     {
       var ek = new ExportKurswahl(GetSelectedObjects());
@@ -282,9 +269,6 @@ namespace diNo.ViewModels
       dia.FileName = "AlteKurse.txt";
       if (dia.ShowDialog() == true) ek.ExportAlteWPF(dia.FileName);
     }
-
-    [RelayCommand]
-    private void Absenzen() { /* new AbsenzenMail(); - im Original bereits auskommentiert */ }
 
     // -------------------- Reparaturen --------------------
 

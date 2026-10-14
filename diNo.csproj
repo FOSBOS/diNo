@@ -198,8 +198,6 @@
     <Compile Include="Repository.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UserImpersonation.cs" />
-    <Compile Include="Xml\schulerfolg_1_1.cs" />
-    <Compile Include="Xml\Schulerfolgsstatistik.cs" />
     <Compile Include="Testdaten.cs" />
     <Compile Include="Lehrer.cs" />
     <Compile Include="Berechnungen.cs" />
@@ -350,10 +348,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Xml\schulerfolg_1.1.dtd" />
-    <None Include="Xml\schulerfolg_1.1.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

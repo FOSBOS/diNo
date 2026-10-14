@@ -142,8 +142,6 @@
             <Button Content="Excel-Dateien versenden" Command="{Binding SendExcelFilesCommand}" />
             <Button Content="Datei für Kurswahl" Command="{Binding ExportKurswahlCommand}" />
             <Button Content="AP-Statistik erstellen" Command="{Binding MBStatistikCommand}" />
-            <Button Content="Schulerfolgsstatistik erstellen" Command="{Binding SeStatistikCommand}" />
-            <Button Content="Absenzenübersicht versenden" Command="{Binding AbsenzenCommand}" />
           </StackPanel>
         </GroupBox>
 
