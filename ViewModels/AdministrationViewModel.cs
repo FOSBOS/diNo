@@ -133,7 +133,14 @@ namespace diNo.ViewModels
     [RelayCommand] private void Globales() => new Views.GlobalesWindow().ShowDialog();
     [RelayCommand] private void Klassen() => new Views.KlasseWindow().ShowDialog();
     [RelayCommand] private void Berechtigungen() => new ReportBerechtigungen(LehrerRolleDruck.CreateLehrerRolleDruck()).Show();
-    [RelayCommand] private void Mails() => new Views.MailDialogWindow(GetSelectedObjects()).ShowDialog();
+    private Views.MailDialogWindow frmMail;
+
+    [RelayCommand]
+    private void Mails()
+    {
+      if (frmMail == null) frmMail = new Views.MailDialogWindow();
+      frmMail.Anzeigen(GetSelectedObjects());
+    }
 
     // -------------------- Globale Einstellungen --------------------
 
@@ -222,7 +229,13 @@ namespace diNo.ViewModels
     private void CreateExcels()
     {
       if (!Ask("Die Dateien werden ins Verzeichnis " + Zugriff.Instance.getString(GlobaleStrings.VerzeichnisExceldateien) + " geschrieben (einstellbar unter globale Texte).\nDort muss auch die Vorlage.xlsx liegen.", "Notendateien erzeugen")) return;
-      RunBusy(() => new ErzeugeExcelDateien().ErzeugeAlleExcelDateien());
+      RunBusy(() =>
+      {
+        using (var erzeuger = new ErzeugeExcelDateien())
+        {
+          erzeuger.ErzeugeAlleExcelDateien();
+        }
+      });
     }
 
     [RelayCommand]

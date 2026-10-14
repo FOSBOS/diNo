@@ -73,6 +73,26 @@ namespace diNo
       log.Info("mailTools initialisiert (ohne Verbindung).");
     }
 
+    // Liest EMail/MailSchule ohne Risiko einer StrongTypingException bei DB-NULL.
+    private static string SafeMail(Lehrer l) => l == null || l.Data.IsEMailNull() ? null : l.Data.EMail;
+    private static string SafeMail(Schueler s) => s == null || s.Data.IsMailSchuleNull() ? null : s.Data.MailSchule;
+
+    // Prüft eine Mailadresse auf NULL/leer und gültiges Format; loggt bei Problemen, wirft nie.
+    private bool IstMailGueltig(string mailAdresse, string kontext)
+    {
+      if (string.IsNullOrWhiteSpace(mailAdresse))
+      {
+        log.Warn("MAILADRESSE fehlt bei " + kontext);
+        return false;
+      }
+      if (!MimeKit.MailboxAddress.TryParse(mailAdresse, out _))
+      {
+        log.Warn($"MAILADRESSE ungültig ({mailAdresse}) bei {kontext}");
+        return false;
+      }
+      return true;
+    }
+
     private void EnsureConnected()
     {
       lock (mailLock)
@@ -109,18 +129,14 @@ namespace diNo
         };
 
         if (isTest)
-          mailTo = Zugriff.Instance.lehrer.Data.EMail;
+          mailTo = SafeMail(Zugriff.Instance.lehrer);
         else if (anEltern)
-        {
           mailTo = s.GetElternMail();
-          if (mailTo == "")
-          {
-            log.Warn("MAILADRESSE (Eltern) fehlt bei " + s.NameVorname);
-            return;
-          }
-        }
         else
-          mailTo = s.Data.MailSchule;
+          mailTo = SafeMail(s);
+
+        if (!IstMailGueltig(mailTo, s.NameVorname))
+          return;
 
         msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), mailFrom));
 
@@ -142,11 +158,15 @@ namespace diNo
         if (replyTyp == ReplyTyp.Klassenleiter)
         {
           Lehrer kl = s.getKlasse.Klassenleiter;
-          msg.ReplyTo.Add(new MimeKit.MailboxAddress(kl.VornameName, kl.Data.EMail));
+          string klMail = SafeMail(kl);
+          if (IstMailGueltig(klMail, "Klassenleiter " + kl.VornameName))
+            msg.ReplyTo.Add(new MimeKit.MailboxAddress(kl.VornameName, klMail));
         }
         else if (replyTyp  == ReplyTyp.Sekretariat)
         {
-          msg.ReplyTo.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), Zugriff.Instance.getString(GlobaleStrings.SchulMail)));
+          string sekrMail = Zugriff.Instance.getString(GlobaleStrings.SchulMail);
+          if (IstMailGueltig(sekrMail, "Sekretariat (globale Einstellung SchulMail)"))
+            msg.ReplyTo.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), sekrMail));
         }
         EnsureConnected();
         mailServer.Send(msg);
@@ -165,23 +185,10 @@ namespace diNo
       string mailTo;
 
       bool isBOS = s.Data.Schulart == "B";
-      if (isBOS)
-        mailTo = s.Data.MailSchule;
-      else
-      {
-        mailTo = s.GetElternMail();
-        if (mailTo == "")
-        {
-          log.Warn("MAILADRESSE fehlt bei " + s.VornameName);
-          return;
-        }
-      }
+      mailTo = isBOS ? SafeMail(s) : s.GetElternMail();
 
-      if (!MimeKit.MailboxAddress.TryParse(mailTo, out _))
-      {
-        log.Warn($"MAILADRESSE ungültig ({mailTo}) bei {s.VornameName}");
+      if (!IstMailGueltig(mailTo, s.VornameName))
         return;
-      }
       log.Info("Mail an " + mailTo);
 
       string body = s.ErzeugeAnrede(!isBOS);
@@ -196,8 +203,12 @@ namespace diNo
       }
 
       Lehrer kl = s.getKlasse.Klassenleiter;
+      string klMail = SafeMail(kl);
+      bool klMailOk = IstMailGueltig(klMail, "Klassenleiter " + kl.VornameName);
+      if (!klMailOk) klMail = "";
+
       body += "\nBei Unstimmigkeiten wenden Sie sich bitte per Mail an mich:"
-        + "\n" + kl.Data.EMail;
+        + "\n" + klMail;
 
       body += "\n\nMit freundlichen Grüßen\n" + kl.NameDienstbezeichnung;
       body += "\n" + kl.KLString;
@@ -225,10 +236,13 @@ namespace diNo
             msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
           if (!isBOS && !isTest)
           {
-            msg.Cc.Add(new MimeKit.MailboxAddress(s.Data.MailSchule, s.Data.MailSchule));
+            string schuleMail = SafeMail(s);
+            if (IstMailGueltig(schuleMail, "Schulmail von " + s.VornameName))
+              msg.Cc.Add(new MimeKit.MailboxAddress(schuleMail, schuleMail));
           }
 
-          msg.ReplyTo.Add(new MimeKit.MailboxAddress(kl.VornameName, kl.Data.EMail));
+          if (klMailOk)
+            msg.ReplyTo.Add(new MimeKit.MailboxAddress(kl.VornameName, klMail));
 
           var builder = new MimeKit.BodyBuilder();
           builder.TextBody = body;
@@ -264,12 +278,9 @@ namespace diNo
                 return;
             }
 
-            string mailTo = lehrer.Data.IsEMailNull() ? "" : lehrer.Data.EMail;
-            if (string.IsNullOrEmpty(mailTo))
-            {
-                log.Warn("Lehrer " + lehrer.Kuerzel + " hat keine gültige Mailadresse!");
+            string mailTo = SafeMail(lehrer);
+            if (!IstMailGueltig(mailTo, "Lehrer " + lehrer.Kuerzel))
                 return;
-            }
 
             msg.From.Add(new MimeKit.MailboxAddress(Zugriff.Instance.getString(GlobaleStrings.SchulName), mailFrom));
             msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace diNo
@@ -20,9 +21,20 @@ namespace diNo
   /// </summary>
   public class ErzeugeExcelDateien : IDisposable
   {
+    /// <summary>
+    /// Nach so vielen erzeugten Dateien wird die Excel-Application-Instanz neu gestartet.
+    /// Excel baut über viele Öffnen/Speichern/Schließen-Zyklen hinweg intern Ressourcen
+    /// (u. a. den sog. Desktop-Heap für seine - auch unsichtbaren - Fenster) auf, die sich
+    /// durch korrektes Freigeben der .NET-COM-Objekte allein nicht vermeiden lassen. Ab ca.
+    /// 30 Dateien in einer einzigen Excel-Instanz führt das reproduzierbar zu einer
+    /// OutOfMemoryException. Ein periodischer Neustart der Instanz behebt das.
+    /// </summary>
+    private const int DateienProExcelInstanz = 20;
+
     private static readonly Logger log = Logger.Instance;
     private OpenNotendatei xls;
     private string fileName;
+    private int erzeugteDateien;
 
     /// <summary>
     /// Erzeugt für jeden Kurs mit zugewiesenem Lehrer eine neue Exceldatei.
@@ -40,6 +52,7 @@ namespace diNo
           log.Info("Erzeuge " + kurs.Bezeichnung + "(" + count + " von " + kurse.Count +")");
           ErzeugeNeueExcelDatei(kurs);
           count++;
+          RecycleExcelApplicationFallsNoetig();
         }
       }
 
@@ -49,10 +62,26 @@ namespace diNo
         {
           log.Info("Erzeuge FPA-Datei für " + k.Bezeichnung);
           ErzeugeNeueExcelDatei(k);
+          RecycleExcelApplicationFallsNoetig();
         }
       }
 
       log.Info(" Dateien erfolgreich erzeugt.");
+    }
+
+    /// <summary>
+    /// Startet die geteilte Excel-Application-Instanz alle <see cref="DateienProExcelInstanz"/>
+    /// Dateien neu, um die in Excel selbst über die Zeit anwachsenden, nicht über
+    /// Marshal.ReleaseComObject adressierbaren Ressourcen wieder freizugeben.
+    /// </summary>
+    private void RecycleExcelApplicationFallsNoetig()
+    {
+      erzeugteDateien++;
+      if (erzeugteDateien % DateienProExcelInstanz == 0)
+      {
+        log.Debug("Starte Excel-Application nach " + erzeugteDateien + " Dateien neu.");
+        OpenNotendatei.QuitApplication();
+      }
     }
 
     /// <summary>
@@ -141,6 +170,10 @@ namespace diNo
           xls.Dispose();
           xls = null;
         }
+
+        // beendet die geteilte Excel-Application-Instanz, damit kein EXCEL.EXE-Prozess
+        // als Zombie im Speicher hängen bleibt, wenn dieser Vorgang abgeschlossen ist.
+        OpenNotendatei.QuitApplication();
       }
     }
 
@@ -280,10 +313,17 @@ namespace diNo
       {
         // Trage schon mal den zum Fach passenden Notenschlüssel und die Prozente ein
         var pruefungssheet = xls.getSheet(sheetName);
-        xls.WriteValue(pruefungssheet, CellConstant.SchluesselArt, schluessel);
-        xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfUntergrenze, ug);
-        xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfObergrenze, og);
-        xls.WriteValue(pruefungssheet, CellConstant.EingabeUeber, eingabe);
+        try
+        {
+          xls.WriteValue(pruefungssheet, CellConstant.SchluesselArt, schluessel);
+          xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfUntergrenze, ug);
+          xls.WriteValue(pruefungssheet, CellConstant.ProzentFuenfObergrenze, og);
+          xls.WriteValue(pruefungssheet, CellConstant.EingabeUeber, eingabe);
+        }
+        finally
+        {
+          Marshal.ReleaseComObject(pruefungssheet);
+        }
       }
 
       try

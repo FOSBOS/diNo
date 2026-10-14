@@ -1,7 +1,6 @@
 ﻿using Microsoft.Office.Interop.Excel;
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -26,7 +25,15 @@ namespace diNo
           OpenExcel.excelApp = new Excel.Application();
         this.FileName = fileName;
 
-        this.workbook = excelApp.Workbooks.Open(this.FileName, Type.Missing, false, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+        Excel.Workbooks workbooks = excelApp.Workbooks;
+        try
+        {
+          this.workbook = workbooks.Open(this.FileName, Type.Missing, false, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+        }
+        finally
+        {
+          Marshal.ReleaseComObject(workbooks);
+        }
         excelApp.Visible = false;
       }
       catch (Exception exp)
@@ -57,12 +64,41 @@ namespace diNo
 
     public Worksheet getSheet(string sheetName)
     {
-      var sheet = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals(sheetName) select sh).FirstOrDefault();
+      Worksheet sheet = FindWorksheet(sheetName);
       if (sheet == null)
       {
         throw new InvalidOperationException("Kein Sheet mit dem Namen " + sheetName + " gefunden");
       }
       return sheet;
+    }
+
+    /// <summary>
+    /// Sucht das Worksheet mit dem angegebenen Namen und gibt dabei die durchlaufene
+    /// Worksheets-Collection sowie alle nicht passenden Worksheet-COM-Objekte wieder frei.
+    /// </summary>
+    /// <param name="sheetName">Der Name des gesuchten Sheets.</param>
+    /// <returns>Das gefundene Worksheet, oder null, falls keines gefunden wurde.</returns>
+    protected Worksheet FindWorksheet(string sheetName)
+    {
+      Excel.Sheets worksheets = workbook.Worksheets;
+      try
+      {
+        foreach (Excel.Worksheet sh in worksheets)
+        {
+          if (sh.Name.Equals(sheetName))
+          {
+            return sh;
+          }
+
+          Marshal.ReleaseComObject(sh);
+        }
+
+        return null;
+      }
+      finally
+      {
+        Marshal.ReleaseComObject(worksheets);
+      }
     }
 
     /// <summary>
@@ -118,13 +154,26 @@ namespace diNo
           Marshal.ReleaseComObject(this.workbook);
           this.workbook = null;
         }
-
-        excelApp.Quit();
       }
 
       GC.SuppressFinalize(this);
     }
     #endregion
+
+    /// <summary>
+    /// Beendet die geteilte Excel-Application-Instanz endgültig. Muss genau einmal aufgerufen
+    /// werden, wenn keine weiteren Exceldateien mehr geöffnet werden sollen (z. B. am Ende eines
+    /// Batchlaufs), damit der EXCEL.EXE-Prozess nicht als Zombie im Speicher hängen bleibt.
+    /// </summary>
+    public static void QuitApplication()
+    {
+      if (excelApp != null)
+      {
+        excelApp.Quit();
+        Marshal.ReleaseComObject(excelApp);
+        excelApp = null;
+      }
+    }
   }
 
   public abstract class BasisNotendatei : OpenExcel
@@ -156,29 +205,51 @@ namespace diNo
 
     public BasisNotendatei(string filename) : base(filename)
     {
-      notenbogen = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("1. Halbjahr") select sh).FirstOrDefault();
+      notenbogen = FindWorksheet("1. Halbjahr") ?? FindWorksheet("Notenbogen"); // für Dateien nach alter SchO
       if (notenbogen == null)
       {
-        notenbogen = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("Notenbogen") select sh).FirstOrDefault(); // für Dateien nach alter SchO
-        if (notenbogen == null)
-        {
-          throw new InvalidOperationException("kein Sheet mit dem Namen \"Notenbogen\" oder \"1. Halbjahr\" gefunden");
-        }
+        throw new InvalidOperationException("kein Sheet mit dem Namen \"Notenbogen\" oder \"1. Halbjahr\" gefunden");
       }
 
-      notenbogen2 = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("2. Halbjahr") select sh).FirstOrDefault();
+      notenbogen2 = FindWorksheet("2. Halbjahr");
       // hier dieses Jahr noch keine Exception werfen, denn nach der alten SchO gibt es dieses Sheet wirklich nicht
 
-      AP = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("AP") select sh).FirstOrDefault();
+      AP = FindWorksheet("AP");
       if (AP == null)
       {
         throw new InvalidOperationException("kein Sheet mit dem Namen \"AP\" gefunden");
       }
 
-      sid = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals("diNo") select sh).FirstOrDefault();
+      sid = FindWorksheet("diNo");
       if (sid == null)
       {
         throw new InvalidOperationException("kein Sheet mit dem Namen \"diNo\" gefunden");
+      }
+    }
+
+    /// <summary>
+    /// Gibt die bei der Konstruktion gehaltenen Worksheet-COM-Objekte frei, bevor das
+    /// Workbook (in der Basisklasse) geschlossen und freigegeben wird.
+    /// </summary>
+    protected override void Dispose(bool disposing)
+    {
+      if (disposing)
+      {
+        ReleaseWorksheet(ref notenbogen);
+        ReleaseWorksheet(ref notenbogen2);
+        ReleaseWorksheet(ref AP);
+        ReleaseWorksheet(ref sid);
+      }
+
+      base.Dispose(disposing);
+    }
+
+    private static void ReleaseWorksheet(ref Worksheet sheet)
+    {
+      if (sheet != null)
+      {
+        Marshal.ReleaseComObject(sheet);
+        sheet = null;
       }
     }
 
@@ -191,7 +262,14 @@ namespace diNo
     public void WriteValue(Excel.Worksheet sheet, string zelle, string value)
     {
       Excel.Range r = sheet.get_Range(zelle, missing);
-      r.Value2 = value;
+      try
+      {
+        r.Value2 = value;
+      }
+      finally
+      {
+        Marshal.ReleaseComObject(r);
+      }
     }
 
     /// <summary>
@@ -205,7 +283,14 @@ namespace diNo
     {
       sheet.Unprotect("1111");
       Excel.Range r = sheet.get_Range(zelle, missing);
-      r.Value2 = value;
+      try
+      {
+        r.Value2 = value;
+      }
+      finally
+      {
+        Marshal.ReleaseComObject(r);
+      }
       sheet.Protect("1111", false, true);
     }
 
@@ -218,7 +303,14 @@ namespace diNo
     public string ReadValue(Excel.Worksheet sheet, string zelle)
     {
       Excel.Range r = sheet.get_Range(zelle, missing);
-      return r.Value2 == null ? null : Convert.ToString(r.Value2).Trim();
+      try
+      {
+        return r.Value2 == null ? null : Convert.ToString(r.Value2).Trim();
+      }
+      finally
+      {
+        Marshal.ReleaseComObject(r);
+      }
     }
 
     /// <summary>
@@ -294,10 +386,11 @@ namespace diNo
     /// <param name="name">Name des Tabellenblattes.</param>
     public void HideWorksheet(string name)
     {
-      Worksheet sheet = (from Excel.Worksheet sh in workbook.Worksheets where sh.Name.Equals(name) select sh).FirstOrDefault();
+      Worksheet sheet = FindWorksheet(name);
       if (sheet != null)
       {
         sheet.Visible = XlSheetVisibility.xlSheetHidden;
+        Marshal.ReleaseComObject(sheet);
       }
     }
   }

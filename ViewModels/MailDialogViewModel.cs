@@ -17,10 +17,10 @@ namespace diNo.ViewModels
   // die Button-Optik.
   public partial class MailDialogViewModel : ObservableObject
   {
-    private readonly List<Schueler> sList;
+    private List<Schueler> sList;
     private StreamWriter err;
 
-    public string AnzahlText { get; }
+    [ObservableProperty] private string anzahlText = "";
 
     [ObservableProperty] private bool isToSchueler = true;
     [ObservableProperty] private bool isToEltern;
@@ -43,7 +43,7 @@ namespace diNo.ViewModels
 
     [ObservableProperty] private bool canSend = true;
 
-    public MailDialogViewModel(List<Schueler> selectedObjects)
+    public void Anzeigen(List<Schueler> selectedObjects)
     {
       sList = selectedObjects;
       AnzahlText = sList.Count + " Schüler ausgewählt.";
@@ -190,8 +190,14 @@ namespace diNo.ViewModels
           }
           try
           {
-            int schuelerId = int.Parse(line[2]);
-            Schueler s = Zugriff.Instance.SchuelerRep.Find(schuelerId);
+            string asvid = line[2];
+            Schueler s = Zugriff.Instance.SchuelerRep.FindBy(x => x.AsvId == asvid);
+            if (s == null)
+            {
+                err.WriteLine("ASVID unbekannt! " + original);
+                continue;
+            }
+
             if (s.Name != line[0]) // falscher Name?
               err.WriteLine("NAME! " + original);
 
