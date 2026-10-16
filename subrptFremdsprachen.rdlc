@@ -59,7 +59,7 @@
                                 <TextRun>
                                   <Value>Niveaustufe*</Value>
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -105,7 +105,7 @@
                                 <TextRun>
                                   <Value>=Fields!Stufe.Value</Value>
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -161,7 +161,7 @@
                               <TextRun>
                                 <Value>Fremdsprachen</Value>
                                 <Style>
-                                  <FontFamily>Gadugi</FontFamily>
+                                  <FontFamily>Segoe UI</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -216,7 +216,7 @@
                               <TextRun>
                                 <Value>=Fields!fachBez.Value</Value>
                                 <Style>
-                                  <FontFamily>Gadugi</FontFamily>
+                                  <FontFamily>Segoe UI</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -268,7 +268,7 @@
                   <TextRun>
                     <Value>* Nach dem Gemeinsamen Europäischen Referenzrahmen für Sprachen (GER)</Value>
                     <Style>
-                      <FontFamily>gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>

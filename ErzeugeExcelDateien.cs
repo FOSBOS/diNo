@@ -49,9 +49,9 @@ namespace diNo
       {
         if (!kurs.IsLehrerIdNull())
         {
-          log.Info("Erzeuge " + kurs.Bezeichnung + "(" + count + " von " + kurse.Count +")");
-          ErzeugeNeueExcelDatei(kurs);
           count++;
+          log.Info("Erzeuge " + kurs.Bezeichnung + "(" + count + " von " + kurse.Count +")");
+          ErzeugeNeueExcelDatei(kurs);          
           RecycleExcelApplicationFallsNoetig();
         }
       }

@@ -154,7 +154,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
@@ -166,7 +166,7 @@
                   <TextRun>
                     <Value>IV. Bemerkungen</Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -179,7 +179,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontWeight>Normal</FontWeight>
                     </Style>
                   </TextRun>
@@ -192,7 +192,7 @@
                     <Value>=Fields!Bemerkung.Value</Value>
                     <MarkupType>HTML</MarkupType>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontWeight>Normal</FontWeight>
                     </Style>
                   </TextRun>
@@ -204,7 +204,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -215,7 +215,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
@@ -227,7 +227,7 @@
                   <TextRun>
                     <Value>V. </Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -235,7 +235,7 @@
                   <TextRun>
                     <Value>=Fields!Anrede.Value</Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -249,7 +249,7 @@
                     <Value>=Fields!BestandenText.Value</Value>
                     <MarkupType>HTML</MarkupType>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Normal</FontWeight>
                     </Style>
@@ -263,7 +263,7 @@
                     <Value />
                     <MarkupType>HTML</MarkupType>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>12pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -277,7 +277,7 @@
                     <Value>=Fields!ZeugnisArt.Value</Value>
                     <MarkupType>HTML</MarkupType>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -293,7 +293,7 @@
                     <Value />
                     <MarkupType>HTML</MarkupType>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Normal</FontWeight>
                     </Style>
@@ -309,7 +309,7 @@
                     <Value>verliehen.</Value>
                     <MarkupType>HTML</MarkupType>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Normal</FontWeight>
                     </Style>
@@ -324,7 +324,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -339,7 +339,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -354,7 +354,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontWeight>Bold</FontWeight>
                     </Style>
                   </TextRun>
@@ -368,7 +368,7 @@
                   <TextRun>
                     <Value>=Fields!DatumZeugnis.Value</Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -379,7 +379,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -390,13 +390,13 @@
                   <TextRun>
                     <Value>=Fields!SchulleiterText.Value</Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                     </Style>
                   </TextRun>
                   <TextRun>
                     <Value>:</Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -407,7 +407,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
@@ -419,7 +419,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
@@ -431,7 +431,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
@@ -443,14 +443,14 @@
                   <TextRun>
                     <Value>.....................................................................               </Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
                   <TextRun>
                     <Value> (Siegel)</Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -461,7 +461,7 @@
                   <TextRun>
                     <Value>=Fields!Schulleiter.Value</Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>9pt</FontSize>
                     </Style>
                   </TextRun>
@@ -473,7 +473,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
@@ -485,7 +485,7 @@
                   <TextRun>
                     <Value />
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                     </Style>
                   </TextRun>
@@ -498,7 +498,7 @@
                     <Value />
                     <Style>
                       <FontStyle>Normal</FontStyle>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>9pt</FontSize>
                       <FontWeight>Normal</FontWeight>
                       <Color>#000000</Color>
@@ -549,7 +549,7 @@
                   <TextRun>
                     <Value>III. Fremdsprachen</Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -600,7 +600,7 @@
                   <TextRun>
                     <Value>---</Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -635,7 +635,7 @@
                   <TextRun>
                     <Value>=Fields!AlternatZweiteFS.Value</Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                     </Style>
                   </TextRun>
                 </TextRuns>

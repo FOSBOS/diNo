@@ -69,7 +69,7 @@
                                 <TextRun>
                                   <Value>=Fields!Punkte.Value</Value>
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -111,7 +111,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -148,7 +148,7 @@
                                 <TextRun>
                                   <Value>=Fields!InWorten.Value</Value>
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -195,7 +195,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -232,7 +232,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -269,7 +269,7 @@
                                 <TextRun>
                                   <Value />
                                   <Style>
-                                    <FontFamily>Gadugi</FontFamily>
+                                    <FontFamily>Segoe UI</FontFamily>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -322,7 +322,7 @@
                               <TextRun>
                                 <Value>=Fields!Text.Value</Value>
                                 <Style>
-                                  <FontFamily>Gadugi</FontFamily>
+                                  <FontFamily>Segoe UI</FontFamily>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -372,7 +372,7 @@
                   <TextRun>
                     <Value>II. Abschlussergebnis und Ermittlung der Durchschnittsnote</Value>
                     <Style>
-                      <FontFamily>Gadugi</FontFamily>
+                      <FontFamily>Segoe UI</FontFamily>
                       <FontSize>11pt</FontSize>
                       <FontWeight>Bold</FontWeight>
                     </Style>

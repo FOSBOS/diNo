@@ -1,6 +1,5 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using diNo.Properties;
-using diNo.Xml.Schulerfolgsstatistik;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
