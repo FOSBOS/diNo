@@ -1198,7 +1198,7 @@
   <Width>14.6cm</Width>
   <Page>
     <PageFooter>
-      <Height>3.16999cm</Height>
+      <Height>3.46999cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1291,9 +1291,22 @@
           <Width>0.7cm</Width>
           <ZIndex>2</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1327,9 +1340,22 @@
           <Width>0.7cm</Width>
           <ZIndex>3</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1363,9 +1389,22 @@
           <Width>0.7cm</Width>
           <ZIndex>4</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1399,9 +1438,22 @@
           <Width>0.7cm</Width>
           <ZIndex>5</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1435,9 +1487,22 @@
           <Width>0.7cm</Width>
           <ZIndex>6</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1471,9 +1536,22 @@
           <Width>0.7cm</Width>
           <ZIndex>7</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1507,9 +1585,22 @@
           <Width>0.7cm</Width>
           <ZIndex>8</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1543,9 +1634,22 @@
           <Width>0.7cm</Width>
           <ZIndex>9</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1579,9 +1683,22 @@
           <Width>0.7cm</Width>
           <ZIndex>10</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1615,9 +1732,22 @@
           <Width>0.7cm</Width>
           <ZIndex>11</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1651,9 +1781,22 @@
           <Width>0.7cm</Width>
           <ZIndex>12</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1687,9 +1830,22 @@
           <Width>0.7cm</Width>
           <ZIndex>13</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1723,9 +1879,22 @@
           <Width>0.7cm</Width>
           <ZIndex>14</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1759,9 +1928,22 @@
           <Width>0.7cm</Width>
           <ZIndex>15</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1795,9 +1977,22 @@
           <Width>0.7cm</Width>
           <ZIndex>16</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1831,9 +2026,22 @@
           <Width>2.1cm</Width>
           <ZIndex>17</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1867,15 +2075,22 @@
           <Width>2.1cm</Width>
           <ZIndex>18</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1909,15 +2124,22 @@
           <Width>2.1cm</Width>
           <ZIndex>19</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1951,15 +2173,22 @@
           <Width>2.1cm</Width>
           <ZIndex>20</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1993,15 +2222,22 @@
           <Width>2.1cm</Width>
           <ZIndex>21</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -2035,15 +2271,22 @@
           <Width>2.1cm</Width>
           <ZIndex>22</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -2077,15 +2320,22 @@
           <Width>2.1cm</Width>
           <ZIndex>23</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>

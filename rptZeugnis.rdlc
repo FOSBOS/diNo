@@ -1056,7 +1056,7 @@
                   <Value>Punkte</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1064,8 +1064,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Height>0.6cm</Height>
+          <Top>0.6cm</Top>
+          <Height>0.5cm</Height>
           <Width>1.9091cm</Width>
           <Style>
             <Border>
@@ -1087,7 +1087,7 @@
                   <Value>Notenstufen</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1095,8 +1095,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.3cm</Top>
-          <Height>0.6cm</Height>
+          <Top>1.1cm</Top>
+          <Height>0.5cm</Height>
           <Width>1.97965cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
@@ -1119,7 +1119,7 @@
                   <Value>15</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1129,15 +1129,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
+          <Top>0.6cm</Top>
           <Left>2cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>2</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1155,7 +1168,7 @@
                   <Value>1</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1165,15 +1178,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>11.8cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>10.4cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>3</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1191,7 +1217,7 @@
                   <Value>2</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1201,15 +1227,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>11.1cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>9.8cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>4</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1227,7 +1266,7 @@
                   <Value>3</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1237,15 +1276,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>10.4cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>9.2cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>5</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1263,7 +1315,7 @@
                   <Value>4</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1273,15 +1325,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>9.7cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>8.6cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>6</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1299,7 +1364,7 @@
                   <Value>6</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1309,15 +1374,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>8.3cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>7.4cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>7</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1335,7 +1413,7 @@
                   <Value>7</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1345,15 +1423,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>7.6cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>6.8cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>8</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1371,7 +1462,7 @@
                   <Value>5</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1381,15 +1472,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>9cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>8cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>9</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1407,7 +1511,7 @@
                   <Value>8</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1417,15 +1521,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>6.9cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>6.2cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>10</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1443,7 +1560,7 @@
                   <Value>9</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1453,15 +1570,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>6.2cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>5.6cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>11</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1479,7 +1609,7 @@
                   <Value>10</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1489,15 +1619,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>5.5cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>5cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>12</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1515,7 +1658,7 @@
                   <Value>11</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1525,15 +1668,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>4.8cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>4.4cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>13</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1551,7 +1707,7 @@
                   <Value>12</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1561,15 +1717,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>4.1cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>3.8cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>14</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1587,7 +1756,7 @@
                   <Value>13</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1597,15 +1766,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>3.4cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>3.2cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>15</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1623,7 +1805,7 @@
                   <Value>14</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1633,15 +1815,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>2.7cm</Left>
-          <Height>0.6cm</Height>
-          <Width>0.7cm</Width>
+          <Top>0.6cm</Top>
+          <Left>2.6cm</Left>
+          <Height>0.5cm</Height>
+          <Width>0.6cm</Width>
           <ZIndex>16</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1659,7 +1854,7 @@
                   <Value>0</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1669,15 +1864,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>0.7cm</Top>
-          <Left>12.5cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.1cm</Width>
+          <Top>0.6cm</Top>
+          <Left>11cm</Left>
+          <Height>0.5cm</Height>
+          <Width>1.8cm</Width>
           <ZIndex>17</ZIndex>
           <Style>
-            <Border>
+            <TopBorder>
               <Style>Solid</Style>
-            </Border>
+              <Width>0.5pt</Width>
+            </TopBorder>
+            <BottomBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1695,7 +1903,7 @@
                   <Value>sehr gut</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1705,21 +1913,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.3cm</Top>
+          <Top>1.1cm</Top>
           <Left>2cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.1cm</Width>
+          <Height>0.5cm</Height>
+          <Width>1.8cm</Width>
           <ZIndex>18</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1737,7 +1952,7 @@
                   <Value>gut</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1747,21 +1962,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.3cm</Top>
-          <Left>4.1cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.1cm</Width>
+          <Top>1.1cm</Top>
+          <Left>3.8cm</Left>
+          <Height>0.5cm</Height>
+          <Width>1.8cm</Width>
           <ZIndex>19</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1779,7 +2001,7 @@
                   <Value>befriedigend</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1789,21 +2011,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.3cm</Top>
-          <Left>6.2cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.1cm</Width>
+          <Top>1.1cm</Top>
+          <Left>5.6cm</Left>
+          <Height>0.5cm</Height>
+          <Width>1.8cm</Width>
           <ZIndex>20</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1821,7 +2050,7 @@
                   <Value>ausreichend</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1831,21 +2060,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.3cm</Top>
-          <Left>8.3cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.1cm</Width>
+          <Top>1.1cm</Top>
+          <Left>7.4cm</Left>
+          <Height>0.5cm</Height>
+          <Width>1.8cm</Width>
           <ZIndex>21</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1863,7 +2099,7 @@
                   <Value>mangelhaft</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1873,21 +2109,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.3cm</Top>
-          <Left>10.4cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.1cm</Width>
+          <Top>1.1cm</Top>
+          <Left>9.2cm</Left>
+          <Height>0.5cm</Height>
+          <Width>1.8cm</Width>
           <ZIndex>22</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1905,7 +2148,7 @@
                   <Value>ungenügend</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1915,21 +2158,28 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
-          <Top>1.3cm</Top>
-          <Left>12.5cm</Left>
-          <Height>0.6cm</Height>
-          <Width>2.1cm</Width>
+          <Top>1.1cm</Top>
+          <Left>11cm</Left>
+          <Height>0.5cm</Height>
+          <Width>1.8cm</Width>
           <ZIndex>23</ZIndex>
           <Style>
-            <Border>
-              <Style>Solid</Style>
-            </Border>
             <TopBorder>
-              <Style>None</Style>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
             </TopBorder>
             <BottomBorder>
-              <Width>1.05pt</Width>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
             </BottomBorder>
+            <LeftBorder>
+              <Style>Solid</Style>
+              <Width>0.35pt</Width>
+            </LeftBorder>
+            <RightBorder>
+              <Style>Solid</Style>
+              <Width>0.5pt</Width>
+            </RightBorder>
             <VerticalAlign>Middle</VerticalAlign>
             <PaddingLeft>2pt</PaddingLeft>
             <PaddingRight>2pt</PaddingRight>
@@ -1947,7 +2197,7 @@
                   <Value>Zuordnung von Punkten zu Notenstufen:</Value>
                   <Style>
                     <FontFamily>Segoe UI</FontFamily>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                   </Style>
                 </TextRun>
               </TextRuns>
@@ -1956,7 +2206,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox4</rd:DefaultName>
           <Top>0.03528cm</Top>
-          <Height>0.6cm</Height>
+          <Height>0.5cm</Height>
           <Width>9cm</Width>
           <ZIndex>24</ZIndex>
           <Style>
@@ -1981,7 +2231,7 @@
     <LeftMargin>2.2cm</LeftMargin>
     <RightMargin>2.2cm</RightMargin>
     <TopMargin>1.5cm</TopMargin>
-    <BottomMargin>1.5cm</BottomMargin>
+    <BottomMargin>0.8cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>
