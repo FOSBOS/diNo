@@ -54,6 +54,8 @@
         <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
           <TextBlock Text="{Binding NameText}" FontSize="27" FontWeight="Bold" Foreground="#0000C0" />
           <TextBlock Text="{Binding KlasseText}" FontSize="16" />
+          <TextBlock Text="{Binding HinweiseText}" Foreground="Red" Width="260"
+                     TextWrapping="Wrap" Margin="0,4,0,0" />
         </StackPanel>
       </StackPanel>
 
@@ -88,8 +90,6 @@
                 ToolTip="Notenbogen auf Vollständigkeit, Gefährdungen und Vorrücken prüfen">
           <Image Source="{StaticResource IconOk}" Width="36" Height="36" />
         </Button>
-        <TextBlock Text="{Binding HinweiseText}" Foreground="Red" Margin="16,0,0,0" Width="260"
-                   TextWrapping="Wrap" VerticalAlignment="Center" />
         <TextBlock Text="Testdatenbank" FontSize="24" Foreground="#C04000" Margin="16,0,0,0"
                    VerticalAlignment="Center" Visibility="{Binding IsTestDB, Converter={StaticResource BoolToVis}}" />
       </StackPanel>
