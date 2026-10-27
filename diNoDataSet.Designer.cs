@@ -6205,7 +6205,9 @@ namespace diNo {
             private global::System.Data.DataColumn columnZeugnisdatum;
             
             private global::System.Data.DataColumn columnLeseModusExcel;
-            
+
+            private global::System.Data.DataColumn columnBibliothekAnzeigen;
+
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public GlobaleKonstantenDataTable() {
@@ -6286,7 +6288,15 @@ namespace diNo {
                     return this.columnLeseModusExcel;
                 }
             }
-            
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn BibliothekAnzeigenColumn {
+                get {
+                    return this.columnBibliothekAnzeigen;
+                }
+            }
+
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
@@ -6324,7 +6334,7 @@ namespace diNo {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public GlobaleKonstantenRow AddGlobaleKonstantenRow(int Schuljahr, int aktZeitpunkt, int Id, int Sperre, System.DateTime Zeugnisdatum, int LeseModusExcel) {
+            public GlobaleKonstantenRow AddGlobaleKonstantenRow(int Schuljahr, int aktZeitpunkt, int Id, int Sperre, System.DateTime Zeugnisdatum, int LeseModusExcel, int BibliothekAnzeigen) {
                 GlobaleKonstantenRow rowGlobaleKonstantenRow = ((GlobaleKonstantenRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Schuljahr,
@@ -6332,7 +6342,8 @@ namespace diNo {
                         Id,
                         Sperre,
                         Zeugnisdatum,
-                        LeseModusExcel};
+                        LeseModusExcel,
+                        BibliothekAnzeigen};
                 rowGlobaleKonstantenRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowGlobaleKonstantenRow);
                 return rowGlobaleKonstantenRow;
@@ -6368,6 +6379,7 @@ namespace diNo {
                 this.columnSperre = base.Columns["Sperre"];
                 this.columnZeugnisdatum = base.Columns["Zeugnisdatum"];
                 this.columnLeseModusExcel = base.Columns["LeseModusExcel"];
+                this.columnBibliothekAnzeigen = base.Columns["BibliothekAnzeigen"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6385,6 +6397,8 @@ namespace diNo {
                 base.Columns.Add(this.columnZeugnisdatum);
                 this.columnLeseModusExcel = new global::System.Data.DataColumn("LeseModusExcel", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnLeseModusExcel);
+                this.columnBibliothekAnzeigen = new global::System.Data.DataColumn("BibliothekAnzeigen", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBibliothekAnzeigen);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnSchuljahr.AllowDBNull = false;
@@ -6393,6 +6407,7 @@ namespace diNo {
                 this.columnId.Unique = true;
                 this.columnSperre.AllowDBNull = false;
                 this.columnLeseModusExcel.AllowDBNull = false;
+                this.columnBibliothekAnzeigen.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13561,7 +13576,18 @@ namespace diNo {
                     this[this.tableGlobaleKonstanten.LeseModusExcelColumn] = value;
                 }
             }
-            
+
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public int BibliothekAnzeigen {
+                get {
+                    return ((int)(this[this.tableGlobaleKonstanten.BibliothekAnzeigenColumn]));
+                }
+                set {
+                    this[this.tableGlobaleKonstanten.BibliothekAnzeigenColumn] = value;
+                }
+            }
+
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public bool IsZeugnisdatumNull() {
@@ -23088,10 +23114,11 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             tableMapping.ColumnMappings.Add("Sperre", "Sperre");
             tableMapping.ColumnMappings.Add("Zeugnisdatum", "Zeugnisdatum");
             tableMapping.ColumnMappings.Add("LeseModusExcel", "LeseModusExcel");
+            tableMapping.ColumnMappings.Add("BibliothekAnzeigen", "BibliothekAnzeigen");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [GlobaleKonstanten] WHERE (([Id] = @Original_Id) AND ([Schuljahr] = @Original_Schuljahr) AND ([aktZeitpunkt] = @Original_aktZeitpunkt) AND ([Sperre] = @Original_Sperre) AND ((@IsNull_Zeugnisdatum = 1 AND [Zeugnisdatum] IS NULL) OR ([Zeugnisdatum] = @Original_Zeugnisdatum)) AND ([LeseModusExcel] = @Original_LeseModusExcel))";
+            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [GlobaleKonstanten] WHERE (([Id] = @Original_Id) AND ([Schuljahr] = @Original_Schuljahr) AND ([aktZeitpunkt] = @Original_aktZeitpunkt) AND ([Sperre] = @Original_Sperre) AND ((@IsNull_Zeugnisdatum = 1 AND [Zeugnisdatum] IS NULL) OR ([Zeugnisdatum] = @Original_Zeugnisdatum)) AND ([LeseModusExcel] = @Original_LeseModusExcel) AND ([BibliothekAnzeigen] = @Original_BibliothekAnzeigen))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Schuljahr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Schuljahr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -23100,11 +23127,12 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Zeugnisdatum", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Zeugnisdatum", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Zeugnisdatum", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Zeugnisdatum", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LeseModusExcel", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LeseModusExcel", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_BibliothekAnzeigen", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BibliothekAnzeigen", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [GlobaleKonstanten] ([Id], [Schuljahr], [aktZeitpunkt], [Sperre], [Ze" +
-                "ugnisdatum], [LeseModusExcel]) VALUES (@Id, @Schuljahr, @aktZeitpunkt, @Sperre, " +
-                "@Zeugnisdatum, @LeseModusExcel)";
+                "ugnisdatum], [LeseModusExcel], [BibliothekAnzeigen]) VALUES (@Id, @Schuljahr, @aktZeitpunkt, @Sperre, " +
+                "@Zeugnisdatum, @LeseModusExcel, @BibliothekAnzeigen)";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Schuljahr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Schuljahr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -23112,9 +23140,10 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Sperre", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sperre", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Zeugnisdatum", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Zeugnisdatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LeseModusExcel", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LeseModusExcel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BibliothekAnzeigen", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BibliothekAnzeigen", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [GlobaleKonstanten] SET [Id] = @Id, [Schuljahr] = @Schuljahr, [aktZeitpunkt] = @aktZeitpunkt, [Sperre] = @Sperre, [Zeugnisdatum] = @Zeugnisdatum, [LeseModusExcel] = @LeseModusExcel WHERE (([Id] = @Original_Id) AND ([Schuljahr] = @Original_Schuljahr) AND ([aktZeitpunkt] = @Original_aktZeitpunkt) AND ([Sperre] = @Original_Sperre) AND ((@IsNull_Zeugnisdatum = 1 AND [Zeugnisdatum] IS NULL) OR ([Zeugnisdatum] = @Original_Zeugnisdatum)) AND ([LeseModusExcel] = @Original_LeseModusExcel))";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [GlobaleKonstanten] SET [Id] = @Id, [Schuljahr] = @Schuljahr, [aktZeitpunkt] = @aktZeitpunkt, [Sperre] = @Sperre, [Zeugnisdatum] = @Zeugnisdatum, [LeseModusExcel] = @LeseModusExcel, [BibliothekAnzeigen] = @BibliothekAnzeigen WHERE (([Id] = @Original_Id) AND ([Schuljahr] = @Original_Schuljahr) AND ([aktZeitpunkt] = @Original_aktZeitpunkt) AND ([Sperre] = @Original_Sperre) AND ((@IsNull_Zeugnisdatum = 1 AND [Zeugnisdatum] IS NULL) OR ([Zeugnisdatum] = @Original_Zeugnisdatum)) AND ([LeseModusExcel] = @Original_LeseModusExcel) AND ([BibliothekAnzeigen] = @Original_BibliothekAnzeigen))";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Schuljahr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Schuljahr", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -23122,6 +23151,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Sperre", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Sperre", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Zeugnisdatum", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Zeugnisdatum", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LeseModusExcel", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LeseModusExcel", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BibliothekAnzeigen", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BibliothekAnzeigen", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Schuljahr", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Schuljahr", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_aktZeitpunkt", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "aktZeitpunkt", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -23129,6 +23159,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Zeugnisdatum", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Zeugnisdatum", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Zeugnisdatum", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Zeugnisdatum", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_LeseModusExcel", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LeseModusExcel", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_BibliothekAnzeigen", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "BibliothekAnzeigen", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -23144,8 +23175,8 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT Id, Schuljahr, aktZeitpunkt, Sperre, Zeugnisdatum, LeseModusExcel FROM Glo" +
-                "baleKonstanten";
+            this._commandCollection[0].CommandText = "SELECT Id, Schuljahr, aktZeitpunkt, Sperre, Zeugnisdatum, LeseModusExcel, Biblio" +
+                "thekAnzeigen FROM GlobaleKonstanten";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -23193,7 +23224,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, int Original_Schuljahr, int Original_aktZeitpunkt, int Original_Sperre, global::System.Nullable<global::System.DateTime> Original_Zeugnisdatum, int Original_LeseModusExcel) {
+        public virtual int Delete(int Original_Id, int Original_Schuljahr, int Original_aktZeitpunkt, int Original_Sperre, global::System.Nullable<global::System.DateTime> Original_Zeugnisdatum, int Original_LeseModusExcel, int Original_BibliothekAnzeigen) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((int)(Original_Schuljahr));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_aktZeitpunkt));
@@ -23207,6 +23238,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                 this.Adapter.DeleteCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
             this.Adapter.DeleteCommand.Parameters[6].Value = ((int)(Original_LeseModusExcel));
+            this.Adapter.DeleteCommand.Parameters[7].Value = ((int)(Original_BibliothekAnzeigen));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -23227,7 +23259,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(int Id, int Schuljahr, int aktZeitpunkt, int Sperre, global::System.Nullable<global::System.DateTime> Zeugnisdatum, int LeseModusExcel) {
+        public virtual int Insert(int Id, int Schuljahr, int aktZeitpunkt, int Sperre, global::System.Nullable<global::System.DateTime> Zeugnisdatum, int LeseModusExcel, int BibliothekAnzeigen) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((int)(Id));
             this.Adapter.InsertCommand.Parameters[1].Value = ((int)(Schuljahr));
             this.Adapter.InsertCommand.Parameters[2].Value = ((int)(aktZeitpunkt));
@@ -23239,6 +23271,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                 this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             this.Adapter.InsertCommand.Parameters[5].Value = ((int)(LeseModusExcel));
+            this.Adapter.InsertCommand.Parameters[6].Value = ((int)(BibliothekAnzeigen));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -23259,7 +23292,7 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int Id, int Schuljahr, int aktZeitpunkt, int Sperre, global::System.Nullable<global::System.DateTime> Zeugnisdatum, int LeseModusExcel, int Original_Id, int Original_Schuljahr, int Original_aktZeitpunkt, int Original_Sperre, global::System.Nullable<global::System.DateTime> Original_Zeugnisdatum, int Original_LeseModusExcel) {
+        public virtual int Update(int Id, int Schuljahr, int aktZeitpunkt, int Sperre, global::System.Nullable<global::System.DateTime> Zeugnisdatum, int LeseModusExcel, int BibliothekAnzeigen, int Original_Id, int Original_Schuljahr, int Original_aktZeitpunkt, int Original_Sperre, global::System.Nullable<global::System.DateTime> Original_Zeugnisdatum, int Original_LeseModusExcel, int Original_BibliothekAnzeigen) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((int)(Id));
             this.Adapter.UpdateCommand.Parameters[1].Value = ((int)(Schuljahr));
             this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(aktZeitpunkt));
@@ -23271,19 +23304,21 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
                 this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(LeseModusExcel));
-            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_Id));
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_Schuljahr));
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(Original_aktZeitpunkt));
-            this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_Sperre));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(BibliothekAnzeigen));
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_Id));
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(Original_Schuljahr));
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_aktZeitpunkt));
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Original_Sperre));
             if ((Original_Zeugnisdatum.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[11].Value = ((System.DateTime)(Original_Zeugnisdatum.Value));
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[12].Value = ((System.DateTime)(Original_Zeugnisdatum.Value));
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[10].Value = ((object)(1));
-                this.Adapter.UpdateCommand.Parameters[11].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[11].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[12].Value = global::System.DBNull.Value;
             }
-            this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(Original_LeseModusExcel));
+            this.Adapter.UpdateCommand.Parameters[13].Value = ((int)(Original_LeseModusExcel));
+            this.Adapter.UpdateCommand.Parameters[14].Value = ((int)(Original_BibliothekAnzeigen));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -23304,8 +23339,8 @@ Klasse.Bezeichnung LIKE Rolle.KlassenString)))
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(int Schuljahr, int aktZeitpunkt, int Sperre, global::System.Nullable<global::System.DateTime> Zeugnisdatum, int LeseModusExcel, int Original_Id, int Original_Schuljahr, int Original_aktZeitpunkt, int Original_Sperre, global::System.Nullable<global::System.DateTime> Original_Zeugnisdatum, int Original_LeseModusExcel) {
-            return this.Update(Original_Id, Schuljahr, aktZeitpunkt, Sperre, Zeugnisdatum, LeseModusExcel, Original_Id, Original_Schuljahr, Original_aktZeitpunkt, Original_Sperre, Original_Zeugnisdatum, Original_LeseModusExcel);
+        public virtual int Update(int Schuljahr, int aktZeitpunkt, int Sperre, global::System.Nullable<global::System.DateTime> Zeugnisdatum, int LeseModusExcel, int BibliothekAnzeigen, int Original_Id, int Original_Schuljahr, int Original_aktZeitpunkt, int Original_Sperre, global::System.Nullable<global::System.DateTime> Original_Zeugnisdatum, int Original_LeseModusExcel, int Original_BibliothekAnzeigen) {
+            return this.Update(Original_Id, Schuljahr, aktZeitpunkt, Sperre, Zeugnisdatum, LeseModusExcel, BibliothekAnzeigen, Original_Id, Original_Schuljahr, Original_aktZeitpunkt, Original_Sperre, Original_Zeugnisdatum, Original_LeseModusExcel, Original_BibliothekAnzeigen);
         }
     }
     

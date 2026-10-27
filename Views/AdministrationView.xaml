@@ -67,6 +67,8 @@
             <Button Content="Bücher (Stammdaten)" Command="{Binding BuecherCommand}" />
             <Button Content="Standardsätze" Command="{Binding BuchStandardsaetzeCommand}" />
             <Button Content="Sammel-Einbuchung" Command="{Binding BuchSammelEinbuchenCommand}" />
+            <CheckBox Content="Bibliothek anzeigen" Margin="0,8,0,0" IsChecked="{Binding BibliothekAnzeigenChecked}"
+                      ToolTip="Wenn aktiv, sehen alle Lehrer den Bibliothek-Reiter (sonst nur Admins und Lehrer mit Rolle Bibliothek)" />
           </StackPanel>
         </GroupBox>
 

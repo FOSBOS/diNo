@@ -33,6 +33,7 @@ namespace diNo.ViewModels
     public bool HatVerwaltungsrechte => Zugriff.Instance.HatVerwaltungsrechte;
     public bool SiehtAlles => Zugriff.Instance.SiehtAlles;
     public bool IsTestDB => Zugriff.Instance.IsTestDB;
+    public bool SiehtBibliothek => Zugriff.Instance.SiehtBibliothek;
 
     [ObservableProperty] private string nameText = "";
     [ObservableProperty] private string klasseText = "";

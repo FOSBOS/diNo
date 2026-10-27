@@ -40,6 +40,10 @@ namespace diNo
     public bool SiehtAlles { get; private set; }
     public bool HatVerwaltungsrechte { get; private set; }
     public bool HatBibliotheksrechte { get; private set; }
+    // global per Administration-Checkbox freischaltbar (GlobaleKonstanten.BibliothekAnzeigen) - live aus der
+    // DB-Zeile gelesen, damit ein "Übernehmen" in der Administration ohne Neustart wirkt.
+    public bool BibliothekAnzeigenFuerAlle { get { return globaleKonstanten.BibliothekAnzeigen == 1; } }
+    public bool SiehtBibliothek { get { return lehrer.HatRolle(Rolle.Admin) || lehrer.HatRolle(Rolle.Bibliothek) || BibliothekAnzeigenFuerAlle; } }
     public bool RptDruck = false;
     public bool IsFBKempten = false;
     public bool IsTestDB { get; private set; }

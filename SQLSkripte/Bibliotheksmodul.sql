@@ -35,3 +35,7 @@ CREATE TABLE BuchStandardsatz (          -- Standardbuchungen je Schuelerkonstel
 -- C#-Enum Rolle.Bibliothek in Zugriff.cs passen. Ids 9-13 sind in dieser DB bereits belegt
 -- (IV, FVKSTU, FVKW, BVKSTW, Dummy) und im C#-Enum nicht abgebildet - daher Id 14.
 INSERT INTO Rolle (Id, Bezeichnung) VALUES (14, 'Bibliothek');
+
+-- Freischalt-Option fuer den Bibliothek-Reiter: 0 = nur Admins/Rolle Bibliothek sehen ihn,
+-- 1 = alle Lehrer sehen ihn (per Checkbox "Bibliothek anzeigen" in der Administration umschaltbar).
+ALTER TABLE GlobaleKonstanten ADD BibliothekAnzeigen INT NOT NULL DEFAULT 0;
