@@ -20,6 +20,7 @@ namespace diNo.ViewModels
 
     public bool IsAdmin => Zugriff.Instance.HatRolle(Rolle.Admin);
     public bool ShowTest => Zugriff.Instance.IsTestDB;
+    public bool HatBibliotheksrechte => Zugriff.Instance.HatBibliotheksrechte;
 
     // Globale Einstellungen
     [ObservableProperty] private bool sperreChecked;
@@ -133,6 +134,12 @@ namespace diNo.ViewModels
     [RelayCommand] private void Globales() => new Views.GlobalesWindow().ShowDialog();
     [RelayCommand] private void Klassen() => new Views.KlasseWindow().ShowDialog();
     [RelayCommand] private void Berechtigungen() => new ReportBerechtigungen(LehrerRolleDruck.CreateLehrerRolleDruck()).Show();
+
+    // -------------------- Bibliothek --------------------
+
+    [RelayCommand] private void Buecher() => new Views.BuecherWindow().ShowDialog();
+    [RelayCommand] private void BuchStandardsaetze() => new Views.BuchStandardsatzWindow().ShowDialog();
+    [RelayCommand] private void BuchSammelEinbuchen() => new Views.BuchSammelEinbuchenWindow().ShowDialog();
     private Views.MailDialogWindow frmMail;
 
     [RelayCommand]

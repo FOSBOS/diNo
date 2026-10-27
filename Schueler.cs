@@ -20,6 +20,7 @@ namespace diNo
     private List<Kurs> kurse; // Recordset-Menge aller Kurse dieses Schülers
     private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
     private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler
+    private IList<BuchAusleihe> buchausleihen; // verwaltet alle Buchausleihen für diesen Schüler
     private List<diNoDataSet.SchuelerAnschriftRow> anschriften;       // eigene Anschrift + Erziehungsberechtigte
     private List<diNoDataSet.SchuelerWiederholungRow> wiederholungen; // Historie über mehrere Schuljahre
     private diNoDataSet.FpaDataTable fpaDT; // wird zum Speichern benötigt: FPA-Halbjahr 1 und 2
@@ -71,6 +72,7 @@ namespace diNo
       kurse = null;
       noten = null;
       vorkommnisse = null;
+      buchausleihen = null;
       anschriften = null;
       wiederholungen = null;
       punktesumme = new Punktesumme(this);
@@ -545,6 +547,92 @@ public int APFaktor
         if (v.Art == art) return v;
       }
       return null;
+    }
+
+    /// <summary>
+    /// Alle Buchausleihen dieses Schülers (aktive und bereits zurückgegebene).
+    /// </summary>
+    public IList<BuchAusleihe> Buchausleihen
+    {
+      get
+      {
+        if (this.buchausleihen == null)
+        {
+          this.buchausleihen = new List<BuchAusleihe>();
+          foreach (var row in new SchuelerBuecherTableAdapter().GetDataBySchuelerId(this.Id))
+            this.buchausleihen.Add(new BuchAusleihe(row));
+        }
+        return this.buchausleihen;
+      }
+    }
+
+    /// <summary>
+    /// Nur die noch nicht zurückgegebenen Ausleihen.
+    /// </summary>
+    public IEnumerable<BuchAusleihe> AktiveAusleihen => Buchausleihen.Where(a => a.IstAktiv);
+
+    /// <summary>
+    /// Ob der Schüler dieses Buch aktuell aktiv (noch nicht zurückgegeben) ausgeliehen hat.
+    /// </summary>
+    public bool HatAktiveAusleihe(int buchId) => AktiveAusleihen.Any(a => a.BuchId == buchId);
+
+    /// <summary>
+    /// Bucht ein Buch für diesen Schüler ein (manuelle oder Standardsatz-Einbuchung).
+    /// </summary>
+    public void Ausleihen(Buch buch, DateTime? datum = null)
+    {
+      new SchuelerBuecherTableAdapter().Insert(this.Id, buch.Id, datum ?? DateTime.Today);
+      this.buchausleihen = null; // damit er die neu lädt
+    }
+
+    /// <summary>
+    /// Gibt eine einzelne Ausleihe zurück.
+    /// </summary>
+    public void BuchZurueckgeben(int ausleiheId, DateTime? datum = null)
+    {
+      var ausleihe = Buchausleihen.FirstOrDefault(a => a.Id == ausleiheId);
+      if (ausleihe == null) return;
+      ausleihe.Zurueckgeben(datum);
+      this.buchausleihen = null; // damit er die neu lädt
+    }
+
+    /// <summary>
+    /// Macht die Rückgabe einer einzelnen Ausleihe rückgängig.
+    /// </summary>
+    public void BuchZurueckgebenRueckgaengig(int ausleiheId)
+    {
+      var ausleihe = Buchausleihen.FirstOrDefault(a => a.Id == ausleiheId);
+      if (ausleihe == null) return;
+      ausleihe.RueckgabeRueckgaengig();
+      this.buchausleihen = null; // damit er die neu lädt
+    }
+
+    /// <summary>
+    /// Rückgabefunktion: gibt alle noch aktiven Ausleihen dieses Schülers zurück (z.B. beim Austritt).
+    /// </summary>
+    public void AlleBuecherZurueckgeben(DateTime? datum = null)
+    {
+      foreach (var ausleihe in AktiveAusleihen.ToList())
+        ausleihe.Zurueckgeben(datum);
+      this.buchausleihen = null; // damit er die neu lädt
+    }
+
+    /// <summary>
+    /// Bucht die zur Jahrgangsstufe/Schulart/Zweig dieses Schülers passenden Standardbücher ein.
+    /// Bereits aktiv ausgeliehene Bücher werden dabei übersprungen (keine Duplikate).
+    /// Liefert die Liste der tatsächlich neu eingebuchten Standardsätze.
+    /// </summary>
+    public List<BuchStandardsatz> EinbuchenStandardsatz(DateTime? datum = null)
+    {
+      var passende = BuchStandardsaetze.Instance.GetFuer(getKlasse.Jahrgangsstufe, getKlasse.Schulart, getKlasse.Zweig);
+      var neu = new List<BuchStandardsatz>();
+      foreach (var satz in passende)
+      {
+        if (HatAktiveAusleihe(satz.BuchId)) continue;
+        Ausleihen(satz.Buch, datum);
+        neu.Add(satz);
+      }
+      return neu;
     }
 
     // nur für 13. Klasse: hat erfolgreich die 2. FS besucht

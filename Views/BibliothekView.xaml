@@ -1,0 +1,96 @@
+<UserControl x:Class="diNo.Views.BibliothekView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             FontSize="14">
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BoolToVis" />
+  </UserControl.Resources>
+  <Grid Margin="16">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <TextBlock Grid.Row="0" Text="Buch einbuchen:" FontSize="14" Margin="0,0,0,10" />
+
+    <Grid Grid.Row="1" Margin="0,0,0,10">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="90" />
+        <ColumnDefinition Width="330" />
+        <ColumnDefinition Width="16" />
+        <ColumnDefinition Width="110" />
+        <ColumnDefinition Width="16" />
+        <ColumnDefinition Width="40" />
+      </Grid.ColumnDefinitions>
+      <TextBlock Grid.Column="0" Text="Buch:" VerticalAlignment="Center" />
+      <ComboBox Grid.Column="1" ItemsSource="{Binding BuchOptions}" DisplayMemberPath="Anzeige"
+                SelectedItem="{Binding SelectedBuch}" />
+      <DatePicker Grid.Column="3" SelectedDate="{Binding Datum}" />
+      <Button Grid.Column="5" Width="40" Height="36" Command="{Binding EinbuchenCommand}" ToolTip="Buch einbuchen">
+        <Image Source="{StaticResource IconSave}" Width="22" Height="22" />
+      </Button>
+    </Grid>
+
+    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,16">
+      <Button Width="220" Height="32" Command="{Binding StandardsatzEinbuchenCommand}"
+              Content="Standardsatz einbuchen" ToolTip="Bucht die zur Klasse passenden Standardbücher ein, sofern noch nicht ausgeliehen" />
+      <Button Width="220" Height="32" Margin="16,0,0,0" Command="{Binding AlleZurueckgebenCommand}"
+              Content="Alle Bücher zurückgeben" ToolTip="Markiert alle aktiven Ausleihen dieses Schülers als zurückgegeben" />
+    </StackPanel>
+
+    <DataGrid Grid.Row="3" ItemsSource="{Binding Eintraege}" AutoGenerateColumns="False"
+              IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" SelectionUnit="FullRow">
+      <DataGrid.RowStyle>
+        <Style TargetType="DataGridRow">
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding IstAktiv}" Value="False">
+              <Setter Property="Foreground" Value="Gray" />
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </DataGrid.RowStyle>
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Buch" Binding="{Binding Titel}" Width="*" />
+        <DataGridTextColumn Header="Ausgegeben am" Binding="{Binding AusgegebenAm, StringFormat=d}" Width="110" />
+        <DataGridTextColumn Header="Rückgabe am" Binding="{Binding RueckgabeAm, StringFormat=d}" Width="110" />
+        <DataGridTemplateColumn Width="100">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <Grid>
+                <Button Width="90" Height="22" Padding="0" ToolTip="Zurückgeben"
+                        Visibility="{Binding IstAktiv, Converter={StaticResource BoolToVis}}"
+                        Command="{Binding DataContext.ZurueckgebenCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                        CommandParameter="{Binding}">
+                  <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource IconOk}" Width="16" Height="16" />
+                    <TextBlock Text="zurückgeben" Margin="4,0,0,0" FontSize="11" VerticalAlignment="Center" />
+                  </StackPanel>
+                </Button>
+                <Button Width="90" Height="22" Padding="0" ToolTip="Rückgabe rückgängig machen"
+                        Command="{Binding DataContext.ZurueckgebenRueckgaengigCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                        CommandParameter="{Binding}">
+                  <Button.Style>
+                    <Style TargetType="Button">
+                      <Setter Property="Visibility" Value="Visible" />
+                      <Style.Triggers>
+                        <DataTrigger Binding="{Binding IstAktiv}" Value="True">
+                          <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                      </Style.Triggers>
+                    </Style>
+                  </Button.Style>
+                  <StackPanel Orientation="Horizontal">
+                    <Image Source="{StaticResource IconRefresh}" Width="16" Height="16" />
+                    <TextBlock Text="rückgängig" Margin="4,0,0,0" FontSize="11" VerticalAlignment="Center" />
+                  </StackPanel>
+                </Button>
+              </Grid>
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</UserControl>

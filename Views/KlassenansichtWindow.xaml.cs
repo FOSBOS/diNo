@@ -44,6 +44,7 @@ namespace diNo.Views
     {
       SchueleransichtView.SetSchueler(schueler);
       VorkommnisseView.SetSchueler(schueler);
+      BibliothekView.SetSchueler(schueler);
       FPAundSeminarView.SetSchueler(schueler);
       NotenbogenView.SetSchueler(schueler);
 

@@ -144,6 +144,12 @@
           </TabItem.Header>
           <views:VorkommnisseView x:Name="VorkommnisseView" />
         </TabItem>
+        <TabItem>
+          <TabItem.Header>
+            <TextBlock Text="Bibliothek" FontSize="15" />
+          </TabItem.Header>
+          <views:BibliothekView x:Name="BibliothekView" />
+        </TabItem>
         <TabItem Visibility="{Binding HatVerwaltungsrechte, Converter={StaticResource BoolToVis}}">
           <TabItem.Header>
             <TextBlock Text="Kurszuordnungen" FontSize="15" />
