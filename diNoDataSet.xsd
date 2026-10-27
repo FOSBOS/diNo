@@ -2995,6 +2995,7 @@ FROM            BuchStandardsatz</CommandText>
               <xs:element name="Sperre" msprop:Generator_ColumnPropNameInTable="SperreColumn" msprop:Generator_ColumnPropNameInRow="Sperre" msprop:Generator_UserColumnName="Sperre" msprop:Generator_ColumnVarNameInTable="columnSperre" type="xs:int" />
               <xs:element name="Zeugnisdatum" msprop:Generator_ColumnPropNameInTable="ZeugnisdatumColumn" msprop:Generator_ColumnPropNameInRow="Zeugnisdatum" msprop:Generator_UserColumnName="Zeugnisdatum" msprop:Generator_ColumnVarNameInTable="columnZeugnisdatum" type="xs:dateTime" minOccurs="0" />
               <xs:element name="LeseModusExcel" msprop:Generator_ColumnPropNameInTable="LeseModusExcelColumn" msprop:Generator_ColumnPropNameInRow="LeseModusExcel" msprop:Generator_UserColumnName="LeseModusExcel" msprop:Generator_ColumnVarNameInTable="columnLeseModusExcel" type="xs:int" />
+              <xs:element name="BibliothekAnzeigen" msprop:Generator_ColumnPropNameInTable="BibliothekAnzeigenColumn" msprop:Generator_ColumnPropNameInRow="BibliothekAnzeigen" msprop:Generator_UserColumnName="BibliothekAnzeigen" msprop:Generator_ColumnVarNameInTable="columnBibliothekAnzeigen" type="xs:int" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
