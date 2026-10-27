@@ -21,6 +21,8 @@ namespace diNo.ViewModels
       new KeyValuePair<int, string>(0, "alle Schularten"),
       new KeyValuePair<int, string>((int)Schulart.FOS, "FOS"),
       new KeyValuePair<int, string>((int)Schulart.BOS, "BOS"),
+      new KeyValuePair<int, string>((int)Schulart.Franzoesisch, "Französisch (alle Schüler mit diesem Kurs)"),
+      new KeyValuePair<int, string>((int)Schulart.Spanisch, "Spanisch (alle Schüler mit diesem Kurs)"),
     };
 
     public List<KeyValuePair<int, string>> ZweigOptions { get; } = new List<KeyValuePair<int, string>>

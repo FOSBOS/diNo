@@ -28,8 +28,7 @@ namespace diNo.ViewModels
 
       foreach (var schueler in Zugriff.Instance.SchuelerRep.getList().Where(s => s.Status == Schuelerstatus.Aktiv))
       {
-        var klasse = schueler.getKlasse;
-        var fehlend = BuchStandardsaetze.Instance.GetFuer(klasse.Jahrgangsstufe, klasse.Schulart, klasse.Zweig)
+        var fehlend = BuchStandardsaetze.Instance.GetFuer(schueler)
           .Where(s => !schueler.HatAktiveAusleihe(s.BuchId))
           .ToList();
         if (fehlend.Count == 0) continue;

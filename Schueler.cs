@@ -624,7 +624,7 @@ public int APFaktor
     /// </summary>
     public List<BuchStandardsatz> EinbuchenStandardsatz(DateTime? datum = null)
     {
-      var passende = BuchStandardsaetze.Instance.GetFuer(getKlasse.Jahrgangsstufe, getKlasse.Schulart, getKlasse.Zweig);
+      var passende = BuchStandardsaetze.Instance.GetFuer(this);
       var neu = new List<BuchStandardsatz>();
       foreach (var satz in passende)
       {
