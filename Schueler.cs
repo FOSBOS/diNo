@@ -2,6 +2,7 @@
 using diNo.Properties;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Resources;
@@ -1003,9 +1004,37 @@ public int APFaktor
     public void AddAnschrift(string anschriftWessen, string anschriftstyp, string nachnamePerson, string vornamePerson, string anredePerson, string verwandtschaftsbezeichnung,
       string strasse, string hausnummer, string plz, string ort, string telefonnummer, string mobilnummer, string email, bool? hauptAnsprechpartner, bool? auskunftsberechtigt)
     {
+      var spalten = new diNoDataSet.SchuelerAnschriftDataTable().Columns;
+      PruefeMaxLaenge(spalten, "AnschriftWessen", anschriftWessen);
+      PruefeMaxLaenge(spalten, "Anschriftstyp", anschriftstyp);
+      PruefeMaxLaenge(spalten, "NachnamePerson", nachnamePerson);
+      PruefeMaxLaenge(spalten, "VornamePerson", vornamePerson);
+      PruefeMaxLaenge(spalten, "AnredePerson", anredePerson);
+      PruefeMaxLaenge(spalten, "Verwandtschaftsbezeichnung", verwandtschaftsbezeichnung);
+      PruefeMaxLaenge(spalten, "Strasse", strasse);
+      PruefeMaxLaenge(spalten, "Hausnummer", hausnummer);
+      PruefeMaxLaenge(spalten, "PLZ", plz);
+      PruefeMaxLaenge(spalten, "Ort", ort);
+      PruefeMaxLaenge(spalten, "Telefonnummer", telefonnummer);
+      PruefeMaxLaenge(spalten, "Mobilnummer", mobilnummer);
+      PruefeMaxLaenge(spalten, "Email", email);
+
       new SchuelerAnschriftTableAdapter().Insert(this.Id, anschriftWessen, anschriftstyp, nachnamePerson, vornamePerson, anredePerson, verwandtschaftsbezeichnung,
         strasse, hausnummer, plz, ort, telefonnummer, mobilnummer, email, hauptAnsprechpartner, auskunftsberechtigt);
       anschriften = null; // damit er die neu lädt
+    }
+
+    /// <summary>
+    /// Prüft einen Wert gegen die in der DataTable hinterlegte Spaltenlänge und wirft bei Überschreitung
+    /// eine aussagekräftige Fehlermeldung (Feldname, Wert, erlaubte Länge), statt die kryptische
+    /// SqlException "Zeichenfolgen- oder Binärdaten würden abgeschnitten" bis zum Aufrufer durchzulassen.
+    /// </summary>
+    private static void PruefeMaxLaenge(DataColumnCollection spalten, string spaltenname, string wert)
+    {
+      if (string.IsNullOrEmpty(wert)) return;
+      int maxLaenge = spalten[spaltenname].MaxLength;
+      if (maxLaenge >= 0 && wert.Length > maxLaenge)
+        throw new ArgumentException($"Feld '{spaltenname}' ist zu lang ({wert.Length} von max. {maxLaenge} Zeichen): \"{wert}\"");
     }
 
     public diNoDataSet.SchuelerAnschriftRow getEigeneAnschrift()
