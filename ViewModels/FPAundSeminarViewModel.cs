@@ -12,7 +12,9 @@ namespace diNo.ViewModels
     private Schueler schueler;
 
     [ObservableProperty] private bool fpaEnabled;
+    [ObservableProperty] private bool fpaVisible;
     [ObservableProperty] private bool seminarEnabled;
+    [ObservableProperty] private bool seminarVisible;
     [ObservableProperty] private bool istVertiefung12;
     [ObservableProperty] private string vertiefung1Label = "Vertiefung 1";
     [ObservableProperty] private string vertiefung2Label = "Vertiefung 2";
@@ -50,6 +52,7 @@ namespace diNo.ViewModels
     private void Init()
     {
       FpaEnabled = IstFpaAenderbar();
+      FpaVisible = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Elf;
       IstVertiefung12 = schueler.Zweig == Zweig.Sozial; // S mit 2 Vertiefungsfächern; U, T, W je nur 1
       if (schueler.Zweig == Zweig.Sozial)
       {
@@ -75,7 +78,8 @@ namespace diNo.ViewModels
       FillHj(fpaNoten[1], 2);
       Jahrespunkte = fpaNoten[1].IsJahrespunkteNull() ? (int?)null : fpaNoten[1].Jahrespunkte;
 
-      SeminarEnabled = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn &&
+      SeminarVisible = schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn;
+      SeminarEnabled = SeminarVisible &&
         (Zugriff.Instance.lehrer.HatRolle(Rolle.Seminarfach) || Zugriff.Instance.lehrer.HatRolle(Rolle.Admin));
       if (schueler.getKlasse.Jahrgangsstufe == Jahrgangsstufe.Dreizehn)
       {

@@ -24,11 +24,10 @@
         <ColumnDefinition Width="16" />
         <ColumnDefinition Width="40" />
       </Grid.ColumnDefinitions>
-      <TextBlock Grid.Column="0" Text="Buch:" VerticalAlignment="Center" />
-      <ComboBox Grid.Column="1" ItemsSource="{Binding BuchOptions}" DisplayMemberPath="Anzeige"
-                SelectedItem="{Binding SelectedBuch}" />
-      <DatePicker Grid.Column="3" SelectedDate="{Binding Datum}" />
-      <Button Grid.Column="5" Width="40" Height="36" Command="{Binding EinbuchenCommand}" ToolTip="Buch einbuchen">
+      <ComboBox ItemsSource="{Binding BuchOptions}" DisplayMemberPath="Anzeige"
+                SelectedItem="{Binding SelectedBuch}" Grid.ColumnSpan="2" Margin="0,0,199,10" />
+      <DatePicker Grid.Column="1" SelectedDate="{Binding Datum}" Margin="147,0,42,10" />
+      <Button Grid.Column="1" Command="{Binding EinbuchenCommand}" ToolTip="Buch einbuchen" Margin="316,0,0,10" Grid.ColumnSpan="2">
         <Image Source="{StaticResource IconSave}" Width="22" Height="22" />
       </Button>
     </Grid>
@@ -36,7 +35,7 @@
     <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,16">
       <Button Width="220" Height="32" Command="{Binding StandardsatzEinbuchenCommand}"
               Content="Standardsatz einbuchen" ToolTip="Bucht die zur Klasse passenden Standardbücher ein, sofern noch nicht ausgeliehen" />
-      <Button Width="220" Height="32" Margin="16,0,0,0" Command="{Binding AlleZurueckgebenCommand}"
+      <Button Width="200" Height="32" Margin="16,0,0,0" Command="{Binding AlleZurueckgebenCommand}"
               Content="Alle Bücher zurückgeben" ToolTip="Markiert alle aktiven Ausleihen dieses Schülers als zurückgegeben" />
     </StackPanel>
 
