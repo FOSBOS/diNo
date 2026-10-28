@@ -12,6 +12,7 @@ namespace diNo.ViewModels
     public bool HatVerwaltungsrechte => Zugriff.Instance.HatVerwaltungsrechte;
 
     [ObservableProperty] private string strasse = "";
+    [ObservableProperty] private string hausnummer = "";
     [ObservableProperty] private string plz = "";
     [ObservableProperty] private string ort = "";
     [ObservableProperty] private string telefonnummer = "";
@@ -35,10 +36,8 @@ namespace diNo.ViewModels
       if (schueler == null) return;
 
       var eigeneAnschrift = schueler.getEigeneAnschrift();
-      string s = eigeneAnschrift == null || eigeneAnschrift.IsStrasseNull() ? "" : eigeneAnschrift.Strasse;
-      if (eigeneAnschrift != null && !eigeneAnschrift.IsHausnummerNull() && eigeneAnschrift.Hausnummer != "")
-        s += " " + eigeneAnschrift.Hausnummer;
-      Strasse = s;
+      Strasse = eigeneAnschrift == null || eigeneAnschrift.IsStrasseNull() ? "" : eigeneAnschrift.Strasse;
+      Hausnummer = eigeneAnschrift == null || eigeneAnschrift.IsHausnummerNull() ? "" : eigeneAnschrift.Hausnummer;
       Plz = eigeneAnschrift == null || eigeneAnschrift.IsPLZNull() ? "" : eigeneAnschrift.PLZ;
       Ort = eigeneAnschrift == null || eigeneAnschrift.IsOrtNull() ? "" : eigeneAnschrift.Ort;
       Telefonnummer = eigeneAnschrift == null || eigeneAnschrift.IsTelefonnummerNull() ? "" : eigeneAnschrift.Telefonnummer;
@@ -85,7 +84,7 @@ namespace diNo.ViewModels
     {
       if (schueler == null) return;
 
-      schueler.SaveEigeneAnschrift(Strasse, Plz, Ort, Telefonnummer, EigeneMail);
+      schueler.SaveEigeneAnschrift(Strasse, Hausnummer, Plz, Ort, Telefonnummer, EigeneMail);
       schueler.Data.Bekenntnis = Bekenntnis;
       // ReliUnterricht via Kurszuordnung wird automatisch gesetzt!
 

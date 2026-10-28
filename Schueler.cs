@@ -1056,18 +1056,18 @@ public int APFaktor
   
     /// <summary>
     /// Legt die eigene Anschrift (AnschriftWessen="3") an oder aktualisiert sie, z. B. aus der Stammdaten-Ansicht.
-    /// Die Hausnummer (aus dem ASV-Import) bleibt dabei unangetastet.
     /// </summary>
-    public void SaveEigeneAnschrift(string strasse, string plz, string ort, string telefonnummer, string email)
+    public void SaveEigeneAnschrift(string strasse, string hausnummer, string plz, string ort, string telefonnummer, string email)
     {
       var eigene = getEigeneAnschrift();
       if (eigene == null)
       {
-        AddAnschrift("3", null, null, null, null, null, strasse, null, plz, ort, telefonnummer, null, email, null, null);
+        AddAnschrift("3", null, null, null, null, null, strasse, hausnummer, plz, ort, telefonnummer, null, email, null, null);
       }
       else
       {
         eigene.Strasse = strasse;
+        eigene.Hausnummer = hausnummer;
         eigene.PLZ = plz;
         eigene.Ort = ort;
         eigene.Telefonnummer = telefonnummer;
