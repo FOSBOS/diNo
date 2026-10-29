@@ -17,15 +17,47 @@ namespace diNo.ViewModels
     public List<Buch> BuchOptions => Buecher.Instance.Aktive;
     public ObservableCollection<BuchAusleiheRow> Eintraege { get; } = new ObservableCollection<BuchAusleiheRow>();
 
+    public bool HatBibliotheksrechte => Zugriff.Instance.HatBibliotheksrechte;
+
     [ObservableProperty] private Buch selectedBuch;
     [ObservableProperty] private DateTime datum = DateTime.Today;
+
+    [ObservableProperty] private bool istUngemahnt;
+    [ObservableProperty] private bool istErsteMahnung;
+    [ObservableProperty] private bool istZweiteMahnung;
+    [ObservableProperty] private bool istRechnung;
+    private bool mahnstufeWirdGeladen;
 
     public void SetSchueler(Schueler value)
     {
       schueler = value;
       if (schueler != null)
         RefreshAusleihen();
+      LadeMahnstufe();
     }
+
+    private void LadeMahnstufe()
+    {
+      mahnstufeWirdGeladen = true;
+      var stufe = schueler?.Mahnstufe ?? Mahnstufe.Ungemahnt;
+      IstUngemahnt = stufe == Mahnstufe.Ungemahnt;
+      IstErsteMahnung = stufe == Mahnstufe.ErsteMahnung;
+      IstZweiteMahnung = stufe == Mahnstufe.ZweiteMahnung;
+      IstRechnung = stufe == Mahnstufe.Rechnung;
+      mahnstufeWirdGeladen = false;
+    }
+
+    private void SetzeMahnstufe(Mahnstufe stufe)
+    {
+      if (mahnstufeWirdGeladen || schueler == null) return;
+      schueler.Mahnstufe = stufe;
+      schueler.Save();
+    }
+
+    partial void OnIstUngemahntChanged(bool value) { if (value) SetzeMahnstufe(Mahnstufe.Ungemahnt); }
+    partial void OnIstErsteMahnungChanged(bool value) { if (value) SetzeMahnstufe(Mahnstufe.ErsteMahnung); }
+    partial void OnIstZweiteMahnungChanged(bool value) { if (value) SetzeMahnstufe(Mahnstufe.ZweiteMahnung); }
+    partial void OnIstRechnungChanged(bool value) { if (value) SetzeMahnstufe(Mahnstufe.Rechnung); }
 
     public void RefreshAusleihen()
     {
@@ -76,6 +108,9 @@ namespace diNo.ViewModels
       schueler.AlleBuecherZurueckgeben();
       RefreshAusleihen();
     }
+
+    [RelayCommand]
+    private void Mahnverwaltung() => new Views.BibliothekMahnuebersichtWindow().ShowDialog();
 
     [RelayCommand]
     private void StandardsatzEinbuchen()

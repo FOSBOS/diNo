@@ -425,6 +425,15 @@ public int APFaktor
       set { data.Status = (int)value; }
     }
 
+    /// <summary>
+    /// Mahnstufe für offene Bibliotheks-Ausleihen (0=ungemahnt, 1./2. Mahnung, 3=Rechnung).
+    /// </summary>
+    public Mahnstufe Mahnstufe
+    {
+      get { return (Mahnstufe)data.Mahnstufe; }
+      set { data.Mahnstufe = (byte)value; }
+    }
+
     public string getWiederholungen()
     {
       string result = string.Empty;
@@ -1228,6 +1237,14 @@ public int APFaktor
   {
     Aktiv = 0,
     Abgemeldet = 1
+  }
+
+  public enum Mahnstufe : byte
+  {
+    Ungemahnt = 0,
+    ErsteMahnung = 1,
+    ZweiteMahnung = 2,
+    Rechnung = 3
   }
 
 }

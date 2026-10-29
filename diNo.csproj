@@ -600,6 +600,15 @@
     </Compile>
     <Compile Include="ViewModels\BibliothekViewModel.cs" />
     <Compile Include="ViewModels\BuchAusleiheRow.cs" />
+    <Page Include="Views\BibliothekMahnuebersichtWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\BibliothekMahnuebersichtWindow.xaml.cs">
+      <DependentUpon>BibliothekMahnuebersichtWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BibliothekMahnuebersichtViewModel.cs" />
+    <Compile Include="ViewModels\SchuelerMahnungRow.cs" />
     <Compile Include="ViewModels\TreeRow.cs" />
     <Compile Include="ViewModels\KlassenBaumViewModel.cs" />
     <Page Include="Views\FPAundSeminarView.xaml">

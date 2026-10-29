@@ -158,6 +158,7 @@ namespace diNo.ViewModels
     [RelayCommand] private void Buecher() => new Views.BuecherWindow().ShowDialog();
     [RelayCommand] private void BuchStandardsaetze() => new Views.BuchStandardsatzWindow().ShowDialog();
     [RelayCommand] private void BuchSammelEinbuchen() => new Views.BuchSammelEinbuchenWindow().ShowDialog();
+    [RelayCommand] private void BibliothekMahnuebersicht() => new Views.BibliothekMahnuebersichtWindow().ShowDialog();
     private Views.MailDialogWindow frmMail;
 
     [RelayCommand]

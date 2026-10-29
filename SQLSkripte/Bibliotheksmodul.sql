@@ -39,3 +39,7 @@ INSERT INTO Rolle (Id, Bezeichnung) VALUES (14, 'Bibliothek');
 -- Freischalt-Option fuer den Bibliothek-Reiter: 0 = nur Admins/Rolle Bibliothek sehen ihn,
 -- 1 = alle Lehrer sehen ihn (per Checkbox "Bibliothek anzeigen" in der Administration umschaltbar).
 ALTER TABLE GlobaleKonstanten ADD BibliothekAnzeigen INT NOT NULL DEFAULT 0;
+
+-- Mahnstufe pro Schueler fuer offene Buchausleihen: 0=ungemahnt, 1=1. Mahnung, 2=2. Mahnung,
+-- 3=Rechnung. Wird in BibliothekView (Radiogroup) gesetzt und in der Mahnuebersicht gefiltert.
+ALTER TABLE Schueler ADD Mahnstufe TINYINT NOT NULL DEFAULT 0;
