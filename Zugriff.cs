@@ -39,6 +39,11 @@ namespace diNo
     public LesemodusExcel Lesemodus { get { return (LesemodusExcel)globaleKonstanten.LeseModusExcel; } }
     public bool SiehtAlles { get; private set; }
     public bool HatVerwaltungsrechte { get; private set; }
+    public bool HatBibliotheksrechte { get; private set; }
+    // global per Administration-Checkbox freischaltbar (GlobaleKonstanten.BibliothekAnzeigen) - live aus der
+    // DB-Zeile gelesen, damit ein "Übernehmen" in der Administration ohne Neustart wirkt.
+    public bool BibliothekAnzeigenFuerAlle { get { return globaleKonstanten.BibliothekAnzeigen == 1; } }
+    public bool SiehtBibliothek { get { return lehrer.HatRolle(Rolle.Admin) || lehrer.HatRolle(Rolle.Bibliothek) || BibliothekAnzeigenFuerAlle; } }
     public bool RptDruck = false;
     public bool IsFBKempten = false;
     public bool IsTestDB { get; private set; }
@@ -83,6 +88,7 @@ namespace diNo
         }
         SiehtAlles = (this.lehrer.HatRolle(Rolle.Admin) || this.lehrer.HatRolle(Rolle.Sekretariat) || this.lehrer.HatRolle(Rolle.Schulleitung));
         HatVerwaltungsrechte = lehrer.HatRolle(Rolle.Admin) || lehrer.HatRolle(Rolle.Sekretariat);
+        HatBibliotheksrechte = HatVerwaltungsrechte || lehrer.HatRolle(Rolle.Bibliothek);
         log.Debug("Anmeldung fertig.");
         // LoadSchueler(); erst in Klassenansicht, wegen Parameter nurAktive
         LoadFaecher();
@@ -285,7 +291,8 @@ namespace diNo
     FpAWirtschaft = 5,
     FpASozial = 6,
     FpATechnik = 7,
-    FpAUmwelt = 8
+    FpAUmwelt = 8,
+    Bibliothek = 14 // Ids 9-13 sind in der DB bereits an andere (im Enum nicht abgebildete) Rollen vergeben (IV, FVKSTU, FVKW, BVKSTW, Dummy)
   }
 
 

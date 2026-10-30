@@ -201,6 +201,9 @@
     <Compile Include="Testdaten.cs" />
     <Compile Include="Lehrer.cs" />
     <Compile Include="Berechnungen.cs" />
+    <Compile Include="Buch.cs" />
+    <Compile Include="BuchAusleihe.cs" />
+    <Compile Include="BuchStandardsatz.cs" />
     <Compile Include="CellConstant.cs" />
     <Compile Include="diNoDataSet.cs">
       <DependentUpon>diNoDataSet.xsd</DependentUpon>
@@ -513,6 +516,31 @@
     </Compile>
     <Compile Include="ViewModels\LehrerViewModel.cs" />
     <Compile Include="ViewModels\RolleCheckItem.cs" />
+    <Page Include="Views\BuecherWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\BuecherWindow.xaml.cs">
+      <DependentUpon>BuecherWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BuecherViewModel.cs" />
+    <Page Include="Views\BuchStandardsatzWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\BuchStandardsatzWindow.xaml.cs">
+      <DependentUpon>BuchStandardsatzWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BuchStandardsatzViewModel.cs" />
+    <Compile Include="ViewModels\BuchStandardsatzRow.cs" />
+    <Page Include="Views\BuchSammelEinbuchenWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\BuchSammelEinbuchenWindow.xaml.cs">
+      <DependentUpon>BuchSammelEinbuchenWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BuchSammelEinbuchenViewModel.cs" />
     <Page Include="Views\NotenCheckWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -563,6 +591,24 @@
     </Compile>
     <Compile Include="ViewModels\VorkommnisseViewModel.cs" />
     <Compile Include="ViewModels\VorkommnisRow.cs" />
+    <Page Include="Views\BibliothekView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\BibliothekView.xaml.cs">
+      <DependentUpon>BibliothekView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BibliothekViewModel.cs" />
+    <Compile Include="ViewModels\BuchAusleiheRow.cs" />
+    <Page Include="Views\BibliothekMahnuebersichtWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="Views\BibliothekMahnuebersichtWindow.xaml.cs">
+      <DependentUpon>BibliothekMahnuebersichtWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\BibliothekMahnuebersichtViewModel.cs" />
+    <Compile Include="ViewModels\SchuelerMahnungRow.cs" />
     <Compile Include="ViewModels\TreeRow.cs" />
     <Compile Include="ViewModels\KlassenBaumViewModel.cs" />
     <Page Include="Views\FPAundSeminarView.xaml">

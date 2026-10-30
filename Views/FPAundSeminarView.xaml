@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              FontSize="14">
   <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BoolToVis" />
     <Style TargetType="TextBlock" x:Key="FeldLabel">
       <Setter Property="Margin" Value="0,6,0,2" />
     </Style>
@@ -15,9 +16,10 @@
 
   <ScrollViewer VerticalScrollBarVisibility="Auto">
     <StackPanel Margin="16">
-      <TextBlock Text="Fachpraktische Ausbildung" FontSize="18" Margin="0,0,0,10" />
+      <TextBlock Text="Fachpraktische Ausbildung" FontSize="18" Margin="0,0,0,10"
+                 Visibility="{Binding FpaVisible, Converter={StaticResource BoolToVis}}" />
 
-      <Grid IsEnabled="{Binding FpaEnabled}">
+      <Grid IsEnabled="{Binding FpaEnabled}" Visibility="{Binding FpaVisible, Converter={StaticResource BoolToVis}}">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="280" />
           <ColumnDefinition Width="16" />
@@ -131,7 +133,18 @@
         </GroupBox>
       </Grid>
 
-      <GroupBox Header="Seminararbeit" Margin="0,16,0,0" HorizontalAlignment="Left" IsEnabled="{Binding SeminarEnabled}">
+      <GroupBox Header="Seminararbeit" HorizontalAlignment="Left" IsEnabled="{Binding SeminarEnabled}"
+                Visibility="{Binding SeminarVisible, Converter={StaticResource BoolToVis}}">
+        <GroupBox.Style>
+          <Style TargetType="GroupBox">
+            <Setter Property="Margin" Value="0,16,0,0" />
+            <Style.Triggers>
+              <DataTrigger Binding="{Binding FpaVisible}" Value="False">
+                <Setter Property="Margin" Value="0" />
+              </DataTrigger>
+            </Style.Triggers>
+          </Style>
+        </GroupBox.Style>
         <StackPanel Margin="4" Width="460">
           <TextBlock Text="Notenpunkte" Style="{StaticResource FeldLabel}" />
           <StackPanel Orientation="Horizontal">

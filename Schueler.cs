@@ -2,6 +2,7 @@
 using diNo.Properties;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Resources;
@@ -20,6 +21,7 @@ namespace diNo
     private List<Kurs> kurse; // Recordset-Menge aller Kurse dieses Schülers
     private SchuelerNoten noten;            // verwaltet alle Noten dieses Schülers
     private IList<Vorkommnis> vorkommnisse; // verwaltet alle Vorkommnisse für diesen Schüler
+    private IList<BuchAusleihe> buchausleihen; // verwaltet alle Buchausleihen für diesen Schüler
     private List<diNoDataSet.SchuelerAnschriftRow> anschriften;       // eigene Anschrift + Erziehungsberechtigte
     private List<diNoDataSet.SchuelerWiederholungRow> wiederholungen; // Historie über mehrere Schuljahre
     private diNoDataSet.FpaDataTable fpaDT; // wird zum Speichern benötigt: FPA-Halbjahr 1 und 2
@@ -71,6 +73,7 @@ namespace diNo
       kurse = null;
       noten = null;
       vorkommnisse = null;
+      buchausleihen = null;
       anschriften = null;
       wiederholungen = null;
       punktesumme = new Punktesumme(this);
@@ -422,6 +425,15 @@ public int APFaktor
       set { data.Status = (int)value; }
     }
 
+    /// <summary>
+    /// Mahnstufe für offene Bibliotheks-Ausleihen (0=ungemahnt, 1./2. Mahnung, 3=Rechnung).
+    /// </summary>
+    public Mahnstufe Mahnstufe
+    {
+      get { return (Mahnstufe)data.Mahnstufe; }
+      set { data.Mahnstufe = (byte)value; }
+    }
+
     public string getWiederholungen()
     {
       string result = string.Empty;
@@ -545,6 +557,92 @@ public int APFaktor
         if (v.Art == art) return v;
       }
       return null;
+    }
+
+    /// <summary>
+    /// Alle Buchausleihen dieses Schülers (aktive und bereits zurückgegebene).
+    /// </summary>
+    public IList<BuchAusleihe> Buchausleihen
+    {
+      get
+      {
+        if (this.buchausleihen == null)
+        {
+          this.buchausleihen = new List<BuchAusleihe>();
+          foreach (var row in new SchuelerBuecherTableAdapter().GetDataBySchuelerId(this.Id))
+            this.buchausleihen.Add(new BuchAusleihe(row));
+        }
+        return this.buchausleihen;
+      }
+    }
+
+    /// <summary>
+    /// Nur die noch nicht zurückgegebenen Ausleihen.
+    /// </summary>
+    public IEnumerable<BuchAusleihe> AktiveAusleihen => Buchausleihen.Where(a => a.IstAktiv);
+
+    /// <summary>
+    /// Ob der Schüler dieses Buch aktuell aktiv (noch nicht zurückgegeben) ausgeliehen hat.
+    /// </summary>
+    public bool HatAktiveAusleihe(int buchId) => AktiveAusleihen.Any(a => a.BuchId == buchId);
+
+    /// <summary>
+    /// Bucht ein Buch für diesen Schüler ein (manuelle oder Standardsatz-Einbuchung).
+    /// </summary>
+    public void Ausleihen(Buch buch, DateTime? datum = null)
+    {
+      new SchuelerBuecherTableAdapter().Insert(this.Id, buch.Id, datum ?? DateTime.Today);
+      this.buchausleihen = null; // damit er die neu lädt
+    }
+
+    /// <summary>
+    /// Gibt eine einzelne Ausleihe zurück.
+    /// </summary>
+    public void BuchZurueckgeben(int ausleiheId, DateTime? datum = null)
+    {
+      var ausleihe = Buchausleihen.FirstOrDefault(a => a.Id == ausleiheId);
+      if (ausleihe == null) return;
+      ausleihe.Zurueckgeben(datum);
+      this.buchausleihen = null; // damit er die neu lädt
+    }
+
+    /// <summary>
+    /// Macht die Rückgabe einer einzelnen Ausleihe rückgängig.
+    /// </summary>
+    public void BuchZurueckgebenRueckgaengig(int ausleiheId)
+    {
+      var ausleihe = Buchausleihen.FirstOrDefault(a => a.Id == ausleiheId);
+      if (ausleihe == null) return;
+      ausleihe.RueckgabeRueckgaengig();
+      this.buchausleihen = null; // damit er die neu lädt
+    }
+
+    /// <summary>
+    /// Rückgabefunktion: gibt alle noch aktiven Ausleihen dieses Schülers zurück (z.B. beim Austritt).
+    /// </summary>
+    public void AlleBuecherZurueckgeben(DateTime? datum = null)
+    {
+      foreach (var ausleihe in AktiveAusleihen.ToList())
+        ausleihe.Zurueckgeben(datum);
+      this.buchausleihen = null; // damit er die neu lädt
+    }
+
+    /// <summary>
+    /// Bucht die zur Jahrgangsstufe/Schulart/Zweig dieses Schülers passenden Standardbücher ein.
+    /// Bereits aktiv ausgeliehene Bücher werden dabei übersprungen (keine Duplikate).
+    /// Liefert die Liste der tatsächlich neu eingebuchten Standardsätze.
+    /// </summary>
+    public List<BuchStandardsatz> EinbuchenStandardsatz(DateTime? datum = null)
+    {
+      var passende = BuchStandardsaetze.Instance.GetFuer(this);
+      var neu = new List<BuchStandardsatz>();
+      foreach (var satz in passende)
+      {
+        if (HatAktiveAusleihe(satz.BuchId)) continue;
+        Ausleihen(satz.Buch, datum);
+        neu.Add(satz);
+      }
+      return neu;
     }
 
     // nur für 13. Klasse: hat erfolgreich die 2. FS besucht
@@ -915,9 +1013,37 @@ public int APFaktor
     public void AddAnschrift(string anschriftWessen, string anschriftstyp, string nachnamePerson, string vornamePerson, string anredePerson, string verwandtschaftsbezeichnung,
       string strasse, string hausnummer, string plz, string ort, string telefonnummer, string mobilnummer, string email, bool? hauptAnsprechpartner, bool? auskunftsberechtigt)
     {
+      var spalten = new diNoDataSet.SchuelerAnschriftDataTable().Columns;
+      PruefeMaxLaenge(spalten, "AnschriftWessen", anschriftWessen);
+      PruefeMaxLaenge(spalten, "Anschriftstyp", anschriftstyp);
+      PruefeMaxLaenge(spalten, "NachnamePerson", nachnamePerson);
+      PruefeMaxLaenge(spalten, "VornamePerson", vornamePerson);
+      PruefeMaxLaenge(spalten, "AnredePerson", anredePerson);
+      PruefeMaxLaenge(spalten, "Verwandtschaftsbezeichnung", verwandtschaftsbezeichnung);
+      PruefeMaxLaenge(spalten, "Strasse", strasse);
+      PruefeMaxLaenge(spalten, "Hausnummer", hausnummer);
+      PruefeMaxLaenge(spalten, "PLZ", plz);
+      PruefeMaxLaenge(spalten, "Ort", ort);
+      PruefeMaxLaenge(spalten, "Telefonnummer", telefonnummer);
+      PruefeMaxLaenge(spalten, "Mobilnummer", mobilnummer);
+      PruefeMaxLaenge(spalten, "Email", email);
+
       new SchuelerAnschriftTableAdapter().Insert(this.Id, anschriftWessen, anschriftstyp, nachnamePerson, vornamePerson, anredePerson, verwandtschaftsbezeichnung,
         strasse, hausnummer, plz, ort, telefonnummer, mobilnummer, email, hauptAnsprechpartner, auskunftsberechtigt);
       anschriften = null; // damit er die neu lädt
+    }
+
+    /// <summary>
+    /// Prüft einen Wert gegen die in der DataTable hinterlegte Spaltenlänge und wirft bei Überschreitung
+    /// eine aussagekräftige Fehlermeldung (Feldname, Wert, erlaubte Länge), statt die kryptische
+    /// SqlException "Zeichenfolgen- oder Binärdaten würden abgeschnitten" bis zum Aufrufer durchzulassen.
+    /// </summary>
+    private static void PruefeMaxLaenge(DataColumnCollection spalten, string spaltenname, string wert)
+    {
+      if (string.IsNullOrEmpty(wert)) return;
+      int maxLaenge = spalten[spaltenname].MaxLength;
+      if (maxLaenge >= 0 && wert.Length > maxLaenge)
+        throw new ArgumentException($"Feld '{spaltenname}' ist zu lang ({wert.Length} von max. {maxLaenge} Zeichen): \"{wert}\"");
     }
 
     public diNoDataSet.SchuelerAnschriftRow getEigeneAnschrift()
@@ -939,18 +1065,18 @@ public int APFaktor
   
     /// <summary>
     /// Legt die eigene Anschrift (AnschriftWessen="3") an oder aktualisiert sie, z. B. aus der Stammdaten-Ansicht.
-    /// Die Hausnummer (aus dem ASV-Import) bleibt dabei unangetastet.
     /// </summary>
-    public void SaveEigeneAnschrift(string strasse, string plz, string ort, string telefonnummer, string email)
+    public void SaveEigeneAnschrift(string strasse, string hausnummer, string plz, string ort, string telefonnummer, string email)
     {
       var eigene = getEigeneAnschrift();
       if (eigene == null)
       {
-        AddAnschrift("3", null, null, null, null, null, strasse, null, plz, ort, telefonnummer, null, email, null, null);
+        AddAnschrift("3", null, null, null, null, null, strasse, hausnummer, plz, ort, telefonnummer, null, email, null, null);
       }
       else
       {
         eigene.Strasse = strasse;
+        eigene.Hausnummer = hausnummer;
         eigene.PLZ = plz;
         eigene.Ort = ort;
         eigene.Telefonnummer = telefonnummer;
@@ -1111,6 +1237,14 @@ public int APFaktor
   {
     Aktiv = 0,
     Abgemeldet = 1
+  }
+
+  public enum Mahnstufe : byte
+  {
+    Ungemahnt = 0,
+    ErsteMahnung = 1,
+    ZweiteMahnung = 2,
+    Rechnung = 3
   }
 
 }

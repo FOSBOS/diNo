@@ -47,6 +47,9 @@ namespace diNo.Views
       FPAundSeminarView.SetSchueler(schueler);
       NotenbogenView.SetSchueler(schueler);
 
+      if (Zugriff.Instance.SiehtBibliothek)
+        BibliothekView.SetSchueler(schueler);
+
       if (Zugriff.Instance.HatVerwaltungsrechte)
       {
         KurszuordnungenView.SetSchueler(schueler);

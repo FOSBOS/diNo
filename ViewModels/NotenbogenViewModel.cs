@@ -15,6 +15,8 @@ namespace diNo.ViewModels
 
     public bool IsAdminEdit => Zugriff.Instance.HatRolle(Rolle.Admin);
     public bool HatVerwaltungsrechte => Zugriff.Instance.HatVerwaltungsrechte;
+    public bool Show11 => schueler != null && schueler.hatVorHj;
+    public bool ShowAbiCols => schueler != null && schueler.getKlasse.Jahrgangsstufe >= Jahrgangsstufe.Zwoelf;
 
     public ObservableCollection<NotenRow> Rows { get; } = new ObservableCollection<NotenRow>();
     public ObservableCollection<PunktesummeRow> PunktesummeRows { get; } = new ObservableCollection<PunktesummeRow>();

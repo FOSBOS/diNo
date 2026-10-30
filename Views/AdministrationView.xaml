@@ -24,6 +24,7 @@
           <ColumnDefinition Width="220" />
           <ColumnDefinition Width="220" />
           <ColumnDefinition Width="220" />
+          <ColumnDefinition Width="220" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
           <RowDefinition Height="Auto" />
@@ -58,6 +59,17 @@
             <CheckBox Width="180" Margin="0,8,0,0" IsChecked="{Binding RptDruck}">
               <TextBlock Text="Mit dem Reportviewer öffnen (für Zeugnisse, Bildschirm-Auflösung auf 100% stellen)" TextWrapping="Wrap" />
             </CheckBox>
+          </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Row="0" Grid.Column="4" Header="Bibliothek" Visibility="{Binding HatBibliotheksrechte, Converter={StaticResource BoolToVis}}">
+          <StackPanel Width="180">
+            <Button Content="Bücher (Stammdaten)" Command="{Binding BuecherCommand}" />
+            <Button Content="Standardsätze" Command="{Binding BuchStandardsaetzeCommand}" />
+            <Button Content="Sammel-Einbuchung" Command="{Binding BuchSammelEinbuchenCommand}" />
+            <Button Content="Offene Ausleihen / Mahnstufen" Command="{Binding BibliothekMahnuebersichtCommand}" />
+            <CheckBox Content="Bibliothek anzeigen" Margin="0,8,0,0" IsChecked="{Binding BibliothekAnzeigenChecked}"
+                      ToolTip="Wenn aktiv, sehen alle Lehrer den Bibliothek-Reiter (sonst nur Admins und Lehrer mit Rolle Bibliothek)" />
           </StackPanel>
         </GroupBox>
 

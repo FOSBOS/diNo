@@ -226,21 +226,24 @@ namespace diNo
       row.Geburtsort = El(schuelerElement, "geburtsort") ?? "";
       row.Ausbildungsrichtung = ErmittleAusbildungsrichtung(kennung, klassenname);
 
-      string bekenntnis;
-      ReligionSchluesselZuKurzform.TryGetValue(int.Parse(El(schuelerElement, "religionszugehoerigkeit")), out bekenntnis);
-      row.Bekenntnis = bekenntnis;
+      // religionszugehoerigkeit/religion_ethik sind in der ASV-XML nicht für jeden Schüler angegeben;
+      // ein fehlender/ungültiger Wert bedeutet "nicht angegeben" und darf den Import nicht abbrechen.
+      int religionszugehoerigkeit;
+      if (int.TryParse(El(schuelerElement, "religionszugehoerigkeit"), out religionszugehoerigkeit))
+      {
+        string bekenntnis;
+        if (ReligionSchluesselZuKurzform.TryGetValue(religionszugehoerigkeit, out bekenntnis))
+          row.Bekenntnis = bekenntnis;
+      }
 
-        string reliethik;
-        try
+        int religionEthik;
+        if (int.TryParse(El(schuelerElement, "religion_ethik"), out religionEthik))
         {
-            if (ReligionSchluesselZuKurzform.TryGetValue(int.Parse(El(schuelerElement, "religion_ethik")), out reliethik))
+            string reliethik;
+            if (ReligionSchluesselZuKurzform.TryGetValue(religionEthik, out reliethik))
                 row.ReligionOderEthik = reliethik;
         }
-        catch
-        {
-            ;
-        }
-        
+
 
         DateTime? eintritt = ParseAsvDatum(El(schuelerElement, "eintrittsdatum"));
         if (eintritt == null) row.SetEintrittAmNull();

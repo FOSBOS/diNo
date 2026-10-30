@@ -190,7 +190,7 @@ namespace diNo
     public NotenbogenDruck(Schueler s) : base(s, Bericht.Notenbogen)
     {
       var eigeneAnschrift = s.getEigeneAnschrift();
-      Anschrift = eigeneAnschrift == null ? "" : eigeneAnschrift.Strasse + "\n" + eigeneAnschrift.PLZ + " " + eigeneAnschrift.Ort;
+      Anschrift = eigeneAnschrift == null ? "" : eigeneAnschrift.Strasse + (eigeneAnschrift.IsHausnummerNull() || eigeneAnschrift.Hausnummer == "" ? "" : " " + eigeneAnschrift.Hausnummer) + "\n" + eigeneAnschrift.PLZ + " " + eigeneAnschrift.Ort;
       Telefon = eigeneAnschrift == null || eigeneAnschrift.IsTelefonnummerNull() ? "" : eigeneAnschrift.Telefonnummer;
       GeborenInAm = "geboren am " + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + " in " + s.Data.Geburtsort;
       KlasseMitZweig = s.KlassenBezeichnung;

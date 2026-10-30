@@ -20,6 +20,7 @@ namespace diNo.ViewModels
 
     public bool IsAdmin => Zugriff.Instance.HatRolle(Rolle.Admin);
     public bool ShowTest => Zugriff.Instance.IsTestDB;
+    public bool HatBibliotheksrechte => Zugriff.Instance.HatBibliotheksrechte;
 
     // Globale Einstellungen
     [ObservableProperty] private bool sperreChecked;
@@ -41,6 +42,10 @@ namespace diNo.ViewModels
     [ObservableProperty] private bool unterschriftGez;
     [ObservableProperty] private bool rptDruck;
 
+    // Bibliothek
+    [ObservableProperty] private bool bibliothekAnzeigenChecked;
+    private bool bibliothekAnzeigenInitialisiert;
+
     public AdministrationViewModel()
     {
       if (IsAdmin)
@@ -51,9 +56,23 @@ namespace diNo.ViewModels
         LeseModusVollstaendig = konstanten.LeseModusExcel == 1;
       }
       ZeugnisDatum = konstanten.Zeugnisdatum;
+
+      if (HatBibliotheksrechte)
+        BibliothekAnzeigenChecked = konstanten.BibliothekAnzeigen == 1;
+      bibliothekAnzeigenInitialisiert = true; // ab hier loest Aendern der Checkbox das Speichern aus
     }
 
     partial void OnRptDruckChanged(bool value) => Zugriff.Instance.RptDruck = value;
+
+    // Speichert sofort beim Umschalten, da diese Checkbox (anders als die übrigen "Globalen
+    // Einstellungen") auch für Nicht-Admins mit Rolle Bibliothek sichtbar/bedienbar ist und daher
+    // keinen eigenen, nur-Admin-gegateten "Übernehmen"-Button mitbenutzen kann.
+    partial void OnBibliothekAnzeigenCheckedChanged(bool value)
+    {
+      if (!bibliothekAnzeigenInitialisiert) return;
+      konstanten.BibliothekAnzeigen = value ? 1 : 0;
+      new GlobaleKonstantenTableAdapter().Update(konstanten);
+    }
 
     private List<Schueler> GetSelectedObjects()
     {
@@ -133,6 +152,13 @@ namespace diNo.ViewModels
     [RelayCommand] private void Globales() => new Views.GlobalesWindow().ShowDialog();
     [RelayCommand] private void Klassen() => new Views.KlasseWindow().ShowDialog();
     [RelayCommand] private void Berechtigungen() => new ReportBerechtigungen(LehrerRolleDruck.CreateLehrerRolleDruck()).Show();
+
+    // -------------------- Bibliothek --------------------
+
+    [RelayCommand] private void Buecher() => new Views.BuecherWindow().ShowDialog();
+    [RelayCommand] private void BuchStandardsaetze() => new Views.BuchStandardsatzWindow().ShowDialog();
+    [RelayCommand] private void BuchSammelEinbuchen() => new Views.BuchSammelEinbuchenWindow().ShowDialog();
+    [RelayCommand] private void BibliothekMahnuebersicht() => new Views.BibliothekMahnuebersichtWindow().ShowDialog();
     private Views.MailDialogWindow frmMail;
 
     [RelayCommand]

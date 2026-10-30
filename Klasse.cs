@@ -20,7 +20,12 @@ namespace diNo
     None = 0,
     FOS = 1,
     BOS = 2,
-    ALLE = 15
+    ALLE = 15,
+    // keine echten Schularten, sondern Sentinel-Werte für BuchStandardsatz: dort ersetzen sie die
+    // Jahrgangsstufe/Schulart/Zweig-Konstellation durch eine Fremdsprachenbelegung des Schülers
+    // (siehe BuchStandardsatz.PasstZu) - z.B. "Alle Französisch-Schüler der 11. Klasse brauchen Buch X".
+    Franzoesisch = 20,
+    Spanisch = 21
   }
 
   public enum Zweig

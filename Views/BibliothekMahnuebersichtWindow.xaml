@@ -1,0 +1,57 @@
+<Window x:Class="diNo.Views.BibliothekMahnuebersichtWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Bibliothek: Offene Ausleihen / Mahnstufen" Height="600" Width="820"
+        WindowStartupLocation="CenterScreen" FontSize="14">
+  <Grid Margin="16">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+      <Label Content="Mahnstufe" VerticalAlignment="Center" Padding="0,0,8,0" />
+      <ComboBox Width="160" ItemsSource="{Binding MahnstufeFilterOptions}" DisplayMemberPath="Value" SelectedValuePath="Key"
+                SelectedValue="{Binding MahnstufeFilter}" VerticalAlignment="Center" />
+      <Button Content="Aktualisieren" Width="110" Height="28" Margin="16,0,0,0"
+              Command="{Binding RefreshCommand}" VerticalAlignment="Center" />
+    </StackPanel>
+
+    <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+      <CheckBox Content="Alle auswählen" IsChecked="{Binding AlleAusgewaehlt}" VerticalAlignment="Center" />
+      <Label Content="neue Mahnstufe für Auswahl" Margin="24,0,0,0" VerticalAlignment="Center" />
+      <ComboBox Width="140" Margin="8,0,0,0" ItemsSource="{Binding MahnstufeOptions}" DisplayMemberPath="Value" SelectedValuePath="Key"
+                SelectedValue="{Binding NeueMahnstufeFuerAuswahl}" VerticalAlignment="Center" />
+      <Button Content="Setzen" Width="90" Height="28" Margin="8,0,0,0"
+              Command="{Binding MahnstufeFuerAuswahlSetzenCommand}" VerticalAlignment="Center" />
+    </StackPanel>
+
+    <DataGrid Grid.Row="2" ItemsSource="{Binding Eintraege}" AutoGenerateColumns="False"
+              IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False" SelectionUnit="FullRow">
+      <DataGrid.Columns>
+        <DataGridTemplateColumn Header="" Width="36">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+        <DataGridTextColumn Header="Schüler" Binding="{Binding NameVorname}" Width="180" />
+        <DataGridTextColumn Header="Klasse" Binding="{Binding KlassenBezeichnung}" Width="90" />
+        <DataGridTextColumn Header="offene Bücher" Binding="{Binding AnzahlOffen}" Width="90" />
+        <DataGridTextColumn Header="seit" Binding="{Binding AeltesteAusgabeAm, StringFormat=dd.MM.yyyy}" Width="90" />
+        <DataGridTextColumn Header="Bücher" Binding="{Binding OffeneBuecherText}" Width="*" />
+        <DataGridTemplateColumn Header="Mahnstufe" Width="140">
+          <DataGridTemplateColumn.CellTemplate>
+            <DataTemplate>
+              <ComboBox ItemsSource="{Binding DataContext.MahnstufeOptions, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                        DisplayMemberPath="Value" SelectedValuePath="Key"
+                        SelectedValue="{Binding MahnstufeValue, UpdateSourceTrigger=PropertyChanged}" />
+            </DataTemplate>
+          </DataGridTemplateColumn.CellTemplate>
+        </DataGridTemplateColumn>
+      </DataGrid.Columns>
+    </DataGrid>
+  </Grid>
+</Window>

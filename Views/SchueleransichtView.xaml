@@ -23,8 +23,21 @@
 
       <!-- Adresse und Kontakt -->
       <StackPanel Grid.Column="0">
-        <TextBlock Text="Straße" Style="{StaticResource FeldLabel}" />
-        <TextBox Text="{Binding Strasse, UpdateSourceTrigger=PropertyChanged}" />
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="60" />
+          </Grid.ColumnDefinitions>
+          <StackPanel Grid.Column="0">
+            <TextBlock Text="Straße" Style="{StaticResource FeldLabel}" Margin="0,0,0,2" />
+            <TextBox Text="{Binding Strasse, UpdateSourceTrigger=PropertyChanged}" />
+          </StackPanel>
+          <StackPanel Grid.Column="2">
+            <TextBlock Text="Nr." Style="{StaticResource FeldLabel}" Margin="0,0,0,2" />
+            <TextBox Text="{Binding Hausnummer, UpdateSourceTrigger=PropertyChanged}" />
+          </StackPanel>
+        </Grid>
 
         <Grid Margin="0,6,0,0">
           <Grid.ColumnDefinitions>

@@ -15,12 +15,17 @@ namespace diNo.Views
     {
       InitializeComponent();
       DataContext = vm;
+      Zeitpunkt z = (Zeitpunkt) Zugriff.Instance.aktZeitpunkt;
+      ChkShowHj1.IsChecked = z == Zeitpunkt.HalbjahrUndProbezeitFOS;
+      ChkShowHj2.IsChecked = z > Zeitpunkt.HalbjahrUndProbezeitFOS;
+      ChkShowAbi.IsChecked = z >= Zeitpunkt.ErstePA && z <= Zeitpunkt.DrittePA;
       UpdateColumnVisibility();
     }
 
     public void SetSchueler(Schueler schueler)
     {
       vm.SetSchueler(schueler);
+      UpdateColumnVisibility();
     }
 
     private void ShowChanged(object sender, RoutedEventArgs e) => UpdateColumnVisibility();
@@ -29,9 +34,10 @@ namespace diNo.Views
     {
       if (ColGE == null) return; // Checked-Events feuern schon während InitializeComponent, bevor alle Spalten existieren
 
+      SetVisible(vm.Show11, Col11_1, Col11_2);
       SetVisible(ChkShowHj1.IsChecked == true, ColSlHj1, ColSchnittMdl1, ColSaHj1, ColPunkte2DezHj1);
       SetVisible(ChkShowHj2.IsChecked == true, ColSlHj2, ColSchnittMdl2, ColSaHj2, ColPunkte2DezHj2);
-      SetVisible(ChkShowAbi.IsChecked == true, ColSAP, ColMAP, ColAPG);
+      SetVisible(ChkShowAbi.IsChecked == true && vm.ShowAbiCols, ColSAP, ColMAP, ColAPG);
 
       bool fixedVisible = ChkShowHj2.IsChecked == true || ChkShowAbi.IsChecked == true ||
         (ChkShowHj1.IsChecked != true && ChkShowHj2.IsChecked != true && ChkShowAbi.IsChecked != true);
