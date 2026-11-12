@@ -1,7 +1,6 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.Reporting.WinForms;
 using SevenZip;
 using System;
 using System.Collections.Generic;
@@ -335,50 +334,17 @@ namespace diNo
       Bericht rptTyp = Bericht.Notenmitteilung;
       List<SchuelerDruck> liste = new List<SchuelerDruck>();
       liste.Add(SchuelerDruck.CreateSchuelerDruck(s, rptTyp, UnterschriftZeugnis.SL));
-      
-      //ReportViewer im Hintergrund erstellen, um PDF zu drucken, und Report zuweisen.
-      ReportViewer rpt = new ReportViewer();
-      ReportDataSource dataSource = new ReportDataSource();
-      dataSource.Name = "DataSet1";
 
-      //Report als Embedded Resource mit dem Namen "Report.rdlc" ... entsprechend anpassen
-      rpt.LocalReport.ReportEmbeddedResource = "diNo." + SchuelerDruck.GetBerichtsname(rptTyp) + ".rdlc"; //"diNo.rptNotenmitteilung.rdlc";
-
-      // Unterberichte einbinden
-      rpt.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(subrptEventHandler);
-
-      //Report mit Daten befüllen
-
-      dataSource.Value = liste;
-      rpt.LocalReport.DataSources.Add(dataSource);
+      byte[] PDF = PdfReportRenderer.BuildAndRenderToPdf(
+          "diNo." + SchuelerDruck.GetBerichtsname(rptTyp) + ".rdlc",
+          "DataSet1",
+          liste,
+          (sender, e) => SchuelerDruckSubreportHandler.Process(e, rptTyp));
 
       //Report als PDF in Datei speichern
-      byte[] PDF = rpt.LocalReport.Render("PDF");
-      FileStream fsReport = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None);
-      fsReport.Write(PDF, 0, PDF.Length);
-      fsReport.Close();
-
-      rpt.Dispose();
-    }
-
-    void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
-    {
-      string subrpt = e.ReportPath; // jeder Unterbericht ruft diesen EventHandler auf; hier steht drin welcher es ist.
-      int schuelerId;
-      int.TryParse(e.Parameters[0].Values[0], out schuelerId);
-      if (schuelerId > 0)
+      using (FileStream fsReport = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None))
       {
-        Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-        /*
-        if (subrpt == "subrptPunktesumme" || subrpt == "subrptPunktesummeNB")
-        {
-          e.DataSources.Add(new ReportDataSource("DataSet1", PunkteSummeDruck.Create(schueler, rptTyp)));
-        }
-        else*/
-        {
-          IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenDruck(Bericht.Notenmitteilung);
-          e.DataSources.Add(new ReportDataSource("DataSet1", noten));
-        }
+        fsReport.Write(PDF, 0, PDF.Length);
       }
     }
 

@@ -224,6 +224,7 @@
     <Compile Include="LeseNotenAusExcel.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="NotenCheckController.cs" />
+    <Compile Include="PdfReportRenderer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReportController.cs" />

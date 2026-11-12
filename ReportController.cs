@@ -42,13 +42,7 @@ namespace diNo
       }
       else // als PDF speichern, dann öffnen, um Skalierungsprobleme zu vermeiden
       {
-        string mimeType, encoding, filenameExtension;
-        string[] streamids;
-        Microsoft.Reporting.WinForms.Warning[] warnings;
-        int numPages = rpt.reportViewer.LocalReport.GetTotalPages();
-        byte[] bytes = rpt.reportViewer.LocalReport.Render(
-           "PDF", null, out mimeType, out encoding, out filenameExtension,
-           out streamids, out warnings);
+        byte[] bytes = PdfReportRenderer.RenderToPdf(rpt.reportViewer.LocalReport);
 
         string file = @"C:\tmp\";
         if (!Directory.Exists(file))
@@ -160,7 +154,7 @@ namespace diNo
 
       // Unterberichte einbinden
       rpt.reportViewer.LocalReport.SubreportProcessing +=
-         new SubreportProcessingEventHandler(subrptEventHandler);
+         (sender, e) => SchuelerDruckSubreportHandler.Process(e, rptTyp);
 
       // In einer Klassenliste wird ein Titel ausgegeben, wenn die Schüler über bestimmte Vorkommnisse selektiert wurden
       if ((rptTyp == Bericht.Klassenliste || rptTyp == Bericht.Auswahlliste) && Zugriff.Instance.markierteSchueler.Count > 0)
@@ -168,8 +162,13 @@ namespace diNo
         rpt.reportViewer.LocalReport.SetParameters(new ReportParameter("Titel", Vorkommnisse.Instance.VorkommnisText(Zugriff.Instance.selectedVorkommnisart)));
       }
     }
+  }
 
-    void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
+  // Unterbericht-Logik für ReportSchuelerdruck, ausgelagert, damit sie auch außerhalb
+  // des interaktiven ReportViewer-Pfads (z.B. von MailTools beim PDF-Versand) genutzt werden kann.
+  public static class SchuelerDruckSubreportHandler
+  {
+    public static void Process(SubreportProcessingEventArgs e, Bericht rptTyp)
     {
       // ACHTUNG: Der Parameter muss im Haupt- und im Unterbericht definiert werden (mit gleichem Namen)
       string subrpt = e.ReportPath; // jeder Unterbericht ruft diesen EventHandler auf; hier steht drin welcher es ist.
@@ -214,7 +213,7 @@ namespace diNo
           vwVorkommnisTableAdapter BerichtTableAdapter;
           BerichtTableAdapter = new vwVorkommnisTableAdapter();
           if (subrpt == "subrptAbiVorkommnis")
-            BerichtTableAdapter.FillBySchuelerIdForAbi(vorkommnisse, schuelerId);   //nur bestimmte Vorkommnisse selektieren              
+            BerichtTableAdapter.FillBySchuelerIdForAbi(vorkommnisse, schuelerId);   //nur bestimmte Vorkommnisse selektieren
           else
             BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);
           e.DataSources.Add(new ReportDataSource("DataSetVorkommnis", (DataTable)vorkommnisse));
