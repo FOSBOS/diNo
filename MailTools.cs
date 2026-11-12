@@ -212,6 +212,7 @@ namespace diNo
 
       body += "\n\nMit freundlichen Grüßen\n" + kl.NameDienstbezeichnung;
       body += "\n" + kl.KLString;
+      body += "\n\nHinweis: Dieses Mail wurde maschinell versandt.";
       body = body.Replace("<br>", "\n");
       log.Debug(body);
       if (!isTest)

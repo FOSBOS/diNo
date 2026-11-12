@@ -113,6 +113,12 @@ namespace diNo.ViewModels
     private void Mahnverwaltung() => new Views.BibliothekMahnuebersichtWindow().ShowDialog();
 
     [RelayCommand]
+    private void BuecherStammdaten() => new Views.BuecherWindow().ShowDialog();
+
+    [RelayCommand]
+    private void BuchStandardsaetze() => new Views.BuchStandardsatzWindow().ShowDialog();
+
+    [RelayCommand]
     private void StandardsatzEinbuchen()
     {
       if (schueler == null) return;

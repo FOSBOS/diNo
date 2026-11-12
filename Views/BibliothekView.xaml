@@ -43,19 +43,20 @@
               Content="Alle Bücher zurückgeben" ToolTip="Markiert alle aktiven Ausleihen dieses Schülers als zurückgegeben" />
     </StackPanel>
 
-    <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Orientation="Horizontal" Margin="16,0,0,0"
-                Visibility="{Binding HatBibliotheksrechte, Converter={StaticResource BoolToVis}}">
-      <StackPanel>
+    <StackPanel Grid.Row="0" Grid.RowSpan="3" Orientation="Horizontal" Margin="542,0,0,0"
+                Visibility="{Binding HatBibliotheksrechte, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2">
+      <StackPanel IsEnabled="False" Width="110">
         <TextBlock Text="Mahnstufe:" FontSize="14" Margin="0,0,0,8" />
         <RadioButton GroupName="Mahnstufe" Content="ungemahnt" IsChecked="{Binding IstUngemahnt}" Margin="0,0,0,6" />
         <RadioButton GroupName="Mahnstufe" Content="1. Mahnung" IsChecked="{Binding IstErsteMahnung}" Margin="0,0,0,6" />
         <RadioButton GroupName="Mahnstufe" Content="2. Mahnung" IsChecked="{Binding IstZweiteMahnung}" Margin="0,0,0,6" />
         <RadioButton GroupName="Mahnstufe" Content="Rechnung" IsChecked="{Binding IstRechnung}" />
       </StackPanel>
-      <Button Width="109" Height="52" Margin="12,24,10,0" VerticalAlignment="Top"
-              Command="{Binding MahnverwaltungCommand}">
-        <TextBlock Text="Mahn-&#x0a;verwaltung" TextWrapping="Wrap" TextAlignment="Center" />
-      </Button>
+      <StackPanel Width="174">
+        <Button Height="32" Margin="0,0,0,6" Content="Bücher (Stammdaten)" Command="{Binding BuecherStammdatenCommand}" />
+        <Button Height="32" Margin="0,0,0,6" Content="Standardsätze" Command="{Binding BuchStandardsaetzeCommand}" />
+        <Button Height="32" Content="Mahnverwaltung" Command="{Binding MahnverwaltungCommand}" />
+      </StackPanel>
     </StackPanel>
 
     <DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" ItemsSource="{Binding Eintraege}" AutoGenerateColumns="False"
