@@ -27,11 +27,15 @@ namespace diNo
     public bool IstU18 { get; set; }
     public string OrtDatum { get; set; }
     public string Logo { get; private set; }
+    public bool MitPreis { get; set; }
+    public string Gesamtbetrag { get; set; } = "";
 
     public BriefDaten(Schueler s, BriefTyp typ)
     {
       Lehrer lehrer;
-      IstU18 = s.Alter() < 18 && (typ != BriefTyp.Standard) || typ == BriefTyp.Mitteilung; // Schüleradresse bei normalen Nachterminen
+      bool IstMahnungOderRechnung = typ == BriefTyp.Mahnung1 || typ == BriefTyp.Mahnung2 || typ == BriefTyp.Rechnung;
+      // Mahnung/Rechnung geht immer an den Schüler selbst, nie an die Eltern.
+      IstU18 = !IstMahnungOderRechnung && (s.Alter() < 18 && (typ != BriefTyp.Standard) || typ == BriefTyp.Mitteilung); // Schüleradresse bei normalen Nachterminen
       bool UnterschriftKL = typ == BriefTyp.Gefaehrdung || typ == BriefTyp.Attestpflicht; // hier nicht der angemeldete Benutzer
 
       Id = s.Id;
@@ -77,6 +81,37 @@ namespace diNo
       }
     }
 
+    // Baut den Mahnung/Rechnung-Brief für die aktuelle Mahnstufe des Schülers.
+    // Liefert null bei Mahnstufe.Ungemahnt (nichts zu drucken/versenden) - Aufrufer filtert das.
+    public static BriefDaten CreateMahnungRechnung(Schueler s)
+    {
+      BriefTyp typ;
+      switch (s.Mahnstufe)
+      {
+        case Mahnstufe.ErsteMahnung: typ = BriefTyp.Mahnung1; break;
+        case Mahnstufe.ZweiteMahnung: typ = BriefTyp.Mahnung2; break;
+        case Mahnstufe.Rechnung: typ = BriefTyp.Rechnung; break;
+        default: return null;
+      }
+
+      var b = new BriefDaten(s, typ);
+
+      if (typ == BriefTyp.Rechnung)
+      {
+        b.Betreff = "Rechnung";
+        b.MitPreis = true;
+        b.Gesamtbetrag = string.Format("{0:0.00} €", BuchDruck.Gesamtbetrag(s));
+        b.Inhalt += "für die unten aufgeführten, nicht zurückgegebenen Bücher stellen wir Ihnen den Anschaffungspreis in Rechnung:";
+      }
+      else
+      {
+        b.Betreff = typ == BriefTyp.Mahnung1 ? "1. Mahnung" : "2. Mahnung";
+        b.Inhalt += "die folgenden ausgeliehenen Bücher wurden bisher nicht zurückgegeben. Bitte geben Sie diese umgehend in der Bibliothek ab:";
+      }
+
+      return b;
+    }
+
     private string ConvertImageToBase64(Image image, ImageFormat format)
     {
       byte[] imageArray;
@@ -100,6 +135,9 @@ namespace diNo
     Ersatzpruefung = 2,
     Gefaehrdung = 3,
     Attestpflicht = 4,
-    Mitteilung = 5
+    Mitteilung = 5,
+    Mahnung1 = 6,
+    Mahnung2 = 7,
+    Rechnung = 8
   }
 }

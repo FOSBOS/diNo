@@ -90,5 +90,40 @@ namespace diNo.ViewModels
       foreach (var row in Eintraege)
         if (ausgewaehlteIds.Contains(row.Schueler.Id)) row.IsSelected = true;
     }
+
+    // Für Drucken/Mailen: ausgewählte Schüler, deren Mahnstufe != Ungemahnt (nur die haben
+    // einen Mahnung/Rechnung-Brief). Warnt, wenn ungemahnte Schüler dabei waren und übersprungen wurden.
+    private List<Schueler> AusgewaehlteMitMahnstufe()
+    {
+      var ausgewaehlte = Eintraege.Where(r => r.IsSelected).ToList();
+      if (ausgewaehlte.Count == 0)
+      {
+        MessageBox.Show("Bitte zuerst mindestens einen Schüler auswählen.");
+        return null;
+      }
+
+      var mitMahnstufe = ausgewaehlte.Where(r => r.Schueler.Mahnstufe != Mahnstufe.Ungemahnt).Select(r => r.Schueler).ToList();
+      int uebersprungen = ausgewaehlte.Count - mitMahnstufe.Count;
+      if (uebersprungen > 0)
+        MessageBox.Show(uebersprungen + " ausgewählte(r) Schüler ist/sind ungemahnt und wird/werden übersprungen.");
+
+      return mitMahnstufe.Count == 0 ? null : mitMahnstufe;
+    }
+
+    [RelayCommand]
+    private void MahnungenDrucken()
+    {
+      var liste = AusgewaehlteMitMahnstufe();
+      if (liste == null) return;
+      new ReportMahnung(liste).Show();
+    }
+
+    [RelayCommand]
+    private void MahnungenMailen()
+    {
+      var liste = AusgewaehlteMitMahnstufe();
+      if (liste == null) return;
+      new Views.MailDialogWindow().Anzeigen(liste);
+    }
   }
 }

@@ -23,7 +23,9 @@ namespace diNo
     Keiner = 0,
     Noten = 1,
     PDF = 2,
-    Absenzen = 3    
+    Absenzen = 3,
+    Mahnung = 4,
+    Buecherinfo = 5
   }
 
   public class MailTools : IDisposable
@@ -129,6 +131,8 @@ namespace diNo
 
         if (isTest)
           mailTo = SafeMail(Zugriff.Instance.lehrer);
+        else if (anhangTyp == AnhangTyp.Mahnung)
+          mailTo = s.GetPrivatMail();
         else if (anEltern)
           mailTo = s.GetElternMail();
         else
@@ -141,6 +145,13 @@ namespace diNo
 
         msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
 
+        if (anhangTyp == AnhangTyp.Mahnung && !isTest)
+        {
+          string elternMail = s.GetElternMail();
+          if (IstMailGueltig(elternMail, "Eltern (CC) " + s.NameVorname))
+            msg.Cc.Add(new MimeKit.MailboxAddress(elternMail, elternMail));
+        }
+
         var builder = new MimeKit.BodyBuilder();
         builder.TextBody = (s.ErzeugeAnrede(anEltern,true) + BodyText).Replace("<br>", "\n");
 
@@ -151,6 +162,26 @@ namespace diNo
         }
         else if (anhangTyp == AnhangTyp.PDF && DateiAnhang != "")
           builder.Attachments.Add(DateiAnhang);
+        else if (anhangTyp == AnhangTyp.Mahnung)
+        {
+          var daten = BriefDaten.CreateMahnungRechnung(s);
+          if (daten == null)
+          {
+            log.Warn(s.NameVorname + " ist ungemahnt, kein Mahnung/Rechnung-Mail verschickt.");
+            return;
+          }
+          byte[] pdf = PdfReportRenderer.BuildAndRenderToPdf(
+              "diNo.rptMahnung.rdlc", "DataSet1", new List<BriefDaten> { daten },
+              (sender, e) => BuecherlisteSubreportHandler.Process(e));
+          builder.Attachments.Add(daten.Betreff + ".pdf", pdf);
+        }
+        else if (anhangTyp == AnhangTyp.Buecherinfo)
+        {
+          byte[] pdf = PdfReportRenderer.BuildAndRenderToPdf(
+              "diNo.rptBuecherinfo.rdlc", "DataSet1", new List<BuecherinfoDruck> { new BuecherinfoDruck(s) },
+              (sender, e) => BuecherlisteSubreportHandler.Process(e));
+          builder.Attachments.Add("Buecherinfo.pdf", pdf);
+        }
 
         msg.Body = builder.ToMessageBody();
 

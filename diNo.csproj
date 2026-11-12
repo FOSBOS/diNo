@@ -203,6 +203,7 @@
     <Compile Include="Berechnungen.cs" />
     <Compile Include="Buch.cs" />
     <Compile Include="BuchAusleihe.cs" />
+    <Compile Include="BuchDruck.cs" />
     <Compile Include="BuchStandardsatz.cs" />
     <Compile Include="CellConstant.cs" />
     <Compile Include="diNoDataSet.cs">
@@ -240,6 +241,9 @@
     <Compile Include="Vorkommnis.cs" />
     <Compile Include="WahlpflichtfachReader.cs" />
     <Compile Include="Zugriff.cs" />
+    <EmbeddedResource Include="rptBuecherinfo.rdlc" />
+    <EmbeddedResource Include="rptMahnung.rdlc" />
+    <EmbeddedResource Include="subrptBuecherliste.rdlc" />
     <EmbeddedResource Include="rptAbiergebnisse.rdlc" />
     <EmbeddedResource Include="rptKlassenkonferenz.rdlc" />
     <EmbeddedResource Include="rptAuswahlliste.rdlc" />

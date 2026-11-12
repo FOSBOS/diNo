@@ -33,6 +33,8 @@ namespace diNo.ViewModels
     [ObservableProperty] private bool isAnhangNoten;
     [ObservableProperty] private bool isAnhangPDF;
     [ObservableProperty] private bool isAnhangAbsenzen;
+    [ObservableProperty] private bool isAnhangMahnung;
+    [ObservableProperty] private bool isAnhangBuecherinfo;
 
     [ObservableProperty] private bool isTest = true;
     [ObservableProperty] private bool isZip;
@@ -73,7 +75,9 @@ namespace diNo.ViewModels
 
         AnhangTyp anhangTyp = IsAnhangNoten ? AnhangTyp.Noten :
             (IsAnhangPDF ? AnhangTyp.PDF :
-            (IsAnhangAbsenzen ? AnhangTyp.Absenzen : AnhangTyp.Keiner));
+            (IsAnhangAbsenzen ? AnhangTyp.Absenzen :
+            (IsAnhangMahnung ? AnhangTyp.Mahnung :
+            (IsAnhangBuecherinfo ? AnhangTyp.Buecherinfo : AnhangTyp.Keiner))));
         string bodyText = null;
 
         if (!IsAnhangAbsenzen)

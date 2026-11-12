@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using static System.Net.WebRequestMethods;
@@ -299,6 +300,66 @@ namespace diNo
         Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
         IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenZeugnisDruck(Bericht.Gefaehrdung);
         e.DataSources.Add(new ReportDataSource("DataSet1", noten));
+      }
+    }
+  }
+
+  public class ReportBuecherinfo : ReportController
+  {
+    private List<Schueler> orgdataSource;
+    public ReportBuecherinfo(List<Schueler> dataSource) : base() { orgdataSource = dataSource; }
+    public override void Init()
+    {
+      rpt.BerichtBindingSource.DataSource = BuecherinfoDruck.Create(orgdataSource);
+      rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptBuecherinfo.rdlc";
+      rpt.reportViewer.LocalReport.SubreportProcessing +=
+         (sender, e) => BuecherlisteSubreportHandler.Process(e);
+    }
+  }
+
+  // Deckt 1./2. Mahnung und Rechnung in einem Report ab - welcher Brieftyp je Schüler
+  // gilt, ergibt sich aus dessen aktueller Mahnstufe (siehe BriefDaten.CreateMahnungRechnung).
+  public class ReportMahnung : ReportController
+  {
+    private List<Schueler> orgdataSource;
+    private List<BriefDaten> bindingDataSource;
+    public ReportMahnung(List<Schueler> dataSource) : base() { orgdataSource = dataSource; }
+    public override void Init()
+    {
+      bindingDataSource = orgdataSource
+        .Select(BriefDaten.CreateMahnungRechnung)
+        .Where(b => b != null)
+        .ToList();
+
+      if (bindingDataSource.Count == 0)
+      {
+        MessageBox.Show("Keiner der ausgewählten Schüler hat eine Mahnstufe ungleich 'ungemahnt'.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        rpt = null;
+        return;
+      }
+
+      rpt.BerichtBindingSource.DataSource = bindingDataSource;
+      rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptMahnung.rdlc";
+      rpt.reportViewer.LocalReport.SubreportProcessing +=
+         (sender, e) => BuecherlisteSubreportHandler.Process(e);
+    }
+  }
+
+  // Liefert die Bücherliste (aktuell offene Ausleihen) für den Bücherliste-Subreport,
+  // gemeinsam genutzt von ReportBuecherinfo und ReportMahnung sowie vom Mail-Versand
+  // (MailTools, über PdfReportRenderer). Ob die Preis-Spalte sichtbar ist, entscheidet
+  // rein der RDL-Parameter "MitPreis" im jeweiligen Hauptbericht - dieser Handler muss
+  // ihn nicht auswerten.
+  public static class BuecherlisteSubreportHandler
+  {
+    public static void Process(SubreportProcessingEventArgs e)
+    {
+      int schuelerId;
+      int.TryParse(e.Parameters[0].Values[0], out schuelerId);
+      if (schuelerId > 0)
+      {
+        Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
+        e.DataSources.Add(new ReportDataSource("DataSet1", BuchDruck.Create(schueler)));
       }
     }
   }

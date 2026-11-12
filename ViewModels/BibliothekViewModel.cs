@@ -113,6 +113,13 @@ namespace diNo.ViewModels
     private void Mahnverwaltung() => new Views.BibliothekMahnuebersichtWindow().ShowDialog();
 
     [RelayCommand]
+    private void BuecherinfoDrucken()
+    {
+      if (schueler == null) return;
+      new ReportBuecherinfo(new List<Schueler> { schueler }).Show();
+    }
+
+    [RelayCommand]
     private void BuecherStammdaten() => new Views.BuecherWindow().ShowDialog();
 
     [RelayCommand]

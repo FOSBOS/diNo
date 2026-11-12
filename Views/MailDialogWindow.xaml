@@ -34,7 +34,9 @@
           <RadioButton GroupName="Anhang" Content="keiner" IsChecked="{Binding IsAnhangKeiner}" Margin="0,0,0,6" />
           <RadioButton GroupName="Anhang" Content="Notenübersicht" IsChecked="{Binding IsAnhangNoten}" Margin="0,0,0,6" />
           <RadioButton GroupName="Anhang" Content="PDF (gleich für alle Empfänger)" IsChecked="{Binding IsAnhangPDF}" Margin="0,0,0,6" />
-          <RadioButton GroupName="Anhang" Content="Absenzenübersicht (kein Bodytext nötig)" IsChecked="{Binding IsAnhangAbsenzen}" />
+          <RadioButton GroupName="Anhang" Content="Absenzenübersicht (kein Bodytext nötig)" IsChecked="{Binding IsAnhangAbsenzen}" Margin="0,0,0,6" />
+          <RadioButton GroupName="Anhang" Content="Mahnung/Rechnung (Bibliothek)" IsChecked="{Binding IsAnhangMahnung}" Margin="0,0,0,6" />
+          <RadioButton GroupName="Anhang" Content="Bücherinfo" IsChecked="{Binding IsAnhangBuecherinfo}" />
         </StackPanel>
       </GroupBox>
 
