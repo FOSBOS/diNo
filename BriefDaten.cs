@@ -70,6 +70,7 @@ namespace diNo
         UnterschriftsText = "Unterschrift";
 
       Inhalt = s.ErzeugeAnrede(IstU18);
+      Inhalt2 = "";
       try
       {
         string verz = Directory.GetCurrentDirectory() + "\\Logo\\Logo.png";
@@ -95,18 +96,42 @@ namespace diNo
       }
 
       var b = new BriefDaten(s, typ);
+      int jahr = Zugriff.Instance.Schuljahr;
 
       if (typ == BriefTyp.Rechnung)
       {
         b.Betreff = "Rechnung";
         b.MitPreis = true;
         b.Gesamtbetrag = string.Format("{0:0.00} €", BuchDruck.Gesamtbetrag(s));
-        b.Inhalt += "für die unten aufgeführten, nicht zurückgegebenen Bücher stellen wir Ihnen den Anschaffungspreis in Rechnung:";
+        b.Inhalt += "Sie haben im Schuljahr " + jahr + "/" + (jahr + 1) + " gegen Unterschrift Schulbücher ausgehändigt bekommen. " +
+          "Diese sind bis heute noch nicht zurückgegeben bzw. bei Verlust/Beschädigung ersetzt worden.<br>" +
+          "Deshalb sehen wir uns gezwungen, Ihnen diese Bücher im Auftrag unseres Sachaufwandsträgers, des Zweckverbandes Berufliches Schulzentrum, " +
+          "Wiesstraße 30, 87435 Kempten, wie folgt in Rechnung zu stellen.";
+        b.Inhalt2 = "Bitte überweisen Sie o.g. Betrag auf das Konto DE81 7335 0000 0310 0001 53<br>" +
+          "bei der Sparkasse Allgäu, BIC BYLADEM1ALG<br>" +
+          "Verwendungszweck: Schulbücher, HHSt. 0.2600.1549";
       }
       else
       {
-        b.Betreff = typ == BriefTyp.Mahnung1 ? "1. Mahnung" : "2. Mahnung";
-        b.Inhalt += "die folgenden ausgeliehenen Bücher wurden bisher nicht zurückgegeben. Bitte geben Sie diese umgehend in der Bibliothek ab:";
+        bool istZweiteMahnung = typ == BriefTyp.Mahnung2;
+        string frist = DateTime.Today.AddDays(8).ToString("dd.MM.yyyy");
+
+        b.Betreff = "Rückforderung lehrmittelfreier Bücher (" + (istZweiteMahnung ? "2." : "1.") + " Mahnung)";
+        b.Inhalt += "Sie haben im Schuljahr " + jahr + "/" + ((jahr + 1) % 100).ToString("00") + " lehrmittelfreie Bücher gegen Unterschrift erhalten. " +
+          "Die Rückgabe erfolgte " + (istZweiteMahnung ? "trotz erster Mahnung bislang" : "bislang") +
+          " unvollständig bzw. zu ersetzende Bücher wurden noch nicht ersetzt. Folgende Bücher wurden nicht abgegeben:";
+
+        b.Inhalt2 = "Sie werden gebeten, die ausstehenden Bücher bis spätestens " + frist + " in der Beruflichen Oberschule abzugeben. " +
+          "Sollten Sie nicht mehr im Besitz der Schulbücher oder diese beschädigt sein, so ist Ersatz bei einer Buchhandlung zu beschaffen und bei uns abzugeben.";
+
+        if (istZweiteMahnung)
+        {
+          b.MitPreis = true;
+          b.Gesamtbetrag = string.Format("{0:0.00} €", BuchDruck.Gesamtbetrag(s));
+          b.Inhalt2 += "<br><br>Werden die Bücher bis zum o. a. Termin nicht bei uns abgegeben, sehen wir uns leider gezwungen, diese über unseren Sachaufwandsträger, " +
+            "dem Zweckverband Berufliches Schulzentrum Kempten (Allgäu), in Rechnung stellen zu lassen. In diesem Fall müssen Sie mit oben aufgeführten Kosten rechnen. " +
+            "Wir bitten zu beachten, dass ab dem Tag der Rechnungsstellung keine Rückgabe der Bücher mehr erfolgen kann.";
+        }
       }
 
       return b;
