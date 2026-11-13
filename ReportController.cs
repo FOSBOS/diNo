@@ -340,6 +340,9 @@ namespace diNo
 
       rpt.BerichtBindingSource.DataSource = bindingDataSource;
       rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptMahnung.rdlc";
+      // Logo kommt per Report-Parameter statt per Datensatz-Feld (Fields!Logo.Value) in den
+      // Page Header, da dort bei mehreren Schülern/Seiten kein zuverlässiger Zeilenkontext besteht.
+      rpt.reportViewer.LocalReport.SetParameters(new ReportParameter("Logo", BriefDaten.LoadLogoBase64()));
       rpt.reportViewer.LocalReport.SubreportProcessing +=
          (sender, e) => BuecherlisteSubreportHandler.Process(e);
     }

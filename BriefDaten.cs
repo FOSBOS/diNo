@@ -71,14 +71,23 @@ namespace diNo
 
       Inhalt = s.ErzeugeAnrede(IstU18);
       Inhalt2 = "";
+      Logo = LoadLogoBase64();
+    }
+
+    // Lädt das Schullogo frisch von der Festplatte (als Base64-PNG), damit es pro Schule
+    // austauschbar bleibt. Wird auch von ReportController für rptMahnung verwendet, da dort
+    // das Logo per Report-Parameter statt per Datensatz-Feld gebunden werden muss
+    // (Fields!-Bindung im Page Header funktioniert bei mehrzeiligen Tablix-Reports nicht zuverlässig).
+    public static string LoadLogoBase64()
+    {
       try
       {
         string verz = Directory.GetCurrentDirectory() + "\\Logo\\Logo.png";
-        Logo = ConvertImageToBase64(Image.FromFile(verz), ImageFormat.Png);
+        return ConvertImageToBase64(Image.FromFile(verz), ImageFormat.Png);
       }
       catch
       {
-        Logo = "";
+        return "";
       }
     }
 
@@ -103,7 +112,7 @@ namespace diNo
         b.Betreff = "Rechnung";
         b.MitPreis = true;
         b.Gesamtbetrag = string.Format("{0:0.00} €", BuchDruck.Gesamtbetrag(s));
-        b.Inhalt += "Sie haben im Schuljahr " + jahr + "/" + (jahr + 1) + " gegen Unterschrift Schulbücher ausgehändigt bekommen. " +
+        b.Inhalt += "Sie haben im Schuljahr " + jahr + "/" + (jahr + 1) + " Schulbücher ausgehändigt bekommen. " +
           "Diese sind bis heute noch nicht zurückgegeben bzw. bei Verlust/Beschädigung ersetzt worden.<br>" +
           "Deshalb sehen wir uns gezwungen, Ihnen diese Bücher im Auftrag unseres Sachaufwandsträgers, des Zweckverbandes Berufliches Schulzentrum, " +
           "Wiesstraße 30, 87435 Kempten, wie folgt in Rechnung zu stellen.";
@@ -114,10 +123,10 @@ namespace diNo
       else
       {
         bool istZweiteMahnung = typ == BriefTyp.Mahnung2;
-        string frist = DateTime.Today.AddDays(8).ToString("dd.MM.yyyy");
+        string frist = DateTime.Today.AddDays(7).ToString("dd.MM.yyyy");
 
         b.Betreff = "Rückforderung lehrmittelfreier Bücher (" + (istZweiteMahnung ? "2." : "1.") + " Mahnung)";
-        b.Inhalt += "Sie haben im Schuljahr " + jahr + "/" + ((jahr + 1) % 100).ToString("00") + " lehrmittelfreie Bücher gegen Unterschrift erhalten. " +
+        b.Inhalt += "Sie haben im Schuljahr " + jahr + "/" + ((jahr + 1) % 100).ToString("00") + " lehrmittelfreie Bücher erhalten. " +
           "Die Rückgabe erfolgte " + (istZweiteMahnung ? "trotz erster Mahnung bislang" : "bislang") +
           " unvollständig bzw. zu ersetzende Bücher wurden noch nicht ersetzt. Folgende Bücher wurden nicht abgegeben:";
 
@@ -137,7 +146,7 @@ namespace diNo
       return b;
     }
 
-    private string ConvertImageToBase64(Image image, ImageFormat format)
+    private static string ConvertImageToBase64(Image image, ImageFormat format)
     {
       byte[] imageArray;
 
