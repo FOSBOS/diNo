@@ -24,6 +24,7 @@ namespace diNo.ViewModels
 
     [ObservableProperty] private bool isToSchueler = true;
     [ObservableProperty] private bool isToEltern;
+    [ObservableProperty] private bool isToPrivat;
 
     [ObservableProperty] private bool isReplyDino = true;
     [ObservableProperty] private bool isReplySekretariat;
@@ -60,13 +61,42 @@ namespace diNo.ViewModels
       }
     }
 
+    partial void OnIsAnhangNotenChanged(bool value)
+    {
+      if (value)
+      {
+        Subject = "Notenübersicht";
+        Body = "im Anhang findest deine aktuelle Notenübersicht. Melde dich bei Unstimmigkeiten direkt beim betroffenen Fachlehrer.";
+      }
+    }
+
+    partial void OnIsAnhangMahnungChanged(bool value)
+    {
+      if (value)
+      {
+        IsToPrivat = true;
+        IsReplySekretariat = true;
+        Subject = "Mahnung Bücherrückgabe";
+        Body = "du hast noch nicht alle Bücher abgegeben (s. Anhang). Bitte gib diese spätestens bis zum 05.08. zu den Öffnungszeiten im Sekretariat ab.";
+      }
+    }
+
+    partial void OnIsAnhangBuecherinfoChanged(bool value)
+    {
+      if (value)
+      {
+        Subject = "Bücherinfo";
+        Body = "im Anhang findest du eine Übersicht über alle ausgeliehenen Schulbücher. Melde dich bei Unstimmigkeiten beim Klassenleiter.";
+      }
+    }
+
     [RelayCommand]
     private async Task Send()
     {
       CanSend = false;
       try
       {
-        string subjectToSend = IsAnhangNoten ? "Notenmitteilung" : Subject;
+        string subjectToSend = Subject;
         bool isTestToSend = IsTest;
 
         var replyTyp =
@@ -121,6 +151,19 @@ namespace diNo.ViewModels
 
         var list = sList.ToList(); // Snapshot
 
+        if (IsAnhangMahnung)
+        {
+          // Nur Schüler mailen, die noch offene Buchausleihen UND einen gesetzten Mahnstatus
+          // haben (sonst gäbe es kein Mahnung/Rechnung-PDF, siehe BriefDaten.CreateMahnungRechnung).
+          var gefiltert = list.Where(s => s.Mahnstufe != Mahnstufe.Ungemahnt && s.AktiveAusleihen.Any()).ToList();
+          int uebersprungen = list.Count - gefiltert.Count;
+          if (uebersprungen > 0)
+            MessageBox.Show(uebersprungen + " ausgewählte(r) Schüler ohne offene Bücher bzw. ohne gesetzten Mahnstatus wird/werden übersprungen.");
+          if (gefiltert.Count == 0)
+            return;
+          list = gefiltert;
+        }
+
         await Task.Run(() =>
         {
           using (var mail = new MailTools()) // parameterlos – lädt Settings intern
@@ -129,6 +172,7 @@ namespace diNo.ViewModels
             mail.anhangTyp = anhangTyp;
             mail.replyTyp = replyTyp;
             mail.anEltern = IsToEltern;
+            mail.anPrivat = IsToPrivat;
             mail.isTest = isTestToSend;
 
             if (anhangTyp != AnhangTyp.Absenzen) // dort automatisch generiert

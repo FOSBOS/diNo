@@ -117,13 +117,5 @@ namespace diNo.ViewModels
       if (liste == null) return;
       new ReportMahnung(liste).Show();
     }
-
-    [RelayCommand]
-    private void MahnungenMailen()
-    {
-      var liste = AusgewaehlteMitMahnstufe();
-      if (liste == null) return;
-      new Views.MailDialogWindow().Anzeigen(liste);
-    }
   }
 }

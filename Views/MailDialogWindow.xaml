@@ -17,7 +17,8 @@
       <GroupBox Header="Mail geht an" Padding="8">
         <StackPanel>
           <RadioButton GroupName="Empfaenger" Content="schulische Mailadresse" IsChecked="{Binding IsToSchueler}" Margin="0,0,0,6" />
-          <RadioButton GroupName="Empfaenger" Content="Eltern" IsChecked="{Binding IsToEltern}" />
+          <RadioButton GroupName="Empfaenger" Content="Eltern" IsChecked="{Binding IsToEltern}" Margin="0,0,0,6" />
+          <RadioButton GroupName="Empfaenger" Content="private Mailadresse" IsChecked="{Binding IsToPrivat}" />
         </StackPanel>
       </GroupBox>
 

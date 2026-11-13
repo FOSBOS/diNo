@@ -13,7 +13,8 @@ namespace diNo.ViewModels
     public string NameVorname => Schueler.NameVorname;
     public string KlassenBezeichnung => Schueler.KlassenBezeichnung;
     public int AnzahlOffen => Schueler.AktiveAusleihen.Count();
-    public string OffeneBuecherText => string.Join(", ", Schueler.AktiveAusleihen.Select(a => a.Buch?.Anzeige));
+    public string OffeneBuecherText => string.Join(", ", Schueler.AktiveAusleihen.Select(a =>
+      string.IsNullOrEmpty(a.Buch?.Fach) ? a.Buch?.Titel : a.Buch.Fach));
     public DateTime AeltesteAusgabeAm => Schueler.AktiveAusleihen.Min(a => a.AusgegebenAm);
 
     [ObservableProperty] private bool isSelected;

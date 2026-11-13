@@ -50,6 +50,7 @@ namespace diNo
     public AnhangTyp anhangTyp;
     public ReplyTyp replyTyp;
     public bool anEltern = false;
+    public bool anPrivat = false;
     public bool isTest = false;
 
     // Parameterloser Konstruktor: lädt Settings aus Zugriff.Instance
@@ -131,7 +132,7 @@ namespace diNo
 
         if (isTest)
           mailTo = SafeMail(Zugriff.Instance.lehrer);
-        else if (anhangTyp == AnhangTyp.Mahnung)
+        else if (anPrivat)
           mailTo = s.GetPrivatMail();
         else if (anEltern)
           mailTo = s.GetElternMail();
