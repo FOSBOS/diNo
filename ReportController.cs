@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using static System.Net.WebRequestMethods;
@@ -42,13 +43,7 @@ namespace diNo
       }
       else // als PDF speichern, dann öffnen, um Skalierungsprobleme zu vermeiden
       {
-        string mimeType, encoding, filenameExtension;
-        string[] streamids;
-        Microsoft.Reporting.WinForms.Warning[] warnings;
-        int numPages = rpt.reportViewer.LocalReport.GetTotalPages();
-        byte[] bytes = rpt.reportViewer.LocalReport.Render(
-           "PDF", null, out mimeType, out encoding, out filenameExtension,
-           out streamids, out warnings);
+        byte[] bytes = PdfReportRenderer.RenderToPdf(rpt.reportViewer.LocalReport);
 
         string file = @"C:\tmp\";
         if (!Directory.Exists(file))
@@ -160,7 +155,7 @@ namespace diNo
 
       // Unterberichte einbinden
       rpt.reportViewer.LocalReport.SubreportProcessing +=
-         new SubreportProcessingEventHandler(subrptEventHandler);
+         (sender, e) => SchuelerDruckSubreportHandler.Process(e, rptTyp);
 
       // In einer Klassenliste wird ein Titel ausgegeben, wenn die Schüler über bestimmte Vorkommnisse selektiert wurden
       if ((rptTyp == Bericht.Klassenliste || rptTyp == Bericht.Auswahlliste) && Zugriff.Instance.markierteSchueler.Count > 0)
@@ -168,8 +163,13 @@ namespace diNo
         rpt.reportViewer.LocalReport.SetParameters(new ReportParameter("Titel", Vorkommnisse.Instance.VorkommnisText(Zugriff.Instance.selectedVorkommnisart)));
       }
     }
+  }
 
-    void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
+  // Unterbericht-Logik für ReportSchuelerdruck, ausgelagert, damit sie auch außerhalb
+  // des interaktiven ReportViewer-Pfads (z.B. von MailTools beim PDF-Versand) genutzt werden kann.
+  public static class SchuelerDruckSubreportHandler
+  {
+    public static void Process(SubreportProcessingEventArgs e, Bericht rptTyp)
     {
       // ACHTUNG: Der Parameter muss im Haupt- und im Unterbericht definiert werden (mit gleichem Namen)
       string subrpt = e.ReportPath; // jeder Unterbericht ruft diesen EventHandler auf; hier steht drin welcher es ist.
@@ -214,7 +214,7 @@ namespace diNo
           vwVorkommnisTableAdapter BerichtTableAdapter;
           BerichtTableAdapter = new vwVorkommnisTableAdapter();
           if (subrpt == "subrptAbiVorkommnis")
-            BerichtTableAdapter.FillBySchuelerIdForAbi(vorkommnisse, schuelerId);   //nur bestimmte Vorkommnisse selektieren              
+            BerichtTableAdapter.FillBySchuelerIdForAbi(vorkommnisse, schuelerId);   //nur bestimmte Vorkommnisse selektieren
           else
             BerichtTableAdapter.FillBySchuelerId(vorkommnisse, schuelerId);
           e.DataSources.Add(new ReportDataSource("DataSetVorkommnis", (DataTable)vorkommnisse));
@@ -300,6 +300,69 @@ namespace diNo
         Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
         IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenZeugnisDruck(Bericht.Gefaehrdung);
         e.DataSources.Add(new ReportDataSource("DataSet1", noten));
+      }
+    }
+  }
+
+  public class ReportBuecherinfo : ReportController
+  {
+    private List<Schueler> orgdataSource;
+    public ReportBuecherinfo(List<Schueler> dataSource) : base() { orgdataSource = dataSource; }
+    public override void Init()
+    {
+      rpt.BerichtBindingSource.DataSource = BuecherinfoDruck.Create(orgdataSource);
+      rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptBuecherinfo.rdlc";
+      rpt.reportViewer.LocalReport.SubreportProcessing +=
+         (sender, e) => BuecherlisteSubreportHandler.Process(e);
+    }
+  }
+
+  // Deckt 1./2. Mahnung und Rechnung in einem Report ab - welcher Brieftyp je Schüler
+  // gilt, ergibt sich aus dessen aktueller Mahnstufe (siehe BriefDaten.CreateMahnungRechnung).
+  public class ReportMahnung : ReportController
+  {
+    private List<Schueler> orgdataSource;
+    private List<BriefDaten> bindingDataSource;
+    public ReportMahnung(List<Schueler> dataSource) : base() { orgdataSource = dataSource; }
+    public override void Init()
+    {
+      bindingDataSource = orgdataSource
+        .Select(BriefDaten.CreateMahnungRechnung)
+        .Where(b => b != null)
+        .ToList();
+
+      if (bindingDataSource.Count == 0)
+      {
+        MessageBox.Show("Keiner der ausgewählten Schüler hat eine Mahnstufe ungleich 'ungemahnt'.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+        rpt = null;
+        return;
+      }
+
+      rpt.BerichtBindingSource.DataSource = bindingDataSource;
+      rpt.reportViewer.LocalReport.ReportEmbeddedResource = "diNo.rptMahnung.rdlc";
+      // Logo kommt per Report-Parameter statt per Datensatz-Feld (Fields!Logo.Value) in den
+      // Page Header, da dort bei mehreren Schülern/Seiten kein zuverlässiger Zeilenkontext besteht.
+      rpt.reportViewer.LocalReport.SetParameters(new ReportParameter("Logo", BriefDaten.LoadLogoBase64()));
+      rpt.reportViewer.LocalReport.SubreportProcessing +=
+         (sender, e) => BuecherlisteSubreportHandler.Process(e);
+    }
+  }
+
+  // Liefert die Bücherliste (aktuell offene Ausleihen) für den Bücherliste-Subreport,
+  // gemeinsam genutzt von ReportBuecherinfo und ReportMahnung sowie vom Mail-Versand
+  // (MailTools, über PdfReportRenderer). Ob die Preis-Spalte sichtbar ist, entscheidet
+  // rein der RDL-Parameter "MitPreis" im jeweiligen Hauptbericht - dieser Handler muss
+  // ihn nicht auswerten.
+  public static class BuecherlisteSubreportHandler
+  {
+    public static void Process(SubreportProcessingEventArgs e)
+    {
+      int schuelerId;
+      int.TryParse(e.Parameters[0].Values[0], out schuelerId);
+      if (schuelerId > 0)
+      {
+        Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
+        e.DataSources.Add(new ReportDataSource("DataSet1", BuchDruck.Create(schueler)));
       }
     }
   }

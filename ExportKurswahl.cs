@@ -46,7 +46,7 @@ namespace diNo
       FileStream stream = new FileStream(datei, FileMode.Create, FileAccess.Write);
       writer = new StreamWriter(stream);
       // erste Zeile = Feldnamen
-      writer.WriteLine("ID;ASV_ID;Username;Pwd;Nachname;Vorname;Klasse;Geburtstag;JgStufe;Zweig;Schulart;Mail;FranzB1;SpanischB1");
+      writer.WriteLine("ID;ASV_ID;Username;Pwd;Nachname;Vorname;Klasse;Geburtstag;JgStufe;Zweig;Schulart;Mail;FranzB1;SpanischB1;Bekenntnis");
       foreach (Schueler s in list)
       {
         /*
@@ -69,7 +69,7 @@ namespace diNo
         // ID; ASV_ID; Username; Pwd; Nachname; Vorname; Klasse; Geburtstag; JgStufe; Zweig; Schulart; Mail; FranzB1; SpanischB1
         writer.WriteLine(s.Id + sep + s.AsvId + sep + username + sep + pwd + sep + s.Name.Replace("'", " ") + sep + s.Data.Rufname + sep +
           s.getKlasse.Bezeichnung + sep + s.Data.Geburtsdatum.ToString("dd.MM.yyyy") + sep + jgstufe + sep + s.Data.Ausbildungsrichtung + sep + s.Data.Schulart + sep +
-          mail + sep + (s.Data.FranzB1 ? 1 : 0) + sep + (s.Data.SpanischB1 ? 1 : 0));
+          mail + sep + (s.Data.FranzB1 ? 1 : 0) + sep + (s.Data.SpanischB1 ? 1 : 0) + sep + s.Data.Bekenntnis);
       }
       writer.Close();
     }
@@ -86,7 +86,7 @@ namespace diNo
           foreach (Kurs k in s.Kurse)
           {
             if (k.getFach.WPFid != null)
-              writer.WriteLine(s.Id + sep + k.getFach.WPFid + sep + Zugriff.Instance.Schuljahr);
+              writer.WriteLine(s.AsvId + sep + k.getFach.WPFid + sep + Zugriff.Instance.Schuljahr);
           }
         }
       }

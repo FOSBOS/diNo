@@ -14,7 +14,14 @@ namespace diNo.ViewModels
   {
     private readonly BuchStandardsatzTableAdapter ta = new BuchStandardsatzTableAdapter();
 
-    public List<int> JahrgangsstufenOptions { get; } = new List<int> { 8, 9, 10, 11, 12, 13 };
+    public List<KeyValuePair<int, string>> JahrgangsstufenOptions { get; } = new List<KeyValuePair<int, string>>
+    {
+      new KeyValuePair<int, string>(9, "IV"),
+      new KeyValuePair<int, string>(10, "VK"),
+      new KeyValuePair<int, string>(11, "11"),
+      new KeyValuePair<int, string>(12, "12"),
+      new KeyValuePair<int, string>(13, "13"),
+    };
 
     public List<KeyValuePair<int, string>> SchulartOptions { get; } = new List<KeyValuePair<int, string>>
     {

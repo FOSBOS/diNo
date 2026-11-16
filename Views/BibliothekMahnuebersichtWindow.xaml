@@ -25,6 +25,8 @@
                 SelectedValue="{Binding NeueMahnstufeFuerAuswahl}" VerticalAlignment="Center" />
       <Button Content="Setzen" Width="90" Height="28" Margin="8,0,0,0"
               Command="{Binding MahnstufeFuerAuswahlSetzenCommand}" VerticalAlignment="Center" />
+      <Button Content="Drucken" Width="100" Height="28" Margin="24,0,0,0"
+              Command="{Binding MahnungenDruckenCommand}" VerticalAlignment="Center" />
     </StackPanel>
 
     <DataGrid Grid.Row="2" ItemsSource="{Binding Eintraege}" AutoGenerateColumns="False"

@@ -23,7 +23,8 @@
       </Grid.ColumnDefinitions>
       <StackPanel Grid.Column="0" Margin="0,0,8,0">
         <Label Content="Jahrgangsstufe" Padding="0,0,0,2" />
-        <ComboBox ItemsSource="{Binding JahrgangsstufenOptions}" SelectedItem="{Binding Jahrgangsstufe}" />
+        <ComboBox ItemsSource="{Binding JahrgangsstufenOptions}" DisplayMemberPath="Value" SelectedValuePath="Key"
+                  SelectedValue="{Binding Jahrgangsstufe}" />
       </StackPanel>
       <StackPanel Grid.Column="1" Margin="0,0,8,0">
         <Label Content="Schulart" Padding="0,0,0,2" />

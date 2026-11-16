@@ -1,7 +1,6 @@
 ﻿using diNo.diNoDataSetTableAdapters;
 using MailKit.Net.Smtp;
 using MailKit.Security;
-using Microsoft.Reporting.WinForms;
 using SevenZip;
 using System;
 using System.Collections.Generic;
@@ -24,7 +23,9 @@ namespace diNo
     Keiner = 0,
     Noten = 1,
     PDF = 2,
-    Absenzen = 3    
+    Absenzen = 3,
+    Mahnung = 4,
+    Buecherinfo = 5
   }
 
   public class MailTools : IDisposable
@@ -49,6 +50,7 @@ namespace diNo
     public AnhangTyp anhangTyp;
     public ReplyTyp replyTyp;
     public bool anEltern = false;
+    public bool anPrivat = false;
     public bool isTest = false;
 
     // Parameterloser Konstruktor: lädt Settings aus Zugriff.Instance
@@ -130,6 +132,8 @@ namespace diNo
 
         if (isTest)
           mailTo = SafeMail(Zugriff.Instance.lehrer);
+        else if (anPrivat)
+          mailTo = s.GetPrivatMail();
         else if (anEltern)
           mailTo = s.GetElternMail();
         else
@@ -142,6 +146,13 @@ namespace diNo
 
         msg.To.Add(new MimeKit.MailboxAddress(mailTo, mailTo));
 
+        if (anhangTyp == AnhangTyp.Mahnung && !isTest)
+        {
+          string elternMail = s.GetElternMail();
+          if (IstMailGueltig(elternMail, "Eltern (CC) " + s.NameVorname))
+            msg.Cc.Add(new MimeKit.MailboxAddress(elternMail, elternMail));
+        }
+
         var builder = new MimeKit.BodyBuilder();
         builder.TextBody = (s.ErzeugeAnrede(anEltern,true) + BodyText).Replace("<br>", "\n");
 
@@ -152,6 +163,26 @@ namespace diNo
         }
         else if (anhangTyp == AnhangTyp.PDF && DateiAnhang != "")
           builder.Attachments.Add(DateiAnhang);
+        else if (anhangTyp == AnhangTyp.Mahnung)
+        {
+          var daten = BriefDaten.CreateMahnungRechnung(s);
+          if (daten == null)
+          {
+            log.Warn(s.NameVorname + " ist ungemahnt, kein Mahnung/Rechnung-Mail verschickt.");
+            return;
+          }
+          byte[] pdf = PdfReportRenderer.BuildAndRenderToPdf(
+              "diNo.rptMahnung.rdlc", "DataSet1", new List<BriefDaten> { daten },
+              (sender, e) => BuecherlisteSubreportHandler.Process(e));
+          builder.Attachments.Add(daten.Betreff + ".pdf", pdf);
+        }
+        else if (anhangTyp == AnhangTyp.Buecherinfo)
+        {
+          byte[] pdf = PdfReportRenderer.BuildAndRenderToPdf(
+              "diNo.rptBuecherinfo.rdlc", "DataSet1", new List<BuecherinfoDruck> { new BuecherinfoDruck(s) },
+              (sender, e) => BuecherlisteSubreportHandler.Process(e));
+          builder.Attachments.Add("Buecherinfo.pdf", pdf);
+        }
 
         msg.Body = builder.ToMessageBody();
 
@@ -212,6 +243,7 @@ namespace diNo
 
       body += "\n\nMit freundlichen Grüßen\n" + kl.NameDienstbezeichnung;
       body += "\n" + kl.KLString;
+      body += "\n\nHinweis: Dieses Mail wurde maschinell versandt.";
       body = body.Replace("<br>", "\n");
       log.Debug(body);
       if (!isTest)
@@ -334,50 +366,17 @@ namespace diNo
       Bericht rptTyp = Bericht.Notenmitteilung;
       List<SchuelerDruck> liste = new List<SchuelerDruck>();
       liste.Add(SchuelerDruck.CreateSchuelerDruck(s, rptTyp, UnterschriftZeugnis.SL));
-      
-      //ReportViewer im Hintergrund erstellen, um PDF zu drucken, und Report zuweisen.
-      ReportViewer rpt = new ReportViewer();
-      ReportDataSource dataSource = new ReportDataSource();
-      dataSource.Name = "DataSet1";
 
-      //Report als Embedded Resource mit dem Namen "Report.rdlc" ... entsprechend anpassen
-      rpt.LocalReport.ReportEmbeddedResource = "diNo." + SchuelerDruck.GetBerichtsname(rptTyp) + ".rdlc"; //"diNo.rptNotenmitteilung.rdlc";
-
-      // Unterberichte einbinden
-      rpt.LocalReport.SubreportProcessing += new SubreportProcessingEventHandler(subrptEventHandler);
-
-      //Report mit Daten befüllen
-
-      dataSource.Value = liste;
-      rpt.LocalReport.DataSources.Add(dataSource);
+      byte[] PDF = PdfReportRenderer.BuildAndRenderToPdf(
+          "diNo." + SchuelerDruck.GetBerichtsname(rptTyp) + ".rdlc",
+          "DataSet1",
+          liste,
+          (sender, e) => SchuelerDruckSubreportHandler.Process(e, rptTyp));
 
       //Report als PDF in Datei speichern
-      byte[] PDF = rpt.LocalReport.Render("PDF");
-      FileStream fsReport = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None);
-      fsReport.Write(PDF, 0, PDF.Length);
-      fsReport.Close();
-
-      rpt.Dispose();
-    }
-
-    void subrptEventHandler(object sender, SubreportProcessingEventArgs e)
-    {
-      string subrpt = e.ReportPath; // jeder Unterbericht ruft diesen EventHandler auf; hier steht drin welcher es ist.
-      int schuelerId;
-      int.TryParse(e.Parameters[0].Values[0], out schuelerId);
-      if (schuelerId > 0)
+      using (FileStream fsReport = new FileStream(targetFile, FileMode.Create, FileAccess.Write, FileShare.None))
       {
-        Schueler schueler = Zugriff.Instance.SchuelerRep.Find(schuelerId);
-        /*
-        if (subrpt == "subrptPunktesumme" || subrpt == "subrptPunktesummeNB")
-        {
-          e.DataSources.Add(new ReportDataSource("DataSet1", PunkteSummeDruck.Create(schueler, rptTyp)));
-        }
-        else*/
-        {
-          IList<NotenDruck> noten = schueler.getNoten.SchuelerNotenDruck(Bericht.Notenmitteilung);
-          e.DataSources.Add(new ReportDataSource("DataSet1", noten));
-        }
+        fsReport.Write(PDF, 0, PDF.Length);
       }
     }
 

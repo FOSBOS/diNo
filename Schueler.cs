@@ -1136,6 +1136,16 @@ public int APFaktor
       return "";
     }
 
+    /// <summary>
+    /// Liefert die private Mailadresse des Schülers (aus der eigenen Anschrift, nicht die
+    /// schulische MailSchule). Wird z.B. für Mahnung/Rechnung-Mails aus der Bibliothek genutzt.
+    /// </summary>
+    public string GetPrivatMail()
+    {
+      var eigene = getEigeneAnschrift();
+      return eigene == null || eigene.IsEmailNull() ? "" : eigene.Email;
+    }
+
     public string ErzeugeAnrede(bool ElternadresseVerwenden, bool Duzen=false)
     {
       if (ElternadresseVerwenden)

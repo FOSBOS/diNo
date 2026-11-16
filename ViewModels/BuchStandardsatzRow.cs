@@ -4,7 +4,7 @@ namespace diNo.ViewModels
   public class BuchStandardsatzRow
   {
     public BuchStandardsatz Satz { get; }
-    public string JahrgangsstufeText => ((int)Satz.Jahrgangsstufe).ToString();
+    public string JahrgangsstufeText => JahrgangsstufeToText(Satz.Jahrgangsstufe);
     public string SchulartText => SchulartToText(Satz.Schulart);
     public string ZweigText => Satz.Zweig.HasValue ? Satz.Zweig.Value.ToString() : "alle";
     public string BuchText => Satz.Buch?.Anzeige ?? "";
@@ -12,6 +12,16 @@ namespace diNo.ViewModels
     public BuchStandardsatzRow(BuchStandardsatz satz)
     {
       Satz = satz;
+    }
+
+    private static string JahrgangsstufeToText(diNo.Jahrgangsstufe jahrgangsstufe)
+    {
+      switch ((int)jahrgangsstufe)
+      {
+        case 9: return "IV";
+        case 10: return "VK";
+        default: return ((int)jahrgangsstufe).ToString();
+      }
     }
 
     private static string SchulartToText(diNo.Schulart? s)
