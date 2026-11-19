@@ -78,6 +78,8 @@
             <Button Content="Abi-Besten" Command="{Binding EinserAbiCommand}" />
             <Button Content="Schnitte je Klasse" Command="{Binding SchnitteCommand}" />
             <Button Content="erreichter Abschluss" Command="{Binding AbschlussCommand}" />
+            <Button Content="Statistik bestanden" Command="{Binding StatistikBestandenCommand}"
+                    ToolTip="Übersicht Zulassung/Abschluss aller 12. und 13. Klassen (Zweig, Jahrgangsstufe, Schulart) in die Zwischenablage" />
           </StackPanel>
         </GroupBox>
 

@@ -135,6 +135,9 @@ namespace diNo.ViewModels
     private void Schnitte() => Auswertungen.AbiSchnitte();
 
     [RelayCommand]
+    private void StatistikBestanden() => RunBusy(() => Auswertungen.StatistikBestanden());
+
+    [RelayCommand]
     private void Abschluss()
     {
       var obj = GetSelectedObjects();

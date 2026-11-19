@@ -97,6 +97,89 @@ namespace diNo
       MessageBox.Show("Auswertung liegt in der Zwischenablage.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
+    /// <summary>
+    /// Übersicht über alle 12. und 13. Klassen: Anzahl Schüler, zur Prüfung Zugelassene
+    /// (= alle außer denen mit Vorkommnis "nicht zur Prüfung zugelassen") und Bestandene
+    /// (Fachhochschulreife, fachgebundene oder allgemeine Hochschulreife), gruppiert nach
+    /// Zweig, Jahrgangsstufe und Schulart. Tab-separiert für Excel in der Zwischenablage.
+    /// </summary>
+    public static void StatistikBestanden()
+    {
+      var gruppen = new SortedDictionary<string, BestandenGruppe>();
+      foreach (Klasse k in Zugriff.Instance.KlassenRep.getList())
+      {
+        if (k.Jahrgangsstufe < Jahrgangsstufe.Zwoelf)
+          continue;
+
+        foreach (Schueler s in k.Schueler)
+        {
+          // Schulart und Zweig kommen bewusst vom Schüler (nicht von der Klasse), da Mischklassen
+          // (z.B. FB- oder Zweig-Mischklassen) pro Schüler unterschiedliche Werte haben können.
+          string schulart = SchulartText(s);
+          string zweig = Faecherkanon.GetZweigString(s.Zweig);
+          string key = schulart + "\t" + (int)k.Jahrgangsstufe + "\t" + zweig; // bestimmt auch die Sortierung
+          BestandenGruppe g;
+          if (!gruppen.TryGetValue(key, out g))
+          {
+            g = new BestandenGruppe { Zweig = zweig, Jahrgangsstufe = (int)k.Jahrgangsstufe, Schulart = schulart };
+            gruppen.Add(key, g);
+          }
+
+          g.Anzahl++;
+          if (!s.hatVorkommnis(Vorkommnisart.NichtZurPruefungZugelassen))
+            g.Zugelassen++;
+          bool allgHSR = s.hatVorkommnis(Vorkommnisart.allgemeineHochschulreife);
+          if (allgHSR)
+            g.AllgHSR++;
+          if (allgHSR || s.hatVorkommnis(Vorkommnisart.Fachabiturzeugnis) || s.hatVorkommnis(Vorkommnisart.fachgebundeneHochschulreife))
+            g.Bestanden++;
+        }
+      }
+
+      if (gruppen.Count == 0)
+      {
+        MessageBox.Show("Es sind keine 12. oder 13. Klassen geladen.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        return;
+      }
+
+      string erg = "Schulart\tJahrgangsstufe\tZweig\tSchüler\tzugelassen\tbestanden\tdarunter allg. HSR\r\n";
+      foreach (var g in gruppen.Values)
+      {
+        erg += g.Schulart + "\t";
+        erg += g.Jahrgangsstufe + "\t";
+        erg += g.Zweig + "\t";
+        erg += g.Anzahl + "\t";
+        erg += g.Zugelassen + "\t";
+        erg += g.Bestanden + "\t";
+        erg += g.AllgHSR + "\r\n";
+      }
+      Clipboard.SetText(erg);
+      MessageBox.Show("Auswertung liegt in der Zwischenablage.", "diNo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    // Schueler.Data.Schulart ist (anders als Klasse.Data.Schulart) ein rohes DB-Kürzel ("F"/"B").
+    private static string SchulartText(Schueler s)
+    {
+      if (s.Data.IsSchulartNull()) return "ohne";
+      switch (s.Data.Schulart)
+      {
+        case "F": return Schulart.FOS.ToString();
+        case "B": return Schulart.BOS.ToString();
+        default: return s.Data.Schulart;
+      }
+    }
+
+    private class BestandenGruppe
+    {
+      public string Zweig;
+      public int Jahrgangsstufe;
+      public string Schulart;
+      public int Anzahl;
+      public int Zugelassen;
+      public int Bestanden;
+      public int AllgHSR;
+    }
+
     public static void AbiBesten()
     {            
       List<Schueler> best = new List<Schueler>();
